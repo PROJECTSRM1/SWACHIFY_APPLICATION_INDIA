@@ -1,0 +1,222 @@
+/* GENERAL CONTAINER */
+.packes-container {
+  font-family: Arial, sans-serif;
+  width: 90%;
+  max-width: 1440px;
+  margin: auto;
+}
+
+/* NAVBAR STYLES */
+.navbar {
+  background-color: #001529;
+  padding: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-logo {
+  color: #fff;
+  font-size: 24px;
+  font-weight: bold;
+  padding-left: 20px;
+}
+
+.nav-links {
+  display: flex;
+  justify-content: flex-end;
+  list-style: none;
+  margin-right: 20px;
+}
+
+.nav-links li {
+  margin-left: 20px;
+}
+
+.nav-links li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.nav-links li a:hover {
+  color: #1890ff;
+}
+
+.mobile-menu-icon {
+  display: none;
+  font-size: 30px;
+  color: white;
+}
+
+.mobile-menu {
+  display: none;
+  list-style: none;
+  position: absolute;
+  top: 60px;
+  right: 10px;
+  background-color: #001529;
+  padding: 20px;
+}
+
+.mobile-menu li {
+  padding: 10px 0;
+}
+
+.mobile-menu li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.mobile-menu li a:hover {
+  color: #1890ff;
+}
+
+/* MOBILE MENU - Toggle for small screens */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+
+  .mobile-menu-icon {
+    display: block;
+  }
+
+  .mobile-menu {
+    display: block;
+  }
+}
+
+/* HERO SECTION */
+.packes-hero {
+  background: center/cover no-repeat;
+  padding: 120px 0;
+  text-align: center;
+  color: white;
+  position: relative;
+}
+
+.hero-overlay {
+  background: rgba(0, 0, 0, 0.5);
+  padding: 60px 20px;
+  display: inline-block;
+}
+
+.packes-hero h1 {
+  font-size: 36px;
+  margin: 0;
+}
+
+.packes-hero p {
+  max-width: 600px;
+  margin: 10px auto 20px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* SERVICES SECTION */
+.packes-services {
+  text-align: center;
+  margin: 50px 0;
+}
+
+.packes-card {
+  text-align: center;
+  padding: 20px;
+  transition: 0.3s;
+}
+
+.packes-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.packes-icon {
+  margin-bottom: 10px;
+  font-size: 32px;
+}
+
+/* CTA SECTION */
+.packes-cta {
+  text-align: center;
+  margin: 60px 0;
+}
+
+/* -------------------- RESPONSIVE BREAKPOINTS -------------------- */
+
+/* 1440px */
+@media (max-width: 1440px) {
+  .packes-hero h1 {
+    font-size: 32px;
+  }
+}
+
+/* 1024px */
+@media (max-width: 1024px) {
+  .packes-card {
+    width: 45%;
+  }
+
+  .packes-steps {
+    flex-wrap: wrap;
+  }
+}
+
+/* 768px */
+@media (max-width: 768px) {
+  .packes-hero {
+    padding: 80px 0;
+  }
+
+  .packes-hero .hero-overlay {
+    padding: 40px 10px;
+  }
+
+  .packes-card {
+    width: 100%;
+  }
+}
+
+/* 425px */
+@media (max-width: 425px) {
+  .packes-hero h1 {
+    font-size: 24px;
+  }
+
+  .packes-footer {
+    text-align: center;
+    flex-direction: column;
+  }
+
+  .packes-form {
+    width: 100%;
+  }
+}
+
+/* 375px */
+@media (max-width: 375px) {
+  .packes-hero p {
+    font-size: 14px;
+  }
+
+  .packes-card {
+    padding: 15px;
+  }
+}
+
+/* 320px */
+@media (max-width: 320px) {
+  .packes-hero h1 {
+    font-size: 20px;
+  }
+
+  .packes-hero {
+    padding: 60px 0;
+  }
+
+  .packes-form input,
+  .packes-form .ant-select,
+  .packes-form .ant-picker {
+    width: 100%;
+  }
+}
