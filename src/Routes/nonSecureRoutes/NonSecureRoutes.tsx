@@ -9,7 +9,8 @@ import { getUserDetails } from '../../utils/helpers/storage';
 import Home_Service from "../../pages/landing/Home_Service";
 import LandingPackers from "../../pages/landing/LandingPackers"
 // import ForgotPasswordLink from '../../pages/forgotpassword/ForgotPasswordLink';
-import CommercialPlots from '../../pages/landing/CommercialPlots';
+import CommercialPlots from "../../pages/landing/CommercialPlots"
+import ConstructionMaterials from "../../pages/landing/ConstructionMaterials"
 
 export const NonSecureRoutes = () => {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ export const NonSecureRoutes = () => {
     const userData: any = getUserDetails('user');
     const currentPath = window.location.pathname;
 
-    if (!userData && !currentPath.startsWith('/app')) {
+    if (userData && !currentPath.startsWith('/app')) {
       navigate('/app/dashboard');
     } else if (!userData && (currentPath === '/' || currentPath === '')) {
       navigate('/landing');
@@ -35,7 +36,8 @@ export const NonSecureRoutes = () => {
       {/* <Route path="/terms" element={<TermsOfService />} /> */}
       <Route path="/home_service" element={<Home_Service />} />
       <Route path="/LandingPackers" element={<LandingPackers />} />
-      <Route path="/commercial-plots" element={<CommercialPlots />} />
+      <Route path="/commercial-plots" element={<CommercialPlots/>}/>
+      <Route path='/ConstructionMaterials' element={<ConstructionMaterials />}/>
 
       
     </Routes>
