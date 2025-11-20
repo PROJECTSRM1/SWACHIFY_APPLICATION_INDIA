@@ -1,0 +1,130 @@
+/* MAIN WRAPPER */
+.cs-wrapper {
+  padding: 24px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* HEADER */
+.cs-header {
+  background-color: #009688;
+  color: white;
+  padding: 18px 20px;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.cs-title {
+  font-size: 18px;
+}
+
+.cs-subtitle {
+  font-size: 14px;
+  opacity: 0.95;
+}
+
+/* GRID LAYOUT */
+.cs-grid {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+/* CARD */
+.cs-card {
+  border-radius: 12px !important;
+  overflow: hidden;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
+  transition: 0.2s ease;
+}
+
+.cs-card:hover {
+  transform: translateY(-4px);
+}
+
+.cs-image {
+  height: 160px;
+  width: 100%;
+  object-fit: cover;
+}
+
+/* CARD CONTENT */
+.cs-card-title {
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+
+.cs-card-desc {
+  font-size: 13px;
+  color: #555;
+  margin-bottom: 14px;
+}
+
+/* BUTTON */
+.cs-button {
+  border-radius: 8px !important;
+  background-color: #009688;
+  color: white;
+}
+
+/* --------------------------- */
+/* 📱 MOBILE — up to 480px     */
+/* --------------------------- */
+@media (max-width: 480px) {
+  .cs-wrapper {
+    padding: 12px;
+  }
+
+  .cs-header {
+    flex-direction: column;
+    text-align: center;
+    padding: 14px;
+  }
+
+  .cs-title {
+    font-size: 16px;
+  }
+
+  .cs-subtitle {
+    font-size: 12px;
+  }
+
+  .cs-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .cs-image {
+    height: 140px;
+  }
+}
+
+/* --------------------------- */
+/* 📱 TABLET — 480 to 900px    */
+/* --------------------------- */
+@media (min-width: 480px) and (max-width: 900px) {
+  .cs-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .cs-image {
+    height: 150px;
+  }
+}
+
+
+@media (min-width: 900px) {
+  .cs-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

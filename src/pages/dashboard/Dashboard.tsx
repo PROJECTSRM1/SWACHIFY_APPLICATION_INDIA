@@ -1,6 +1,7 @@
 import React from "react";
 import HeaderBar from "../../components/header/header";
 import "./Dashboard.css";
+import ConstructionServices from "../building/building";
 
 const Dashboard: React.FC = () => {
   return (
@@ -21,6 +22,7 @@ const Dashboard: React.FC = () => {
           />
         </div>
       </div>
+      <ConstructionServices/>
 
       {/* Later: You can add responsive service cards here */}
 
