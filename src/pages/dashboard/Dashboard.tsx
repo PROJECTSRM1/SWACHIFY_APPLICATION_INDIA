@@ -1,6 +1,6 @@
 import React from "react";
 import HeaderBar from "../../components/header/header";
-import "./dashboard.css";
+import "./Dashboard.css";
 
 const Dashboard: React.FC = () => {
   return (

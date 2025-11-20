@@ -39,7 +39,7 @@ const services = [
   },
   {
     icon: <ShopOutlined style={{ fontSize: 28, color: "#ff3333" }} />,
-    title: "Buy & Sale Commercial Plots",
+    title: "commercial-plots",
     desc: "Premium commercial plots in prime locations. Excellent investment opportunities.",
   },
   {
@@ -51,6 +51,12 @@ const services = [
 
 const LandingPage = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+
+  // ⭐ Scroll to Services Section
+  const scrollToServices = () => {
+    const section = document.getElementById("services-section");
+    section?.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
     <div className="landing-container">
@@ -66,8 +72,13 @@ const LandingPage = () => {
   <li><Link to="/home_service">Home Services</Link></li>
   <li><Link to="/homeapartment">Rentals</Link></li>
   <li><Link to="/commercial-plots">Commercial Plots</Link></li>
-  <li><Link to="/raw-material">Raw Materials</Link></li>
-  <li><Link to="/contact">Contact</Link></li>
+  <li><Link to="/ConstructionMaterials">Construction Materials</Link></li>
+  <li><Link to="/contactus">ContactUs</Link></li>
+
+  {/* ⭐ ADDED CART */}
+  <li><Link to="/Cart">Cart</Link></li>
+
+  <li><Link to="/Login">Login</Link></li>
 </ul>
 
         {/* Mobile Menu Button */}
@@ -79,14 +90,19 @@ const LandingPage = () => {
       {/* DROPDOWN MOBILE MENU */}
       {menuOpen && (
         <ul className="mobile-menu">
-          <li>Home</li>
-          <li>Cleaning</li>
-          <li>Packers & Movers</li>
-          <li>Home Services</li>
-          <li>Rentals</li>
-          <li>Commercial Plots</li>
-          <li>Raw Materials</li>
-          <li>Contact</li>
+          <li><Link to="/" onClick={() => setMenuOpen(false)}>Home</Link></li>
+          <li><Link to="/cleaningservice" onClick={() => setMenuOpen(false)}>Cleaning</Link></li>
+          <li><Link to="/LandingPackers" onClick={() => setMenuOpen(false)}>Packers & Movers</Link></li>
+          <li><Link to="/home_service" onClick={() => setMenuOpen(false)}>Home Services</Link></li>
+          <li><Link to="/homeapartment" onClick={() => setMenuOpen(false)}>Rentals</Link></li>
+          <li><Link to="/commercial-plots" onClick={() => setMenuOpen(false)}>Commercial Plots</Link></li>
+          <li><Link to="/raw-material" onClick={() => setMenuOpen(false)}>Construction Materials</Link></li>
+          <li><Link to="/contactus" onClick={() => setMenuOpen(false)}>Contact</Link></li>
+
+          {/* ⭐ ADDED CART */}
+          <li><Link to="/Cart" onClick={() => setMenuOpen(false)}>Cart</Link></li>
+
+          <li><Link to="/Login" onClick={() => setMenuOpen(false)}>Login</Link></li>
         </ul>
       )}
 
@@ -98,12 +114,17 @@ const LandingPage = () => {
         <div className="hero-content">
           <h1>Transform Your Home & Property Services</h1>
           <p>Your trusted solution for cleaning, moving, rentals, construction, and more.</p>
-          <Button type="primary" size="large">Get Started</Button>
+
+          {/* ⭐ CALL SCROLL FUNCTION */}
+          <Button type="primary" size="large" onClick={scrollToServices}>
+            Get Started
+          </Button>
         </div>
       </section>
 
       {/* 🟦 SERVICES SECTION */}
-      <section className="services-section">
+      {/* ⭐ ADDED ID FOR SCROLL TARGET */}
+      <section id="services-section" className="services-section">
         <h2 className="section-title">Our Services</h2>
         <p className="section-subtitle">
           Comprehensive solutions for all your home and property needs
