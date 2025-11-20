@@ -1,0 +1,1099 @@
+/* ==========================
+   Global styles
+========================== */
+:root {
+  --accent: #2f80ed;
+  --muted: #6b7280;
+  --bg: #f8fafc;
+  --radius: 12px;
+  --shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  --container: 1200px;
+  font-family: "Inter", Arial, sans-serif;
+}
+
+body {
+  background: var(--bg);
+  margin: 0;
+  padding: 0;
+}
+
+/* ==========================
+   PAGE CONTAINER
+========================== */
+.lc-page {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* hero background image (moved from inline to CSS) */
+.lc-hero--large {
+  background-image: linear-gradient(90deg, rgba(18,72,160,0.88), rgba(47,128,237,0.72)), url('../../assets/landingimages/landingcleaninghero.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 520px; /* adjust if you want different height */
+  min-height: 420px;
+  display: flex;
+  align-items: center;
+  color: white;
+  position: relative;
+}
+
+/* DatePicker full width */
+.lc-datepicker {
+  width: 100% !important;
+}
+
+/* .lc-socials should already exist but just in case ensure marginTop is covered */
+.lc-socials {
+  margin-top: 12px; /* moved from inline */
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+/* subtle grain / texture layer (optional) */
+.lc-hero--large::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(255,255,255,0.02) 0%, rgba(0,0,0,0.08) 100%);
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+/* inner container keeps content flush to left like screenshot */
+.lc-hero-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  width: 100%;
+  padding: 36px 28px;
+  box-sizing: border-box;
+}
+
+/* left aligned content column that sits toward the left side */
+.lc-hero-content {
+  max-width: 850px;            /* controls line-length for large title */
+  margin-left: 16px;
+  position: relative;
+}
+
+/* small top row with icon and label */
+.lc-hero-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.lc-hero-icon svg {
+  color: rgba(255,255,255,0.95);
+  display: inline-block;
+}
+
+.lc-hero-sub {
+  font-weight: 600;
+  font-size: 0.98rem;
+  color: rgba(255,255,255,0.95);
+  background: transparent;
+  display: inline-block;
+  letter-spacing: 0.1px;
+}
+
+/* hero title — much bigger and tighter like the screenshot */
+.lc-hero-title {
+  font-size: 4.2rem;           /* large headline */
+  line-height: 1.02;
+  font-weight: 700;
+  margin: 6px 0 18px 0;
+  color: #ffffff;
+  text-align: left;
+  letter-spacing: -0.6px;
+}
+
+/* description paragraph under title */
+.lc-hero-desc {
+  font-size: 1.05rem;
+  max-width: 720px;
+  color: rgba(255,255,255,0.92);
+  margin-bottom: 26px;
+  line-height: 1.55;
+}
+
+/* CTA buttons — pill-style, spacing and shadows */
+.lc-hero-ctas {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.lc-cta {
+  border-radius: 10rem;
+  padding: 12px 20px;
+  min-width: 120px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 6px 18px rgba(7,6,26,0.12);
+}
+
+/* Ghost / white outline like screenshot left button */
+.lc-cta--ghost {
+  background: rgba(255,255,255,0.98);
+  color: #0b2a3a;
+  border: 1px solid rgba(0,0,0,0.06);
+  box-shadow: 0 6px 18px rgba(7,6,26,0.06);
+}
+
+/* Primary pill — blue filled (slightly darker than overlay so it reads) */
+.lc-cta--primary {
+  background: linear-gradient(180deg,#2f80ed,#2260cc);
+  color: white;
+  border: 1px solid rgba(0,0,0,0.08);
+  box-shadow: 0 10px 30px rgba(47,128,237,0.18);
+}
+
+/* smaller screens: scale down hero but keep proportion & spacing */
+@media (max-width: 1100px) {
+  .lc-hero-title { font-size: 3.2rem; }
+  .lc-hero-desc { font-size: 1rem; }
+  .lc-hero--large { height: 460px; }
+}
+
+@media (max-width: 760px) {
+  .lc-hero--large { height: 420px; padding-top: 18px; padding-bottom: 18px; }
+  .lc-hero-inner { padding-left: 18px; padding-right: 18px; }
+  .lc-hero-title { font-size: 2.2rem; line-height: 1.08; }
+  .lc-hero-desc { display: block; max-width: 100%; margin-bottom: 18px; font-size: 0.98rem; }
+  .lc-hero-ctas { flex-direction: row; gap: 10px; }
+}
+
+
+/* ==========================
+   MAIN CONTAINER
+========================== */
+.lc-container {
+  max-width: var(--container);
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+/* ==========================
+   SECTION HEADINGS
+========================== */
+.lc-section-title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.lc-sub {
+  text-align: center;
+  font-size: 1rem;
+  color: var(--muted);
+  margin-bottom: 30px;
+}
+
+/* ==========================
+   SERVICES GRID
+========================== */
+.lc-services {
+  margin-bottom: 60px;
+}
+
+.lc-service-card {
+  border-radius: var(--radius);
+  overflow: hidden;
+  height: 100%;
+  box-shadow: var(--shadow);
+}
+
+.lc-service-card img {
+  width: 100%;
+  height: 170px;
+  object-fit: cover;
+}
+
+.lc-service-body {
+  padding: 18px;
+  min-height: 120px;
+}
+
+/* ====== WHAT'S INCLUDED (cards grid) ====== */
+.lc-included {
+  padding: 42px 0 56px;
+  background: transparent;
+}
+
+.lc-included-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.lc-included .lc-section-title {
+  margin-bottom: 6px;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.lc-included .lc-sub {
+  margin-bottom: 28px;
+  color: var(--muted);
+}
+
+/* grid: 4 equal columns, consistent row heights */
+.lc-included-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px 22px;
+  align-items: stretch;
+}
+
+/* single box */
+.lc-included-box {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 20px 22px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(16, 24, 40, 0.06);
+  min-height: 96px;                /* enforces consistent box size */
+  transition: transform .12s ease, box-shadow .12s ease;
+  box-sizing: border-box;
+}
+
+/* subtle hover lift */
+.lc-included-box:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(16,24,40,0.08);
+}
+
+/* left column (icon) — fixed width so text aligns across boxes */
+.lc-included-left {
+  width: 36px;
+  flex: 0 0 36px;
+  display: flex;
+  align-items: flex-start; /* check icon vertically centered-ish with text */
+}
+
+/* text area */
+.lc-included-text {
+  font-size: 16px;
+  color: #0b2a3a;
+  line-height: 1.5;
+  font-weight: 500;
+  word-break: break-word;
+  display: block;
+  /* allow multiple lines but keep box height consistent */
+}
+
+/* responsive: 2 columns under 1000px */
+@media (max-width: 1000px) {
+  .lc-included-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+  .lc-included-box { min-height: 88px; padding: 16px; }
+}
+
+/* mobile: single column under 600px */
+@media (max-width: 600px) {
+  .lc-included-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .lc-included-box {
+    min-height: auto;
+    padding: 14px;
+  }
+  .lc-included-left { align-items: center; }
+  .lc-included-text { font-size: 15px; }
+}
+
+/* ==========================
+   PRICING SECTION
+========================== */
+.lc-pricing {
+  margin: 60px 0;
+}
+
+.lc-price-card {
+  background: white;
+  padding: 25px;
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  text-align: center;
+  position: relative;
+}
+
+.lc-price-card.popular {
+  border: 2px solid var(--accent);
+  transform: translateY(-5px);
+}
+
+.lc-badge {
+  background: var(--accent);
+  color: white;
+  padding: 6px 14px;
+  border-radius: 20px;
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-weight: 600;
+}
+
+.lc-price {
+  margin: 10px 0;
+}
+
+.lc-amount {
+  font-size: 2.3rem;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.lc-time {
+  margin-bottom: 12px;
+  color: var(--muted);
+}
+
+.lc-bullets {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 16px;
+}
+
+.lc-bullets li {
+  display: flex;
+  align-items: center;
+  margin: 6px 0;
+}
+
+.lc-bullet {
+  color: #16a34a;
+  margin-right: 8px;
+}
+
+/* ==========================
+   BOOKING FORM
+========================== */
+.lc-booking {
+  margin: 60px 0;
+}
+
+.lc-booking-card {
+  background: white;
+  padding: 25px;
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+}
+
+/* WHY CHOOSE — exact styling to match the provided image (replace previous .lc-why block) */
+.lc-why.pale {
+  background: #eef6ff;            /* pale-blue background from screenshot */
+  padding: 64px 20px;
+  margin-top: 30px;
+  border-radius: 0;               /* screenshot shows a flush band, keep subtle */
+  overflow: hidden;
+}
+
+.lc-why-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* title */
+.lc-why .lc-section-title {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 30px;
+  color: #0b2a3a; /* darker for contrast like screenshot */
+}
+
+/* grid: 3 equal items centered */
+.lc-why-grid {
+  display: flex;
+  justify-content: center;
+  gap: 6%;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+/* single item */
+.lc-why-item {
+  width: 28%;
+  min-width: 220px;
+  text-align: center;
+}
+
+/* circular icon */
+.lc-why-icon-circle {
+  width: 86px;
+  height: 86px;
+  border-radius: 50%;
+  background: var(--accent); /* uses accent color #2f80ed */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 18px;
+  box-shadow: 0 12px 34px rgba(47,128,237,0.12);
+  
+}
+
+/* small bold title under icon */
+.lc-why-title {
+  font-weight: 600;
+  font-size: 0.98rem;
+  margin-bottom: 8px;
+  color: #102233;
+}
+
+/* description text centered and multi-line as in screenshot */
+.lc-why-desc {
+  color: var(--muted);
+  font-size: 0.98rem;
+  line-height: 1.6;
+  max-width: 360px;
+  margin: 0 auto;
+  padding: 0 6px;
+}
+
+/* Responsive: stack vertically on small screens */
+@media (max-width: 900px) {
+  .lc-why.pale { padding: 36px 12px; }
+  .lc-why-grid { flex-direction: column; gap: 20px; align-items: center; }
+  .lc-why-item { width: 100%; max-width: 720px; }
+  .lc-why-icon-circle { width: 64px; height: 64px; margin-bottom: 10px; }
+  .lc-why .lc-section-title { font-size: 22px; }
+  .lc-why-desc { font-size: 0.96rem; max-width: 520px; }
+}
+
+
+/* ==========================
+   FOOTER (dark) — updated to match screenshot
+   ========================== */
+.lc-footer {
+  background: linear-gradient(180deg, #071226 0%, #061425 100%); /* deep navy */
+  color: #e6eef7;
+  padding: 48px 20px 18px;
+  margin-top: 60px;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.lc-footer-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 28px;
+  align-items: start;
+}
+
+/* Column wrapper */
+.lc-footer-col {
+  min-width: 0;
+}
+
+/* Small section heading */
+.lc-footer-title {
+  font-size: 16px;
+  color: #ffffff;
+  margin: 0 0 12px 0;
+  font-weight: 700;
+}
+
+/* About paragraph */
+.lc-footer-about {
+  color: rgba(255,255,255,0.75);
+  max-width: 320px;
+  margin: 0;
+  font-size: 14px;
+}
+
+/* Links list */
+.lc-footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.lc-footer-links li {
+  margin: 8px 0;
+}
+
+.lc-footer-links a {
+  color: rgba(255,255,255,0.78);
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.lc-footer-links a:hover {
+  color: #bfe0ff;
+  text-decoration: underline;
+}
+
+/* ---- Fix: remove bullets and align contact rows exactly like screenshot ---- */
+.lc-contact-list {
+  list-style: none;      /* removes default bullets */
+  margin: 0;
+  padding: 0;
+}
+
+.lc-contact-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;             /* space between icon and text */
+  margin: 10px 0;
+  color: rgba(255,255,255,0.82);
+  font-size: 14px;
+}
+
+/* make AntD icon match the visual weight/size of screenshot */
+.lc-contact-list li .lc-contact-icon,
+.lc-contact-list li .anticon {
+  font-size: 18px;           /* adjust to match screenshot */
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.85);
+  vertical-align: middle;
+}
+
+/* ensure the link/text stays vertically centered and no extra left padding */
+.lc-contact-text {
+  line-height: 1;
+  display: inline-block;
+}
+
+/* safety: if any marker still shows in some browsers */
+.lc-contact-list li::marker {
+  content: none;
+}
+
+
+.lc-social-link {
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.04);
+  color: rgba(255,255,255,0.95);
+  text-decoration: none;
+  transition: transform .12s ease, background .12s ease;
+}
+
+.lc-social-link svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
+.lc-social-link:hover {
+  transform: translateY(-3px);
+  background: rgba(191,224,255,0.06);
+}
+
+/* Thin divider and bottom row — match screenshot subtle divider and centered text */
+.lc-footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.06);
+  margin-top: 26px;
+  padding-top: 20px;
+  text-align: center;
+}
+
+.lc-footer-bottom-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  color: rgba(255,255,255,0.55);
+  font-size: 13px;
+}
+
+/* Responsive: stack columns on small screens (keeps screenshot styling on mobile) */
+@media (max-width: 940px) {
+  .lc-footer-inner {
+    grid-template-columns: 1fr 1fr;
+  }
+  .lc-footer-about { max-width: 100%; }
+}
+
+@media (max-width: 600px) {
+  .lc-footer-inner {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    padding-bottom: 6px;
+  }
+  .lc-socials { justify-content: flex-start; }
+  .lc-footer { padding: 36px 16px 18px; }
+}
+
+/* ==========================
+   WHY / ABOUT / SMALL STYLES
+========================== */
+.muted {
+  color: var(--muted);
+}
+
+/* ==========================
+   RESPONSIVE
+========================== */
+@media (max-width: 900px) {
+  .lc-hero {
+    height: 55vh;
+  }
+
+  .lc-hero-title {
+    font-size: 2.3rem;
+  }
+
+  .lc-service-card img {
+    height: 150px;
+  }
+
+  .lc-price-card {
+    margin-bottom: 20px;
+  }
+
+  .lc-why.pale { padding: 28px 12px; }
+  .lc-why-icon-circle { width:60px; height:60px; font-size:24px; }
+}
+/* ===== Fix for booking form layout & submit style =====
+   Add this to the end of landingcleaningpage.css
+   Keeps existing classes untouched and forces full-width inputs/selects,
+   restores the black submit bar and spacing so the booking block looks
+   exactly like the screenshot you wanted.
+================================================================== */
+
+.lc-booking-card {
+  /* ensure card centers and uses full internal width */
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
+}
+
+/* Force form controls to fill the column width exactly */
+.lc-booking-card .ant-form-item-control-input,
+.lc-booking-card .ant-form-item-control-input-content,
+.lc-booking-card .ant-input,
+.lc-booking-card .ant-input-affix-wrapper,
+.lc-booking-card .ant-select-selector,
+.lc-booking-card .ant-picker,
+.lc-booking-card .ant-input-textarea textarea {
+  width: 100% !important;
+  box-sizing: border-box;
+}
+
+/* height & visuals consistent with screenshot */
+.lc-booking-card .ant-input,
+.lc-booking-card .ant-input-affix-wrapper,
+.lc-booking-card .ant-select-selector,
+.lc-booking-card .ant-picker {
+  height: 44px;
+  border-radius: 10px;
+  background: #f4f4f6;
+  border: 1px solid rgba(0,0,0,0.05);
+  padding: 0 12px;
+}
+
+/* textarea */
+.lc-booking-card .ant-input-textarea textarea {
+  min-height: 110px;
+  padding: 12px;
+  border-radius: 10px;
+  background: #f4f4f6;
+  border: 1px solid rgba(0,0,0,0.05);
+}
+
+/* Make sure label stays aligned and with required star as before */
+.lc-booking-card .ant-form-item-label > label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 8px;
+  color: inherit;
+}
+
+/* fix column centering issues: makes Col behave as expected */
+.lc-booking-card .ant-row > .ant-col {
+  display: block;
+}
+
+/* adjust spacing between rows (so layout doesn't look cramped) */
+.lc-booking-card .ant-row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* ensure form item control wrapper doesn't shrink the child */
+.lc-booking-card .ant-form-item-control {
+  min-width: 0;
+}
+
+/* Submit button — black bar as screenshot (force overrides) */
+.lc-submit-btn {
+  background: #07061a !important;
+  color: #ffffff !important;
+  border: none !important;
+  height: 56px;
+  border-radius: 12px !important;
+  font-size: 1.05rem;
+  font-weight: 600;
+  box-shadow: 0 6px 18px rgba(7,6,26,0.15);
+}
+
+/* Remove any green default from theme override */
+.lc-booking-card .ant-btn-primary {
+  background: #07061a !important;
+  border-color: #07061a !important;
+}
+
+/* keep mobile responsiveness identical */
+@media (max-width: 900px) {
+  .lc-booking-card { padding: 20px; border-radius: 12px; }
+  .lc-submit-btn { height: 52px; border-radius: 10px; }
+  .lc-booking-card .ant-input,
+  .lc-booking-card .ant-select-selector,
+  .lc-booking-card .ant-picker { height: 44px; }
+}
+
+/* ==========================
+   NAVBAR / HEADER (for cleaning page)
+   Add this to landingcleaningpage.css (end of file recommended)
+   ========================== */
+
+.lc-header {
+  background: #ffffff;
+  border-bottom: 1px solid rgba(16,24,40,0.06);
+  position: relative;
+  z-index: 40;
+  box-shadow: 0 1px 0 rgba(16,24,40,0.02);
+}
+
+.lc-header-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  box-sizing: border-box;
+}
+
+/* Logo */
+.lc-logo-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.lc-brand {
+  font-weight: 600;
+  color: #0b2a3a;
+  font-size: 1.05rem;
+}
+
+/* Navigation */
+.lc-nav {
+  margin-left: 28px;
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  flex: 1 1 auto;
+}
+
+/* basic nav link */
+.lc-nav-link {
+  color: #0b2a3a;
+  text-decoration: none;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-weight: 600;
+  transition: background .12s ease, color .12s ease, transform .08s;
+}
+
+/* active pill (matches screenshot for Cleaning) */
+.lc-nav-link--active {
+  background: linear-gradient(180deg,#2f80ed,#2260cc);
+  color: #fff !important;
+  box-shadow: 0 8px 20px rgba(47,128,237,0.14);
+}
+
+/* hover states */
+.lc-nav-link:hover {
+  background: rgba(15,45,90,0.04);
+}
+
+/* CTA on the right */
+.lc-header-cta {
+  margin-left: auto;
+}
+
+.lc-header-btn {
+  border-radius: 10rem;
+  padding: 8px 14px;
+  font-weight: 600;
+  background: transparent;
+  border: 1px solid rgba(16,24,40,0.06);
+}
+
+/* Responsive: collapse spacing on small screens */
+@media (max-width: 940px) {
+  .lc-header-inner {
+    padding: 12px 14px;
+  }
+  .lc-nav {
+    gap: 12px;
+    overflow-x: auto;
+  }
+  .lc-nav-link { padding: 8px 10px; font-size: 0.95rem; }
+  .lc-brand { font-size: 1rem; }
+}
+
+@media (max-width: 560px) {
+  .lc-nav { display: none; } /* keep simple for mobile header in this release */
+  .lc-header-cta { display: none; }
+}
+
+
+/* Thin outline phone (Lucide) used only for footer phone row */
+.lc-thin-phone {
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  min-height: 18px;
+  display: inline-block;
+  vertical-align: middle;
+  /* Lucide renders as <svg>; set stroke and ensure no fill */
+  stroke: #9aa4b2;        /* light gray matching your screenshot */
+  stroke-width: 1.6;      /* thin outline */
+  fill: none;
+  /* small visual nudge so handset angle/position matches screenshot */
+  transform: translateY(1px) rotate(-12deg);
+  transform-origin: center;
+}
+
+/* keep existing flex/spacing from your .lc-contact-list li,
+   ensure the svg doesn't inherit AntD icon font-size/color */
+.lc-contact-list li .lc-thin-phone,
+.lc-contact-list li svg.lc-thin-phone {
+  color: inherit;         /* don't force text color */
+}
+
+/* If you want the phone to use the same color as the text */
+.lc-contact-list li .lc-thin-phone {
+  stroke: currentColor;   /* will follow .lc-contact-list color */
+}
+
+/* ensure li spacing still matches */
+.lc-contact-row,
+.lc-contact-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+/* Thin outline phone (Lucide) used only for footer phone row */
+.lc-thin-phone {
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  min-height: 18px;
+  display: inline-block;
+  vertical-align: middle;
+  /* Lucide renders as <svg>; set stroke and ensure no fill */
+  stroke: #9aa4b2;        /* light gray matching your screenshot */
+  stroke-width: 1.6;      /* thin outline */
+  fill: none;
+  /* small visual nudge so handset angle/position matches screenshot */
+  transform: translateY(1px) rotate(-12deg);
+  transform-origin: center;
+}
+
+/* keep existing flex/spacing from your .lc-contact-list li,
+   ensure the svg doesn't inherit AntD icon font-size/color */
+.lc-contact-list li .lc-thin-phone,
+.lc-contact-list li svg.lc-thin-phone {
+  color: inherit;         /* don't force text color */
+}
+
+/* If you want the phone to use the same color as the text */
+.lc-contact-list li .lc-thin-phone {
+  stroke: currentColor;   /* will follow .lc-contact-list color */
+}
+
+/* ensure li spacing still matches */
+.lc-contact-row,
+.lc-contact-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+/* ---------- Dollar icon styling (external CSS) ---------- */
+
+.lc-why-icon-circle--dollar {
+  width: 86px;                      /* same footprint as other icons */
+  height: 86px;
+  border-radius: 50%;
+  background: var(--accent) !important;  /* match blue */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 18px;
+  box-shadow: 0 12px 34px rgba(47,128,237,0.12) !important;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* SVG glyph: sized to fill circle similarly to the other icons */
+.lc-why-icon-circle--dollar .lc-why-dollar-svg {
+  width: 28px;
+  height: 28px;
+  display: block;
+  pointer-events: none;
+  line-height: 0;
+}
+
+/* Slightly larger glyph on wide screens if you want it bolder */
+@media (min-width: 1200px) {
+  .lc-why-icon-circle--dollar .lc-why-dollar-svg { width: 30px; height: 30px; }
+}
+
+/* Downsize on narrow screens so the glyph never overflows */
+@media (max-width: 900px) {
+  .lc-why-icon-circle--dollar {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 12px;
+  }
+  .lc-why-icon-circle--dollar .lc-why-dollar-svg {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+/* Defensive: ensure no earlier rule makes it transparent */
+.lc-why-icon-circle.lc-why-icon-circle--dollar {
+  background: var(--accent) !important;
+  box-shadow: 0 12px 34px rgba(47,128,237,0.12) !important;
+}
+
+
+
+/* ==========================
+   Booking form: make Select & DatePicker match inputs
+   Paste this at the END of landingcleaningpage.css
+   ========================== */
+
+/* Base visual match for Select / DatePicker / InputAffix */
+.lc-booking-card .ant-select-selector,
+.lc-booking-card .ant-picker,
+.lc-booking-card .ant-input,
+.lc-booking-card .ant-input-affix-wrapper {
+  height: 44px !important;
+  border-radius: 10px !important;
+  background: #f4f4f6 !important;
+  border: 1px solid rgba(0,0,0,0.05) !important;
+  padding: 0 12px !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* Ensure Select inner content sits vertically centered */
+.lc-booking-card .ant-select-selector .ant-select-selection-item,
+.lc-booking-card .ant-select-selector .ant-select-selection-placeholder {
+  line-height: 1;
+  color: #9aa0a6; /* placeholder-like color */
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* DatePicker input alignment & placeholder color */
+.lc-booking-card .ant-picker-input > input {
+  height: 44px !important;
+  padding: 0 8px !important;
+  border: none !important;
+  background: transparent !important;
+  color: #4b5563;
+}
+
+/* DatePicker suffix (calendar icon) & Select arrow alignment */
+.lc-booking-card .ant-picker-suffix,
+.lc-booking-card .ant-select-arrow {
+  color: #bfc6ca;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+  pointer-events: none;
+}
+
+/* Prevent arrow overlap — ensure padding-right enough space */
+.lc-booking-card .ant-select-selector .ant-select-selection-overflow {
+  padding-right: 36px !important;
+}
+
+/* Focus / active state to match other inputs */
+.lc-booking-card .ant-input:focus,
+.lc-booking-card .ant-input-affix-wrapper-focused,
+.lc-booking-card .ant-select-focused .ant-select-selector,
+.lc-booking-card .ant-picker-focused,
+.lc-booking-card .ant-picker:hover {
+  box-shadow: 0 6px 18px rgba(37,99,235,0.06) !important;
+  border-color: #2563eb !important;
+  background: #ffffff !important;
+}
+
+/* Dropdown appearance tweaks (rounded corners, same visual weight) */
+.lc-booking-card .ant-select-dropdown,
+.lc-booking-card .ant-select-dropdown .ant-select-item-option {
+  border-radius: 10px;
+}
+
+/* Plain textarea visuals matching inputs */
+.lc-booking-card .ant-input-textarea textarea {
+  min-height: 110px !important;
+  padding: 12px !important;
+  border-radius: 10px !important;
+  background: #f4f4f6 !important;
+  border: 1px solid rgba(0,0,0,0.05) !important;
+  resize: none;
+}
+
+/* If native select is used as fallback, make it visually consistent */
+.lc-booking-card select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: #f4f4f6;
+  border-radius: 10px;
+  border: 1px solid rgba(0,0,0,0.05);
+  height: 44px;
+  padding: 0 12px;
+  box-sizing: border-box;
+  color: #4b5563;
+}
+
+/* Keep responsive sizing consistent with the rest of your rules */
+@media (max-width: 900px) {
+  .lc-booking-card .ant-input,
+  .lc-booking-card .ant-select-selector,
+  .lc-booking-card .ant-picker {
+    height: 44px !important;
+  }
+}
+
+
+
+
