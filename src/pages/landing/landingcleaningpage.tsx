@@ -1,0 +1,576 @@
+import React from "react";
+// add this
+import { Phone } from "lucide-react";
+
+// you can keep the AntD PhoneOutlined import if you still use it elsewhere,
+// otherwise remove `PhoneOutlined` from the AntD import list.
+
+import { Row, Col, Card, Button, Form, Input, Select, DatePicker } from "antd";
+
+import {
+  FacebookOutlined,
+  TwitterOutlined,
+  InstagramOutlined,
+  LinkedinOutlined,
+  CheckCircleOutlined,
+  PhoneOutlined,
+  MailOutlined,
+  EnvironmentOutlined
+} from "@ant-design/icons";
+
+import { Link } from "react-router-dom";
+import "./landingcleaningpage.css";
+
+// TEMP PLACEHOLDER IMAGES (no errors if files not added yet)
+// When you add images, replace these with proper imports:
+// e.g. import heroImg from "../../assets/cleaning/hero.jpg";
+// imports at top of file (after React / antd / icons)
+import heroImg from "../../assets/landingimages/landingcleaninghero.jpg";
+import s1 from "../../assets/landingimages/landinghomecleaning.jpg";
+import s2 from "../../assets/landingimages/landingofficecleaning.jpg";
+import s3 from "../../assets/landingimages/moveinoutcleaning.jpg";
+import s4 from "../../assets/landingimages/regularmaintenance.jpg";
+import s5 from "../../assets/landingimages/landingkitchen&bathroomcleaning.jpg";
+import s6 from "../../assets/landingimages/sofa&upholsterycleaning.jpg";
+import s7 from "../../assets/landingimages/landingcarpetcleaning.jpg";
+import s8 from "../../assets/landingimages/postconstruction.jpg";
+
+
+const { TextArea } = Input;
+// removed unused `Option` const to avoid TS warning
+
+const serviceList = [
+  { title: "Residential Cleaning", desc: "Homes, apartments, and condos", img: s1 },
+  { title: "Office Cleaning", desc: "Commercial spaces and offices", img: s2 },
+  { title: "Move In/Out Cleaning", desc: "Deep cleaning for relocations", img: s3 },
+  { title: "Regular Maintenance", desc: "Weekly, bi-weekly, or monthly", img: s4 },
+  { title: "Kitchen & Bathroom", desc: "Sanitization & deep scrubbing", img: s5 },
+  { title: "Sofa & Upholstery", desc: "Shampoo and stain removal", img: s6 },
+  { title: "Carpet Cleaning", desc: "Foam wash & extraction", img: s7 },
+  { title: "Post-Construction", desc: "Debris removal & polish", img: s8 },
+];
+
+const packages = [
+  {
+    name: "Basic Clean",
+    price: "$79",
+    time: "2-3 hours",
+    bullets: [
+      "General cleaning",
+      "Dusting and vacuuming",
+      "Kitchen cleaning",
+      "Bathroom cleaning",
+      "Up to 1000 sq ft",
+    ],
+  },
+  {
+    name: "Deep Clean",
+    price: "$149",
+    time: "4-5 hours",
+    bullets: [
+      "Everything in Basic",
+      "Inside appliances",
+      "Baseboards and walls",
+      "Window cleaning",
+      "Up to 2000 sq ft",
+    ],
+    popular: true,
+  },
+  {
+    name: "Premium Clean",
+    price: "$249",
+    time: "Full day",
+    bullets: [
+      "Everything in Deep",
+      "Inside cabinets",
+      "Oven deep clean",
+      "Refrigerator cleaning",
+      "Unlimited square footage",
+    ],
+  },
+];
+
+const LandingCleaningPage: React.FC = () => {
+  const [form] = Form.useForm();
+
+  const onFinish = (values: any) => {
+    console.log("Booking request:", values);
+    // TODO: send booking request to API
+  };
+
+  return (
+    <div className="lc-page">
+      {/* ========== NAVBAR (added) ========== */}
+      <header className="lc-header">
+        <div className="lc-header-inner">
+          <div className="lc-logo">
+            <Link to="/" className="lc-logo-link" aria-label="Home">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden>
+                <path d="M3 11.5L12 4l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V11.5z" stroke="#1b2b3a" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" fill="#2f80ed" />
+              </svg>
+              <span className="lc-brand">HomeServices</span>
+            </Link>
+          </div>
+
+          <nav className="lc-nav" role="navigation" aria-label="Primary">
+            <Link to="/" className="lc-nav-link">Home</Link>
+            <Link to="/cleaning" className="lc-nav-link">Cleaning</Link>
+            <Link to="/packers" className="lc-nav-link">Packers &amp; Movers</Link>
+            <Link to="/homeservices" className="lc-nav-link">Home Services</Link>
+            <Link to="/rentals" className="lc-nav-link">Rentals</Link>
+            <Link to="/commercialplots" className="lc-nav-link">Commercial Plots</Link>
+            <Link to="/materials" className="lc-nav-link">Construction Materials</Link>
+          </nav>
+
+          <div className="lc-header-cta">
+            <Button type="default" className="lc-header-btn">Sign in</Button>
+          </div>
+        </div>
+      </header>
+      {/* ========== /NAVBAR ========== */}
+
+      {/* HERO SECTION */}
+<section className="lc-hero lc-hero--large">
+  <div className="lc-hero-inner">
+    <div className="lc-hero-content">
+      <div className="lc-hero-top">
+        <span className="lc-hero-icon" aria-hidden>
+          {/* sparkle / star icon */}
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2l1.8 4L18 8l-4 1.8L12 14l-1.8-4L6 8l4.2-2L12 2z" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </span>
+
+        <span className="lc-hero-sub">Professional Cleaning Service</span>
+      </div>
+
+      <h1 className="lc-hero-title">
+        Sparkling Clean Homes &amp; Offices
+      </h1>
+
+      <p className="lc-hero-desc">
+        Experience the difference with our professional cleaning services. We bring cleanliness,
+        hygiene, and peace of mind to your space.
+      </p>
+
+      <div className="lc-hero-ctas">
+        <button className="lc-cta lc-cta--ghost">Book Now</button>
+        <button className="lc-cta lc-cta--primary">Get Quote</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+      <main className="lc-container">
+        {/* SERVICES GRID */}
+        <section className="lc-services">
+          <h2 className="lc-section-title">Our Cleaning Services</h2>
+          <p className="lc-sub muted">
+            Comprehensive solutions for all your home and property needs
+          </p>
+
+          <Row gutter={[24, 24]}>
+            {serviceList.map((s, idx) => (
+              <Col xs={24} sm={12} md={6} key={idx}>
+                <Card
+                  hoverable
+                  className="lc-service-card"
+                  cover={<img src={s.img} alt={s.title} />}
+                >
+                  <div className="lc-service-body">
+                    <h3>{s.title}</h3>
+                    <p className="muted">{s.desc}</p>
+                  </div>
+                </Card>
+              </Col>
+            ))}
+          </Row>
+        </section>
+
+<section className="lc-included" aria-labelledby="included-heading">
+  <div className="lc-included-inner">
+    <h2 id="included-heading" className="lc-section-title">What's Included</h2>
+    <p className="lc-sub muted">
+      Our comprehensive cleaning service covers every corner of your space
+    </p>
+
+    {/* grid of boxes */}
+    <div className="lc-included-grid" role="list">
+      {[
+        "Deep cleaning of all rooms",
+        "Kitchen and bathroom sanitization",
+        "Window and glass cleaning",
+        "Floor mopping and vacuuming",
+        "Dusting and surface cleaning",
+        "Eco-friendly cleaning products",
+        "Trained and verified staff",
+        "Flexible scheduling",
+      ].map((txt, i) => (
+        <div key={i} className="lc-included-box" role="listitem" aria-label={txt}>
+          <div className="lc-included-left" aria-hidden>
+            {/* green check SVG */}
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M20 6L9 17l-5-5" stroke="#16a34a" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+
+          <div className="lc-included-text">
+            {txt}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+
+        {/* PRICING */}
+        <section className="lc-pricing">
+          <h2 className="lc-section-title">Pricing Packages</h2>
+          <p className="lc-sub muted">Choose the package that best fits your needs</p>
+
+          <Row gutter={[24, 24]} justify="center">
+            {packages.map((p, i) => (
+              <Col xs={24} sm={12} md={8} key={i}>
+                <div className={`lc-price-card ${p.popular ? "popular" : ""}`}>
+                  {p.popular && <div className="lc-badge">Most Popular</div>}
+
+                  <h3>{p.name}</h3>
+
+                  <div className="lc-price">
+                    <span className="lc-amount">{p.price}</span>
+                    <span className="lc-suffix"> / service</span>
+                  </div>
+
+                  <div className="lc-time">{p.time}</div>
+
+                  <ul className="lc-bullets">
+                    {p.bullets.map((b, idx) => (
+                      <li key={idx}>
+                        <CheckCircleOutlined className="lc-bullet" />
+                        {b}
+                      </li>
+                    ))}
+                  </ul>
+
+                  <Button type={p.popular ? "primary" : "default"} block>
+                    Select Package
+                  </Button>
+                </div>
+              </Col>
+            ))}
+          </Row>
+        </section>
+
+        {/* BOOKING FORM */}
+     {/* ====== BOOKING SECTION (replace existing booking section with this) ====== */}
+<section className="lc-booking">
+  <h2 className="lc-section-title">Book Your Cleaning Service</h2>
+  <p className="lc-sub muted">
+    Fill out the form below and we'll get back to you within 24 hours
+  </p>
+
+  <div className="lc-booking-card">
+    <Form form={form} layout="vertical" onFinish={onFinish}>
+      <Row gutter={16}>
+        <Col xs={24} md={12}>
+          <Form.Item
+            name="name"
+            label="Full Name"
+            rules={[{ required: true }]}
+          >
+            <Input placeholder="John Doe" />
+          </Form.Item>
+        </Col>
+
+        <Col xs={24} md={12}>
+          <Form.Item
+            name="email"
+            label="Email"
+            rules={[{ required: true, type: "email" }]}
+          >
+            <Input placeholder="john@example.com" />
+          </Form.Item>
+        </Col>
+
+        <Col xs={24} md={12}>
+          <Form.Item
+            name="phone"
+            label="Phone Number"
+            rules={[{ required: true }]}
+          >
+            <Input placeholder="+1 (555) 123-4567" />
+          </Form.Item>
+        </Col>
+
+        {/* Service Type: fixed options (matches screenshot) */}
+        <Col xs={24} md={12}>
+          <Form.Item
+            name="serviceType"
+            label="Service Type"
+            rules={[{ required: true }]}
+          >
+            <Select placeholder="Select Cleaning Service">
+              <Select.Option value="Basic Service">Basic Service</Select.Option>
+              <Select.Option value="Standard Service">Standard Service</Select.Option>
+              <Select.Option value="Premium Service">Premium Service</Select.Option>
+              <Select.Option value="Emergency Service">Emergency Service</Select.Option>
+            </Select>
+          </Form.Item>
+        </Col>
+
+        <Col xs={24}>
+          <Form.Item
+            name="address"
+            label="Service Address"
+            rules={[{ required: true }]}
+          >
+            <Input placeholder="123 Main St, City, State, ZIP" />
+          </Form.Item>
+        </Col>
+
+        <Col xs={24} md={12}>
+          <Form.Item
+            name="date"
+            label="Preferred Date"
+            rules={[{ required: true }]}
+          >
+            {/* keep DatePicker for the exact UI shown */}
+            <DatePicker className="lc-datepicker" />
+          </Form.Item>
+        </Col>
+
+        {/* Preferred Time: replaced TimePicker with Select to match screenshot slots */}
+        <Col xs={24} md={12}>
+          <Form.Item
+            name="time"
+            label="Preferred Time"
+            rules={[{ required: true }]}
+          >
+            <Select placeholder="Select time slot">
+              <Select.Option value="08:00-10:00">8:00 AM - 10:00 AM</Select.Option>
+              <Select.Option value="10:00-12:00">10:00 AM - 12:00 PM</Select.Option>
+              <Select.Option value="12:00-14:00">12:00 PM - 2:00 PM</Select.Option>
+              <Select.Option value="14:00-16:00">2:00 PM - 4:00 PM</Select.Option>
+              <Select.Option value="16:00-18:00">4:00 PM - 6:00 PM</Select.Option>
+            </Select>
+          </Form.Item>
+        </Col>
+
+        <Col xs={24}>
+          <Form.Item name="details" label="Additional Details">
+            <TextArea
+              rows={4}
+              placeholder="Tell us more about your requirements..."
+            />
+          </Form.Item>
+        </Col>
+
+        <Col xs={24}>
+          <Form.Item>
+            {/* black submit bar — uses your existing css class lc-submit-btn */}
+            <Button
+              htmlType="submit"
+              className="lc-submit-btn"
+              size="large"
+              block
+            >
+              Submit Booking Request
+            </Button>
+          </Form.Item>
+        </Col>
+      </Row>
+    </Form>
+  </div>
+</section>
+{/* ====== /BOOKING SECTION ====== */}
+
+
+        {/* Insert WhyChooseSection here (renders pale-blue row) */}
+        <WhyChooseSection />
+      </main>
+
+      {/* Insert DarkFooter here */}
+      <DarkFooter />
+    </div>
+  );
+};
+
+/* =========================
+   Helper components (two functions)
+   - WhyChooseSection
+   - DarkFooter
+   Keep them below main component so they don't change existing UI above
+   ========================= */
+
+/* (unchanged) WhyChooseSection and DarkFooter functions kept the same as in your file */
+function WhyChooseSection() {
+  return (
+    <section className="lc-why pale lc-why-centered" aria-labelledby="why-choose-heading">
+      <div className="lc-why-inner">
+        <h2 id="why-choose-heading" className="lc-section-title">
+          Why Choose Our Cleaning Service
+        </h2>
+
+        <div className="lc-why-grid" role="list">
+          {/* Item 1 — Shield Icon */}
+          <div className="lc-why-item" role="listitem">
+            <div className="lc-why-icon-circle" aria-hidden>
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M12 2L4 5v6c0 5 4 9 8 9s8-4 8-9V5l-8-3z"
+                  stroke="#fff"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
+
+            <div className="lc-why-title">Insured & Bonded</div>
+            <div className="lc-why-desc">
+              All our staff are fully insured and background-checked for your peace of mind
+            </div>
+          </div>
+
+          {/* Item 2 — Sparkle Icon */}
+          <div className="lc-why-item" role="listitem">
+            <div className="lc-why-icon-circle" aria-hidden>
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M12 3l1.8 4 4 1.8-4 1.8L12 15l-1.8-4-4-1.8 4-1.8L12 3z"
+                  stroke="#fff"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
+
+            <div className="lc-why-title">Satisfaction Guarantee</div>
+            <div className="lc-why-desc">
+              Not happy with the results? We'll re-clean for free within 24 hours
+            </div>
+          </div>
+
+       {/* Item 3 — EXACT Dollar Icon */}
+<div className="lc-why-item" role="listitem">
+  <div className="lc-why-icon-circle lc-why-icon-circle--dollar" aria-hidden>
+    <svg
+      className="lc-why-dollar-svg"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path
+        d="M12 3v2m0 14v2m3-11c0-1.657-1.567-3-3.5-3S8 6.343 8 8
+           s1.567 3 3.5 3S15 12.343 15 14s-1.567 3-3.5 3S8 17.657 8 16"
+        stroke="#fff"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+      />
+    </svg>
+  </div>
+
+  <div className="lc-why-title">Transparent Pricing</div>
+  <div className="lc-why-desc">
+    No hidden fees or surprise charges. What you see is what you pay
+  </div>
+</div>
+
+
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/** DarkFooter: footer matching screenshot (only footer changed) */
+function DarkFooter() {
+  return (
+    <footer className="lc-footer">
+      <div className="lc-footer-inner">
+        {/* Column 1: About */}
+        <div className="lc-footer-col">
+          <h4 className="lc-footer-title">About Us</h4>
+          <p className="lc-footer-about">
+            Your trusted partner for all home and property-related services. Quality,
+            reliability, and customer satisfaction guaranteed.
+          </p>
+        </div>
+
+        {/* Column 2: Services */}
+        <div className="lc-footer-col">
+          <h4 className="lc-footer-title">Services</h4>
+          <ul className="lc-footer-links" aria-label="Services">
+            <li><a href="#cleaning">Cleaning Service</a></li>
+            <li><a href="#packers">Packers &amp; Movers</a></li>
+            <li><a href="#homes">Home Services</a></li>
+            <li><a href="#rentals">Rentals</a></li>
+            <li><a href="#commercial">Commercial Plots</a></li>
+            <li><a href="#materials">Construction Materials</a></li>
+          </ul>
+        </div>
+
+        {/* Column 3: Quick Links */}
+        <div className="lc-footer-col">
+          <h4 className="lc-footer-title">Quick Links</h4>
+          <ul className="lc-footer-links" aria-label="Quick links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/contact">Contact</a></li>
+            <li><a href="/careers">Careers</a></li>
+          </ul>
+        </div>
+
+        {/* Column 4: Contact Info */}
+        <div className="lc-footer-col">
+          <h4 className="lc-footer-title">Contact Info</h4>
+
+          {/* Use AntD icons (PhoneOutlined / MailOutlined / EnvironmentOutlined)
+              so sizing and stroke match the social icons exactly */}
+          <ul className="lc-contact-list">
+            <div className="lc-contact-row">
+  {/* after: exact replacement */}
+<Phone className="lc-contact-icon lc-thin-phone" aria-hidden />
+<span className="lc-contact-text"> +1 (555) 123-4567</span>
+</div>
+
+
+            <li>
+              <MailOutlined className="lc-contact-icon" />
+              <span className="lc-contact-text">info@homeservices.com</span>
+            </li>
+
+            <li>
+              <EnvironmentOutlined className="lc-contact-icon" />
+              <span className="lc-contact-text">123 Service Street, City, State</span>
+            </li>
+          </ul>
+
+          {/* Social icons — use the CSS classes already defined in your CSS */}
+          <div className="lc-socials" >
+            <a aria-label="facebook" className="lc-social-link" href="#"><FacebookOutlined /></a>
+            <a aria-label="twitter" className="lc-social-link" href="#"><TwitterOutlined /></a>
+            <a aria-label="instagram" className="lc-social-link" href="#"><InstagramOutlined /></a>
+            <a aria-label="linkedin" className="lc-social-link" href="#"><LinkedinOutlined /></a>
+          </div>
+        </div>
+      </div>
+
+      <div className="lc-footer-bottom">
+        <div className="lc-footer-bottom-inner">
+          <span>© 2025 Home Services. All rights reserved.</span>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+/* export main component */
+export default LandingCleaningPage;

@@ -11,6 +11,9 @@ import LandingPackers from "../../pages/landing/LandingPackers"
 // import ForgotPasswordLink from '../../pages/forgotpassword/ForgotPasswordLink';
 import CommercialPlots from "../../pages/landing/CommercialPlots"
 import ConstructionMaterials from "../../pages/landing/ConstructionMaterials"
+import LandingCleaningPage from "../../pages/landing/landingcleaningpage";
+//Import rentals page (file: src/pages/landing/landingrentals.tsx)
+import Landingrentals from "../../pages/landing/landingrentals";
 
 export const NonSecureRoutes = () => {
   const navigate = useNavigate();
@@ -38,6 +41,11 @@ export const NonSecureRoutes = () => {
       <Route path="/LandingPackers" element={<LandingPackers />} />
       <Route path="/commercial-plots" element={<CommercialPlots/>}/>
       <Route path='/ConstructionMaterials' element={<ConstructionMaterials />}/>
+     {/* cleaning landing page */}
+      <Route path="/cleaningservice" element={<LandingCleaningPage />} />
+
+      {/* rentals landing page */}
+      <Route path="/rentals" element={<Landingrentals />} />
 
       
     </Routes>
