@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { MenuOutlined, CloseOutlined } from "@ant-design/icons";
 import "./ConstructionMaterials.css";
 import heroImage from "../../assets/landingimages/brickwall.jpg";
+import cc from "../../assets/landingimages/card1.jpg"
 
 const { Title, Text } = Typography;
 const { Option } = Select;
@@ -91,7 +92,7 @@ const productCategories = [
   {
     title: "Cement & Concrete",
     items: ["Portland Cement", "Ready-Mix Concrete", "Mortar", "Grout"],
-    image: "https://via.placeholder.com/400x260?text=Cement"
+    image: "cc"
   },
   {
     title: "Steel & Metals",
