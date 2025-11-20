@@ -1,6 +1,7 @@
 import React from "react";
 import HeaderBar from "../../components/header/header";
 import "./Dashboard.css";
+import ConstructionServices from "../building/building";
 import Packersandmovers from "./PackersAndMovers/Packersandmovers";
 import CleaningService from "./cleaningservice/CleaningService";
 
@@ -23,8 +24,10 @@ const Dashboard: React.FC = () => {
           />
         </div>
       </div>
-      <CleaningService></CleaningService>
+      <CleaningService/>
       <Packersandmovers></Packersandmovers>
+      <ConstructionServices/>
+      
       
 
       {/* Later: You can add responsive service cards here */}

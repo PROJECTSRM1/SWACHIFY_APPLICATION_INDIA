@@ -1,0 +1,454 @@
+.machinery-wrapper {
+  width: 86%;
+  background: #f8fafc;
+  min-height: 100vh;
+  padding-bottom: 20px;
+  margin-left: 95px;
+}
+
+.machinery-header {
+   width: 100%;
+  background: #d97706;         
+  padding: 10px 20px;         
+  color: white;
+  margin-bottom: 25px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+  box-sizing: border-box;
+}
+
+.machinery-header h2 {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 700;
+  text-align: left;
+}
+
+.machinery-header p {
+  margin: 5px 0 0;
+  font-size: 15px;
+  font-weight: 400;
+  text-align: left;
+}
+
+
+.machinery-grid {
+  width: 100%;
+  padding: 0 25px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  box-sizing: border-box;
+}
+
+.machinery-card {
+  background: white;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  transition: 0.2s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.machinery-card:hover {
+  transform: translateY(-4px);
+}
+
+
+.card-img img {
+  width: 100%;
+  height: 170px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.machinery-card h3 {
+  font-size: 20px;
+  margin: 12px 0 6px;
+  color: #1e293b;
+  font-weight: 700;
+}
+
+.machinery-desc {
+  font-size: 14px;
+  color: #64748b;
+  margin-bottom: 12px;
+  min-height: 45px;
+}
+
+.machinery-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+
+.machinery-price {
+  color: #1e40af;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.machinery-btn {
+  background: #d97706;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  width: 140px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.machinery-btn:hover {
+  background: #b45309;
+}
+
+/* RESPONSIVE — TABLET */
+
+
+.mach-details-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.mach-details-box {
+  width: 90%;
+  max-width: 950px;
+  background: white;
+  border-radius: 14px;
+  padding: 25px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.mach-details-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mach-details-header h2 {
+  font-size: 10px;
+  font-weight: 300;
+}
+
+.mach-close-btn {
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.mach-top-section {
+  display: flex;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+.mach-left-side {
+  width: 40%;
+}
+
+.mach-image-box {
+  width: 100%;
+  height: 200px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #e5e7eb;
+}
+
+.mach-image-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mach-service-price-box {
+  background: #eef2ff;
+  text-align: center;
+  padding: 16px;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+.mach-sp-value {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1e40af;
+}
+
+.mach-included-title {
+  margin-top: 15px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.mach-included-list {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 10px;
+}
+
+.mach-included-list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  color: #1e293b;
+  margin-bottom: 8px;
+}
+
+.mach-included-list li::before {
+  content: "✓";
+  color: #0f9d58; /* green tick */
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1;
+}
+
+
+.mach-form-side {
+  width: 60%;
+}
+
+.mach-form-section {
+  border: 1px solid #e2e8f0;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.mach-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.mach-form-item {
+  width: 48%;
+  display: flex;
+  flex-direction: column;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.mach-checkbox-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);  /* 2 per row */
+  gap: 10px 20px;  /* spacing */
+}
+
+.mach-button-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.mach-cancel-btn {
+  width: 50%;
+  padding: 10px;
+  background: #f3f4f6;
+  border: none;
+  border-radius: 8px;
+}
+
+.mach-add-btn {
+  width: 50%;
+  padding: 10px;
+  background: black;
+  color: white;
+  border: none;
+  border-radius: 8px;
+}
+
+.mach-details-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.mach-details-box {
+  width: 90%;
+  max-width: 750px;
+  background: white;
+  border-radius: 14px;
+  padding: 25px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.mach-details-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mach-details-header h2 {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.mach-close-btn {
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.mach-top-section {
+  display: flex;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+.mach-left-side {
+  width: 40%;
+}
+
+.mach-image-box {
+  width: 100%;
+  height: 200px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #e5e7eb;
+}
+
+.mach-image-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mach-service-price-box {
+  background: #eef2ff;
+  text-align: center;
+  padding: 16px;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+.mach-sp-value {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1e40af;
+}
+
+.mach-included-title {
+  margin-top: 15px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.mach-included-list {
+  padding-left: 0;
+  list-style: none;
+}
+
+.mach-included-list li::before {
+  content: "✓ ";
+  color: green;
+}
+
+.mach-form-side {
+  width: 60%;
+}
+
+.mach-form-section {
+  border: 1px solid #e2e8f0;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.mach-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.mach-form-item {
+  width: 48%;
+  display: flex;
+  flex-direction: column;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.mach-checkbox-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);  
+  gap: 12px 40px;  
+  margin-bottom: 15px;
+}
+
+.mach-checkbox-row label {
+  display: flex;
+  align-items: center; 
+  gap: 8px;             
+  font-size: 15px;
+  color: #1e293b;
+  cursor: pointer;
+}
+
+.mach-checkbox-row input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+
+.mach-button-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.mach-cancel-btn {
+  width: 50%;
+  padding: 10px;
+  background: #f3f4f6;
+  border: none;
+  border-radius: 8px;
+}
+
+.mach-add-btn {
+  width: 50%;
+  padding: 10px;
+  background: black;
+  color: white;
+  border: none;
+  border-radius: 8px;
+}
+
+@media (max-width: 900px) {
+  .mach-top-section {
+    flex-direction: column;
+  }
+  .mach-left-side,
+  .mach-form-side {
+    width: 100%;
+  }
+}
+
+
+
