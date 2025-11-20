@@ -1,0 +1,219 @@
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  /* color-scheme: light dark; */
+  color: #000;
+  background-color: #f5f5f5;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+/* .ant-menu-light .ant-menu-item-selected, :where(.css-dev-only-do-not-override-1odpy5d).ant-menu-light>.ant-menu .ant-menu-item-selected {
+    color:  !important;
+} */
+/* .ant-menu-light:not(.ant-menu-horizontal) .ant-menu-item:not(.ant-menu-item-selected):active, :where(.css-dev-only-do-not-override-1odpy5d).ant-menu-light>.ant-menu:not(.ant-menu-horizontal) .ant-menu-item:not(.ant-menu-item-selected):active
+{
+  background-color: #385f69;
+} */
+.ant-menu-light .ant-menu-item-selected, :where(.css-dev-only-do-not-override-1odpy5d).ant-menu-light>.ant-menu .ant-menu-item-selected {
+        background-color: rgb(20, 184, 166);
+}
+.ant-menu-light .ant-menu-item-selected, :where(.css-dev-only-do-not-override-1odpy5d).ant-menu-light>.ant-menu .ant-menu-item-selected {
+        color: #f5f5f5;
+}
+.color{
+  background-color: #0d9488 !important;
+  color: white;
+}
+.ant-btn-color-default {
+    color: #f7fafa;
+    background-color: rgb(20, 184, 166);
+    /* box-shadow: 0 2px 0  rgb(20, 184, 166); */
+}
+.element.style {
+    /* padding: 24px; */
+    margin: 0px;
+    min-height: 280px;
+    border-radius: 8px;
+}
+.element.style {
+    margin: 0px;
+    border-radius: 8px;
+    flex: 1 1 0%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+.ant-card .ant-card-body {
+    /* padding: 24px; */
+    border-radius: 0 0 8px 8px;
+}
+.element.style {
+    /* padding: 24px; */
+    margin: 0px;
+    border-radius: 8px;
+    flex: 1 1 0%;
+    overflow: hidden;
+    display: flex
+;
+    flex-direction: column;
+}
+.element.style {
+    background: rgb(240, 242, 245);
+    /* padding: 24px 0px; */
+    min-height: 100vh;
+}
+.element.style {
+    background: rgb(240, 242, 245);
+    /* padding: 24px 0px; */
+    min-height: 100vh;
+}
+.ant-layout-content {
+    margin: 0px;
+    border-radius: 8px;
+    flex: 1 1 0%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+.sw-action-btn {
+  height: 36px;
+  min-width: 160px;
+  padding: 0 16px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+.sw-assign {
+  background: #0D9488 !important;
+  border-color: #0D9488 !important;
+}
+.ant-steps .ant-steps-item-process .ant-steps-item-icon {
+    background-color: rgb(20, 184, 166);
+    border-color: rgb(20, 184, 166);
+}
+
+.ant-steps .ant-steps-item-content {
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 8px;
+}
+.ant-steps .ant-steps-item-wait .ant-steps-item-icon {
+    background-color: rgb(20, 184, 166);
+    border-color: rgb(20, 184, 166);
+    color: #ffffff;
+}
+.ant-steps .ant-steps-item:not(.ant-steps-item-active):not(.ant-steps-item-process)>.ant-steps-item-container[role='button']:hover .ant-steps-item-icon {
+    border-color: rgb(20, 184, 166);
+    color: white;
+}
+.ant-steps .ant-steps-item-wait .ant-steps-item-icon >.ant-steps-icon {
+    color: white;
+}
+
+.ant-avatar {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    color: #fff;
+    font-size: 14px;
+    line-height: 1.5714285714285714;
+    list-style: none;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    position: relative;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: right;
+    vertical-align: revert;
+    background: #14b8a6;
+    border: 1px solid transparent;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+}
+.ant-table-tbody > tr:hover > td {
+  background-color: #acdad3 !important;
+  /* transition: background-color 0.2s; */
+}
+.ant-table-thead > tr > th {
+  font-weight: 700 !important;
+  background-color: #14b8a6 !important;
+  padding: 10px !important;
+  border-bottom: 2px solid #c5d3d1 !important;
+}
+@media (max-width: 425px) {
+    button, .ant-btn {
+        width: 97% !important;
+    }
+}
+
+.booking-card {
+    border-radius: 16px;
+    transition: all 0.3s 
+ease;
+    border: 1px solid #e5e7eb;
+    cursor: default;
+    padding: 8px 24px 20px 24px;
+    box-sizing: border-box;
+    background: #fff;
+    margin-bottom: 12px;
+    position: relative;
+    overflow: visible;
+    min-height: 160px;
+}
+.ant-btn.ant-btn-icon-only {
+    padding-inline: 7px;
+    padding: 7px;
+}
+
+.ant-popconfirm .ant-popconfirm-buttons button {
+    margin-right: -1px;
+    margin-inline-start: 6px;
+    width: 39px !important;}
+
+ .ant-tag {
+        font-size: 10px !important;
+        min-width: 60px !important;
+    }
+.ant-popover .ant-popover-inner {
+    background-color: #ffffff;
+    background-clip: padding-box;
+    border-radius: 8px;
+    box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+    padding: 8px;
+}
+.ant-modal-root .ant-modal-wrap {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    overflow: auto;
+    outline: 0;
+    -webkit-overflow-scrolling: touch;
+}
+.dashboard-padding-1 {
+    padding: 2px;
+    background: #f0f2f5;
+    min-height: 93vh;
+}
+.ant-otp .ant-otp-input {
+    text-align: center;
+    padding-inline: 3px;
+    margin-bottom: 54px;
+}
+/* .dashboard-padding-25 {
+    border-radius: 20px;
+    height: 480px;
+    border: none;
+    box-shadow: 0 2px 16px rgba(0);
+    display: flex;
+    flex-direction: column;
+    background: white;
+    padding-bottom: 30px;
+} */
+
