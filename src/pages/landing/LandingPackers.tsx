@@ -1,6 +1,7 @@
 // src/pages/landing/LandingPackers.tsx
 import React, { useState } from 'react';
-import { Row, Col, Card, Button, Form, Input, Select, DatePicker } from 'antd';
+// import { Row, Col, Card, Button, Form, Input, Select, DatePicker,Menu } from 'antd';
+import {  Card, Button, Form, Input, Select, DatePicker, Menu} from 'antd';
 import {
   CheckCircleOutlined,
   TruckOutlined,
@@ -10,8 +11,8 @@ import {
   ClockCircleOutlined,
   PhoneOutlined,
   InboxOutlined,
-  MenuOutlined,
-  CloseOutlined
+  // MenuOutlined,
+  // CloseOutlined
 } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import './LandingPackers.css';
@@ -29,6 +30,17 @@ import insurance from '../../assets/landingimages/insurance.jpeg'
 // ========================================================================
 
 const { Option } = Select;
+
+const navItems = [
+  { key: "home", label: <Link to="/">Home</Link> },
+  { key: "cleaning", label: <Link to="/cleaningservice">Cleaning</Link> },
+  { key: "packers", label: <Link to="/LandingPackers">Packers & Movers</Link> },
+  { key: "home_services", label: <Link to="/home_service">Home Services</Link> },
+  { key: "rentals", label: <Link to="/rentals">Rentals</Link> },
+  { key: "commercial", label: <Link to="/commercial-plots">Buy&Sale Properties</Link> },
+  { key: "materials", label: <Link to="/ConstructionMaterials">Construction Materials</Link> },
+];
+
 
 const services = [
   {
@@ -121,24 +133,24 @@ const LandingPackers: React.FC = () => {
   return (
     <div className="packes-container">
       {/* NAVBAR */}
-      <nav className="navbar">
-        <div className="nav-logo">Swachify India</div>
-        <ul className="nav-links">
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/cleaningservice">Cleaning</Link></li>
-          <li><Link to="/LandingPackers">Packers & Movers</Link></li>
-          <li><Link to="/home_service">Home Services</Link></li>
-          <li><Link to="/homeapartment">Rentals</Link></li>
-          <li><Link to="/Buy_SaleHouseProducts">Commercial Plots</Link></li>
-          <li><Link to="/ConstructionMaterials">Construction Materials</Link></li>
-          <li><Link to="/contactus">ContactUs</Link></li>
-          <li><Link to="/Cart">Cart</Link></li>
-          <li><Link to="/Login">Login</Link></li>
-        </ul>
-        <div className="mobile-menu-icon" onClick={() => setMenuOpen(!menuOpen)}>
-          {menuOpen ? <CloseOutlined /> : <MenuOutlined />}
+     <header className="hs-navbar">
+        <div className="hs-navbar-logo">
+          <span className="hs-logo-text">SWACHIFY INDIA</span>
         </div>
-      </nav>
+
+        <Menu mode="horizontal" selectedKeys={["home-services"]} className="hs-navbar-menu" items={navItems} />
+
+        <Button
+          type="primary"
+          className="hs-contact-btn"
+          onClick={() => {
+            // setActiveTab("login");
+            // setAuthModalVisible(true);
+          }}
+        >
+          Sign Up
+        </Button>
+      </header>
 
       {menuOpen && (
         <ul className="mobile-menu">

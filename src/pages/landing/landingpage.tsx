@@ -1,6 +1,6 @@
   import  { useState } from "react";
-  import { Button, Card, Row, Col } from "antd";
-  import { Link } from "react-router-dom";
+  import { Button, Card, Row, Col ,Menu} from "antd";
+  import { Link, } from "react-router-dom";
 
   import {
     HomeOutlined,
@@ -9,12 +9,22 @@
     ShopOutlined,
     ApartmentOutlined,
     BuildOutlined,
-    MenuOutlined,
-    CloseOutlined
+    // MenuOutlined,
+    // CloseOutlined
   } from "@ant-design/icons";
 
   import "./landingpage.css";
   import heroImage from "../../assets/landingimages/hero.jpg";
+
+  const navItems = [
+    { key: "home", label: <Link to="/">Home</Link> },
+    { key: "cleaning", label: <Link to="/cleaningservice">Cleaning</Link> },
+    { key: "packers", label: <Link to="/LandingPackers">Packers & Movers</Link> },
+    { key: "home_services", label: <Link to="/home_service">Home Services</Link> },
+    { key: "rentals", label: <Link to="/rentals">Rentals</Link> },
+    { key: "commercial", label: <Link to="/commercial-plots">Buy&Sale Properties</Link> },
+    { key: "materials", label: <Link to="/ConstructionMaterials">Construction Materials</Link> },
+  ];
 
   const services = [
     {
@@ -62,30 +72,24 @@
       <div className="landing-container">
 
         {/* 🟦 NAVBAR */}
-        <nav className="navbar">
-          <div className="nav-logo">Swachify India</div>
+        <header className="hs-navbar">
+        <div className="hs-navbar-logo">
+          <span className="hs-logo-text">SWACHIFY INDIA</span>
+        </div>
 
-        <ul className="nav-links">
-    <li><Link to="/">Home</Link></li>
-    <li><Link to="/cleaningservice">Cleaning</Link></li>
-    <li><Link to="/LandingPackers">Packers & Movers</Link></li>
-    <li><Link to="/home_service">Home Services</Link></li>
-    <li><Link to="/rentals">Rentals</Link></li>
-    <li><Link to="/commercial-plots">Commercial Plots</Link></li>
-    <li><Link to="/ConstructionMaterials">Construction Materials</Link></li>
-    <li><Link to="/contactus">ContactUs</Link></li>
+        <Menu mode="horizontal" selectedKeys={["home-services"]} className="hs-navbar-menu" items={navItems} />
 
-    {/* ⭐ ADDED CART */}
-    <li><Link to="/Cart">Cart</Link></li>
-
-    <li><Link to="/Login">Login</Link></li>
-  </ul>
-
-          {/* Mobile Menu Button */}
-          <div className="mobile-menu-icon" onClick={() => setMenuOpen(!menuOpen)}>
-            {menuOpen ? <CloseOutlined /> : <MenuOutlined />}
-          </div>
-        </nav>
+        <Button
+          type="primary"
+          className="hs-contact-btn"
+          // onClick={() => {
+          //   setActiveTab("login");
+          //   setAuthModalVisible(true);
+          // }}
+        >
+          Sign Up
+        </Button>
+      </header>
 
         {/* DROPDOWN MOBILE MENU */}
         {menuOpen && (
@@ -96,7 +100,7 @@
             <li><Link to="/home_service" onClick={() => setMenuOpen(false)}>Home Services</Link></li>
             <li><Link to="/rentals" onClick={() => setMenuOpen(false)}>Rentals</Link></li>
             <li><Link to="/commercial-plots" onClick={() => setMenuOpen(false)}>Commercial Plots</Link></li>
-            <li><Link to="/raw-material" onClick={() => setMenuOpen(false)}>Construction Materials</Link></li>
+            <li><Link to="/ConstructionMaterials" onClick={() => setMenuOpen(false)}>Construction Materials</Link></li>
             <li><Link to="/contactus" onClick={() => setMenuOpen(false)}>Contact</Link></li>
 
             {/* ⭐ ADDED CART */}
