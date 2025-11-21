@@ -4,6 +4,9 @@ import { HomeOutlined } from '@ant-design/icons';
 import ServiceCard from '../components/ServiceCard';
 import PropertyTypePage from './PropertyTypePage';
 import CommercialPropertyTypePage from './CommercialPropertyTypePage';
+import ApartmentListingsPage from './ApartmentListingsPage';
+import CommercialListingsPage from './CommercialListingsPage';
+import PropertyDetailsPage from './PropertyDetailsPage';
 import './ServicesPage.css';
 
 // Import images from assets folder
@@ -13,10 +16,46 @@ import img from "../../../../assets/HomeRental/House.jpg";
 // For now, using the same image as placeholder - replace with actual images
 const commercialImg = houseImg; // Replace with: import commercialImg from '../assets/commercial.jpg';
 
-const ServicesPage: React.FC = () => {
-  const [activeModal, setActiveModal] = useState<'residential' | 'commercial' | null>(null);
+type ServiceModalType = 'residential' | 'commercial' | null;
 
-  const closeModal = () => setActiveModal(null);
+interface ListingContext {
+  category: 'residential' | 'commercial';
+  typeId: string;
+}
+
+const ServicesPage: React.FC = () => {
+  const [activeModal, setActiveModal] = useState<ServiceModalType>(null);
+  const [listingContext, setListingContext] = useState<ListingContext | null>(null);
+  const [selectedPropertyId, setSelectedPropertyId] = useState<string | null>(null);
+
+  const showTypeModal = !!activeModal && !listingContext;
+  const showListingsModal = !!listingContext && !selectedPropertyId;
+  const showDetailsModal = !!selectedPropertyId;
+
+  const closeAllModals = () => {
+    setSelectedPropertyId(null);
+    setListingContext(null);
+    setActiveModal(null);
+  };
+
+  const handleResidentialTypeSelect = (typeId: string) => {
+    setListingContext({ category: 'residential', typeId });
+  };
+
+  const handleCommercialTypeSelect = (typeId: string) => {
+    setListingContext({ category: 'commercial', typeId });
+  };
+
+  const handleBackToTypes = () => {
+    setSelectedPropertyId(null);
+    setListingContext(null);
+  };
+
+  const handlePropertySelect = (propertyId: string) => {
+    setSelectedPropertyId(propertyId);
+  };
+
+  const selectedListingTypeId = listingContext?.typeId;
 
   return (
     <div className="services-page">
@@ -54,24 +93,65 @@ const ServicesPage: React.FC = () => {
       </section>
 
       <Modal
-        open={!!activeModal}
-        onCancel={closeModal}
+        open={showTypeModal}
+        onCancel={closeAllModals}
         footer={null}
         width={1000}
         centered
         destroyOnClose
         className="browse-modal"
       >
-        {activeModal === 'residential' && <PropertyTypePage />}
-        {activeModal === 'commercial' && <CommercialPropertyTypePage />}
+        {activeModal === 'residential' && (
+          <PropertyTypePage onSelectType={handleResidentialTypeSelect} />
+        )}
+        {activeModal === 'commercial' && (
+          <CommercialPropertyTypePage onSelectType={handleCommercialTypeSelect} />
+        )}
+      </Modal>
+
+      <Modal
+        open={showListingsModal}
+        onCancel={closeAllModals}
+        footer={null}
+        width={1100}
+        centered
+        destroyOnClose
+        className="browse-modal"
+      >
+        {listingContext?.category === 'residential' && selectedListingTypeId && (
+          <ApartmentListingsPage
+            selectedType={selectedListingTypeId}
+            onBack={handleBackToTypes}
+            onSelectProperty={handlePropertySelect}
+          />
+        )}
+        {listingContext?.category === 'commercial' && selectedListingTypeId && (
+          <CommercialListingsPage
+            selectedType={selectedListingTypeId}
+            onBack={handleBackToTypes}
+            onSelectProperty={handlePropertySelect}
+          />
+        )}
+      </Modal>
+
+      <Modal
+        open={showDetailsModal}
+        onCancel={() => setSelectedPropertyId(null)}
+        footer={null}
+        width={1200}
+        centered
+        destroyOnClose
+        className="browse-modal"
+      >
+        {selectedPropertyId && (
+          <PropertyDetailsPage
+            propertyId={selectedPropertyId}
+            onClose={() => setSelectedPropertyId(null)}
+          />
+        )}
       </Modal>
     </div>
   );
 };
 
 export default ServicesPage;
-
-
-
-
-

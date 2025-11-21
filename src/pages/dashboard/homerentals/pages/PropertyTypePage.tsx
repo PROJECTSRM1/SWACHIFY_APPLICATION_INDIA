@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Row, Col, Card, Button } from 'antd';
 import { HomeOutlined } from '@ant-design/icons';
 import './PropertyTypePage.css';
@@ -12,8 +11,17 @@ import houseImg from '../../../../assets/HomeRental/independent.jpg';
 // import gardenHouseImg from '../assests/threed.jpg';
 // import officeImg from '../assests/office.jpg';
 
-const PropertyTypePage: React.FC = () => {
-  const navigate = useNavigate();
+interface PropertyTypePageProps {
+  onSelectType?: (typeId: string) => void;
+}
+
+const PropertyTypePage: React.FC<PropertyTypePageProps> = ({ onSelectType }) => {
+  const handleViewProperties = (typeId: string) => {
+    if (onSelectType) {
+      onSelectType(typeId);
+      return;
+    }
+  };
 
   const propertyTypes = [
     {
@@ -66,7 +74,7 @@ const PropertyTypePage: React.FC = () => {
                     </div>
                     <Button
                       className="ptc-view-btn"
-                      onClick={() => navigate(`/listings/${type.id}`)}
+                      onClick={() => handleViewProperties(type.id)}
                     >
                       View Properties
                     </Button>

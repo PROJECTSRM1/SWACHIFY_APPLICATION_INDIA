@@ -39,22 +39,7 @@ const Dashboard: React.FC = () => {
     
       <HomeServices/>
 
-         <div className="app-root">
-      <HeaderBarforrental></HeaderBarforrental>
-      <main className="app-main">
-        <Routes>
-          <Route path="/" element={<ServicesPage />} />
-          <Route path="/property-types" element={<PropertyTypePage />} />
-          <Route path="/listings/:type" element={<ApartmentListingsPage />} />
-          <Route path="/property/:id" element={<PropertyDetailsPage />} />
-          <Route path="/commercial-property-types" element={<CommercialPropertyTypePage />} />
-          <Route path="/commercial/:type" element={<CommercialListingsPage />} />
-          <Route path="/commercial/property/:id" element={<PropertyDetailsPage />} />
-
-        </Routes>
-      </main>
-      <FooterBar />
-    </div>
+    <ServicesPage/>
    
       <ConstructionServices/>
       
