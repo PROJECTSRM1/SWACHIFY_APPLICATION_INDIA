@@ -22,10 +22,8 @@ const Dashboard: React.FC = () => {
       <HeaderBar />
 
       <div className="services-section">
+        
         <h1 className="services-title">Our Services</h1>
-        <p className="services-subtitle">
-          Browse through our services and add items to your cart
-        </p>
 
         <div className="services-search">
           <input
