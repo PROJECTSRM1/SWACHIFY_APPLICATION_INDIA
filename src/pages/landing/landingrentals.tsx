@@ -11,6 +11,7 @@ import {
   ShopOutlined,
   CrownOutlined,
   AppstoreOutlined,
+  // PhoneOutlined,
   MailOutlined,
   EnvironmentOutlined,
   FacebookOutlined,
@@ -25,6 +26,11 @@ import { Link } from "react-router-dom";
 import "./landingrentals.css";
 
 const { Option } = Select;
+// const { TextArea } = Input;
+
+// Image imports — keep exact paths (case-sensitive)
+// add near the other image imports (keep your existing imports too)
+// import heroImage from "../../assets/landingimages/landingrenatlshero.jpg"
 const { TabPane } = Tabs;
 
 /* ================================
@@ -43,7 +49,7 @@ export const HSHeader: React.FC<HSHeaderProps> = ({ selectedKey = "", onSignUp =
     { key: "cleaning", label: <Link to="/cleaningservice">Cleaning</Link> },
     { key: "packers", label: <Link to="/LandingPackers">Packers & Movers</Link> },
     { key: "home_services", label: <Link to="/home_service">Home Services</Link> },
-    { key: "rentals", label: <Link to="/homeapartment">Rentals</Link> },
+    { key: "rentals", label: <Link to="/rentals">Rentals</Link> },
     { key: "commercial", label: <Link to="/commercial-plots">Buy&Sale Properties</Link> },
     { key: "materials", label: <Link to="/raw-material">Construction Materials</Link> },
   ];
@@ -91,6 +97,16 @@ import apt4 from "../../assets/landingimages/spaciousfamilyhouse.jpg";
 import apt5 from "../../assets/landingimages/luxuryvillawithpool.jpg";
 import apt6 from "../../assets/landingimages/modern1bhkflat.jpg";
 /* ======================================================= */
+
+  const navItems = [
+    { key: "home", label: <Link to="/">Home</Link> },
+    { key: "cleaning", label: <Link to="/cleaningservice">Cleaning</Link> },
+    { key: "packers", label: <Link to="/LandingPackers">Packers & Movers</Link> },
+    { key: "home_services", label: <Link to="/home_service">Home Services</Link> },
+    { key: "rentals", label: <Link to="/rentals">Rentals</Link> },
+    { key: "commercial", label: <Link to="/commercial-plots">Buy&Sale Properties</Link> },
+    { key: "materials", label: <Link to="/ConstructionMaterials">Construction Materials</Link> },
+  ];
 
 const Landingrentals: React.FC = () => {
   const [form] = Form.useForm();
@@ -216,6 +232,8 @@ const Landingrentals: React.FC = () => {
 
   return (
     <div className="lr-page">
+      {/* ========== NAVBAR (ADDED) ========== */}
+     
       {/* ========== NAVBAR (REPLACED with HSHeader) ========== */}
       {/* Pass the modal open handler so clicking Sign Up opens auth modal */}
       <HSHeader onSignUp={() => setAuthModalVisible(true)} />
