@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
 
 import excavatorImg from "../../../assets/Building/excavator.jpg";
 import loaderImg from "../../../assets/Building/loader.jpg";
@@ -7,23 +6,25 @@ import craneImg from "../../../assets/Building/crane.jpg";
 import mixerImg from "../../../assets/Building/concretemixer.jpg";
 
 const machinery = [
-  { id: "1", title: "Excavator Rental", price: "150", img: excavatorImg, description: "Heavy-duty excavators suitable for construction and earthwork tasks." },
-  { id: "2", title: "Loader Rental", price: "200", img: loaderImg, description: "Efficient loaders for material handling and lifting tasks." },
-  { id: "3", title: "Crane Rental", price: "300", img: craneImg, description: "High-capacity cranes for lifting heavy materials and machinery." },
-  { id: "4", title: "Concrete Mixer Rental", price: "120", img: mixerImg, description: "Portable and truck-mounted concrete mixers for efficient construction." },
+  { id: 1, title: "Excavator Rental", price: "150", img: excavatorImg, description: "Heavy-duty excavators suitable for construction and earthwork tasks." },
+  { id: 2, title: "Loader Rental", price: "200", img: loaderImg, description: "Efficient loaders for material handling and lifting tasks." },
+  { id: 3, title: "Crane Rental", price: "300", img: craneImg, description: "High-capacity cranes for lifting heavy materials and machinery." },
+  { id: 4, title: "Concrete Mixer Rental", price: "120", img: mixerImg, description: "Portable and truck-mounted concrete mixers for efficient construction." },
 ];
 
-const MachineryDetails: React.FC = () => {
-  const { id } = useParams();
-  const navigate = useNavigate();
+interface FormProps {
+  id: number;
+  onClose: () => void;
+}
+
+const MachineryDetails: React.FC<FormProps> = ({ id, onClose }) => {
 
   const machine = machinery.find((item) => item.id === id);
   const [quantity, setQuantity] = useState(1);
 
-  if (!machine) return <p>Machine not found</p>;
+  if (!machine) return null;
 
-  const unitPrice = Number(machine.price.replace("₹", ""));
-  const totalPrice = unitPrice * quantity;
+  const totalPrice = Number(machine.price) * quantity;
 
   return (
     <div className="mach-details-modal">
@@ -32,7 +33,7 @@ const MachineryDetails: React.FC = () => {
         {/* HEADER */}
         <div className="mach-details-header">
           <h2>{machine.title}</h2>
-          <button className="mach-close-btn" onClick={() => navigate(-1)}>✕</button>
+          <button className="mach-close-btn" onClick={onClose}>✕</button>
         </div>
 
         <div className="mach-top-section">
@@ -52,22 +53,21 @@ const MachineryDetails: React.FC = () => {
 
             <h3 className="mach-included-title">What's Included</h3>
             <ul className="mach-included-list">
-              <li>✓ On-time delivery</li>
-              <li>✓ Equipment safety check</li>
-              <li>✓ Breakdown support</li>
-              <li>✓ Operator support (optional)</li>
-              <li>✓ Fuel support (if applicable)</li>
-              <li>✓ Invoice & documentation</li>
+              <li>On-time delivery</li>
+              <li>Equipment safety check</li>
+              <li>Breakdown support</li>
+              <li>Operator support (optional)</li>
+              <li>Fuel support (if applicable)</li>
+              <li>Invoice & documentation</li>
             </ul>
           </div>
 
-          {/* RIGHT FORM */}
+          {/* RIGHT SIDE FORM */}
           <div className="mach-form-side">
             <div className="mach-form-section">
 
               <h3 className="mach-section-title">Rental Details</h3>
 
-              {/* CUSTOMER NAME + RENTAL TYPE */}
               <div className="mach-row">
                 <div className="mach-form-item">
                   <label>Customer Name</label>
@@ -84,7 +84,6 @@ const MachineryDetails: React.FC = () => {
                 </div>
               </div>
 
-              {/* QUANTITY + RENTAL DATE */}
               <div className="mach-row">
                 <div className="mach-form-item">
                   <label>Quantity</label>
@@ -102,20 +101,14 @@ const MachineryDetails: React.FC = () => {
                 </div>
               </div>
 
-              {/* CONTACT */}
-              <div className="mach-row">
-                <div className="mach-form-item">
-                  <label>Contact Number</label>
-                  <input type="text" placeholder="Enter contact number" />
-                </div>
+              <div className="mach-form-item full-width">
+                <label>Contact Number</label>
+                <input type="text" placeholder="Enter contact number" />
               </div>
 
-              {/* ADDRESS */}
-              <div className="mach-row">
-                <div className="mach-form-item full-width">
-                  <label>Site Address</label>
-                  <textarea placeholder="Enter site address" />
-                </div>
+              <div className="mach-form-item full-width">
+                <label>Site Address</label>
+                <textarea placeholder="Enter site address"></textarea>
               </div>
 
               <h3 className="mach-section-title">Additional Services</h3>
@@ -127,15 +120,13 @@ const MachineryDetails: React.FC = () => {
                 <label><input type="checkbox" /> Maintenance Support</label>
               </div>
 
-              <div className="mach-row">
-                <div className="mach-form-item full-width">
-                  <label>Special Instructions</label>
-                  <textarea placeholder="Any specific requirements..." />
-                </div>
+              <div className="mach-form-item full-width">
+                <label>Special Instructions</label>
+                <textarea placeholder="Any specific requirements..." />
               </div>
 
               <div className="mach-button-row">
-                <button className="mach-cancel-btn" onClick={() => navigate(-1)}>Cancel</button>
+                <button className="mach-cancel-btn" onClick={onClose}>Cancel</button>
                 <button className="mach-add-btn">Add to Cart</button>
               </div>
 
