@@ -9,7 +9,7 @@ import {
   Select,
   Input,
   InputNumber,
-  Checkbox,
+ // Checkbox,
   DatePicker,
   message,
 } from "antd";
@@ -404,14 +404,14 @@ const CleaningService: React.FC = () => {
 
     if (lower.includes("1 bhk") || lower.includes("2 bhk") || lower.includes("3 bhk") || lower.includes("2 bhk / 3 bhk") || lower.includes("1 bhk apartment") || lower.match(/\b\d+\s*bhk/)) {
       config.bedrooms = true;
-      config.bathrooms = true;
+      //config.bathrooms = true;
       config.sqft = true;
       return config;
     }
 
     if (lower.includes("villa")) {
       config.bedrooms = true;
-      config.bathrooms = true;
+     // config.bathrooms = true;
       config.sqft = true;
       return config;
     }
@@ -520,6 +520,7 @@ const CleaningService: React.FC = () => {
                 <div className="main-card-body">
                   <Title level={4} className="main-card-title">{cat.title}</Title>
                   <Paragraph className="main-card-desc">{cat.desc}</Paragraph>
+                  
                 </div>
               </Card>
             </div>
@@ -572,7 +573,7 @@ const CleaningService: React.FC = () => {
               key={m.title}
               className="module-card"
               hoverable
-              onClick={() => openModuleDetails(m)}
+              //onClick={() => openModuleDetails(m)}
               role="listitem"
             >
               <img src={m.image} className="module-img" alt={m.title} />
@@ -647,15 +648,15 @@ const CleaningService: React.FC = () => {
                         <Select placeholder="Select service type" className="full-width-select">
                           {selectedModule.title.toLowerCase().includes("room") || selectedModule.title.toLowerCase().includes("bedroom") ? (
                             <>
-                              <Option value="standard">Standard Clean</Option>
-                              <Option value="deep">Deep Clean</Option>
-                              <Option value="mattress">Mattress Cleaning</Option>
+                              <Option value="standard">Regular cleaning</Option>
+                              <Option value="deep">Deep Cleaning</Option>
+                              <Option value="mattress">Move-in/Move-out Cleaning</Option>
                             </>
                           ) : selectedModule.title.toLowerCase().includes("kitchen") ? (
                             <>
-                              <Option value="standard">Surface Clean</Option>
-                              <Option value="deep">Deep Kitchen Clean</Option>
-                              <Option value="grease">Degreasing & Appliance Care</Option>
+                              <Option value="standard">Regular Cleaning</Option>
+                              <Option value="deep">Deep  Cleaning</Option>
+                              <Option value="grease">Move-in/Move-out</Option>
                             </>
                           ) : selectedModule.title.toLowerCase().includes("bathroom") ? (
                             <>
@@ -664,11 +665,11 @@ const CleaningService: React.FC = () => {
                             </>
                           ) : (
                             <>
-                              <Option value="standard">Standard Clean</Option>
-                              <Option value="deep">Deep Clean</Option>
-                              <Option value="move">Move-in / Move-out</Option>
-                              <Option value="recurring">Recurring</Option>
-                              <Option value="sanitization">Sanitization</Option>
+                              <Option value="standard">Regular Cleaning</Option>
+                              <Option value="deep">Deep Cleaning</Option>
+                              <Option value="move">Move-in / Move-out Cleaning</Option>
+                              {/* <Option value="recurring">Recurring</Option>
+                              <Option value="sanitization">Sanitization</Option> */}
                             </>
                           )}
                         </Select>
@@ -707,7 +708,7 @@ const CleaningService: React.FC = () => {
                       </div>
                     )}
 
-                    <Form.Item name="additional" label="Additional Services">
+                    {/* <Form.Item name="additional" label="Additional Services">
                       <Checkbox.Group>
                         <div className="checkbox-grid">
                           <Checkbox value="window">Window Cleaning (₹100)</Checkbox>
@@ -716,7 +717,7 @@ const CleaningService: React.FC = () => {
                           {selectedModule.title.toLowerCase().includes("kitchen") && <Checkbox value="oven">Oven Cleaning (₹300)</Checkbox>}
                         </div>
                       </Checkbox.Group>
-                    </Form.Item>
+                    </Form.Item> */}
 
                     <div className="form-row">
                       {cfg.preferredDate && (
