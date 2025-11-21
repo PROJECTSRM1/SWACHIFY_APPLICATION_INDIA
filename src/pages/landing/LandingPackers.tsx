@@ -1,7 +1,16 @@
 // src/pages/landing/LandingPackers.tsx
 import React, { useState } from 'react';
-// import { Row, Col, Card, Button, Form, Input, Select, DatePicker,Menu } from 'antd';
-import {  Card, Button, Form, Input, Select, DatePicker, Menu} from 'antd';
+import {
+  Card,
+  Button,
+  Form,
+  Input,
+  Select,
+  DatePicker,
+  Menu,
+  Modal,
+  Tabs,
+} from 'antd';
 import {
   CheckCircleOutlined,
   TruckOutlined,
@@ -9,12 +18,10 @@ import {
   DollarOutlined,
   UserOutlined,
   ClockCircleOutlined,
-  PhoneOutlined,
-  InboxOutlined,
-  // MenuOutlined,
-  // CloseOutlined
+  EnvironmentOutlined,
+  MailOutlined,
 } from '@ant-design/icons';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './LandingPackers.css';
 
 // === IMAGE IMPORTS - ensure these files exist in src/assets/landingimages ===
@@ -24,12 +31,12 @@ import localandlongdistance from '../../assets/landingimages/localandlongdistanc
 import residentialMovingImg from '../../assets/landingimages/residential-moving.jpg';
 import officeRelocationImg from '../../assets/landingimages/office-relocation.jpg';
 import vehicleTransportImg from '../../assets/landingimages/vehicle-transport.jpg';
-import Loadingtransport from '../../assets/landingimages/Loadingtransport.jpg'
-import insurance from '../../assets/landingimages/insurance.jpeg'
-
+import Loadingtransport from '../../assets/landingimages/Loadingtransport.jpg';
+import insurance from '../../assets/landingimages/insurance.jpeg';
 // ========================================================================
 
 const { Option } = Select;
+const { TabPane } = Tabs;
 
 const navItems = [
   { key: "home", label: <Link to="/">Home</Link> },
@@ -41,28 +48,27 @@ const navItems = [
   { key: "materials", label: <Link to="/ConstructionMaterials">Construction Materials</Link> },
 ];
 
-
 const services = [
   {
-    img: packingServicesImg, // packing & unpacking
+    img: packingServicesImg,
     icon: <CheckCircleOutlined style={{ fontSize: 30, color: '#00aa33' }} />,
     title: 'Packing Services',
     desc: 'Professional packing with premium quality materials.',
   },
   {
-    img: Loadingtransport, // loading / transport
+    img: Loadingtransport,
     icon: <DollarOutlined style={{ fontSize: 30, color: '#8b00ff' }} />,
     title: 'Loading Transport',
     desc: 'Best value moving services at competitive rates.',
   },
   {
-    img: localandlongdistance, // local & long distance
+    img: localandlongdistance,
     icon: <TruckOutlined style={{ fontSize: 30, color: '#1677ff' }} />,
     title: 'Local & Long Distance',
     desc: 'Reliable transportation services ensuring safe relocations.',
   },
   {
-    img: insurance, // insurance/boxes (reuse packing image or change to boxes image)
+    img: insurance,
     icon: <SafetyCertificateOutlined style={{ fontSize: 30, color: '#ff7a00' }} />,
     title: 'Insurance Coverage',
     desc: 'Fully insured service for your peace of mind.',
@@ -125,15 +131,150 @@ const whyChooseUs = [
 
 const LandingPackers: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [authVisible, setAuthVisible] = useState(false);
+  const [loginForm] = Form.useForm();
+  const [registerForm] = Form.useForm();
+  const navigate = useNavigate();
 
   const onFinish = (values: any) => {
     console.log('Received values:', values);
   };
 
+  // Auth handlers — on successful login navigate to dashboard
+  const handleLogin = (values: any) => {
+    console.log('Login values:', values);
+    // TODO: call auth API here. On success:
+    setAuthVisible(false);
+    // navigate to dashboard as requested
+    navigate('/dashboard');
+  };
+
+  const handleRegister = (values: any) => {
+    console.log('Register values:', values);
+    // TODO: register API. On success you can either log in automatically or keep modal closed.
+    setAuthVisible(false);
+    navigate('/dashboard'); // optional: navigate after register (keeps same behavior)
+  };
+
+  // Minimal Auth modal: matches the "second/third pic" layout (centered form with no left images)
+  const AuthModal = () => (
+    <Modal
+      open={authVisible}
+      onCancel={() => setAuthVisible(false)}
+      footer={null}
+      centered
+      width={560}
+      className="auth-modal--packers"
+      closeIcon={<span style={{ fontSize: 20, color: "#9aa4b2" }}>✕</span>}
+      bodyStyle={{ padding: 28 }}
+      aria-labelledby="auth-modal-title"
+    >
+      <div style={{ maxWidth: 480, margin: '0 auto' }}>
+        <Tabs defaultActiveKey="login" type="line" centered>
+          <TabPane tab="Login" key="login">
+            <Form
+              form={loginForm}
+              layout="vertical"
+              onFinish={handleLogin}
+              initialValues={{ remember: true }}
+            >
+              <Form.Item
+                label={<span style={{ fontWeight: 600 }}>Email / Phone</span>}
+                name="identifier"
+                rules={[{ required: true, message: "Please enter email / phone" }]}
+              >
+                <Input placeholder="john@example.com or +1 555 123 4567" />
+              </Form.Item>
+
+              <Form.Item
+                label={<span style={{ fontWeight: 600 }}>Password</span>}
+                name="password"
+                rules={[{ required: true, message: "Please enter your password" }]}
+              >
+                <Input.Password placeholder="Password" />
+              </Form.Item>
+
+              <Form.Item>
+                <Button type="primary" htmlType="submit" block style={{ height: 44 }}>
+                  Login
+                </Button>
+              </Form.Item>
+            </Form>
+          </TabPane>
+
+          <TabPane tab="Register" key="register">
+            <Form
+              form={registerForm}
+              layout="vertical"
+              onFinish={handleRegister}
+            >
+              <Form.Item
+                label={<span style={{ fontWeight: 600 }}>Full name</span>}
+                name="fullName"
+                rules={[{ required: true, message: "Please enter your full name" }]}
+              >
+                <Input placeholder="John Doe" />
+              </Form.Item>
+
+              <Form.Item
+                label={<span style={{ fontWeight: 600 }}>Email</span>}
+                name="email"
+                rules={[{ required: true, type: "email", message: "Please enter valid email" }]}
+              >
+                <Input placeholder="john@example.com" />
+              </Form.Item>
+
+              <Form.Item
+                label={<span style={{ fontWeight: 600 }}>Phone</span>}
+                name="phone"
+                rules={[{ required: true, message: "Please enter phone number" }]}
+              >
+                <Input placeholder="+1 555 123 4567" />
+              </Form.Item>
+
+              <Form.Item
+                label={<span style={{ fontWeight: 600 }}>Password</span>}
+                name="regPassword"
+                rules={[{ required: true, message: "Please choose a password" }]}
+              >
+                <Input.Password placeholder="Choose a password" />
+              </Form.Item>
+
+              <Form.Item
+                label={<span style={{ fontWeight: 600 }}>Confirm Password</span>}
+                name="confirmPassword"
+                dependencies={['regPassword']}
+                rules={[
+                  { required: true, message: "Please confirm password" },
+                  ({ getFieldValue }) => ({
+                    validator(_, value) {
+                      if (!value || getFieldValue('regPassword') === value) {
+                        return Promise.resolve();
+                      }
+                      return Promise.reject(new Error('Passwords do not match'));
+                    },
+                  }),
+                ]}
+              >
+                <Input.Password placeholder="Confirm password" />
+              </Form.Item>
+
+              <Form.Item>
+                <Button type="primary" htmlType="submit" block style={{ height: 44 }}>
+                  Register
+                </Button>
+              </Form.Item>
+            </Form>
+          </TabPane>
+        </Tabs>
+      </div>
+    </Modal>
+  );
+
   return (
     <div className="packes-container">
       {/* NAVBAR */}
-     <header className="hs-navbar">
+      <header className="hs-navbar">
         <div className="hs-navbar-logo">
           <span className="hs-logo-text">SWACHIFY INDIA</span>
         </div>
@@ -143,10 +284,7 @@ const LandingPackers: React.FC = () => {
         <Button
           type="primary"
           className="hs-contact-btn"
-          onClick={() => {
-            // setActiveTab("login");
-            // setAuthModalVisible(true);
-          }}
+          onClick={() => setAuthVisible(true)}
         >
           Sign Up
         </Button>
@@ -166,6 +304,9 @@ const LandingPackers: React.FC = () => {
           <li><Link to="/Login" onClick={() => setMenuOpen(false)}>Login</Link></li>
         </ul>
       )}
+
+      {/* render auth modal */}
+      <AuthModal />
 
       {/* HERO */}
       <section className="packes-hero" style={{ backgroundImage: `url(${heroPackers})` }}>
@@ -227,10 +368,10 @@ const LandingPackers: React.FC = () => {
               <Input prefix={<UserOutlined />} placeholder="John Doe" />
             </Form.Item>
             <Form.Item label="Email" name="email" rules={[{ required: true }]}>
-              <Input prefix={<InboxOutlined />} placeholder="john@example.com" />
+              <Input prefix={<MailOutlined />} placeholder="john@example.com" />
             </Form.Item>
             <Form.Item label="Phone Number" name="phoneNumber" rules={[{ required: true }]}>
-              <Input prefix={<PhoneOutlined />} placeholder="+1 (555) 123-4567" />
+              <Input placeholder="+1 (555) 123-4567" />
             </Form.Item>
             <Form.Item label="Service Type" name="serviceType" rules={[{ required: true }]}>
               <Select placeholder="Select Service">
@@ -308,10 +449,7 @@ const LandingPackers: React.FC = () => {
         <div className="footer-grid">
           <div>
             <h3>About Us</h3>
-            <p>
-              Your trusted partner for all home and property-related services.
-              Quality, reliability, and customer satisfaction guaranteed.
-            </p>
+            <p>Your trusted partner for all home and property-related services. Quality, reliability, and customer satisfaction guaranteed.</p>
           </div>
           <div>
             <h3>Services</h3>
