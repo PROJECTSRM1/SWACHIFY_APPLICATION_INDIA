@@ -1,6 +1,7 @@
   import  { useState } from "react";
   import { Button, Card, Row, Col ,Menu} from "antd";
   import { Link, } from "react-router-dom";
+  import { useNavigate } from "react-router-dom";
 
   import {
     HomeOutlined,
@@ -31,36 +32,44 @@
       icon: <HomeOutlined style={{ fontSize: 28, color: "#1677ff" }} />,
       title: "Cleaning Service",
       desc: "Professional cleaning solutions for your home and office. Deep cleaning, regular maintenance, and specialized services.",
+      route: "/cleaningservice",
     },
     {
       icon: <TruckOutlined style={{ fontSize: 28, color: "#00aa33" }} />,
       title: "Packers & Movers",
       desc: "Safe and reliable relocation services. Local and long-distance moving with complete packing solutions.",
+      route: "/LandingPackers",
     },
     {
       icon: <ToolOutlined style={{ fontSize: 28, color: "#ff7a00" }} />,
       title: "Home Services",
       desc: "Expert plumbing, electrical, carpentry, and maintenance services. Quick response and quality workmanship.",
+         route: "/home_service",
     },
     {
       icon: <ApartmentOutlined style={{ fontSize: 28, color: "#8b00ff" }} />,
       title: "Home & Apartments Rental",
       desc: "Find your perfect home with our extensive rental listings. Apartments, houses, and furnished options available.",
+      route: "/rentals",
     },
     {
       icon: <ShopOutlined style={{ fontSize: 28, color: "#ff3333" }} />,
       title: "commercial-plots",
       desc: "Premium commercial plots in prime locations. Excellent investment opportunities.",
+      route: "/commercial-plots",
     },
     {
       icon: <BuildOutlined style={{ fontSize: 28, color: "#ffaa00" }} />,
       title: "Construction Raw Materials",
       desc: "Quality cement, bricks, and building materials at competitive prices.",
+      route: "/ConstructionMaterials",
     },
   ];
 
   const LandingPage = () => {
     const [menuOpen, setMenuOpen] = useState(false);
+   const navigate = useNavigate();
+
 
     // ⭐ Scroll to Services Section
     const scrollToServices = () => {
@@ -137,7 +146,9 @@
           <Row gutter={[24, 24]} justify="center">
             {services.map((item, i) => (
               <Col xs={24} sm={12} md={8} key={i}>
-                <Card className="service-card" hoverable>
+                <Card className="service-card" hoverable
+           onClick={() => navigate(item.route)}
+        style={{ cursor: "pointer" }}>
                   <div className="service-icon">{item.icon}</div>
                   <h3 className="service-title">{item.title}</h3>
                   <p className="service-desc">{item.desc}</p>
