@@ -1,48 +1,48 @@
-
-
-/* Remove padding around close button */
-.ant-modal .ant-modal-close {
+/* Scope everything inside .service-details-popup */
+.service-details-popup .ant-modal .ant-modal-close {
   top: 8px !important;
   right: 8px !important;
 }
 
-/* Remove default header area spacing */
-.ant-modal .ant-modal-header {
+.service-details-popup .ant-modal .ant-modal-header {
   padding: 0 !important;
   margin: 0 !important;
   border-bottom: none;
-  height: 0;             /* removes extra height */
+  height: 0;
 }
 
-.ant-modal .ant-modal-body {
-  padding-top: 5px !important; /* now it will move to the top properly */
+.service-details-popup .ant-modal .ant-modal-body {
+  padding-top: 5px !important;
 }
 
-
-.popup-title {
+.service-details-popup .popup-title {
   font-size: 22px;
   font-weight: 700;
   margin-bottom: 5px;
 }
 
-.popup-subtitle {
+.service-details-popup .popup-subtitle {
   font-size: 15px;
   color: #555;
   margin-bottom: 20px;
 }
 
-/* ---------------------- */
-/*       CARD STYLES      */
-/* ---------------------- */
+/* ⭐ Added spacing below section heading */
+.service-details-popup .popup-section-title {
+  margin-top: 5px;
+  margin-bottom: 18px;
+}
 
-.popup-card-grid {
+/* ⭐ Added spacing above card grid */
+.service-details-popup .popup-card-grid {
+  margin-top: 10px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
   gap: 20px;
   width: 100%;
 }
 
-.popup-card {
+.service-details-popup .popup-card {
   position: relative;
   border-radius: 14px;
   overflow: hidden;
@@ -53,20 +53,18 @@
   cursor: pointer;
 }
 
-.popup-card:hover {
+.service-details-popup .popup-card:hover {
   transform: translateY(-5px);
 }
 
-/* IMAGE */
-.popup-card-image {
+.service-details-popup .popup-card-image {
   width: 100%;
   height: 160px;
   object-fit: cover;
   border-bottom: 1px solid #eee;
 }
 
-/* Overlay Button */
-.popup-overlay-btn {
+.service-details-popup .popup-overlay-btn {
   position: absolute;
   top: 12px;
   right: 12px;
@@ -79,40 +77,38 @@
   font-weight: 600;
 }
 
-/* CONTENT */
-.popup-card-content {
+.service-details-popup .popup-card-content {
   padding: 14px;
 }
 
-.popup-card-content h4 {
+.service-details-popup .popup-card-content h4 {
   margin: 0;
   font-size: 16px;
   font-weight: 700;
   color: #222;
 }
 
-.popup-card-content p {
+.service-details-popup .popup-card-content p {
   color: #666;
   font-size: 13px;
   margin-top: 6px;
   line-height: 1.35;
 }
 
-/* Footer: price + button */
-.popup-card-footer {
+.service-details-popup .popup-card-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: 12px;
 }
 
-.popup-price {
+.service-details-popup .popup-price {
   font-size: 15px;
   font-weight: 700;
   color: #2979ff;
 }
 
-.popup-view-btn {
+.service-details-popup .popup-view-btn {
   background: #10b329;
   color: white;
   border: none;
@@ -123,34 +119,31 @@
   font-weight: 600;
 }
 
-.popup-view-btn:hover {
+.service-details-popup .popup-view-btn:hover {
   background: #089823;
 }
 
-/* ---------------------- */
-/*   Why Choose Section   */
-/* ---------------------- */
-
-.why-choose-box {
+/* Why Choose section */
+.service-details-popup .why-choose-box {
   margin-top: 28px;
   padding: 20px;
   background: #f3f1ff;
   border-radius: 14px;
 }
 
-.why-title {
+.service-details-popup .why-title {
   font-size: 18px;
   font-weight: 700;
   margin-bottom: 14px;
 }
 
-.why-grid {
+.service-details-popup .why-grid {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
 }
 
-.why-item {
+.service-details-popup .why-item {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -158,7 +151,7 @@
   min-width: 180px;
 }
 
-.why-icon {
+.service-details-popup .why-icon {
   background: #b78af1;
   color: white;
   padding: 10px;
@@ -167,51 +160,36 @@
   font-size: 13px;
 }
 
-/* ---------------------- */
-/*   RESPONSIVE DEVICES   */
-/* ---------------------- */
-
+/* Responsive */
 @media (max-width: 992px) {
-  .popup-card-grid {
+  .service-details-popup .popup-card-grid {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 18px;
   }
 
-  .why-item {
+  .service-details-popup .why-item {
     width: 45%;
   }
 }
 
 @media (max-width: 600px) {
-  .popup-card-grid {
+  .service-details-popup .popup-card-grid {
     grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
   }
 
-  .popup-card-image {
+  .service-details-popup .popup-card-image {
     height: 135px;
   }
 
-  .popup-title {
+  .service-details-popup .popup-title {
     font-size: 20px;
   }
 
-  .why-grid {
+  .service-details-popup .why-grid {
     flex-direction: column;
   }
 
-  .why-item {
+  .service-details-popup .why-item {
     width: 100%;
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-

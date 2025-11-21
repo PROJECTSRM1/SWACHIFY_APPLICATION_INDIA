@@ -74,37 +74,27 @@ export default function HomeServices() {
       </div>
 
       {/* GRID */}
-      <Row gutter={[4,8]} className="services-grid">
-        {displayedCards.map((service, i) => (
-          <Col
-            xs={24}
-      sm={12}
-      md={12}
-      lg={6}   
-      xl={6}   
-      key={i}
-      className="center-last-row"
-   
- 
+      <div className="services-card-grid">
+  {displayedCards.map((service, i) => (
+    <div className="service-card-wrapper" key={i}>
+      <Card
+        hoverable
+        className="service-card"
+        cover={<img src={service.image} alt="" className="service-image" />}
+      >
+        <h3 className="service-title">{service.title}</h3>
 
-           
-          >
-            <Card
-              hoverable
-              className="service-card"
-              cover={<img src={service.image} alt="" className="service-image" />}
-            >
-              <h3 className="service-title">{service.title}</h3>
-              {/* <p className="service-desc">{service.description}</p> */}
-              {/* <Text className="service-price">{service.price}</Text> */}
-
-              <Button className="details-btn" block onClick={() => openPopup(service.title)}>
-                View Details
-              </Button>
-            </Card>
-          </Col>
-        ))}
-      </Row>
+        <Button
+          className="details-btn"
+          block
+          onClick={() => openPopup(service.title)}
+        >
+          View Details
+        </Button>
+      </Card>
+    </div>
+  ))}
+</div>
 
       {/* Popup */}
       {popupOpen && selectedService && (

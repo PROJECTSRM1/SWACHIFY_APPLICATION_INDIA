@@ -134,9 +134,7 @@ const Packersandmovers: React.FC = () => {
             <p className="pm-hero-sub">{cardsData.length} services available</p>
           </div>
           <div className="pm-hero-right">
-            <button className="pm-hero-expand" aria-label="expand">
-              <DownOutlined />
-            </button>
+           
           </div>
         </div>
       </section>

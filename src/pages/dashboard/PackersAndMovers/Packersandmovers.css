@@ -9,8 +9,10 @@
 
 /* ---------- hero ---------- */
 .pm-hero { 
-  margin:20px auto 12px; 
-  width:100%; 
+  /* margin:20px auto 12px;  */
+  /* width:100%;  */
+  margin-left: 52px;
+  margin-right: 52px;
 }
 
 .pm-hero-inner { 
@@ -21,6 +23,8 @@
   background:#ff6d00; 
   border-radius:8px; 
   color:#fff; 
+  
+  
 }
 
 .pm-hero-title { 
@@ -37,8 +41,11 @@
 
 /* ---------- cards ---------- */
 .pm-main { 
-  width:100%; 
-  margin:18px auto 48px; 
+  width:95%; 
+  margin:18px; 
+  margin-left: 30px;
+  /* margin-right: 52px; */
+  margin-right: 20px;
 }
 
 .pm-cards-wrapper { width:100%; }
