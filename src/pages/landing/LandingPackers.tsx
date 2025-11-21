@@ -5,8 +5,6 @@ import {
   Button,
   Form,
   Input,
-  Select,
-  DatePicker,
   Menu,
   Modal,
   Tabs,
@@ -36,7 +34,7 @@ import Loadingtransport from '../../assets/landingimages/Loadingtransport.jpg';
 import insurance from '../../assets/landingimages/insurance.jpeg';
 // =====================
 
-const { Option } = Select;
+// const { Option } = Select;
 const { TabPane } = Tabs;
 
 const navItems = [
@@ -337,7 +335,7 @@ const LandingPackers: React.FC = () => {
           </Form.Item>
 
           <Form.Item label="Phone Number" name="phoneNumber" rules={[{ required: true }]}>
-            <Input prefix={<EnvironmentOutlined />} />
+            {/* <Input prefix={<EnvironmentOutlined />} /> */}
           </Form.Item>
 
           <Button type="primary" block>Submit</Button>

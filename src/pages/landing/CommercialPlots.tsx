@@ -79,7 +79,7 @@ const CommercialPlots: React.FC = () => {
   const [selectedType, setSelectedType] = useState<string | undefined>(undefined);
 
   // booking form state (simple, local)
-  const [bookingDate, setBookingDate] = useState<any>(null);
+  const [setBookingDate] = useState<any>(null);
 
   // auth modal state
   const [authModalVisible, setAuthModalVisible] = useState(false);

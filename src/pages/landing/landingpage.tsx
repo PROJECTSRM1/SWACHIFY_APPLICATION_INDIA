@@ -1,15 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Button,
   Card,
   Row,
   Col,
   Menu,
-  Modal,
-  Tabs,
-  Form,
-  Input,
-  Checkbox,
 } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -88,28 +83,28 @@ import { Link, useNavigate } from "react-router-dom";
     section?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const openAuthModal = (tab: "login" | "register" = "register") => {
-    // setActiveAuthTab(tab);
-    // setAuthModalVisible(true);
-  };
+  // const openAuthModal = (tab: "login" | "register" = "register") => {
+  //   // setActiveAuthTab(tab);
+  //   // setAuthModalVisible(true);
+  // };
 
   // const closeAuthModal = () => setAuthModalVisible(false);
 
   // ⭐ When Login is successful → Go to dashboard
-  const onLogin = (values: any) => {
-    console.log("login values", values);
+  // const onLogin = (values: any) => {
+  //   console.log("login values", values);
 
     // closeAuthModal();
 
-    setTimeout(() => {
-      navigate("/app/dashboard");   // ⭐ Redirect here
-    }, 80);
-  };
+  //   setTimeout(() => {
+  //     navigate("/app/dashboard");   // ⭐ Redirect here
+  //   }, 80);
+  // };
 
-  const onRegister = (values: any) => {
-    console.log("register values", values);
-    // closeAuthModal();
-  };
+  // const onRegister = (values: any) => {
+  //   console.log("register values", values);
+  //   // closeAuthModal();
+  // };
 
   // return (
   //   <div className="landing-container">
