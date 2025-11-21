@@ -1,12 +1,12 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { Layout } from 'antd';
 import './HeaderBar.css';
 
 const { Header } = Layout;
 
 const HeaderBarforrental: React.FC = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   return (
     <Header className="header-bar">
