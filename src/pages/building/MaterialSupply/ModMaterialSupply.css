@@ -271,6 +271,7 @@
   font-weight: 600;
   margin-bottom: 4px;
   text-align: left !important;
+  margin-top: 10px;
 }
 
 input,
@@ -302,7 +303,7 @@ textarea {
 .checkbox-row label{
   display: flex;
   align-items: center;
-  gap: px;
+  gap: 5px;
   font-size: 13px;
 }
 
