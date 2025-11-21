@@ -525,7 +525,7 @@ const CleaningService: React.FC = () => {
                       <Button 
         size="middle"
         type="primary"
-        className="category-details-btn"
+         className="black-btn"
         onClick={() => openCategory(cat.key)}
       >
         View Details
@@ -596,7 +596,7 @@ const CleaningService: React.FC = () => {
 
                 <div className="module-footer">
                   <div className="module-price">{m.price}</div>
-                  <Button size="small" type="primary" className="but" onClick={(e) => { e.stopPropagation(); openModuleDetails(m); }}>
+                  <Button size="small" type="primary" className="black-btn" onClick={(e) => { e.stopPropagation(); openModuleDetails(m); }}>
                     View Details
                   </Button>
                 </div>
@@ -752,7 +752,10 @@ const CleaningService: React.FC = () => {
 
               <div className="details-actions">
                 <Button onClick={handleDetailsCancel}>Cancel</Button>
-                <Button type="primary" htmlType="submit">Add to Cart</Button>
+                <Button type="primary" htmlType="submit" className="black-btn">
+  Add to Cart
+</Button>
+
               </div>
             </Form>
           </div>
