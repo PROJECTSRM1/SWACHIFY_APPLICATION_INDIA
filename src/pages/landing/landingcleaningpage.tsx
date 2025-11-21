@@ -328,24 +328,7 @@ const LandingCleaningPage: React.FC = () => {
   return (
     <div className="lc-page">
       {/* ========== NAVBAR (added) ========== */}
-      <header className="hs-navbar">
-        <div className="hs-navbar-logo">
-          <span className="hs-logo-text">SWACHIFY INDIA</span>
-        </div>
-
-        <Menu mode="horizontal" selectedKeys={["home-services"]} className="hs-navbar-menu" items={navItems} />
-
-        <Button
-          type="primary"
-          className="hs-contact-btn"
-          onClick={() => {
-            // setActiveTab("login");
-            // setAuthModalVisible(true);
-          }}
-        >
-          Sign Up
-        </Button>
-      </header>
+    
       {/* ========== NAVBAR (replaced with HSHeader) ========== */}
       {/* Pass the onSignUp to open the modal */}
       <HSHeader onSignUp={() => setAuthVisible(true)} />
