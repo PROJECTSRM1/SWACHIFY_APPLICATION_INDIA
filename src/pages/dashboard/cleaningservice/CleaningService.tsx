@@ -13,7 +13,7 @@ import {
   DatePicker,
   message,
 } from "antd";
-import { ThunderboltFilled } from "@ant-design/icons";
+// import { ThunderboltFilled } from "@ant-design/icons";
 import "./CleaningService.css";
 
 import residentialImg from "../../../assets/CleaningServices/resi.png";
@@ -234,6 +234,13 @@ const CleaningService: React.FC = () => {
       image: specializedImg,
       count: 12,
     },
+     {
+      key: "industrial",
+      title: "Industrial Cleaning",
+      desc: "Heavy-duty cleaning for factories, warehouses, and industrial facilities",
+      image: industrialImg,
+      count: 8,
+    },
     {
       key: "post",
       title: "Post-Construction Cleaning",
@@ -241,13 +248,7 @@ const CleaningService: React.FC = () => {
       image: postImg,
       count: 8,
     },
-    {
-      key: "industrial",
-      title: "Industrial Cleaning",
-      desc: "Heavy-duty cleaning for factories, warehouses, and industrial facilities",
-      image: industrialImg,
-      count: 8,
-    },
+   
   ];
 
   const subservicesByMain: Record<string, { key: string; title: string; image: string }[]> = {
@@ -494,9 +495,9 @@ const CleaningService: React.FC = () => {
     
       <div className="cs-header">
         <div className="cs-header-left">
-          <div className="cs-icon">
+          {/* <div className="cs-icon">
             <ThunderboltFilled className="cs-icon-inner" />
-          </div>
+          </div> */}
           <div>
             <Title level={3} className="cs-header-title">Cleaning Services</Title>
             <p className="cs-header-sub">{categories.length} services available</p>
@@ -512,7 +513,8 @@ const CleaningService: React.FC = () => {
         <div className="main-row">
           {visibleCategories.map((cat) => (
             <div className="main-col" key={cat.key}>
-              <Card className="main-card" hoverable onClick={() => openCategory(cat.key)}>
+              <Card className="main-card" hoverable>
+
                 <div className="main-card-image-wrap">
                   <img src={cat.image} alt={cat.title} className="main-card-image" />
                 </div>
@@ -520,6 +522,14 @@ const CleaningService: React.FC = () => {
                 <div className="main-card-body">
                   <Title level={4} className="main-card-title">{cat.title}</Title>
                   <Paragraph className="main-card-desc">{cat.desc}</Paragraph>
+                      <Button 
+        size="middle"
+        type="primary"
+        className="category-details-btn"
+        onClick={() => openCategory(cat.key)}
+      >
+        View Details
+      </Button>
                   
                 </div>
               </Card>

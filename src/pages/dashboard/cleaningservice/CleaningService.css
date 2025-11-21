@@ -93,7 +93,7 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  height: 330px;
+  height: 350px;
   box-shadow: 0 8px 24px rgba(12, 20, 30, 0.06);
   cursor: pointer;
   background: #fff;
@@ -559,4 +559,8 @@ body,
     min-width: 100px !important;
   }
 }
-
+@media(max-width: 325px){
+  .main-card{
+    height:390px;
+  }
+}

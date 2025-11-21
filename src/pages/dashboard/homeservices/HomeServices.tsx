@@ -78,12 +78,16 @@ export default function HomeServices() {
         {displayedCards.map((service, i) => (
           <Col
             xs={24}
-            sm={12}
-            md={12}
-            lg={8}
-            xl={6}
-            key={i}
-            className="center-last-row"
+      sm={12}
+      md={12}
+      lg={6}   
+      xl={6}   
+      key={i}
+      className="center-last-row"
+   
+ 
+
+           
           >
             <Card
               hoverable
