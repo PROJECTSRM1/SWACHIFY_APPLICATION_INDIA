@@ -66,6 +66,7 @@ const navItems = [
   { key: "commercial", label: <Link to="/commercial-plots">Buy&Sale Properties</Link> },
   { key: "materials", label: <Link to="/ConstructionMaterials">Construction Materials</Link> },
 ];
+console.log(navItems);
 const { TabPane } = Tabs;
 
 /* ================================

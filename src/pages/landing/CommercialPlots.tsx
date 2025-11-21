@@ -80,7 +80,7 @@ const CommercialPlots: React.FC = () => {
 
   // booking form state (simple, local)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
-  const [bookingDate, setBookingDate] = useState<any>(null);
+  const [setBookingDate] = useState<any>(null);
 
   // auth modal state
   const [authModalVisible, setAuthModalVisible] = useState(false);
