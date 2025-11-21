@@ -939,55 +939,39 @@ body {
   align-items: center;
   gap: 12px;
 }
-/* ---------- Dollar icon styling (external CSS) ---------- */
-
+/* Dollar circle EXACT same size as sparkle icon */
 .lc-why-icon-circle--dollar {
-  width: 86px;                      /* same footprint as other icons */
+  width: 86px;
   height: 86px;
   border-radius: 50%;
-  background: var(--accent) !important;  /* match blue */
-  display: inline-flex;
+  background: var(--accent) !important;
+  display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 auto 18px;
   box-shadow: 0 12px 34px rgba(47,128,237,0.12) !important;
-  box-sizing: border-box;
-  overflow: hidden;
 }
 
-/* SVG glyph: sized to fill circle similarly to the other icons */
-.lc-why-icon-circle--dollar .lc-why-dollar-svg {
+/* Dollar icon inside — match sparkle icon size */
+.lc-why-dollar-svg {
   width: 28px;
   height: 28px;
   display: block;
-  pointer-events: none;
-  line-height: 0;
 }
 
-/* Slightly larger glyph on wide screens if you want it bolder */
-@media (min-width: 1200px) {
-  .lc-why-icon-circle--dollar .lc-why-dollar-svg { width: 30px; height: 30px; }
-}
-
-/* Downsize on narrow screens so the glyph never overflows */
+/* Mobile — match sparkle icon mobile sizing */
 @media (max-width: 900px) {
   .lc-why-icon-circle--dollar {
     width: 64px;
     height: 64px;
     margin-bottom: 12px;
   }
-  .lc-why-icon-circle--dollar .lc-why-dollar-svg {
+
+  .lc-why-dollar-svg {
     width: 22px;
     height: 22px;
   }
 }
-
-/* Defensive: ensure no earlier rule makes it transparent */
-.lc-why-icon-circle.lc-why-icon-circle--dollar {
-  background: var(--accent) !important;
-  box-shadow: 0 12px 34px rgba(47,128,237,0.12) !important;
-}
-
 
 
 /* ==========================
