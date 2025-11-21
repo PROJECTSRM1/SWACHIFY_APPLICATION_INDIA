@@ -42,9 +42,9 @@ const navItems = [
   { key: "cleaning", label: <Link to="/cleaningservice">Cleaning</Link> },
   { key: "packers", label: <Link to="/LandingPackers">Packers & Movers</Link> },
   { key: "home_services", label: <Link to="/home_service">Home Services</Link> },
-  { key: "rentals", label: <Link to="/homeapartment">Rentals</Link> },
+  { key: "rentals", label: <Link to="/rentals">Rentals</Link> },
   { key: "commercial", label: <Link to="/commercial-plots">Buy&Sale Properties</Link> },
-  { key: "materials", label: <Link to="/raw-material">Construction Materials</Link> },
+  { key: "materials", label: <Link to="/ConstructionMaterials">Construction Materials</Link> },
 ];
 
 const cardRows = [
