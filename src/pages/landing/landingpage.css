@@ -257,4 +257,111 @@ html, body {
   font-weight: 600 !important;
 }
 
+/* ================= WHY CHOOSE US (centered) ================= */
+/* Targets both class names used in different files to be safe */
+#why-choose-section,
+.why-choose-section,
+.why-choose-us {
+  padding: 60px 40px;
+  text-align: center;          /* center headings & intro text */
+  background: transparent;
+}
+
+/* constrain width and center the cards container */
+#why-choose-section .container,
+.why-choose-section .container,
+.why-choose-us .container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* center the row and force predictable column sizes like services */
+#why-choose-section .ant-row,
+.why-choose-section .ant-row,
+.why-choose-us .ant-row {
+  max-width: 1200px;
+  margin: 0 auto !important;
+  display: flex !important;
+  justify-content: center !important;
+  gap: 20px;
+}
+
+/* make 3 cards per row on desktop (matches services layout) */
+#why-choose-section .ant-col,
+.why-choose-section .ant-col,
+.why-choose-us .ant-col {
+  flex: 0 0 33.333% !important;
+  max-width: 33.333% !important;
+  display: flex;
+  align-items: stretch;
+}
+
+/* style each card so icon+text are vertically centered */
+.why-card,
+.choose-us-card {
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  align-items: center;    /* vertically center icon + text */
+  gap: 12px;
+  text-align: left;       /* keep icon+text left-aligned inside card */
+  min-height: 120px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+  border-radius: 10px;
+}
+
+/* make the heading inside card slightly bigger */
+.why-card h4,
+.choose-us-card h4 {
+  margin: 0 0 6px 0;
+  font-size: 1.05rem;
+}
+
+/* description smaller */
+.why-card p,
+.choose-us-card p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+/* Responsive: 2 columns tablet, 1 column mobile */
+@media (max-width: 992px) {
+  #why-choose-section .ant-col,
+  .why-choose-section .ant-col,
+  .why-choose-us .ant-col {
+    flex: 0 0 50% !important;
+    max-width: 50% !important;
+  }
+}
+
+@media (max-width: 600px) {
+  #why-choose-section .ant-col,
+  .why-choose-section .ant-col,
+  .why-choose-us .ant-col {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* on mobile center the card content */
+  .why-card,
+  .choose-us-card {
+    text-align: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    min-height: auto;
+  }
+
+  .why-card h4,
+  .choose-us-card h4 {
+    font-size: 1rem;
+  }
+
+  .why-card p,
+  .choose-us-card p {
+    font-size: 0.95rem;
+  }
+}
+
 

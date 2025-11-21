@@ -216,6 +216,103 @@ const LandingPage = () => {
         </Row>
       </section>
 
+      {/* ===== NEW: WHY CHOOSE OUR SERVICE SECTION (placed below Our Services) ===== */}
+      <section id="why-choose-section" className="why-choose-section" style={{ padding: "40px 20px" }}>
+        <div className="container" style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <h2 className="section-title" style={{ textAlign: "center" }}>Why Choose Our Service</h2>
+          <p className="section-subtitle" style={{ textAlign: "center", marginBottom: 28 }}>
+            We focus on quality, trust and speed — built to make your life easier.
+          </p>
+
+          <Row gutter={[20, 20]} justify="center">
+            <Col xs={24} sm={12} md={8}>
+              <Card className="why-card" bordered={false} hoverable>
+                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                  <ToolOutlined style={{ fontSize: 28, color: "#ff7a00" }} />
+                  <div>
+                    <h4 style={{ marginBottom: 6 }}>Skilled Professionals</h4>
+                    <p style={{ margin: 0, fontSize: 14 }}>
+                      Verified, trained technicians who deliver quality workmanship every time.
+                    </p>
+                  </div>
+                </div>
+              </Card>
+            </Col>
+
+            <Col xs={24} sm={12} md={8}>
+              <Card className="why-card" bordered={false} hoverable>
+                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                  <HomeOutlined style={{ fontSize: 28, color: "#1677ff" }} />
+                  <div>
+                    <h4 style={{ marginBottom: 6 }}>Trusted & Local</h4>
+                    <p style={{ margin: 0, fontSize: 14 }}>
+                      Local teams who know your area and are committed to timely service.
+                    </p>
+                  </div>
+                </div>
+              </Card>
+            </Col>
+
+            <Col xs={24} sm={12} md={8}>
+              <Card className="why-card" bordered={false} hoverable>
+                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                  <TruckOutlined style={{ fontSize: 28, color: "#00aa33" }} />
+                  <div>
+                    <h4 style={{ marginBottom: 6 }}>Transparent Pricing</h4>
+                    <p style={{ margin: 0, fontSize: 14 }}>
+                      Clear quotes with no hidden fees — affordable packages for every need.
+                    </p>
+                  </div>
+                </div>
+              </Card>
+            </Col>
+
+            <Col xs={24} sm={12} md={8}>
+              <Card className="why-card" bordered={false} hoverable>
+                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                  <BuildOutlined style={{ fontSize: 28, color: "#ffaa00" }} />
+                  <div>
+                    <h4 style={{ marginBottom: 6 }}>Licensed & Insured</h4>
+                    <p style={{ margin: 0, fontSize: 14 }}>
+                      Professional services backed by proper licensing and insurance.
+                    </p>
+                  </div>
+                </div>
+              </Card>
+            </Col>
+
+            <Col xs={24} sm={12} md={8}>
+              <Card className="why-card" bordered={false} hoverable>
+                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                  <ApartmentOutlined style={{ fontSize: 28, color: "#8b00ff" }} />
+                  <div>
+                    <h4 style={{ marginBottom: 6 }}>Satisfaction Guarantee</h4>
+                    <p style={{ margin: 0, fontSize: 14 }}>
+                      We stand behind our work — if you're not happy, we'll make it right.
+                    </p>
+                  </div>
+                </div>
+              </Card>
+            </Col>
+
+            <Col xs={24} sm={12} md={8}>
+              <Card className="why-card" bordered={false} hoverable>
+                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                  <ShopOutlined style={{ fontSize: 28, color: "#ff3333" }} />
+                  <div>
+                    <h4 style={{ marginBottom: 6 }}>24/7 Support</h4>
+                    <p style={{ margin: 0, fontSize: 14 }}>
+                      Emergency response and customer support available round the clock.
+                    </p>
+                  </div>
+                </div>
+              </Card>
+            </Col>
+          </Row>
+        </div>
+      </section>
+      {/* ===== end why choose section ===== */}
+
       {/* 🟦 FOOTER */}
       <footer className="footer">
         <div className="footer-grid">
