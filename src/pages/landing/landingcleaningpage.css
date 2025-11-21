@@ -939,55 +939,39 @@ body {
   align-items: center;
   gap: 12px;
 }
-/* ---------- Dollar icon styling (external CSS) ---------- */
-
+/* Dollar circle EXACT same size as sparkle icon */
 .lc-why-icon-circle--dollar {
-  width: 86px;                      /* same footprint as other icons */
+  width: 86px;
   height: 86px;
   border-radius: 50%;
-  background: var(--accent) !important;  /* match blue */
-  display: inline-flex;
+  background: var(--accent) !important;
+  display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 auto 18px;
   box-shadow: 0 12px 34px rgba(47,128,237,0.12) !important;
-  box-sizing: border-box;
-  overflow: hidden;
 }
 
-/* SVG glyph: sized to fill circle similarly to the other icons */
-.lc-why-icon-circle--dollar .lc-why-dollar-svg {
+/* Dollar icon inside — match sparkle icon size */
+.lc-why-dollar-svg {
   width: 28px;
   height: 28px;
   display: block;
-  pointer-events: none;
-  line-height: 0;
 }
 
-/* Slightly larger glyph on wide screens if you want it bolder */
-@media (min-width: 1200px) {
-  .lc-why-icon-circle--dollar .lc-why-dollar-svg { width: 30px; height: 30px; }
-}
-
-/* Downsize on narrow screens so the glyph never overflows */
+/* Mobile — match sparkle icon mobile sizing */
 @media (max-width: 900px) {
   .lc-why-icon-circle--dollar {
     width: 64px;
     height: 64px;
     margin-bottom: 12px;
   }
-  .lc-why-icon-circle--dollar .lc-why-dollar-svg {
+
+  .lc-why-dollar-svg {
     width: 22px;
     height: 22px;
   }
 }
-
-/* Defensive: ensure no earlier rule makes it transparent */
-.lc-why-icon-circle.lc-why-icon-circle--dollar {
-  background: var(--accent) !important;
-  box-shadow: 0 12px 34px rgba(47,128,237,0.12) !important;
-}
-
 
 
 /* ==========================
@@ -1094,6 +1078,104 @@ body {
   }
 }
 
+/* ===== HS Header (paste into landingcleaningpage.css or homeservice.css) ===== */
+.hs-navbar {
+  height: 68px;
+  display: flex;
+  align-items: center;
+  padding: 0 28px;
+  background: #fff;
+  border-bottom: 1px solid #f0f0f0;
+  z-index: 50;
+}
+.hs-navbar-logo {
+  display: flex;
+  align-items: center;
+  font-size: 1.32rem;
+  font-weight: 700;
+  color: #262626;
+  margin-right: 38px;
+}
+.hs-logo-text {
+  font-weight: 600;
+  color: #262626;
+  font-size: 1.19rem;
+}
+.hs-navbar-menu {
+  flex: 1;
+  min-width: 0;
+  border-bottom: none !important;
+  padding-left: 70px;
+  font-weight: bold;
+}
+
+/* Contact button in header */
+.hs-contact-btn {
+  background: #111827 !important;
+  border-color: #111827 !important;
+  color: #fff !important;
+  font-weight: 600;
+  border-radius: 8px !important;
+  padding: 8px 12px;
+  margin-left: 16px;
+  box-shadow: 0 6px 16px rgba(17,24,39,0.08);
+}
+
+/* Responsive header behavior */
+@media (max-width: 768px) {
+  .hs-navbar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px 16px;
+    background: #fff;
+    border-bottom: 1px solid #f0f0f0;
+    box-shadow: 0 6px 18px rgba(6,21,38,0.06);
+    position: sticky;
+    top: 0;
+    z-index: 900;
+    height: auto;
+    box-sizing: border-box;
+  }
+
+  .hs-navbar-logo {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    order: 1;
+  }
+
+  .hs-navbar-menu {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    order: 2;
+    gap: 4px;
+    background: transparent;
+  }
+
+  .hs-navbar-menu .ant-menu-item {
+    width: 100%;
+    display: flex !important;
+    justify-content: center;
+    padding: 10px 12px !important;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+    box-sizing: border-box;
+    background: transparent;
+  }
+  .hs-navbar-menu .ant-menu-item:last-child { border-bottom: none; }
+
+  .hs-contact-btn {
+    order: 3;
+    width: calc(100% - 28px);
+    max-width: 420px;
+    margin: 6px 0 0;
+  }
+}
 
 
 
