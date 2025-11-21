@@ -1,12 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 // add this
 import { Phone} from "lucide-react";
-import { Menu } from 'antd'    
+// import { Menu } from 'antd'    
 
 // you can keep the AntD PhoneOutlined import if you still use it elsewhere,
 // otherwise remove `PhoneOutlined` from the AntD import list.
 
-import { Row, Col, Card, Button, Form, Input, Select, DatePicker } from "antd";
+/* NOTE: Menu was added to the existing AntD imports because the header uses it */
+import {
+  Row,
+  Col,
+  Card,
+  Button,
+  Form,
+  Input,
+  Select,
+  DatePicker,
+  Menu,
+  Modal,
+  Tabs,
+  Checkbox,
+} from "antd";
 
 import {
   FacebookOutlined,
@@ -16,7 +30,7 @@ import {
   CheckCircleOutlined,
   // PhoneOutlined,
   MailOutlined,
-  EnvironmentOutlined
+  EnvironmentOutlined,
 } from "@ant-design/icons";
 
 import { Link } from "react-router-dom";
@@ -36,6 +50,10 @@ import s6 from "../../assets/landingimages/sofa&upholsterycleaning.jpg";
 import s7 from "../../assets/landingimages/landingcarpetcleaning.jpg";
 import s8 from "../../assets/landingimages/postconstruction.jpg";
 
+// --- Optional: screenshot files you've uploaded (paths from conversation) ---
+// They are provided if you want to reference them or preview in dev.
+// /mnt/data/Screenshot 2025-11-21 110102.png
+// /mnt/data/Screenshot 2025-11-21 110111.png
 
 const { TextArea } = Input;
 // removed unused `Option` const to avoid TS warning
@@ -48,6 +66,63 @@ const navItems = [
   { key: "commercial", label: <Link to="/commercial-plots">Buy&Sale Properties</Link> },
   { key: "materials", label: <Link to="/ConstructionMaterials">Construction Materials</Link> },
 ];
+const { TabPane } = Tabs;
+
+/* ================================
+   HSHeader component (inserted)
+   Re-uses .hs-* CSS classes so it will match your other header/UI
+   ================================= */
+type HSHeaderProps = {
+  selectedKey?: string;
+  onSignUp?: () => void;
+};
+
+export const HSHeader: React.FC<HSHeaderProps> = ({
+  selectedKey = "",
+  onSignUp = () => {},
+}) => {
+  const headerNav = [
+    { key: "home", label: <Link to="/">Home</Link> },
+    { key: "cleaning", label: <Link to="/cleaningservice">Cleaning</Link> },
+    { key: "packers", label: <Link to="/LandingPackers">Packers & Movers</Link> },
+    { key: "home_services", label: <Link to="/home_service">Home Services</Link> },
+    { key: "rentals", label: <Link to="/rentals">Rentals</Link> },
+    { key: "commercial", label: <Link to="/commercial-plots">Buy&Sale Properties</Link> },
+    { key: "materials", label: <Link to="/raw-material">Construction Materials</Link> },
+  ];
+
+  // IMPORTANT: ensure if selectedKey is empty we pass an empty array so AntD highlights nothing.
+  const selectedKeysArray = selectedKey ? [selectedKey] : [];
+
+  return (
+    <header className="hs-navbar" role="banner" aria-label="Primary header">
+      <div className="hs-navbar-logo" aria-hidden>
+        <span className="hs-logo-text">SWACHIFY INDIA</span>
+      </div>
+
+      <Menu
+        mode="horizontal"
+        selectedKeys={selectedKeysArray}
+        className="hs-navbar-menu"
+        items={headerNav}
+        role="navigation"
+        aria-label="Primary navigation"
+      />
+
+      <Button
+        type="primary"
+        className="hs-contact-btn"
+        onClick={onSignUp}
+        aria-label="Sign up"
+      >
+        Sign Up
+      </Button>
+    </header>
+  );
+};
+/* ================================
+   End HSHeader
+   ================================= */
 
 const serviceList = [
   { title: "Residential Cleaning", desc: "Homes, apartments, and condos", img: s1 },
@@ -103,9 +178,151 @@ const packages = [
 const LandingCleaningPage: React.FC = () => {
   const [form] = Form.useForm();
 
+  // new modal state for auth
+  const [authVisible, setAuthVisible] = useState(false);
+
+  // keep separate forms for login/register
+  const [loginForm] = Form.useForm();
+  const [registerForm] = Form.useForm();
+
   const onFinish = (values: any) => {
     console.log("Booking request:", values);
     // TODO: send booking request to API
+  };
+
+  // handlers for auth modal forms
+  const onLogin = (values: any) => {
+    console.log("Login values:", values);
+    // perform login action or call API
+    // for now just close modal
+    setAuthVisible(false);
+  };
+
+  const onRegister = (values: any) => {
+    console.log("Register values:", values);
+    // perform register action then optionally close modal or keep open
+    setAuthVisible(false);
+  };
+
+  // Renders the Auth modal (Login + Register)
+  const AuthModal = () => {
+    return (
+      <Modal
+        open={authVisible}
+        onCancel={() => setAuthVisible(false)}
+        footer={null}
+        centered
+        bodyStyle={{ padding: 28 }}
+        closeIcon={<span style={{ fontSize: 20, color: "#9aa4b2" }}>✕</span>}
+        className="lr-auth-modal" // reuse existing / similar classes you already have in CSS
+        width={560}
+        aria-labelledby="auth-modal-title"
+      >
+        <div style={{ maxWidth: 480, margin: "0 auto" }}>
+          <Tabs defaultActiveKey="login" type="line" centered>
+            <TabPane tab="Login" key="login">
+              <Form
+                form={loginForm}
+                layout="vertical"
+                onFinish={onLogin}
+                initialValues={{ remember: true }}
+              >
+                <Form.Item
+                  label={<span style={{ fontWeight: 600 }}>Email / Phone</span>}
+                  name="identifier"
+                  rules={[{ required: true, message: "Please enter email / phone" }]}
+                >
+                  <Input placeholder="john@example.com or +1 555 123 4567" />
+                </Form.Item>
+
+                <Form.Item
+                  label={<span style={{ fontWeight: 600 }}>Password</span>}
+                  name="password"
+                  rules={[{ required: true, message: "Please enter your password" }]}
+                >
+                  <Input.Password placeholder="Password" />
+                </Form.Item>
+
+                <Form.Item name="remember" valuePropName="checked">
+                  <Checkbox>Remember me</Checkbox>
+                </Form.Item>
+
+                <Form.Item>
+                  <Button type="primary" htmlType="submit" block style={{ height: 44 }}>
+                    Login
+                  </Button>
+                </Form.Item>
+              </Form>
+            </TabPane>
+
+            <TabPane tab="Register" key="register">
+              <Form
+                form={registerForm}
+                layout="vertical"
+                onFinish={onRegister}
+              >
+                <Form.Item
+                  label={<span style={{ fontWeight: 600 }}>Full name</span>}
+                  name="fullName"
+                  rules={[{ required: true, message: "Please enter your full name" }]}
+                >
+                  <Input placeholder="John Doe" />
+                </Form.Item>
+
+                <Form.Item
+                  label={<span style={{ fontWeight: 600 }}>Email</span>}
+                  name="email"
+                  rules={[{ required: true, type: "email", message: "Please enter valid email" }]}
+                >
+                  <Input placeholder="john@example.com" />
+                </Form.Item>
+
+                <Form.Item
+                  label={<span style={{ fontWeight: 600 }}>Phone</span>}
+                  name="phone"
+                  rules={[{ required: true, message: "Please enter phone number" }]}
+                >
+                  <Input placeholder="+1 555 123 4567" />
+                </Form.Item>
+
+                <Form.Item
+                  label={<span style={{ fontWeight: 600 }}>Password</span>}
+                  name="regPassword"
+                  rules={[{ required: true, message: "Please choose a password" }]}
+                >
+                  <Input.Password placeholder="Choose a password" />
+                </Form.Item>
+
+                <Form.Item
+                  label={<span style={{ fontWeight: 600 }}>Confirm Password</span>}
+                  name="confirmPassword"
+                  dependencies={["regPassword"]}
+                  rules={[
+                    { required: true, message: "Please confirm password" },
+                    ({ getFieldValue }) => ({
+                      validator(_, value) {
+                        if (!value || getFieldValue("regPassword") === value) {
+                          return Promise.resolve();
+                        }
+                        return Promise.reject(new Error("Passwords do not match"));
+                      },
+                    }),
+                  ]}
+                >
+                  <Input.Password placeholder="Confirm password" />
+                </Form.Item>
+
+                <Form.Item>
+                  <Button type="primary" htmlType="submit" block style={{ height: 44 }}>
+                    Register
+                  </Button>
+                </Form.Item>
+              </Form>
+            </TabPane>
+          </Tabs>
+        </div>
+      </Modal>
+    );
   };
 
   return (
@@ -129,58 +346,60 @@ const LandingCleaningPage: React.FC = () => {
           Sign Up
         </Button>
       </header>
+      {/* ========== NAVBAR (replaced with HSHeader) ========== */}
+      {/* Pass the onSignUp to open the modal */}
+      <HSHeader onSignUp={() => setAuthVisible(true)} />
       {/* ========== /NAVBAR ========== */}
 
-      {/* HERO SECTION */}
-<section className="lc-hero lc-hero--large">
-  <div className="lc-hero-inner">
-    <div className="lc-hero-content">
-      <div className="lc-hero-top">
-        <span className="lc-hero-icon" aria-hidden>
-          {/* sparkle / star icon */}
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-            <path d="M12 2l1.8 4L18 8l-4 1.8L12 14l-1.8-4L6 8l4.2-2L12 2z" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </span>
+      {/* render modal */}
+      <AuthModal />
 
-        <span className="lc-hero-sub">Professional Cleaning Service</span>
-      </div>
+      {/* ========== HERO SECTION ========== */}
+      <section className="lc-hero lc-hero--large">
+        <div className="lc-hero-inner">
+          <div className="lc-hero-content">
+            <div className="lc-hero-top">
+              <span className="lc-hero-icon" aria-hidden>
+                {/* sparkle / star icon */}
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M12 2l1.8 4L18 8l-4 1.8L12 14l-1.8-4L6 8l4.2-2L12 2z"
+                    stroke="currentColor"
+                    strokeWidth="1.3"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </span>
 
-      <h1 className="lc-hero-title">
-        Sparkling Clean Homes &amp; Offices
-      </h1>
+              <span className="lc-hero-sub">Professional Cleaning Service</span>
+            </div>
 
-      <p className="lc-hero-desc">
-        Experience the difference with our professional cleaning services. We bring cleanliness,
-        hygiene, and peace of mind to your space.
-      </p>
+            <h1 className="lc-hero-title">Sparkling Clean Homes &amp; Offices</h1>
 
-      <div className="lc-hero-ctas">
-        <button className="lc-cta lc-cta--ghost">Book Now</button>
-        <button className="lc-cta lc-cta--primary">Get Quote</button>
-      </div>
-    </div>
-  </div>
-</section>
+            <p className="lc-hero-desc">
+              Experience the difference with our professional cleaning services. We bring cleanliness,
+              hygiene, and peace of mind to your space.
+            </p>
 
-
+            <div className="lc-hero-ctas">
+              <button className="lc-cta lc-cta--ghost">Book Now</button>
+              <button className="lc-cta lc-cta--primary">Get Quote</button>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <main className="lc-container">
         {/* SERVICES GRID */}
         <section className="lc-services">
           <h2 className="lc-section-title">Our Cleaning Services</h2>
-          <p className="lc-sub muted">
-            Comprehensive solutions for all your home and property needs
-          </p>
+          <p className="lc-sub muted">Comprehensive solutions for all your home and property needs</p>
 
           <Row gutter={[24, 24]}>
             {serviceList.map((s, idx) => (
               <Col xs={24} sm={12} md={6} key={idx}>
-                <Card
-                  hoverable
-                  className="lc-service-card"
-                  cover={<img src={s.img} alt={s.title} />}
-                >
+                <Card hoverable className="lc-service-card" cover={<img src={s.img} alt={s.title} />}>
                   <div className="lc-service-body">
                     <h3>{s.title}</h3>
                     <p className="muted">{s.desc}</p>
@@ -191,42 +410,37 @@ const LandingCleaningPage: React.FC = () => {
           </Row>
         </section>
 
-<section className="lc-included" aria-labelledby="included-heading">
-  <div className="lc-included-inner">
-    <h2 id="included-heading" className="lc-section-title">What's Included</h2>
-    <p className="lc-sub muted">
-      Our comprehensive cleaning service covers every corner of your space
-    </p>
+        <section className="lc-included" aria-labelledby="included-heading">
+          <div className="lc-included-inner">
+            <h2 id="included-heading" className="lc-section-title">What's Included</h2>
+            <p className="lc-sub muted">Our comprehensive cleaning service covers every corner of your space</p>
 
-    {/* grid of boxes */}
-    <div className="lc-included-grid" role="list">
-      {[
-        "Deep cleaning of all rooms",
-        "Kitchen and bathroom sanitization",
-        "Window and glass cleaning",
-        "Floor mopping and vacuuming",
-        "Dusting and surface cleaning",
-        "Eco-friendly cleaning products",
-        "Trained and verified staff",
-        "Flexible scheduling",
-      ].map((txt, i) => (
-        <div key={i} className="lc-included-box" role="listitem" aria-label={txt}>
-          <div className="lc-included-left" aria-hidden>
-            {/* green check SVG */}
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-              <path d="M20 6L9 17l-5-5" stroke="#16a34a" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
+            {/* grid of boxes */}
+            <div className="lc-included-grid" role="list">
+              {[
+                "Deep cleaning of all rooms",
+                "Kitchen and bathroom sanitization",
+                "Window and glass cleaning",
+                "Floor mopping and vacuuming",
+                "Dusting and surface cleaning",
+                "Eco-friendly cleaning products",
+                "Trained and verified staff",
+                "Flexible scheduling",
+              ].map((txt, i) => (
+                <div key={i} className="lc-included-box" role="listitem" aria-label={txt}>
+                  <div className="lc-included-left" aria-hidden>
+                    {/* green check SVG */}
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                      <path d="M20 6L9 17l-5-5" stroke="#16a34a" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </div>
+
+                  <div className="lc-included-text">{txt}</div>
+                </div>
+              ))}
+            </div>
           </div>
-
-          <div className="lc-included-text">
-            {txt}
-          </div>
-        </div>
-      ))}
-    </div>
-  </div>
-</section>
-
+        </section>
 
         {/* PRICING */}
         <section className="lc-pricing">
@@ -267,128 +481,83 @@ const LandingCleaningPage: React.FC = () => {
         </section>
 
         {/* BOOKING FORM */}
-     {/* ====== BOOKING SECTION (replace existing booking section with this) ====== */}
-<section className="lc-booking">
-  <h2 className="lc-section-title">Book Your Cleaning Service</h2>
-  <p className="lc-sub muted">
-    Fill out the form below and we'll get back to you within 24 hours
-  </p>
+        <section className="lc-booking">
+          <h2 className="lc-section-title">Book Your Cleaning Service</h2>
+          <p className="lc-sub muted">Fill out the form below and we'll get back to you within 24 hours</p>
 
-  <div className="lc-booking-card">
-    <Form form={form} layout="vertical" onFinish={onFinish}>
-      <Row gutter={16}>
-        <Col xs={24} md={12}>
-          <Form.Item
-            name="name"
-            label="Full Name"
-            rules={[{ required: true }]}
-          >
-            <Input placeholder="John Doe" />
-          </Form.Item>
-        </Col>
+          <div className="lc-booking-card">
+            <Form form={form} layout="vertical" onFinish={onFinish}>
+              <Row gutter={16}>
+                <Col xs={24} md={12}>
+                  <Form.Item name="name" label="Full Name" rules={[{ required: true }]}>
+                    <Input placeholder="John Doe" />
+                  </Form.Item>
+                </Col>
 
-        <Col xs={24} md={12}>
-          <Form.Item
-            name="email"
-            label="Email"
-            rules={[{ required: true, type: "email" }]}
-          >
-            <Input placeholder="john@example.com" />
-          </Form.Item>
-        </Col>
+                <Col xs={24} md={12}>
+                  <Form.Item name="email" label="Email" rules={[{ required: true, type: "email" }]}>
+                    <Input placeholder="john@example.com" />
+                  </Form.Item>
+                </Col>
 
-        <Col xs={24} md={12}>
-          <Form.Item
-            name="phone"
-            label="Phone Number"
-            rules={[{ required: true }]}
-          >
-            <Input placeholder="+1 (555) 123-4567" />
-          </Form.Item>
-        </Col>
+                <Col xs={24} md={12}>
+                  <Form.Item name="phone" label="Phone Number" rules={[{ required: true }]}>
+                    <Input placeholder="+1 (555) 123-4567" />
+                  </Form.Item>
+                </Col>
 
-        {/* Service Type: fixed options (matches screenshot) */}
-        <Col xs={24} md={12}>
-          <Form.Item
-            name="serviceType"
-            label="Service Type"
-            rules={[{ required: true }]}
-          >
-            <Select placeholder="Select Cleaning Service">
-              <Select.Option value="Basic Service">Basic Service</Select.Option>
-              <Select.Option value="Standard Service">Standard Service</Select.Option>
-              <Select.Option value="Premium Service">Premium Service</Select.Option>
-              <Select.Option value="Emergency Service">Emergency Service</Select.Option>
-            </Select>
-          </Form.Item>
-        </Col>
+                <Col xs={24} md={12}>
+                  <Form.Item name="serviceType" label="Service Type" rules={[{ required: true }]}>
+                    <Select placeholder="Select Cleaning Service">
+                      <Select.Option value="Basic Service">Basic Service</Select.Option>
+                      <Select.Option value="Standard Service">Standard Service</Select.Option>
+                      <Select.Option value="Premium Service">Premium Service</Select.Option>
+                      <Select.Option value="Emergency Service">Emergency Service</Select.Option>
+                    </Select>
+                  </Form.Item>
+                </Col>
 
-        <Col xs={24}>
-          <Form.Item
-            name="address"
-            label="Service Address"
-            rules={[{ required: true }]}
-          >
-            <Input placeholder="123 Main St, City, State, ZIP" />
-          </Form.Item>
-        </Col>
+                <Col xs={24}>
+                  <Form.Item name="address" label="Service Address" rules={[{ required: true }]}>
+                    <Input placeholder="123 Main St, City, State, ZIP" />
+                  </Form.Item>
+                </Col>
 
-        <Col xs={24} md={12}>
-          <Form.Item
-            name="date"
-            label="Preferred Date"
-            rules={[{ required: true }]}
-          >
-            {/* keep DatePicker for the exact UI shown */}
-            <DatePicker className="lc-datepicker" />
-          </Form.Item>
-        </Col>
+                <Col xs={24} md={12}>
+                  <Form.Item name="date" label="Preferred Date" rules={[{ required: true }]}>
+                    <DatePicker className="lc-datepicker" />
+                  </Form.Item>
+                </Col>
 
-        {/* Preferred Time: replaced TimePicker with Select to match screenshot slots */}
-        <Col xs={24} md={12}>
-          <Form.Item
-            name="time"
-            label="Preferred Time"
-            rules={[{ required: true }]}
-          >
-            <Select placeholder="Select time slot">
-              <Select.Option value="08:00-10:00">8:00 AM - 10:00 AM</Select.Option>
-              <Select.Option value="10:00-12:00">10:00 AM - 12:00 PM</Select.Option>
-              <Select.Option value="12:00-14:00">12:00 PM - 2:00 PM</Select.Option>
-              <Select.Option value="14:00-16:00">2:00 PM - 4:00 PM</Select.Option>
-              <Select.Option value="16:00-18:00">4:00 PM - 6:00 PM</Select.Option>
-            </Select>
-          </Form.Item>
-        </Col>
+                <Col xs={24} md={12}>
+                  <Form.Item name="time" label="Preferred Time" rules={[{ required: true }]}>
+                    <Select placeholder="Select time slot">
+                      <Select.Option value="08:00-10:00">8:00 AM - 10:00 AM</Select.Option>
+                      <Select.Option value="10:00-12:00">10:00 AM - 12:00 PM</Select.Option>
+                      <Select.Option value="12:00-14:00">12:00 PM - 2:00 PM</Select.Option>
+                      <Select.Option value="14:00-16:00">2:00 PM - 4:00 PM</Select.Option>
+                      <Select.Option value="16:00-18:00">4:00 PM - 6:00 PM</Select.Option>
+                    </Select>
+                  </Form.Item>
+                </Col>
 
-        <Col xs={24}>
-          <Form.Item name="details" label="Additional Details">
-            <TextArea
-              rows={4}
-              placeholder="Tell us more about your requirements..."
-            />
-          </Form.Item>
-        </Col>
+                <Col xs={24}>
+                  <Form.Item name="details" label="Additional Details">
+                    <TextArea rows={4} placeholder="Tell us more about your requirements..." />
+                  </Form.Item>
+                </Col>
 
-        <Col xs={24}>
-          <Form.Item>
-            {/* black submit bar — uses your existing css class lc-submit-btn */}
-            <Button
-              htmlType="submit"
-              className="lc-submit-btn"
-              size="large"
-              block
-            >
-              Submit Booking Request
-            </Button>
-          </Form.Item>
-        </Col>
-      </Row>
-    </Form>
-  </div>
-</section>
-{/* ====== /BOOKING SECTION ====== */}
-
+                <Col xs={24}>
+                  <Form.Item>
+                    <Button htmlType="submit" className="lc-submit-btn" size="large" block>
+                      Submit Booking Request
+                    </Button>
+                  </Form.Item>
+                </Col>
+              </Row>
+            </Form>
+          </div>
+        </section>
 
         {/* Insert WhyChooseSection here (renders pale-blue row) */}
         <WhyChooseSection />
@@ -457,35 +626,33 @@ function WhyChooseSection() {
             </div>
           </div>
 
-       {/* Item 3 — EXACT Dollar Icon */}
-<div className="lc-why-item" role="listitem">
-  <div className="lc-why-icon-circle lc-why-icon-circle--dollar" aria-hidden>
-    <svg
-      className="lc-why-dollar-svg"
-      viewBox="0 0 24 24"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-      focusable="false"
-    >
-      <path
-        d="M12 3v2m0 14v2m3-11c0-1.657-1.567-3-3.5-3S8 6.343 8 8
-           s1.567 3 3.5 3S15 12.343 15 14s-1.567 3-3.5 3S8 17.657 8 16"
-        stroke="#fff"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        fill="none"
-      />
-    </svg>
-  </div>
+          <div className="lc-why-item" role="listitem">
+            <div className="lc-why-icon-circle lc-why-icon-circle--dollar" aria-hidden>
+              <svg
+                className="lc-why-dollar-svg"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <text
+                  x="50%"
+                  y="50%"
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                  style={{
+                    fontFamily: "Inter, Arial, sans-serif",
+                    fontWeight: 700,
+                    fontSize: "20px",
+                    fill: "#fff",
+                  }}
+                >
+                  $
+                </text>
+              </svg>
+            </div>
 
-  <div className="lc-why-title">Transparent Pricing</div>
-  <div className="lc-why-desc">
-    No hidden fees or surprise charges. What you see is what you pay
-  </div>
-</div>
-
-
+            <div className="lc-why-title">Transparent Pricing</div>
+            <div className="lc-why-desc">No hidden fees or surprise charges. What you see is what you pay</div>
+          </div>
         </div>
       </div>
     </section>
@@ -501,8 +668,8 @@ function DarkFooter() {
         <div className="lc-footer-col">
           <h4 className="lc-footer-title">About Us</h4>
           <p className="lc-footer-about">
-            Your trusted partner for all home and property-related services. Quality,
-            reliability, and customer satisfaction guaranteed.
+            Your trusted partner for all home and property-related services. Quality, reliability,
+            and customer satisfaction guaranteed.
           </p>
         </div>
 
@@ -534,15 +701,11 @@ function DarkFooter() {
         <div className="lc-footer-col">
           <h4 className="lc-footer-title">Contact Info</h4>
 
-          {/* Use AntD icons (PhoneOutlined / MailOutlined / EnvironmentOutlined)
-              so sizing and stroke match the social icons exactly */}
           <ul className="lc-contact-list">
             <div className="lc-contact-row">
-  {/* after: exact replacement */}
-<Phone className="lc-contact-icon lc-thin-phone" aria-hidden />
-<span className="lc-contact-text"> +1 (555) 123-4567</span>
-</div>
-
+              <Phone className="lc-contact-icon lc-thin-phone" aria-hidden />
+              <span className="lc-contact-text"> +1 (555) 123-4567</span>
+            </div>
 
             <li>
               <MailOutlined className="lc-contact-icon" />

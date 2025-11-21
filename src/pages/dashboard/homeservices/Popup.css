@@ -1,0 +1,217 @@
+
+
+/* Remove padding around close button */
+.ant-modal .ant-modal-close {
+  top: 8px !important;
+  right: 8px !important;
+}
+
+/* Remove default header area spacing */
+.ant-modal .ant-modal-header {
+  padding: 0 !important;
+  margin: 0 !important;
+  border-bottom: none;
+  height: 0;             /* removes extra height */
+}
+
+.ant-modal .ant-modal-body {
+  padding-top: 5px !important; /* now it will move to the top properly */
+}
+
+
+.popup-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.popup-subtitle {
+  font-size: 15px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+/* ---------------------- */
+/*       CARD STYLES      */
+/* ---------------------- */
+
+.popup-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 20px;
+  width: 100%;
+}
+
+.popup-card {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #ffffff;
+  box-shadow: 0px 4px 18px rgba(0, 0, 0, 0.12);
+  transition: transform 0.25s ease;
+  padding-bottom: 10px;
+  cursor: pointer;
+}
+
+.popup-card:hover {
+  transform: translateY(-5px);
+}
+
+/* IMAGE */
+.popup-card-image {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-bottom: 1px solid #eee;
+}
+
+/* Overlay Button */
+.popup-overlay-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(255, 255, 255, 0.92);
+  border: none;
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* CONTENT */
+.popup-card-content {
+  padding: 14px;
+}
+
+.popup-card-content h4 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #222;
+}
+
+.popup-card-content p {
+  color: #666;
+  font-size: 13px;
+  margin-top: 6px;
+  line-height: 1.35;
+}
+
+/* Footer: price + button */
+.popup-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.popup-price {
+  font-size: 15px;
+  font-weight: 700;
+  color: #2979ff;
+}
+
+.popup-view-btn {
+  background: #10b329;
+  color: white;
+  border: none;
+  padding: 7px 16px;
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.popup-view-btn:hover {
+  background: #089823;
+}
+
+/* ---------------------- */
+/*   Why Choose Section   */
+/* ---------------------- */
+
+.why-choose-box {
+  margin-top: 28px;
+  padding: 20px;
+  background: #f3f1ff;
+  border-radius: 14px;
+}
+
+.why-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.why-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.why-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 30%;
+  min-width: 180px;
+}
+
+.why-icon {
+  background: #b78af1;
+  color: white;
+  padding: 10px;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+/* ---------------------- */
+/*   RESPONSIVE DEVICES   */
+/* ---------------------- */
+
+@media (max-width: 992px) {
+  .popup-card-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 18px;
+  }
+
+  .why-item {
+    width: 45%;
+  }
+}
+
+@media (max-width: 600px) {
+  .popup-card-grid {
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  }
+
+  .popup-card-image {
+    height: 135px;
+  }
+
+  .popup-title {
+    font-size: 20px;
+  }
+
+  .why-grid {
+    flex-direction: column;
+  }
+
+  .why-item {
+    width: 100%;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
