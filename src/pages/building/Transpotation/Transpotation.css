@@ -4,7 +4,7 @@
   background: #f8fafc;
   min-height: 100vh;
   padding-bottom: 20px;
-  margin-left: 75px;
+  margin-left: 55px;
 }
 
 
@@ -16,6 +16,8 @@
   border-bottom-left-radius: 0px;
   border-bottom-right-radius: 0px;
   box-sizing: border-box;
+  border-radius: 14px;
+
 }
 
 .transport-header h2 {
@@ -112,21 +114,10 @@
   background: #b45309;
 }
 
-@media (max-width: 900px) {
-  .transport-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
 
-@media (max-width: 480px) {
-  .transport-grid {
-    grid-template-columns: 1fr;
-    padding: 0 12px;
-  }
-}
 .tf-wrapper {
   width: 100%;
-  padding: 24px;
+  padding: 0;
   background: #fff;
   font-family: "Inter", sans-serif;
 }
@@ -134,7 +125,7 @@
 .tf-container {
   background: white;
   border-radius: 16px;
-  padding: 24px;
+  padding: 0;
   width: 100%;
 }
 
@@ -187,10 +178,11 @@
 }
 
 .tf-price-box {
-  margin-top: 18px;
+  margin-top: 8px;
   background: #eef4ff;
-  padding: 20px;
-  border-radius: 12px;
+  padding: px;
+  border-radius: 5px;
+  text-align: center;
 }
 
 .tf-price-label {
@@ -222,21 +214,46 @@
   color: #3fbf62;
   display: flex;
   align-items: center;
+  font-size: 13px;
 }
 
 /* RIGHT FORM */
 .tf-form-box {
   width: 60%;
-  background: #f8fafc;
-  padding: 28px;
+  background: #ffffff;
+  padding: 18px;
   border-radius: 16px;
-  border: 1px solid #e2e8f0;
+  border: 1px solid #eeeeee;
 }
 
 .tf-form-title {
-  font-size: 20px;
+  font-size: 17px;
   margin-bottom: 18px;
   font-weight: 600;
+}
+
+.tf-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.tf-modal-content {
+  width: 90%;
+  max-width: 850px;
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 5px 26px rgba(0,0,0,0.3);
 }
 
 /* GRID */
@@ -261,10 +278,10 @@
 .tf-field input,
 .tf-field select,
 .tf-field textarea {
-  padding: 20;
-  border: 2px solid #cbd5e1;
+  padding: 10;
+  border: 1px solid #b0b2b4;
   border-radius: 8px;
-  font-size: 14px;
+  font-size: 13px;
 }
 
 textarea {
@@ -276,14 +293,15 @@ textarea {
 .tf-checkbox-group {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
+  gap: 0;
   margin-bottom: 16px;
 }
 
 .tf-checkbox-group label {
   display: flex;
   gap: 8px;
-  font-size: 15px;
+  font-size: 12px;
+  align-items: center;
 }
 
 /* BUTTONS */
@@ -311,10 +329,25 @@ textarea {
   color: #fff;
 }
 
-/* RESPONSIVE */
+/* ========== TABLETS (max-width: 900px) ========== */
+
 @media (max-width: 900px) {
+
+  /* Transport Grid */
+  .transport-grid {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 20px;
+  }
+
+  .transport-wrapper {
+    width: 95%;
+    margin-left: 10px;
+  }
+
+  /* TF Modal Layout */
   .tf-main {
     flex-direction: column;
+    gap: 20px;
   }
 
   .tf-left,
@@ -322,10 +355,120 @@ textarea {
     width: 100%;
   }
 
-  .tf-checkbox-group {
+  .tf-image {
+    height: 180px;
+  }
+
+  .tf-modal-content {
+    width: 95%;
+    max-width: 650px;
+    padding: 18px;
+  }
+
+}
+
+
+/* ========== MOBILE (max-width: 600px) ========== */
+
+@media (max-width: 600px) {
+
+  /* Transport wrapper mobile fix */
+  .transport-wrapper {
+    width: 100%;
+    margin-left: 0;
+    padding: 10px;
+  }
+
+  /* Header Responsive */
+  .transport-header {
+    text-align: center;
+    padding: 12px;
+  }
+
+  .transport-header h2 {
+    font-size: 20px;
+  }
+
+  /* Grid → 1 column */
+  .transport-grid {
     grid-template-columns: 1fr;
+    padding: 0 10px;
+  }
+
+  /* TF Popup */
+  .tf-modal-content {
+    width: 95%;
+    max-width: 450px;
+    padding: 15px;
+  }
+
+  .tf-header h2 {
+    font-size: 18px;
+  }
+
+  .tf-image {
+    height: 150px;
+  }
+
+  /* TF Form Inputs */
+  .tf-field input,
+  .tf-field select,
+  .tf-field textarea {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  textarea {
+    height: 70px;
+  }
+
+  /* Checkbox → single column */
+  .tf-checkbox-group {
+    grid-template-columns: 1fr !important;
+    gap: 10px 0;
+  }
+
+  .tf-btn {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+}
+
+
+/* ========== SMALL DEVICES (max-width: 420px) ========== */
+
+@media (max-width: 420px) {
+
+  .transport-header h2 {
+    font-size: 18px;
+  }
+
+  .tf-modal-content {
+    width: 98%;
+    padding: 12px;
+  }
+
+  .tf-image {
+    height: 120px;
+  }
+
+  .tf-field label {
+    font-size: 11px;
+  }
+
+  .tf-field input,
+  .tf-field select {
+    height: 28px;
+    font-size: 11px;
+  }
+
+  textarea {
+    height: 60px;
+    font-size: 11px;
   }
 }
+
 
 
 
