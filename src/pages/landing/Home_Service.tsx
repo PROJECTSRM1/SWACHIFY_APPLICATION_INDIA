@@ -29,7 +29,7 @@ import {
   InstagramOutlined,
   LinkedinOutlined,
 } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import "./homeservice.css";
 
@@ -141,6 +141,9 @@ const Home_Service: React.FC = () => {
   const [authModalVisible, setAuthModalVisible] = useState(false);
   const [activeTab, setActiveTab] = useState<"login" | "register">("login");
 
+  // react-router navigate
+  const navigate = useNavigate();
+
   // Login form
   const [loginForm] = Form.useForm();
   // Register form
@@ -152,6 +155,8 @@ const Home_Service: React.FC = () => {
     message.success("Logged in (demo)");
     setAuthModalVisible(false);
     loginForm.resetFields();
+    // navigate to dashboard
+    navigate("/app/dashboard");
   };
 
   const onRegisterFinish = (values: any) => {
@@ -160,6 +165,8 @@ const Home_Service: React.FC = () => {
     message.success("Registered (demo)");
     setAuthModalVisible(false);
     registerForm.resetFields();
+    // navigate to dashboard (or welcome/setup page)
+    navigate("app/dashboard");
   };
 
   const onRegisterValidatePassword = (_: any, value: string) => {
