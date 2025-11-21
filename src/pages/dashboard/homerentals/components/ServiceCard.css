@@ -1,0 +1,139 @@
+.service-card {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s ease;
+  border: 1px solid var(--border-color);
+}
+
+.service-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-4px);
+}
+
+.sc-image-wrap {
+  height: 200px;
+  overflow: hidden;
+  background: var(--bg-light);
+}
+
+.sc-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+}
+
+.service-card:hover .sc-image {
+  transform: scale(1.05);
+}
+
+.sc-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sc-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.sc-sub {
+  color: var(--text-secondary);
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.sc-cta {
+  margin-top: 8px;
+}
+
+.browse-btn {
+  background: var(--secondary-color);
+  border-color: var(--secondary-color);
+  width: 100%;
+}
+
+.browse-btn:hover {
+  background: #1e3a8a;
+  border-color: #1e3a8a;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .sc-image-wrap {
+    height: 180px;
+  }
+
+  .sc-title {
+    font-size: 18px;
+  }
+
+  .sc-sub {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sc-image-wrap {
+    height: 160px;
+  }
+
+  .sc-title {
+    font-size: 16px;
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-color: #8b5cf6;
+  --primary-dark: #6d28d9;
+  --secondary-color: #1e40af;
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  --text-muted: #9ca3af;
+  --bg-white: #ffffff;
+  --bg-light: #f9fafb;
+  --border-color: #e5e7eb;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --radius: 10px;
+  --radius-lg: 12px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--text-primary);
+  background-color: var(--bg-light);
+  line-height: 1.6;
+}
+
+.app-root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-main {
+  flex: 1;
+}
+
+.muted {
+  color: var(--text-muted);
+}
+
+
+
