@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Row, Col, Card, Button, Form, Input, Select, DatePicker, Menu, Modal, Tabs, Checkbox, message } from "antd";
+import { Row, Col, Card, Button, Form, Input, Select, DatePicker, Menu, Modal, Tabs, Checkbox } from "antd";
 // add this
 import { Phone } from "lucide-react";
 
@@ -11,7 +11,6 @@ import {
   ShopOutlined,
   CrownOutlined,
   AppstoreOutlined,
-  // PhoneOutlined,
   MailOutlined,
   EnvironmentOutlined,
   FacebookOutlined,
@@ -21,28 +20,19 @@ import {
   LinkedinOutlined
 } from "@ant-design/icons";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import "./landingrentals.css";
 
 const { Option } = Select;
-// const { TextArea } = Input;
-
-// Image imports — keep exact paths (case-sensitive)
-// add near the other image imports (keep your existing imports too)
-// import heroImage from "../../assets/landingimages/landingrenatlshero.jpg"
 const { TabPane } = Tabs;
 
-/* ================================
-   HSHeader component (inserted)
-   Re-uses .hs-* CSS classes so it will match your other header/UI
-   ================================= */
+/* ================================ HSHeader component ================================ */
 type HSHeaderProps = {
   selectedKey?: string;
   onSignUp?: () => void;
 };
 
-// Default selectedKey is now empty string (no selection by default)
 export const HSHeader: React.FC<HSHeaderProps> = ({ selectedKey = "", onSignUp = () => {} }) => {
   const headerNav = [
     { key: "home", label: <Link to="/">Home</Link> },
@@ -54,7 +44,6 @@ export const HSHeader: React.FC<HSHeaderProps> = ({ selectedKey = "", onSignUp =
     { key: "materials", label: <Link to="/raw-material">Construction Materials</Link> },
   ];
 
-  // ensure no highlight if selectedKey is empty
   const selectedKeysArray = selectedKey ? [selectedKey] : [];
 
   return (
@@ -83,12 +72,9 @@ export const HSHeader: React.FC<HSHeaderProps> = ({ selectedKey = "", onSignUp =
     </header>
   );
 };
-/* ================================
-   End HSHeader
-   ================================= */
+/* ================================ End HSHeader ================================ */
 
-/* ========== IMAGE IMPORTS (use these variables) ========== */
-/* Keep these imports at the top (you had them in your earlier message) */
+/* ========== IMAGE IMPORTS ========== */
 import heroimg from "../../assets/landingimages/landingrenatlshero.jpg";
 import apt1 from "../../assets/landingimages/2bhkapartment.jpg";
 import apt2 from "../../assets/landingimages/3bhkpenthouse.jpg";
@@ -98,17 +84,6 @@ import apt5 from "../../assets/landingimages/luxuryvillawithpool.jpg";
 import apt6 from "../../assets/landingimages/modern1bhkflat.jpg";
 /* ======================================================= */
 
-  const navItems = [
-    { key: "home", label: <Link to="/">Home</Link> },
-    { key: "cleaning", label: <Link to="/cleaningservice">Cleaning</Link> },
-    { key: "packers", label: <Link to="/LandingPackers">Packers & Movers</Link> },
-    { key: "home_services", label: <Link to="/home_service">Home Services</Link> },
-    { key: "rentals", label: <Link to="/rentals">Rentals</Link> },
-    { key: "commercial", label: <Link to="/commercial-plots">Buy&Sale Properties</Link> },
-    { key: "materials", label: <Link to="/ConstructionMaterials">Construction Materials</Link> },
-  ];
-  console.log(navItems);
-
 const Landingrentals: React.FC = () => {
   const [form] = Form.useForm();
 
@@ -117,6 +92,8 @@ const Landingrentals: React.FC = () => {
   const [activeTab, setActiveTab] = useState<"login" | "register">("login");
   const [loginForm] = Form.useForm();
   const [registerForm] = Form.useForm();
+
+  const navigate = useNavigate();
 
   const onSearch = (values: any) => {
     console.log("Search:", values);
@@ -128,16 +105,18 @@ const Landingrentals: React.FC = () => {
 
   const onLoginFinish = (values: any) => {
     console.log("Login values:", values);
-    message.success("Logged in (demo)");
+    // close modal, reset, then navigate
     setAuthModalVisible(false);
     loginForm.resetFields();
+    setTimeout(() => navigate("/app/dashboard"), 150);
   };
 
   const onRegisterFinish = (values: any) => {
     console.log("Register values:", values);
-    message.success("Registered (demo)");
+    // close modal, reset, then navigate
     setAuthModalVisible(false);
     registerForm.resetFields();
+    setTimeout(() => navigate("/app/dashboard"), 150);
   };
 
   const onRegisterValidatePassword = (_: any, value: string) => {
@@ -148,7 +127,7 @@ const Landingrentals: React.FC = () => {
     return Promise.reject(new Error("Passwords do not match"));
   };
 
-  // === FEATURED PROPERTIES DATA (explicit to preserve exact order & content) ===
+  // === FEATURED PROPERTIES DATA ===
   const properties = [
     {
       id: 1,
@@ -233,14 +212,8 @@ const Landingrentals: React.FC = () => {
 
   return (
     <div className="lr-page">
-      {/* ========== NAVBAR (ADDED) ========== */}
-     
-      {/* ========== NAVBAR (REPLACED with HSHeader) ========== */}
-      {/* Pass the modal open handler so clicking Sign Up opens auth modal */}
       <HSHeader onSignUp={() => setAuthModalVisible(true)} />
-      {/* ========== /NAVBAR ========== */}
 
-      {/* Auth Modal (Login / Register) */}
       <Modal
         title={null}
         centered
@@ -355,7 +328,6 @@ const Landingrentals: React.FC = () => {
         </div>
       </Modal>
 
-      {/* HERO */}
       <section
         className="lr-hero lr-hero-with-image"
         style={{
@@ -401,12 +373,11 @@ const Landingrentals: React.FC = () => {
       </section>
 
       <main className="lr-container">
-        {/* Browse by Property Type */}
         <section className="lr-types">
           <h2 className="lr-section-title">Browse by Property Type</h2>
 
           <Row gutter={[24, 24]} justify="center">
-            {[
+            {[ 
               { title: "Apartments", count: "1,250+", icon: <HomeOutlined /> },
               { title: "Houses", count: "800+", icon: <ShopOutlined /> },
               { title: "Villas", count: "350+", icon: <CrownOutlined /> },
@@ -426,7 +397,6 @@ const Landingrentals: React.FC = () => {
           </Row>
         </section>
 
-        {/* Featured Properties */}
         <section className="lr-featured">
           <div className="lr-featured-head">
             <div>
@@ -477,7 +447,6 @@ const Landingrentals: React.FC = () => {
           </Row>
         </section>
 
-        {/* Amenities */}
         <section className="lr-amenities" aria-labelledby="amenities-heading">
           <div className="lr-amenities-inner">
             <div className="lr-amenities-top">
@@ -490,18 +459,7 @@ const Landingrentals: React.FC = () => {
             </div>
 
             <div className="lr-amenities-grid" role="list" aria-label="List of amenities">
-              {[
-                "24/7 Security",
-                "Swimming Pool",
-                "Gym & Fitness Center",
-                "Parking",
-                "Power Backup",
-                "Elevator",
-                "Garden/Park",
-                "Children's Play Area",
-                "Club House",
-                "Maintenance Staff"
-              ].map((amenity, i) => (
+              {[ "24/7 Security","Swimming Pool","Gym & Fitness Center","Parking","Power Backup","Elevator","Garden/Park","Children's Play Area","Club House","Maintenance Staff" ].map((amenity, i) => (
                 <div key={i} className="lr-amenity" role="listitem" aria-label={amenity}>
                   <span className="lr-amenity-check" aria-hidden>
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -594,7 +552,6 @@ const Landingrentals: React.FC = () => {
         </section>
       </main>
 
-      {/* Dark footer (unchanged) */}
       <footer className="lr-footer">
         <div className="lr-footer-inner lr-footer-grid">
           <div className="lr-footer-col">

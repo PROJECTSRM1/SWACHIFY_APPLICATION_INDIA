@@ -1,7 +1,12 @@
-  import  { useState } from "react";
-  import { Button, Card, Row, Col ,Menu} from "antd";
-  import { Link, } from "react-router-dom";
-  import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import {
+  Button,
+  Card,
+  Row,
+  Col,
+  Menu,
+} from "antd";
+import { Link, useNavigate } from "react-router-dom";
 
   import {
     HomeOutlined,
@@ -68,14 +73,48 @@
 
   const LandingPage = () => {
     const [menuOpen, setMenuOpen] = useState(false);
-   const navigate = useNavigate();
+  //  const navigate = useNavigate();
 
 
-    // ⭐ Scroll to Services Section
-    const scrollToServices = () => {
-      const section = document.getElementById("services-section");
-      section?.scrollIntoView({ behavior: "smooth" });
-    };
+  const navigate = useNavigate(); // ⭐ Added navigate
+
+  const scrollToServices = () => {
+    const section = document.getElementById("services-section");
+    section?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  // const openAuthModal = (tab: "login" | "register" = "register") => {
+  //   // setActiveAuthTab(tab);
+  //   // setAuthModalVisible(true);
+  // };
+
+  // const closeAuthModal = () => setAuthModalVisible(false);
+
+  // ⭐ When Login is successful → Go to dashboard
+  // const onLogin = (values: any) => {
+  //   console.log("login values", values);
+
+    // closeAuthModal();
+
+  //   setTimeout(() => {
+  //     navigate("/app/dashboard");   // ⭐ Redirect here
+  //   }, 80);
+  // };
+
+  // const onRegister = (values: any) => {
+  //   console.log("register values", values);
+  //   // closeAuthModal();
+  // };
+
+  // return (
+  //   <div className="landing-container">
+  //     {/* NAVBAR */}
+  //     <header className="hs-navbar">
+  //   // ⭐ Scroll to Services Section
+  //   const scrollToServices = () => {
+  //     const section = document.getElementById("services-section");
+  //     section?.scrollIntoView({ behavior: "smooth" });
+  //   };
 
     return (
       <div className="landing-container">
@@ -86,7 +125,12 @@
           <span className="hs-logo-text">SWACHIFY INDIA</span>
         </div>
 
-        <Menu mode="horizontal" selectedKeys={["home-services"]} className="hs-navbar-menu" items={navItems} />
+        <Menu
+          mode="horizontal"
+          selectedKeys={["home-services"]}
+          className="hs-navbar-menu"
+          items={navItems}
+        />
 
         <Button
           type="primary"
