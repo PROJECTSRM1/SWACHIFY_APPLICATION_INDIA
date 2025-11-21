@@ -4,6 +4,7 @@ import "./Dashboard.css";
 import ConstructionServices from "../building/building";
 import Packersandmovers from "./PackersAndMovers/Packersandmovers";
 import CleaningService from "./cleaningservice/CleaningService";
+import HomeServices from "./homeservices/HomeServices";
 
 const Dashboard: React.FC = () => {
   return (
@@ -27,6 +28,7 @@ const Dashboard: React.FC = () => {
       <CleaningService/>
       <Packersandmovers></Packersandmovers>
       <ConstructionServices/>
+      <HomeServices/>
       
       
 
