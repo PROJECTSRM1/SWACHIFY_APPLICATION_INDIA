@@ -22,7 +22,7 @@ import {
   SearchOutlined,
   EyeOutlined,
 } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./commercialplots.css";
 
 /* Update this path to your hero/background image file in your repo */
@@ -79,8 +79,7 @@ const CommercialPlots: React.FC = () => {
   const [selectedType, setSelectedType] = useState<string | undefined>(undefined);
 
   // booking form state (simple, local)
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
-  const [bookingDate, setBookingDate] = useState<any>(null);
+  const [setBookingDate] = useState<any>(null);
 
   // auth modal state
   const [authModalVisible, setAuthModalVisible] = useState(false);
@@ -89,6 +88,9 @@ const CommercialPlots: React.FC = () => {
   // login/register forms
   const [loginForm] = Form.useForm();
   const [registerForm] = Form.useForm();
+
+  // router
+  const navigate = useNavigate();
 
   const filteredProducts = useMemo(() => {
     const q = searchLocation.trim().toLowerCase();
@@ -105,19 +107,33 @@ const CommercialPlots: React.FC = () => {
     message.success("Logged in (demo)");
     setAuthModalVisible(false);
     loginForm.resetFields();
+
+    // navigate to dashboard
+    setTimeout(() => navigate("/app/dashboard"), 150);
   };
 
   const onRegisterFinish = (values: any) => {
     console.log("Register:", values);
-    message.success("Registered (demo)");
+    message.success("");
     setAuthModalVisible(false);
     registerForm.resetFields();
+
+    // navigate to dashboard
+    setTimeout(() => navigate("/app/dashboard"), 10);
   };
 
   const validateConfirm = (_: any, val: string) => {
     const pwd = registerForm.getFieldValue("password");
     if (!val || val === pwd) return Promise.resolve();
     return Promise.reject(new Error("Passwords do not match"));
+  };
+
+  // Booking submission - navigate to /app/dashboard after success
+  const handleBookingSubmit = () => {
+    // Here you'd normally collect booking form values and send to API.
+    // For demo, show success and redirect.
+    message.success("Booking request submitted");
+    setTimeout(() => navigate("/app/dashboard"), 150);
   };
 
   return (
@@ -444,7 +460,7 @@ const CommercialPlots: React.FC = () => {
                 </Col>
 
                 <Col xs={24}>
-                  <Button type="primary" block className="booking-submit">Submit Booking Request</Button>
+                  <Button type="primary" block className="booking-submit" onClick={handleBookingSubmit}>Submit Booking Request</Button>
                 </Col>
               </Row>
             </div>

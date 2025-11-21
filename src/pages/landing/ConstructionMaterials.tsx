@@ -1,23 +1,38 @@
-import React, { useState } from "react";
-import { Row, Col,Menu, Card, Button, Typography, Form, Input, DatePicker, Select } from "antd";
-import { Link } from "react-router-dom";
-// import { MenuOutlined, CloseOutlined } from "@ant-design/icons";
+// c:/Users/Manikantha.N/Desktop/SWACHIFY_APPLICATION_INDIA/src/pages/landing/ConstructionMaterials.tsx
+import React, { useState, useEffect } from "react";
+import {
+  Row,
+  Col,
+  Menu,
+  Card,
+  Button,
+  Typography,
+  Form,
+  Input,
+  DatePicker,
+  Select,
+  Modal,
+  Tabs,
+  Checkbox,
+} from "antd";
+import { Link, useNavigate } from "react-router-dom";
 import "./ConstructionMaterials.css";
 import heroImage from "../../assets/landingimages/brickwall.jpg";
-// import cc from "../../assets/landingimages/card1.jpg"
 
 const { Title, Text } = Typography;
 const { Option } = Select;
+const { TabPane } = Tabs;
 
-  const navItems = [
-    { key: "home", label: <Link to="/">Home</Link> },
-    { key: "cleaning", label: <Link to="/cleaningservice">Cleaning</Link> },
-    { key: "packers", label: <Link to="/LandingPackers">Packers & Movers</Link> },
-    { key: "home_services", label: <Link to="/home_service">Home Services</Link> },
-    { key: "rentals", label: <Link to="/rentals">Rentals</Link> },
-    { key: "commercial", label: <Link to="/commercial-plots">Buy&Sale Properties</Link> },
-    { key: "materials", label: <Link to="/ConstructionMaterials">Construction Materials</Link> },
-  ];
+/* ================= NAV ITEMS ================= */
+const navItems = [
+  { key: "home", label: <Link to="/">Home</Link> },
+  { key: "cleaning", label: <Link to="/cleaningservice">Cleaning</Link> },
+  { key: "packers", label: <Link to="/LandingPackers">Packers & Movers</Link> },
+  { key: "home_services", label: <Link to="/home_service">Home Services</Link> },
+  { key: "rentals", label: <Link to="/rentals">Rentals</Link> },
+  { key: "commercial", label: <Link to="/commercial-plots">Buy&Sale Properties</Link> },
+  { key: "materials", label: <Link to="/ConstructionMaterials">Construction Materials</Link> },
+];
 
 /* ================= NAVBAR SECTION ================= */
 interface NavbarProps {
@@ -26,24 +41,24 @@ interface NavbarProps {
 }
 const NavbarSection: React.FC<NavbarProps> = ({ menuOpen, setMenuOpen }) => (
   <>
-  <header className="hs-navbar">
-        <div className="hs-navbar-logo">
-          <span className="hs-logo-text">SWACHIFY INDIA</span>
-        </div>
+    <header className="hs-navbar">
+      <div className="hs-navbar-logo">
+        <span className="hs-logo-text">SWACHIFY INDIA</span>
+      </div>
 
-        <Menu mode="horizontal" selectedKeys={["home-services"]} className="hs-navbar-menu" items={navItems} />
+      <Menu
+        mode="horizontal"
+        selectedKeys={["home-services"]}
+        className="hs-navbar-menu"
+        items={navItems}
+      />
 
-        <Button
-          type="primary"
-          className="hs-contact-btn"
-          // onClick={() => {
-          //   setActiveTab("login");
-          //   setAuthModalVisible(true);
-          // }}
-        >
-          Sign Up
-        </Button>
-      </header>
+      {/* Sign Up button triggers modal */}
+      <Button type="primary" className="hs-contact-btn">
+        Sign Up
+      </Button>
+    </header>
+
     {menuOpen && (
       <ul className="mobile-menu">
         <li><Link to="/" onClick={() => setMenuOpen(false)}>Home</Link></li>
@@ -61,149 +76,192 @@ const NavbarSection: React.FC<NavbarProps> = ({ menuOpen, setMenuOpen }) => (
   </>
 );
 
-/* ================= DATA ================= */
+/* ================= DATA (unchanged) ================= */
 const services = [
   { title: "Free Delivery", description: "On orders above $500 within 50 miles" },
   { title: "Same-Day Dispatch", description: "Orders placed before 2 PM ship the same day" },
   { title: "Quality Assured", description: "All materials tested and certified" },
-  { title: "Quantity Calculator", description: "Free estimation service for your project" }
+  { title: "Quantity Calculator", description: "Free estimation service for your project" },
 ];
+
 const featuredProducts = [
   {
     title: "Premium Portland Cement",
     image: "https://via.placeholder.com/300x200?text=Cement",
     price: "$8.50 per bag (50kg)",
     rating: "4.8/5",
-    details: ["High Strength", "Quick Setting", "Weather Resistant"]
+    details: ["High Strength", "Quick Setting", "Weather Resistant"],
   },
   {
     title: "TMT Steel Bars (Fe 500)",
     image: "https://via.placeholder.com/300x200?text=Steel",
     price: "$650 per ton",
     rating: "4.9/5",
-    details: ["High Tensile", "Corrosion Resistant", "ISI Certified"]
+    details: ["High Tensile", "Corrosion Resistant", "ISI Certified"],
   },
   {
     title: "AAC Blocks",
     image: "https://via.placeholder.com/300x200?text=AAC+Blocks",
     price: "$2.20 per block",
     rating: "4.7/5",
-    details: ["Lightweight", "Thermal Insulation", "Fire Resistant"]
+    details: ["Lightweight", "Thermal Insulation", "Fire Resistant"],
   },
   {
     title: "M-Sand (Manufactured Sand)",
     image: "https://via.placeholder.com/300x200?text=MSand",
     price: "$45 per ton",
     rating: "4.6/5",
-    details: ["Consistent Quality", "Eco Friendly", "No Impurities"]
-  }
+    details: ["Consistent Quality", "Eco Friendly", "No Impurities"],
+  },
 ];
+
 const productCategories = [
   {
     title: "Cement & Concrete",
     items: ["Portland Cement", "Ready-Mix Concrete", "Mortar", "Grout"],
-    image: "cc"
+    image: "https://via.placeholder.com/400x260?text=Cement",
   },
   {
     title: "Steel & Metals",
     items: ["TMT Bars", "Steel Beams", "Wire Mesh", "Angles & Channels"],
-    image: "https://via.placeholder.com/400x260?text=Steel"
+    image: "https://via.placeholder.com/400x260?text=Steel",
   },
   {
     title: "Bricks & Blocks",
     items: ["Red Bricks", "Fly Ash Bricks", "AAC Blocks", "Concrete Blocks"],
-    image: "https://via.placeholder.com/400x260?text=Bricks"
+    image: "https://via.placeholder.com/400x260?text=Bricks",
   },
   {
     title: "Sand & Aggregates",
     items: ["River Sand", "M Sand", "Coarse Aggregates", "Stone Chips"],
-    image: "https://via.placeholder.com/400x260?text=Sand"
+    image: "https://via.placeholder.com/400x260?text=Sand",
   },
   {
     title: "Roofing Materials",
     items: ["Roof Tiles", "Metal Sheets", "Waterproofing", "Insulation"],
-    image: "https://via.placeholder.com/400x260?text=Roofing"
+    image: "https://via.placeholder.com/400x260?text=Roofing",
   },
   {
     title: "Plumbing & Electrical",
     items: ["PPR Pipes", "Copper Wires", "Switches", "Fittings"],
-    image: "https://via.placeholder.com/400x260?text=Plumbing"
-  }
+    image: "https://via.placeholder.com/400x260?text=Plumbing",
+  },
 ];
 
-/* ================= PRESENTATIONAL SUB-COMPONENTS ================= */
-const WhyChooseUs: React.FC = () => {
-  const features = [
-    "Competitive wholesale pricing",
-    "Bulk order discounts",
-    "Direct from manufacturers",
-    "Quality certifications included",
-    "Technical support available",
-    "Flexible payment options",
-    "Material return policy",
-    "Project consultation"
-  ];
+/* ================= AUTH MODAL ================= */
+const AuthModal: React.FC<{ visible: boolean; onClose: () => void; onSuccess: () => void }> = ({
+  visible,
+  onClose,
+  onSuccess,
+}) => {
+  const [activeKey, setActiveKey] = useState("login");
+
+  const handleLoginFinish = () => {
+    onSuccess(); // navigate to /app/dashboard
+    onClose();
+  };
+
+  const handleRegisterFinish = () => {
+    onSuccess(); // navigate to /app/dashboard
+    onClose();
+  };
+
   return (
-    <section className="why-choose-us">
-      <div className="why-inner">
-        <Title level={2} className="why-title">Why Choose Us</Title>
-        <Text className="why-sub">Your trusted partner for construction material supply</Text>
-        <div className="why-features">
-          {features.map((f, i) => (
-            <div className="why-pill" key={i}>
-              <span className="why-check">✓</span>
-              <span className="why-text">{f}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
+    <Modal open={visible} onCancel={onClose} footer={null} centered width={520} className="auth-modal">
+      <Tabs activeKey={activeKey} onChange={(k) => setActiveKey(k)} className="auth-tabs">
+        {/* LOGIN */}
+        <TabPane tab="Login" key="login">
+          <Form layout="vertical" onFinish={handleLoginFinish}>
+            <Form.Item label={<span className="required"> Email / Phone</span>} name="identifier" rules={[{ required: true }]}>
+              <Input placeholder="john@example.com" />
+            </Form.Item>
+
+            <Form.Item label={<span className="required">Password</span>} name="password" rules={[{ required: true }]}>
+              <Input.Password placeholder="Password" />
+            </Form.Item>
+
+            <Form.Item>
+              <Checkbox>Remember me</Checkbox>
+            </Form.Item>
+
+            <Form.Item>
+              <Button type="primary" htmlType="submit" block>Login</Button>
+            </Form.Item>
+          </Form>
+        </TabPane>
+
+        {/* REGISTER */}
+        <TabPane tab="Register" key="register">
+          <Form layout="vertical" onFinish={handleRegisterFinish}>
+            <Form.Item name="fullName" label={<span className="required"> Full name</span>} rules={[{ required: true }]}>
+              <Input placeholder="John Doe" />
+            </Form.Item>
+
+            <Form.Item name="email" label={<span className="required"> Email</span>} rules={[{ required: true, type: 'email' }]}>
+              <Input placeholder="john@example.com" />
+            </Form.Item>
+
+            <Form.Item name="phone" label={<span className="required"> Phone</span>} rules={[{ required: true }]}>
+              <Input placeholder="+1 555 123 4567" />
+            </Form.Item>
+
+            <Form.Item name="password" label={<span className="required"> Password</span>} rules={[{ required: true }]}>
+              <Input.Password placeholder="Choose a password" />
+            </Form.Item>
+
+            <Form.Item
+              name="confirm"
+              label={<span className="required"> Confirm Password</span>}
+              dependencies={["password"]}
+              rules={[
+                { required: true },
+                ({ getFieldValue }) => ({
+                  validator(_, value) {
+                    if (!value || getFieldValue('password') === value) return Promise.resolve();
+                    return Promise.reject(new Error('Passwords do not match'));
+                  },
+                }),
+              ]}
+            >
+              <Input.Password placeholder="Confirm password" />
+            </Form.Item>
+
+            <Form.Item>
+              <Button type="primary" htmlType="submit" block>Register</Button>
+            </Form.Item>
+          </Form>
+        </TabPane>
+      </Tabs>
+    </Modal>
   );
 };
 
-const TrustedBrands: React.FC = () => {
-  const brands = ["UltraCem", "SteelPro", "BuildMaster", "ConcretePlus", "MegaSteel", "PrimeBricks", "QualityMix", "TopGrade"];
-  return (
-    <section className="trusted-brands">
-      <div className="tb-inner">
-        <Title level={3} className="tb-title">Trusted Brands We Supply</Title>
-        <div className="brand-row">
-          {brands.map((brand, i) => (
-            <div className="brand-pill" key={i}>{brand}</div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
-
-/* ================= REQUEST QUOTE (FULL FORM matching screenshot) ================= */
+/* ================= REQUEST QUOTE ================= */
 const RequestQuote: React.FC = () => {
-  const handleSubmit = (values: any) => {
-    console.log("Quote request:", values);
+  const navigate = useNavigate();
+
+  const handleSubmit = () => {
+    navigate("/app/dashboard"); // direct navigation ONLY
   };
 
   return (
     <section className="request-quote">
       <div className="rq-inner">
         <Title level={2} className="rq-title">Request a Quote</Title>
-        <Text className="rq-sub">Tell us about your project and get a customized quote for materials</Text>
+        <Text className="rq-sub">Tell us about your project and get a customized quote</Text>
 
         <div className="rq-card">
-          <Form
-            name="request_quote"
-            onFinish={handleSubmit}
-            layout="vertical"
-            className="rq-form"
-          >
+          <Form onFinish={handleSubmit} layout="vertical" className="rq-form">
+            {/* Form Fields unchanged */}
             <Row gutter={24}>
               <Col xs={24} sm={12}>
-                <Form.Item label="Full Name *" name="fullName" rules={[{ required: true, message: "Please enter full name" }]}>
+                <Form.Item label="Full Name *" name="fullName" rules={[{ required: true }]}>
                   <Input placeholder="John Doe" />
                 </Form.Item>
               </Col>
+
               <Col xs={24} sm={12}>
-                <Form.Item label="Email *" name="email" rules={[{ required: true, message: "Please enter email" }]}>
+                <Form.Item label="Email *" name="email" rules={[{ required: true }]}>
                   <Input placeholder="john@example.com" />
                 </Form.Item>
               </Col>
@@ -211,15 +269,15 @@ const RequestQuote: React.FC = () => {
 
             <Row gutter={24}>
               <Col xs={24} sm={12}>
-                <Form.Item label="Phone Number *" name="phoneNumber" rules={[{ required: true, message: "Please enter phone number" }]}>
-                  <Input placeholder="+1 (555) 123-4567" />
+                <Form.Item label="Phone Number *" name="phone" rules={[{ required: true }]}>
+                  <Input placeholder="+1 555 123 4567" />
                 </Form.Item>
               </Col>
+
               <Col xs={24} sm={12}>
-                <Form.Item label="Service Type *" name="serviceType" rules={[{ required: true, message: "Please select service" }]}>
-                  <Select placeholder="Select Construction Materials">
+                <Form.Item label="Service Type *" name="service" rules={[{ required: true }]}>
+                  <Select placeholder="Select Material">
                     <Option value="construction-materials">Construction Materials</Option>
-                    <Option value="cleaning-service">Cleaning Service</Option>
                   </Select>
                 </Form.Item>
               </Col>
@@ -227,42 +285,39 @@ const RequestQuote: React.FC = () => {
 
             <Row gutter={24}>
               <Col xs={24}>
-                <Form.Item label="Service Address *" name="serviceAddress" rules={[{ required: true, message: "Please enter address" }]}>
-                  <Input placeholder="123 Main St, City, State, ZIP" />
+                <Form.Item label="Service Address *" name="address" rules={[{ required: true }]}>
+                  <Input placeholder="123 Main St" />
                 </Form.Item>
               </Col>
             </Row>
 
             <Row gutter={24}>
               <Col xs={24} sm={12}>
-                <Form.Item label="Preferred Date *" name="preferredDate" rules={[{ required: true, message: "Please pick a date" }]}>
-                  <DatePicker style={{ width: "100%" }} placeholder="Pick a date" />
+                <Form.Item label="Preferred Date *" name="date" rules={[{ required: true }]}>
+                  <DatePicker style={{ width: "100%" }} />
                 </Form.Item>
               </Col>
+
               <Col xs={24} sm={12}>
-                <Form.Item label="Preferred Time *" name="preferredTime" rules={[{ required: true, message: "Please select time slot" }]}>
-                  <Select placeholder="Select time slot">
-                    <Option value="8am-10am">8:00 AM - 10:00 AM</Option>
-                    <Option value="10am-12pm">10:00 AM - 12:00 PM</Option>
-                    <Option value="12pm-2pm">12:00 PM - 2:00 PM</Option>
-                    <Option value="2pm-4pm">2:00 PM - 4:00 PM</Option>
-                    <Option value="4pm-6pm">4:00 PM - 6:00 PM</Option>
+                <Form.Item label="Preferred Time *" name="time" rules={[{ required: true }]}>
+                  <Select placeholder="Select time">
+                    <Option>8:00 AM - 10:00 AM</Option>
+                    <Option>10:00 AM - 12:00 PM</Option>
                   </Select>
                 </Form.Item>
               </Col>
             </Row>
 
-            <Row gutter={24}>
-              <Col xs={24}>
-                <Form.Item label="Additional Details" name="additionalDetails">
-                  <Input.TextArea rows={4} placeholder="Tell us more about your requirements..." />
-                </Form.Item>
-              </Col>
-            </Row>
+            <Form.Item
+              label="Additional Details"
+              name="details"
+            >
+              <Input.TextArea placeholder="Tell us more..." rows={4} />
+            </Form.Item>
 
-            <div className="rq-submit">
-              <Button htmlType="submit" type="primary" size="large">Submit Booking Request</Button>
-            </div>
+            <Button type="primary" htmlType="submit" size="large" block>
+              Submit Booking Request
+            </Button>
           </Form>
         </div>
       </div>
@@ -274,36 +329,9 @@ const RequestQuote: React.FC = () => {
 const NewFooter: React.FC = () => (
   <footer className="footer">
     <div className="footer-grid">
-      <div>
-        <h3>About Us</h3>
-        <p>Your trusted partner for all home and property-related services.</p>
-      </div>
-      <div>
-        <h3>Services</h3>
-        <ul>
-          <li>Cleaning Service</li>
-          <li>Packers & Movers</li>
-          <li>Home Services</li>
-          <li>Rentals</li>
-          <li>Commercial Plots</li>
-          <li>Construction Materials</li>
-        </ul>
-      </div>
-      <div>
-        <h3>Quick Links</h3>
-        <ul>
-          <li>Home</li>
-          <li>About</li>
-          <li>Contact</li>
-          <li>Careers</li>
-        </ul>
-      </div>
-      <div>
-        <h3>Contact Info</h3>
-        <p>📞 +1 (555) 123-4567</p>
-        <p>✉️ info@homeservices.com</p>
-        <p>📍 123 Service Street, City, State</p>
-      </div>
+      <div><h3>About Us</h3><p>Your trusted construction material supplier.</p></div>
+      <div><h3>Quick Links</h3><ul><li>Home</li><li>Contact</li></ul></div>
+      <div><h3>Contact</h3><p>📞 +1 (555) 123-4567</p></div>
     </div>
     <p className="footer-bottom">© 2025 Home Services. All rights reserved.</p>
   </footer>
@@ -312,16 +340,37 @@ const NewFooter: React.FC = () => (
 /* ================= MAIN PAGE ================= */
 const ConstructionMaterials: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [authVisible, setAuthVisible] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const btn = document.querySelector(".hs-contact-btn");
+    if (!btn) return;
+    const handler = () => setAuthVisible(true);
+    btn.addEventListener("click", handler);
+    return () => btn.removeEventListener("click", handler);
+  }, []);
+
+  const handleAuthSuccess = () => {
+    navigate("/app/dashboard");
+  };
+
   return (
     <div className="construction-materials-container">
+
       <NavbarSection menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
 
-      <section className="hero-section" style={{ backgroundImage: `url(${heroImage})` }}>
+      {/* HERO */}
+      <section
+        className="hero-section"
+        style={{ backgroundImage: `url(${heroImage})` }}
+      >
         <div className="hero-overlay">
           <h1>Quality Building Materials at Best Prices</h1>
-          <p>Browse our comprehensive range of construction materials delivered to your site.</p>
+          <p>Browse our comprehensive range of construction materials.</p>
+
           <div className="hero-buttons">
-            <Button type="primary" size="large" style={{ marginRight: 20 }}>Browse Catalog</Button>
+            <Button type="primary" size="large">Browse Catalog</Button>
             <Button size="large">Get Bulk Quote</Button>
           </div>
         </div>
@@ -331,37 +380,24 @@ const ConstructionMaterials: React.FC = () => {
       <section className="product-categories">
         <div className="pc-inner">
           <h2>Product Categories</h2>
-          <p className="pc-sub">3 cards on top, 3 on bottom — centered perfectly.</p>
+          <p className="pc-sub">3 cards on top, 3 below — centered properly.</p>
 
-          <div className="pc-grid" role="list">
-            {(() => {
-              const needed = 6;
-              const fallback = {
-                title: "More coming soon",
-                items: [],
-                image: "https://via.placeholder.com/400x260?text=Coming+Soon"
-              };
-              const items = Array.from({ length: needed }, (_, i) => productCategories[i] ?? fallback);
-              return items.map((category, i) => (
-                <article className="pc-grid-item" key={i} role="listitem">
-                  <Card hoverable className="pc-card" cover={<img src={category.image} alt={category.title} />}>
-                    <div className="pc-card-inner">
-                      <h3>{category.title}</h3>
-                      {category.items && category.items.length > 0 ? (
-                        <ul>
-                          {category.items.map((it, j) => <li key={j}>{it}</li>)}
-                        </ul>
-                      ) : (
-                        <p className="pc-placeholder">Details coming soon</p>
-                      )}
-                      <div className="pc-card-actions">
-                        <Button type="primary" block>Browse</Button>
-                      </div>
-                    </div>
-                  </Card>
-                </article>
-              ));
-            })()}
+          <div className="pc-grid">
+            {productCategories.map((category, i) => (
+              <article key={i} className="pc-grid-item">
+                <Card
+                  hoverable
+                  className="pc-card"
+                  cover={<img src={category.image} alt={category.title} />}
+                >
+                  <div className="pc-card-inner">
+                    <h3>{category.title}</h3>
+                    <ul>{category.items.map((it, j) => <li key={j}>{it}</li>)}</ul>
+                    <Button type="primary" block>Browse</Button>
+                  </div>
+                </Card>
+              </article>
+            ))}
           </div>
         </div>
       </section>
@@ -370,12 +406,12 @@ const ConstructionMaterials: React.FC = () => {
       <section className="our-services">
         <div className="os-inner">
           <h2>Our Services</h2>
-          <div className="services-grid" role="list">
-            {services.map((service, i) => (
-              <div className="service-grid-item" key={i} role="listitem">
+          <div className="services-grid">
+            {services.map((s, i) => (
+              <div key={i} className="service-grid-item">
                 <div className="service-card">
-                  <h3>{service.title}</h3>
-                  <p>{service.description}</p>
+                  <h3>{s.title}</h3>
+                  <p>{s.description}</p>
                 </div>
               </div>
             ))}
@@ -387,23 +423,18 @@ const ConstructionMaterials: React.FC = () => {
       <section className="featured-products">
         <div className="fp-inner">
           <h2>Featured Products</h2>
-          <div className="featured-grid" role="list">
-            {featuredProducts.map((product, i) => (
-              <article className="featured-item" key={i} role="listitem">
+
+          <div className="featured-grid">
+            {featuredProducts.map((p, i) => (
+              <article key={i} className="featured-item">
                 <div className="featured-card">
-                  <div className="featured-media">
-                    <img src={product.image} alt={product.title} />
-                  </div>
+                  <div className="featured-media"><img src={p.image} alt={p.title} /></div>
                   <div className="featured-body">
-                    <h3>{product.title}</h3>
-                    <p className="fp-price">Price: {product.price}</p>
-                    <p className="fp-rating">Rating: {product.rating}</p>
-                    <ul>
-                      {product.details.map((d, j) => <li key={j}>{d}</li>)}
-                    </ul>
-                    <div className="fp-action">
-                      <Button type="primary" block>Request Quote</Button>
-                    </div>
+                    <h3>{p.title}</h3>
+                    <p className="fp-price">Price: {p.price}</p>
+                    <p className="fp-rating">Rating: {p.rating}</p>
+                    <ul>{p.details.map((d, j) => <li key={j}>{d}</li>)}</ul>
+                    <Button type="primary" block>Request Quote</Button>
                   </div>
                 </div>
               </article>
@@ -412,12 +443,17 @@ const ConstructionMaterials: React.FC = () => {
         </div>
       </section>
 
-      {/* NEW: REQUEST QUOTE FORM (inserted below featured products and above why choose us) */}
+      {/* REQUEST QUOTE */}
       <RequestQuote />
 
-      <WhyChooseUs />
-      <TrustedBrands />
       <NewFooter />
+
+      {/* LOGIN / REGISTER MODAL */}
+      <AuthModal
+        visible={authVisible}
+        onClose={() => setAuthVisible(false)}
+        onSuccess={handleAuthSuccess}
+      />
     </div>
   );
 };

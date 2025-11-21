@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import '../MachineryRental/MachineryRental.css';
+import MachineryDetails from "./FormMachineryRental"; // popup component
+
 import excavatorImg from "../../../assets/Building/excavator.jpg";
 import loaderImg from "../../../assets/Building/loader.jpg";
 import craneImg from "../../../assets/Building/crane.jpg";
 import mixerImg from "../../../assets/Building/concretemixer.jpg";
-import { useNavigate } from "react-router-dom";
 
 const machinery = [
   {
@@ -38,18 +39,17 @@ const machinery = [
 ];
 
 const MachineryRental: React.FC = () => {
-  const navigate = useNavigate();
+
+  const [selectedId, setSelectedId] = useState<number | null>(null);
 
   return (
     <div className="machinery-wrapper">
-
-      {/* Page Header */}
+     
       <div className="machinery-header">
         <h2>Construction Equipment Rental</h2>
         <p>{machinery.length} services available</p>
       </div>
 
-      {/* Cards Grid */}
       <div className="machinery-grid">
         {machinery.map((item) => (
           <div className="machinery-card" key={item.id}>
@@ -62,15 +62,26 @@ const MachineryRental: React.FC = () => {
             <p className="machinery-desc">{item.description}</p>
 
             <div className="machinery-bottom">
-              <p className="machinery-price">{item.price}</p>
-              <button className="machinery-btn" onClick={() => navigate(`/app/machinery/${item.id}`)}>
+              <p className="machinery-price">₹{item.price}</p>
+
+              <button
+                className="machinery-btn"
+                onClick={() => setSelectedId(item.id)}
+              >
                 View Details
               </button>
-            </div>
 
+            </div>
           </div>
         ))}
       </div>
+
+      {selectedId !== null && (
+        <MachineryDetails 
+          id={selectedId} 
+          onClose={() => setSelectedId(null)} 
+        />
+      )}
 
     </div>
   );

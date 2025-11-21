@@ -1,9 +1,12 @@
 
 .material-wrapper {
   width: 100%;
-  background: #f8fafc;
+  background: transparent;
   min-height: 100vh;
   padding-bottom: 20px;
+  margin-left: 80px;
+  margin: 0 ;
+  padding: 0;
 }
 
 .rd-imgeader {
@@ -15,6 +18,7 @@
   border-bottom-left-radius: 0px;
   border-bottom-right-radius: 0px;
   box-sizing: border-box;
+  border-radius: 14px;
 }
 
 .rd-imgeader h2 {
@@ -93,7 +97,7 @@
   font-weight: 600;
 }
 
-.details-btn {
+.details-btn1 {
   background: #d97706;
   color: white;
   padding: 8px 12px;
@@ -267,6 +271,7 @@
   font-weight: 600;
   margin-bottom: 4px;
   text-align: left !important;
+  margin-top: 10px;
 }
 
 input,
@@ -287,17 +292,28 @@ textarea {
 }
 
 .checkbox-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px 5px;
-  margin-bottom: 3;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px 20px;
+  margin-bottom: 10px;
+  justify-content: center;
+  font-size: 12px;
+  
 }
-
-.checkbox-item {
-  width: calc(50% - 20px);
-  font-size: 13px;
+.checkbox-row label{
   display: flex;
   align-items: center;
+  gap: 5px;
+  font-size: 13px;
+}
+
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #1e293b;
 }
 
 .button-row {
@@ -331,5 +347,156 @@ textarea {
   .left-side,
   .form-side {
     width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .checkbox-row {
+    grid-template-columns: 1fr !important;
+    
+  }
+}
+
+/* ========== TABLET VIEW (max-width: 900px) ========== */
+
+@media (max-width: 900px) {
+
+  /* Material Grid */
+  .material-grid {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 0 15px;
+  }
+
+  /* Modal Layout */
+  .details-box {
+    width: 85%;
+    max-width: 600px;
+    padding: 18px;
+  }
+
+  .top-section {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .left-side,
+  .form-side {
+    width: 100%;
+  }
+
+  .image-box {
+    height: 160px;
+  }
+}
+
+
+/* ========== MOBILE VIEW (max-width: 600px) ========== */
+
+@media (max-width: 600px) {
+
+  /* Material Wrapper fix */
+  .material-wrapper {
+    width: 100%;
+    margin-left: 0;
+    padding: 0 10px;
+  }
+
+  /* Header */
+  .rd-imgeader {
+    padding: 12px;
+    border-radius: 10px;
+    text-align: center;
+  }
+
+  .rd-imgeader h2 {
+    font-size: 20px;
+  }
+
+  /* Cards become 1 column */
+  .material-grid {
+    grid-template-columns: 1fr;
+    padding: 0 10px;
+  }
+
+  /* Modal size */
+  .details-box {
+    width: 95%;
+    max-width: 480px;
+    padding: 15px;
+  }
+
+  .details-header h2 {
+    font-size: 18px;
+  }
+
+  .top-section {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  /* Image box smaller */
+  .image-box {
+    height: 140px;
+  }
+
+  .service-price-box {
+    padding: 10px;
+  }
+
+  /* Form fields smaller */
+  input,
+  select {
+    height: 30px;
+    font-size: 12px;
+  }
+
+  textarea {
+    height: 70px;
+    font-size: 12px;
+  }
+
+  /* Checkbox row becomes 1 column */
+  .checkbox-row {
+    grid-template-columns: 1fr !important;
+    gap: 6px;
+  }
+
+  /* Buttons */
+  .button-row button {
+    padding: 8px;
+    font-size: 13px;
+  }
+}
+
+
+/* ========== SMALL MOBILE VIEW (max-width: 400px) ========== */
+
+@media (max-width: 400px) {
+
+  .details-box {
+    width: 98%;
+    padding: 12px;
+  }
+
+  .image-box {
+    height: 120px;
+  }
+
+  .section-title {
+    font-size: 15px;
+  }
+
+  .form-item label {
+    font-size: 11px;
+  }
+
+  input,
+  select {
+    height: 28px;
+    font-size: 11px;
+  }
+
+  textarea {
+    height: 60px;
   }
 }

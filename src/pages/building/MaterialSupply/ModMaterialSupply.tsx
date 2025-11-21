@@ -1,6 +1,6 @@
-//import React from "react";
-import "../MaterialSupply/ModMaterialSupply.css"
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import "../MaterialSupply/ModMaterialSupply.css";
+import EquipmentDetails from "./FormMaterialSupply";
 
 import cementimg from "../../../assets/Building/cement.jpg";
 import sandimg from "../../../assets/Building/sand.jpg";
@@ -10,52 +10,16 @@ import pipesimg from "../../../assets/Building/pipes.jpg";
 import tilesimg from "../../../assets/Building/tiles.jpg";
 
 const materials = [
-  {
-    id: 1,
-    title: "Cement",
-    description: "High quality cement for all construction needs",
-    price: "800",
-    img: cementimg,
-  },
-  {
-    id: 2,
-    title: "Sand",
-    description: "River sand and M sand for construction",
-    price: "450",
-    img: sandimg,
-  },
-  {
-    id: 3,
-    title: "Bricks",
-    description: "Red bricks and fly ash bricks",
-    price: "200",
-    img: brickimg,
-  },
-  {
-    id: 4,
-    title: "Steel & TMT Bars",
-    description: "High grade steel bars and rods",
-    price: "650",
-    img: steelimg,
-  },
-  {
-    id: 5,
-    title: "Pipes",
-    description: "PVC and plumbing pipes for water supply",
-    price: "250",
-    img: pipesimg,
-  },
-  {
-    id: 6,
-    title: "Marble & Tiles",
-    description: "Premium marble and flooring tiles",
-    price: "405",
-    img: tilesimg,
-  },
+  { id: 1, title: "Cement", description: "High quality cement for all construction needs", price: "800", img: cementimg },
+  { id: 2, title: "Sand", description: "River sand and M sand for construction", price: "450", img: sandimg },
+  { id: 3, title: "Bricks", description: "Red bricks and fly ash bricks", price: "200", img: brickimg },
+  { id: 4, title: "Steel & TMT Bars", description: "High grade steel bars and rods", price: "650", img: steelimg },
+  { id: 5, title: "Pipes", description: "PVC and plumbing pipes for water supply", price: "250", img: pipesimg },
+  { id: 6, title: "Marble & Tiles", description: "Premium marble and flooring tiles", price: "405", img: tilesimg },
 ];
 
 const MaterialSupply: React.FC = () => {
-  const navigate = useNavigate();
+  const [selectedId, setSelectedId] = useState<number | null>(null);
 
   return (
     <div className="material-wrapper">
@@ -76,10 +40,11 @@ const MaterialSupply: React.FC = () => {
               <p className="desc">{item.description}</p>
 
               <div className="bottom-row">
-                <p className="price">{item.price}</p>
+                <p className="price">₹{item.price}</p>
+
                 <button
-                  className="details-btn"
-                  onClick={() => navigate(`/app/details/${item.id}`)}
+                  className="details-btn1"
+                  onClick={() => setSelectedId(item.id)}
                 >
                   View Details
                 </button>
@@ -88,6 +53,13 @@ const MaterialSupply: React.FC = () => {
           </div>
         ))}
       </div>
+
+      {selectedId !== null && (
+        <EquipmentDetails 
+          id={selectedId} 
+          onClose={() => setSelectedId(null)} 
+        />
+      )}
     </div>
   );
 };
