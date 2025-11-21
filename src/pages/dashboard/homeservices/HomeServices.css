@@ -1,0 +1,201 @@
+.home-services-container {
+  padding: 20px;
+  width: 100%;
+}
+
+
+
+
+.services-top-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #089823;
+  color: white;
+
+  padding: 34px 32px;
+  border-radius: 16px;
+
+  width: 100%;
+  max-width: 1200px;        /* ✔ Aligns perfectly with grid */
+  margin: 0 auto 30px auto;
+
+  flex-wrap: wrap;
+  gap: 12px;
+
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.services-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  /* border: 2px solid black; */
+ 
+}
+
+
+
+
+
+
+
+.banner-title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.banner-subtitle {
+  margin: 0;
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.header-viewall-btn {
+  background: #fff !important;
+  color: black !important;
+  border: none !important;
+  padding: 8px 20px !important;
+  border-radius: 6px !important;
+  font-weight: 500;
+}
+
+.header-viewall-btn:hover {
+  opacity: 0.9;
+}
+
+/* ------------------------------------
+   SERVICE CARDS (Reduced Width + Hover)
+------------------------------------ */
+
+.services-grid {
+  display: flex;
+  justify-content: center;
+}
+
+.service-card {
+  border-radius: 12px !important;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid #e4e4e4;
+  max-width: 260px;        /* 🔥 Reduced card width */
+  margin: 0 auto;          /* Center card */
+}
+
+.service-card:hover {
+  transform: translateY(-6px) scale(1.03);   /* 🔥 Hover zoom effect */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+.service-image {
+  height: 170px;
+  width: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease; /* 🔥 Image hover effect */
+}
+
+.service-card:hover .service-image {
+  transform: scale(1.06);
+}
+
+.service-title {
+  font-size: 17px;
+  font-weight: 600;
+  margin-top: 12px;
+}
+
+.details-btn {
+  background: #06A826 !important;   /* Green */
+  color: white !important;
+  border: none !important;
+  height: 30px !important;           /* Smaller height */
+  font-size: 13px !important;        /* Slightly smaller text */
+  border-radius: 5px !important;
+  padding: 0 12px !important;        /* Reduce horizontal padding */
+}
+
+.details-btn:hover {
+  opacity: 0.85;
+}
+
+.ant-col {
+  padding-left: 2px !important;
+  padding-right: 2px !important;
+  margin-bottom: 12px !important;
+}
+
+
+/* ------------------------------------
+   RESPONSIVENESS
+------------------------------------ */
+
+/* Tablets */
+@media (max-width: 992px) {
+  .service-card {
+    max-width: 300px;
+  }
+}
+
+/* Large mobile devices */
+@media (max-width: 768px) {
+  .service-image {
+    height: 150px;
+  }
+  .service-card {
+    max-width: 80%;
+  }
+}
+
+/* Small mobile devices */
+@media (max-width: 480px) {
+  .banner-title {
+    font-size: 18px;
+  }
+
+  .service-card {
+    max-width: 90%;
+  }
+
+  .service-image {
+    height: 140px;
+  }
+}
+
+/* Center last row */
+.ant-row {
+  justify-content: center !important;
+}
+
+
+
+/* Reduce gap between cards */
+.ant-row {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* Reduce horizontal + vertical gutter space */
+.ant-col {
+  padding-left: 4px !important;
+  padding-right: 4px !important;
+  margin-bottom: 8px !important;
+}
+
+/* Reduce card internal padding */
+.service-card {
+  padding: 10px !important;
+}
+
+/* If the grid has custom class */
+.services-grid {
+  gap: 8px !important;  /* reduces space between cards */
+}
+
+.services-grid {
+  width: 100%;
+}
+
+.service-card {
+  width: 100%;
+}

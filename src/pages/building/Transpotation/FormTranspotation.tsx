@@ -1,18 +1,20 @@
 import React, { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
 import "./Transpotation.css";
 
 import materialpickupimg from "../../../assets/Building/material pickup.jpg";
 import deliveryservicesimg from "../../../assets/Building/Delivery services.jpg";
 
 const Transportation = [
-  { id: "1", title: "Material Supply", price: "800", img: materialpickupimg, description: "Premium quality cement for construction" },
-  { id: "2", title: "Delivery Services", price: "450", img: deliveryservicesimg, description: "River sand and M sand for construction" },
+  { id: 1, title: "Material Supply", price: "800", img: materialpickupimg, description: "Premium quality cement for construction" },
+  { id: 2, title: "Delivery Services", price: "450", img: deliveryservicesimg, description: "River sand and M sand for construction" },
 ];
 
-const TransportationForm: React.FC = () => {
-  const { id } = useParams();
-  const navigate = useNavigate();
+interface FormProps {
+  id: number;
+  onClose: () => void;
+}
+
+const TransportationForm: React.FC<FormProps> = ({ id, onClose }) => {
   const material = Transportation.find((item) => item.id === id);
   const [quantity, setQuantity] = useState(1);
 
@@ -27,7 +29,7 @@ const TransportationForm: React.FC = () => {
 
         <div className="tf-header">
           <h2>{material.title}</h2>
-          <button className="tf-close" onClick={() => navigate(-1)}>✕</button>
+          <button className="tf-close" onClick={onClose}>✕</button>
         </div>
 
         <div className="tf-main">
@@ -46,14 +48,14 @@ const TransportationForm: React.FC = () => {
 
             <h3 className="tf-included-title">What's Included</h3>
             <ul className="tf-included-list">
-              <li>Quality certified materials</li>
-              <li>Timely delivery</li>
-              <li>Doorstep delivery</li>
-              <li>Quality assurance</li>
-              <li>Return/exchange policy</li>
-              <li>Technical support</li>
-              <li>Bulk order discounts</li>
-              <li>Invoice and documentation</li>
+              <li>✓ Quality certified materials</li>
+              <li>✓ Timely delivery</li>
+              <li>✓ Doorstep delivery</li>
+              <li>✓ Quality assurance</li>
+              <li>✓ Return/exchange policy</li>
+              <li>✓ Technical support</li>
+              <li>✓ Bulk order discounts</li>
+              <li>✓ Invoice and documentation</li>
             </ul>
           </div>
 
@@ -118,7 +120,7 @@ const TransportationForm: React.FC = () => {
             </div>
 
             <div className="tf-buttons">
-              <button className="tf-btn cancel" onClick={() => navigate(-1)}>Cancel</button>
+              <button className="tf-btn cancel" onClick={onClose}>Cancel</button>
               <button className="tf-btn add">Add to Cart</button>
             </div>
           </div>

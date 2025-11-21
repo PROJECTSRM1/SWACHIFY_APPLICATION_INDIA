@@ -9,11 +9,11 @@ import {
   Select,
   Input,
   InputNumber,
-  Checkbox,
+ // Checkbox,
   DatePicker,
   message,
 } from "antd";
-import { ThunderboltFilled } from "@ant-design/icons";
+// import { ThunderboltFilled } from "@ant-design/icons";
 import "./CleaningService.css";
 
 import residentialImg from "../../../assets/CleaningServices/resi.png";
@@ -234,6 +234,13 @@ const CleaningService: React.FC = () => {
       image: specializedImg,
       count: 12,
     },
+     {
+      key: "industrial",
+      title: "Industrial Cleaning",
+      desc: "Heavy-duty cleaning for factories, warehouses, and industrial facilities",
+      image: industrialImg,
+      count: 8,
+    },
     {
       key: "post",
       title: "Post-Construction Cleaning",
@@ -241,13 +248,7 @@ const CleaningService: React.FC = () => {
       image: postImg,
       count: 8,
     },
-    {
-      key: "industrial",
-      title: "Industrial Cleaning",
-      desc: "Heavy-duty cleaning for factories, warehouses, and industrial facilities",
-      image: industrialImg,
-      count: 8,
-    },
+   
   ];
 
   const subservicesByMain: Record<string, { key: string; title: string; image: string }[]> = {
@@ -404,14 +405,14 @@ const CleaningService: React.FC = () => {
 
     if (lower.includes("1 bhk") || lower.includes("2 bhk") || lower.includes("3 bhk") || lower.includes("2 bhk / 3 bhk") || lower.includes("1 bhk apartment") || lower.match(/\b\d+\s*bhk/)) {
       config.bedrooms = true;
-      config.bathrooms = true;
+      //config.bathrooms = true;
       config.sqft = true;
       return config;
     }
 
     if (lower.includes("villa")) {
       config.bedrooms = true;
-      config.bathrooms = true;
+     // config.bathrooms = true;
       config.sqft = true;
       return config;
     }
@@ -494,9 +495,9 @@ const CleaningService: React.FC = () => {
     
       <div className="cs-header">
         <div className="cs-header-left">
-          <div className="cs-icon">
+          {/* <div className="cs-icon">
             <ThunderboltFilled className="cs-icon-inner" />
-          </div>
+          </div> */}
           <div>
             <Title level={3} className="cs-header-title">Cleaning Services</Title>
             <p className="cs-header-sub">{categories.length} services available</p>
@@ -512,7 +513,8 @@ const CleaningService: React.FC = () => {
         <div className="main-row">
           {visibleCategories.map((cat) => (
             <div className="main-col" key={cat.key}>
-              <Card className="main-card" hoverable onClick={() => openCategory(cat.key)}>
+              <Card className="main-card" hoverable>
+
                 <div className="main-card-image-wrap">
                   <img src={cat.image} alt={cat.title} className="main-card-image" />
                 </div>
@@ -520,6 +522,15 @@ const CleaningService: React.FC = () => {
                 <div className="main-card-body">
                   <Title level={4} className="main-card-title">{cat.title}</Title>
                   <Paragraph className="main-card-desc">{cat.desc}</Paragraph>
+                      <Button 
+        size="middle"
+        type="primary"
+        className="category-details-btn"
+        onClick={() => openCategory(cat.key)}
+      >
+        View Details
+      </Button>
+                  
                 </div>
               </Card>
             </div>
@@ -572,7 +583,7 @@ const CleaningService: React.FC = () => {
               key={m.title}
               className="module-card"
               hoverable
-              onClick={() => openModuleDetails(m)}
+              //onClick={() => openModuleDetails(m)}
               role="listitem"
             >
               <img src={m.image} className="module-img" alt={m.title} />
@@ -647,15 +658,15 @@ const CleaningService: React.FC = () => {
                         <Select placeholder="Select service type" className="full-width-select">
                           {selectedModule.title.toLowerCase().includes("room") || selectedModule.title.toLowerCase().includes("bedroom") ? (
                             <>
-                              <Option value="standard">Standard Clean</Option>
-                              <Option value="deep">Deep Clean</Option>
-                              <Option value="mattress">Mattress Cleaning</Option>
+                              <Option value="standard">Regular cleaning</Option>
+                              <Option value="deep">Deep Cleaning</Option>
+                              <Option value="mattress">Move-in/Move-out Cleaning</Option>
                             </>
                           ) : selectedModule.title.toLowerCase().includes("kitchen") ? (
                             <>
-                              <Option value="standard">Surface Clean</Option>
-                              <Option value="deep">Deep Kitchen Clean</Option>
-                              <Option value="grease">Degreasing & Appliance Care</Option>
+                              <Option value="standard">Regular Cleaning</Option>
+                              <Option value="deep">Deep  Cleaning</Option>
+                              <Option value="grease">Move-in/Move-out</Option>
                             </>
                           ) : selectedModule.title.toLowerCase().includes("bathroom") ? (
                             <>
@@ -664,11 +675,11 @@ const CleaningService: React.FC = () => {
                             </>
                           ) : (
                             <>
-                              <Option value="standard">Standard Clean</Option>
-                              <Option value="deep">Deep Clean</Option>
-                              <Option value="move">Move-in / Move-out</Option>
-                              <Option value="recurring">Recurring</Option>
-                              <Option value="sanitization">Sanitization</Option>
+                              <Option value="standard">Regular Cleaning</Option>
+                              <Option value="deep">Deep Cleaning</Option>
+                              <Option value="move">Move-in / Move-out Cleaning</Option>
+                              {/* <Option value="recurring">Recurring</Option>
+                              <Option value="sanitization">Sanitization</Option> */}
                             </>
                           )}
                         </Select>
@@ -707,7 +718,7 @@ const CleaningService: React.FC = () => {
                       </div>
                     )}
 
-                    <Form.Item name="additional" label="Additional Services">
+                    {/* <Form.Item name="additional" label="Additional Services">
                       <Checkbox.Group>
                         <div className="checkbox-grid">
                           <Checkbox value="window">Window Cleaning (₹100)</Checkbox>
@@ -716,7 +727,7 @@ const CleaningService: React.FC = () => {
                           {selectedModule.title.toLowerCase().includes("kitchen") && <Checkbox value="oven">Oven Cleaning (₹300)</Checkbox>}
                         </div>
                       </Checkbox.Group>
-                    </Form.Item>
+                    </Form.Item> */}
 
                     <div className="form-row">
                       {cfg.preferredDate && (
