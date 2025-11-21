@@ -1,23 +1,38 @@
-import React, { useState } from "react";
-import { Row, Col,Menu, Card, Button, Typography, Form, Input, DatePicker, Select } from "antd";
+// c:/Users/Manikantha.N/Desktop/SWACHIFY_APPLICATION_INDIA/src/pages/landing/ConstructionMaterials.tsx
+import React, { useState, useEffect } from "react";
+import {
+  Row,
+  Col,
+  Menu,
+  Card,
+  Button,
+  Typography,
+  Form,
+  Input,
+  DatePicker,
+  Select,
+  Modal,
+  Tabs,
+  Checkbox,
+} from "antd";
 import { Link } from "react-router-dom";
-// import { MenuOutlined, CloseOutlined } from "@ant-design/icons";
 import "./ConstructionMaterials.css";
 import heroImage from "../../assets/landingimages/brickwall.jpg";
-// import cc from "../../assets/landingimages/card1.jpg"
 
 const { Title, Text } = Typography;
 const { Option } = Select;
+const { TabPane } = Tabs;
 
-  const navItems = [
-    { key: "home", label: <Link to="/">Home</Link> },
-    { key: "cleaning", label: <Link to="/cleaningservice">Cleaning</Link> },
-    { key: "packers", label: <Link to="/LandingPackers">Packers & Movers</Link> },
-    { key: "home_services", label: <Link to="/home_service">Home Services</Link> },
-    { key: "rentals", label: <Link to="/rentals">Rentals</Link> },
-    { key: "commercial", label: <Link to="/commercial-plots">Buy&Sale Properties</Link> },
-    { key: "materials", label: <Link to="/ConstructionMaterials">Construction Materials</Link> },
-  ];
+/* ================= NAV ITEMS ================= */
+const navItems = [
+  { key: "home", label: <Link to="/">Home</Link> },
+  { key: "cleaning", label: <Link to="/cleaningservice">Cleaning</Link> },
+  { key: "packers", label: <Link to="/LandingPackers">Packers & Movers</Link> },
+  { key: "home_services", label: <Link to="/home_service">Home Services</Link> },
+  { key: "rentals", label: <Link to="/rentals">Rentals</Link> },
+  { key: "commercial", label: <Link to="/commercial-plots">Buy&Sale Properties</Link> },
+  { key: "materials", label: <Link to="/ConstructionMaterials">Construction Materials</Link> },
+];
 
 /* ================= NAVBAR SECTION ================= */
 interface NavbarProps {
@@ -26,24 +41,24 @@ interface NavbarProps {
 }
 const NavbarSection: React.FC<NavbarProps> = ({ menuOpen, setMenuOpen }) => (
   <>
-  <header className="hs-navbar">
-        <div className="hs-navbar-logo">
-          <span className="hs-logo-text">SWACHIFY INDIA</span>
-        </div>
+    <header className="hs-navbar">
+      <div className="hs-navbar-logo">
+        <span className="hs-logo-text">SWACHIFY INDIA</span>
+      </div>
 
-        <Menu mode="horizontal" selectedKeys={["home-services"]} className="hs-navbar-menu" items={navItems} />
+      <Menu
+        mode="horizontal"
+        selectedKeys={["home-services"]}
+        className="hs-navbar-menu"
+        items={navItems}
+      />
 
-        <Button
-          type="primary"
-          className="hs-contact-btn"
-          // onClick={() => {
-          //   setActiveTab("login");
-          //   setAuthModalVisible(true);
-          // }}
-        >
-          Sign Up
-        </Button>
-      </header>
+      {/* DO NOT MODIFY BUTTON */}
+      <Button type="primary" className="hs-contact-btn">
+        Sign Up
+      </Button>
+    </header>
+
     {menuOpen && (
       <ul className="mobile-menu">
         <li><Link to="/" onClick={() => setMenuOpen(false)}>Home</Link></li>
@@ -61,74 +76,76 @@ const NavbarSection: React.FC<NavbarProps> = ({ menuOpen, setMenuOpen }) => (
   </>
 );
 
-/* ================= DATA ================= */
+/* ================= DATA (unchanged) ================= */
 const services = [
   { title: "Free Delivery", description: "On orders above $500 within 50 miles" },
   { title: "Same-Day Dispatch", description: "Orders placed before 2 PM ship the same day" },
   { title: "Quality Assured", description: "All materials tested and certified" },
-  { title: "Quantity Calculator", description: "Free estimation service for your project" }
+  { title: "Quantity Calculator", description: "Free estimation service for your project" },
 ];
+
 const featuredProducts = [
   {
     title: "Premium Portland Cement",
     image: "https://via.placeholder.com/300x200?text=Cement",
     price: "$8.50 per bag (50kg)",
     rating: "4.8/5",
-    details: ["High Strength", "Quick Setting", "Weather Resistant"]
+    details: ["High Strength", "Quick Setting", "Weather Resistant"],
   },
   {
     title: "TMT Steel Bars (Fe 500)",
     image: "https://via.placeholder.com/300x200?text=Steel",
     price: "$650 per ton",
     rating: "4.9/5",
-    details: ["High Tensile", "Corrosion Resistant", "ISI Certified"]
+    details: ["High Tensile", "Corrosion Resistant", "ISI Certified"],
   },
   {
     title: "AAC Blocks",
     image: "https://via.placeholder.com/300x200?text=AAC+Blocks",
     price: "$2.20 per block",
     rating: "4.7/5",
-    details: ["Lightweight", "Thermal Insulation", "Fire Resistant"]
+    details: ["Lightweight", "Thermal Insulation", "Fire Resistant"],
   },
   {
     title: "M-Sand (Manufactured Sand)",
     image: "https://via.placeholder.com/300x200?text=MSand",
     price: "$45 per ton",
     rating: "4.6/5",
-    details: ["Consistent Quality", "Eco Friendly", "No Impurities"]
-  }
+    details: ["Consistent Quality", "Eco Friendly", "No Impurities"],
+  },
 ];
+
 const productCategories = [
   {
     title: "Cement & Concrete",
     items: ["Portland Cement", "Ready-Mix Concrete", "Mortar", "Grout"],
-    image: "cc"
+    image: "https://via.placeholder.com/400x260?text=Cement",
   },
   {
     title: "Steel & Metals",
     items: ["TMT Bars", "Steel Beams", "Wire Mesh", "Angles & Channels"],
-    image: "https://via.placeholder.com/400x260?text=Steel"
+    image: "https://via.placeholder.com/400x260?text=Steel",
   },
   {
     title: "Bricks & Blocks",
     items: ["Red Bricks", "Fly Ash Bricks", "AAC Blocks", "Concrete Blocks"],
-    image: "https://via.placeholder.com/400x260?text=Bricks"
+    image: "https://via.placeholder.com/400x260?text=Bricks",
   },
   {
     title: "Sand & Aggregates",
     items: ["River Sand", "M Sand", "Coarse Aggregates", "Stone Chips"],
-    image: "https://via.placeholder.com/400x260?text=Sand"
+    image: "https://via.placeholder.com/400x260?text=Sand",
   },
   {
     title: "Roofing Materials",
     items: ["Roof Tiles", "Metal Sheets", "Waterproofing", "Insulation"],
-    image: "https://via.placeholder.com/400x260?text=Roofing"
+    image: "https://via.placeholder.com/400x260?text=Roofing",
   },
   {
     title: "Plumbing & Electrical",
     items: ["PPR Pipes", "Copper Wires", "Switches", "Fittings"],
-    image: "https://via.placeholder.com/400x260?text=Plumbing"
-  }
+    image: "https://via.placeholder.com/400x260?text=Plumbing",
+  },
 ];
 
 /* ================= PRESENTATIONAL SUB-COMPONENTS ================= */
@@ -177,7 +194,7 @@ const TrustedBrands: React.FC = () => {
   );
 };
 
-/* ================= REQUEST QUOTE (FULL FORM matching screenshot) ================= */
+/* ================= REQUEST QUOTE (full form restored) ================= */
 const RequestQuote: React.FC = () => {
   const handleSubmit = (values: any) => {
     console.log("Quote request:", values);
@@ -203,7 +220,7 @@ const RequestQuote: React.FC = () => {
                 </Form.Item>
               </Col>
               <Col xs={24} sm={12}>
-                <Form.Item label="Email *" name="email" rules={[{ required: true, message: "Please enter email" }]}>
+                <Form.Item label="Email *" name="email" rules={[{ required: true, type: "email", message: "Please enter a valid email" }]}>
                   <Input placeholder="john@example.com" />
                 </Form.Item>
               </Col>
@@ -270,6 +287,67 @@ const RequestQuote: React.FC = () => {
   );
 };
 
+/* ================= AUTH MODAL ================= */
+const AuthModal: React.FC<{ visible: boolean; onClose: () => void }> = ({
+  visible,
+  onClose,
+}) => {
+  const [activeKey, setActiveKey] = useState("login");
+
+  return (
+    <Modal open={visible} onCancel={onClose} footer={null} centered width={520} className="auth-modal">
+      <Tabs activeKey={activeKey} onChange={(k) => setActiveKey(k)} className="auth-tabs">
+        {/* LOGIN */}
+        <TabPane tab="Login" key="login">
+          <Form layout="vertical" onFinish={onClose}>
+            <Form.Item label={<span className="required"> Email / Phone</span>} name="identifier" rules={[{ required: true }]}>
+              <Input placeholder="john@example.com or +1 555 123 4567" />
+            </Form.Item>
+
+            <Form.Item label={<span className="required">Password</span>} name="password" rules={[{ required: true }]}>
+              <Input.Password placeholder="Password" />
+            </Form.Item>
+
+            <Form.Item>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Checkbox>Remember me</Checkbox>
+              </div>
+            </Form.Item>
+
+            <Form.Item>
+              <Button type="primary" htmlType="submit" block>Login</Button>
+            </Form.Item>
+          </Form>
+        </TabPane>
+
+        {/* REGISTER */}
+        <TabPane tab="Register" key="register">
+          <Form layout="vertical" onFinish={onClose}>
+            <Form.Item name="fullName" label={<span className="required"> Full name</span>} rules={[{ required: true }]}>
+              <Input placeholder="John Doe" />
+            </Form.Item>
+            <Form.Item name="email" label={<span className="required"> Email</span>} rules={[{ required: true, type: 'email' }]}>
+              <Input placeholder="john@example.com" />
+            </Form.Item>
+            <Form.Item name="phone" label={<span className="required"> Phone</span>} rules={[{ required: true }]}>
+              <Input placeholder="+1 555 123 4567" />
+            </Form.Item>
+            <Form.Item name="password" label={<span className="required"> Password</span>} rules={[{ required: true }]}>
+              <Input.Password placeholder="Choose a password" />
+            </Form.Item>
+            <Form.Item name="confirm" label={<span className="required"> Confirm Password</span>} dependencies={["password"]} rules={[{ required: true, message: 'Please confirm your password' }, ({ getFieldValue }) => ({ validator(_, value) { if (!value || getFieldValue('password') === value) { return Promise.resolve(); } return Promise.reject(new Error('Passwords do not match')); }, })]}>
+              <Input.Password placeholder="Confirm password" />
+            </Form.Item>
+            <Form.Item>
+              <Button type="primary" htmlType="submit" block>Register</Button>
+            </Form.Item>
+          </Form>
+        </TabPane>
+      </Tabs>
+    </Modal>
+  );
+};
+
 /* ================= FOOTER ================= */
 const NewFooter: React.FC = () => (
   <footer className="footer">
@@ -305,6 +383,7 @@ const NewFooter: React.FC = () => (
         <p>📍 123 Service Street, City, State</p>
       </div>
     </div>
+
     <p className="footer-bottom">© 2025 Home Services. All rights reserved.</p>
   </footer>
 );
@@ -312,16 +391,36 @@ const NewFooter: React.FC = () => (
 /* ================= MAIN PAGE ================= */
 const ConstructionMaterials: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [authVisible, setAuthVisible] = useState(false);
+
+  /* Without changing Navbar component signature */
+  useEffect(() => {
+    const btn = document.querySelector(".hs-contact-btn");
+    if (!btn) return;
+
+    const handler = () => setAuthVisible(true);
+    btn.addEventListener("click", handler);
+
+    return () => btn.removeEventListener("click", handler);
+  }, []);
+
   return (
     <div className="construction-materials-container">
       <NavbarSection menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
 
-      <section className="hero-section" style={{ backgroundImage: `url(${heroImage})` }}>
+      {/* HERO */}
+      <section
+        className="hero-section"
+        style={{ backgroundImage: `url(${heroImage})` }}
+      >
         <div className="hero-overlay">
           <h1>Quality Building Materials at Best Prices</h1>
           <p>Browse our comprehensive range of construction materials delivered to your site.</p>
+
           <div className="hero-buttons">
-            <Button type="primary" size="large" style={{ marginRight: 20 }}>Browse Catalog</Button>
+            <Button type="primary" size="large" style={{ marginRight: 20 }}>
+              Browse Catalog
+            </Button>
             <Button size="large">Get Bulk Quote</Button>
           </div>
         </div>
@@ -333,35 +432,20 @@ const ConstructionMaterials: React.FC = () => {
           <h2>Product Categories</h2>
           <p className="pc-sub">3 cards on top, 3 on bottom — centered perfectly.</p>
 
-          <div className="pc-grid" role="list">
-            {(() => {
-              const needed = 6;
-              const fallback = {
-                title: "More coming soon",
-                items: [],
-                image: "https://via.placeholder.com/400x260?text=Coming+Soon"
-              };
-              const items = Array.from({ length: needed }, (_, i) => productCategories[i] ?? fallback);
-              return items.map((category, i) => (
-                <article className="pc-grid-item" key={i} role="listitem">
-                  <Card hoverable className="pc-card" cover={<img src={category.image} alt={category.title} />}>
-                    <div className="pc-card-inner">
-                      <h3>{category.title}</h3>
-                      {category.items && category.items.length > 0 ? (
-                        <ul>
-                          {category.items.map((it, j) => <li key={j}>{it}</li>)}
-                        </ul>
-                      ) : (
-                        <p className="pc-placeholder">Details coming soon</p>
-                      )}
-                      <div className="pc-card-actions">
-                        <Button type="primary" block>Browse</Button>
-                      </div>
-                    </div>
-                  </Card>
-                </article>
-              ));
-            })()}
+          <div className="pc-grid">
+            {productCategories.slice(0, 6).map((category, i) => (
+              <article key={i} className="pc-grid-item">
+                <Card hoverable className="pc-card" cover={<img src={category.image} alt={category.title} />}>
+                  <div className="pc-card-inner">
+                    <h3>{category.title}</h3>
+                    <ul>
+                      {category.items.map((it, j) => <li key={j}>{it}</li>)}
+                    </ul>
+                    <div className="pc-card-actions"><Button type="primary" block>Browse</Button></div>
+                  </div>
+                </Card>
+              </article>
+            ))}
           </div>
         </div>
       </section>
@@ -370,12 +454,13 @@ const ConstructionMaterials: React.FC = () => {
       <section className="our-services">
         <div className="os-inner">
           <h2>Our Services</h2>
-          <div className="services-grid" role="list">
-            {services.map((service, i) => (
-              <div className="service-grid-item" key={i} role="listitem">
+
+          <div className="services-grid">
+            {services.map((s, i) => (
+              <div key={i} className="service-grid-item">
                 <div className="service-card">
-                  <h3>{service.title}</h3>
-                  <p>{service.description}</p>
+                  <h3>{s.title}</h3>
+                  <p>{s.description}</p>
                 </div>
               </div>
             ))}
@@ -387,23 +472,18 @@ const ConstructionMaterials: React.FC = () => {
       <section className="featured-products">
         <div className="fp-inner">
           <h2>Featured Products</h2>
-          <div className="featured-grid" role="list">
-            {featuredProducts.map((product, i) => (
-              <article className="featured-item" key={i} role="listitem">
+
+          <div className="featured-grid">
+            {featuredProducts.map((p, i) => (
+              <article key={i} className="featured-item">
                 <div className="featured-card">
-                  <div className="featured-media">
-                    <img src={product.image} alt={product.title} />
-                  </div>
+                  <div className="featured-media"><img src={p.image} alt={p.title} /></div>
                   <div className="featured-body">
-                    <h3>{product.title}</h3>
-                    <p className="fp-price">Price: {product.price}</p>
-                    <p className="fp-rating">Rating: {product.rating}</p>
-                    <ul>
-                      {product.details.map((d, j) => <li key={j}>{d}</li>)}
-                    </ul>
-                    <div className="fp-action">
-                      <Button type="primary" block>Request Quote</Button>
-                    </div>
+                    <h3>{p.title}</h3>
+                    <p className="fp-price">Price: {p.price}</p>
+                    <p className="fp-rating">Rating: {p.rating}</p>
+                    <ul>{p.details.map((d, j) => <li key={j}>{d}</li>)}</ul>
+                    <div className="fp-action"><Button type="primary" block>Request Quote</Button></div>
                   </div>
                 </div>
               </article>
@@ -412,12 +492,15 @@ const ConstructionMaterials: React.FC = () => {
         </div>
       </section>
 
-      {/* NEW: REQUEST QUOTE FORM (inserted below featured products and above why choose us) */}
+      {/* REQUEST QUOTE FORM */}
       <RequestQuote />
 
       <WhyChooseUs />
       <TrustedBrands />
       <NewFooter />
+
+      {/* LOGIN / REGISTER MODAL */}
+      <AuthModal visible={authVisible} onClose={() => setAuthVisible(false)} />
     </div>
   );
 };
