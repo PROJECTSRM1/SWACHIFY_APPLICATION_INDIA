@@ -1,12 +1,13 @@
 .machinery-wrapper {
-  width: 86%;
+  width: 100%;
   background: #f8fafc;
   min-height: 100vh;
   padding-bottom: 20px;
   margin-left: 95px;
+  margin: 0 ;
+  padding: 0 ;
 }
 
-/* HEADER */
 .machinery-header {
   width: 100%;
   background: #d97706;
@@ -27,7 +28,6 @@
   font-size: 15px;
 }
 
-/* GRID */
 .machinery-grid {
   width: 100%;
   padding: 0 25px;
@@ -37,7 +37,7 @@
  
 }
 
-/* CARD */
+
 .machinery-card {
   background: white;
   border-radius: 16px;
@@ -87,6 +87,7 @@
 
 .mach-section-title{
   font-size: 17px;
+  margin-top: 5px;
 }
 
 .machinery-btn {
@@ -104,7 +105,6 @@
   background: #b45309;
 }
 
-/* ---------- DETAILS MODAL ----------- */
 
 .mach-details-modal {
   position: fixed;
@@ -215,9 +215,9 @@
   flex-direction: column;
   font-size: 13px;
   font-weight: 500;
+  margin-top: 5px;
 }
 
-/* CHECKBOX GRID FIX */
 .mach-checkbox-row {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -227,7 +227,7 @@
 .mach-checkbox-row label {
   display: flex;
   align-items: center;
-  gap: px;
+  gap: 5px;
   font-size: 13px;
 }
 
@@ -303,7 +303,7 @@
 
 .mach-form-item.full-width textarea {
   width: 205% !important;
-  height: 100px !important;     /* Bigger box */
+  height: 100px !important;  
   padding: 12px 14px;
   font-size: 13px;
   border-radius: 10px;

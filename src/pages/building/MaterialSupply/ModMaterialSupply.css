@@ -1,10 +1,12 @@
 
 .material-wrapper {
-  width: 89%;
-  background: #f8fafc;
+  width: 100%;
+  background: transparent;
   min-height: 100vh;
   padding-bottom: 20px;
-  margin-left: 75px;
+  margin-left: 80px;
+  margin: 0 ;
+  padding: 0;
 }
 
 .rd-imgeader {
@@ -95,7 +97,7 @@
   font-weight: 600;
 }
 
-.details-btn {
+.details-btn1 {
   background: #d97706;
   color: white;
   padding: 8px 12px;
@@ -269,6 +271,7 @@
   font-weight: 600;
   margin-bottom: 4px;
   text-align: left !important;
+  margin-top: 10px;
 }
 
 input,
@@ -300,7 +303,7 @@ textarea {
 .checkbox-row label{
   display: flex;
   align-items: center;
-  gap: px;
+  gap: 5px;
   font-size: 13px;
 }
 

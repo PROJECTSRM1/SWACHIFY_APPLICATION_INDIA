@@ -43,7 +43,7 @@ const MaterialSupply: React.FC = () => {
                 <p className="price">₹{item.price}</p>
 
                 <button
-                  className="details-btn"
+                  className="details-btn1"
                   onClick={() => setSelectedId(item.id)}
                 >
                   View Details

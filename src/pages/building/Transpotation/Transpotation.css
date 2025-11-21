@@ -1,10 +1,13 @@
 
 .transport-wrapper {
-  width: 90%;
+  width: 100%;
   background: #f8fafc;
   min-height: 100vh;
   padding-bottom: 20px;
   margin-left: 55px;
+  margin-left: 80px;
+  margin: 0 ;
+  padding: 0;
 }
 
 
@@ -36,17 +39,17 @@
 
 
 .transport-grid {
-  width: 100%;
-  padding: 20px 40px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px; 
-  box-sizing: border-box;
+    width: 100%;
+    padding: 20px 40px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 18px;
+    box-sizing: border-box;
 }
 
 .transport-card {
   background: #ffffff;
-  border-radius: 16px;
+  border-radius: 15px;
   padding: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
   transition: 0.2s ease;
@@ -196,10 +199,9 @@
   color: #2563eb;
 }
 
-/* INCLUDED LIST */
 .tf-included-title {
   margin-top: 22px;
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 600;
 }
 
@@ -217,7 +219,6 @@
   font-size: 13px;
 }
 
-/* RIGHT FORM */
 .tf-form-box {
   width: 60%;
   background: #ffffff;
@@ -270,9 +271,11 @@
 }
 
 .tf-field label {
-  margin-bottom: 6px;
-  font-size: 14px;
-  font-weight: 500;
+      font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    text-align: left !important;
+    margin-top: 10px;
 }
 
 .tf-field input,
@@ -289,7 +292,6 @@ textarea {
   resize: none;
 }
 
-/* CHECKBOXES */
 .tf-checkbox-group {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -304,7 +306,6 @@ textarea {
   align-items: center;
 }
 
-/* BUTTONS */
 .tf-buttons {
   display: flex;
   gap: 16px;
@@ -329,11 +330,9 @@ textarea {
   color: #fff;
 }
 
-/* ========== TABLETS (max-width: 900px) ========== */
 
 @media (max-width: 900px) {
 
-  /* Transport Grid */
   .transport-grid {
     grid-template-columns: repeat(2, 1fr);
     padding: 20px;
@@ -344,7 +343,6 @@ textarea {
     margin-left: 10px;
   }
 
-  /* TF Modal Layout */
   .tf-main {
     flex-direction: column;
     gap: 20px;
@@ -368,18 +366,15 @@ textarea {
 }
 
 
-/* ========== MOBILE (max-width: 600px) ========== */
 
 @media (max-width: 600px) {
 
-  /* Transport wrapper mobile fix */
   .transport-wrapper {
     width: 100%;
     margin-left: 0;
     padding: 10px;
   }
 
-  /* Header Responsive */
   .transport-header {
     text-align: center;
     padding: 12px;
@@ -389,13 +384,11 @@ textarea {
     font-size: 20px;
   }
 
-  /* Grid → 1 column */
   .transport-grid {
     grid-template-columns: 1fr;
     padding: 0 10px;
   }
 
-  /* TF Popup */
   .tf-modal-content {
     width: 95%;
     max-width: 450px;

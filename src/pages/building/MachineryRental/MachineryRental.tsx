@@ -44,14 +44,12 @@ const MachineryRental: React.FC = () => {
 
   return (
     <div className="machinery-wrapper">
-
-      {/* Page Header */}
+     
       <div className="machinery-header">
         <h2>Construction Equipment Rental</h2>
         <p>{machinery.length} services available</p>
       </div>
 
-      {/* Cards Grid */}
       <div className="machinery-grid">
         {machinery.map((item) => (
           <div className="machinery-card" key={item.id}>

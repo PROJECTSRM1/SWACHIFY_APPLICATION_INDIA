@@ -4,6 +4,7 @@ import "./Dashboard.css";
 import ConstructionServices from "../building/building";
 import Packersandmovers from "./PackersAndMovers/Packersandmovers";
 import CleaningService from "./cleaningservice/CleaningService";
+import BuySaleProducts from "./buy&sale/BuySaleProducts";
 import HomeServices from "./homeservices/HomeServices";
 import { Route, Routes } from "react-router-dom";
 import ServicesPage from "./homerentals/pages/ServicesPage";
@@ -21,10 +22,8 @@ const Dashboard: React.FC = () => {
       <HeaderBar />
 
       <div className="services-section">
+        
         <h1 className="services-title">Our Services</h1>
-        <p className="services-subtitle">
-          Browse through our services and add items to your cart
-        </p>
 
         <div className="services-search">
           <input
@@ -42,6 +41,7 @@ const Dashboard: React.FC = () => {
     <ServicesPage/>
    
       <ConstructionServices/>
+      <BuySaleProducts/>
       
       
 

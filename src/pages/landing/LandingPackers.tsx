@@ -5,11 +5,10 @@ import {
   Button,
   Form,
   Input,
-  Select,
-  DatePicker,
   Menu,
   Modal,
   Tabs,
+  Checkbox
 } from 'antd';
 import {
   CheckCircleOutlined,
@@ -18,13 +17,13 @@ import {
   DollarOutlined,
   UserOutlined,
   ClockCircleOutlined,
-  EnvironmentOutlined,
+//EnvironmentOutlined,
   MailOutlined,
 } from '@ant-design/icons';
 import { Link, useNavigate } from 'react-router-dom';
 import './LandingPackers.css';
 
-// === IMAGE IMPORTS - ensure these files exist in src/assets/landingimages ===
+// === IMAGE IMPORTS ===
 import heroPackers from '../../assets/landingimages/Packers.jpg';
 import packingServicesImg from '../../assets/landingimages/PackingServices .jpg';
 import localandlongdistance from '../../assets/landingimages/localandlongdistance.jpg';
@@ -33,9 +32,9 @@ import officeRelocationImg from '../../assets/landingimages/office-relocation.jp
 import vehicleTransportImg from '../../assets/landingimages/vehicle-transport.jpg';
 import Loadingtransport from '../../assets/landingimages/Loadingtransport.jpg';
 import insurance from '../../assets/landingimages/insurance.jpeg';
-// ========================================================================
+// =====================
 
-const { Option } = Select;
+// const { Option } = Select;
 const { TabPane } = Tabs;
 
 const navItems = [
@@ -80,10 +79,10 @@ const typesOfServices = [
     title: 'Residential Moving',
     price: '$299',
     features: [
-      '1-5 bedroom homes',
+      '1–5 bedroom homes',
       'Packing & unpacking',
       'Furniture disassembly/assembly',
-      'Storage solutions available'
+      'Storage solutions available',
     ],
     image: residentialMovingImg,
   },
@@ -91,10 +90,10 @@ const typesOfServices = [
     title: 'Office Relocation',
     price: 'Custom Quote',
     features: [
-      'Minimal business disruption',
-      'After hours moving',
+      'Minimal disruption',
+      'After-hours moving',
       'IT equipment handling',
-      'Floor plan setup'
+      'Floor plan setup',
     ],
     image: officeRelocationImg,
   },
@@ -105,181 +104,164 @@ const typesOfServices = [
       'Cars & motorcycles',
       'Enclosed transport',
       'Door to door service',
-      'Insurance included'
+      'Insurance included',
     ],
     image: vehicleTransportImg,
   },
 ];
 
-const whyChooseUs = [
+const reasons = [
   {
     icon: <UserOutlined style={{ fontSize: 30, color: '#00aa33' }} />,
     title: 'Expert Team',
-    desc: 'Trained professionals with years of moving experience.',
+    desc: 'Trained professionals with years of relocation experience.',
   },
   {
     icon: <ClockCircleOutlined style={{ fontSize: 30, color: '#1677ff' }} />,
     title: 'On-Time Delivery',
-    desc: 'We respect your time and ensure punctual service.',
+    desc: 'We value your time and ensure timely relocation.',
   },
   {
     icon: <SafetyCertificateOutlined style={{ fontSize: 30, color: '#ff7a00' }} />,
     title: 'Full Insurance',
-    desc: 'Complete coverage for your belongings during transit.',
+    desc: 'Your belongings are fully covered during transit.',
   },
 ];
 
 const LandingPackers: React.FC = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
   const [authVisible, setAuthVisible] = useState(false);
   const [loginForm] = Form.useForm();
   const [registerForm] = Form.useForm();
   const navigate = useNavigate();
 
-  const onFinish = (values: any) => {
-    console.log('Received values:', values);
-  };
-
-  // Auth handlers — on successful login navigate to dashboard
+  // 🚀 LOGIN → DIRECT NAVIGATION
   const handleLogin = (values: any) => {
-    console.log('Login values:', values);
-    // TODO: call auth API here. On success:
+    console.log("Login:", values);
     setAuthVisible(false);
-    // navigate to dashboard as requested
-    navigate('/dashboard');
+    navigate("/app/dashboard");
   };
 
+  // 🚀 REGISTER → DIRECT NAVIGATION
   const handleRegister = (values: any) => {
-    console.log('Register values:', values);
-    // TODO: register API. On success you can either log in automatically or keep modal closed.
+    console.log("Register:", values);
     setAuthVisible(false);
-    navigate('/dashboard'); // optional: navigate after register (keeps same behavior)
+    navigate("/app/dashboard");
   };
 
-  // Minimal Auth modal: matches the "second/third pic" layout (centered form with no left images)
   const AuthModal = () => (
     <Modal
       open={authVisible}
       onCancel={() => setAuthVisible(false)}
       footer={null}
       centered
-      width={560}
-      className="auth-modal--packers"
-      closeIcon={<span style={{ fontSize: 20, color: "#9aa4b2" }}>✕</span>}
-      bodyStyle={{ padding: 28 }}
-      aria-labelledby="auth-modal-title"
+      width={550}
+      className="auth-modal"
     >
-      <div style={{ maxWidth: 480, margin: '0 auto' }}>
-        <Tabs defaultActiveKey="login" type="line" centered>
-          <TabPane tab="Login" key="login">
-            <Form
-              form={loginForm}
-              layout="vertical"
-              onFinish={handleLogin}
-              initialValues={{ remember: true }}
+      <Tabs defaultActiveKey="login" centered>
+
+        {/* LOGIN TAB */}
+        <TabPane tab="Login" key="login">
+          <Form form={loginForm} layout="vertical" onFinish={handleLogin}>
+            <Form.Item
+              label="Email / Phone"
+              name="identifier"
+              rules={[{ required: true }]}
             >
-              <Form.Item
-                label={<span style={{ fontWeight: 600 }}>Email / Phone</span>}
-                name="identifier"
-                rules={[{ required: true, message: "Please enter email / phone" }]}
-              >
-                <Input placeholder="john@example.com or +1 555 123 4567" />
-              </Form.Item>
+              <Input placeholder="john@example.com" />
+            </Form.Item>
 
-              <Form.Item
-                label={<span style={{ fontWeight: 600 }}>Password</span>}
-                name="password"
-                rules={[{ required: true, message: "Please enter your password" }]}
-              >
-                <Input.Password placeholder="Password" />
-              </Form.Item>
-
-              <Form.Item>
-                <Button type="primary" htmlType="submit" block style={{ height: 44 }}>
-                  Login
-                </Button>
-              </Form.Item>
-            </Form>
-          </TabPane>
-
-          <TabPane tab="Register" key="register">
-            <Form
-              form={registerForm}
-              layout="vertical"
-              onFinish={handleRegister}
+            <Form.Item
+              label="Password"
+              name="password"
+              rules={[{ required: true }]}
             >
-              <Form.Item
-                label={<span style={{ fontWeight: 600 }}>Full name</span>}
-                name="fullName"
-                rules={[{ required: true, message: "Please enter your full name" }]}
-              >
-                <Input placeholder="John Doe" />
-              </Form.Item>
+              <Input.Password placeholder="Password" />
+            </Form.Item>
 
-              <Form.Item
-                label={<span style={{ fontWeight: 600 }}>Email</span>}
-                name="email"
-                rules={[{ required: true, type: "email", message: "Please enter valid email" }]}
-              >
-                <Input placeholder="john@example.com" />
-              </Form.Item>
+            {/* ⭐ Added Remember Me Checkbox */}
+            <Form.Item name="remember" valuePropName="checked">
+              <Checkbox>Remember me</Checkbox>
+            </Form.Item>
 
-              <Form.Item
-                label={<span style={{ fontWeight: 600 }}>Phone</span>}
-                name="phone"
-                rules={[{ required: true, message: "Please enter phone number" }]}
-              >
-                <Input placeholder="+1 555 123 4567" />
-              </Form.Item>
+            <Button type="primary" htmlType="submit" block>
+              Login
+            </Button>
+          </Form>
+        </TabPane>
 
-              <Form.Item
-                label={<span style={{ fontWeight: 600 }}>Password</span>}
-                name="regPassword"
-                rules={[{ required: true, message: "Please choose a password" }]}
-              >
-                <Input.Password placeholder="Choose a password" />
-              </Form.Item>
+        {/* REGISTER TAB */}
+        <TabPane tab="Register" key="register">
+          <Form form={registerForm} layout="vertical" onFinish={handleRegister}>
+            <Form.Item
+              label="Full Name"
+              name="fullName"
+              rules={[{ required: true }]}
+            >
+              <Input placeholder="John Doe" />
+            </Form.Item>
 
-              <Form.Item
-                label={<span style={{ fontWeight: 600 }}>Confirm Password</span>}
-                name="confirmPassword"
-                dependencies={['regPassword']}
-                rules={[
-                  { required: true, message: "Please confirm password" },
-                  ({ getFieldValue }) => ({
-                    validator(_, value) {
-                      if (!value || getFieldValue('regPassword') === value) {
-                        return Promise.resolve();
-                      }
-                      return Promise.reject(new Error('Passwords do not match'));
-                    },
-                  }),
-                ]}
-              >
-                <Input.Password placeholder="Confirm password" />
-              </Form.Item>
+            <Form.Item
+              label="Email"
+              name="email"
+              rules={[{ required: true, type: "email" }]}
+            >
+              <Input placeholder="john@example.com" />
+            </Form.Item>
 
-              <Form.Item>
-                <Button type="primary" htmlType="submit" block style={{ height: 44 }}>
-                  Register
-                </Button>
-              </Form.Item>
-            </Form>
-          </TabPane>
-        </Tabs>
-      </div>
+            <Form.Item
+              label="Phone"
+              name="phone"
+              rules={[{ required: true }]}
+            >
+              <Input placeholder="+1 555 123 4567" />
+            </Form.Item>
+
+            <Form.Item
+              label="Password"
+              name="password"
+              rules={[{ required: true }]}
+            >
+              <Input.Password placeholder="Password" />
+            </Form.Item>
+
+            <Form.Item
+              label="Confirm Password"
+              name="confirm"
+              dependencies={["password"]}
+              rules={[
+                { required: true },
+                ({ getFieldValue }) => ({
+                  validator(_, value) {
+                    return !value || getFieldValue("password") === value
+                      ? Promise.resolve()
+                      : Promise.reject("Passwords do not match");
+                  },
+                }),
+              ]}
+            >
+              <Input.Password placeholder="Confirm Password" />
+            </Form.Item>
+
+            <Button type="primary" htmlType="submit" block>
+              Register
+            </Button>
+          </Form>
+        </TabPane>
+
+      </Tabs>
     </Modal>
   );
 
   return (
-    <div className="packes-container">
-      {/* NAVBAR */}
+    <div className="packers-container">
+
+      {/* HEADER */}
       <header className="hs-navbar">
         <div className="hs-navbar-logo">
           <span className="hs-logo-text">SWACHIFY INDIA</span>
         </div>
 
-        <Menu mode="horizontal" selectedKeys={["home-services"]} className="hs-navbar-menu" items={navItems} />
+        <Menu mode="horizontal" items={navItems} className="hs-navbar-menu" />
 
         <Button
           type="primary"
@@ -290,29 +272,16 @@ const LandingPackers: React.FC = () => {
         </Button>
       </header>
 
-      {menuOpen && (
-        <ul className="mobile-menu">
-          <li><Link to="/" onClick={() => setMenuOpen(false)}>Home</Link></li>
-          <li><Link to="/cleaningservice" onClick={() => setMenuOpen(false)}>Cleaning</Link></li>
-          <li><Link to="/LandingPackers" onClick={() => setMenuOpen(false)}>Packers & Movers</Link></li>
-          <li><Link to="/home_service" onClick={() => setMenuOpen(false)}>Home Services</Link></li>
-          <li><Link to="/homeapartment" onClick={() => setMenuOpen(false)}>Rentals</Link></li>
-          <li><Link to="/Buy_SaleHouseProducts" onClick={() => setMenuOpen(false)}>Commercial Plots</Link></li>
-          <li><Link to="/ConstructionMaterials" onClick={() => setMenuOpen(false)}>Construction Materials</Link></li>
-          <li><Link to="/contactus" onClick={() => setMenuOpen(false)}>Contact</Link></li>
-          <li><Link to="/Cart" onClick={() => setMenuOpen(false)}>Cart</Link></li>
-          <li><Link to="/Login" onClick={() => setMenuOpen(false)}>Login</Link></li>
-        </ul>
-      )}
-
-      {/* render auth modal */}
       <AuthModal />
 
-      {/* HERO */}
-      <section className="packes-hero" style={{ backgroundImage: `url(${heroPackers})` }}>
+      {/* HERO SECTION */}
+      <section
+        className="packes-hero"
+        style={{ backgroundImage: `url(${heroPackers})` }}
+      >
         <div className="hero-overlay">
           <h1>Stress-Free Relocation Services</h1>
-          <p>From packing to delivery, we make moving seamless and efficient.</p>
+          <p>From packing to delivery, we make your move effortless.</p>
           <Button type="primary" size="large">Book Now</Button>
         </div>
       </section>
@@ -320,39 +289,34 @@ const LandingPackers: React.FC = () => {
       {/* SERVICES */}
       <section className="packes-services">
         <h2>Our Services</h2>
-        <p>Your trusted relocation partner across cities and states.</p>
         <div className="services-row">
-          {services.map((item, i) => (
-            <Card key={i} className="packes-card" hoverable>
-              <img src={item.img} alt={item.title} className="service-img" />
-              <div className="packes-icon">{item.icon}</div>
-              <h3>{item.title}</h3>
-              <p>{item.desc}</p>
+          {services.map((s, i) => (
+            <Card key={i} className="packes-card">
+              <img src={s.img} className="service-img" />
+              <div className="packes-icon">{s.icon}</div>
+              <h3>{s.title}</h3>
+              <p>{s.desc}</p>
             </Card>
           ))}
         </div>
       </section>
 
-      {/* TYPES OF SERVICES */}
+      {/* SERVICE TYPES */}
       <section className="types-of-services">
         <h2>Types of Moving Services</h2>
-        <p>Whether you're moving your home, office, or vehicle, we've got you covered.</p>
         <div className="types-row">
-          {typesOfServices.map((service, i) => (
+          {typesOfServices.map((t, i) => (
             <Card
               key={i}
               className="service-card"
-              hoverable
-              cover={<img src={service.image} alt={service.title} className="service-img" />}
+              cover={<img src={t.image} className="service-img" />}
             >
-              <h3>{service.title}</h3>
-              <p>Starting at {service.price}</p>
+              <h3>{t.title}</h3>
+              <p>Starting at {t.price}</p>
               <ul>
-                {service.features.map((feature, index) => (
-                  <li key={index}>{feature}</li>
-                ))}
+                {t.features.map((f, idx) => <li key={idx}>{f}</li>)}
               </ul>
-              <Button type="primary" size="large">Get Quote</Button>
+              <Button type="primary">Get Quote</Button>
             </Card>
           ))}
         </div>
@@ -361,84 +325,32 @@ const LandingPackers: React.FC = () => {
       {/* REQUEST QUOTE */}
       <section className="request-quote">
         <h2>Request a Moving Quote</h2>
-        <p>Tell us about your move and get a customized quote</p>
-        <div className="quote-form-container">
-          <Form name="request_quote" onFinish={onFinish} layout="vertical">
-            <Form.Item label="Full Name" name="fullName" rules={[{ required: true }]}>
-              <Input prefix={<UserOutlined />} placeholder="John Doe" />
-            </Form.Item>
-            <Form.Item label="Email" name="email" rules={[{ required: true }]}>
-              <Input prefix={<MailOutlined />} placeholder="john@example.com" />
-            </Form.Item>
-            <Form.Item label="Phone Number" name="phoneNumber" rules={[{ required: true }]}>
-              <Input placeholder="+1 (555) 123-4567" />
-            </Form.Item>
-            <Form.Item label="Service Type" name="serviceType" rules={[{ required: true }]}>
-              <Select placeholder="Select Service">
-                <Option value="basic">Basic Service</Option>
-                <Option value="standard">Standard Service</Option>
-                <Option value="premium">Premium Service</Option>
-                <Option value="emergency">Emergency Service</Option>
-              </Select>
-            </Form.Item>
-            <Form.Item label="Service Address" name="serviceAddress" rules={[{ required: true }]}>
-              <Input placeholder="123 Main St, City, State, ZIP" />
-            </Form.Item>
-            <Form.Item label="Preferred Date" name="preferredDate" rules={[{ required: true }]}>
-              <DatePicker style={{ width: '100%' }} />
-            </Form.Item>
-            <Form.Item label="Preferred Time" name="preferredTime" rules={[{ required: true }]}>
-              <Select placeholder="Select Time Slot">
-                <Option value="8am-10am">8:00 AM - 10:00 AM</Option>
-                <Option value="10am-12pm">10:00 AM - 12:00 PM</Option>
-                <Option value="12pm-2pm">12:00 PM - 2:00 PM</Option>
-                <Option value="2pm-4pm">2:00 PM - 4:00 PM</Option>
-                <Option value="4pm-6pm">4:00 PM - 6:00 PM</Option>
-              </Select>
-            </Form.Item>
-            <Form.Item label="Additional Details" name="additionalDetails">
-              <Input.TextArea rows={3} placeholder="Tell us more..." />
-            </Form.Item>
-            <Button type="primary" htmlType="submit" block>
-              Submit Booking Request
-            </Button>
-          </Form>
-        </div>
-      </section>
+        <Form layout="vertical">
+          <Form.Item label="Full Name" name="fullName" rules={[{ required: true }]}>
+            <Input />
+          </Form.Item>
 
-      {/* HOW IT WORKS */}
-      <section className="how-it-works">
-        <h2 className="hiw-title">How It Works</h2>
-        <div className="hiw-steps">
-          {[1,2,3,4].map((n) => (
-            <div className="hiw-step" key={n}>
-              <div className="hiw-step-top">
-                <span className="hiw-circle">{n}</span>
-              </div>
-              <div className="hiw-texts">
-                <div className="hiw-step-title">
-                  {n === 1 ? 'Get a Quote' : n === 2 ? 'Schedule Your Move' : n === 3 ? 'We Pack & Load' : 'Safe Delivery'}
-                </div>
-                <div className="hiw-step-sub">
-                  {n === 1 ? 'Contact us for a free estimate' :
-                   n === 2 ? 'Choose your preferred date and time' :
-                   n === 3 ? 'Our team handles everything carefully' : 'Your belongings arrive safely'}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+          <Form.Item label="Email" name="email" rules={[{ required: true }]}>
+            <Input prefix={<MailOutlined />} />
+          </Form.Item>
+
+          <Form.Item label="Phone Number" name="phoneNumber" rules={[{ required: true }]}>
+            {/* <Input prefix={<EnvironmentOutlined />} /> */}
+          </Form.Item>
+
+          <Button type="primary" block>Submit</Button>
+        </Form>
       </section>
 
       {/* WHY CHOOSE US */}
       <section className="why-choose-us">
         <h2>Why Choose Us</h2>
         <div className="choose-us-wrapper">
-          {whyChooseUs.map((item, i) => (
-            <div className="choose-us-card" key={i}>
-              <div className="choose-us-icon">{item.icon}</div>
-              <h3>{item.title}</h3>
-              <p>{item.desc}</p>
+          {reasons.map((r, i) => (
+            <div key={i} className="choose-us-card">
+              <div className="choose-us-icon">{r.icon}</div>
+              <h3>{r.title}</h3>
+              <p>{r.desc}</p>
             </div>
           ))}
         </div>
@@ -446,41 +358,9 @@ const LandingPackers: React.FC = () => {
 
       {/* FOOTER */}
       <footer className="footer">
-        <div className="footer-grid">
-          <div>
-            <h3>About Us</h3>
-            <p>Your trusted partner for all home and property-related services. Quality, reliability, and customer satisfaction guaranteed.</p>
-          </div>
-          <div>
-            <h3>Services</h3>
-            <ul>
-              <li>Cleaning Service</li>
-              <li>Packers & Movers</li>
-              <li>Home Services</li>
-              <li>Rentals</li>
-              <li>Commercial Plots</li>
-              <li>Construction Materials</li>
-            </ul>
-          </div>
-          <div>
-            <h3>Quick Links</h3>
-            <ul>
-              <li>Home</li>
-              <li>About</li>
-              <li>Contact</li>
-              <li>Careers</li>
-            </ul>
-          </div>
-          <div>
-            <h3>Contact Info</h3>
-            <p>📞 +1 (555) 123-4567</p>
-            <p>✓ info@homeservices.com</p>
-            <p>📍 123 Service Street, City, State</p>
-            <div className="social-icons">🌐 🎧 📷 🧭</div>
-          </div>
-        </div>
-        <p className="footer-bottom">© 2025 Home Services. All rights reserved.</p>
+        <p>© 2025 Home Services. All rights reserved.</p>
       </footer>
+
     </div>
   );
 };

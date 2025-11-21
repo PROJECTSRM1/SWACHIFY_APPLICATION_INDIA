@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+// src/pages/landing/LandingPage.tsx
+import { useState } from "react";
 import {
   Button,
   Card,
@@ -10,8 +11,9 @@ import {
   Form,
   Input,
   Checkbox,
+  message,
 } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import {
   HomeOutlined,
@@ -20,12 +22,12 @@ import {
   ShopOutlined,
   ApartmentOutlined,
   BuildOutlined,
+  EyeInvisibleOutlined,
+  EyeTwoTone,
 } from "@ant-design/icons";
 
 import "./landingpage.css";
 import heroImage from "../../assets/landingimages/hero.jpg";
-
-const { TabPane } = Tabs;
 
 const navItems = [
   { key: "home", label: <Link to="/">Home</Link> },
@@ -42,62 +44,77 @@ const services = [
     icon: <HomeOutlined style={{ fontSize: 28, color: "#1677ff" }} />,
     title: "Cleaning Service",
     desc: "Professional cleaning solutions for your home and office. Deep cleaning, regular maintenance, and specialized services.",
+    route: "/cleaningservice",
   },
   {
     icon: <TruckOutlined style={{ fontSize: 28, color: "#00aa33" }} />,
     title: "Packers & Movers",
     desc: "Safe and reliable relocation services. Local and long-distance moving with complete packing solutions.",
+    route: "/LandingPackers",
   },
   {
     icon: <ToolOutlined style={{ fontSize: 28, color: "#ff7a00" }} />,
     title: "Home Services",
     desc: "Expert plumbing, electrical, carpentry, and maintenance services. Quick response and quality workmanship.",
+    route: "/home_service",
   },
   {
     icon: <ApartmentOutlined style={{ fontSize: 28, color: "#8b00ff" }} />,
     title: "Home & Apartments Rental",
     desc: "Find your perfect home with our extensive rental listings. Apartments, houses, and furnished options available.",
+    route: "/rentals",
   },
   {
     icon: <ShopOutlined style={{ fontSize: 28, color: "#ff3333" }} />,
     title: "commercial-plots",
     desc: "Premium commercial plots in prime locations. Excellent investment opportunities.",
+    route: "/commercial-plots",
   },
   {
     icon: <BuildOutlined style={{ fontSize: 28, color: "#ffaa00" }} />,
     title: "Construction Raw Materials",
     desc: "Quality cement, bricks, and building materials at competitive prices.",
+    route: "/ConstructionMaterials",
   },
 ];
+
+const { TabPane } = Tabs;
 
 const LandingPage = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [authModalVisible, setAuthModalVisible] = useState(false);
   const [activeAuthTab, setActiveAuthTab] = useState<"login" | "register">("register");
 
-  // ⭐ Scroll to Services Section
-  const scrollToServices = () => {
-    const section = document.getElementById("services-section");
-    section?.scrollIntoView({ behavior: "smooth" });
-  };
+  const navigate = useNavigate();
 
-  // Handlers for modal
   const openAuthModal = (tab: "login" | "register" = "register") => {
     setActiveAuthTab(tab);
     setAuthModalVisible(true);
   };
+
   const closeAuthModal = () => setAuthModalVisible(false);
 
-  // Submit handlers (wire up to your auth later)
-  const onLogin = (values: any) => {
+  // When Login is successful → Go to dashboard
+  const onLogin = async (values: any) => {
+    // TODO: replace with real API call
     console.log("login values", values);
-    // TODO: call login API
+    message.success("Login successful");
     closeAuthModal();
+    navigate("/app/dashboard");
   };
-  const onRegister = (values: any) => {
+
+  // When Register is successful → Go to dashboard
+  const onRegister = async (values: any) => {
+    // TODO: replace with real API call
     console.log("register values", values);
-    // TODO: call register API
+    message.success("Registration successful");
     closeAuthModal();
+    navigate("/app/dashboard");
+  };
+
+  const scrollToServices = () => {
+    const section = document.getElementById("services-section");
+    section?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -108,7 +125,12 @@ const LandingPage = () => {
           <span className="hs-logo-text">SWACHIFY INDIA</span>
         </div>
 
-        <Menu mode="horizontal" selectedKeys={["home-services"]} className="hs-navbar-menu" items={navItems} />
+        <Menu
+          mode="horizontal"
+          selectedKeys={["home-services"]}
+          className="hs-navbar-menu"
+          items={navItems}
+        />
 
         <Button
           type="primary"
@@ -130,8 +152,22 @@ const LandingPage = () => {
           <li><Link to="/commercial-plots" onClick={() => setMenuOpen(false)}>Commercial Plots</Link></li>
           <li><Link to="/ConstructionMaterials" onClick={() => setMenuOpen(false)}>Construction Materials</Link></li>
           <li><Link to="/contactus" onClick={() => setMenuOpen(false)}>Contact</Link></li>
+
+          {/* ⭐ ADDED CART */}
           <li><Link to="/Cart" onClick={() => setMenuOpen(false)}>Cart</Link></li>
-          <li><Link to="/Login" onClick={() => setMenuOpen(false)}>Login</Link></li>
+
+          <li>
+            <Link
+              to="#"
+              onClick={(e) => {
+                e.preventDefault();
+                setMenuOpen(false);
+                openAuthModal("login");
+              }}
+            >
+              Login
+            </Link>
+          </li>
         </ul>
       )}
 
@@ -152,6 +188,7 @@ const LandingPage = () => {
       </section>
 
       {/* 🟦 SERVICES SECTION */}
+      {/* ⭐ ADDED ID FOR SCROLL TARGET */}
       <section id="services-section" className="services-section">
         <h2 className="section-title">Our Services</h2>
         <p className="section-subtitle">
@@ -161,11 +198,16 @@ const LandingPage = () => {
         <Row gutter={[24, 24]} justify="center">
           {services.map((item, i) => (
             <Col xs={24} sm={12} md={8} key={i}>
-              <Card className="service-card" hoverable>
+              <Card
+                className="service-card"
+                hoverable
+                onClick={() => navigate(item.route)}
+                style={{ cursor: "pointer" }}
+              >
                 <div className="service-icon">{item.icon}</div>
                 <h3 className="service-title">{item.title}</h3>
                 <p className="service-desc">{item.desc}</p>
-                <a className="learn-more" href="#">
+                <a className="learn-more" href="#" onClick={(e) => e.preventDefault()}>
                   Learn More →
                 </a>
               </Card>
@@ -173,6 +215,103 @@ const LandingPage = () => {
           ))}
         </Row>
       </section>
+
+      {/* ===== NEW: WHY CHOOSE OUR SERVICE SECTION (placed below Our Services) ===== */}
+      <section id="why-choose-section" className="why-choose-section" style={{ padding: "40px 20px" }}>
+        <div className="container" style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <h2 className="section-title" style={{ textAlign: "center" }}>Why Choose Our Service</h2>
+          <p className="section-subtitle" style={{ textAlign: "center", marginBottom: 28 }}>
+            We focus on quality, trust and speed — built to make your life easier.
+          </p>
+
+          <Row gutter={[20, 20]} justify="center">
+            <Col xs={24} sm={12} md={8}>
+              <Card className="why-card" bordered={false} hoverable>
+                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                  <ToolOutlined style={{ fontSize: 28, color: "#ff7a00" }} />
+                  <div>
+                    <h4 style={{ marginBottom: 6 }}>Skilled Professionals</h4>
+                    <p style={{ margin: 0, fontSize: 14 }}>
+                      Verified, trained technicians who deliver quality workmanship every time.
+                    </p>
+                  </div>
+                </div>
+              </Card>
+            </Col>
+
+            <Col xs={24} sm={12} md={8}>
+              <Card className="why-card" bordered={false} hoverable>
+                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                  <HomeOutlined style={{ fontSize: 28, color: "#1677ff" }} />
+                  <div>
+                    <h4 style={{ marginBottom: 6 }}>Trusted & Local</h4>
+                    <p style={{ margin: 0, fontSize: 14 }}>
+                      Local teams who know your area and are committed to timely service.
+                    </p>
+                  </div>
+                </div>
+              </Card>
+            </Col>
+
+            <Col xs={24} sm={12} md={8}>
+              <Card className="why-card" bordered={false} hoverable>
+                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                  <TruckOutlined style={{ fontSize: 28, color: "#00aa33" }} />
+                  <div>
+                    <h4 style={{ marginBottom: 6 }}>Transparent Pricing</h4>
+                    <p style={{ margin: 0, fontSize: 14 }}>
+                      Clear quotes with no hidden fees — affordable packages for every need.
+                    </p>
+                  </div>
+                </div>
+              </Card>
+            </Col>
+
+            <Col xs={24} sm={12} md={8}>
+              <Card className="why-card" bordered={false} hoverable>
+                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                  <BuildOutlined style={{ fontSize: 28, color: "#ffaa00" }} />
+                  <div>
+                    <h4 style={{ marginBottom: 6 }}>Licensed & Insured</h4>
+                    <p style={{ margin: 0, fontSize: 14 }}>
+                      Professional services backed by proper licensing and insurance.
+                    </p>
+                  </div>
+                </div>
+              </Card>
+            </Col>
+
+            <Col xs={24} sm={12} md={8}>
+              <Card className="why-card" bordered={false} hoverable>
+                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                  <ApartmentOutlined style={{ fontSize: 28, color: "#8b00ff" }} />
+                  <div>
+                    <h4 style={{ marginBottom: 6 }}>Satisfaction Guarantee</h4>
+                    <p style={{ margin: 0, fontSize: 14 }}>
+                      We stand behind our work — if you're not happy, we'll make it right.
+                    </p>
+                  </div>
+                </div>
+              </Card>
+            </Col>
+
+            <Col xs={24} sm={12} md={8}>
+              <Card className="why-card" bordered={false} hoverable>
+                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                  <ShopOutlined style={{ fontSize: 28, color: "#ff3333" }} />
+                  <div>
+                    <h4 style={{ marginBottom: 6 }}>24/7 Support</h4>
+                    <p style={{ margin: 0, fontSize: 14 }}>
+                      Emergency response and customer support available round the clock.
+                    </p>
+                  </div>
+                </div>
+              </Card>
+            </Col>
+          </Row>
+        </div>
+      </section>
+      {/* ===== end why choose section ===== */}
 
       {/* 🟦 FOOTER */}
       <footer className="footer">
@@ -221,7 +360,7 @@ const LandingPage = () => {
         </p>
       </footer>
 
-      {/* ===== AUTH MODAL (Login / Register) ===== */}
+      {/* ===== AUTH MODAL (login / register) ===== */}
       <Modal
         open={authModalVisible}
         onCancel={closeAuthModal}
@@ -229,107 +368,120 @@ const LandingPage = () => {
         centered
         width={520}
         bodyStyle={{ padding: 24 }}
-        className="auth-modal"
-        closeIcon={<span className="auth-close">✕</span>}
+        destroyOnClose
       >
-        <div className="auth-modal-inner">
-          <Tabs
-            activeKey={activeAuthTab}
-            onChange={(key) => setActiveAuthTab(key as "login" | "register")}
-            className="auth-tabs"
-          >
-            <TabPane tab="Login" key="login">
-              <Form layout="vertical" onFinish={onLogin}>
-                <Form.Item
-                  label={<span className="required-label">Email / Phone</span>}
-                  name="identifier"
-                  rules={[{ required: true, message: "Please input email or phone" }]}
-                >
-                  <Input placeholder="john@example.com or +1 555 123 4567" />
-                </Form.Item>
+        <Tabs
+          activeKey={activeAuthTab}
+          onChange={(key) => setActiveAuthTab(key as "login" | "register")}
+          centered
+        >
+          <TabPane tab="Login" key="login">
+            <Form layout="vertical" name="loginForm" onFinish={onLogin} preserve={false}>
+              <Form.Item
+                label={<span style={{ color: "#ff4d4f" }}> Email / Phone</span>}
+                name="identifier"
+                rules={[{ required: true, message: "Please input email / phone" }]}
+              >
+                <Input placeholder="john@example.com or +1 555 123 4567" />
+              </Form.Item>
 
-                <Form.Item
-                  label={<span className="required-label">Password</span>}
-                  name="password"
-                  rules={[{ required: true, message: "Please input password" }]}
-                >
-                  <Input.Password placeholder="Password" />
-                </Form.Item>
+              <Form.Item
+                label={<span style={{ color: "#ff4d4f" }}> Password</span>}
+                name="password"
+                rules={[{ required: true, message: "Please input password" }]}
+              >
+                <Input.Password
+                  placeholder="Password"
+                  iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+                />
+              </Form.Item>
 
-                <Form.Item>
+              <Form.Item>
+                <Form.Item name="remember" valuePropName="checked" noStyle>
                   <Checkbox>Remember me</Checkbox>
                 </Form.Item>
+              </Form.Item>
 
-                <Form.Item>
-                  <Button type="primary" htmlType="submit" block>
-                    Login
-                  </Button>
-                </Form.Item>
-              </Form>
-            </TabPane>
+              <Form.Item>
+                <Button type="primary" block htmlType="submit">
+                  Login
+                </Button>
+              </Form.Item>
+            </Form>
+          </TabPane>
 
-            <TabPane tab="Register" key="register">
-              <Form layout="vertical" onFinish={onRegister}>
-                <Form.Item
-                  label={<span className="required-label">Full name</span>}
-                  name="fullname"
-                  rules={[{ required: true, message: "Please input full name" }]}
-                >
-                  <Input placeholder="John Doe" />
-                </Form.Item>
+          <TabPane tab="Register" key="register">
+            <Form layout="vertical" name="registerForm" onFinish={onRegister} preserve={false}>
+              <Form.Item
+                label={<span style={{ color: "#ff4d4f" }}> Full name</span>}
+                name="fullname"
+                rules={[{ required: true, message: "Please input your full name" }]}
+              >
+                <Input placeholder="John Doe" />
+              </Form.Item>
 
-                <Form.Item
-                  label={<span className="required-label">Email</span>}
-                  name="email"
-                  rules={[{ required: true, message: "Please input email" }, { type: "email", message: "Enter a valid email" }]}
-                >
-                  <Input placeholder="john@example.com" />
-                </Form.Item>
+              <Form.Item
+                label={<span style={{ color: "#ff4d4f" }}> Email</span>}
+                name="email"
+                rules={[
+                  { required: true, message: "Please input your email" },
+                  { type: "email", message: "Enter a valid email" },
+                ]}
+              >
+                <Input placeholder="john@example.com" />
+              </Form.Item>
 
-                <Form.Item
-                  label={<span className="required-label">Phone</span>}
-                  name="phone"
-                  rules={[{ required: true, message: "Please input phone" }]}
-                >
-                  <Input placeholder="+1 555 123 4567" />
-                </Form.Item>
+              <Form.Item
+                label={<span style={{ color: "#ff4d4f" }}> Phone</span>}
+                name="phone"
+                rules={[{ required: true, message: "Please input your phone" }]}
+              >
+                <Input placeholder="+1 555 123 4567" />
+              </Form.Item>
 
-                <Form.Item
-                  label={<span className="required-label">Password</span>}
-                  name="password"
-                  rules={[{ required: true, message: "Please input password" }]}
-                >
-                  <Input.Password placeholder="Choose a password" />
-                </Form.Item>
+              <Form.Item
+                label={<span style={{ color: "#ff4d4f" }}> Password</span>}
+                name="password"
+                rules={[{ required: true, message: "Please input a password" }]}
+                hasFeedback
+              >
+                <Input.Password
+                  placeholder="Choose a password"
+                  iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+                />
+              </Form.Item>
 
-                <Form.Item
-                  label={<span className="required-label">Confirm Password</span>}
-                  name="confirmPassword"
-                  dependencies={['password']}
-                  rules={[
-                    { required: true, message: "Please confirm password" },
-                    ({ getFieldValue }) => ({
-                      validator(_, value) {
-                        if (!value || getFieldValue('password') === value) {
-                          return Promise.resolve();
-                        }
-                        return Promise.reject(new Error('Passwords do not match'));
-                      },
-                    }),
-                  ]}
-                >
-                  <Input.Password placeholder="Confirm password" />
-                </Form.Item>
+              <Form.Item
+                label={<span style={{ color: "#ff4d4f" }}> Confirm Password</span>}
+                name="confirm"
+                dependencies={["password"]}
+                hasFeedback
+                rules={[
+                  { required: true, message: "Please confirm your password" },
+                  ({ getFieldValue }) => ({
+                    validator(_, value) {
+                      if (!value || getFieldValue("password") === value) {
+                        return Promise.resolve();
+                      }
+                      return Promise.reject(new Error("Passwords do not match"));
+                    },
+                  }),
+                ]}
+              >
+                <Input.Password
+                  placeholder="Confirm password"
+                  iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+                />
+              </Form.Item>
 
-                <Form.Item>
-                  <Button type="primary" htmlType="submit" block>
-                    Register
-                  </Button>
-                </Form.Item>
-              </Form>
-            </TabPane>
-          </Tabs>
-        </div>
+              <Form.Item>
+                <Button type="primary" block htmlType="submit">
+                  Register
+                </Button>
+              </Form.Item>
+            </Form>
+          </TabPane>
+        </Tabs>
       </Modal>
     </div>
   );
