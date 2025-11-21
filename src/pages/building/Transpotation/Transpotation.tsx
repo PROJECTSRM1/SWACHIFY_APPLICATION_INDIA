@@ -1,9 +1,10 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+//import { useNavigate } from "react-router-dom";
 
 import "../Transpotation/Transpotation.css";
 import materialpickupimg from '../../../assets/Building/material pickup.jpg'
 import deliveryservicesimg from '../../../assets/Building/Delivery services.jpg'
+import TransportationForm from "./FormTranspotation"; 
 
 const transportServices = [
   {
@@ -23,19 +24,27 @@ const transportServices = [
 ];
 
 const TransportationServices: React.FC = () => {
-      const navigate = useNavigate();
+  const [showPopup, setShowPopup] = useState(false);
+  const [selectedId, setSelectedId] = useState<number | null>(null);
 
+  const openPopup = (id: number) => {
+    setSelectedId(id);
+    setShowPopup(true);
+  };
+
+  const closePopup = () => {
+    setSelectedId(null);
+    setShowPopup(false);
+  };
 
   return (
     <div className="transport-wrapper">
 
-     
       <div className="transport-header">
         <h2>Transportation Services</h2>
         <p>{transportServices.length} services available</p>
       </div>
 
-     
       <div className="transport-grid">
         {transportServices.map((item) => (
           <div className="transport-card" key={item.id}>
@@ -52,7 +61,7 @@ const TransportationServices: React.FC = () => {
 
               <button
                 className="transport-btn"
-                onClick={() => navigate(`/app/transport/${item.id}`)}
+                onClick={() => openPopup(item.id)}
               >
                 View Details
               </button>
@@ -61,6 +70,15 @@ const TransportationServices: React.FC = () => {
           </div>
         ))}
       </div>
+
+      {/* Popup Modal */}
+      {showPopup && (
+        <div className="tf-modal-overlay">
+          <div className="tf-modal-content">
+            <TransportationForm id={selectedId!} onClose={closePopup} />
+          </div>
+        </div>
+      )}
 
     </div>
   );
