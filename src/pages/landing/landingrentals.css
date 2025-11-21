@@ -1760,3 +1760,61 @@
 
 
 
+/* Responsive header behavior */
+@media (max-width: 768px) {
+  .hs-navbar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px 16px;
+    background: #fff;
+    border-bottom: 1px solid #f0f0f0;
+    box-shadow: 0 6px 18px rgba(6,21,38,0.06);
+    position: sticky;
+    top: 0;
+    z-index: 900;
+    height: auto;
+    box-sizing: border-box;
+  }
+
+  .hs-navbar-logo {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    order: 1;
+  }
+
+  .hs-navbar-menu {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    order: 2;
+    gap: 4px;
+    background: transparent;
+  }
+
+  .hs-navbar-menu .ant-menu-item {
+    width: 100%;
+    display: flex !important;
+    justify-content: center;
+    padding: 10px 12px !important;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+    box-sizing: border-box;
+    background: transparent;
+  }
+  .hs-navbar-menu .ant-menu-item:last-child { border-bottom: none; }
+
+  .hs-contact-btn {
+    order: 3;
+    width: calc(100% - 28px);
+    max-width: 420px;
+    margin: 6px 0 0;
+  }
+}
+
+
+
