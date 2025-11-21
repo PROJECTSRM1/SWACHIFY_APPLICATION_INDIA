@@ -4,7 +4,22 @@ import { Link } from "react-router-dom";
 import { MenuOutlined, CloseOutlined } from "@ant-design/icons";
 import "./ConstructionMaterials.css";
 import heroImage from "../../assets/landingimages/brickwall.jpg";
-import cc from "../../assets/landingimages/card1.jpg"
+import PremiumPortlandCement from "../../assets/landingimages/PremiumPortlandCement.jpg"
+import TMTSteelBars from "../../assets/landingimages/TMTSteelBars.jpg"
+import AACBlocks from "../../assets/landingimages/AACBlocks.jpeg"
+import MSand from "../../assets/landingimages/MSand.jpg"
+import CementConcrete from "../../assets/landingimages/CementConcrete.jpg"
+import SteelMetals from "../../assets/landingimages/SteelMetals.webp"
+import BricksBlocks from "../../assets/landingimages/BricksBlocks.jpg"
+import SandAggregates from "../../assets/landingimages/SandAggregates.jpg"
+import RoofingMaterials from "../../assets/landingimages/RoofingMaterials.jpg"
+import PlumbingElectrical from "../../assets/landingimages/PlumbingElectrical.jpeg"
+
+
+
+
+
+
 
 const { Title, Text } = Typography;
 const { Option } = Select;
@@ -61,28 +76,28 @@ const services = [
 const featuredProducts = [
   {
     title: "Premium Portland Cement",
-    image: "https://via.placeholder.com/300x200?text=Cement",
+    image: PremiumPortlandCement,
     price: "$8.50 per bag (50kg)",
     rating: "4.8/5",
     details: ["High Strength", "Quick Setting", "Weather Resistant"]
   },
   {
     title: "TMT Steel Bars (Fe 500)",
-    image: "https://via.placeholder.com/300x200?text=Steel",
+    image: TMTSteelBars,
     price: "$650 per ton",
     rating: "4.9/5",
     details: ["High Tensile", "Corrosion Resistant", "ISI Certified"]
   },
   {
     title: "AAC Blocks",
-    image: "https://via.placeholder.com/300x200?text=AAC+Blocks",
+    image: AACBlocks,
     price: "$2.20 per block",
     rating: "4.7/5",
     details: ["Lightweight", "Thermal Insulation", "Fire Resistant"]
   },
   {
     title: "M-Sand (Manufactured Sand)",
-    image: "https://via.placeholder.com/300x200?text=MSand",
+    image: MSand,
     price: "$45 per ton",
     rating: "4.6/5",
     details: ["Consistent Quality", "Eco Friendly", "No Impurities"]
@@ -92,32 +107,32 @@ const productCategories = [
   {
     title: "Cement & Concrete",
     items: ["Portland Cement", "Ready-Mix Concrete", "Mortar", "Grout"],
-    image: "cc"
+    image: CementConcrete,
   },
   {
     title: "Steel & Metals",
     items: ["TMT Bars", "Steel Beams", "Wire Mesh", "Angles & Channels"],
-    image: "https://via.placeholder.com/400x260?text=Steel"
+    image: SteelMetals,
   },
   {
     title: "Bricks & Blocks",
     items: ["Red Bricks", "Fly Ash Bricks", "AAC Blocks", "Concrete Blocks"],
-    image: "https://via.placeholder.com/400x260?text=Bricks"
+    image: BricksBlocks,
   },
   {
     title: "Sand & Aggregates",
     items: ["River Sand", "M Sand", "Coarse Aggregates", "Stone Chips"],
-    image: "https://via.placeholder.com/400x260?text=Sand"
+    image: SandAggregates,
   },
   {
     title: "Roofing Materials",
     items: ["Roof Tiles", "Metal Sheets", "Waterproofing", "Insulation"],
-    image: "https://via.placeholder.com/400x260?text=Roofing"
+    image: RoofingMaterials,
   },
   {
     title: "Plumbing & Electrical",
     items: ["PPR Pipes", "Copper Wires", "Switches", "Fittings"],
-    image: "https://via.placeholder.com/400x260?text=Plumbing"
+    image: PlumbingElectrical,
   }
 ];
 
