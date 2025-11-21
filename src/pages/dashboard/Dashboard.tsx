@@ -4,6 +4,9 @@ import "./Dashboard.css";
 import ConstructionServices from "../building/building";
 import Packersandmovers from "./PackersAndMovers/Packersandmovers";
 import CleaningService from "./cleaningservice/CleaningService";
+<<<<<<< HEAD
+import BuySaleProducts from "./buy&sale/BuySaleProducts";
+=======
 import HomeServices from "./homeservices/HomeServices";
 import { Route, Routes } from "react-router-dom";
 import ServicesPage from "./homerentals/pages/ServicesPage";
@@ -15,6 +18,7 @@ import CommercialListingsPage from "./homerentals/pages/CommercialListingsPage";
 import FooterBar from "./homerentals/components/FooterBar";
 import HeaderBarforrental from "./homerentals/components/HeaderBar";
 
+>>>>>>> main
 const Dashboard: React.FC = () => {
   return (
     <div className="dashboard-container">
@@ -57,6 +61,7 @@ const Dashboard: React.FC = () => {
     </div>
    
       <ConstructionServices/>
+      <BuySaleProducts/>
       
       
 
