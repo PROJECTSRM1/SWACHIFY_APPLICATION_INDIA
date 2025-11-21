@@ -11,7 +11,7 @@ import {
   Input,
   Checkbox,
 } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import {
   HomeOutlined,
@@ -75,40 +75,50 @@ const LandingPage = () => {
   const [authModalVisible, setAuthModalVisible] = useState(false);
   const [activeAuthTab, setActiveAuthTab] = useState<"login" | "register">("register");
 
-  // ⭐ Scroll to Services Section
+  const navigate = useNavigate(); // ⭐ Added navigate
+
   const scrollToServices = () => {
     const section = document.getElementById("services-section");
     section?.scrollIntoView({ behavior: "smooth" });
   };
 
-  // Handlers for modal
   const openAuthModal = (tab: "login" | "register" = "register") => {
     setActiveAuthTab(tab);
     setAuthModalVisible(true);
   };
+
   const closeAuthModal = () => setAuthModalVisible(false);
 
-  // Submit handlers (wire up to your auth later)
+  // ⭐ When Login is successful → Go to dashboard
   const onLogin = (values: any) => {
     console.log("login values", values);
-    // TODO: call login API
+
     closeAuthModal();
+
+    setTimeout(() => {
+      navigate("/app/dashboard");   // ⭐ Redirect here
+    }, 80);
   };
+
   const onRegister = (values: any) => {
     console.log("register values", values);
-    // TODO: call register API
     closeAuthModal();
   };
 
   return (
     <div className="landing-container">
-      {/* 🟦 NAVBAR */}
+      {/* NAVBAR */}
       <header className="hs-navbar">
         <div className="hs-navbar-logo">
           <span className="hs-logo-text">SWACHIFY INDIA</span>
         </div>
 
-        <Menu mode="horizontal" selectedKeys={["home-services"]} className="hs-navbar-menu" items={navItems} />
+        <Menu
+          mode="horizontal"
+          selectedKeys={["home-services"]}
+          className="hs-navbar-menu"
+          items={navItems}
+        />
 
         <Button
           type="primary"
@@ -119,7 +129,7 @@ const LandingPage = () => {
         </Button>
       </header>
 
-      {/* DROPDOWN MOBILE MENU */}
+      {/* MOBILE MENU */}
       {menuOpen && (
         <ul className="mobile-menu">
           <li><Link to="/" onClick={() => setMenuOpen(false)}>Home</Link></li>
@@ -135,7 +145,7 @@ const LandingPage = () => {
         </ul>
       )}
 
-      {/* 🟦 HERO SECTION */}
+      {/* HERO SECTION */}
       <section
         className="hero-section"
         style={{ backgroundImage: `url(${heroImage})` }}
@@ -144,19 +154,16 @@ const LandingPage = () => {
           <h1>Transform Your Home & Property Services</h1>
           <p>Your trusted solution for cleaning, moving, rentals, construction, and more.</p>
 
-          {/* ⭐ CALL SCROLL FUNCTION */}
           <Button type="primary" size="large" onClick={scrollToServices}>
             Get Started
           </Button>
         </div>
       </section>
 
-      {/* 🟦 SERVICES SECTION */}
+      {/* SERVICES SECTION */}
       <section id="services-section" className="services-section">
         <h2 className="section-title">Our Services</h2>
-        <p className="section-subtitle">
-          Comprehensive solutions for all your home and property needs
-        </p>
+        <p className="section-subtitle">Comprehensive solutions for all your home and property needs</p>
 
         <Row gutter={[24, 24]} justify="center">
           {services.map((item, i) => (
@@ -165,24 +172,19 @@ const LandingPage = () => {
                 <div className="service-icon">{item.icon}</div>
                 <h3 className="service-title">{item.title}</h3>
                 <p className="service-desc">{item.desc}</p>
-                <a className="learn-more" href="#">
-                  Learn More →
-                </a>
+                <a className="learn-more" href="#">Learn More →</a>
               </Card>
             </Col>
           ))}
         </Row>
       </section>
 
-      {/* 🟦 FOOTER */}
+      {/* FOOTER */}
       <footer className="footer">
         <div className="footer-grid">
           <div>
             <h3>About Us</h3>
-            <p>
-              Your trusted partner for all home and property-related services.
-              Quality, reliability, and customer satisfaction guaranteed.
-            </p>
+            <p>Your trusted partner for all home and property-related services.</p>
           </div>
 
           <div>
@@ -211,17 +213,14 @@ const LandingPage = () => {
             <h3>Contact Info</h3>
             <p>📞 +1 (555) 123-4567</p>
             <p>📧 info@homeservices.com</p>
-            <p>📍 123 Service Street, City, State</p>
-            <div className="social-icons">🌐 🎯 📸 🔗</div>
+            <p>📍 123 Service Street</p>
           </div>
         </div>
 
-        <p className="footer-bottom">
-          © 2025 Home Services. All rights reserved.
-        </p>
+        <p className="footer-bottom">© 2025 Home Services. All rights reserved.</p>
       </footer>
 
-      {/* ===== AUTH MODAL (Login / Register) ===== */}
+      {/* AUTH MODAL */}
       <Modal
         open={authModalVisible}
         onCancel={closeAuthModal}
@@ -241,7 +240,7 @@ const LandingPage = () => {
             <TabPane tab="Login" key="login">
               <Form layout="vertical" onFinish={onLogin}>
                 <Form.Item
-                  label={<span className="required-label">Email / Phone</span>}
+                  label="Email or Phone"
                   name="identifier"
                   rules={[{ required: true, message: "Please input email or phone" }]}
                 >
@@ -249,7 +248,7 @@ const LandingPage = () => {
                 </Form.Item>
 
                 <Form.Item
-                  label={<span className="required-label">Password</span>}
+                  label="Password"
                   name="password"
                   rules={[{ required: true, message: "Please input password" }]}
                 >
@@ -271,7 +270,7 @@ const LandingPage = () => {
             <TabPane tab="Register" key="register">
               <Form layout="vertical" onFinish={onRegister}>
                 <Form.Item
-                  label={<span className="required-label">Full name</span>}
+                  label="Full name"
                   name="fullname"
                   rules={[{ required: true, message: "Please input full name" }]}
                 >
@@ -279,15 +278,15 @@ const LandingPage = () => {
                 </Form.Item>
 
                 <Form.Item
-                  label={<span className="required-label">Email</span>}
+                  label="Email"
                   name="email"
-                  rules={[{ required: true, message: "Please input email" }, { type: "email", message: "Enter a valid email" }]}
+                  rules={[{ required: true, message: "Please input email" }]}
                 >
                   <Input placeholder="john@example.com" />
                 </Form.Item>
 
                 <Form.Item
-                  label={<span className="required-label">Phone</span>}
+                  label="Phone"
                   name="phone"
                   rules={[{ required: true, message: "Please input phone" }]}
                 >
@@ -295,7 +294,7 @@ const LandingPage = () => {
                 </Form.Item>
 
                 <Form.Item
-                  label={<span className="required-label">Password</span>}
+                  label="Password"
                   name="password"
                   rules={[{ required: true, message: "Please input password" }]}
                 >
@@ -303,17 +302,17 @@ const LandingPage = () => {
                 </Form.Item>
 
                 <Form.Item
-                  label={<span className="required-label">Confirm Password</span>}
+                  label="Confirm Password"
                   name="confirmPassword"
-                  dependencies={['password']}
+                  dependencies={["password"]}
                   rules={[
                     { required: true, message: "Please confirm password" },
                     ({ getFieldValue }) => ({
                       validator(_, value) {
-                        if (!value || getFieldValue('password') === value) {
+                        if (!value || getFieldValue("password") === value) {
                           return Promise.resolve();
                         }
-                        return Promise.reject(new Error('Passwords do not match'));
+                        return Promise.reject(new Error("Passwords do not match"));
                       },
                     }),
                   ]}
