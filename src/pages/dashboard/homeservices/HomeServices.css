@@ -3,23 +3,39 @@
   width: 100%;
 }
 
-/* ------------------------------------
-   HEADER
------------------------------------- */
+
+
+
 .services-top-banner {
   display: flex;
   justify-content: space-between;
   align-items: center;
   background: #089823;
   color: white;
-  padding: 18px 22px;
-  border-radius: 12px;
-  margin-bottom: 25px;
+
+  padding: 34px 32px;
+  border-radius: 16px;
+
+  width: 100%;
+  max-width: 1200px;        /* ✔ Aligns perfectly with grid */
+  margin: 0 auto 30px auto;
+
   flex-wrap: wrap;
-  gap: 10px;
-    width: 80%;               /* 🔥 Reduce width */
-  margin: 0 auto 25px auto; 
+  gap: 12px;
+
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
 }
+
+.services-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+
+
+
+
 
 .banner-title {
   margin: 0;
@@ -100,6 +116,13 @@
   opacity: 0.85;
 }
 
+.ant-col {
+  padding-left: 2px !important;
+  padding-right: 2px !important;
+  margin-bottom: 12px !important;
+}
+
+
 /* ------------------------------------
    RESPONSIVENESS
 ------------------------------------ */
@@ -164,4 +187,12 @@
 /* If the grid has custom class */
 .services-grid {
   gap: 8px !important;  /* reduces space between cards */
+}
+
+.services-grid {
+  width: 100%;
+}
+
+.service-card {
+  width: 100%;
 }
