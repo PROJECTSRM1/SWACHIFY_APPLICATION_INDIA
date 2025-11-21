@@ -11,6 +11,7 @@
 
   box-sizing: border-box;
   overflow-x: hidden !important;
+
 }
 
 
@@ -148,4 +149,27 @@ html, body {
   width: 100% !important;
   max-width: 100% !important;
   display: block;
+}
+.header-item {
+  cursor: pointer;
+}
+
+.drawer-icons .header-icon-large {
+  cursor: pointer;
+}
+
+/* Cursor pointer for Cart (desktop) */
+.header-item-cart {
+  cursor: pointer;
+}
+
+/* Cursor pointer for Logout (desktop) */
+.header-item {
+  cursor: pointer;
+}
+
+/* Cursor pointer for Cart + Logout inside Drawer */
+.drawer-icons .header-icon-cart,
+.drawer-icons .header-icon-large {
+  cursor: pointer;
 }

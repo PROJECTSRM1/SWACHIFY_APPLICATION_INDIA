@@ -7,13 +7,22 @@ import {
   CloseOutlined,
 } from "@ant-design/icons";
 import { Menu, Drawer } from "antd";
+import { useNavigate } from "react-router-dom";
 import "./header.css";
 
 const HeaderBar: React.FC = () => {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    navigate("/");
+  };
+
+  const handleCartClick = () => {
+    navigate("/cart"); // <-- cart navigation added
+  };
 
   const centerMenu = [
-    
     { key: "cleaning", label: <span className="menu-item">Cleaning</span> },
     {
       key: "packers",
@@ -37,29 +46,27 @@ const HeaderBar: React.FC = () => {
   return (
     <div className="header-container">
 
-     
       <div className="header-left">
         <HomeOutlined className="logo-icon" />
         <span className="logo-text">HomeServices</span>
       </div>
 
-      
       <div className="header-center">
         <Menu mode="horizontal" items={centerMenu} className="header-menu" />
       </div>
 
-   
       <div className="header-right">
-        <span className="header-item-cart">
+        {/* Cart with navigation */}
+        <span className="header-item-cart" onClick={handleCartClick}>
           <ShoppingCartOutlined className="header-icon-cart" /> Cart
         </span>
 
-        <span className="header-item">
+        {/* Logout with navigation */}
+        <span className="header-item" onClick={handleLogout}>
           <LogoutOutlined className="header-icon-large" /> Logout
         </span>
       </div>
 
-      
       <div className="mobile-menu-btn">
         <MenuOutlined
           className="header-icon-large"
@@ -67,12 +74,11 @@ const HeaderBar: React.FC = () => {
         />
       </div>
 
-     
       <Drawer
         placement="left"
         onClose={() => setOpen(false)}
         open={open}
-         closable={false}
+        closable={false}
         title={
           <div className="drawer-header">
             <span className="logo-text">HomeServices</span>
@@ -83,8 +89,17 @@ const HeaderBar: React.FC = () => {
         <Menu mode="vertical" items={centerMenu} />
 
         <div className="drawer-icons">
-          <ShoppingCartOutlined className="header-icon-cart" />
-          <LogoutOutlined className="header-icon-large" />
+          {/* Drawer cart with navigation */}
+          <ShoppingCartOutlined
+            className="header-icon-cart"
+            onClick={handleCartClick}
+          />
+
+          {/* Drawer logout */}
+          <LogoutOutlined
+            className="header-icon-large"
+            onClick={handleLogout}
+          />
         </div>
       </Drawer>
     </div>
