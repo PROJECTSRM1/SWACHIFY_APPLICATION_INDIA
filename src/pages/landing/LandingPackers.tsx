@@ -18,7 +18,7 @@ import {
   DollarOutlined,
   UserOutlined,
   ClockCircleOutlined,
-  EnvironmentOutlined,
+//EnvironmentOutlined,
   MailOutlined,
 } from '@ant-design/icons';
 import { Link, useNavigate } from 'react-router-dom';

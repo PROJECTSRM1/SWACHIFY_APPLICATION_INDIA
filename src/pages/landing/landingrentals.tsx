@@ -107,6 +107,7 @@ import apt6 from "../../assets/landingimages/modern1bhkflat.jpg";
     { key: "commercial", label: <Link to="/commercial-plots">Buy&Sale Properties</Link> },
     { key: "materials", label: <Link to="/ConstructionMaterials">Construction Materials</Link> },
   ];
+  console.log(navItems);
 
 const Landingrentals: React.FC = () => {
   const [form] = Form.useForm();
