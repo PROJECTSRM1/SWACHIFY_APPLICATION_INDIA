@@ -4,7 +4,7 @@ import "./Dashboard.css";
 import ConstructionServices from "../building/building";
 import Packersandmovers from "./PackersAndMovers/Packersandmovers";
 import CleaningService from "./cleaningservice/CleaningService";
-
+import BuySaleProducts from "./buy&sale/BuySaleProducts";
 const Dashboard: React.FC = () => {
   return (
     <div className="dashboard-container">
@@ -27,6 +27,7 @@ const Dashboard: React.FC = () => {
       <CleaningService/>
       <Packersandmovers></Packersandmovers>
       <ConstructionServices/>
+      <BuySaleProducts/>
       
       
 
