@@ -1,9 +1,11 @@
 .machinery-wrapper {
-  width: 86%;
+  width: 100%;
   background: #f8fafc;
   min-height: 100vh;
   padding-bottom: 20px;
   margin-left: 95px;
+  margin: 0 ;
+  padding: 0 ;
 }
 
 /* HEADER */

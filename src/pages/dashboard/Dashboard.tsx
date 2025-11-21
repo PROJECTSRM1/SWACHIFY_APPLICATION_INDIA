@@ -4,6 +4,7 @@ import "./Dashboard.css";
 import ConstructionServices from "../building/building";
 import Packersandmovers from "./PackersAndMovers/Packersandmovers";
 import CleaningService from "./cleaningservice/CleaningService";
+import BuySaleProducts from "./buy&sale/BuySaleProducts";
 import HomeServices from "./homeservices/HomeServices";
 import { Route, Routes } from "react-router-dom";
 import ServicesPage from "./homerentals/pages/ServicesPage";
@@ -57,6 +58,7 @@ const Dashboard: React.FC = () => {
     </div>
    
       <ConstructionServices/>
+      <BuySaleProducts/>
       
       
 
