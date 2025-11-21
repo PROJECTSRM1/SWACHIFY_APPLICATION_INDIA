@@ -10,7 +10,7 @@ import Home_Service from "../../pages/landing/Home_Service";
 import LandingPackers from "../../pages/landing/LandingPackers"
 // import ForgotPasswordLink from '../../pages/forgotpassword/ForgotPasswordLink';
 import CommercialPlots from "../../pages/landing/CommercialPlots"
-import ConstructionMaterials from "../../pages/landing/ConstructionMaterials"
+import ConstructionMaterials from '../../pages/landing/ConstructionMaterials';
 import LandingCleaningPage from "../../pages/landing/landingcleaningpage";
 //Import rentals page (file: src/pages/landing/landingrentals.tsx)
 import Landingrentals from "../../pages/landing/landingrentals";

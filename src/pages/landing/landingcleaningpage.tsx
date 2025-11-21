@@ -1,6 +1,7 @@
 import React from "react";
 // add this
-import { Phone } from "lucide-react";
+import { Phone} from "lucide-react";
+import { Menu } from 'antd'    
 
 // you can keep the AntD PhoneOutlined import if you still use it elsewhere,
 // otherwise remove `PhoneOutlined` from the AntD import list.
@@ -13,7 +14,7 @@ import {
   InstagramOutlined,
   LinkedinOutlined,
   CheckCircleOutlined,
-  PhoneOutlined,
+  // PhoneOutlined,
   MailOutlined,
   EnvironmentOutlined
 } from "@ant-design/icons";
@@ -25,7 +26,7 @@ import "./landingcleaningpage.css";
 // When you add images, replace these with proper imports:
 // e.g. import heroImg from "../../assets/cleaning/hero.jpg";
 // imports at top of file (after React / antd / icons)
-import heroImg from "../../assets/landingimages/landingcleaninghero.jpg";
+// import heroImg from "../../assets/landingimages/landingcleaninghero.jpg";
 import s1 from "../../assets/landingimages/landinghomecleaning.jpg";
 import s2 from "../../assets/landingimages/landingofficecleaning.jpg";
 import s3 from "../../assets/landingimages/moveinoutcleaning.jpg";
@@ -38,6 +39,15 @@ import s8 from "../../assets/landingimages/postconstruction.jpg";
 
 const { TextArea } = Input;
 // removed unused `Option` const to avoid TS warning
+const navItems = [
+  { key: "home", label: <Link to="/">Home</Link> },
+  { key: "cleaning", label: <Link to="/cleaningservice">Cleaning</Link> },
+  { key: "packers", label: <Link to="/LandingPackers">Packers & Movers</Link> },
+  { key: "home_services", label: <Link to="/home_service">Home Services</Link> },
+  { key: "rentals", label: <Link to="/rentals">Rentals</Link> },
+  { key: "commercial", label: <Link to="/commercial-plots">Buy&Sale Properties</Link> },
+  { key: "materials", label: <Link to="/ConstructionMaterials">Construction Materials</Link> },
+];
 
 const serviceList = [
   { title: "Residential Cleaning", desc: "Homes, apartments, and condos", img: s1 },
@@ -101,31 +111,23 @@ const LandingCleaningPage: React.FC = () => {
   return (
     <div className="lc-page">
       {/* ========== NAVBAR (added) ========== */}
-      <header className="lc-header">
-        <div className="lc-header-inner">
-          <div className="lc-logo">
-            <Link to="/" className="lc-logo-link" aria-label="Home">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden>
-                <path d="M3 11.5L12 4l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V11.5z" stroke="#1b2b3a" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" fill="#2f80ed" />
-              </svg>
-              <span className="lc-brand">HomeServices</span>
-            </Link>
-          </div>
-
-          <nav className="lc-nav" role="navigation" aria-label="Primary">
-            <Link to="/" className="lc-nav-link">Home</Link>
-            <Link to="/cleaning" className="lc-nav-link">Cleaning</Link>
-            <Link to="/packers" className="lc-nav-link">Packers &amp; Movers</Link>
-            <Link to="/homeservices" className="lc-nav-link">Home Services</Link>
-            <Link to="/rentals" className="lc-nav-link">Rentals</Link>
-            <Link to="/commercialplots" className="lc-nav-link">Commercial Plots</Link>
-            <Link to="/materials" className="lc-nav-link">Construction Materials</Link>
-          </nav>
-
-          <div className="lc-header-cta">
-            <Button type="default" className="lc-header-btn">Sign in</Button>
-          </div>
+      <header className="hs-navbar">
+        <div className="hs-navbar-logo">
+          <span className="hs-logo-text">SWACHIFY INDIA</span>
         </div>
+
+        <Menu mode="horizontal" selectedKeys={["home-services"]} className="hs-navbar-menu" items={navItems} />
+
+        <Button
+          type="primary"
+          className="hs-contact-btn"
+          onClick={() => {
+            // setActiveTab("login");
+            // setAuthModalVisible(true);
+          }}
+        >
+          Sign Up
+        </Button>
       </header>
       {/* ========== /NAVBAR ========== */}
 

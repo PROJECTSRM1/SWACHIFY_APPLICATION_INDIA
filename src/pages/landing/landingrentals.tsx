@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col, Card, Button, Form, Input, Select, DatePicker } from "antd";
+import { Row, Col,Menu, Card, Button, Form, Input, Select, DatePicker } from "antd";
 // add this
 import { Phone } from "lucide-react";
 
@@ -14,7 +14,7 @@ import {
   ShopOutlined,
   CrownOutlined,
   AppstoreOutlined,
-  PhoneOutlined,
+  // PhoneOutlined,
   MailOutlined,
   EnvironmentOutlined,
   FacebookOutlined,
@@ -29,11 +29,11 @@ import { Link } from "react-router-dom";
 import "./landingrentals.css";
 
 const { Option } = Select;
-const { TextArea } = Input;
+// const { TextArea } = Input;
 
 // Image imports — keep exact paths (case-sensitive)
 // add near the other image imports (keep your existing imports too)
-import heroImage from "../../assets/landingimages/landingrenatlshero.jpg"
+// import heroImage from "../../assets/landingimages/landingrenatlshero.jpg"
 
 import apt1 from "../../assets/landingimages/2bhkapartment.jpg";
 import apt2 from "../../assets/landingimages/3bhkpenthouse.jpg";
@@ -41,6 +41,16 @@ import apt3 from "../../assets/landingimages/cozystudioapartment.jpg";
 import apt4 from "../../assets/landingimages/spaciousfamilyhouse.jpg";
 import apt5 from "../../assets/landingimages/luxuryvillawithpool.jpg";
 import apt6 from "../../assets/landingimages/modern1bhkflat.jpg";
+
+  const navItems = [
+    { key: "home", label: <Link to="/">Home</Link> },
+    { key: "cleaning", label: <Link to="/cleaningservice">Cleaning</Link> },
+    { key: "packers", label: <Link to="/LandingPackers">Packers & Movers</Link> },
+    { key: "home_services", label: <Link to="/home_service">Home Services</Link> },
+    { key: "rentals", label: <Link to="/rentals">Rentals</Link> },
+    { key: "commercial", label: <Link to="/commercial-plots">Buy&Sale Properties</Link> },
+    { key: "materials", label: <Link to="/ConstructionMaterials">Construction Materials</Link> },
+  ];
 
 const Landingrentals: React.FC = () => {
   const [form] = Form.useForm();
@@ -140,31 +150,23 @@ const Landingrentals: React.FC = () => {
   return (
     <div className="lr-page">
       {/* ========== NAVBAR (ADDED) ========== */}
-      <header className="lr-header">
-        <div className="lr-header-inner">
-          <div className="lr-logo">
-            <Link to="/" className="lr-logo-link" aria-label="Home">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden>
-                <path d="M3 11.5L12 4l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V11.5z" stroke="#1b2b3a" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" fill="#7B2CFF" />
-              </svg>
-              <span className="lr-brand">HomeServices</span>
-            </Link>
-          </div>
-
-          <nav className="lr-nav" role="navigation" aria-label="Primary">
-            <Link to="/" className="lr-nav-link">Home</Link>
-            <Link to="/cleaningservice" className="lr-nav-link">Cleaning</Link>
-            <Link to="/packers" className="lr-nav-link">Packers &amp; Movers</Link>
-            <Link to="/homeservices" className="lr-nav-link">Home Services</Link>
-            <Link to="/rentals" className="lr-nav-link">Rentals</Link>
-            <Link to="/commercialplots" className="lr-nav-link">Commercial Plots</Link>
-            <Link to="/materials" className="lr-nav-link">Construction Materials</Link>
-          </nav>
-
-          <div className="lr-header-cta">
-            <Button type="default" className="lr-header-btn">Sign in</Button>
-          </div>
+       <header className="hs-navbar">
+        <div className="hs-navbar-logo">
+          <span className="hs-logo-text">SWACHIFY INDIA</span>
         </div>
+
+        <Menu mode="horizontal" selectedKeys={["home-services"]} className="hs-navbar-menu" items={navItems} />
+
+        <Button
+          type="primary"
+          className="hs-contact-btn"
+          // onClick={() => {
+          //   setActiveTab("login");
+          //   setAuthModalVisible(true);
+          // }}
+        >
+          Sign Up
+        </Button>
       </header>
       {/* ========== /NAVBAR ========== */}
 
