@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Row, Col, Card, Button, Typography, Form, Input, DatePicker, Select } from "antd";
+import { Row, Col,Menu, Card, Button, Typography, Form, Input, DatePicker, Select } from "antd";
 import { Link } from "react-router-dom";
-import { MenuOutlined, CloseOutlined } from "@ant-design/icons";
+// import { MenuOutlined, CloseOutlined } from "@ant-design/icons";
 import "./ConstructionMaterials.css";
 import heroImage from "../../assets/landingimages/brickwall.jpg";
 import PremiumPortlandCement from "../../assets/landingimages/PremiumPortlandCement.jpg"
@@ -20,9 +20,20 @@ import PlumbingElectrical from "../../assets/landingimages/PlumbingElectrical.jp
 
 
 
+// import cc from "../../assets/landingimages/card1.jpg"
 
 const { Title, Text } = Typography;
 const { Option } = Select;
+
+  const navItems = [
+    { key: "home", label: <Link to="/">Home</Link> },
+    { key: "cleaning", label: <Link to="/cleaningservice">Cleaning</Link> },
+    { key: "packers", label: <Link to="/LandingPackers">Packers & Movers</Link> },
+    { key: "home_services", label: <Link to="/home_service">Home Services</Link> },
+    { key: "rentals", label: <Link to="/rentals">Rentals</Link> },
+    { key: "commercial", label: <Link to="/commercial-plots">Buy&Sale Properties</Link> },
+    { key: "materials", label: <Link to="/ConstructionMaterials">Construction Materials</Link> },
+  ];
 
 /* ================= NAVBAR SECTION ================= */
 interface NavbarProps {
@@ -31,24 +42,24 @@ interface NavbarProps {
 }
 const NavbarSection: React.FC<NavbarProps> = ({ menuOpen, setMenuOpen }) => (
   <>
-    <nav className="navbar">
-      <div className="nav-logo">Swachify India</div>
-      <ul className="nav-links">
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/cleaningservice">Cleaning</Link></li>
-        <li><Link to="/LandingPackers">Packers & Movers</Link></li>
-        <li><Link to="/home_service">Home Services</Link></li>
-        <li><Link to="/homeapartment">Rentals</Link></li>
-        <li><Link to="/Buy_SaleHouseProducts">Commercial Plots</Link></li>
-        <li><Link to="/ConstructionMaterials">Construction Materials</Link></li>
-        <li><Link to="/contactus">ContactUs</Link></li>
-        <li><Link to="/Cart">Cart</Link></li>
-        <li><Link to="/Login">Login</Link></li>
-      </ul>
-      <div className="mobile-menu-icon" onClick={() => setMenuOpen(!menuOpen)}>
-        {menuOpen ? <CloseOutlined /> : <MenuOutlined />}
-      </div>
-    </nav>
+  <header className="hs-navbar">
+        <div className="hs-navbar-logo">
+          <span className="hs-logo-text">SWACHIFY INDIA</span>
+        </div>
+
+        <Menu mode="horizontal" selectedKeys={["home-services"]} className="hs-navbar-menu" items={navItems} />
+
+        <Button
+          type="primary"
+          className="hs-contact-btn"
+          // onClick={() => {
+          //   setActiveTab("login");
+          //   setAuthModalVisible(true);
+          // }}
+        >
+          Sign Up
+        </Button>
+      </header>
     {menuOpen && (
       <ul className="mobile-menu">
         <li><Link to="/" onClick={() => setMenuOpen(false)}>Home</Link></li>
