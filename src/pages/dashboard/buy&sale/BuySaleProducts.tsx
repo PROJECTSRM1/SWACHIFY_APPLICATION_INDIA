@@ -1,316 +1,335 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import {
-    Card,
-    Form,
-    Input,
-    Select,
-    Button,
-    Row,
-    Col,
-    Typography,
-    message,
-    List,
-    Space,
-    Modal,
-    Tag,
-    Upload,
-    Divider,
-    Alert
+  Card,
+  Form,
+  Input,
+  Select,
+  Button,
+  Row,
+  Col,
+  Typography,
+  message,
+  List,
+  Space,
+  Modal,
+  Tag,
+  Upload,
+  Divider,
+  Alert,
 } from 'antd';
-// Resolved type-only imports (error 1484)
-import type { FormProps, UploadFile, UploadProps } from 'antd'; 
+import type { FormProps, UploadFile, UploadProps } from 'antd';
 
 import {
-    HomeOutlined,
-    ShopOutlined,
-    ShoppingCartOutlined,
-    TruckOutlined,
-    ArrowRightOutlined,
-    RiseOutlined,
-    EnvironmentOutlined,
-    PlusOutlined,
-    ArrowLeftOutlined,
-    EyeOutlined,
-    FileTextOutlined,
-    DollarOutlined,
-    UserOutlined,
-    PhoneOutlined,
-    MailOutlined,
+  HomeOutlined,
+  ShopOutlined,
+  ShoppingCartOutlined,
+  TruckOutlined,
+  ArrowRightOutlined,
+  RiseOutlined,
+  EnvironmentOutlined,
+  PlusOutlined,
+  ArrowLeftOutlined,
+  EyeOutlined,
+  FileTextOutlined,
+  DollarOutlined,
+  UserOutlined,
+  PhoneOutlined,
+  MailOutlined,
 } from '@ant-design/icons';
+
 import './BuySaleProducts.css';
-import BuySaleImage from "../../../assets/buyandsale/buySale-real-estate.png";
-import RetailImage from '../../../assets/buyandsale/old_retail.png'; 
-import OnlineImage from '../../../assets/buyandsale/onlineordering.png'; 
-import WholesaleImage from '../../../assets/buyandsale/wholesale_buynear.png'; 
-import SkyImage from '../../../assets/buyandsale/sky_scrapper.png'; 
-import Vintagev from '../../../assets/buyandsale/Vintage_house.png'; 
-import Modern from '../../../assets/buyandsale/modern_house.png'; 
-import Land from '../../../assets/buyandsale/Land_For_sale.png'; 
-import Lakehouse from '../../../assets/buyandsale/Lakehouse.png'; 
-import CustomerRecords from '../../../assets/buyandsale/customerrecords.png'; 
-// import DocumentVerification from '../../assets/buyandsale/documentverification.png'; 
-// import PriceNegotiation from '../../assets/buyandsale/pricenegotiation.png'; 
-import a from '../../../assets/buyandsale/A.png'; 
-import b from '../../../assets/buyandsale/B.png'; 
-import c from '../../../assets/buyandsale/C.png'; 
-import d from '../../../assets/buyandsale/D.png'; 
-import e from '../../../assets/buyandsale/E.png'; 
-import f from '../../../assets/buyandsale/suppliercordination.png'; 
 
-
+import BuySaleImage from '../../../assets/buyandsale/buySale-real-estate.png';
+import RetailImage from '../../../assets/buyandsale/old_retail.png';
+import OnlineImage from '../../../assets/buyandsale/onlineordering.png';
+import WholesaleImage from '../../../assets/buyandsale/wholesale_buynear.png';
+import SkyImage from '../../../assets/buyandsale/sky_scrapper.png';
+import Vintagev from '../../../assets/buyandsale/Vintage_house.png';
+import Modern from '../../../assets/buyandsale/modern_house.png';
+import Land from '../../../assets/buyandsale/Land_For_sale.png';
+import Lakehouse from '../../../assets/buyandsale/Lakehouse.png';
+import CustomerRecords from '../../../assets/buyandsale/customerrecords.png';
+import a from '../../../assets/buyandsale/A.png';
+import b from '../../../assets/buyandsale/B.png';
+import c from '../../../assets/buyandsale/C.png';
+import d from '../../../assets/buyandsale/D.png';
+import e from '../../../assets/buyandsale/E.png';
+import f from '../../../assets/buyandsale/suppliercordination.png';
 
 const { Option } = Select;
 const { TextArea } = Input;
 const { Title, Text } = Typography;
 
-// --- INTERFACE DEFINITIONS (UNCHANGED) ---
+/* ---------- helpers ---------- */
+
+const formatINR = (amount: number) =>
+  new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: 'INR',
+    maximumFractionDigits: 0,
+  }).format(amount);
+
+/* ---------- types ---------- */
 
 interface Subservice {
-    key: string;
-    title: string;
-    contentComponent: React.FC<any>;
-    imagePath: string;
+  key: string;
+  title: string;
+  description: string;
+  contentComponent: React.FC<any>;
+  imagePath: string;
 }
 
 interface Service {
-    key: string;
-    title: string;
-    icon: React.ReactNode;
-    imagePath: string;
-    subservices: Subservice[];
+  key: string;
+  title: string;
+  description: string;
+  icon: React.ReactNode;
+  imagePath: string;
+  subservices: Subservice[];
 }
 
 interface PropertyListing {
-    id: number;
-    title: string;
-    listingType: 'sale' | 'purchase';
-    price: number;
-    area: number;
-    location: string;
-    tags: string[];
-    roi: string;
-    imagePath: string;
-    propertyType: string;
-    description?: string;
+  id: number;
+  title: string;
+  listingType: 'sale' | 'purchase';
+  price: number;
+  area: number;
+  location: string;
+  tags: string[];
+  roi: string;
+  imagePath: string;
+  propertyType: string;
+  description?: string;
 }
 
-// Simplified Props for components rendered inside Modals
 interface PropertyListingViewProps {
-    defaultListingType: 'sale' | 'purchase';
-    onViewDetails: (property: PropertyListing) => void;
+  defaultListingType: 'sale' | 'purchase';
+  onViewDetails: (property: PropertyListing) => void;
 }
 
 interface ContentComponentProps {
-    defaultListingType?: 'sale' | 'purchase';
+  defaultListingType?: 'sale' | 'purchase';
+  onViewDetails?: (property: PropertyListing) => void;
 }
 
 interface PropertyDetailViewProps {
-    property: PropertyListing;
-    onOpenDocVerify: () => void;
+  property: PropertyListing;
+  onOpenDocVerify: () => void;
 }
 
 interface PropertyFormValues {
-    propertyType: string;
-    listingType: 'sale' | 'purchase';
-    title: string;
-    price: number;
-    area: number;
-    location: string;
-    description: string;
-    tags?: string;
-    roi?: string;
-    image: UploadFile[];
+  propertyType: string;
+  listingType: 'sale' | 'purchase';
+  title: string;
+  price: number;
+  area: number;
+  location: string;
+  description: string;
+  tags?: string;
+  roi?: string;
+  image: UploadFile[];
 }
 
-// UPDATED: new fields that match the new contact + negotiation form
 interface PriceNegotiationFormValues {
-    name?: string;
-    email?: string;
-    phone?: string;
-    currentMarketPrice?: number;
-    predictedMarketPrice?: number;
-    currentAskingPrice?: number;
-    offerPrice?: number;
-    negotiationMessage?: string;
+  name?: string;
+  email?: string;
+  phone?: string;
+  currentMarketPrice?: number;
+  predictedMarketPrice?: number;
+  currentAskingPrice?: number;
+  offerPrice?: number;
+  negotiationMessage?: string;
 }
 
 interface DocumentationFormValues {
-    docType?: string;
-    docNumber?: string;
-    verificationStatus?: string;
-    notes?: string;
+  docType?: string;
+  docNumber?: string;
+  verificationStatus?: string;
+  notes?: string;
 }
 
-// --- MOCK DATA (same as before, shortened for brevity) ---
+/* ---------- mock data (amounts now interpreted as INR) ---------- */
+
 const MOCK_PROPERTY_LISTINGS: PropertyListing[] = [
-    {
-        id: 1,
-        title: 'Prime Commercial Plot - City Center',
-        listingType: 'sale',
-        price: 2500000,
-        area: 5000,
-        location: 'Business District, Manhattan',
-        tags: ['Corner Plot', 'High Visibility', 'Metro Access', 'Utilities Ready'],
-        roi: '15-18% per annum',
-        imagePath: SkyImage,
-        propertyType: 'Retail/Office',
-        description:
-            "A premium 5000 sqft commercial plot in the heart of Manhattan's Business District. Approved for high-rise commercial development. Excellent ROI potential.",
-    },
-    {
-        id: 2,
-        title: 'Industrial Plot - Warehouse Zone',
-        listingType: 'sale',
-        price: 1800000,
-        area: 10000,
-        location: 'Industrial Area, Queens',
-        tags: ['Highway Access', 'Loading Docks', 'Large Space', 'Fenced'],
-        roi: '12-15% per annum',
-        imagePath: Land,
-        propertyType: 'Warehouse/Industrial',
-        description:
-            '10,000 sqft of industrial land located near major highways. Ideal for building a large warehouse with multiple loading docks. Secure and fenced area.',
-    },
-    {
-        id: 3,
-        title: 'Office Complex Plot',
-        listingType: 'sale',
-        price: 4200000,
-        area: 8000,
-        location: 'Financial District, NYC',
-        tags: ['Premium Location', 'High-rise Approved', 'Transit Hub', 'Featured'],
-        roi: '20-25% per annum',
-        imagePath: SkyImage,
-        propertyType: 'Office',
-        description:
-            'An 8000 sqft land parcel with high-rise approval, perfect for a landmark corporate office complex in the bustling Financial District. Highest ROI potential.',
-    },
-    {
-        id: 4,
-        title: 'Shopping Complex Land',
-        listingType: 'sale',
-        price: 3500000,
-        area: 15000,
-        location: 'Suburban Area, Long Island',
-        tags: ['Mall Approved', 'Parking Space', 'High Footfall'],
-        roi: '18-22% per annum',
-        imagePath: Land,
-        propertyType: 'Retail',
-        description:
-            'Large 15,000 sqft plot in a high-growth suburban area, pre-approved for a shopping mall or retail complex. Excellent potential for high footfall.',
-    },
-    {
-        id: 5,
-        title: 'Boutique Hotel Development Land',
-        listingType: 'purchase',
-        price: 1500000,
-        area: 5000,
-        location: 'Miami Beach, FL',
-        tags: ['High Traffic', 'Ocean View', 'Zoning Approved'],
-        roi: '18-20% per annum',
-        imagePath: Land,
-        propertyType: 'Land/Commercial',
-        description:
-            'Seeking a 5000 sqft ocean-view plot in Miami Beach suitable for boutique hotel development. High traffic area with current zoning approvals preferred.',
-    },
-    {
-        id: 6,
-        title: 'Luxury Log Cabin on Lake',
-        listingType: 'purchase',
-        price: 950000,
-        area: 3200,
-        location: 'Aspen, CO',
-        tags: ['Lakefront', 'Private Dock', 'Rental Income Ready'],
-        roi: '10-14% per annum',
-        imagePath: Lakehouse,
-        propertyType: 'Residential/Holiday',
-        description:
-            'Looking to purchase a 3200 sqft luxury log cabin or lakehouse property in the Aspen area. Must be suitable for immediate rental income.',
-    },
-    {
-        id: 7,
-        title: 'Historic Victorian Home',
-        listingType: 'purchase',
-        price: 1200000,
-        area: 4500,
-        location: 'Brooklyn Heights, NY',
-        tags: ['Vintage Style', 'Renovated', 'Garden Access'],
-        roi: 'N/A (Personal Use)',
-        imagePath: Vintagev,
-        propertyType: 'Residential',
-        description:
-            'Seeking a classic, well-maintained 4500 sqft Victorian style home in Brooklyn Heights for personal residence. Garden access is a strong plus.',
-    },
-    {
-        id: 8,
-        title: 'Corporate Office Tower Floor',
-        listingType: 'purchase',
-        price: 3800000,
-        area: 7500,
-        location: 'Midtown, Manhattan',
-        tags: ['High-rise', 'Metro Access', 'High Security'],
-        roi: '16-19% per annum',
-        imagePath: SkyImage,
-        propertyType: 'Office',
-        description:
-            'Interest in purchasing an entire floor (approx 7500 sqft) in a modern corporate office tower in Midtown Manhattan. Must have high security and excellent transit access.',
-    },
+  {
+    id: 1,
+    title: 'Prime Commercial Plot - City Center',
+    listingType: 'sale',
+    price: 25000000, // ₹2.5 Cr
+    area: 5000,
+    location: 'Business District, Mumbai',
+    tags: ['Corner Plot', 'High Visibility', 'Metro Access', 'Utilities Ready'],
+    roi: '15–18% per annum',
+    imagePath: SkyImage,
+    propertyType: 'Retail/Office',
+    description:
+      'Premium 5,000 sq.ft. commercial plot at the heart of the business district. Ideal for high-street retail or multi-storey office development.',
+  },
+  {
+    id: 2,
+    title: 'Industrial Plot - Warehouse Zone',
+    listingType: 'sale',
+    price: 18000000, // ₹1.8 Cr
+    area: 10000,
+    location: 'Industrial Area, Pune',
+    tags: ['Highway Access', 'Loading Docks', 'Large Space', 'Fenced'],
+    roi: '12–15% per annum',
+    imagePath: Land,
+    propertyType: 'Warehouse/Industrial',
+    description:
+      '10,000 sq.ft. industrial land with excellent highway connectivity. Perfect for large warehousing and logistics hubs.',
+  },
+  {
+    id: 3,
+    title: 'Office Complex Plot',
+    listingType: 'sale',
+    price: 42000000, // ₹4.2 Cr
+    area: 8000,
+    location: 'Financial District, Bengaluru',
+    tags: ['Premium Location', 'High-rise Approved', 'Transit Hub', 'Featured'],
+    roi: '20–25% per annum',
+    imagePath: SkyImage,
+    propertyType: 'Office',
+    description:
+      '8,000 sq.ft. office plot in a prime financial corridor, with approvals for high-rise corporate development and strong rental demand.',
+  },
+  {
+    id: 4,
+    title: 'Shopping Complex Land',
+    listingType: 'sale',
+    price: 35000000, // ₹3.5 Cr
+    area: 15000,
+    location: 'Suburban Area, Hyderabad',
+    tags: ['Mall Approved', 'Parking Space', 'High Footfall'],
+    roi: '18–22% per annum',
+    imagePath: Land,
+    propertyType: 'Retail',
+    description:
+      '15,000 sq.ft. plot pre-approved for a shopping complex with dedicated parking and strong residential catchment.',
+  },
+  {
+    id: 5,
+    title: 'Boutique Hotel Development Land',
+    listingType: 'purchase',
+    price: 15000000,
+    area: 5000,
+    location: 'Beachfront Area, Goa',
+    tags: ['High Tourist Footfall', 'Sea Facing', 'Zoning Approved'],
+    roi: '18–20% per annum',
+    imagePath: Land,
+    propertyType: 'Land/Commercial',
+    description:
+      'Requirement for a 5,000 sq.ft. sea-facing commercial plot in Goa suitable for boutique hotel development.',
+  },
+  {
+    id: 6,
+    title: 'Luxury Hillside Villa',
+    listingType: 'purchase',
+    price: 9500000,
+    area: 3200,
+    location: 'Hillside, Lonavala',
+    tags: ['Scenic View', 'Private Pool', 'Rental Ready'],
+    roi: '10–14% per annum',
+    imagePath: Lakehouse,
+    propertyType: 'Residential/Holiday',
+    description:
+      'Looking for a fully furnished 3,200 sq.ft. luxury villa with pool and valley view for both self-use and short-stay rental.',
+  },
+  {
+    id: 7,
+    title: 'Heritage Bungalow',
+    listingType: 'purchase',
+    price: 12000000,
+    area: 4500,
+    location: 'Central, Chennai',
+    tags: ['Heritage Charm', 'Renovated', 'Garden'],
+    roi: 'N/A (Self Use)',
+    imagePath: Vintagev,
+    propertyType: 'Residential',
+    description:
+      'Buyer requirement for a renovated 4,500 sq.ft. heritage bungalow with garden in a well-connected central location.',
+  },
+  {
+    id: 8,
+    title: 'Corporate Office Tower Floor',
+    listingType: 'purchase',
+    price: 38000000,
+    area: 7500,
+    location: 'IT Park, Gurugram',
+    tags: ['Grade-A Tower', 'Metro Access', 'High Security'],
+    roi: '16–19% per annum',
+    imagePath: SkyImage,
+    propertyType: 'Office',
+    description:
+      'Corporate client seeking a full floor (approx. 7,500 sq.ft.) in a Grade-A IT tower with excellent connectivity.',
+  },
 ];
 
-// --- PROPERTY CARD ---
-const PropertyCard: React.FC<{ property: PropertyListing; onViewDetails: (property: PropertyListing) => void }> = ({
-    property,
-    onViewDetails,
-}) => {
-    const imagePath = property.imagePath;
+/* ---------- property card ---------- */
 
-    return (
-        <Card
-            hoverable
-            className="service-card-main"
-            cover={<div className="service-card-image" style={{ backgroundImage: `url(${imagePath})` }} />}
-        >
-            <Card.Meta
-                title={<span className="service-card-title">{property.title}</span>}
-                description={
-                    <Space direction="vertical" style={{ width: '100%' }}>
-                        <Text type="secondary" className="text-with-icon-align">
-                            <EnvironmentOutlined /> {property.location}
-                        </Text>
-                        <Title level={3} className="price-title">
-                            {`$${(property.price / 1000000).toFixed(1)}M`}
-                        </Title>
-                        <Text type="secondary">{`${property.area} sqft • Zoning: ${property.propertyType}`}</Text>
-                        <Space size={[0, 8]} wrap className="tags-space-top">
-                            {property.tags.map((tag) => (
-                                <Tag key={tag} color="default">
-                                    {tag}
-                                </Tag>
-                            ))}
-                        </Space>
-                        <Text className="roi-text">
-                            <RiseOutlined /> {property.roi}
-                        </Text>
-                        <Space className="button-group-space-top">
-                            <Button type="primary" size="large" onClick={() => onViewDetails(property)}>
-                                Contact Us / Negotiate
-                            </Button>
-                            <Button size="large" onClick={() => onViewDetails(property)}>
-                                View Details
-                            </Button>
-                        </Space>
-                    </Space>
-                }
-            />
-        </Card>
-    );
+const PropertyCard: React.FC<{
+  property: PropertyListing;
+  onViewDetails: (property: PropertyListing) => void;
+}> = ({ property, onViewDetails }) => {
+  const imagePath = property.imagePath;
+
+  return (
+    <Card
+      hoverable
+      className="service-card-main property-card"
+      cover={
+        <div
+          className="service-card-image"
+          style={{ backgroundImage: `url(${imagePath})` }}
+        />
+      }
+    >
+      <Card.Meta
+        title={<span className="service-card-title">{property.title}</span>}
+        description={
+          <Space direction="vertical" style={{ width: '100%' }}>
+            <Text type="secondary" className="text-with-icon-align">
+              <EnvironmentOutlined /> {property.location}
+            </Text>
+            <Title level={4} className="price-title">
+              {formatINR(property.price)}
+            </Title>
+            <Text type="secondary">
+              {property.area} sq.ft • Type: {property.propertyType}
+            </Text>
+            <Space size={[0, 8]} wrap className="tags-space-top">
+              {property.tags.map((tag) => (
+                <Tag key={tag}>{tag}</Tag>
+              ))}
+            </Space>
+            <Text className="roi-text">
+              <RiseOutlined /> {property.roi}
+            </Text>
+            <Text className="property-card-description">
+              {property.description}
+            </Text>
+            <Space className="button-group-space-top" wrap>
+              <Button type="primary" size="middle" onClick={() => onViewDetails(property)}>
+                Contact / Negotiate
+              </Button>
+              <Button size="middle" onClick={() => onViewDetails(property)}>
+                View Details
+              </Button>
+            </Space>
+          </Space>
+        }
+      />
+    </Card>
+  );
 };
 
-// --- DETAIL VIEW RIGHT SIDE: CONTACT + PRICE NEGOTIATION (UPDATED) ---
-const PriceNegotiationContent: React.FC<ContentComponentProps & { currentPrice: number }> = ({ currentPrice }) => {
+/* ---------- price negotiation (INR) ---------- */
+
+const PriceNegotiationContent: React.FC<ContentComponentProps & { currentPrice: number }> = ({
+  currentPrice,
+}) => {
   const [form] = Form.useForm<PriceNegotiationFormValues>();
 
-  // State for analysis results
   const [priceComparison, setPriceComparison] = useState<{
     diff: number;
     percentDiff: number;
@@ -325,79 +344,6 @@ const PriceNegotiationContent: React.FC<ContentComponentProps & { currentPrice: 
     type: 'success' | 'warning' | 'error' | 'info';
   } | null>(null);
 
-  const onSubmit: FormProps<PriceNegotiationFormValues>['onFinish'] = (values) => {
-    // Final re-analysis of offer on submit (in case user didn’t change after last calc)
-    analyzeOffer(values);
-    message.success('Your enquiry and offer have been submitted!');
-    console.log('Contact & negotiation form submitted:', values);
-  };
-
-  // --- PRICE COMPARISON (market vs predicted) ---
-  const handleCompareClick = async () => {
-    try {
-      // validate predicted price first
-      await form.validateFields(['predictedMarketPrice']);
-      const current = form.getFieldValue('currentMarketPrice') || currentPrice;
-      const predicted = form.getFieldValue('predictedMarketPrice');
-
-      if (!current || !predicted) return;
-
-      // basic sanity: price must be positive
-      if (predicted <= 0) {
-        message.error('Predicted market price must be greater than zero.');
-        return;
-      }
-
-      // sanity check: predicted shouldn’t be wildly off (> ±50%)
-      const maxAllowed = current * 1.5;
-      const minAllowed = current * 0.5;
-      if (predicted > maxAllowed || predicted < minAllowed) {
-        message.error(
-          'Predicted market price is more than ±50% away from the current price. Please double-check your input.',
-        );
-        setPriceComparison(null);
-        return;
-      }
-
-      const diff = predicted - current;
-      const percentDiff = (diff / current) * 100;
-
-      let messageText = '';
-      let type: 'success' | 'warning' | 'error' | 'info' = 'info';
-
-      const absPercent = Math.abs(percentDiff);
-
-      if (absPercent < 5) {
-        messageText = 'Predicted price is well aligned with the current market value (within ±5%).';
-        type = 'success';
-      } else if (absPercent < 15) {
-        messageText =
-          diff > 0
-            ? 'Property looks moderately underpriced compared to your prediction (5–15% below).'
-            : 'Property looks moderately overpriced compared to your prediction (5–15% above).';
-        type = 'warning';
-      } else {
-        messageText =
-          diff > 0
-            ? 'Property appears significantly underpriced (more than 15% below your prediction). Please validate with more comps.'
-            : 'Property appears significantly overpriced (more than 15% above your prediction). Consider negotiating harder or re-evaluating.';
-        type = 'error';
-      }
-
-      setPriceComparison({
-        diff,
-        percentDiff,
-        message: messageText,
-        type,
-      });
-
-      message.success('Price comparison analysis completed.');
-    } catch (err) {
-      // validation error – do nothing, AntD already shows messages
-    }
-  };
-
-  // --- OFFER vs ASKING (runs whenever offer changes or on submit) ---
   const analyzeOffer = (values: PriceNegotiationFormValues) => {
     const asking = values.currentAskingPrice || currentPrice;
     const offer = values.offerPrice;
@@ -418,44 +364,97 @@ const PriceNegotiationContent: React.FC<ContentComponentProps & { currentPrice: 
       messageText = 'Your offer matches the asking price exactly.';
       type = 'info';
     } else if (percentDiff < 0) {
-      // below asking – typical negotiation range often 3–10% under
       if (absPercent <= 3) {
         messageText = `Your offer is about ${absPercent.toFixed(
           1,
-        )}% below asking – a small, reasonable discount in many markets.`;
+        )}% below asking – a small, reasonable discount.`;
         type = 'success';
       } else if (absPercent <= 10) {
         messageText = `Your offer is ${absPercent.toFixed(
           1,
-        )}% below asking – within a typical negotiation range. Expect a counter-offer.`;
+        )}% below asking – within a typical negotiation band. Expect a counter-offer.`;
         type = 'warning';
       } else {
         messageText = `Your offer is ${absPercent.toFixed(
           1,
-        )}% below asking – this may be viewed as a strong/lowball offer unless the property is clearly overpriced.`;
+        )}% below asking – this may be treated as a very aggressive offer unless the property is clearly overpriced.`;
         type = 'error';
       }
     } else {
-      // above asking
       if (percentDiff <= 3) {
         messageText = `Your offer is ${percentDiff.toFixed(
           1,
-        )}% above asking – this can help in competitive or hot markets.`;
+        )}% above asking – useful in highly competitive markets.`;
         type = 'warning';
       } else {
         messageText = `Your offer is ${percentDiff.toFixed(
           1,
-        )}% above asking – you may be overpaying unless competition is very strong.`;
+        )}% above asking – double-check that you are not overpaying.`;
         type = 'error';
       }
     }
 
-    setOfferAnalysis({
-      diff,
-      percentDiff,
-      message: messageText,
-      type,
-    });
+    setOfferAnalysis({ diff, percentDiff, message: messageText, type });
+  };
+
+  const handleCompareClick = async () => {
+    try {
+      await form.validateFields(['predictedMarketPrice']);
+      const current = form.getFieldValue('currentMarketPrice') || currentPrice;
+      const predicted = form.getFieldValue('predictedMarketPrice');
+
+      if (!current || !predicted) return;
+
+      if (predicted <= 0) {
+        message.error('Predicted market price must be greater than zero.');
+        return;
+      }
+
+      const maxAllowed = current * 1.5;
+      const minAllowed = current * 0.5;
+      if (predicted > maxAllowed || predicted < minAllowed) {
+        message.error(
+          'Predicted price is more than ±50% away from current price. Please re-check the number.',
+        );
+        setPriceComparison(null);
+        return;
+      }
+
+      const diff = predicted - current;
+      const percentDiff = (diff / current) * 100;
+      const absPercent = Math.abs(percentDiff);
+
+      let messageText = '';
+      let type: 'success' | 'warning' | 'error' | 'info' = 'info';
+
+      if (absPercent < 5) {
+        messageText = 'Predicted price is well aligned with current market value (within ±5%).';
+        type = 'success';
+      } else if (absPercent < 15) {
+        messageText =
+          diff > 0
+            ? 'Property looks moderately under-priced (5–15% below your prediction).'
+            : 'Property looks moderately over-priced (5–15% above your prediction).';
+        type = 'warning';
+      } else {
+        messageText =
+          diff > 0
+            ? 'Property appears significantly under-priced (>15% below). Validate with more comps.'
+            : 'Property appears significantly over-priced (>15% above). Negotiate strongly or reassess.';
+        type = 'error';
+      }
+
+      setPriceComparison({ diff, percentDiff, message: messageText, type });
+      message.success('Price comparison completed.');
+    } catch {
+      /* AntD validation already shows errors */
+    }
+  };
+
+  const onSubmit: FormProps<PriceNegotiationFormValues>['onFinish'] = (values) => {
+    analyzeOffer(values);
+    message.success('Your enquiry and offer have been submitted!');
+    console.log('Contact & negotiation form submitted:', values);
   };
 
   return (
@@ -469,13 +468,12 @@ const PriceNegotiationContent: React.FC<ContentComponentProps & { currentPrice: 
           currentMarketPrice: currentPrice,
           currentAskingPrice: currentPrice,
         }}
-        onValuesChange={(_, allValues) => {
-          // live analysis of offer on any change
-          analyzeOffer(allValues as PriceNegotiationFormValues);
-        }}
+        onValuesChange={(_, allValues) =>
+          analyzeOffer(allValues as PriceNegotiationFormValues)
+        }
       >
-        {/* CONTACT DETAILS */}
-        <Title level={4}>
+        {/* contact details */}
+        <Title level={4} className="detail-section-title">
           <UserOutlined /> Contact Details
         </Title>
         <Row gutter={[16, 16]}>
@@ -494,7 +492,7 @@ const PriceNegotiationContent: React.FC<ContentComponentProps & { currentPrice: 
               label="Email"
               rules={[
                 { required: true, message: 'Please enter your email' },
-                { type: 'email', message: 'Please enter a valid email' },
+                { type: 'email', message: 'Enter a valid email' },
               ]}
             >
               <Input placeholder="Enter your email address" prefix={<MailOutlined />} />
@@ -513,37 +511,43 @@ const PriceNegotiationContent: React.FC<ContentComponentProps & { currentPrice: 
 
         <Divider />
 
-        {/* PRICE COMPARISON TOOL */}
-        <Title level={4}>
+        {/* price comparison */}
+        <Title level={4} className="detail-section-title">
           <DollarOutlined /> Price Comparison Tool
         </Title>
         <Row gutter={[16, 16]}>
           <Col xs={24} md={12}>
-            <Form.Item<PriceNegotiationFormValues> name="currentMarketPrice" label="Current Market Price ($)">
-              <Input type="number" prefix="$" disabled />
+            <Form.Item<PriceNegotiationFormValues>
+              name="currentMarketPrice"
+              label="Current Market Price (₹)"
+            >
+              <Input type="number" prefix="₹" disabled />
             </Form.Item>
           </Col>
           <Col xs={24} md={12}>
             <Form.Item<PriceNegotiationFormValues>
               name="predictedMarketPrice"
-              label="Predicted Market Price ($)"
+              label="Predicted Market Price (₹)"
               rules={[
                 { required: true, message: 'Please enter predicted market price' },
                 {
                   validator: (_, value) => {
                     if (value == null || value === '') return Promise.resolve();
-                    if (value <= 0) return Promise.reject('Predicted market price must be greater than zero.');
+                    if (value <= 0)
+                      return Promise.reject(
+                        new Error('Predicted market price must be greater than zero.'),
+                      );
                     return Promise.resolve();
                   },
                 },
               ]}
             >
-              <Input type="number" prefix="$" placeholder="e.g., 2600000" />
+              <Input type="number" prefix="₹" placeholder="e.g. 26000000" />
             </Form.Item>
           </Col>
           <Col xs={24}>
             <Button type="default" onClick={handleCompareClick}>
-              Analyze Comparison
+              Analyse Comparison
             </Button>
           </Col>
           {priceComparison && (
@@ -554,16 +558,17 @@ const PriceNegotiationContent: React.FC<ContentComponentProps & { currentPrice: 
                 message={
                   <>
                     <div>{priceComparison.message}</div>
-                    <div style={{ marginTop: 4 }}>
+                    <div className="alert-extra-line">
                       Difference:{' '}
                       <b>
-                        {priceComparison.diff >= 0 ? '+' : '-'}${Math.abs(priceComparison.diff).toLocaleString()}
+                        {priceComparison.diff >= 0 ? '+' : '-'}
+                        {formatINR(Math.abs(priceComparison.diff))}
                       </b>{' '}
                       (
                       {`${priceComparison.diff >= 0 ? '+' : '-'}${Math.abs(
                         priceComparison.percentDiff,
                       ).toFixed(2)}%`}{' '}
-                      vs current market price)
+                      vs. current price)
                     </div>
                   </>
                 }
@@ -574,28 +579,37 @@ const PriceNegotiationContent: React.FC<ContentComponentProps & { currentPrice: 
 
         <Divider />
 
-        {/* NEGOTIATION OFFER */}
-        <Title level={4}>
+        {/* negotiation offer */}
+        <Title level={4} className="detail-section-title">
           <RiseOutlined /> Negotiation Offer
         </Title>
         <Row gutter={[16, 16]}>
           <Col xs={24} md={12}>
-            <Form.Item<PriceNegotiationFormValues> name="currentAskingPrice" label="Current Asking Price ($)">
-              <Input type="number" prefix="$" disabled />
+            <Form.Item<PriceNegotiationFormValues>
+              name="currentAskingPrice"
+              label="Current Asking Price (₹)"
+            >
+              <Input type="number" prefix="₹" disabled />
             </Form.Item>
           </Col>
           <Col xs={24} md={12}>
             <Form.Item<PriceNegotiationFormValues>
               name="offerPrice"
-              label="Your Offer ($)"
+              label="Your Offer (₹)"
               rules={[{ required: true, message: 'Please enter your offer price' }]}
             >
-              <Input type="number" prefix="$" />
+              <Input type="number" prefix="₹" />
             </Form.Item>
           </Col>
           <Col xs={24}>
-            <Form.Item<PriceNegotiationFormValues> name="negotiationMessage" label="Negotiation Message">
-              <TextArea rows={3} placeholder="Share your terms, conditions, or questions..." />
+            <Form.Item<PriceNegotiationFormValues>
+              name="negotiationMessage"
+              label="Negotiation Message"
+            >
+              <TextArea
+                rows={3}
+                placeholder="Share your expectations, payment timeline, or any conditions…"
+              />
             </Form.Item>
           </Col>
           {offerAnalysis && (
@@ -606,17 +620,17 @@ const PriceNegotiationContent: React.FC<ContentComponentProps & { currentPrice: 
                 message={
                   <>
                     <div>{offerAnalysis.message}</div>
-                    <div style={{ marginTop: 4 }}>
+                    <div className="alert-extra-line">
                       Difference:{' '}
                       <b>
-                        {offerAnalysis.diff >= 0 ? '+' : '-'}$
-                        {Math.abs(offerAnalysis.diff).toLocaleString()}
+                        {offerAnalysis.diff >= 0 ? '+' : '-'}
+                        {formatINR(Math.abs(offerAnalysis.diff))}
                       </b>{' '}
                       (
                       {`${offerAnalysis.diff >= 0 ? '+' : '-'}${Math.abs(
                         offerAnalysis.percentDiff,
                       ).toFixed(2)}%`}{' '}
-                      vs asking price)
+                      vs. asking price)
                     </div>
                   </>
                 }
@@ -626,704 +640,840 @@ const PriceNegotiationContent: React.FC<ContentComponentProps & { currentPrice: 
         </Row>
 
         <Button type="primary" htmlType="submit">
-          Submit Offer
+          Submit Enquiry & Offer
         </Button>
       </Form>
     </div>
   );
 };
 
+/* ---------- document verification ---------- */
 
 const DocumentationContent: React.FC<ContentComponentProps> = () => {
-    const onUpload: FormProps<DocumentationFormValues>['onFinish'] = () => {
-        message.success('Document uploaded for verification!');
+  const onUpload: FormProps<DocumentationFormValues>['onFinish'] = () => {
+    message.success('Document uploaded for verification!');
+  };
+
+  return (
+    <Form layout="vertical" onFinish={onUpload}>
+      <Row gutter={[16, 16]}>
+        <Col xs={24} md={12}>
+          <Form.Item<DocumentationFormValues>
+            name="docType"
+            label="Document Type"
+            rules={[{ required: true }]}
+          >
+            <Select placeholder="Select type">
+              <Option value="deed">Title Deed</Option>
+              <Option value="survey">Survey Report</Option>
+            </Select>
+          </Form.Item>
+        </Col>
+        <Col xs={24} md={12}>
+          <Form.Item<DocumentationFormValues>
+            name="verificationStatus"
+            label="Status"
+          >
+            <Select placeholder="Select status">
+              <Option value="pending">Pending</Option>
+            </Select>
+          </Form.Item>
+        </Col>
+        <Col xs={24}>
+          <Form.Item
+            name="documentFile"
+            label="Upload File"
+            rules={[{ required: true }]}
+          >
+            <Input type="file" />
+          </Form.Item>
+        </Col>
+      </Row>
+      <Button type="primary" htmlType="submit">
+        Upload Document
+      </Button>
+    </Form>
+  );
+};
+
+/* ---------- property detail view ---------- */
+
+const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({
+  property,
+  onOpenDocVerify,
+}) => {
+  return (
+    <div className="detail-view-container">
+      <Row gutter={[24, 24]}>
+        <Col xs={24} lg={10}>
+          <div
+            className="service-card-image property-detail-image"
+            style={{ backgroundImage: `url(${property.imagePath})` }}
+          />
+          <Title level={4} className="price-title">
+            {formatINR(property.price)}
+          </Title>
+          <Text type="secondary" className="text-with-icon-align">
+            <EnvironmentOutlined /> {property.location}
+          </Text>
+          <Text type="secondary" className="detail-meta-line">
+            {property.area} sq.ft • Type: {property.propertyType}
+          </Text>
+          <Text className="roi-text">
+            <RiseOutlined /> {property.roi}
+          </Text>
+
+          <Divider orientation="left">Description</Divider>
+          <Text className="detail-description">
+            {property.description || 'No detailed description provided.'}
+          </Text>
+
+          <Divider orientation="left">Next Steps</Divider>
+          <Button
+            type="default"
+            size="middle"
+            icon={<FileTextOutlined />}
+            onClick={onOpenDocVerify}
+          >
+            Start Document Verification
+          </Button>
+        </Col>
+
+        <Col xs={24} lg={14}>
+          <Divider orientation="left">
+            <EyeOutlined /> Price Analysis & Negotiation
+          </Divider>
+          <PriceNegotiationContent currentPrice={property.price} />
+        </Col>
+      </Row>
+    </div>
+  );
+};
+
+/* ---------- property listing view ---------- */
+
+const PropertyListingView: React.FC<PropertyListingViewProps> = ({
+  defaultListingType,
+  onViewDetails,
+}) => {
+  const [listings, setListings] = useState<PropertyListing[]>(
+    MOCK_PROPERTY_LISTINGS.filter((l) => l.listingType === defaultListingType),
+  );
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [form] = Form.useForm<PropertyFormValues>();
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
+  const [newPropertyImage, setNewPropertyImage] = useState<string | null>(null);
+
+  const normFile = (e: any) => (Array.isArray(e) ? e : e && e.fileList);
+
+  const handleFileChange: UploadProps['onChange'] = ({ fileList: newFileList }) => {
+    setFileList(newFileList);
+    if (newFileList.length > 0 && newFileList[0].originFileObj) {
+      const reader = new FileReader();
+      reader.onload = () => setNewPropertyImage(reader.result as string);
+      reader.readAsDataURL(newFileList[0].originFileObj as File);
+    } else {
+      setNewPropertyImage(null);
+    }
+  };
+
+  const onFinish: FormProps<PropertyFormValues>['onFinish'] = (values) => {
+    const newListing: PropertyListing = {
+      id: Date.now(),
+      title: values.title,
+      listingType: values.listingType,
+      price: values.price,
+      area: values.area,
+      location: values.location,
+      tags: values.tags
+        ? values.tags.split(',').map((tag) => tag.trim())
+        : ['New Listing', 'User Added'],
+      roi: values.roi || 'TBD',
+      imagePath:
+        newPropertyImage || (defaultListingType === 'sale' ? Modern : SkyImage),
+      propertyType: values.propertyType,
+      description: values.description,
     };
-    return (
-        <Form layout="vertical" onFinish={onUpload}>
-            <Row gutter={[16, 16]}>
-                <Col xs={24} md={12}>
-                    <Form.Item<DocumentationFormValues>
-                        name="docType"
-                        label="Document Type"
-                        rules={[{ required: true }]}
-                    >
-                        <Select placeholder="Select type">
-                            <Option value="deed">Title Deed</Option>
-                            <Option value="survey">Survey Report</Option>
-                        </Select>
-                    </Form.Item>
-                </Col>
-                <Col xs={24} md={12}>
-                    <Form.Item<DocumentationFormValues> name="verificationStatus" label="Status">
-                        <Select placeholder="Select status">
-                            <Option value="pending">Pending</Option>
-                        </Select>
-                    </Form.Item>
-                </Col>
-                <Col xs={24}>
-                    <Form.Item name="documentFile" label="Upload File" rules={[{ required: true }]}>
-                        <Input type="file" />
-                    </Form.Item>
-                </Col>
-            </Row>
-            <Button type="primary" htmlType="submit">
-                Upload Document
-            </Button>
+
+    setListings((prev) => [newListing, ...prev]);
+    message.success(
+      `${defaultListingType === 'sale' ? 'Sale' : 'Purchase'} listing added successfully!`,
+    );
+    setIsModalVisible(false);
+    form.resetFields();
+    setFileList([]);
+    setNewPropertyImage(null);
+  };
+
+  const handleOpenModal = () => {
+    setIsModalVisible(true);
+    form.setFieldsValue({
+      listingType: defaultListingType,
+      title: '',
+      price: undefined,
+      area: undefined,
+      location: '',
+      tags: '',
+      roi: '',
+      image: [],
+      propertyType: undefined,
+      description: '',
+    });
+    setFileList([]);
+    setNewPropertyImage(null);
+  };
+
+  return (
+    <>
+      <div className="listing-view-header">
+        <span className="listing-view-header-title">
+          {defaultListingType === 'sale'
+            ? 'Featured Properties for Sale'
+            : 'Buyer Requirements (Purchase)'}
+        </span>
+        <Button type="primary" onClick={handleOpenModal}>
+          Add Property
+        </Button>
+      </div>
+
+      <List
+        grid={{ gutter: 20, xs: 1, sm: 2, md: 2, lg: 3, xl: 3 }}
+        dataSource={listings}
+        renderItem={(item) => (
+          <List.Item>
+            <PropertyCard property={item} onViewDetails={onViewDetails} />
+          </List.Item>
+        )}
+        locale={{
+          emptyText: (
+            <Text type="secondary">
+              No listings found. Be the first to add one!
+            </Text>
+          ),
+        }}
+        className="form-content-spacing"
+      />
+
+      <Modal
+        title={`Add Property Listing (${defaultListingType === 'sale' ? 'For Sale' : 'For Purchase'})`}
+        open={isModalVisible}
+        onCancel={() => setIsModalVisible(false)}
+        footer={null}
+        destroyOnClose
+      >
+        <Form
+          form={form}
+          layout="vertical"
+          onFinish={onFinish}
+          initialValues={{ listingType: defaultListingType }}
+        >
+          <Row gutter={[16, 16]}>
+            <Col xs={24}>
+              <Form.Item name="title" label="Property Title" rules={[{ required: true }]}>
+                <Input placeholder="Enter property title" />
+              </Form.Item>
+            </Col>
+
+            <Col xs={24} md={12}>
+              <Form.Item
+                name="propertyType"
+                label="Property Type"
+                rules={[{ required: true }]}
+              >
+                <Select placeholder="Select type">
+                  <Option value="Retail/Office">Retail/Office</Option>
+                  <Option value="Warehouse/Industrial">Warehouse/Industrial</Option>
+                  <Option value="Office">Office</Option>
+                  <Option value="Retail">Retail</Option>
+                  <Option value="land">Land</Option>
+                  <Option value="house">House</Option>
+                </Select>
+              </Form.Item>
+            </Col>
+
+            <Col xs={24} md={12}>
+              <Form.Item
+                name="listingType"
+                label="Listing For"
+                rules={[{ required: true }]}
+              >
+                <Select disabled>
+                  <Option value="sale">For Sale</Option>
+                  <Option value="purchase">Want to Purchase</Option>
+                </Select>
+              </Form.Item>
+            </Col>
+
+            <Col xs={24} md={12}>
+              <Form.Item name="price" label="Price (₹)" rules={[{ required: true }]}>
+                <Input type="number" prefix="₹" />
+              </Form.Item>
+            </Col>
+            <Col xs={24} md={12}>
+              <Form.Item
+                name="area"
+                label="Area (sq.ft)"
+                rules={[{ required: true }]}
+              >
+                <Input type="number" suffix="sq.ft" />
+              </Form.Item>
+            </Col>
+            <Col xs={24}>
+              <Form.Item
+                name="location"
+                label="Location"
+                rules={[{ required: true }]}
+              >
+                <Input placeholder="e.g., City, State, or Locality" />
+              </Form.Item>
+            </Col>
+            <Col xs={24}>
+              <Form.Item name="tags" label="Tags (comma-separated)">
+                <Input placeholder="e.g., Corner Plot, Near Metro, Parking" />
+              </Form.Item>
+            </Col>
+            <Col xs={24}>
+              <Form.Item name="roi" label="Expected ROI (Optional)">
+                <Input placeholder="e.g., 15–18% per annum" />
+              </Form.Item>
+            </Col>
+
+            <Col xs={24}>
+              <Form.Item
+                name="image"
+                label="Property Image"
+                valuePropName="fileList"
+                getValueFromEvent={normFile}
+              >
+                <Upload
+                  listType="picture-card"
+                  fileList={fileList}
+                  onChange={handleFileChange}
+                  beforeUpload={() => false}
+                  maxCount={1}
+                  accept=".png,.jpg,.jpeg"
+                >
+                  {fileList.length < 1 && (
+                    <div>
+                      <PlusOutlined />
+                      <div style={{ marginTop: 8 }}>Upload</div>
+                    </div>
+                  )}
+                </Upload>
+              </Form.Item>
+            </Col>
+
+            <Col xs={24}>
+              <Form.Item name="description" label="Short Description">
+                <TextArea
+                  rows={3}
+                  placeholder="Summarise highlights, connectivity, approvals, etc."
+                />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Button type="primary" htmlType="submit">
+            Submit Listing
+          </Button>
         </Form>
-    );
+      </Modal>
+    </>
+  );
 };
 
-// --- NEW PROPERTY DETAIL VIEW COMPONENT ---
-const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({ property, onOpenDocVerify }) => {
-    return (
-        <div className="detail-view-container">
-            <Row gutter={[24, 24]}>
-                {/* Left Column: Property Details & Image */}
-                <Col xs={24} lg={10}>
-                    <div
-                        className="service-card-image"
-                        style={{ backgroundImage: `url(${property.imagePath})`, height: 250, borderRadius: 8, marginBottom: 15 }}
-                    />
-                    <Title level={4} className="price-title">{`$${(property.price / 1000000).toFixed(2)}M`}</Title>
-                    <Text type="secondary" className="text-with-icon-align">
-                        <EnvironmentOutlined /> {property.location}
-                    </Text>
-                    <Text type="secondary" style={{ display: 'block' }}>{`${property.area} sqft • Type: ${
-                        property.propertyType
-                    }`}</Text>
-                    <Text className="roi-text">
-                        <RiseOutlined /> {property.roi}
-                    </Text>
-                    <Divider orientation="left">Description</Divider>
-                    <Text>{property.description || 'No detailed description provided.'}</Text>
+/* ---------- other subservice content ---------- */
 
-                    <Divider orientation="left">Actions</Divider>
-                    <Button
-                        type="default"
-                        size="large"
-                        icon={<FileTextOutlined />}
-                        onClick={onOpenDocVerify}
-                        style={{ marginBottom: 15 }}
-                    >
-                        Start Document Verification
-                    </Button>
-                </Col>
-
-                {/* Right Column: Contact + Negotiation Form */}
-                <Col xs={24} lg={14}>
-                    <Divider orientation="left">
-                        <EyeOutlined /> Price Negotiation & Comparison
-                    </Divider>
-                    <PriceNegotiationContent currentPrice={property.price} />
-                </Col>
-            </Row>
-        </div>
-    );
-};
-
-// --- PROPERTY LISTING VIEW (unchanged except for context) ---
-const PropertyListingView: React.FC<PropertyListingViewProps> = ({ defaultListingType, onViewDetails }) => {
-    const [listings, setListings] = useState<PropertyListing[]>(
-        MOCK_PROPERTY_LISTINGS.filter((l) => l.listingType === defaultListingType),
-    );
-    const [isModalVisible, setIsModalVisible] = useState(false);
-    const [form] = Form.useForm<PropertyFormValues>();
-    const [fileList, setFileList] = useState<UploadFile[]>([]);
-    const [newPropertyImage, setNewPropertyImage] = useState<string | null>(null);
-
-    const normFile = (e: any) => {
-        if (Array.isArray(e)) {
-            return e;
-        }
-        return e && e.fileList;
-    };
-
-    const handleFileChange: UploadProps['onChange'] = ({ fileList: newFileList }) => {
-        setFileList(newFileList);
-        if (newFileList.length > 0 && newFileList[0].originFileObj) {
-            const reader = new FileReader();
-            reader.onload = () => {
-                setNewPropertyImage(reader.result as string);
-            };
-            reader.readAsDataURL(newFileList[0].originFileObj as File);
-        } else {
-            setNewPropertyImage(null);
-        }
-    };
-
-    const onFinish: FormProps<PropertyFormValues>['onFinish'] = (values) => {
-        const newListing: PropertyListing = {
-            id: Date.now(),
-            title: values.title,
-            listingType: values.listingType,
-            price: values.price,
-            area: values.area,
-            location: values.location,
-            tags: values.tags ? values.tags.split(',').map((tag) => tag.trim()) : ['New Listing', 'User Added'],
-            roi: values.roi || 'TBD',
-            imagePath: newPropertyImage || (defaultListingType === 'sale' ? Modern : SkyImage),
-            propertyType: values.propertyType,
-            description: values.description,
-        };
-
-        setListings((prev) => [newListing, ...prev]);
-        message.success(`${defaultListingType === 'sale' ? 'Sale' : 'Purchase'} listing added successfully!`);
-        setIsModalVisible(false);
-        form.resetFields();
-        setFileList([]);
-        setNewPropertyImage(null);
-    };
-
-    const handleOpenModal = () => {
-        setIsModalVisible(true);
-        form.setFieldsValue({
-            listingType: defaultListingType,
-            title: '',
-            price: undefined,
-            area: undefined,
-            location: '',
-            tags: '',
-            roi: '',
-            image: [],
-            propertyType: undefined,
-            description: '',
-        });
-        setFileList([]);
-        setNewPropertyImage(null);
-    };
-
-    return (
-        <>
-            <div className="listing-view-header">
-                <span className="listing-view-header-title">{`Featured ${
-                    defaultListingType === 'sale' ? 'Sale' : 'Purchase'
-                } Listings`}</span>
-                <Button type="primary" onClick={handleOpenModal}>
-                    Add Property
-                </Button>
-            </div>
-
-            <List
-                grid={{ gutter: 20, xs: 1, sm: 2, md: 2, lg: 3, xl: 3 }}
-                dataSource={listings}
-                renderItem={(item) => (
-                    <List.Item>
-                        <PropertyCard property={item} onViewDetails={onViewDetails} />
-                    </List.Item>
-                )}
-                locale={{ emptyText: <Text type="secondary">No listings found. Be the first to add one!</Text> }}
-                className="form-content-spacing"
-            />
-
-            <Modal
-                title={`Add Property Listing (${defaultListingType === 'sale' ? 'For Sale' : 'For Purchase'})`}
-                open={isModalVisible}
-                onCancel={() => setIsModalVisible(false)}
-                footer={null}
-                destroyOnClose={true}
-            >
-                <Form form={form} layout="vertical" onFinish={onFinish} initialValues={{ listingType: defaultListingType }}>
-                    <Row gutter={[16, 16]}>
-                        <Col xs={24}>
-                            <Form.Item name="title" label="Property Title" rules={[{ required: true }]}>
-                                <Input placeholder="Enter property title" />
-                            </Form.Item>
-                        </Col>
-
-                        <Col xs={24} md={12}>
-                            <Form.Item name="propertyType" label="Property Type" rules={[{ required: true }]}>
-                                <Select placeholder="Select type">
-                                    <Option value="Retail/Office">Retail/Office</Option>
-                                    <Option value="Warehouse/Industrial">Warehouse/Industrial</Option>
-                                    <Option value="Office">Office</Option>
-                                    <Option value="Retail">Retail</Option>
-                                    <Option value="land">Land</Option>
-                                    <Option value="house">House</Option>
-                                </Select>
-                            </Form.Item>
-                        </Col>
-
-                        <Col xs={24} md={12}>
-                            <Form.Item name="listingType" label="Listing For" rules={[{ required: true }]}>
-                                <Select disabled>
-                                    <Option value="sale">For Sale</Option>
-                                    <Option value="purchase">Want to Purchase</Option>
-                                </Select>
-                            </Form.Item>
-                        </Col>
-
-                        <Col xs={24} md={12}>
-                            <Form.Item name="price" label="Price ($)" rules={[{ required: true }]}>
-                                <Input type="number" prefix="$" />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} md={12}>
-                            <Form.Item name="area" label="Area (sqft)" rules={[{ required: true }]}>
-                                <Input type="number" suffix="sqft" />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24}>
-                            <Form.Item name="location" label="Location" rules={[{ required: true }]}>
-                                <Input placeholder="e.g., City, State, or Address" />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24}>
-                            <Form.Item name="tags" label="Tags (comma-separated)">
-                                <Input placeholder="e.g., Highway Access, Fenced, Corner Plot" />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24}>
-                            <Form.Item name="roi" label="Expected ROI (Optional)">
-                                <Input placeholder="e.g., 15-18% per annum" />
-                            </Form.Item>
-                        </Col>
-
-                        <Col xs={24}>
-                            <Form.Item
-                                name="image"
-                                label="Property Image (for banner)"
-                                valuePropName="fileList"
-                                getValueFromEvent={normFile}
-                            >
-                                <Upload
-                                    listType="picture-card"
-                                    fileList={fileList}
-                                    onChange={handleFileChange}
-                                    beforeUpload={() => false}
-                                    maxCount={1}
-                                    accept=".png,.jpg,.jpeg"
-                                >
-                                    {fileList.length < 1 && (
-                                        <div>
-                                            <PlusOutlined />
-                                            <div style={{ marginTop: 8 }}>Upload</div>
-                                        </div>
-                                    )}
-                                </Upload>
-                            </Form.Item>
-                        </Col>
-
-                        <Col xs={24}>
-                            <Form.Item name="description" label="Description">
-                                <TextArea rows={3} placeholder="Detailed description..." />
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                    <Button type="primary" htmlType="submit">
-                        Submit Listing
-                    </Button>
-                </Form>
-            </Modal>
-        </>
-    );
-};
-
-// Simple redirects
-const PropertyListingSaleContent: React.FC<ContentComponentProps & { onViewDetails: (property: PropertyListing) => void }> =
-    ({ onViewDetails }) =>
-        <PropertyListingView defaultListingType="sale" onViewDetails={onViewDetails} />;
+const PropertyListingSaleContent: React.FC<
+  ContentComponentProps & { onViewDetails: (property: PropertyListing) => void }
+> = ({ onViewDetails }) => (
+  <PropertyListingView defaultListingType="sale" onViewDetails={onViewDetails} />
+);
 
 const PropertyListingPurchaseContent: React.FC<
-    ContentComponentProps & { onViewDetails: (property: PropertyListing) => void }
-> = ({ onViewDetails }) => <PropertyListingView defaultListingType="purchase" onViewDetails={onViewDetails} />;
+  ContentComponentProps & { onViewDetails: (property: PropertyListing) => void }
+> = ({ onViewDetails }) => (
+  <PropertyListingView defaultListingType="purchase" onViewDetails={onViewDetails} />
+);
 
-// --- OTHER SUBSERVICE CONTENTS (unchanged) ---
 const RetailInStoreContent: React.FC<ContentComponentProps> = () => (
-    <Form layout="vertical" className="form-content-spacing" onFinish={() => message.success('Sale completed!')}>
-        <Form.Item label="Sale Amount ($)">
-            <Input placeholder="Enter sale amount" prefix="$" type="number" />
-        </Form.Item>
-        <Form.Item label="Item Details">
-            <TextArea rows={2} placeholder="Description of items sold..." />
-        </Form.Item>
-        <Button type="primary" htmlType="submit">
-            Complete Sale
-        </Button>
-    </Form>
+  <Form
+    layout="vertical"
+    className="form-content-spacing"
+    onFinish={() => message.success('Sale recorded successfully!')}
+  >
+    <Form.Item label="Bill Amount (₹)">
+      <Input placeholder="Enter sale amount" prefix="₹" type="number" />
+    </Form.Item>
+    <Form.Item label="Item Details">
+      <TextArea rows={2} placeholder="Description of items sold…" />
+    </Form.Item>
+    <Button type="primary" htmlType="submit">
+      Complete Sale
+    </Button>
+  </Form>
 );
 
 const RetailInventoryContent: React.FC<ContentComponentProps> = () => (
-    <Form layout="vertical" className="form-content-spacing" onFinish={() => message.success('Inventory updated!')}>
-        <Form.Item label="Product ID">
-            <Input placeholder="Enter Product SKU" />
-        </Form.Item>
-        <Form.Item label="Stock Change">
-            <Input type="number" placeholder="+ / - Amount" />
-        </Form.Item>
-        <Form.Item label="Customer ID">
-            <Input placeholder="Enter Customer ID" />
-        </Form.Item>
-        <Button type="primary" htmlType="submit" className="button-spacer-right">
-            Update Stock
-        </Button>
-        <Button>Fetch Records</Button>
-    </Form>
+  <Form
+    layout="vertical"
+    className="form-content-spacing"
+    onFinish={() => message.success('Inventory updated!')}
+  >
+    <Form.Item label="Product SKU">
+      <Input placeholder="Enter product SKU" />
+    </Form.Item>
+    <Form.Item label="Stock Change">
+      <Input type="number" placeholder="+ / − quantity" />
+    </Form.Item>
+    <Form.Item label="Customer ID (optional)">
+      <Input placeholder="If linked to a customer" />
+    </Form.Item>
+    <Button type="primary" htmlType="submit" className="button-spacer-right">
+      Update Stock
+    </Button>
+    <Button>Fetch Purchase History</Button>
+  </Form>
 );
 
 const OnlineCheckoutContent: React.FC<ContentComponentProps> = () => (
-    <Input placeholder="Shipping Rate (flat fee)" className="width-100" />
+  <Input placeholder="Default shipping rate (₹) – flat fee" className="width-100" />
 );
+
 const OnlineCatalogContent: React.FC<ContentComponentProps> = () => (
-    <TextArea rows={3} placeholder="Product SEO Description" />
+  <TextArea
+    rows={3}
+    placeholder="Product SEO description, keywords and highlights…"
+  />
 );
-const OnlinePaymentContent: React.FC<ContentComponentProps> = () => <Input placeholder="Gateway API Key" />;
+
+const OnlinePaymentContent: React.FC<ContentComponentProps> = () => (
+  <Input placeholder="Payment gateway API key" />
+);
+
 const OnlineDeliveryContent: React.FC<ContentComponentProps> = () => (
-    <Select placeholder="Select Courier Service" className="width-100">
-        <Option value="a">Local Express</Option>
-    </Select>
+  <Select placeholder="Select courier / delivery partner" className="width-100">
+    <Option value="local">Local Express</Option>
+    <Option value="national">National Courier</Option>
+  </Select>
 );
+
 const OnlineOffersContent: React.FC<ContentComponentProps> = () => (
-    <Input placeholder="Coupon Code (e.g., SUMMER20)" />
+  <Input placeholder="Coupon Code (e.g., FESTIVE10)" />
 );
 
 const WholesaleBulkContent: React.FC<ContentComponentProps> = () => (
-    <Form layout="vertical" className="form-content-spacing" onFinish={() => message.success('Bulk order submitted!')}>
-        <Form.Item label="Product Name/SKU">
-            <Input placeholder="Enter bulk product name" />
-        </Form.Item>
-        <Form.Item label="Order Quantity">
-            <Input type="number" placeholder="Order Quantity (e.g., 500+)" />
-        </Form.Item>
-        <Button type="primary" htmlType="submit">
-            Submit Bulk Order
-        </Button>
-    </Form>
-);
-const WholesaleStockContent: React.FC<ContentComponentProps> = () => (
-    <Form
-        layout="vertical"
-        className="form-content-spacing"
-        onFinish={() => message.success('Supplier status checked.')}
-    >
-        <Form.Item label="Supplier Name">
-            <Input placeholder="Supplier Contact Name" />
-        </Form.Item>
-        <Button type="primary" htmlType="submit">
-            Check Supplier Status
-        </Button>
-    </Form>
+  <Form
+    layout="vertical"
+    className="form-content-spacing"
+    onFinish={() => message.success('Bulk order captured!')}
+  >
+    <Form.Item label="Item / SKU">
+      <Input placeholder="Bulk item SKU or description" />
+    </Form.Item>
+    <Form.Item label="Order Quantity">
+      <Input type="number" placeholder="e.g. 500" />
+    </Form.Item>
+    <Button type="primary" htmlType="submit">
+      Submit Bulk Order
+    </Button>
+  </Form>
 );
 
-// --- SERVICE DATA (unchanged list, still no direct price-neg/doc subservices) ---
+const WholesaleStockContent: React.FC<ContentComponentProps> = () => (
+  <Form
+    layout="vertical"
+    className="form-content-spacing"
+    onFinish={() => message.success('Supplier status checked.')}
+  >
+    <Form.Item label="Supplier Name">
+      <Input placeholder="Supplier / distributor name" />
+    </Form.Item>
+    <Button type="primary" htmlType="submit">
+      Check Supplier Status
+    </Button>
+  </Form>
+);
+
+/* ---------- services & subservices with descriptions ---------- */
+
 const SERVICES_DATA: Service[] = [
-    {
-        key: 'buySale',
-        title: 'Buy & Sale Products',
-        icon: <HomeOutlined />,
-        imagePath: BuySaleImage,
-        subservices: [
-            {
-                key: 'propListingSale',
-                title: 'Property Listing for Sale',
-                contentComponent: PropertyListingSaleContent as React.FC<any>,
-                imagePath: Modern,
-            },
-            {
-                key: 'propListingPurchase',
-                title: 'Property Listing for Purchase',
-                contentComponent: PropertyListingPurchaseContent as React.FC<any>,
-                imagePath: SkyImage,
-            },
-        ],
-    },
-    {
-        key: 'retail',
-        title: 'Old Retail Sales',
-        icon: <ShopOutlined />,
-        imagePath: RetailImage,
-        subservices: [
-            {
-                key: 'inStore',
-                title: 'In-Store Sales',
-                contentComponent: RetailInStoreContent,
-                imagePath: CustomerRecords,
-            },
-            {
-                key: 'inventory',
-                title: 'Inventory & Customer Records',
-                contentComponent: RetailInventoryContent,
-                imagePath: WholesaleImage,
-            },
-        ],
-    },
-    {
-        key: 'online',
-        title: 'Online Ordering',
-        icon: <ShoppingCartOutlined />,
-        imagePath: OnlineImage,
-        subservices: [
-            { key: 'onlineOrder', title: 'Online Ordering & Checkout', contentComponent: OnlineCheckoutContent, imagePath: a },
-            { key: 'digitalCat', title: 'Digital CatLog & Product Search', contentComponent: OnlineCatalogContent, imagePath: b },
-            { key: 'onlinePay', title: 'Online Payments (UPI, Card)', contentComponent: OnlinePaymentContent, imagePath: c },
-            { key: 'delivery', title: 'Home Delivery & Order Tracking', contentComponent: OnlineDeliveryContent, imagePath: d },
-            { key: 'offers', title: 'Online Offers & Coupons', contentComponent: OnlineOffersContent, imagePath: e },
-        ],
-    },
-    {
-        key: 'wholesale',
-        title: 'Wholesale Buy Near Distribution',
-        icon: <TruckOutlined />,
+  {
+    key: 'buySale',
+    title: 'Buy & Sale Products',
+    description: 'Manage commercial and residential property listings for sale and purchase.',
+    icon: <HomeOutlined />,
+    imagePath: BuySaleImage,
+    subservices: [
+      {
+        key: 'propListingSale',
+        title: 'Property Listing for Sale',
+        description: '',
+        contentComponent: PropertyListingSaleContent as React.FC<any>,
+        imagePath: Modern,
+      },
+      {
+        key: 'propListingPurchase',
+        title: 'Property Listing for Purchase',
+        description: '',
+        contentComponent: PropertyListingPurchaseContent as React.FC<any>,
+        imagePath: SkyImage,
+      },
+    ],
+  },
+  {
+    key: 'retail',
+    title: 'Old Retail Sales',
+    description: 'Traditional in-store billing, stock updates and customer history.',
+    icon: <ShopOutlined />,
+    imagePath: RetailImage,
+    subservices: [
+      {
+        key: 'inStore',
+        title: 'In-Store Billing',
+        description: '',
+        contentComponent: RetailInStoreContent,
+        imagePath: CustomerRecords,
+      },
+      {
+        key: 'inventory',
+        title: 'Inventory & Customer Records',
+        description: '',
+        contentComponent: RetailInventoryContent,
         imagePath: WholesaleImage,
-        subservices: [
-            {
-                key: 'bulkMgmt',
-                title: 'Price comparison and bulk order management',
-                contentComponent: WholesaleBulkContent,
-                imagePath: WholesaleImage,
-            },
-            {
-                key: 'supplierCoord',
-                title: 'Supplier coordination and stock tracking',
-                contentComponent: WholesaleStockContent,
-                imagePath: f,
-            },
-        ],
-    },
+      },
+    ],
+  },
+  {
+    key: 'online',
+    title: 'Online Ordering',
+    description: 'Set up digital catalogue, payments, delivery and offers.',
+    icon: <ShoppingCartOutlined />,
+    imagePath: OnlineImage,
+    subservices: [
+      {
+        key: 'onlineOrder',
+        title: 'Online Ordering & Checkout',
+        description: '',
+        contentComponent: OnlineCheckoutContent,
+        imagePath: a,
+      },
+      {
+        key: 'digitalCat',
+        title: 'Digital Catalog & Product Search',
+        description: '',
+        contentComponent: OnlineCatalogContent,
+        imagePath: b,
+      },
+      {
+        key: 'onlinePay',
+        title: 'Online Payments (UPI / Card)',
+        description: '',
+        contentComponent: OnlinePaymentContent,
+        imagePath: c,
+      },
+      {
+        key: 'delivery',
+        title: 'Home Delivery & Tracking',
+        description: '',
+        contentComponent: OnlineDeliveryContent,
+        imagePath: d,
+      },
+      {
+        key: 'offers',
+        title: 'Online Offers & Coupons',
+        description: '',
+        contentComponent: OnlineOffersContent,
+        imagePath: e,
+      },
+    ],
+  },
+  {
+    key: 'wholesale',
+    title: 'Wholesale Buy Near Distribution',
+    description: 'Handle bulk orders, price comparison and supplier coordination',
+    icon: <TruckOutlined />,
+    imagePath: WholesaleImage,
+    subservices: [
+      {
+        key: 'bulkMgmt',
+        title: 'Price Comparison & Bulk Orders',
+        description: '',
+        contentComponent: WholesaleBulkContent,
+        imagePath: WholesaleImage,
+      },
+      {
+        key: 'supplierCoord',
+        title: 'Supplier Coordination & Stock Tracking',
+        description: '',
+        contentComponent: WholesaleStockContent,
+        imagePath: f,
+      },
+    ],
+  },
 ];
 
-// --- MAIN COMPONENT ---
+/* ---------- main component & modals ---------- */
+
 export function BuySaleProducts() {
-    const [subserviceModalVisible, setSubserviceModalVisible] = useState(false);
-    const [detailModalVisible, setDetailModalVisible] = useState(false);
-    const [propertyDetailModalVisible, setPropertyDetailModalVisible] = useState(false);
-    const [docVerifyModalVisible, setDocVerifyModalVisible] = useState(false);
+  const [subserviceModalVisible, setSubserviceModalVisible] = useState(false);
+  const [detailModalVisible, setDetailModalVisible] = useState(false);
+  const [propertyDetailModalVisible, setPropertyDetailModalVisible] = useState(false);
+  const [docVerifyModalVisible, setDocVerifyModalVisible] = useState(false);
 
-    const [currentService, setCurrentService] = useState<Service | null>(null);
-    const [currentSubservice, setCurrentSubservice] = useState<Subservice | null>(null);
-    const [selectedProperty, setSelectedProperty] = useState<PropertyListing | null>(null);
+  const [currentService, setCurrentService] = useState<Service | null>(null);
+  const [currentSubservice, setCurrentSubservice] = useState<Subservice | null>(null);
+  const [selectedProperty, setSelectedProperty] = useState<PropertyListing | null>(null);
 
-    const handleServiceClick = useCallback((service: Service) => {
-        setCurrentService(service);
-        setSubserviceModalVisible(true);
-        setDetailModalVisible(false);
-        setPropertyDetailModalVisible(false);
-    }, []);
+  const handleServiceClick = useCallback((service: Service) => {
+    setCurrentService(service);
+    setSubserviceModalVisible(true);
+    setDetailModalVisible(false);
+    setPropertyDetailModalVisible(false);
+  }, []);
 
-    const handleSubserviceClick = useCallback((subservice: Subservice) => {
-        setCurrentSubservice(subservice);
-        setSubserviceModalVisible(false);
-        setDetailModalVisible(true);
-    }, []);
+  const handleSubserviceClick = useCallback((subservice: Subservice) => {
+    setCurrentSubservice(subservice);
+    setSubserviceModalVisible(false);
+    setDetailModalVisible(true);
+  }, []);
 
-    const handleViewDetails = useCallback((property: PropertyListing) => {
-        setSelectedProperty(property);
-        setSubserviceModalVisible(false);
-        setDetailModalVisible(false);
-        setPropertyDetailModalVisible(true);
-    }, []);
+  const handleViewDetails = useCallback((property: PropertyListing) => {
+    setSelectedProperty(property);
+    setSubserviceModalVisible(false);
+    setDetailModalVisible(false);
+    setPropertyDetailModalVisible(true);
+  }, []);
 
-    const handleBackToMain = useCallback(() => {
-        setSubserviceModalVisible(false);
-        setCurrentService(null);
-    }, []);
+  const handleBackToMain = useCallback(() => {
+    setSubserviceModalVisible(false);
+    setCurrentService(null);
+  }, []);
 
-    const handleBackToSubservices = useCallback(() => {
-        setDetailModalVisible(false);
-        setCurrentSubservice(null);
-        if (currentService) {
-            setSubserviceModalVisible(true);
-        } else {
-            handleBackToMain();
-        }
-    }, [currentService, handleBackToMain]);
+  const handleBackToSubservices = useCallback(() => {
+    setDetailModalVisible(false);
+    setCurrentSubservice(null);
+    if (currentService) setSubserviceModalVisible(true);
+    else handleBackToMain();
+  }, [currentService, handleBackToMain]);
 
-    const handleClosePropertyDetail = useCallback(() => {
-        setPropertyDetailModalVisible(false);
-        setSelectedProperty(null);
-        setDetailModalVisible(true);
-        if (currentService && currentService.key === 'buySale') {
-            setCurrentSubservice(
-                currentService.subservices.find(
-                    (s) => s.key === 'propListingSale' || s.key === 'propListingPurchase',
-                ) || null,
-            );
-        }
-    }, [currentService]);
+  const handleClosePropertyDetail = useCallback(() => {
+    setPropertyDetailModalVisible(false);
+    setSelectedProperty(null);
+    setDetailModalVisible(true);
+  }, []);
 
-    const handleOpenDocVerify = useCallback(() => {
-        setDocVerifyModalVisible(true);
-    }, []);
+  const handleOpenDocVerify = useCallback(() => setDocVerifyModalVisible(true), []);
+  const handleCloseDocVerify = useCallback(() => setDocVerifyModalVisible(false), []);
 
-    const handleCloseDocVerify = useCallback(() => {
-        setDocVerifyModalVisible(false);
-    }, []);
+  const DetailContentComponent = useMemo(
+    () => currentSubservice?.contentComponent,
+    [currentSubservice],
+  );
 
-    const DetailContentComponent = useMemo(() => currentSubservice?.contentComponent, [currentSubservice]);
-
-    const renderMainServices = () => (
-        <Row gutter={[24, 24]}>
-            {SERVICES_DATA.map((service) => (
-                <Col xs={24} sm={12} lg={6} key={service.key}>
-                    <Card
-                        hoverable
-                        className="service-card-main"
-                        cover={
-                            <div
-                                className="service-card-image"
-                                style={{ backgroundImage: `url(${service.imagePath})` }}
-                            />
-                        }
-                        onClick={() => handleServiceClick(service)}
-                    >
-                        <Card.Meta
-                            title={
-                                <Space size="small">
-                                    {service.icon}{' '}
-                                    <span className="service-card-title">{service.title}</span>
-                                </Space>
-                            }
-                        />
-                    </Card>
-                </Col>
-            ))}
-        </Row>
-    );
-
-    const SubserviceModalTitle = (
-        <Space className="navigation-title-bar card-title-align modal-header-space">
-            <Button
-                onClick={handleBackToMain}
-                type="text"
-                className="minimal-back-button back-button-style"
-                icon={<ArrowLeftOutlined />}
+  const renderMainServices = () => (
+    <Row gutter={[24, 24]}>
+      {SERVICES_DATA.map((service) => (
+        <Col xs={24} sm={12} lg={6} key={service.key}>
+          <Card
+            hoverable
+            className="service-card-main"
+            cover={
+              <div
+                className="service-card-image"
+                style={{ backgroundImage: `url(${service.imagePath})` }}
+              />
+            }
+            onClick={() => handleServiceClick(service)}
+          >
+            <Card.Meta
+              title={
+                <Space size="small">
+                  {service.icon}
+                  <span className="service-card-title">{service.title}</span>
+                </Space>
+              }
+              description={
+                <Text type="secondary" className="service-card-description">
+                  {service.description}
+                </Text>
+              }
             />
-            <Title level={3} className="modal-title-no-margin">
-                {currentService?.title + ' Subservices'}
-            </Title>
-        </Space>
-    );
+          </Card>
+        </Col>
+      ))}
+    </Row>
+  );
 
-    const DetailModalTitle = (
-        <Space className="navigation-title-bar card-title-align modal-header-space">
-            <Button
-                onClick={handleBackToSubservices}
-                type="text"
-                className="minimal-back-button back-button-style"
-                icon={<ArrowLeftOutlined />}
-            />
-            <Title level={3} className="modal-title-no-margin">
-                {currentSubservice?.title}
-            </Title>
-        </Space>
-    );
+  const SubserviceModalTitle = (
+    <Space className="navigation-title-bar card-title-align modal-header-space">
+      <Button
+        onClick={handleBackToMain}
+        type="text"
+        className="minimal-back-button back-button-style"
+        icon={<ArrowLeftOutlined />}
+      />
+      <Title level={3} className="modal-title-no-margin">
+        {currentService?.title} 
+      </Title>
+    </Space>
+  );
 
-    const PropertyDetailModalTitle = (
-        <Space className="navigation-title-bar card-title-align modal-header-space">
-            <Button
-                onClick={handleClosePropertyDetail}
-                type="text"
-                className="minimal-back-button back-button-style"
-                icon={<ArrowLeftOutlined />}
-            />
-            <Title level={3} className="modal-title-no-margin">
-                {selectedProperty?.title || 'Property Details'}
-            </Title>
-        </Space>
-    );
+  const DetailModalTitle = (
+    <Space className="navigation-title-bar card-title-align modal-header-space">
+      <Button
+        onClick={handleBackToSubservices}
+        type="text"
+        className="minimal-back-button back-button-style"
+        icon={<ArrowLeftOutlined />}
+      />
+      <Title level={3} className="modal-title-no-margin">
+        {currentSubservice?.title}
+      </Title>
+    </Space>
+  );
 
-    const renderSubservicesModalContent = () => (
-        <div className="subservice-list-container subservice-list-padding">
-            <Row gutter={[24, 24]} justify="center">
-                {currentService?.subservices.map((subservice) => (
-                    <Col xs={24} sm={12} md={12} key={subservice.key}>
-                        <Card
-                            hoverable
-                            className="subservice-card"
-                            onClick={() => handleSubserviceClick(subservice)}
-                            cover={
-                                <div
-                                    className="service-card-image"
-                                    style={{ backgroundImage: `url(${subservice.imagePath})` }}
-                                />
-                            }
-                        >
-                            <Card.Meta title={subservice.title} />
-                            <ArrowRightOutlined className="subservice-arrow" />
-                        </Card>
-                    </Col>
-                ))}
-            </Row>
+  const PropertyDetailModalTitle = (
+    <Space className="navigation-title-bar card-title-align modal-header-space">
+      <Button
+        onClick={handleClosePropertyDetail}
+        type="text"
+        className="minimal-back-button back-button-style"
+        icon={<ArrowLeftOutlined />}
+      />
+      <Title level={3} className="modal-title-no-margin">
+        {selectedProperty?.title || 'Property Details'}
+      </Title>
+    </Space>
+  );
+
+  const renderSubservicesModalContent = () => (
+    <div className="subservice-list-container subservice-list-padding">
+      <Row gutter={[24, 24]} justify="center">
+        {currentService?.subservices.map((subservice) => (
+          <Col xs={24} sm={12} md={12} key={subservice.key}>
+            <Card
+              hoverable
+              className="subservice-card"
+              onClick={() => handleSubserviceClick(subservice)}
+              cover={
+                <div
+                  className="service-card-image"
+                  style={{ backgroundImage: `url(${subservice.imagePath})` }}
+                />
+              }
+            >
+              <Card.Meta
+                title={subservice.title}
+                description={
+                  <Text type="secondary" className="subservice-card-description">
+                    {subservice.description}
+                  </Text>
+                }
+              />
+              <ArrowRightOutlined className="subservice-arrow" />
+            </Card>
+          </Col>
+        ))}
+      </Row>
+    </div>
+  );
+
+  return (
+    <div className="app-container">
+      <div className="header-banner">
+        <Title level={1} className="banner-title">
+          <HomeOutlined /> Buy/Sale Products Management
+        </Title>
+        <Text className="banner-subtitle">
+          Available Services 
+        </Text>
+      </div>
+
+      <div className="module-section">
+        <Title level={2} className="section-title">
+          Select a Service
+        </Title>
+        <div className="section-title-underline" />
+        {renderMainServices()}
+      </div>
+
+      {/* Subservice modal */}
+     <Modal
+  title={SubserviceModalTitle}
+  open={subserviceModalVisible}
+  onCancel={handleBackToMain}
+  footer={null}
+  width={1000}
+  centered
+  className="subservice-modal"
+>
+  {renderSubservicesModalContent()}
+</Modal>
+
+
+      {/* Detail modal (listing / forms) */}
+      <Modal
+        title={DetailModalTitle}
+        open={detailModalVisible}
+        onCancel={handleBackToSubservices}
+        footer={null}
+        width={1000}
+        centered
+        destroyOnClose
+        className="app-detail-modal"
+      >
+        {DetailContentComponent && (
+          <div className="detail-view-container">
+            {currentSubservice?.key === 'propListingSale' ||
+            currentSubservice?.key === 'propListingPurchase' ? (
+              <DetailContentComponent
+                defaultListingType={
+                  currentSubservice.key === 'propListingSale' ? 'sale' : 'purchase'
+                }
+                onViewDetails={handleViewDetails}
+              />
+            ) : (
+              <DetailContentComponent />
+            )}
+          </div>
+        )}
+      </Modal>
+
+      {/* Property detail + negotiation */}
+      <Modal
+        title={PropertyDetailModalTitle}
+        open={propertyDetailModalVisible}
+        onCancel={handleClosePropertyDetail}
+        footer={null}
+        width={1200}
+        centered
+        destroyOnClose
+        className="app-detail-modal"
+      >
+        {selectedProperty && (
+          <PropertyDetailView
+            property={selectedProperty}
+            onOpenDocVerify={handleOpenDocVerify}
+          />
+        )}
+      </Modal>
+
+      {/* document verification */}
+      <Modal
+        title="Document Verification"
+        open={docVerifyModalVisible}
+        onCancel={handleCloseDocVerify}
+        footer={null}
+        width={600}
+        centered
+        destroyOnClose
+      >
+        <div className="detail-view-container">
+          <DocumentationContent />
         </div>
-    );
-
-    return (
-        <div className="app-container">
-            <div className="header-banner">
-                <Title level={1} className="banner-title">
-                    <HomeOutlined /> Buy/Sale Products Management
-                </Title>
-            </div>
-
-            <div className="module-section">{renderMainServices()}</div>
-
-            <Modal
-                title={SubserviceModalTitle}
-                open={subserviceModalVisible}
-                onCancel={handleBackToMain}
-                footer={null}
-                width={1000}
-                centered
-            >
-                {renderSubservicesModalContent()}
-            </Modal>
-
-            <Modal
-                title={DetailModalTitle}
-                open={detailModalVisible}
-                onCancel={handleBackToSubservices}
-                footer={null}
-                width={1000}
-                centered
-                destroyOnClose={true}
-                className="app-detail-modal"
-            >
-                {DetailContentComponent && (
-                    <div className="detail-view-container">
-                        {currentSubservice?.key === 'propListingSale' ||
-                        currentSubservice?.key === 'propListingPurchase' ? (
-                            <DetailContentComponent
-                                defaultListingType={
-                                    currentSubservice.key === 'propListingSale' ? 'sale' : 'purchase'
-                                }
-                                onViewDetails={handleViewDetails}
-                            />
-                        ) : (
-                            <DetailContentComponent />
-                        )}
-                    </div>
-                )}
-            </Modal>
-
-            <Modal
-                title={PropertyDetailModalTitle}
-                open={propertyDetailModalVisible}
-                onCancel={handleClosePropertyDetail}
-                footer={null}
-                width={1200}
-                centered
-                destroyOnClose={true}
-                className="app-detail-modal"
-            >
-                {selectedProperty && (
-                    <PropertyDetailView property={selectedProperty} onOpenDocVerify={handleOpenDocVerify} />
-                )}
-            </Modal>
-
-            <Modal
-                title="Document Verification Form"
-                open={docVerifyModalVisible}
-                onCancel={handleCloseDocVerify}
-                footer={null}
-                width={600}
-                centered
-                destroyOnClose={true}
-            >
-                <div className="detail-view-container">
-                    <DocumentationContent />
-                </div>
-            </Modal>
-        </div>
-    );
+      </Modal>
+    </div>
+  );
 }
 
 export default BuySaleProducts;
