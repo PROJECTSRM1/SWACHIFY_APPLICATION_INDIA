@@ -35,7 +35,7 @@ import card2 from "../../assets/landingimages/commercial plot.jpg";
 import card3 from "../../assets/landingimages/land.jpg";
 import card4 from "../../assets/landingimages/plot.jpg";
 
-const { Header, Content, Footer } = Layout;
+const { Content, Footer } = Layout;
 const { Title, Paragraph } = Typography;
 const { Option } = Select;
 const { TabPane } = Tabs;
@@ -162,6 +162,7 @@ const CommercialPlots: React.FC = () => {
     message.success("Logged in (demo)");
     setAuthModalVisible(false);
     loginForm.resetFields();
+    console.log(navItems);
 
     // navigate to dashboard
     setTimeout(() => navigate("/app/dashboard"), 150);
