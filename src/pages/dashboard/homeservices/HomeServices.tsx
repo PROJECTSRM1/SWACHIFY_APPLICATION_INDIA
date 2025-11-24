@@ -40,9 +40,6 @@ export default function HomeServices() {
     { title: "Home Security Services", description: "CCTV installation", price: "$250", image: homesecurityservice },
   ];
 
-
-
-
   const displayedCards = showAll ? services : services.slice(0, 4);
   
   // OPEN POPUP 1
@@ -91,21 +88,11 @@ const handleFormSubmit = (formData: any) => {
 };
 
 
-
-
-
 // CANCEL POPUP 2
 const handleFormCancel = () => {
   setFormPopupOpen(false);
   setDetailsPopupOpen(true);
 };
-
-
-
-
-
-
-
 
 
 
@@ -123,9 +110,6 @@ const handleFormCancel = () => {
       <p className="banner-subtitle">{services.length} services available</p>
     </div>
   </div>
-
-
-
 
         <Button
           className="header-viewall-btn"
@@ -180,12 +164,7 @@ const handleFormCancel = () => {
     issues={selectedSubService.issues}
     price={selectedSubService.price}
   />
-)}
-
-
-
-     
+)}     
     </div>
   );
 }
-

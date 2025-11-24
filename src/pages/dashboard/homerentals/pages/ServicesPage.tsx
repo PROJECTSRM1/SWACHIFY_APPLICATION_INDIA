@@ -71,7 +71,7 @@ const ServicesPage: React.FC = () => {
         </div>
       </section>
 
-      <section className="services-grid">
+      <section className="services-grid1">
         <Row gutter={[24, 24]}>
           <Col xs={24} sm={12} lg={12}>
             <ServiceCard

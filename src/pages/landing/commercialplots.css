@@ -397,3 +397,78 @@
 .ant-modal-body .ant-form-item {
   margin-bottom: 12px;
 }
+
+/* ---------------- EXISTING YOUR ENTIRE CSS ABOVE THIS LINE ---------------- */
+
+/* ========================================================================
+   HSHeader NAVBAR CSS (Same as Cleaning Page Navbar)
+   ======================================================================== */
+
+.hs-navbar {
+  width: 100%;
+  background: #ffffff;
+  padding: 14px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+.hs-logo-text {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0b3b66;
+  letter-spacing: 0.4px;
+}
+
+.hs-navbar-menu {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
+.hs-navbar-menu a {
+  color: #0b3b66;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
+.hs-navbar-menu a.active {
+  color: #7b2cff;
+  font-weight: 700;
+}
+
+.hs-contact-btn {
+  background: #0b1220;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 700;
+  border: none;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+}
+
+/* ---------------- MOBILE ---------------- */
+@media (max-width: 768px) {
+  .hs-navbar {
+    flex-direction: column;
+    gap: 10px;
+    padding: 14px;
+  }
+
+  .hs-navbar-menu {
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+  }
+
+  .hs-contact-btn {
+    width: 100%;
+    max-width: 360px;
+  }
+}
+
