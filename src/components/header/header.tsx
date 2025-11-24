@@ -22,6 +22,31 @@ const HeaderBar: React.FC = () => {
     navigate("/cart"); // <-- cart navigation added
   };
 
+  const handleNavigate = (key: String)=>{
+    if(key=="cleaning"){
+      navigate("/app/dashboard/cleaning")
+
+    }
+    if(key=="packers"){
+      navigate("/app/dashboard/packers")
+
+    }
+     if(key=="homeservices"){
+      navigate("/app/dashboard/homeservices")
+    }
+      if(key=="rentals"){
+      navigate("/app/dashboard/rentals")
+    }
+      if(key=="commercial"){
+      navigate("/app/dashboard/commercials")
+    }
+      if(key=="construction"){
+     navigate("/app/dashboard/constructions") 
+    }
+    
+  }
+
+
   const centerMenu = [
     { key: "cleaning", label: <span className="menu-item">Cleaning</span> },
     {
@@ -51,8 +76,12 @@ const HeaderBar: React.FC = () => {
         <span className="logo-text">HomeServices</span>
       </div>
 
+      
+
       <div className="header-center">
-        <Menu mode="horizontal" items={centerMenu} className="header-menu" />
+        <Menu mode="horizontal" items={centerMenu} className="header-menu"
+          onClick={(info) => handleNavigate(info.key)}
+        />
       </div>
 
       <div className="header-right">
