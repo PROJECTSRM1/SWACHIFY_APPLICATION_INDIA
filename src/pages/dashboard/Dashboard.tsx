@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import HeaderBar from "../../components/header/header";
 import "./Dashboard.css";
 import ConstructionServices from "../building/building";
@@ -6,23 +6,51 @@ import Packersandmovers from "./PackersAndMovers/Packersandmovers";
 import CleaningService from "./cleaningservice/CleaningService";
 import BuySaleProducts from "./buy&sale/BuySaleProducts";
 import HomeServices from "./homeservices/HomeServices";
-// import { Route, Routes } from "react-router-dom";
 import ServicesPage from "./homerentals/pages/ServicesPage";
-// import PropertyTypePage from "./homerentals/pages/PropertyTypePage";
-// import ApartmentListingsPage from "./homerentals/pages/ApartmentListingsPage";
-// import PropertyDetailsPage from "./homerentals/pages/PropertyDetailsPage";
-// import CommercialPropertyTypePage from "./homerentals/pages/CommercialPropertyTypePage";
-// import CommercialListingsPage from "./homerentals/pages/CommercialListingsPage";
-// import FooterBar from "./homerentals/components/FooterBar";
-// import HeaderBarforrental from "./homerentals/components/HeaderBar";
 
 const Dashboard: React.FC = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+
+  // List of services that will be displayed
+  const servicesList = [
+    { name: "Cleaning Service", component: <CleaningService /> },
+    { name: "Packers and Movers / Transport", component: <Packersandmovers /> },
+    { name: "Home Services", component: <HomeServices /> },
+    { name: "Home & Apartments Rental", component: <ServicesPage /> },
+    { name: "Construction Services", component: <ConstructionServices /> },
+    { name: "Buy & Sale Products", component: <BuySaleProducts /> },
+  ];
+
+  // Filter based on search input
+  // Normalize strings for strong matching
+const normalize = (str: string) =>
+  str
+    .toLowerCase()
+    .replace(/\s+/g, "")        // remove spaces
+    .replace(/[^a-z0-9]/g, ""); // remove symbols
+
+// Filter based on search input (strong + fuzzy)
+const filteredServices = servicesList.filter((service) => {
+  const name = normalize(service.name);
+  const query = normalize(searchQuery);
+
+  if (!query) return true;
+
+  // Fuzzy match
+  return (
+    name.includes(query) ||
+    query.includes(name) ||
+    name.startsWith(query) ||
+    name.endsWith(query)
+  );
+});
+
+
   return (
     <div className="dashboard-container">
       <HeaderBar />
 
       <div className="services-section">
-        
         <h1 className="services-title">Our Services</h1>
 
         <div className="services-search">
@@ -30,23 +58,22 @@ const Dashboard: React.FC = () => {
             type="text"
             placeholder="Search services..."
             className="search-input"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
       </div>
-      <CleaningService/>
-      <Packersandmovers></Packersandmovers>
-    
-      <HomeServices/>
 
-    <ServicesPage/>
-   
-      <ConstructionServices/>
-      <BuySaleProducts/>
-      
-      
-
-      {/* Later: You can add responsive service cards here */}
-
+      {/* Render only filtered services */}
+      {filteredServices.length > 0 ? (
+        filteredServices.map((service, index) => (
+          <div key={index}>{service.component}</div>
+        ))
+      ) : (
+        <p style={{ textAlign: "center", marginTop: "20px" }}>
+          No services found.
+        </p>
+      )}
     </div>
   );
 };
