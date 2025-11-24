@@ -73,7 +73,7 @@
   width: 140px;
   height: 3px;
   border-radius: 999px;
-  background-color: var(--primary-red);
+  /* background-color: var(--primary-red); */
   margin-bottom: 18px;
 }
 
@@ -147,7 +147,7 @@
 /* make body center content and give enough bottom padding */
 /* final padding for subservice card body */
 .subservice-card .ant-card-body {
-  padding: 10px 16px 18px !important;
+  padding: 12px 16px 18px !important;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -159,7 +159,7 @@
 .subservice-card .ant-card-meta-title,
 .subservice-card .ant-card-meta-description {
   width: 100%;
-  text-align: center;
+  text-align: left;
 }
 
 /* allow long subservice names to wrap nicely */
@@ -182,7 +182,7 @@
 }
 
 /* move arrow to bottom-right, aligned with text */
-.subservice-arrow {
+/* .subservice-arrow {
   position: absolute;
   right: 16px;
   bottom: 14px;
@@ -190,7 +190,7 @@
   transform: none;
   font-size: 16px;
   color: var(--primary-red);
-}
+} */
 
 
 /* ---------- generic text utilities ---------- */
@@ -376,9 +376,9 @@
   }
 
   .header-banner {
-    border-radius: 0;
-    margin-left: -12px;
-    margin-right: -12px;
+    border-radius: 22;
+    margin-left: -2px;
+    margin-right: -2px;
     padding: 20px 16px;
   }
 
