@@ -23,7 +23,7 @@ export const NonSecureRoutes = () => {
     const userData: any = getUserDetails('user');
     const currentPath = window.location.pathname;
 
-    if (!userData && !currentPath.startsWith('/app')) {
+    if (userData && !currentPath.startsWith('/app')) {
       navigate('/app/dashboard');
     } else if (userData && (currentPath === '/' || currentPath === '')) {
       navigate('/landing');
