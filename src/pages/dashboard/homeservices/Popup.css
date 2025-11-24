@@ -1,0 +1,195 @@
+/* Scope everything inside .service-details-popup */
+.service-details-popup .ant-modal .ant-modal-close {
+  top: 8px !important;
+  right: 8px !important;
+}
+
+.service-details-popup .ant-modal .ant-modal-header {
+  padding: 0 !important;
+  margin: 0 !important;
+  border-bottom: none;
+  height: 0;
+}
+
+.service-details-popup .ant-modal .ant-modal-body {
+  padding-top: 5px !important;
+}
+
+.service-details-popup .popup-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.service-details-popup .popup-subtitle {
+  font-size: 15px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+/* ⭐ Added spacing below section heading */
+.service-details-popup .popup-section-title {
+  margin-top: 5px;
+  margin-bottom: 18px;
+}
+
+/* ⭐ Added spacing above card grid */
+.service-details-popup .popup-card-grid {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 20px;
+  width: 100%;
+}
+
+.service-details-popup .popup-card {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #ffffff;
+  box-shadow: 0px 4px 18px rgba(0, 0, 0, 0.12);
+  transition: transform 0.25s ease;
+  padding-bottom: 10px;
+  cursor: pointer;
+}
+
+.service-details-popup .popup-card:hover {
+  transform: translateY(-5px);
+}
+
+.service-details-popup .popup-card-image {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-bottom: 1px solid #eee;
+}
+
+.service-details-popup .popup-overlay-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(255, 255, 255, 0.92);
+  border: none;
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.service-details-popup .popup-card-content {
+  padding: 14px;
+}
+
+.service-details-popup .popup-card-content h4 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #222;
+}
+
+.service-details-popup .popup-card-content p {
+  color: #666;
+  font-size: 13px;
+  margin-top: 6px;
+  line-height: 1.35;
+}
+
+.service-details-popup .popup-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.service-details-popup .popup-price {
+  font-size: 15px;
+  font-weight: 700;
+  color: #2979ff;
+}
+
+.service-details-popup .popup-view-btn {
+  background: #10b329;
+  color: white;
+  border: none;
+  padding: 7px 16px;
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.service-details-popup .popup-view-btn:hover {
+  background: #089823;
+}
+
+/* Why Choose section */
+.service-details-popup .why-choose-box {
+  margin-top: 28px;
+  padding: 20px;
+  background: #f3f1ff;
+  border-radius: 14px;
+}
+
+.service-details-popup .why-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.service-details-popup .why-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.service-details-popup .why-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 30%;
+  min-width: 180px;
+}
+
+.service-details-popup .why-icon {
+  background: #b78af1;
+  color: white;
+  padding: 10px;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .service-details-popup .popup-card-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 18px;
+  }
+
+  .service-details-popup .why-item {
+    width: 45%;
+  }
+}
+
+@media (max-width: 600px) {
+  .service-details-popup .popup-card-grid {
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  }
+
+  .service-details-popup .popup-card-image {
+    height: 135px;
+  }
+
+  .service-details-popup .popup-title {
+    font-size: 20px;
+  }
+
+  .service-details-popup .why-grid {
+    flex-direction: column;
+  }
+
+  .service-details-popup .why-item {
+    width: 100%;
+  }
+}
