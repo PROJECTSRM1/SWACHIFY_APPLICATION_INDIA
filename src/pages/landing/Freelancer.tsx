@@ -1,27 +1,69 @@
 //import React from "react";
 import "./Freelancer.css";
+import { useNavigate } from "react-router-dom";
+import freelancerHeroImg from '../../assets/landingimages/freelancer.png';
+
+
 
 const Freelancer = () => {
+
+    const navigate = useNavigate();
     return (
         <div className="dashboard-container">
 
             {/* HEADER */}
-            <header className="header">
+            <header className="freelancer-header">
                 <div className="logo">
                     <h2>Swachify Freelance</h2>
                 </div>
 
                 <nav>
-                    <button className="btn-login">Login</button>
+                    <button className="btn-login" onClick={() => navigate("/freelancerlogin")}>
+                        Login
+                    </button>
                 </nav>
             </header>
+            <div className="back-btn-container">
+                <button className="back-btn" onClick={() => navigate("/landing")}>
+                    &larr; Back
+                </button>
+            </div>
+
 
             {/* HERO */}
-            <section className="find-workers">
-                <h1>Find Trusted Workers for Your Tasks — Anytime</h1>
+            {/* <section
+                className="find-workers"
+                style={{
+                    backgroundImage: `url(${freelancerHeroImg})`,
+                    backgroundSize: 'contain',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundPosition: 'right center',
+                }}
+            >
+                <h1>Find the Right Tasks That Fit Your Skills</h1>
+                <p className="hero-sub">Book services and let verified workers accept nearby requests.</p>
+                <button className="view-requests">View Live Requests</button>
+            </section> */}
+
+            <section
+                className="find-workers"
+                style={{
+                    backgroundImage: `url(${freelancerHeroImg})`,
+                    // backgroundSize: 'cover',      // Make image cover entire section
+                    backgroundRepeat: 'no-repeat',
+                    height:400,
+                    
+
+                    backgroundPosition: 'center', // Center the image
+                    color: '#111827',             // Ensure text color is visible
+                }}
+            >
+                <h1>Find the Right Tasks That Fit Your Skills</h1>
                 <p className="hero-sub">Book services and let verified workers accept nearby requests.</p>
                 <button className="view-requests">View Live Requests</button>
             </section>
+
+
 
             {/* LIVE REQUESTS */}
             <section className="live-requests">
