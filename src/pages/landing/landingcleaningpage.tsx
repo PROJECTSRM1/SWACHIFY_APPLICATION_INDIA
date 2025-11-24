@@ -1,6 +1,7 @@
+// src/pages/landing/LandingCleaningPage.tsx
 import React, { useState } from "react";
 // add this
-import { Phone} from "lucide-react";
+import { Phone } from "lucide-react";
 // import { Menu } from 'antd'    
 
 // you can keep the AntD PhoneOutlined import if you still use it elsewhere,
@@ -33,14 +34,12 @@ import {
   EnvironmentOutlined,
 } from "@ant-design/icons";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./landingcleaningpage.css";
 
 // TEMP PLACEHOLDER IMAGES (no errors if files not added yet)
 // When you add images, replace these with proper imports:
 // e.g. import heroImg from "../../assets/cleaning/hero.jpg";
-// imports at top of file (after React / antd / icons)
-// import heroImg from "../../assets/landingimages/landingcleaninghero.jpg";
 import s1 from "../../assets/landingimages/landinghomecleaning.jpg";
 import s2 from "../../assets/landingimages/landingofficecleaning.jpg";
 import s3 from "../../assets/landingimages/moveinoutcleaning.jpg";
@@ -89,7 +88,7 @@ export const HSHeader: React.FC<HSHeaderProps> = ({
     { key: "home_services", label: <Link to="/home_service">Home Services</Link> },
     { key: "rentals", label: <Link to="/rentals">Rentals</Link> },
     { key: "commercial", label: <Link to="/commercial-plots">Buy&Sale Properties</Link> },
-    { key: "materials", label: <Link to="/raw-material">Construction Materials</Link> },
+    { key: "materials", label: <Link to="/ConstructionMaterials">Construction Materials</Link> },
   ];
 
   // IMPORTANT: ensure if selectedKey is empty we pass an empty array so AntD highlights nothing.
@@ -186,6 +185,8 @@ const LandingCleaningPage: React.FC = () => {
   const [loginForm] = Form.useForm();
   const [registerForm] = Form.useForm();
 
+  const navigate = useNavigate();
+
   const onFinish = (values: any) => {
     console.log("Booking request:", values);
     // TODO: send booking request to API
@@ -195,14 +196,17 @@ const LandingCleaningPage: React.FC = () => {
   const onLogin = (values: any) => {
     console.log("Login values:", values);
     // perform login action or call API
-    // for now just close modal
+    // close modal first
     setAuthVisible(false);
+    // allow modal close animation to finish, then navigate
+    setTimeout(() => navigate("/app/dashboard"), 140);
   };
 
   const onRegister = (values: any) => {
     console.log("Register values:", values);
     // perform register action then optionally close modal or keep open
     setAuthVisible(false);
+    setTimeout(() => navigate("/app/dashboard"), 140);
   };
 
   // Renders the Auth modal (Login + Register)

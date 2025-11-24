@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Card, Row, Col, Button } from "antd";
+import { Card, Button } from "antd";
 import "./HomeServices.css";
 import { popupData } from "./popupData"; // Correct import
 import type { PopupCategory } from "./popupData"; // Correct import of type
