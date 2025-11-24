@@ -321,7 +321,10 @@
   color:#5b6670;
   margin-top:6px;
 }
-
+.hero-overlay h1 {
+    font-size: 1.9rem;
+    margin: 0 0 8px 0;
+}
 /* ================= RESPONSIVE NAVBAR ================= */
 @media (max-width: 992px) {
   .nav-links { display: none; }
