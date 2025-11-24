@@ -206,7 +206,7 @@ const cardsData: CardItem[] = [
           { name: "pickupLocation", label: "Pickup Location", type: "text", required: true },
           { name: "dropLocation", label: "Drop Location", type: "text", required: true },
           { name: "rentalDays", label: "Rental Days", type: "number", required: true },
-          { name: "loadWeight", label: "Load Weight (kg)", type: "number" },
+          { name: "loadWeight", label: "Load Weight-- (kg)", type: "number" },
         ],
       },
     ],
