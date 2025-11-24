@@ -1,0 +1,144 @@
+/* PAGE BASE */
+.dashboard-container {
+  font-family: "Inter", Arial, sans-serif;
+  background-color: #f5f7fa;
+}
+
+/* ---------------- HEADER ---------------- */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 40px;
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.logo h2 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.btn-login {
+  background: none;
+  border: none;
+  color: #0066ff;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* ---------------- HERO SECTION ---------------- */
+.find-workers {
+ background: linear-gradient(to bottom, #becfe6, white);
+  padding: 40px 60px;
+  border-radius: 12px;
+  margin: 30px 40px;
+  text-align: left;
+}
+
+.find-workers h1 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.hero-sub {
+  color: #555;
+  font-size: 15px;
+  margin-bottom: 20px;
+}
+
+.view-requests {
+  background: #246bfd;
+  color: white;
+  padding: 10px 22px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* ---------------- LIVE REQUESTS ---------------- */
+.live-requests {
+  margin: 10px 40px 40px 40px;
+}
+
+.live-requests h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+/* CARD CONTAINER (2 cards first row, 1 next row) */
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+/* ---------------- CARD STYLE ---------------- */
+.request-card {
+  background: white;
+  width: 48%;
+  padding: 20px;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.request-left {
+  max-width: 70%;
+}
+
+.request-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.request-meta {
+  color: #666;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+.request-desc {
+  font-size: 14px;
+  color: #444;
+  margin-bottom: 12px;
+}
+
+.view-btn {
+  background: white;
+  border: 1px solid #d1d5db;
+  padding: 6px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+/* RIGHT SIDE */
+.request-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.time-text {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.accept-btn {
+  background: #22c55e;
+  color: white;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+}
