@@ -39,7 +39,7 @@ const { TabPane } = Tabs;
 
 /* ================= NAV ITEMS ================= */
 const navItems = [
-  { key: "home", label: <Link to="/">Home</Link> },
+  { key: "home", label: <Link to="/landing">Home</Link> },
   { key: "cleaning", label: <Link to="/cleaningservice">Cleaning</Link> },
   { key: "packers", label: <Link to="/LandingPackers">Packers & Movers</Link> },
   { key: "home_services", label: <Link to="/home_service">Home Services</Link> },
