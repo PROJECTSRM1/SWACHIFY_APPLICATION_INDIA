@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import React, { useMemo, useState } from "react";
 import {
   Row,
   Col,
@@ -22,7 +21,7 @@ import {
  import "../pages/CommercialListingsPage.css";
 
 // Import Images
-import shop1Img from "../../../../assets/HomeRental/startup1.jpg";
+import shop1Img from "../../../../assets/HomeRental/startup1.jpg"
 import shop2Img from "../../../../assets/HomeRental/startup2.jpg";
 import startup2Img from "../../../../assets/HomeRental/startup2.jpg";
 import startup4Img from "../../../../assets/HomeRental/office.jpg";
@@ -53,9 +52,17 @@ interface Property {
   image: string;
 }
 
-const CommercialListingsPage: React.FC = () => {
-  const { type } = useParams<{ type: string }>();
-  const navigate = useNavigate();
+interface CommercialListingsPageProps {
+  selectedType?: string;
+  onBack?: () => void;
+  onSelectProperty?: (propertyId: string) => void;
+}
+
+const CommercialListingsPage: React.FC<CommercialListingsPageProps> = ({
+  selectedType,
+  onBack,
+  onSelectProperty,
+}) => {
 
   const [searchQuery, setSearchQuery] = useState("");
   const [priceFilter, setPriceFilter] = useState("all");
@@ -255,25 +262,31 @@ const CommercialListingsPage: React.FC = () => {
   ];
 
   // SELECT LISTING TYPE
-  const selectedCategory =
-    type === "shops"
-      ? "Shops"
-      : type === "startups"
-      ? "Startups"
-      : type === "warehouses"
-      ? "Warehouses"
-      : type === "open-plots"
-      ? "Open Plots"
-      : "Commercial";
+  const resolvedType = selectedType || "shops";
+
+  const selectedCategory = useMemo(() => {
+    switch (resolvedType) {
+      case "shops":
+        return "Shops";
+      case "startups":
+        return "Startups";
+      case "warehouses":
+        return "Warehouses";
+      case "open-plots":
+        return "Open Plots";
+      default:
+        return "Commercial";
+    }
+  }, [resolvedType]);
 
   const listingData =
-    type === "shops"
+    resolvedType === "shops"
       ? shopListings
-      : type === "startups"
+      : resolvedType === "startups"
       ? startupListings
-      : type === "warehouses"
+      : resolvedType === "warehouses"
       ? warehouseListings
-      : type === "open-plots"
+      : resolvedType === "open-plots"
       ? openPlotsListings
       : [];
 
@@ -299,7 +312,11 @@ const CommercialListingsPage: React.FC = () => {
         <Button
           type="text"
           icon={<ArrowLeftOutlined />}
-          onClick={() => navigate("/commercial-property-types")}
+          onClick={() => {
+            if (onBack) {
+              onBack();
+            }
+          }}
           className="back-btn"
         >
           {selectedCategory}
@@ -382,7 +399,11 @@ const CommercialListingsPage: React.FC = () => {
 
                   <Button
                     type="primary"
-                    onClick={() => navigate(`/commercial/property/${property.id}`)}
+                    onClick={() => {
+                      if (onSelectProperty) {
+                        onSelectProperty(property.id);
+                      }
+                    }}
                     className="pc-view-btn"
                   >
                     View Details

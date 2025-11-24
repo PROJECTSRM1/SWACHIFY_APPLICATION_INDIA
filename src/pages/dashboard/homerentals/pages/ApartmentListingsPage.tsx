@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import React, { useMemo, useState } from 'react';
 import {
   Row,
   Col,
@@ -53,9 +52,17 @@ interface Property {
   image: string;
 }
 
-const ApartmentListingsPage: React.FC = () => {
-  const { type } = useParams<{ type: string }>();
-  const navigate = useNavigate();
+interface ApartmentListingsPageProps {
+  selectedType?: string;
+  onBack?: () => void;
+  onSelectProperty?: (propertyId: string) => void;
+}
+
+const ApartmentListingsPage: React.FC<ApartmentListingsPageProps> = ({
+  selectedType,
+  onBack,
+  onSelectProperty,
+}) => {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [priceFilter, setPriceFilter] = useState<string>('all');
 
@@ -227,18 +234,24 @@ const ApartmentListingsPage: React.FC = () => {
     },
   ];
 
-  const propertyTypeName =
-    type === 'villas'
-      ? 'Villas'
-      : type === 'independent-house'
-      ? 'Independent House'
-      : 'Apartments';
+  const resolvedType = selectedType || 'apartments';
+
+  const propertyTypeName = useMemo(() => {
+    switch (resolvedType) {
+      case 'villas':
+        return 'Villas';
+      case 'independent-house':
+        return 'Independent House';
+      default:
+        return 'Apartments';
+    }
+  }, [resolvedType]);
 
   // Choose properties based on selected type
   const allProperties: Property[] =
-    type === 'villas'
+    resolvedType === 'villas'
       ? villaProperties
-      : type === 'independent-house'
+      : resolvedType === 'independent-house'
       ? independentHouseProperties
       : apartmentProperties;
 
@@ -277,7 +290,11 @@ const ApartmentListingsPage: React.FC = () => {
           <Button
             type="text"
             icon={<ArrowLeftOutlined />}
-            onClick={() => navigate('/property-types')}
+            onClick={() => {
+              if (onBack) {
+                onBack();
+              }
+            }}
             className="back-btn"
           >
             {propertyTypeName}
@@ -375,7 +392,11 @@ const ApartmentListingsPage: React.FC = () => {
                     <div className="pc-price">${property.price}/mo</div>
                     <Button
                       type="primary"
-                      onClick={() => navigate(`/property/${property.id}`)}
+                      onClick={() => {
+                        if (onSelectProperty) {
+                          onSelectProperty(property.id);
+                        }
+                      }}
                       className="pc-view-btn"
                     >
                       View Details

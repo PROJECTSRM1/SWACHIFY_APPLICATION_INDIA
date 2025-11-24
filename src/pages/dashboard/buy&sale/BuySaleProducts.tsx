@@ -24,7 +24,6 @@ import {
   ShopOutlined,
   ShoppingCartOutlined,
   TruckOutlined,
-  ArrowRightOutlined,
   RiseOutlined,
   EnvironmentOutlined,
   PlusOutlined,
@@ -44,10 +43,8 @@ import RetailImage from '../../../assets/buyandsale/old_retail.png';
 import OnlineImage from '../../../assets/buyandsale/onlineordering.png';
 import WholesaleImage from '../../../assets/buyandsale/wholesale_buynear.png';
 import SkyImage from '../../../assets/buyandsale/sky_scrapper.png';
-import Vintagev from '../../../assets/buyandsale/Vintage_house.png';
 import Modern from '../../../assets/buyandsale/modern_house.png';
 import Land from '../../../assets/buyandsale/Land_For_sale.png';
-import Lakehouse from '../../../assets/buyandsale/Lakehouse.png';
 import CustomerRecords from '../../../assets/buyandsale/customerrecords.png';
 import a from '../../../assets/buyandsale/A.png';
 import b from '../../../assets/buyandsale/B.png';
@@ -177,7 +174,7 @@ const MOCK_PROPERTY_LISTINGS: PropertyListing[] = [
     imagePath: Land,
     propertyType: 'Warehouse/Industrial',
     description:
-      '10,000 sq.ft. industrial land with excellent highway connectivity. Perfect for large warehousing and logistics hubs.',
+      '10,000 sq.ft. industrial land with excellent highway connectivity. Perfect for large warehousing and logistics hubs with overall fencing.',
   },
   {
     id: 3,
@@ -193,76 +190,76 @@ const MOCK_PROPERTY_LISTINGS: PropertyListing[] = [
     description:
       '8,000 sq.ft. office plot in a prime financial corridor, with approvals for high-rise corporate development and strong rental demand.',
   },
-  {
-    id: 4,
-    title: 'Shopping Complex Land',
-    listingType: 'sale',
-    price: 35000000, // ₹3.5 Cr
-    area: 15000,
-    location: 'Suburban Area, Hyderabad',
-    tags: ['Mall Approved', 'Parking Space', 'High Footfall'],
-    roi: '18–22% per annum',
-    imagePath: Land,
-    propertyType: 'Retail',
-    description:
-      '15,000 sq.ft. plot pre-approved for a shopping complex with dedicated parking and strong residential catchment.',
-  },
-  {
-    id: 5,
-    title: 'Boutique Hotel Development Land',
-    listingType: 'purchase',
-    price: 15000000,
-    area: 5000,
-    location: 'Beachfront Area, Goa',
-    tags: ['High Tourist Footfall', 'Sea Facing', 'Zoning Approved'],
-    roi: '18–20% per annum',
-    imagePath: Land,
-    propertyType: 'Land/Commercial',
-    description:
-      'Requirement for a 5,000 sq.ft. sea-facing commercial plot in Goa suitable for boutique hotel development.',
-  },
-  {
-    id: 6,
-    title: 'Luxury Hillside Villa',
-    listingType: 'purchase',
-    price: 9500000,
-    area: 3200,
-    location: 'Hillside, Lonavala',
-    tags: ['Scenic View', 'Private Pool', 'Rental Ready'],
-    roi: '10–14% per annum',
-    imagePath: Lakehouse,
-    propertyType: 'Residential/Holiday',
-    description:
-      'Looking for a fully furnished 3,200 sq.ft. luxury villa with pool and valley view for both self-use and short-stay rental.',
-  },
-  {
-    id: 7,
-    title: 'Heritage Bungalow',
-    listingType: 'purchase',
-    price: 12000000,
-    area: 4500,
-    location: 'Central, Chennai',
-    tags: ['Heritage Charm', 'Renovated', 'Garden'],
-    roi: 'N/A (Self Use)',
-    imagePath: Vintagev,
-    propertyType: 'Residential',
-    description:
-      'Buyer requirement for a renovated 4,500 sq.ft. heritage bungalow with garden in a well-connected central location.',
-  },
-  {
-    id: 8,
-    title: 'Corporate Office Tower Floor',
-    listingType: 'purchase',
-    price: 38000000,
-    area: 7500,
-    location: 'IT Park, Gurugram',
-    tags: ['Grade-A Tower', 'Metro Access', 'High Security'],
-    roi: '16–19% per annum',
-    imagePath: SkyImage,
-    propertyType: 'Office',
-    description:
-      'Corporate client seeking a full floor (approx. 7,500 sq.ft.) in a Grade-A IT tower with excellent connectivity.',
-  },
+//   {
+//     id: 4,
+//     title: 'Shopping Complex Land',
+//     listingType: 'sale',
+//     price: 35000000, // ₹3.5 Cr
+//     area: 15000,
+//     location: 'Suburban Area, Hyderabad',
+//     tags: ['Mall Approved', 'Parking Space', 'High Footfall'],
+//     roi: '18–22% per annum',
+//     imagePath: Land,
+//     propertyType: 'Retail',
+//     description:
+//       '15,000 sq.ft. plot pre-approved for a shopping complex with dedicated parking and strong residential catchment.',
+//   },
+//   {
+//     id: 5,
+//     title: 'Boutique Hotel Development Land',
+//     listingType: 'purchase',
+//     price: 15000000,
+//     area: 5000,
+//     location: 'Beachfront Area, Goa',
+//     tags: ['High Tourist Footfall', 'Sea Facing', 'Zoning Approved'],
+//     roi: '18–20% per annum',
+//     imagePath: Land,
+//     propertyType: 'Land/Commercial',
+//     description:
+//       'Requirement for a 5,000 sq.ft. sea-facing commercial plot in Goa suitable for boutique hotel development.',
+//   },
+//   {
+//     id: 6,
+//     title: 'Luxury Hillside Villa',
+//     listingType: 'purchase',
+//     price: 9500000,
+//     area: 3200,
+//     location: 'Hillside, Lonavala',
+//     tags: ['Scenic View', 'Private Pool', 'Rental Ready'],
+//     roi: '10–14% per annum',
+//     imagePath: Lakehouse,
+//     propertyType: 'Residential/Holiday',
+//     description:
+//       'Looking for a fully furnished 3,200 sq.ft. luxury villa with pool and valley view for both self-use and short-stay rental.',
+//   },
+//   {
+//     id: 7,
+//     title: 'Heritage Bungalow',
+//     listingType: 'purchase',
+//     price: 12000000,
+//     area: 4500,
+//     location: 'Central, Chennai',
+//     tags: ['Heritage Charm', 'Renovated', 'Garden'],
+//     roi: 'N/A (Self Use)',
+//     imagePath: Vintagev,
+//     propertyType: 'Residential',
+//     description:
+//       'Buyer requirement for a renovated 4,500 sq.ft. heritage bungalow with garden in a well-connected central location.',
+//   },
+//   {
+//     id: 8,
+//     title: 'Corporate Office Tower Floor',
+//     listingType: 'purchase',
+//     price: 38000000,
+//     area: 7500,
+//     location: 'IT Park, Gurugram',
+//     tags: ['Grade-A Tower', 'Metro Access', 'High Security'],
+//     roi: '16–19% per annum',
+//     imagePath: SkyImage,
+//     propertyType: 'Office',
+//     description:
+//       'Corporate client seeking a full floor (approx. 7,500 sq.ft.) in a Grade-A IT tower with excellent connectivity.',
+//   },
 ];
 
 /* ---------- property card ---------- */
@@ -1370,7 +1367,7 @@ export function BuySaleProducts() {
                   </Text>
                 }
               />
-              <ArrowRightOutlined className="subservice-arrow" />
+              {/* <ArrowRightOutlined className="subservice-arrow" /> */}
             </Card>
           </Col>
         ))}
