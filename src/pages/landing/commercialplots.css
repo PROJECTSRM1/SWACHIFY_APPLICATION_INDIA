@@ -71,6 +71,7 @@
 .browse-count { color:#8a2be2; font-size:22px; font-weight:800; margin-bottom:4px; }
 .browse-sub { font-size:13px; color:#6b7b86; }
 
+
 /* =========================
    PRODUCT CARDS
    ========================= */
@@ -472,3 +473,32 @@
   }
 }
 
+/* Force header menu items to stay black (override AntD selected/active styles) */
+.hs-navbar-menu,
+.hs-navbar-menu .ant-menu {
+  background: transparent !important;
+  border-bottom: none !important;
+}
+
+/* normal menu links */
+.hs-navbar-menu .ant-menu-item,
+.hs-navbar-menu .ant-menu-item > a {
+  color: #000000 !important;         /* black always */
+  font-weight: 600;
+}
+
+/* selected / active menu item (AntD adds these classes) */
+.hs-navbar-menu .ant-menu-item-selected,
+.hs-navbar-menu .ant-menu-item-active,
+.hs-navbar-menu .ant-menu-item-selected > a,
+.hs-navbar-menu .ant-menu-item-active > a {
+  color: #000000 !important;         /* keep black when selected */
+  background: transparent !important;/* remove highlight background if any */
+}
+
+/* make sure hover still looks OK (optional) */
+.hs-navbar-menu .ant-menu-item:hover,
+.hs-navbar-menu .ant-menu-item > a:hover {
+  color: #000000 !important;
+  opacity: 0.85;
+}
