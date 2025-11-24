@@ -6,15 +6,15 @@ import Packersandmovers from "./PackersAndMovers/Packersandmovers";
 import CleaningService from "./cleaningservice/CleaningService";
 import BuySaleProducts from "./buy&sale/BuySaleProducts";
 import HomeServices from "./homeservices/HomeServices";
-import { Route, Routes } from "react-router-dom";
+// import { Route, Routes } from "react-router-dom";
 import ServicesPage from "./homerentals/pages/ServicesPage";
-import PropertyTypePage from "./homerentals/pages/PropertyTypePage";
-import ApartmentListingsPage from "./homerentals/pages/ApartmentListingsPage";
-import PropertyDetailsPage from "./homerentals/pages/PropertyDetailsPage";
-import CommercialPropertyTypePage from "./homerentals/pages/CommercialPropertyTypePage";
-import CommercialListingsPage from "./homerentals/pages/CommercialListingsPage";
-import FooterBar from "./homerentals/components/FooterBar";
-import HeaderBarforrental from "./homerentals/components/HeaderBar";
+// import PropertyTypePage from "./homerentals/pages/PropertyTypePage";
+// import ApartmentListingsPage from "./homerentals/pages/ApartmentListingsPage";
+// import PropertyDetailsPage from "./homerentals/pages/PropertyDetailsPage";
+// import CommercialPropertyTypePage from "./homerentals/pages/CommercialPropertyTypePage";
+// import CommercialListingsPage from "./homerentals/pages/CommercialListingsPage";
+// import FooterBar from "./homerentals/components/FooterBar";
+// import HeaderBarforrental from "./homerentals/components/HeaderBar";
 
 const Dashboard: React.FC = () => {
   return (
@@ -38,22 +38,7 @@ const Dashboard: React.FC = () => {
     
       <HomeServices/>
 
-         <div className="app-root">
-      <HeaderBarforrental></HeaderBarforrental>
-      <main className="app-main">
-        <Routes>
-          <Route path="/" element={<ServicesPage />} />
-          <Route path="/property-types" element={<PropertyTypePage />} />
-          <Route path="/listings/:type" element={<ApartmentListingsPage />} />
-          <Route path="/property/:id" element={<PropertyDetailsPage />} />
-          <Route path="/commercial-property-types" element={<CommercialPropertyTypePage />} />
-          <Route path="/commercial/:type" element={<CommercialListingsPage />} />
-          <Route path="/commercial/property/:id" element={<PropertyDetailsPage />} />
-
-        </Routes>
-      </main>
-      <FooterBar />
-    </div>
+    <ServicesPage/>
    
       <ConstructionServices/>
       <BuySaleProducts/>

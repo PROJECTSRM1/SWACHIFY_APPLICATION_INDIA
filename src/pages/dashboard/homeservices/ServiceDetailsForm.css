@@ -1,348 +1,225 @@
-/* ServiceDetailsForm.css
-   Exact visual recreation of the provided screenshot.
-   Only CSS — no changes to your JSX/TS.
-*/
-
-/* ---------- Variables ---------- */
-:root{
-  --bg: #ffffff;
-  --muted: #9aa0a6;
-  --field-bg: #f6f7f8;
-  --outline: #e9ecef;
-  --accent-dark: #06060a; /* Add to cart button */
-  --accent-dark-2: #0b0b10;
-  --price-bg: #eef6ff;
-  --success-green: #1aa34a;
-  --error-red: #d9534f;
-  --radius: 10px;
-  --radius-lg: 14px;
-  --gap: 18px;
-  --container-pad: 18px;
+/* ============================
+   GLOBAL MODAL RESET
+============================ */
+.sdform-ant-modal .ant-modal,
+.sdform-ant-modal .ant-modal-content,
+.sdform-ant-modal .ant-modal-body,
+.sdform-ant-modal .ant-modal-wrap,
+.sdform-ant-modal .ant-modal-root {
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
-/* ---------- Modal / container ---------- */
-.service-form-modal {
-  background: transparent;
-  width: 100%;
-  box-sizing: border-box;
-  font-family: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  color: #111;
+/* Modal width (adjustable) */
+.sdform-ant-modal .ant-modal {
+  width: 520px !important;
+  max-width: 95%;
 }
 
-/* --- Header section (image left, details right) --- */
-.service-header-section{
+/* Remove background padding inside card */
+.sdform-ant-container,
+.sdform-ant-container .ant-card-body {
+  padding: 0 !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+}
+
+/* ============================
+   TITLE
+============================ */
+.sdform-ant-title {
+  font-size: 16px;
+  font-weight: 600;
+  padding: 10px 14px 6px 14px;
+  margin: 0;
+}
+
+/* ============================
+   HEADER SECTION
+============================ */
+.sdform-ant-header {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 28px;
-  align-items: start;
-  padding: var(--container-pad);
-  border-bottom: 1px solid var(--outline);
+  grid-template-columns: 48% 52%;
+  gap: 10px;
+  padding: 0 14px;
 }
 
-/* Left image */
-.service-header-image{
+/* LEFT */
+.sdform-ant-image {
   width: 100%;
-  height: 240px;
-  object-fit: cover;
-  border-radius: var(--radius-lg);
-  box-shadow: 0 6px 18px rgba(20,20,30,0.06);
-  display: block;
+  border-radius: 6px;
 }
 
-/* Right details column */
-.service-header-details{
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+.sdform-ant-description {
+  font-size: 13px;
+  margin: 6px 0 8px 0;
 }
 
-/* Title and description */
-.service-title{
-  margin: 0;
-  font-size: 22px;
+/* PRICE BOX */
+.sdform-price-wrapper {
+  background: #eef5ff;
+  padding: 10px;
+  border-radius: 6px;
+}
+
+.sdform-price-title {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.sdform-price-value {
+  font-size: 16px;
   font-weight: 700;
-  color: #111;
-  letter-spacing: 0.1px;
 }
 
-.service-main-description{
-  margin: 0;
-  color: #6b6f73;
+/* RIGHT INFO */
+.sdform-ant-header-info {
+  padding-left: 6px;
+}
+
+.sdform-ant-header-info h4 {
   font-size: 14px;
-  line-height: 1.4;
+  margin: 0 0 6px 0;
 }
 
-/* Included list (right column) */
-.service-included-list{
+.sdform-ant-list {
   list-style: none;
-  margin: 6px 0 0 0;
   padding: 0;
+  margin: 0;
+}
+
+.sdform-ant-list li {
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+/* ============================
+   FORM
+============================ */
+.sdform-ant-form {
+  padding: 10px 14px 16px 14px;
+}
+
+.sdform-ant-form .ant-form-item {
+  margin-bottom: 10px !important;  /* was usually 16px */
+}
+
+
+.sdform-ant-two-col {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 10px;
 }
 
-/* style for each included item to match screenshot checkmark + text */
-.service-included-list li{
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 14px;
-  color: #222;
+/* Smaller inputs */
+.sdform-ant-form .ant-input,
+.sdform-ant-form .ant-select-selector,
+.sdform-ant-form .ant-picker {
+  height: 29px !important;       /* increased (was 26px) */
+  font-size: 13px !important;    /* slightly larger text */
+  padding: 0 8px !important;
 }
 
-/* custom check icon using pseudo element */
-.service-included-list li::before{
-  content: "✓";
-  display: inline-flex;
-  width: 20px;
-  height: 20px;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-  color: var(--success-green);
-  font-weight: 700;
-  border-radius: 50%;
-  transform: translateY(1px);
+/* Textarea */
+.sdform-ant-form textarea {
+  min-height: 55px !important;   /* was 50px */
+  font-size: 12px !important;
 }
 
-/* small caption under left image
-.service-header-section + .service-form-fields,
-.service-header-details .caption {
-  /* place caption just under image if needed */
- 
 
-/* Price box */
-.service-price-box{
-  display: inline-block;
-  margin-top: 8px;
-  padding: 16px 18px;
-  background: linear-gradient(180deg, var(--price-bg), #f3f9ff 60%);
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(14,32,72,0.04);
-  font-size: 16px;
-  font-weight: 700;
-  color: #1764d6;
-  min-width: 120px;
-  text-align: left;
+.sdform-ant-form .ant-form-item-label > label {
+  font-size: 12px !important;
 }
 
-/* ---------- Form fields area ---------- */
-.service-form-fields{
-  padding: 20px var(--container-pad) calc(var(--container-pad) + 8px);
-  background: transparent;
-  display: block;
-}
 
-/* Section heading */
-.service-form-fields > h4,
-.service-section-title{
-  margin: 0 0 14px 0;
-  color: #222;
-  font-size: 16px;
-  font-weight: 700;
-}
-
-/* two-column row used for issue + urgency */
-.service-two-column{
+/* ============================
+   BUTTONS
+============================ */
+/* ============================
+   UPDATED SMALLER BUTTONS
+============================ */
+.sdform-ant-buttons {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 18px;
-  margin-bottom: 14px;
+  gap: 6px;                     /* smaller spacing */
+  margin-top: 14px;              /* reduced top margin */
 }
 
-/* service-row for date/time */
-.service-row{
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 18px;
-  margin-bottom: 14px;
+.sdform-ant-cancel,
+.sdform-ant-submit {
+  height: 26px !important;      /* reduced height (was 28px) */
+  line-height: 26px !important;
+  padding: 0 !important;
+  font-size: 11px !important;   /* slightly smaller text */
+  border-radius: 4px !important;
 }
 
-/* common label */
-.service-form-fields label{
-  display: block;
-  font-size: 13px;
-  color: #333;
-  margin-bottom: 8px;
-  font-weight: 600;
+.sdform-ant-submit {
+  background: #000 !important;
+  color: #fff !important;
+  border: none !important;
 }
 
-/* inputs, selects, textarea */
-.service-form-fields input[type="text"],
-.service-form-fields input[type="date"],
-.service-form-fields select,
-.service-form-fields textarea{
-  width: 100%;
-  box-sizing: border-box;
-  border: 1px solid var(--outline);
-  background: var(--field-bg);
-  padding: 14px 16px;
-  border-radius: 8px;
-  font-size: 14px;
-  color: #222;
-  outline: none;
-  transition: box-shadow .15s ease, border-color .15s ease, transform .08s ease;
-}
 
-/* slight elevation on focus */
-.service-form-fields input:focus,
-.service-form-fields select:focus,
-.service-form-fields textarea:focus{
-  border-color: rgba(33,110,255,0.18);
-  box-shadow: 0 6px 18px rgba(17,88,255,0.06);
-  transform: translateY(-1px);
-}
+/* ============================
+   RESPONSIVE DESIGN
+============================ */
 
-/* placeholder color */
-.service-form-fields input::placeholder,
-.service-form-fields textarea::placeholder{
-  color: #9aa0a6;
-}
-
-/* textarea tall look */
-.service-form-fields textarea{
-  min-height: 84px;
-  resize: vertical;
-  line-height: 1.4;
-}
-
-/* spacing between fields */
-.service-form-fields > label + textarea,
-.service-form-fields > label + input,
-.service-form-fields > label + select,
-.service-form-fields .service-two-column,
-.service-form-fields .service-row{
-  margin-bottom: 18px;
-}
-
-/* error text */
-.error-text{
-  margin: 6px 0 0;
-  color: var(--error-red);
-  font-size: 13px;
-}
-
-/* ---------- Buttons at bottom ---------- */
-.service-buttons{
-  display: flex;
-  gap: 18px;
-  justify-content: space-between;
-  align-items: center;
-  padding: 18px var(--container-pad) 30px;
-  border-top: 1px solid var(--outline);
-}
-
-/* left cancel (outlined) */
-.service-buttons .ant-btn-default, 
-.service-buttons .ant-btn[aria-type="default"]{
-  background: #fff;
-  border: 1px solid var(--outline) !important;
-  color: #222;
-  padding: 12px 28px;
-  border-radius: 10px;
-  font-weight: 600;
-  min-width: 160px;
-}
-
-/* right primary (Add to Cart) — big pill, dark gradient */
-.service-buttons .ant-btn-primary{
-  background: linear-gradient(90deg, var(--accent-dark), var(--accent-dark-2));
-  border: none;
-  color: #fff;
-  padding: 12px 34px;
-  border-radius: 12px;
-  font-weight: 700;
-  min-width: 260px;
-  box-shadow: 0 8px 26px rgba(8,8,12,0.28);
-}
-
-/* smaller screens: move buttons stacked */
-@media (max-width: 520px){
-  .service-buttons{
-    flex-direction: column-reverse;
-    gap: 12px;
-    align-items: stretch;
-    padding-bottom: 24px;
-  }
-
-  .service-buttons .ant-btn-default,
-  .service-buttons .ant-btn-primary{
-    min-width: 100%;
-    width: 100%;
+/* Tablets */
+@media (max-width: 900px) {
+  .sdform-ant-modal .ant-modal {
+    width: 92% !important;
   }
 }
 
-/* ---------- Responsive adjustments for header columns ---------- */
-@media (max-width: 920px){
-  .service-header-section{
+/* Mobile */
+@media (max-width: 700px) {
+  .sdform-ant-header {
     grid-template-columns: 1fr;
-    gap: 14px;
+    padding: 0 10px;
   }
 
-  .service-header-image{
-    height: 200px;
-  }
-
-  .service-price-box{
+  .sdform-ant-header-info {
+    padding-left: 0;
     margin-top: 10px;
   }
-}
 
-/* mobile fine tuning */
-@media (max-width: 420px){
-  .service-header-image{
-    height: 160px;
-  }
-
-  .service-title{
-    font-size: 20px;
-  }
-
-  .service-form-fields{
-    padding-left: 14px;
-    padding-right: 14px;
-  }
-
-  .service-two-column,
-  .service-row{
+  .sdform-ant-two-col {
     grid-template-columns: 1fr;
   }
+
+  .sdform-ant-form {
+    padding: 10px;
+  }
+
+  .sdform-ant-buttons {
+    grid-template-columns: 1fr;
+  }
+
+  .sdform-ant-modal .ant-modal {
+    max-width: 96% !important;
+  }
 }
 
-/* ---------- Small cosmetics to match screenshot lines & separators ---------- */
-.service-header-section{
-  position: relative;
-}
+/* Very small phones (iPhone SE, etc.) */
+@media (max-width: 380px) {
+  .sdform-ant-title {
+    font-size: 14px;
+  }
 
-/* subtle horizontal divider similar to screenshot */
-.service-divider {
-  height: 1px;
-  background: var(--outline);
-  width: 100%;
-  margin: 12px 0;
-}
+  .sdform-ant-image {
+    border-radius: 4px;
+  }
 
-/* If Ant modal adds internal paddings, ensure our content uses full width */
-.ant-modal .service-form-modal {
-  padding: 0;
-}
+  .sdform-price-wrapper {
+    padding: 8px;
+  }
 
-/* ensure selects show caret and minimal default styling */
-.service-form-fields select {
-  appearance: none;
-  -webkit-appearance: none;
-  background-image: linear-gradient(45deg, transparent 50%, #9aa0a6 50%),
-                    linear-gradient(135deg, #9aa0a6 50%, transparent 50%);
-  background-position: calc(100% - 18px) calc(1em + 2px), calc(100% - 13px) calc(1em + 2px);
-  background-size: 6px 6px, 6px 6px;
-  background-repeat: no-repeat;
-  padding-right: 36px;
+  .sdform-ant-form .ant-input,
+  .sdform-ant-form .ant-select-selector,
+  .sdform-ant-form .ant-picker {
+    height: 28px !important;
+  }
 }
-
-/* accessibility focus outline */
-.service-form-fields input:focus, .service-form-fields select:focus, .service-form-fields textarea:focus{
-  outline: 3px solid rgba(33,110,255,0.08);
-}
-
-/* end of file */
