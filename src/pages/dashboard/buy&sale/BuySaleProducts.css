@@ -99,7 +99,10 @@
 
 .service-card-main .ant-card-body {
   padding: 12px 14px !important;
+  display: flex;
+  flex-direction: column;
 }
+
 
 .service-card-image {
   height: 160px;
@@ -133,46 +136,64 @@
 /* SUBSERVICE CARD (MODAL) – ALIGN TEXT & ARROW PROPERLY */
 
 .subservice-card {
-  border-radius: 10px !important;
+  border-radius: 16px !important;
   border: 1px solid var(--border-light);
   overflow: hidden;
   background-color: #ffffff;
-  position: relative;
-  box-shadow: 0 3px 10px rgba(15, 23, 42, 0.08);
+  box-shadow: 0 3px 10px rgba(15, 23, 42, 0.06);
   transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
   display: flex;
   flex-direction: column;
 }
 
-/* make body center content and give enough bottom padding */
-/* final padding for subservice card body */
+.subservice-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--primary-red);
+  box-shadow: 0 14px 32px rgba(15, 23, 42, 0.16);
+}
+
+/* card body – center title + subtitle, like Homes/Apartments/Villas */
 .subservice-card .ant-card-body {
-  padding: 12px 16px 18px !important;
+  padding: 10px 14px 16px !important;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
+/* image at top with rounded only on top edges */
+.subservice-card-image {
+  height: 160px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
 
-/* center title & description text */
+.minimal-back-button {
+  background-color: #d90000bf !important;
+}
+
+/* text alignment & wrapping */
 .subservice-card .ant-card-meta-title,
 .subservice-card .ant-card-meta-description {
   width: 100%;
-  text-align: left;
+  text-align: center;
 }
 
-/* allow long subservice names to wrap nicely */
 .subservice-card .ant-card-meta-title {
-  white-space: normal;       /* allow multiple lines */
-  word-break: break-word;    /* break long words if needed */
+  font-weight: 600;
+  white-space: normal;
+  word-break: break-word;
 }
 
 .subservice-card .ant-card-meta-description,
 .subservice-card-description {
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--text-muted);
   white-space: normal;
   word-break: break-word;
 }
+
 
 /* keep image with full width and rounded top only */
 .subservice-card .service-card-image {
@@ -372,7 +393,7 @@
 
 @media (max-width: 768px) {
   .app-container {
-    padding: 12px;
+    padding: 12px;  
   }
 
   .header-banner {
@@ -410,6 +431,11 @@
 
   .property-detail-image {
     height: 200px;
+  }
+
+   .service-view-btn {
+    font-size: 12px;
+    padding-inline: 10px;
   }
 }
 
@@ -498,3 +524,43 @@
     font-size: 1.1rem !important;
   }
 }
+
+/* layout for title + description + button inside main service cards */
+.service-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  height: 100%;
+}
+
+/* black full-width button like Cleaning Services cards */
+/* View Details button in semi-transparent red */
+.service-view-btn {
+  margin-top: 10px;
+  background-color: #d90000bf !important;
+  border-color: #d90000bf !important;
+  color: #ffffff !important;
+  font-weight: 600;
+  width: 100%;
+  border-radius: 6px;
+  transition: 0.2s ease;
+}
+
+/* Hover — slightly darker red */
+.service-view-btn:hover,
+.service-view-btn:focus {
+  background-color: #d90000bf !important; /* darker variant */
+  border-color: #d90000bf !important;
+  color: #ffffff !important;
+}
+
+/* outer surface inside subservice modal, like cleaning modal cards */
+.subservice-list-surface {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 20px 18px 22px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
+}
+
+
+
