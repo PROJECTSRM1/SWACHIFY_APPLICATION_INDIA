@@ -30,7 +30,7 @@ import "./landingpage.css";
 import heroImage from "../../assets/landingimages/hero.jpg";
 
 const navItems = [
-  { key: "home", label: <Link to="/home">Home</Link> },
+  { key: "home", label: <Link to="/landing">Home</Link> },
   { key: "cleaning", label: <Link to="/cleaningservice">Cleaning</Link> },
   { key: "packers", label: <Link to="/LandingPackers">Packers & Movers</Link> },
   { key: "home_services", label: <Link to="/home_service">Home Services</Link> },
