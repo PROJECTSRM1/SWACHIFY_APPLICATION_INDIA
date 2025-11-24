@@ -357,9 +357,60 @@ const LandingPackers: React.FC = () => {
       </section>
 
       {/* FOOTER */}
-      <footer className="footer">
-        <p>© 2025 Home Services. All rights reserved.</p>
-      </footer>
+{/* FOOTER */}
+<footer className="lr-footer site-footer" role="contentinfo" aria-label="Footer">
+  <div className="lr-footer-inner lr-footer-grid">
+    <div className="lr-footer-col">
+      <h4>About Us</h4>
+      <p className="lr-footer-about">
+        Your trusted partner for all home and property-related services. Quality,
+        reliability, and customer satisfaction guaranteed.
+      </p>
+    </div>
+    <div className="lr-footer-col">
+      <h4>Services</h4>
+      <ul className="lr-footer-list">
+        <li>Cleaning Service</li>
+        <li>Packers & Movers</li>
+        <li>Home Services</li>
+        <li>Rentals</li>
+        <li>Commercial Plots</li>
+        <li>Construction Materials</li>
+      </ul>
+    </div>
+    <div className="lr-footer-col">
+      <h4>Quick Links</h4>
+      <ul className="lr-footer-list">
+        <li>Home</li>
+        <li>About</li>
+        <li>Contact</li>
+        <li>Careers</li>
+      </ul>
+    </div>
+    <div className="lr-footer-col">
+      <h4>Contact Info</h4>
+      <ul className="lr-contact-list">
+        <li className="lr-contact-phone">
+          <span aria-hidden className="lc-contact-icon">📞</span>
+          <span className="lc-contact-text"> +1 (555) 123-4567</span>
+        </li>
+        <li>✉️ &nbsp; info@homeservices.com</li>
+        <li>📍 &nbsp; 123 Service Street, City, State</li>
+      </ul>
+      <div className="lr-footer-socials" aria-hidden>
+        <a className="social" href="#" aria-label="facebook">f</a>
+        <a className="social" href="#" aria-label="twitter">t</a>
+        <a className="social" href="#" aria-label="instagram">ig</a>
+        <a className="social" href="#" aria-label="linkedin">in</a>
+      </div>
+    </div>
+  </div>
+
+  <div className="lr-footer-bottom">
+    <div className="lr-footer-sep" />
+    <div className="lr-footer-copy">© 2025 Home Services. All rights reserved.</div>
+  </div>
+</footer>
 
     </div>
   );

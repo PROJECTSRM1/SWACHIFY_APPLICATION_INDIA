@@ -19,6 +19,8 @@ import { Link, useNavigate } from "react-router-dom";
 import "./ConstructionMaterials.css";
 import heroImage from "../../assets/landingimages/brickwall.jpg";
 
+import cementu from "../../assets/landingimages/brickwall.jpg"
+
 const { Title, Text } = Typography;
 const { Option } = Select;
 const { TabPane } = Tabs;
@@ -87,7 +89,7 @@ const services = [
 const featuredProducts = [
   {
     title: "Premium Portland Cement",
-    image: "https://via.placeholder.com/300x200?text=Cement",
+    image: cementu,
     price: "$8.50 per bag (50kg)",
     rating: "4.8/5",
     details: ["High Strength", "Quick Setting", "Weather Resistant"],

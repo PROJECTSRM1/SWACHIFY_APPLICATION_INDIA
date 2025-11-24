@@ -307,11 +307,6 @@
 .cta-action { margin-top: 12px; }
 @media (max-width: 768px) { .quantity-inner { padding: 14px; gap: 12px; } .cta-icon { font-size: 36px; padding: 12px; } .cta-body h3 { font-size: 1.15rem; } }
 
-/* ================= FOOTER ================= */
-.footer { background-color: #06152b; color: white; padding: 40px 20px; margin-top: 40px; }
-.footer h3 { margin-bottom: 12px; }
-.footer p, .footer ul, .footer li { color: #cfcfcf; }
-.footer-bottom { text-align: center; margin-top: 24px; border-top: 1px solid rgba(255,255,255,0.12); padding-top: 16px; font-size: 0.9rem; }
 
 /* ================= RESPONSIVE ================= */
 @media (max-width: 992px) {
