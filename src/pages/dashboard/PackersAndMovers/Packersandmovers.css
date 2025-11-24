@@ -1,25 +1,30 @@
 /* ---------------- container ---------------- */
 .pm-container {
   width: 100%;
-  max-width: 980px; /* compact */
+  max-width: 1200px; /* compact */
   margin: 0 auto;
   padding: 0 14px;
   box-sizing: border-box;
 }
 
 /* ---------- hero ---------- */
-.pm-hero {
-  margin: 6px auto 12px;
-  width: 100%;
+.pm-hero { 
+  /* margin:20px auto 12px;  */
+  /* width:100%;  */
+  margin-left: 52px;
+  margin-right: 52px;
 }
-.pm-hero-inner {
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:12px;
-  background:#ff6d00;
-  border-radius:8px;
-  color:#fff;
+
+.pm-hero-inner { 
+  display:flex; 
+  align-items:center; 
+  justify-content:space-between; 
+  padding:18px; 
+  background:#ff6d00; 
+  border-radius:8px; 
+  color:#fff; 
+  
+  
 }
 .pm-hero-title {
   margin:0;
@@ -33,9 +38,12 @@
 }
 
 /* ---------- cards ---------- */
-.pm-main {
-  width:100%;
-  margin:12px auto 36px;
+.pm-main { 
+  width:95%; 
+  margin:18px; 
+  margin-left: 30px;
+  /* margin-right: 52px; */
+  margin-right: 20px;
 }
 .pm-cards-wrapper { width:100%; }
 

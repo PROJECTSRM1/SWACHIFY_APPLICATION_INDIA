@@ -1107,14 +1107,14 @@ const SERVICES_DATA: Service[] = [
       {
         key: 'propListingSale',
         title: 'Property Listing for Sale',
-        description: 'Publish detailed property ads for investors and end-buyers.',
+        description: '',
         contentComponent: PropertyListingSaleContent as React.FC<any>,
         imagePath: Modern,
       },
       {
         key: 'propListingPurchase',
         title: 'Property Listing for Purchase',
-        description: 'Capture buyer requirements and match with suitable properties.',
+        description: '',
         contentComponent: PropertyListingPurchaseContent as React.FC<any>,
         imagePath: SkyImage,
       },
@@ -1130,14 +1130,14 @@ const SERVICES_DATA: Service[] = [
       {
         key: 'inStore',
         title: 'In-Store Billing',
-        description: 'Record walk-in customer bills and print receipts.',
+        description: '',
         contentComponent: RetailInStoreContent,
         imagePath: CustomerRecords,
       },
       {
         key: 'inventory',
         title: 'Inventory & Customer Records',
-        description: 'Track stock levels, adjustments and linked customer purchases.',
+        description: '',
         contentComponent: RetailInventoryContent,
         imagePath: WholesaleImage,
       },
@@ -1153,35 +1153,35 @@ const SERVICES_DATA: Service[] = [
       {
         key: 'onlineOrder',
         title: 'Online Ordering & Checkout',
-        description: 'Configure cart, taxes, shipping and order flow.',
+        description: '',
         contentComponent: OnlineCheckoutContent,
         imagePath: a,
       },
       {
         key: 'digitalCat',
         title: 'Digital Catalog & Product Search',
-        description: 'Maintain product photos, details and searchable tags.',
+        description: '',
         contentComponent: OnlineCatalogContent,
         imagePath: b,
       },
       {
         key: 'onlinePay',
         title: 'Online Payments (UPI / Card)',
-        description: 'Manage UPI, card and net-banking gateway integrations.',
+        description: '',
         contentComponent: OnlinePaymentContent,
         imagePath: c,
       },
       {
         key: 'delivery',
         title: 'Home Delivery & Tracking',
-        description: 'Map delivery zones, service partners and live tracking.',
+        description: '',
         contentComponent: OnlineDeliveryContent,
         imagePath: d,
       },
       {
         key: 'offers',
         title: 'Online Offers & Coupons',
-        description: 'Create coupon codes and scheduled online campaigns.',
+        description: '',
         contentComponent: OnlineOffersContent,
         imagePath: e,
       },
@@ -1190,21 +1190,21 @@ const SERVICES_DATA: Service[] = [
   {
     key: 'wholesale',
     title: 'Wholesale Buy Near Distribution',
-    description: 'Handle bulk orders, price comparison and supplier coordination.',
+    description: 'Handle bulk orders, price comparison and supplier coordination',
     icon: <TruckOutlined />,
     imagePath: WholesaleImage,
     subservices: [
       {
         key: 'bulkMgmt',
         title: 'Price Comparison & Bulk Orders',
-        description: 'Capture high-volume orders and negotiate slab-based pricing.',
+        description: '',
         contentComponent: WholesaleBulkContent,
         imagePath: WholesaleImage,
       },
       {
         key: 'supplierCoord',
         title: 'Supplier Coordination & Stock Tracking',
-        description: 'Track supplier SLAs, inward stock and replenishment alerts.',
+        description: '',
         contentComponent: WholesaleStockContent,
         imagePath: f,
       },
@@ -1313,7 +1313,7 @@ export function BuySaleProducts() {
         icon={<ArrowLeftOutlined />}
       />
       <Title level={3} className="modal-title-no-margin">
-        {currentService?.title} Subservices
+        {currentService?.title} 
       </Title>
     </Space>
   );
@@ -1391,7 +1391,7 @@ export function BuySaleProducts() {
 
       <div className="module-section">
         <Title level={2} className="section-title">
-          Select a Core Service
+          Select a Service
         </Title>
         <div className="section-title-underline" />
         {renderMainServices()}
