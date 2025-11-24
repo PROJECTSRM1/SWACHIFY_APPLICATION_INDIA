@@ -37,7 +37,8 @@ import {
 } from '@ant-design/icons';
 
 import './BuySaleProducts.css';
-
+import Lakehouse from '../../../assets/buyandsale/Lakehouse.png';
+import Vintagev from '../../../assets/buyandsale/Vintage_house.png';
 import BuySaleImage from '../../../assets/buyandsale/buySale-real-estate.png';
 import RetailImage from '../../../assets/buyandsale/old_retail.png';
 import OnlineImage from '../../../assets/buyandsale/onlineordering.png';
@@ -190,76 +191,76 @@ const MOCK_PROPERTY_LISTINGS: PropertyListing[] = [
     description:
       '8,000 sq.ft. office plot in a prime financial corridor, with approvals for high-rise corporate development and strong rental demand.',
   },
-//   {
-//     id: 4,
-//     title: 'Shopping Complex Land',
-//     listingType: 'sale',
-//     price: 35000000, // ₹3.5 Cr
-//     area: 15000,
-//     location: 'Suburban Area, Hyderabad',
-//     tags: ['Mall Approved', 'Parking Space', 'High Footfall'],
-//     roi: '18–22% per annum',
-//     imagePath: Land,
-//     propertyType: 'Retail',
-//     description:
-//       '15,000 sq.ft. plot pre-approved for a shopping complex with dedicated parking and strong residential catchment.',
-//   },
-//   {
-//     id: 5,
-//     title: 'Boutique Hotel Development Land',
-//     listingType: 'purchase',
-//     price: 15000000,
-//     area: 5000,
-//     location: 'Beachfront Area, Goa',
-//     tags: ['High Tourist Footfall', 'Sea Facing', 'Zoning Approved'],
-//     roi: '18–20% per annum',
-//     imagePath: Land,
-//     propertyType: 'Land/Commercial',
-//     description:
-//       'Requirement for a 5,000 sq.ft. sea-facing commercial plot in Goa suitable for boutique hotel development.',
-//   },
-//   {
-//     id: 6,
-//     title: 'Luxury Hillside Villa',
-//     listingType: 'purchase',
-//     price: 9500000,
-//     area: 3200,
-//     location: 'Hillside, Lonavala',
-//     tags: ['Scenic View', 'Private Pool', 'Rental Ready'],
-//     roi: '10–14% per annum',
-//     imagePath: Lakehouse,
-//     propertyType: 'Residential/Holiday',
-//     description:
-//       'Looking for a fully furnished 3,200 sq.ft. luxury villa with pool and valley view for both self-use and short-stay rental.',
-//   },
-//   {
-//     id: 7,
-//     title: 'Heritage Bungalow',
-//     listingType: 'purchase',
-//     price: 12000000,
-//     area: 4500,
-//     location: 'Central, Chennai',
-//     tags: ['Heritage Charm', 'Renovated', 'Garden'],
-//     roi: 'N/A (Self Use)',
-//     imagePath: Vintagev,
-//     propertyType: 'Residential',
-//     description:
-//       'Buyer requirement for a renovated 4,500 sq.ft. heritage bungalow with garden in a well-connected central location.',
-//   },
-//   {
-//     id: 8,
-//     title: 'Corporate Office Tower Floor',
-//     listingType: 'purchase',
-//     price: 38000000,
-//     area: 7500,
-//     location: 'IT Park, Gurugram',
-//     tags: ['Grade-A Tower', 'Metro Access', 'High Security'],
-//     roi: '16–19% per annum',
-//     imagePath: SkyImage,
-//     propertyType: 'Office',
-//     description:
-//       'Corporate client seeking a full floor (approx. 7,500 sq.ft.) in a Grade-A IT tower with excellent connectivity.',
-//   },
+  {
+    id: 4,
+    title: 'Shopping Complex Land',
+    listingType: 'sale',
+    price: 35000000, // ₹3.5 Cr
+    area: 15000,
+    location: 'Suburban Area, Hyderabad',
+    tags: ['Mall Approved', 'Parking Space', 'High Footfall'],
+    roi: '18–22% per annum',
+    imagePath: Land,
+    propertyType: 'Retail',
+    description:
+      '15,000 sq.ft. plot pre-approved for a shopping complex with dedicated parking and strong residential catchment.',
+  },
+  {
+    id: 5,
+    title: 'Boutique Hotel Development Land',
+    listingType: 'purchase',
+    price: 15000000,
+    area: 5000,
+    location: 'Beachfront Area, Goa',
+    tags: ['High Tourist Footfall', 'Sea Facing', 'Zoning Approved'],
+    roi: '18–20% per annum',
+    imagePath: Land,
+    propertyType: 'Land/Commercial',
+    description:
+      'Requirement for a 5,000 sq.ft. sea-facing commercial plot in Goa suitable for boutique hotel development.',
+  },
+  {
+    id: 6,
+    title: 'Luxury Hillside Villa',
+    listingType: 'purchase',
+    price: 9500000,
+    area: 3200,
+    location: 'Hillside, Lonavala',
+    tags: ['Scenic View', 'Private Pool', 'Rental Ready'],
+    roi: '10–14% per annum',
+    imagePath: Lakehouse,
+    propertyType: 'Residential/Holiday',
+    description:
+      'Looking for a fully furnished 3,200 sq.ft. luxury villa with pool and valley view for both self-use and short-stay rental.',
+  },
+  {
+    id: 7,
+    title: 'Heritage Bungalow',
+    listingType: 'purchase',
+    price: 12000000,
+    area: 4500,
+    location: 'Central, Chennai',
+    tags: ['Heritage Charm', 'Renovated', 'Garden'],
+    roi: 'N/A (Self Use)',
+    imagePath: Vintagev,
+    propertyType: 'Residential',
+    description:
+      'Buyer requirement for a renovated 4,500 sq.ft. heritage bungalow with garden in a well-connected central location.',
+  },
+  {
+    id: 8,
+    title: 'Corporate Office Tower Floor',
+    listingType: 'purchase',
+    price: 38000000,
+    area: 7500,
+    location: 'IT Park, Gurugram',
+    tags: ['Grade-A Tower', 'Metro Access', 'High Security'],
+    roi: '16–19% per annum',
+    imagePath: SkyImage,
+    propertyType: 'Office',
+    description:
+      'Corporate client seeking a full floor (approx. 7,500 sq.ft.) in a Grade-A IT tower with excellent connectivity.',
+  },
 ];
 
 /* ---------- property card ---------- */
@@ -1104,14 +1105,14 @@ const SERVICES_DATA: Service[] = [
       {
         key: 'propListingSale',
         title: 'Property Listing for Sale',
-        description: '',
+        description: 'Click to view properties listed for sale.',
         contentComponent: PropertyListingSaleContent as React.FC<any>,
         imagePath: Modern,
       },
       {
         key: 'propListingPurchase',
         title: 'Property Listing for Purchase',
-        description: '',
+        description: 'Click to view buyer requirements and purchase requests.',
         contentComponent: PropertyListingPurchaseContent as React.FC<any>,
         imagePath: SkyImage,
       },
@@ -1134,7 +1135,7 @@ const SERVICES_DATA: Service[] = [
       {
         key: 'inventory',
         title: 'Inventory & Customer Records',
-        description: '',
+        description: 'Click to update stock and view customer history.',
         contentComponent: RetailInventoryContent,
         imagePath: WholesaleImage,
       },
@@ -1150,35 +1151,35 @@ const SERVICES_DATA: Service[] = [
       {
         key: 'onlineOrder',
         title: 'Online Ordering & Checkout',
-        description: '',
+        description: 'Click to configure cart, tax and checkout flow.',
         contentComponent: OnlineCheckoutContent,
-        imagePath: a,
+        imagePath: b,
       },
       {
         key: 'digitalCat',
         title: 'Digital Catalog & Product Search',
-        description: '',
+        description: 'Click to manage catalogue and search metadata.',
         contentComponent: OnlineCatalogContent,
-        imagePath: b,
+        imagePath: a,
       },
       {
         key: 'onlinePay',
         title: 'Online Payments (UPI / Card)',
-        description: '',
+        description: 'Click to configure UPI, card and gateway keys.',
         contentComponent: OnlinePaymentContent,
         imagePath: c,
       },
       {
         key: 'delivery',
         title: 'Home Delivery & Tracking',
-        description: '',
+        description: 'Click to manage delivery partners and zones.',
         contentComponent: OnlineDeliveryContent,
         imagePath: d,
       },
       {
         key: 'offers',
         title: 'Online Offers & Coupons',
-        description: '',
+        description: 'Click to create coupons and promo campaigns.',
         contentComponent: OnlineOffersContent,
         imagePath: e,
       },
@@ -1194,20 +1195,21 @@ const SERVICES_DATA: Service[] = [
       {
         key: 'bulkMgmt',
         title: 'Price Comparison & Bulk Orders',
-        description: '',
+        description: 'Click to capture high-volume orders and compare prices.',
         contentComponent: WholesaleBulkContent,
         imagePath: WholesaleImage,
       },
       {
         key: 'supplierCoord',
         title: 'Supplier Coordination & Stock Tracking',
-        description: '',
+        description: 'Click to track supplier status and stock inwards.',
         contentComponent: WholesaleStockContent,
         imagePath: f,
       },
     ],
   },
 ];
+
 
 /* ---------- main component & modals ---------- */
 
@@ -1267,39 +1269,49 @@ export function BuySaleProducts() {
     [currentSubservice],
   );
 
-  const renderMainServices = () => (
-    <Row gutter={[24, 24]}>
-      {SERVICES_DATA.map((service) => (
-        <Col xs={24} sm={12} lg={6} key={service.key}>
-          <Card
-            hoverable
-            className="service-card-main"
-            cover={
-              <div
-                className="service-card-image"
-                style={{ backgroundImage: `url(${service.imagePath})` }}
-              />
-            }
-            onClick={() => handleServiceClick(service)}
-          >
-            <Card.Meta
-              title={
-                <Space size="small">
-                  {service.icon}
-                  <span className="service-card-title">{service.title}</span>
-                </Space>
-              }
-              description={
-                <Text type="secondary" className="service-card-description">
-                  {service.description}
-                </Text>
-              }
+const renderMainServices = () => (
+  <Row gutter={[24, 24]}>
+    {SERVICES_DATA.map((service) => (
+      <Col xs={24} sm={12} lg={6} key={service.key}>
+        <Card
+          hoverable
+          className="service-card-main"
+          cover={
+            <div
+              className="service-card-image"
+              style={{ backgroundImage: `url(${service.imagePath})` }}
             />
-          </Card>
-        </Col>
-      ))}
-    </Row>
-  );
+          }
+        >
+          <Space
+            direction="vertical"
+            size={8}
+            className="service-card-content"
+          >
+            <Space size="small">
+              {service.icon}
+              <span className="service-card-title">{service.title}</span>
+            </Space>
+
+            <Text type="secondary" className="service-card-description">
+              {service.description}
+            </Text>
+
+            {/* New button – same idea as Cleaning Services cards */}
+            <Button
+              block
+              className="service-view-btn"
+              onClick={() => handleServiceClick(service)}
+            >
+              View Details
+            </Button>
+          </Space>
+        </Card>
+      </Col>
+    ))}
+  </Row>
+);
+
 
   const SubserviceModalTitle = (
     <Space className="navigation-title-bar card-title-align modal-header-space">
@@ -1343,18 +1355,19 @@ export function BuySaleProducts() {
     </Space>
   );
 
-  const renderSubservicesModalContent = () => (
-    <div className="subservice-list-container subservice-list-padding">
+const renderSubservicesModalContent = () => (
+  <div className="subservice-list-container subservice-list-padding">
+    <div className="subservice-list-surface">
       <Row gutter={[24, 24]} justify="center">
         {currentService?.subservices.map((subservice) => (
-          <Col xs={24} sm={12} md={12} key={subservice.key}>
+          <Col xs={24} sm={12} md={8} key={subservice.key}>
             <Card
               hoverable
               className="subservice-card"
               onClick={() => handleSubserviceClick(subservice)}
               cover={
                 <div
-                  className="service-card-image"
+                  className="service-card-image subservice-card-image"
                   style={{ backgroundImage: `url(${subservice.imagePath})` }}
                 />
               }
@@ -1367,13 +1380,14 @@ export function BuySaleProducts() {
                   </Text>
                 }
               />
-              {/* <ArrowRightOutlined className="subservice-arrow" /> */}
             </Card>
           </Col>
         ))}
       </Row>
     </div>
-  );
+  </div>
+);
+
 
   return (
     <div className="app-container">
@@ -1387,9 +1401,9 @@ export function BuySaleProducts() {
       </div>
 
       <div className="module-section">
-        <Title level={2} className="section-title">
+        {/* <Title level={2} className="section-title">
           Select a Service
-        </Title>
+        </Title> */}
         <div className="section-title-underline" />
         {renderMainServices()}
       </div>
