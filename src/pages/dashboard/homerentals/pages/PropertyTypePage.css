@@ -119,6 +119,9 @@
   margin: 0;
 }
 
+/* ------------------------------
+   BENEFIT SECTION
+------------------------------- */
 .benefits-grid {
   margin-top: 32px;
 }
@@ -164,7 +167,10 @@
   margin: 0;
 }
 
-/* Mobile Responsive Styles */
+/* ===========================================
+   RESPONSIVE DESIGN
+=========================================== */
+
 @media (max-width: 1024px) {
   .property-type-page {
     padding: 0 20px 40px;
@@ -262,6 +268,28 @@
   }
 }
 
+/* ============================
+   SMALL MOBILE FIXES (BUTTON)
+=============================== */
+@media (max-width: 600px) {
+  .services-top-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 18px 16px !important;
+    gap: 10px !important;
+  }
+
+  .header-viewall-btn {
+    width: 100% !important;
+    text-align: center !important;
+  }
+
+  .banner-left {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
+
 @media (max-width: 480px) {
   .property-type-page {
     padding: 0 12px 32px;
@@ -279,3 +307,11 @@
     font-size: 18px;
   }
 }
+
+
+
+
+
+
+
+  
