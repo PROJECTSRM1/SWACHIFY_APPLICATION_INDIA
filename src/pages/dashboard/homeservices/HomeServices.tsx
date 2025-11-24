@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Card, Row, Col, Button } from "antd";
+import { Card, Button } from "antd";
 import "./HomeServices.css";
 import { popupData } from "./popupData"; // Correct import
 import type { PopupCategory } from "./popupData"; // Correct import of type
+import { ToolOutlined } from "@ant-design/icons";
 import cleaningservices from "../../../assets/HomeServices/cleaningservices.jpg";
 import electricalservices from "../../../assets/HomeServices/electricalservices.jpg";
 import plumbingservices from "../../../assets/HomeServices/plumbingservices.jpg";
@@ -15,55 +16,116 @@ import handymangeneralrepair from "../../../assets/HomeServices/handymangenralre
 import homesecurityservice from "../../../assets/HomeServices/homesecuritservices.webp";
 
 import ServiceDetailsPopup from "./ServiceDetailsPopup";
-
-
-interface ServiceItem {
-  title: string;
-  description: string;
-  price: string;
-  image: string;
-}
-
-const services: ServiceItem[] = [
-  { title: "Cleaning Services", description: "Professional cleaning service", price: "$120", image: cleaningservices },
-  { title: "Electrical Services", description: "Licensed electrical repair", price: "$130", image: electricalservices },
-  { title: "Plumbing Service", description: "Expert plumbing repairs", price: "$120", image: plumbingservices },
-  { title: "Appliances Repair", description: "All home appliance repairs", price: "$100", image: appliancesrepair },
-  { title: "Carpentry & Furniture", description: "Woodwork & furniture repairs", price: "$200", image: carpentryfurniture },
-  { title: "Painting & Renovation", description: "Interior & exterior painting", price: "$400", image: paintingrenovation },
-  { title: "HVAC & Cooling", description: "AC repair & service", price: "$150", image: hvaccooling },
-  { title: "Gardening & Outdoor Care", description: "Garden maintenance", price: "$90", image: gardeningoutdoor },
-  { title: "Handyman / General Repair", description: "General repairs", price: "$110", image: handymangeneralrepair },
-  { title: "Home Security Services", description: "CCTV installation", price: "$250", image: homesecurityservice },
-];
+import ServiceRequestForm from "./ServiceDetailsForm";
 
 export default function HomeServices() {
   const [selectedService, setSelectedService] = useState<PopupCategory | null>(null);
+  const [selectedSubService, setSelectedSubService] = useState<any>(null);
 
-  const [popupOpen, setPopupOpen] = useState(false);
+  const [detailsPopupOpen, setDetailsPopupOpen] = useState(false);
+  const [formPopupOpen, setFormPopupOpen] = useState(false);
+
   const [showAll, setShowAll] = useState(false);
 
-  const displayedCards = showAll ? services : services.slice(0, 4);
+  const services = [
+    { title: "Cleaning Services", description: "Professional cleaning service", price: "$120", image: cleaningservices },
+    { title: "Electrical Services", description: "Licensed electrical repair", price: "$130", image: electricalservices },
+    { title: "Plumbing Service", description: "Expert plumbing repairs", price: "$120", image: plumbingservices },
+    { title: "Appliances Repair", description: "All home appliance repairs", price: "$100", image: appliancesrepair },
+    { title: "Carpentry & Furniture", description: "Woodwork & furniture repairs", price: "$200", image: carpentryfurniture },
+    { title: "Painting & Renovation", description: "Interior & exterior painting", price: "$400", image: paintingrenovation },
+    { title: "HVAC & Cooling", description: "AC repair & service", price: "$150", image: hvaccooling },
+    { title: "Gardening & Outdoor Care", description: "Garden maintenance", price: "$90", image: gardeningoutdoor },
+    { title: "Handyman / General Repair", description: "General repairs", price: "$110", image: handymangeneralrepair },
+    { title: "Home Security Services", description: "CCTV installation", price: "$250", image: homesecurityservice },
+  ];
 
-  // Safe openPopup function
-  const openPopup = (serviceTitle: string) => {
-    const data = popupData[serviceTitle];
-    if (data) {
-      setSelectedService(data);
-      setPopupOpen(true);
-    } else {
-      console.warn("No popup data found for:", serviceTitle);
-    }
+
+
+
+  const displayedCards = showAll ? services : services.slice(0, 4);
+  
+  // OPEN POPUP 1
+const openDetailsPopup = (serviceTitle: string) => {
+  const data = popupData[serviceTitle];
+  if (!data) return;
+
+  setSelectedService(data);
+  setSelectedSubService(null);
+
+  setFormPopupOpen(false);
+  setDetailsPopupOpen(true);
+};
+
+// OPEN POPUP 2
+const openFormPopup = (subService: any) => {
+  setSelectedSubService(subService);
+
+  setDetailsPopupOpen(false);
+  setFormPopupOpen(true);
+};
+
+// SUBMIT POPUP 2
+
+const handleFormSubmit = (formData: any) => {
+  const payload = {
+    ...formData,
+    serviceInfo: {
+      title: selectedSubService.title,
+      price: selectedSubService.price,
+      image: selectedSubService.image,
+      description: selectedSubService.description,
+      includedList: selectedSubService.includedList,
+    },
+      //  serviceInfo: selectedSubService,
   };
+
+  console.log("Payload to backend:", payload);
+
+  // axios.post("/api/service-request", payload)
+  //   .then(res => console.log(res))
+  //   .catch(err => console.error(err));
+
+  setFormPopupOpen(false);
+  setDetailsPopupOpen(true);
+};
+
+
+
+
+
+// CANCEL POPUP 2
+const handleFormCancel = () => {
+  setFormPopupOpen(false);
+  setDetailsPopupOpen(true);
+};
+
+
+
+
+
+
+
+
+
 
   return (
     <div className="home-services-container">
       {/* HEADER */}
       <div className="services-top-banner">
-        <div>
-          <h2 className="banner-title">Home Services</h2>
-          <p className="banner-subtitle">{services.length} services available</p>
-        </div>
+          <div className="banner-left">
+              <div className="banner-icon">
+      <ToolOutlined />
+    </div>
+
+    <div>
+      <h2 className="banner-title">Home Services</h2>
+      <p className="banner-subtitle">{services.length} services available</p>
+    </div>
+  </div>
+
+
+
 
         <Button
           className="header-viewall-btn"
@@ -74,50 +136,56 @@ export default function HomeServices() {
       </div>
 
       {/* GRID */}
-      <Row gutter={[4,8]} className="services-grid">
+      <div className="services-card-grid">
         {displayedCards.map((service, i) => (
-          <Col
-            xs={24}
-      sm={12}
-      md={12}
-      lg={6}   
-      xl={6}   
-      key={i}
-      className="center-last-row"
-   
- 
-
-           
-          >
+          <div className="service-card-wrapper" key={i}>
             <Card
               hoverable
               className="service-card"
               cover={<img src={service.image} alt="" className="service-image" />}
             >
               <h3 className="service-title">{service.title}</h3>
-              {/* <p className="service-desc">{service.description}</p> */}
-              {/* <Text className="service-price">{service.price}</Text> */}
 
-              <Button className="details-btn" block onClick={() => openPopup(service.title)}>
+              <Button
+                className="details-btn"
+                block
+                onClick={() => openDetailsPopup(service.title)}
+              >
                 View Details
               </Button>
             </Card>
-          </Col>
+          </div>
         ))}
-      </Row>
+      </div>
 
-      {/* Popup */}
-      {popupOpen && selectedService && (
-        <ServiceDetailsPopup
-          open={popupOpen}
-          onClose={() => {
-            setPopupOpen(false);
-            setSelectedService(null);
-          }}
-          mainTitle={selectedService.mainTitle}
-          subServices={selectedService.subServices || []} // Fallback if subServices is empty
-        />
-      )}
+      {detailsPopupOpen && selectedService && (
+  <ServiceDetailsPopup
+    open={detailsPopupOpen}
+    onClose={() => setDetailsPopupOpen(false)}
+    mainTitle={selectedService.mainTitle}
+    subServices={selectedService.subServices}
+    onOpenForm={openFormPopup}
+  />
+)}
+
+{formPopupOpen && selectedSubService && (
+  <ServiceRequestForm
+    open={formPopupOpen}
+    onCancel={handleFormCancel}
+    onSubmit={handleFormSubmit}
+    image={selectedSubService.image}
+    title={selectedSubService.title}
+    description={selectedSubService.description}
+    includedList={selectedSubService.includedList}
+    issues={selectedSubService.issues}
+    price={selectedSubService.price}
+  />
+)}
+
+
+
+     
     </div>
   );
 }
+
