@@ -66,6 +66,14 @@ const HeaderBar: React.FC = () => {
       key: "construction",
       label: <span className="menu-item">Construction Materials</span>,
     },
+     {
+      key: "freelancer",
+      label: <span className="menu-item">Freelancer</span>,
+    },
+    {
+      key: "location",
+      label: <span className="menu-item">Location</span>,
+    },
   ];
 
   return (

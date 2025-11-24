@@ -27,6 +27,8 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import "./ConstructionMaterials.css";
 import heroImage from "../../assets/landingimages/brickwall.jpg";
+import heroImage1 from "../../assets/landingimages/brickwall.jpg";
+
 const { Title, Text } = Typography;
 const { Option } = Select;
 const { TabPane } = Tabs;
@@ -39,6 +41,8 @@ const navItems = [
   { key: "rentals", label: <Link to="/rentals">Rentals</Link> },
   { key: "commercial", label: <Link to="/commercial-plots">Buy&Sale Properties</Link> },
   { key: "materials", label: <Link to="/ConstructionMaterials">Construction Materials</Link> },
+  { key: "freelancer", label: <Link to="/Freelancer">Freelancer</Link> },
+  //  { key: "location", label: <Link to="">Location</Link> },
 ];
 /* ================= NAVBAR SECTION ================= */
 interface NavbarProps {
@@ -87,7 +91,7 @@ const services = [
 const featuredProducts = [
   {
     title: "Premium Portland Cement",
-    image: "https://via.placeholder.com/300x200?text=Cement",
+    image: heroImage1,
     price: "$8.50 per bag (50kg)",
     rating: "4.8/5",
     details: ["High Strength", "Quick Setting", "Weather Resistant"],

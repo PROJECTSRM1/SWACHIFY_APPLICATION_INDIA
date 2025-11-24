@@ -364,4 +364,111 @@ html, body {
   }
 }
 
+/* ===== compact navbar for hs-navbar / hs-navbar-menu (ADD THIS) ===== */
+
+/* Make sure header class names used in TSX are handled */
+.hs-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* keep logo left and sign-up right */
+  gap: 16px;
+  padding: 12px 24px; /* slightly reduced padding so more space for menu */
+  box-sizing: border-box;
+}
+
+/* Prevent the Menu from stretching full width and remove extra internal spacing */
+.hs-navbar .hs-navbar-menu {
+  width: auto;               /* don't force it to full width */
+  flex: 1 1 auto;            /* allow it to grow but not push things off */
+  display: flex;
+  justify-content: center;   /* center the nav links (change to flex-start if you want left) */
+  align-items: center;
+  overflow: visible;
+}
+
+/* AntD horizontal menu - make items compact */
+.hs-navbar .hs-navbar-menu .ant-menu-horizontal {
+  display: flex;
+  gap: 6px;                 /* small gap between items (was large before) */
+  align-items: center;
+  line-height: 1;
+  background: transparent;
+  border-bottom: none;
+}
+
+/* Reduce padding inside each menu item */
+.hs-navbar .hs-navbar-menu .ant-menu-item {
+  padding: 0 10px;          /* compact left/right padding */
+  height: auto;
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  font-size: 0.98rem;       /* slightly smaller to fit more items */
+  white-space: nowrap;      /* keep label on one line */
+}
+
+/* If Link within menu has extra margin, remove it */
+.hs-navbar .hs-navbar-menu .ant-menu-item a {
+  margin: 0;
+  padding: 8px 4px;
+  display: inline-block;
+}
+
+/* make sure logo doesn't shrink too small */
+.hs-navbar-logo {
+  flex: 0 0 auto;
+  margin-right: 8px;
+}
+
+/* keep the Sign Up button visible and not pushed off-screen */
+.hs-contact-btn {
+  flex: 0 0 auto;
+  margin-left: 12px;
+}
+
+/* =============================
+   FINAL ULTRA-TIGHT NAVBAR (100% ZOOM)
+   ============================= */
+
+/* Move menu close to logo */
+.hs-navbar-menu {
+  margin-left: 10px !important;
+  padding: 0 !important;
+}
+
+/* Tighter gap between items */
+.hs-navbar-menu .ant-menu-horizontal {
+  gap: 4px !important;          /* ultra tight gap */
+  padding: 0 !important;
+  margin: 0 !important;
+  border-bottom: none !important;
+}
+
+/* Shrink each menu item */
+.hs-navbar-menu .ant-menu-item {
+  padding: 0 4px !important;    /* ultra narrow padding */
+  margin: 0 !important;
+  font-size: 0.85rem !important; /* smaller text so everything fits at 100% */
+  font-weight: 600 !important;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+  min-width: 0 !important;
+}
+
+/* Shrink anchor text */
+.hs-navbar-menu .ant-menu-item a {
+  padding: 1px 0px !important;
+  margin: 0 !important;
+  font-size: 0.85rem !important;
+}
+
+/* Remove underline */
+.hs-navbar-menu .ant-menu-item::after {
+  display: none !important;
+}
+
+/* Keep navbar fixed and static */
+.hs-navbar-menu {
+  overflow: visible !important;
+}
 

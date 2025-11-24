@@ -14,6 +14,7 @@ import ConstructionMaterials from '../../pages/landing/ConstructionMaterials';
 import LandingCleaningPage from "../../pages/landing/landingcleaningpage";
 //Import rentals page (file: src/pages/landing/landingrentals.tsx)
 import Landingrentals from "../../pages/landing/landingrentals";
+import Freelancer from '../../pages/landing/Freelancer';
 
 export const NonSecureRoutes = () => {
   const navigate = useNavigate();
@@ -46,6 +47,7 @@ export const NonSecureRoutes = () => {
 
       {/* rentals landing page */}
       <Route path="/rentals" element={<Landingrentals />} />
+      <Route path="/freelancer" element={<Freelancer />} />
 
       
     </Routes>
