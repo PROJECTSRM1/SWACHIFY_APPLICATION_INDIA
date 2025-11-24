@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Row, Col, Card, Button } from 'antd';
 import { ShopOutlined, HomeOutlined } from '@ant-design/icons';
 import './CommercialPropertyTypePage.css';
@@ -9,12 +8,22 @@ import shopImg from '../../../../assets/HomeRental/startup1.jpg';
 import warehouseImg from '../../../../assets/HomeRental/WareHouse.jpg';
 import plotImg from '../../../../assets/HomeRental/openplot.jpg';
 
-const CommercialPropertyTypePage: React.FC = () => {
-  const navigate = useNavigate();
+interface CommercialPropertyTypePageProps {
+  onSelectType?: (typeId: string) => void;
+}
+
+const CommercialPropertyTypePage: React.FC<CommercialPropertyTypePageProps> = ({ onSelectType }) => {
+
+  const handleViewProperties = (typeId: string) => {
+    if (onSelectType) {
+      onSelectType(typeId);
+      return;
+    }
+  };
 
   const commercialPropertyTypes = [
     {
-      id: 'Startup',
+      id: 'startups',
       title: 'StartUp',
       subtitle: 'Retail StartUp and Showrooms for your business',
       image: shopImg,
@@ -63,7 +72,7 @@ const CommercialPropertyTypePage: React.FC = () => {
                     </div>
                     <Button
                       className="ptc-view-btn"
-                      onClick={() => navigate(`/commercial/${type.id}`)}
+                      onClick={() => handleViewProperties(type.id)}
                     >
                       View Properties
                     </Button>

@@ -1,5 +1,4 @@
 import React from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
 import {
   Row,
   Col,
@@ -28,7 +27,6 @@ import './PropertyDetailsPage.css';
 import apartment1Img from '../../../../assets/HomeRental/img.jpg';
 import apartment2Img from '../../../../assets/HomeRental/apart.jpg';
 import apartment3Img from '../../../../assets/HomeRental/threed.jpg';
-// import apartment4Img from "../assests/modern-bathroom-with-big-mirror.jpg"
 import villa1Img from '../../../../assets/HomeRental/villa.jpg';
 import villa2Img from '../../../../assets/HomeRental/bedroom.jpg';
 import house1Img from '../../../../assets/HomeRental/threed.jpg';
@@ -45,7 +43,7 @@ import modernBathroomImg from "../../../../assets/HomeRental/smarthometechnology
 import villaImg2 from "../../../../assets/HomeRental/VillaLuxury.jpg"
 
 /*Commericial*/
-// import opelPlotImg from "../assests/HomeRental/openplot.jpg"../../../
+// import opelPlotImg from "../assests/HomeRental/openplot.jpg"
 
 
 import plot1Img from "../../../../assets/HomeRental/openplot3.jpg";
@@ -82,9 +80,12 @@ interface PropertyDetails {
   description: string;
 }
 
-const PropertyDetailsPage: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
+interface PropertyDetailsPageProps {
+  propertyId?: string;
+  onClose?: () => void;
+}
+
+const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, onClose }) => {
   const [form] = Form.useForm();
 
   // Details for each property (ids match ApartmentListingsPage)
@@ -417,8 +418,9 @@ const PropertyDetailsPage: React.FC = () => {
   };
 
   // Fallback to a default property if id is missing or incorrect
+  const activePropertyId = propertyId || 'apt-1';
   const property: PropertyDetails =
-    (id && propertiesById[id]) || propertiesById['apt-1'];
+    (activePropertyId && propertiesById[activePropertyId]) || propertiesById['apt-1'];
   
   // Determine property type for form selection
   const isResidential = property.id.startsWith('apt-') || property.id.startsWith('villa-') || property.id.startsWith('house-');
@@ -456,7 +458,11 @@ const PropertyDetailsPage: React.FC = () => {
         <Button
           type="text"
           icon={<ArrowLeftOutlined />}
-          onClick={() => navigate(-1)}
+          onClick={() => {
+            if (onClose) {
+              onClose();
+            }
+          }}
           className="back-btn"
         >
           Back to Listings
@@ -867,4 +873,3 @@ const PropertyDetailsPage: React.FC = () => {
 };
 
 export default PropertyDetailsPage;
-
