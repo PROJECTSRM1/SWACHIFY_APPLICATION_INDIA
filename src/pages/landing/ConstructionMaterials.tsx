@@ -159,7 +159,7 @@ const productCategories = [
     title: "Plumbing & Electrical",
     items: ["PPR Pipes", "Copper Wires", "Switches", "Fittings"],
     image: PlumbingElectrical,
-  },
+   },
 ];
 
 /* ================= AUTH MODAL ================= */
