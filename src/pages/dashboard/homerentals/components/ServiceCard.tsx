@@ -2,7 +2,6 @@ import React from 'react';
 import { Card, Button } from 'antd';
 import { EyeOutlined } from '@ant-design/icons';
 import './ServiceCard.css';
-// import { Navigate } from 'react-router-dom';
 
 interface Props {
   title: string;

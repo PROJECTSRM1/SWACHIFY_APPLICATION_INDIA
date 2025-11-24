@@ -52,6 +52,8 @@ import smartsecuritydevicesetup from "../../../assets/HomeServices/HomeSecurityS
 
 
 
+
+
 // ⭐ Reusable type for each sub-service
 export type SubService = {
   title: string;
@@ -72,991 +74,1120 @@ export type PopupCategory = {
 export type PopupDataType = Record<string, PopupCategory>;
 
 // ⭐ Your popup data — now cleanly typed and error-free
-export const popupData: PopupDataType = {
+export const popupData: PopupDataType =
+ 
+{
+
   "Cleaning Services": {
-    mainTitle: "Cleaning Services",
-    subServices: [
-      {
-        title: "Home Cleaning",
-        description: "Full home cleaning service",
-        image: cleaning,
-        price: "₹499",
-        includedList: [
-          "Certified technician",
-          "Quality tools and equipment",
-          "Genuine Spare Parts",
-          "Service warranty",  
-        ],
-        issues: [
-          "Dust accumulation",
-          "Stains on floor",
-          "Deep cleaning needed",
-          "General cleaning"
-        ]
-      },
-      {
-        title: "Mattress Cleaning",
-        description: "Deep mattress cleaning",
-        image: mattress,
-        price: "₹299",
-        includedList: [
-          "Steam cleaning",
-          "Dust mite removal",
-          "Fabric-safe chemicals",
-          "Deep sanitization"
-        ],
-        issues: [
-           "Dust mites",
-          "Bad odor",
-          "Sweat stains",
-         "Food or drink spills",
-     
-        ]
-      },
-
-       {
-        title: "Kitchen Cleaning",
-        description: "Deep kitchen cleaning",
-        image: kitchen,
-        price: "₹299",
-        includedList: [
-          "Steam cleaning",
-          "Dust mite removal",
-          "Fabric-safe chemicals",
-          "Deep sanitization"
-        ],
-        issues: [
-            "Grease buildup",
-  "Stains on countertop",
-  "Dirty exhaust fan",
-  "Oil stains near stove",
-         
-        ]
-      },
-        {
-        title: "Bathroom Cleaning",
-        description: "Deep kitchen cleaning",
-        image: bathroom,
-        price: "₹299",
-        includedList: [
-          "Steam cleaning",
-          "Dust mite removal",
-          "Fabric-safe chemicals",
-          "Deep sanitization"
-        ],
-        issues: [
-           "Hard water stains",
-  "Clogged drain",
-  "Mold & mildew",
-  "Deep cleaning required"
-         
-        ]
-      },
-        {
-        title: "Pest Control & DisInfection",
-        description: "Pest Control & DisInfection will be done",
-        image: pestcontroll,
-        price: "₹299",
-        includedList: [
-          "Steam cleaning",
-          "Dust mite removal",
-          "Fabric-safe chemicals",
-          "Deep sanitization"
-        ],
-        issues: [
-           "Cockroach infestation",
-  "Ant infestation",
-  "Mosquito issue",
-  "Bed bugs",
-        ]
-      },
-    ]
-  },
-
-
-
-
-  "Electrical Services": {
-    mainTitle: "Electrical Services",
-    subServices: [
-      {
-        title: "Wiring & Lighting Install",
-        description: "Wiring, lighting & setup",
-        image: wiringlighting,
-        price: "₹130",
-        includedList: [
-          "Certified technician",
-          "Safety compliance",
-          "Quality tools",
-          "Post-service cleanup"
-        ],
-        issues: [
-          "Wiring issue",
-          "Bulb not working",
-          "Short circuit",
-          "Switch issue"
-        ]
-      },
-      {
-        title: "Fan Appliances Repair",
-        description: "Repairing ceiling & wall fans",
-        image: fanappliances,
-        price: "₹199",
-        includedList: [
-          "Genuine spare parts",
-          "Warranty included",
-          "Expert electrician"
-        ],
-        issues: [
-          "Fan not rotating",
-          "Fan making noise",
-          "Fan not starting",
-          "Regulator issue"
-        ]
-      },
-        {
-        title: "Circuit Breaker Switchboard Fixing",
-        description: "Repairing ceiling & wall fans",
-        image: circuitbreaker,
-        price: "₹199",
-        includedList: [
-          "Genuine spare parts",
-          "Warranty included",
-          "Expert electrician"
-        ],
-        issues: [
-          "Fan not rotating",
-          "Fan making noise",
-          "Fan not starting",
-          "Regulator issue"
-        ]
-      },
-       {
-        title: "smart Home Device Installation",
-        description: "Smart device setup",
-        image: smarthomedevice,
-        price: "₹199",
-        includedList: [
-          "Genuine spare parts",
-          "Warranty included",
-          "Expert electrician"
-        ],
-        issues: [
-  "Device not connecting",
-  "App setup required",
-  "Mounting installation",
-  "Wi-Fi connectivity issue"
-         
-        ]
-      },
-
-    ]
-  },
-
-    "Plumbing Service": {
-    mainTitle: "Plumbing Service",
-    subServices: [
-      {
-        title: "Leak Repair",
-        description: "Full home cleaning service",
-        image: leakrepair,
-        price: "₹499",
-        includedList: [
-          "Certified technician",
-          "Quality tools and equipment",
-          "Service warranty",
-          "Post-service cleanup"
-        ],
-        issues: [
-          "Dust accumulation",
-          "Stains on floor",
-          "Deep cleaning needed",
-          "General cleaning"
-        ]
-      },
-      {
-        title: "PipeFitting",
-        description: "Deep mattress cleaning",
-        image: pipefittings,
-        price: "₹299",
-        includedList: [
-          "Steam cleaning",
-          "Dust mite removal",
-          "Fabric-safe chemicals",
-          "Deep sanitization"
-        ],
-        issues: [
-          "Bad smell",
-          "Dust mites",
-          "Stains on mattress",
-          "General cleaning"
-        ]
-      },
-
-       {
-        title: "Geyser Installation",
-        description: "Deep kitchen cleaning",
-        image: Geyserinstallation,
-        price: "₹299",
-        includedList: [
-          "Steam cleaning",
-          "Dust mite removal",
-          "Fabric-safe chemicals",
-          "Deep sanitization"
-        ],
-        issues: [
-          "Bad smell",
-          "Dust mites",
-          "Stains on mattress",
-          "General cleaning"
-        ]
-      },
-        {
-        title: "Bathroom Fitting",
-        description: "Deep kitchen cleaning",
-        image: Bathroomfittings,
-        price: "₹299",
-        includedList: [
-          "Steam cleaning",
-          "Dust mite removal",
-          "Fabric-safe chemicals",
-          "Deep sanitization"
-        ],
-        issues: [
-          "Bad smell",
-          "Dust mites",
-          "Stains on mattress",
-          "General cleaning"
-        ]
-      },
-        {
-        title: "Water Tank",
-        description: "Pest Control & DisInfection will be done",
-        image: Watertank,
-        price: "₹299",
-        includedList: [
-          "Steam cleaning",
-          "Dust mite removal",
-          "Fabric-safe chemicals",
-          "Deep sanitization"
-        ],
-        issues: [
-          "Bad smell",
-          "Dust mites",
-          "Stains on mattress",
-          "General cleaning"
-        ]
-      },
-         {
-        title: "Drain Cleaning",
-        description: "Pest Control & DisInfection will be done",
-        image: Drincleaning,
-        price: "₹299",
-        includedList: [
-          "Steam cleaning",
-          "Dust mite removal",
-          "Fabric-safe chemicals",
-          "Deep sanitization"
-        ],
-        issues: [
-          "Bad smell",
-          "Dust mites",
-          "Stains on mattress",
-          "General cleaning"
-        ]
-      }
-    ]
-  },
-
-
-    "Appliances Repair": {
-    mainTitle: "Appliances Repair",
-    subServices: [
-      {
-        title: "Ac Repair",
-        description: "Full home cleaning service",
-        image: acrepair,
-        price: "₹499",
-        includedList: [
-          "Certified technician",
-          "Quality tools and equipment",
-          "Service warranty",
-          "Post-service cleanup"
-        ],
-        issues: [
-          "Dust accumulation",
-          "Stains on floor",
-          "Deep cleaning needed",
-          "General cleaning"
-        ]
-      },
-      {
-        title: "refrigerator Repair",
-        description: "Deep mattress cleaning",
-        image: refrigeratorrepair,
-        price: "₹299",
-        includedList: [
-          "Steam cleaning",
-          "Dust mite removal",
-          "Fabric-safe chemicals",
-          "Deep sanitization"
-        ],
-        issues: [
-          "Bad smell",
-          "Dust mites",
-          "Stains on mattress",
-          "General cleaning"
-        ]
-      },
-
-       {
-        title: "Washing Machine Repairs",
-        description: "Deep kitchen cleaning",
-        image: washingrepair,
-        price: "₹299",
-        includedList: [
-          "Steam cleaning",
-          "Dust mite removal",
-          "Fabric-safe chemicals",
-          "Deep sanitization"
-        ],
-        issues: [
-          "Bad smell",
-          "Dust mites",
-          "Stains on mattress",
-          "General cleaning"
-        ]
-      },
-        {
-        title: "Microwave Servicing",
-        description: "Deep kitchen cleaning",
-        image: microwave,
-        price: "₹299",
-        includedList: [
-          "Steam cleaning",
-          "Dust mite removal",
-          "Fabric-safe chemicals",
-          "Deep sanitization"
-        ],
-        issues: [
-          "Bad smell",
-          "Dust mites",
-          "Stains on mattress",
-          "General cleaning"
-        ]
-      },
-        {
-        title: "TV Servicing",
-        description: "Pest Control & DisInfection will be done",
-        image: tvservice,
-        price: "₹299",
-        includedList: [
-          "Steam cleaning",
-          "Dust mite removal",
-          "Fabric-safe chemicals",
-          "Deep sanitization"
-        ],
-        issues: [
-          "Bad smell",
-          "Dust mites",
-          "Stains on mattress",
-          "General cleaning"
-        ]
-      },
-         {
-        title: "Regular Maintance",
-        description: "Pest Control & DisInfection will be done",
-        image: regularmaintance,
-        price: "₹299",
-        includedList: [
-          "Steam cleaning",
-          "Dust mite removal",
-          "Fabric-safe chemicals",
-          "Deep sanitization"
-        ],
-        issues: [
-          "Bad smell",
-          "Dust mites",
-          "Stains on mattress",
-          "General cleaning"
-        ]
-      }, {
-        
-        title: "Spare Parts & Replacement",
-        description: "Pest Control & DisInfection will be done",
-        image: sparepart,
-        price: "₹299",
-        includedList: [
-          "Steam cleaning",
-          "Dust mite removal",
-          "Fabric-safe chemicals",
-          "Deep sanitization"
-        ],
-        issues: [
-          "Bad smell",
-          "Dust mites",
-          "Stains on mattress",
-          "General cleaning"
-        ]
-      }
-    ]
-  },
-
-
-  
-    "Carpentry & Furniture": {
-    mainTitle: "Carpentry & Furniture",
-    subServices: [
-      {
-        title: "Custom Furniture Making",
-        description: "Full home cleaning service",
-        image: customfurniture,
-        price: "₹499",
-        includedList: [
-          "Certified technician",
-          "Quality tools and equipment",
-          "Service warranty",
-          "Post-service cleanup"
-        ],
-        issues: [
-          "Dust accumulation",
-          "Stains on floor",
-          "Deep cleaning needed",
-          "General cleaning"
-        ]
-      },
-      {
-        title: "Furnitu Rerepair",
-        description: "Deep mattress cleaning",
-        image: furniturerepair,
-        price: "₹299",
-        includedList: [
-          "Steam cleaning",
-          "Dust mite removal",
-          "Fabric-safe chemicals",
-          "Deep sanitization"
-        ],
-        issues: [
-          "Bad smell",
-          "Dust mites",
-          "Stains on mattress",
-          "General cleaning"
-        ]
-      },
-
-       {
-        title: "Doors And Windows Fixing",
-        description: "Deep kitchen cleaning",
-        image: doorwindows,
-        price: "₹299",
-        includedList: [
-          "Steam cleaning",
-          "Dust mite removal",
-          "Fabric-safe chemicals",
-          "Deep sanitization"
-        ],
-        issues: [
-          "Bad smell",
-          "Dust mites",
-          "Stains on mattress",
-          "General cleaning"
-        ]
-      },
-        {
-        title: "Wardrobe And Cabinet Installation",
-        description: "Deep kitchen cleaning",
-        image: wardrob,
-        price: "₹299",
-        includedList: [
-          "Steam cleaning",
-          "Dust mite removal",
-          "Fabric-safe chemicals",
-          "Deep sanitization"
-        ],
-        issues: [
-          "Bad smell",
-          "Dust mites",
-          "Stains on mattress",
-          "General cleaning"
-        ]
-      }
-    ]
+  mainTitle: "Cleaning Services",
+  subServices: [
+    {
+      title: "Home Cleaning",
+      description: "Complete home cleaning with sanitation",
+      image: cleaning,
+      price: "₹799",
+      includedList: [
+        "Professional staff",
+        "Eco-friendly products",
+        "Floor & surface cleaning",
+        "Kitchen & bathroom touch-up",
+        "Post-service inspection"
+      ],
+      issues: [
+        "Dust build-up",
+        "Dirty floors",
+        "Unclean surfaces",
+        "Mild stains",
+        "General cleaning needs"
+      ]
     },
 
-     "Painting & Renovation": {
-    mainTitle: "Painting & Renovation",
-    subServices: [
-      {
-        title: "Interior Painting",
-        description: "Full home cleaning service",
-        image: interiorpainting,
-        price: "₹499",
-        includedList: [
-          "Certified technician",
-          "Quality tools and equipment",
-          "Service warranty",
-          "Post-service cleanup"
-        ],
-        issues: [
-          "Dust accumulation",
-          "Stains on floor",
-          "Deep cleaning needed",
-          "General cleaning"
-        ]
-      },
-      {
-        title: "Exterior Painting",
-        description: "Deep mattress cleaning",
-        image: exteriorpainting,
-        price: "₹299",
-        includedList: [
-          "Steam cleaning",
-          "Dust mite removal",
-          "Fabric-safe chemicals",
-          "Deep sanitization"
-        ],
-        issues: [
-          "Bad smell",
-          "Dust mites",
-          "Stains on mattress",
-          "General cleaning"
-        ]
-      },
-
-       {
-        title: "Wallpaper And Touchup Works",
-        description: "Deep kitchen cleaning",
-        image: wallpaper,
-        price: "₹299",
-        includedList: [
-          "Steam cleaning",
-          "Dust mite removal",
-          "Fabric-safe chemicals",
-          "Deep sanitization"
-        ],
-        issues: [
-          "Bad smell",
-          "Dust mites",
-          "Stains on mattress",
-          "General cleaning"
-        ]
-      },
-        {
-        title: "Water Profing",
-        description: "Deep kitchen cleaning",
-        image:waterproof,
-        price: "₹299",
-        includedList: [
-          "Steam cleaning",
-          "Dust mite removal",
-          "Fabric-safe chemicals",
-          "Deep sanitization"
-        ],
-        issues: [
-          "Bad smell",
-          "Dust mites",
-          "Stains on mattress",
-          "General cleaning"
-        ]
-      },
-      
-        {
-        title: "Wall Repair",
-        description: "Deep kitchen cleaning",
-        image:wallrepair,
-        price: "₹299",
-        includedList: [
-          "Steam cleaning",
-          "Dust mite removal",
-          "Fabric-safe chemicals",
-          "Deep sanitization"
-        ],
-        issues: [
-          "Bad smell",
-          "Dust mites",
-          "Stains on mattress",
-          "General cleaning"
-        ]
-      }
-    ]
-    },
-    "HVAC & Cooling": {
-    mainTitle: "HVAC & Cooling",
-    subServices: [
-      {
-        title: "Ac Installation",
-        description: "Full home cleaning service",
-        image: acinstalla,
-        price: "₹499",
-        includedList: [
-          "Certified technician",
-          "Quality tools and equipment",
-          "Service warranty",
-          "Post-service cleanup"
-        ],
-        issues: [
-          "Dust accumulation",
-          "Stains on floor",
-          "Deep cleaning needed",
-          "General cleaning"
-        ]
-      },
-      {
-        title: "Ac Service",
-        description: "Deep mattress cleaning",
-        image:acservice,
-        price: "₹299",
-        includedList: [
-          "Steam cleaning",
-          "Dust mite removal",
-          "Fabric-safe chemicals",
-          "Deep sanitization"
-        ],
-        issues: [
-          "Bad smell",
-          "Dust mites",
-          "Stains on mattress",
-          "General cleaning"
-        ]
-      },
-
-       {
-        title: "Ac Duct Cleaning",
-        description: "Deep kitchen cleaning",
-        image: acduct,
-        price: "₹299",
-        includedList: [
-          "Steam cleaning",
-          "Dust mite removal",
-          "Fabric-safe chemicals",
-          "Deep sanitization"
-        ],
-        issues: [
-          "Bad smell",
-          "Dust mites",
-          "Stains on mattress",
-          "General cleaning"
-        ]
-      },
-        {
-        title: "Ac Filter Replacement",
-        description: "Deep kitchen cleaning",
-        image:acfilter,
-        price: "₹299",
-        includedList: [
-          "Steam cleaning",
-          "Dust mite removal",
-          "Fabric-safe chemicals",
-          "Deep sanitization"
-        ],
-        issues: [
-          "Bad smell",
-          "Dust mites",
-          "Stains on mattress",
-          "General cleaning"
-        ]
-      },
-         {
-        title: "Cooling System Maintaince",
-        description: "Deep kitchen cleaning",
-        image:cooling,
-        price: "₹299",
-        includedList: [
-          "Steam cleaning",
-          "Dust mite removal",
-          "Fabric-safe chemicals",
-          "Deep sanitization"
-        ],
-        issues: [
-          "Bad smell",
-          "Dust mites",
-          "Stains on mattress",
-          "General cleaning"
-        ]
-      }
-    ]
+    {
+      title: "Mattress Cleaning",
+      description: "Deep mattress cleaning and sanitizing",
+      image: mattress,
+      price: "₹499",
+      includedList: [
+        "Deep vacuuming",
+        "Dust mite removal",
+        "Anti-bacterial treatment",
+        "Spot stain cleaning",
+        "Deep sanitization"
+      ],
+      issues: [
+        "Bad odor",
+        "Dust mites",
+        "Sweat stains",
+        "Allergy issues",
+        "General dirt"
+      ]
     },
 
-    
-  "Gardening & Outdoor Care": {
-    mainTitle: "Gardening & Outdoor Care",
-    subServices: [
-      {
-        
-        title: "Lawn Maintanance",
-        description: "Wiring, lighting & setup",
-        image:lawnmaintaince,
-        price: "₹130",
-        includedList: [
-          "Certified technician",
-          "Safety compliance",
-          "Quality tools",
-          "Post-service cleanup"
-        ],
-        issues: [
-          "Wiring issue",
-          "Bulb not working",
-          "Short circuit",
-          "Switch issue"
-        ]
-      },
-      {
-        title: "land Scaping",
-        description: "Repairing ceiling & wall fans",
-        image: landscaping,
-        price: "₹199",
-        includedList: [
-          "Genuine spare parts",
-          "Warranty included",
-          "Expert electrician"
-        ],
-        issues: [
-          "Fan not rotating",
-          "Fan making noise",
-          "Fan not starting",
-          "Regulator issue"
-        ]
-      },
-        {
-        title: "Outdoor Cleaning",
-        description: "Repairing ceiling & wall fans",
-        image: outdoorcleaning,
-        price: "₹199",
-        includedList: [
-          "Genuine spare parts",
-          "Warranty included",
-          "Expert electrician"
-        ],
-        issues: [
-          "Fan not rotating",
-          "Fan making noise",
-          "Fan not starting",
-          "Regulator issue"
-        ]
-      },
-       {
-        title: "Garden Pest control And Care",
-        description: "Repairing ceiling & wall fans",
-        image:gardenpest,
-        price: "₹199",
-        includedList: [
-          "Genuine spare parts",
-          "Warranty included",
-          "Expert electrician"
-        ],
-        issues: [
-          "Fan not rotating",
-          "Fan making noise",
-          "Fan not starting",
-          "Regulator issue"
-        ]
-      },
-
-    ]
-  },
-
-
-  
-     "Handyman / General Repair": {
-    mainTitle: "Handyman / General Repair",
-    subServices: [
-      {
-        title: "TV Mounting",
-        description: "Full home cleaning service",
-        image: tvmounting,
-        price: "₹499",
-        includedList: [
-          "Certified technician",
-          "Quality tools and equipment",
-          "Service warranty",
-          "Post-service cleanup"
-        ],
-        issues: [
-          "Dust accumulation",
-          "Stains on floor",
-          "Deep cleaning needed",
-          "General cleaning"
-        ]
-      },
-      {
-        title: "Shelf Mounting",
-        description: "Deep mattress cleaning",
-        image: shelfmounting,
-        price: "₹299",
-        includedList: [
-          "Steam cleaning",
-          "Dust mite removal",
-          "Fabric-safe chemicals",
-          "Deep sanitization"
-        ],
-        issues: [
-          "Bad smell",
-          "Dust mites",
-          "Stains on mattress",
-          "General cleaning"
-        ]
-      },
-
-       {
-        title: "Fixture Repair",
-        description: "Deep kitchen cleaning",
-        image: fixturerepair,
-        price: "₹299",
-        includedList: [
-          "Steam cleaning",
-          "Dust mite removal",
-          "Fabric-safe chemicals",
-          "Deep sanitization"
-        ],
-        issues: [
-          "Bad smell",
-          "Dust mites",
-          "Stains on mattress",
-          "General cleaning"
-        ]
-      },
-        {
-        title: "Furniture Repair",
-        description: "Deep kitchen cleaning",
-        image:furniturerepair,
-        price: "₹299",
-        includedList: [
-          "Steam cleaning",
-          "Dust mite removal",
-          "Fabric-safe chemicals",
-          "Deep sanitization"
-        ],
-        issues: [
-          "Bad smell",
-          "Dust mites",
-          "Stains on mattress",
-          "General cleaning"
-        ]
-      },
-      
-        {
-        title: "Minor Home Maintaince",
-        description: "Deep kitchen cleaning",
-        image:minorhome,
-        price: "₹299",
-        includedList: [
-          "Steam cleaning",
-          "Dust mite removal",
-          "Fabric-safe chemicals",
-          "Deep sanitization"
-        ],
-        issues: [
-          "Bad smell",
-          "Dust mites",
-          "Stains on mattress",
-          "General cleaning"
-        ]
-      }
-    ]
+    {
+      title: "Kitchen Cleaning",
+      description: "Deep kitchen cleaning and degreasing",
+      image: kitchen,
+      price: "₹649",
+      includedList: [
+        "Grease removal",
+        "Cabinet exterior cleaning",
+        "Appliance wipe-down",
+        "Sink sanitation",
+        "Floor scrubbing"
+      ],
+      issues: [
+        "Grease build-up",
+        "Dirty tiles",
+        "Stove stains",
+        "Unclean sink",
+        "General kitchen dirt"
+      ]
     },
 
-    
-     "Home Security Services": {
-    mainTitle: "Home Security Services",
-    subServices: [
-      {
-        title: "CCTV Installation",
-        description: "Full home cleaning service",
-        image: cctvinstallation,
-        price: "₹499",
-        includedList: [
-          "Certified technician",
-          "Quality tools and equipment",
-          "Service warranty",
-          "Post-service cleanup"
-        ],
-        issues: [
-          "Dust accumulation",
-          "Stains on floor",
-          "Deep cleaning needed",
-          "General cleaning"
-        ]
-      },
-      {
-        title: "Door Lock Installation",
-        description: "Deep mattress cleaning",
-        image: doorlock,
-        price: "₹299",
-        includedList: [
-          "Steam cleaning",
-          "Dust mite removal",
-          "Fabric-safe chemicals",
-          "Deep sanitization"
-        ],
-        issues: [
-          "Bad smell",
-          "Dust mites",
-          "Stains on mattress",
-          "General cleaning"
-        ]
-      },
+    {
+      title: "Bathroom Cleaning",
+      description: "Deep bathroom cleaning and sanitizing",
+      image: bathroom,
+      price: "₹549",
+      includedList: [
+        "Tile scrubbing",
+        "Hard water stain removal",
+        "Toilet deep cleaning",
+        "Glass cleaning",
+        "Germicidal sanitization"
+      ],
+      issues: [
+        "Hard water stains",
+        "Dirty tiles",
+        "Bad odor",
+        "Soap scum",
+        "General bathroom dirt"
+      ]
+    },
 
-       {
-        title: "Alaram System",
-        description: "Deep kitchen cleaning",
-        image: alaramsystem,
-        price: "₹299",
-        includedList: [
-          "Steam cleaning",
-          "Dust mite removal",
-          "Fabric-safe chemicals",
-          "Deep sanitization"
-        ],
-        issues: [
-          "Bad smell",
-          "Dust mites",
-          "Stains on mattress",
-          "General cleaning"
-        ]
-      },
-        {
-        title: "Motion Censor Systems",
-        description: "Deep kitchen cleaning",
-        image:motioncensor,
-        price: "₹299",
-        includedList: [
-          "Steam cleaning",
-          "Dust mite removal",
-          "Fabric-safe chemicals",
-          "Deep sanitization"
-        ],
-        issues: [
-          "Bad smell",
-          "Dust mites",
-          "Stains on mattress",
-          "General cleaning"
-        ]
-      },
-      
-        {
-        title: "Smart Security Device Setup",
-        description: "Deep kitchen cleaning",
-        image:smartsecuritydevicesetup,
-        price: "₹299",
-        includedList: [
-          "Steam cleaning",
-          "Dust mite removal",
-          "Fabric-safe chemicals",
-          "Deep sanitization"
-        ],
-        issues: [
-          "Bad smell",
-          "Dust mites",
-          "Stains on mattress",
-          "General cleaning"
-        ]
-      }
-    ]
+    {
+      title: "Pest Control & Disinfection",
+      description: "Pest removal with complete disinfection",
+      image: pestcontroll,
+      price: "₹899",
+      includedList: [
+        "Odorless chemicals",
+        "Cockroach/ant control",
+        "Gel & spray treatment",
+        "Home disinfection",
+        "Safety-compliant process"
+      ],
+      issues: [
+        "Cockroach infestation",
+        "Ants/insects",
+        "Mosquito breeding",
+        "Germs & bacteria",
+        "General pest issues"
+      ]
     }
+  ]
+},
 
 
 
+"Electrical Services": {
+  mainTitle: "Electrical Services",
+  subServices: [
+    {
+      title: "Wiring & Lighting Install",
+      description: "Professional wiring and lighting installation",
+      image: wiringlighting,
+      price: "₹130",
+      includedList: [
+        "Certified technician",
+        "Safety compliance",
+        "Quality tools",
+        "Post-service cleanup",
+        "Quick installation"
+      ],
+      issues: [
+        "Wiring issue",
+        "Bulb not working",
+        "Short circuit",
+        "Switch issue",
+        "Loose connections"
+      ]
+    },
+
+    {
+      title: "Fan Appliances Repair",
+      description: "Expert repair for all fans",
+      image: fanappliances,
+      price: "₹199",
+      includedList: [
+        "Genuine spare parts",
+        "Warranty included",
+        "Expert electrician",
+        "Quick diagnosis",
+        "Quality repair work"
+      ],
+      issues: [
+        "Fan not rotating",
+        "Fan making noise",
+        "Fan not starting",
+        "Regulator issue",
+        "Low fan speed"
+      ]
+    },
+
+    {
+      title: "Circuit Breaker & Switchboard Fixing",
+      description: "Circuit breaker and switchboard repair",
+      image: circuitbreaker,
+      price: "₹199",
+      includedList: [
+        "Genuine spare parts",
+        "Warranty included",
+        "Expert electrician",
+        "Safety inspection",
+        "Fast restoration"
+      ],
+      issues: [
+        "Breaker tripping",
+        "Overload issues",
+        "Loose switches",
+        "Socket not working",
+        "Sparking problem"
+      ]
+    },
+
+    {
+      title: "Smart Home Device Installation",
+      description: "Smart device setup and configuration",
+      image: smarthomedevice,
+      price: "₹199",
+      includedList: [
+        "Device configuration",
+        "Warranty included",
+        "Expert electrician",
+        "App connectivity setup",
+        "Testing & verification"
+      ],
+      issues: [
+        "Device not pairing",
+        "Connectivity issues",
+        "Incorrect setup",
+        "App integration problems",
+        "Power supply issues"
+      ]
+    }
+  ]
+},
+
+
+ "Plumbing Service": {
+  mainTitle: "Plumbing Service",
+  subServices: [
+    {
+      title: "Leak Repair",
+      description: "Quick and reliable leak fixing",
+      image: leakrepair,
+      price: "₹499",
+      includedList: [
+        "Certified technician",
+        "Quality tools and equipment",
+        "Leak source detection",
+        "Service warranty",
+        "Post-service cleanup"
+      ],
+      issues: [
+        "Tap leakage",
+        "Pipe leakage",
+        "Water dripping",
+        "Joint loose",
+        "Moisture patches"
+      ]
+    },
+
+    {
+      title: "Pipe Fitting",
+      description: "Professional installation of new pipes",
+      image: pipefittings,
+      price: "₹299",
+      includedList: [
+        "Quality fittings used",
+        "Skilled plumber",
+        "Accurate measurements",
+        "Secure sealing",
+        "Post-installation testing"
+      ],
+      issues: [
+        "Loose pipe joints",
+        "Pipe replacement needed",
+        "Low water flow",
+        "Pipe cracks",
+        "Improper fitting"
+      ]
+    },
+
+    {
+      title: "Geyser Installation",
+      description: "Safe and secure geyser installation",
+      image: Geyserinstallation,
+      price: "₹299",
+      includedList: [
+        "Secure wall mounting",
+        "Pipe and valve setup",
+        "Safety checkup",
+        "Electrical connection check",
+        "Installation warranty"
+      ],
+      issues: [
+        "Geyser not heating",
+        "Water leakage",
+        "Incorrect installation",
+        "Pipe fitting issue",
+        "Pressure problems"
+      ]
+    },
+
+    {
+      title: "Bathroom Fitting",
+      description: "Complete bathroom fixtures installation",
+      image: Bathroomfittings,
+      price: "₹299",
+      includedList: [
+        "Tap installation",
+        "Shower setup",
+        "Washbasin fitting",
+        "Leak testing",
+        "Quality hardware used"
+      ],
+      issues: [
+        "Tap loose",
+        "Shower leakage",
+        "Broken fittings",
+        "Low water pressure",
+        "Improper installation"
+      ]
+    },
+
+    {
+      title: "Water Tank",
+      description: "Water tank cleaning and maintenance",
+      image: Watertank,
+      price: "₹299",
+      includedList: [
+        "Tank scrubbing",
+        "Sludge removal",
+        "Water disinfectant",
+        "Inlet/outlet cleaning",
+        "Complete drying"
+      ],
+      issues: [
+        "Dirty water",
+        "Foul smell",
+        "Algae build-up",
+        "Sediment accumulation",
+        "Overflow issues"
+      ]
+    },
+
+    {
+      title: "Drain Cleaning",
+      description: "Clogged drain clearing and cleaning",
+      image: Drincleaning,
+      price: "₹299",
+      includedList: [
+        "Clog inspection",
+        "Drain snaking",
+        "Blockage removal",
+        "Odor treatment",
+        "Flow testing"
+      ],
+      issues: [
+        "Drain blockage",
+        "Slow water flow",
+        "Bad drain smell",
+        "Grease buildup",
+        "Hair clogging"
+      ]
+    }
+  ]
+},
+
+
+ "Appliances Repair": {
+  mainTitle: "Appliances Repair",
+  subServices: [
+    {
+      title: "AC Repair",
+      description: "Professional AC inspection and repair",
+      image: acrepair,
+      price: "₹499",
+      includedList: [
+        "Certified technician",
+        "Cooling efficiency check",
+        "Gas level inspection",
+        "Electrical safety check",
+        "Post-service cleanup"
+      ],
+      issues: [
+        "AC not cooling",
+        "Water leakage",
+        "Bad smell",
+        "Low airflow",
+        "Compressor issue"
+      ]
+    },
+
+    {
+      title: "Refrigerator Repair",
+      description: "Reliable fridge repair and servicing",
+      image: refrigeratorrepair,
+      price: "₹299",
+      includedList: [
+        "Thermostat check",
+        "Cooling issue diagnosis",
+        "Genuine spare parts",
+        "Expert technician",
+        "Post-repair testing"
+      ],
+      issues: [
+        "Not cooling",
+        "Water leakage",
+        "Freezer over-icing",
+        "Noise from compressor",
+        "Door not sealing"
+      ]
+    },
+
+    {
+      title: "Washing Machine Repairs",
+      description: "Complete washing machine repair service",
+      image: washingrepair,
+      price: "₹299",
+      includedList: [
+        "Drum inspection",
+        "Motor check",
+        "Spin cycle testing",
+        "Genuine spare parts",
+        "Service warranty"
+      ],
+      issues: [
+        "Machine not spinning",
+        "Water not draining",
+        "Motor noise",
+        "Vibration issues",
+        "Door not locking"
+      ]
+    },
+
+    {
+      title: "Microwave Servicing",
+      description: "Microwave heating and repair service",
+      image: microwave,
+      price: "₹299",
+      includedList: [
+        "Heating coil check",
+        "Door sensor testing",
+        "Internal cleaning",
+        "High-voltage inspection",
+        "Service warranty"
+      ],
+      issues: [
+        "Not heating",
+        "Plate not rotating",
+        "Sparking inside",
+        "Burning smell",
+        "Button malfunction"
+      ]
+    },
+
+    {
+      title: "TV Servicing",
+      description: "Expert LED and LCD servicing",
+      image: tvservice,
+      price: "₹299",
+      includedList: [
+        "Screen inspection",
+        "Motherboard testing",
+        "Sound issue diagnosis",
+        "Port checkup",
+        "Service warranty"
+      ],
+      issues: [
+        "No display",
+        "No sound",
+        "Lines on screen",
+        "Port not working",
+        "Remote not responding"
+      ]
+    },
+
+    {
+      title: "Regular Maintenance",
+      description: "Routine appliance check and servicing",
+      image: regularmaintance,
+      price: "₹299",
+      includedList: [
+        "Full appliance inspection",
+        "Cleaning and lubrication",
+        "Performance testing",
+        "Safety check",
+        "Maintenance report"
+      ],
+      issues: [
+        "Low performance",
+        "Overheating issues",
+        "Noise from appliance",
+        "Irregular functioning",
+        "Wear and tear"
+      ]
+    },
+
+    {
+      title: "Spare Parts & Replacement",
+      description: "Genuine spare parts with installation",
+      image: sparepart,
+      price: "₹299",
+      includedList: [
+        "Original spare parts",
+        "Expert fitting",
+        "Safety testing",
+        "Warranty included",
+        "Post-installation check"
+      ],
+      issues: [
+        "Broken components",
+        "Damaged wiring",
+        "Worn-out parts",
+        "Non-functional buttons",
+        "Motor or compressor faults"
+      ]
+    }
+  ]
+},
+
+
+  
+   "Carpentry & Furniture": {
+  mainTitle: "Carpentry & Furniture",
+  subServices: [
+    {
+      title: "Custom Furniture Making",
+      description: "Beautiful custom furniture built professionally",
+      image: customfurniture,
+      price: "₹499",
+      includedList: [
+        "Skilled carpenter",
+        "Custom design support",
+        "Quality wood materials",
+        "Precision cutting",
+        "Smooth finishing"
+      ],
+      issues: [
+        "New furniture requirement",
+        "Custom size needed",
+        "Design modification",
+        "Material selection help",
+        "Loose structure concerns"
+      ]
+    },
+
+    {
+      title: "Furniture Repair",
+      description: "Reliable repair for damaged furniture",
+      image: furniturerepair,
+      price: "₹299",
+      includedList: [
+        "Joint tightening",
+        "Surface polishing",
+        "Wood repair materials",
+        "Hardware replacement",
+        "Service warranty"
+      ],
+      issues: [
+        "Broken furniture",
+        "Loose joints",
+        "Scratches & dents",
+        "Damaged hinges",
+        "Cracked wood"
+      ]
+    },
+
+    {
+      title: "Doors And Windows Fixing",
+      description: "Repairing wooden doors and windows",
+      image: doorwindows,
+      price: "₹299",
+      includedList: [
+        "Hinge adjustment",
+        "Lock repair",
+        "Frame alignment",
+        "Smooth door movement",
+        "Noise reduction"
+      ],
+      issues: [
+        "Door not closing",
+        "Window jammed",
+        "Loose hinges",
+        "Lock not working",
+        "Frame misalignment"
+      ]
+    },
+
+    {
+      title: "Wardrobe And Cabinet Installation",
+      description: "Professional wardrobe and cabinet setup",
+      image: wardrob,
+      price: "₹299",
+      includedList: [
+        "Accurate measurement",
+        "Wall anchoring",
+        "Hardware installation",
+        "Smooth sliding setup",
+        "Post-installation testing"
+      ],
+      issues: [
+        "Cabinet misalignment",
+        "Broken hinges",
+        "Loose shelves",
+        "Sliding not smooth",
+        "New installation required"
+      ]
+    }
+  ]
+},
+
+  "Painting & Renovation": {
+  mainTitle: "Painting & Renovation",
+  subServices: [
+    {
+      title: "Interior Painting",
+      description: "Smooth interior home painting",
+      image: interiorpainting,
+      price: "₹499",
+      includedList: [
+        "Wall sanding",
+        "Primer application",
+        "Quality paint materials",
+        "Furniture covering",
+        "Post-paint cleanup"
+      ],
+      issues: [
+        "Wall discoloration",
+        "Peeling paint",
+        "Cracks on wall",
+        "Faded colors",
+        "Moisture patches"
+      ]
+    },
+
+    {
+      title: "Exterior Painting",
+      description: "Durable exterior wall painting",
+      image: exteriorpainting,
+      price: "₹299",
+      includedList: [
+        "Weatherproof paint",
+        "Surface washing",
+        "Crack sealing",
+        "Primer coating",
+        "Professional painters"
+      ],
+      issues: [
+        "Paint fading",
+        "Exterior cracks",
+        "Water damage marks",
+        "Wall roughness",
+        "Peeling layers"
+      ]
+    },
+
+    {
+      title: "Wallpaper And Touch-Up Works",
+      description: "Stylish wallpaper and touchups",
+      image: wallpaper,
+      price: "₹299",
+      includedList: [
+        "Wallpaper installation",
+        "Bubble removal",
+        "Wall smoothening",
+        "Design alignment",
+        "Minor paint touchups"
+      ],
+      issues: [
+        "Wallpaper peeling",
+        "Wall bubbles",
+        "Misalignment issues",
+        "Minor cracks",
+        "Paint scratches"
+      ]
+    },
+
+    {
+      title: "Water Proofing",
+      description: "Effective leakage and seepage protection",
+      image: waterproof,
+      price: "₹299",
+      includedList: [
+        "Crack filling",
+        "Waterproof coating",
+        "Chemical treatment",
+        "Leak prevention",
+        "Moisture inspection"
+      ],
+      issues: [
+        "Wall seepage",
+        "Water leakage",
+        "Damp patches",
+        "Ceiling moisture",
+        "Crack water flow"
+      ]
+    },
+
+    {
+      title: "Wall Repair",
+      description: "Professional wall crack repairs",
+      image: wallrepair,
+      price: "₹299",
+      includedList: [
+        "Crack filling",
+        "Hole patching",
+        "Surface leveling",
+        "Primer coat",
+        "Finish sanding"
+      ],
+      issues: [
+        "Wall cracks",
+        "Holes in wall",
+        "Uneven surface",
+        "Chipped plaster",
+        "Damaged corners"
+      ]
+    }
+  ]
+},
+ "HVAC & Cooling": {
+  mainTitle: "HVAC & Cooling",
+  subServices: [
+    {
+      title: "AC Installation",
+      description: "Professional AC unit installation",
+      image: acinstalla,
+      price: "₹499",
+      includedList: [
+        "Proper wall mounting",
+        "Pipe connection setup",
+        "Gas level check",
+        "Electrical safety check",
+        "Post-install testing"
+      ],
+      issues: [
+        "Water leakage",
+        "Improper cooling",
+        "Vibration issues",
+        "Loose mounting",
+        "High noise"
+      ]
+    },
+
+    {
+      title: "AC Service",
+      description: "Complete AC cleaning service",
+      image: acservice,
+      price: "₹299",
+      includedList: [
+        "Filter wash",
+        "Cooling coil cleaning",
+        "Drain pipe cleaning",
+        "Gas pressure check",
+        "Outer panel cleaning"
+      ],
+      issues: [
+        "Low cooling",
+        "Bad smell",
+        "Water dripping",
+        "Dirty filters",
+        "High power usage"
+      ]
+    },
+
+    {
+      title: "AC Duct Cleaning",
+      description: "Deep duct airflow cleaning",
+      image: acduct,
+      price: "₹299",
+      includedList: [
+        "Dust removal",
+        "Duct sanitization",
+        "Blower cleaning",
+        "Vent inspection",
+        "Airflow improvement"
+      ],
+      issues: [
+        "Dust in vents",
+        "Low airflow",
+        "Bad odor",
+        "Allergy triggers",
+        "Clogged ducts"
+      ]
+    },
+
+    {
+      title: "AC Filter Replacement",
+      description: "Quick filter replacement service",
+      image: acfilter,
+      price: "₹299",
+      includedList: [
+        "New filter installation",
+        "Filter quality check",
+        "Unit inspection",
+        "Safety verification",
+        "Cooling test"
+      ],
+      issues: [
+        "Dirty filters",
+        "Weak cooling",
+        "Bad airflow",
+        "High noise",
+        "Odor issues"
+      ]
+    },
+
+    {
+      title: "Cooling System Maintenance",
+      description: "Complete cooling system checkup",
+      image: cooling,
+      price: "₹299",
+      includedList: [
+        "Compressor check",
+        "Thermostat testing",
+        "Cooling efficiency check",
+        "Gas pressure inspection",
+        "Electrical connection check"
+      ],
+      issues: [
+        "Frequent breakdowns",
+        "Cooling delay",
+        "Thermostat issues",
+        "Gas leakage",
+        "Overheating"
+      ]
+    }
+  ]
+},
+
+
+    
+"Gardening & Outdoor Care": {
+  mainTitle: "Gardening & Outdoor Care",
+  subServices: [
+    {
+      title: "Lawn Maintenance",
+      description: "Regular lawn grooming and care",
+      image: lawnmaintaince,
+      price: "₹130",
+      includedList: [
+        "Grass trimming",
+        "Weed removal",
+        "Edge shaping",
+        "Leaf clearing",
+        "Waste disposal"
+      ],
+      issues: [
+        "Overgrown grass",
+        "Weed spread",
+        "Uneven edges",
+        "Dry patches",
+        "Insect damage"
+      ]
+    },
+
+    {
+      title: "Landscaping",
+      description: "Complete garden design service",
+      image: landscaping,
+      price: "₹199",
+      includedList: [
+        "Garden planning",
+        "Plant selection",
+        "Soil preparation",
+        "Installation support",
+        "Finishing touches"
+      ],
+      issues: [
+        "Poor layout",
+        "Unhealthy plants",
+        "Soil imbalance",
+        "Patchy design",
+        "Water drainage issue"
+      ]
+    },
+
+    {
+      title: "Outdoor Cleaning",
+      description: "Thorough outdoor area cleaning",
+      image: outdoorcleaning,
+      price: "₹199",
+      includedList: [
+        "Surface washing",
+        "Debris removal",
+        "Pressure cleaning",
+        "Moss cleanup",
+        "Walkway clearing"
+      ],
+      issues: [
+        "Dirty pathways",
+        "Excess leaves",
+        "Moss buildup",
+        "Outdoor stains",
+        "Garbage accumulation"
+      ]
+    },
+
+    {
+      title: "Garden Pest Control & Care",
+      description: "Garden pest removal treatment",
+      image: gardenpest,
+      price: "₹199",
+      includedList: [
+        "Safe chemicals",
+        "Plant protection",
+        "Complete inspection",
+        "Pest elimination",
+        "Aftercare tips"
+      ],
+      issues: [
+        "Plant pests",
+        "Leaf damage",
+        "Soil insects",
+        "Fungal infection",
+        "Plant wilting"
+      ]
+    }
+  ]
+},
+
+
+
+  
+"Handyman / General Repair": {
+  mainTitle: "Handyman / General Repair",
+  subServices: [
+    {
+      title: "TV Mounting",
+      description: "Secure TV wall installation",
+      image: tvmounting,
+      price: "₹499",
+      includedList: [
+        "Accurate wall measurement",
+        "Sturdy mounting brackets",
+        "Cable management",
+        "Safety check",
+        "Quick installation"
+      ],
+      issues: [
+        "Loose TV mount",
+        "Tilt not working",
+        "Wall alignment issue",
+        "Bracket replacement needed",
+        "Drilling support required"
+      ]
+    },
+
+    {
+      title: "Shelf Mounting",
+      description: "Wall shelf installation help",
+      image: shelfmounting,
+      price: "₹299",
+      includedList: [
+        "Proper level alignment",
+        "Strong fasteners",
+        "Drilling and fitting",
+        "Load testing",
+        "Cleanup after work"
+      ],
+      issues: [
+        "Shelf not level",
+        "Loose screws",
+        "Wall cracks",
+        "Incorrect placement",
+        "Heavy load concerns"
+      ]
+    },
+
+    {
+      title: "Fixture Repair",
+      description: "Minor home fixture repair",
+      image: fixturerepair,
+      price: "₹299",
+      includedList: [
+        "Inspection of fixture",
+        "Minor adjustments",
+        "Replacement parts (if needed)",
+        "Secure fitting",
+        "Functionality testing"
+      ],
+      issues: [
+        "Loose handles",
+        "Broken hinges",
+        "Damaged fixtures",
+        "Misalignment",
+        "Wear and tear"
+      ]
+    },
+
+    {
+      title: "Furniture Repair",
+      description: "Basic furniture fixing service",
+      image: furniturerepair,
+      price: "₹299",
+      includedList: [
+        "Minor wood repair",
+        "Loose joint fixing",
+        "Hardware replacement",
+        "Alignment correction",
+        "Finishing touches"
+      ],
+      issues: [
+        "Loose joints",
+        "Wobbling chair",
+        "Broken drawer",
+        "Cracked wood",
+        "Damaged hinges"
+      ]
+    },
+
+    {
+      title: "Minor Home Maintenance",
+      description: "Small home fixes service",
+      image: minorhome,
+      price: "₹299",
+      includedList: [
+        "General inspections",
+        "Minor repairs",
+        "Hardware tightening",
+        "Basic replacements",
+        "Quick handyman support"
+      ],
+      issues: [
+        "Loose fittings",
+        "Wall damage",
+        "Small cracks",
+        "Stuck doors",
+        "Minor wear issues"
+      ]
+    }
+  ]
+},
+
+
+"Home Security Services": {
+  mainTitle: "Home Security Services",
+  subServices: [
+    {
+      title: "CCTV Installation",
+      description: "Professional CCTV setup service",
+      image: cctvinstallation,
+      price: "₹499",
+      includedList: [
+        "HD camera setup",
+        "Cable routing & fixing",
+        "Mobile app configuration",
+        "DVR/NVR setup",
+        "System testing"
+      ],
+      issues: [
+        "Camera not recording",
+        "Blurry video feed",
+        "App not connecting",
+        "Cable damage",
+        "DVR storage issues"
+      ]
+    },
+
+    {
+      title: "Door Lock Installation",
+      description: "Secure lock fitting service",
+      image: doorlock,
+      price: "₹299",
+      includedList: [
+        "Lock alignment",
+        "Door drilling (if needed)",
+        "Hardware installation",
+        "Key functionality check",
+        "Secure fitting"
+      ],
+      issues: [
+        "Loose lock",
+        "Key not turning",
+        "Broken latch",
+        "Door misalignment",
+        "Lock replacement needed"
+      ]
+    },
+
+    {
+      title: "Alarm System Setup",
+      description: "House alarm installation service",
+      image: alaramsystem,
+      price: "₹299",
+      includedList: [
+        "Sensor placement",
+        "Control panel setup",
+        "App connectivity",
+        "Alert testing",
+        "Safety configuration"
+      ],
+      issues: [
+        "No alarm sound",
+        "Sensor not detecting",
+        "Mobile alerts not working",
+        "Wiring fault",
+        "Low battery issue"
+      ]
+    },
+
+    {
+      title: "Motion Sensor Systems",
+      description: "Motion sensor setup service",
+      image: motioncensor,
+      price: "₹299",
+      includedList: [
+        "Sensor positioning",
+        "Range calibration",
+        "Wiring or WiFi setup",
+        "Sensitivity adjustment",
+        "Testing & verification"
+      ],
+      issues: [
+        "Sensor not triggering",
+        "False alerts",
+        "Low range",
+        "Connectivity issues",
+        "Power supply fault"
+      ]
+    },
+
+    {
+      title: "Smart Security Device Setup",
+      description: "Smart device installation service",
+      image: smartsecuritydevicesetup,
+      price: "₹299",
+      includedList: [
+        "Smart hub connection",
+        "WiFi pairing setup",
+        "Device configuration",
+        "App integration",
+        "Functionality testing"
+      ],
+      issues: [
+        "Device not pairing",
+        "App-sync issues",
+        "Smart hub offline",
+        "Voice assistant errors",
+        "Battery or power issue"
+      ]
+    }
+  ]
+}
 
 };
-
 

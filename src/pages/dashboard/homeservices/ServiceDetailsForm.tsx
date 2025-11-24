@@ -1,8 +1,6 @@
-import React, { useState } from "react";
-import { Modal, Button } from "antd";
+import { Modal, Form, Input, Select, DatePicker, Button, Card } from "antd";
 import "./ServiceDetailsForm.css";
-
-
+import dayjs from "dayjs";
 
 
 interface ServiceRequestFormProps {
@@ -28,210 +26,176 @@ export default function ServiceRequestForm({
   onCancel,
   onSubmit,
 }: ServiceRequestFormProps) {
-  const [formData, setFormData] = useState({
-    issueType: "",
-    urgencyLevel: "",
-    problemDescription: "",
-    locationArea: "",
-    preferredDate: "",
-    preferredTime: "",
-    serviceAddress: "",
-  });
+  const [form] = Form.useForm();
 
-  const [errors, setErrors] = useState<any>({}); // <-- NEW
+  const handleFinish = (values: any) => {
 
-  const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >
-  ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-
-    // Live validation
-    setErrors({ ...errors, [e.target.name]: "" });
+      const payload = {
+    ...values,
+    preferredDate: values.preferredDate?.format("YYYY-MM-DD"),
   };
 
-  const validateForm = () => {
-    let newErrors: any = {};
+  onSubmit(payload);
+   
 
-    if (!formData.issueType) newErrors.issueType = "Please select an issue type.";
-    if (!formData.urgencyLevel) newErrors.urgencyLevel = "Please select urgency level.";
-    if (!formData.problemDescription) newErrors.problemDescription = "Description is required.";
-    if (!formData.locationArea) newErrors.locationArea = "Location/area is required.";
-    if (!formData.preferredDate) newErrors.preferredDate = "Select a date.";
-    if (!formData.preferredTime) newErrors.preferredTime = "Select a time.";
-    if (!formData.serviceAddress) newErrors.serviceAddress = "Service address is required.";
-    
+    setTimeout(() => {
+      Modal.success({
+        title: "Added to Cart",
+        content: "Your service request has been successfully added to your cart.",
+        centered: true,
+      });
+    }, 250);
+    form.resetFields();
 
-    setErrors(newErrors);
-
-    return Object.keys(newErrors).length === 0;
   };
-const handleSubmit = (e: React.FormEvent) => {
-  e.preventDefault();
 
-  if (!validateForm()) return;
-
-  onSubmit(formData);  // ⬅ first close modal in parent
-
-  setTimeout(() => {
-    Modal.success({
-      title: "Added to Cart",
-      content: "Your service request has been successfully added to your cart.",
-      centered: true,
-    });
-  }, 300); // ⬅ wait until modal is fully closed
-};
-
-
-
-
-
-
+  
 
   return (
-    <Modal open={open} onCancel={onCancel} footer={null} width={760} centered>
-      <form className="service-form-modal" onSubmit={handleSubmit}>
-        {/* Header Section */}
-        <div className="service-header-section">
-          <img src={image} alt={title} className="service-header-image" />
 
-          <div className="service-header-details">
-            <h2 className="service-title">{title}</h2>
-            <p className="service-main-description">{description}</p>
+    <Modal
+  open={open}
+  onCancel={onCancel}
+  footer={null}
+  width={620}   // 🔥 reduced width
+  centered
+  className="sdform-ant-modal"
+>
+  <Card className="sdform-ant-container">
+    <h2 className="sdform-ant-title">{title}</h2>
 
-            <ul className="service-included-list">
-              {includedList.map((item, index) => (
-                <li key={index}>{item}</li>
-              ))}
-            </ul>
+    <div className="sdform-ant-header">
+      <div>
+        <img src={image} alt={title} className="sdform-ant-image" />
+        <p className="sdform-ant-description">{description}</p>
 
-            <div className="service-price-box">{price}</div>
-          </div>
+        <div className="sdform-price-wrapper">
+          <div className="sdform-price-title">Service Price</div>
+          <div className="sdform-price-value">{price}</div>
         </div>
+      </div>
 
-        {/* Form Fields */}
-        <div className="service-form-fields">
+      <div className="sdform-ant-header-info">
+        <h4>What's Included</h4>
+        <ul className="sdform-ant-list">
+          {includedList.map((item, i) => (
+            <li key={i}>{item}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
 
-          {/* Issue + Urgency Side by Side */}
-          <div className="service-two-column">
-            <div>
-              <label>Issue</label>
-              <select
-                name="issueType"
-                value={formData.issueType}
-                onChange={handleChange}
-              >
-                <option value="">Select issue</option>
-                {issues.map((item, index) => (
-                  <option key={index} value={item}>
-                    {item}
-                  </option>
-                ))}
-              </select>
-              {errors.issueType && <p className="error-text">{errors.issueType}</p>}
-            </div>
 
-            <div>
-              <label>Urgency Level</label>
-              <select
-                name="urgencyLevel"
-                value={formData.urgencyLevel}
-                onChange={handleChange}
-              >
-                <option value="">Select urgency level</option>
-                <option value="low">Low</option>
-                <option value="medium">Medium</option>
-                <option value="high">High</option>
-              </select>
-              {errors.urgencyLevel && (
-                <p className="error-text">{errors.urgencyLevel}</p>
-              )}
-            </div>
-          </div>
 
-          <label>Problem Description</label>
-          <textarea
-            name="problemDescription"
-            value={formData.problemDescription}
-            onChange={handleChange}
-            rows={3}
-          />
-          {errors.problemDescription && (
-            <p className="error-text">{errors.problemDescription}</p>
-          )}
+  
+ 
 
-          <label>Location/Area</label>
-          <input
-            type="text"
-            name="locationArea"
-            value={formData.locationArea}
-            onChange={handleChange}
-          />
-          {errors.locationArea && <p className="error-text">{errors.locationArea}</p>}
+     
 
-          <div className="service-row">
-            <div>
-              <label>Preferred Date</label>
-              <input
-                type="date"
-                name="preferredDate"
-                value={formData.preferredDate}
-                onChange={handleChange}
+        {/* FORM SECTION */}
+        <Form
+          form={form}
+          layout="vertical"
+          onFinish={handleFinish}
+          className="sdform-ant-form"
+        >
+          <div className="sdform-ant-two-col">
+            <Form.Item
+              label="Issue"
+              name="issueType"
+              rules={[{ required: true, message: "Please select an issue" }]}
+            >
+              <Select
+                placeholder="Select issue"
+                options={issues.map((i) => ({ label: i, value: i }))}
               />
-              {errors.preferredDate && (
-                <p className="error-text">{errors.preferredDate}</p>
-              )}
-            </div>
+            </Form.Item>
 
-            <div>
-              <label>Preferred Time</label>
-              <select
-                name="preferredTime"
-                value={formData.preferredTime}
-                onChange={handleChange}
-              >
-                <option value="">Select time</option>
-                <option value="morning">Morning</option>
-                <option value="afternoon">Afternoon</option>
-                <option value="evening">Evening</option>
-              </select>
-              {errors.preferredTime && (
-                <p className="error-text">{errors.preferredTime}</p>
-              )}
-            </div>
+            <Form.Item
+              label="Urgency Level"
+              name="urgencyLevel"
+              rules={[{ required: true, message: "Please select urgency" }]}
+            >
+              <Select
+                placeholder="Select urgency"
+                options={[
+                  { label: "Low", value: "low" },
+                  { label: "Medium", value: "medium" },
+                  { label: "High", value: "high" },
+                ]}
+              />
+            </Form.Item>
           </div>
 
-          <label>Service Address</label>
-          <input
-            type="text"
-            name="serviceAddress"
-            value={formData.serviceAddress}
-            onChange={handleChange}
-          />
-          {errors.serviceAddress && (
-            <p className="error-text">{errors.serviceAddress}</p>
-          )}
-        </div>
+          <Form.Item
+            label="Problem Description"
+            name="problemDescription"
+            rules={[{ required: true, message: "Enter problem details" }]}
+          >
+            <Input.TextArea rows={3} />
+          </Form.Item>
 
-        <div className="service-buttons">
-          <Button type="default" onClick={onCancel}>
-            Cancel
-          </Button>
-          <Button type="primary" htmlType="submit">
-            Add to Cart
-          </Button>
-        </div>
-      </form>
+          <Form.Item
+            label="Location / Area"
+            name="locationArea"
+            rules={[{ required: true, message: "Location is required" }]}
+          >
+            <Input />
+          </Form.Item>
+
+          <div className="sdform-ant-two-col">
+            <Form.Item
+              label="Preferred Date"
+              name="preferredDate"
+              rules={[{ required: true, message: "Select a date" }]}
+            >
+              <DatePicker
+  style={{ width: "100%" }}
+  disabledDate={(current) => current && current < dayjs().startOf("day")}
+/>
+
+            </Form.Item>
+
+            <Form.Item
+              label="Preferred Time"
+              name="preferredTime"
+              rules={[{ required: true, message: "Select a time" }]}
+            >
+              <Select
+                placeholder="Select time"
+                options={[
+                  { label: "Morning", value: "morning" },
+                  { label: "Afternoon", value: "afternoon" },
+                  { label: "Evening", value: "evening" },
+                ]}
+              />
+            </Form.Item>
+          </div>
+
+          <Form.Item
+            label="Service Address"
+            name="serviceAddress"
+            rules={[{ required: true, message: "Address required" }]}
+          >
+            <Input />
+          </Form.Item>
+
+          {/* BUTTONS */}
+          <div className="sdform-ant-buttons">
+            <Button onClick={onCancel} className="sdform-ant-cancel">
+              Cancel
+            </Button>
+
+            <Button type="primary" htmlType="submit" className="sdform-ant-submit">
+              Add to Cart
+            </Button>
+          </div>
+        </Form>
+      </Card>
     </Modal>
+
+
+
+
   );
 }
-
-
-
-
-
-
-
-
-
