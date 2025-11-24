@@ -1,3 +1,4 @@
+// src/pages/landing/CommercialPlots.tsx
 import React, { useMemo, useState } from "react";
 import {
   Layout,
@@ -38,6 +39,57 @@ const { Header, Content, Footer } = Layout;
 const { Title, Paragraph } = Typography;
 const { Option } = Select;
 const { TabPane } = Tabs;
+
+/* -------------------------
+   HSHeader (inlined — same as Cleaning page)
+   ------------------------- */
+type HSHeaderProps = {
+  selectedKey?: string;
+  onSignUp?: () => void;
+};
+
+const HSHeader: React.FC<HSHeaderProps> = ({ selectedKey = "", onSignUp = () => {} }) => {
+  const headerNav = [
+    { key: "home", label: <Link to="/">Home</Link> },
+    { key: "cleaning", label: <Link to="/cleaningservice">Cleaning</Link> },
+    { key: "packers", label: <Link to="/LandingPackers">Packers & Movers</Link> },
+    { key: "home_services", label: <Link to="/home_service">Home Services</Link> },
+    { key: "rentals", label: <Link to="/rentals">Rentals</Link> },
+    { key: "commercial", label: <Link to="/commercial-plots">Buy&Sale Properties</Link> },
+    { key: "materials", label: <Link to="/ConstructionMaterials">Construction Materials</Link> },
+  ];
+
+  const selectedKeysArray = selectedKey ? [selectedKey] : [];
+
+  return (
+    <header className="hs-navbar" role="banner" aria-label="Primary header">
+      <div className="hs-navbar-logo" aria-hidden>
+        <span className="hs-logo-text">SWACHIFY INDIA</span>
+      </div>
+
+      <Menu
+        mode="horizontal"
+        selectedKeys={selectedKeysArray}
+        className="hs-navbar-menu"
+        items={headerNav}
+        role="navigation"
+        aria-label="Primary navigation"
+      />
+
+      <Button
+        type="primary"
+        className="hs-contact-btn"
+        onClick={onSignUp}
+        aria-label="Sign up"
+      >
+        Sign Up
+      </Button>
+    </header>
+  );
+};
+/* -------------------------
+   End HSHeader
+   ------------------------- */
 
 type Product = {
   id: number;
@@ -138,22 +190,14 @@ const CommercialPlots: React.FC = () => {
 
   return (
     <Layout className="cp-layout">
-      <Header className="cp-header">
-        <div className="cp-logo"><span className="cp-logo-text">SWACHIFY INDIA</span></div>
-
-        <Menu mode="horizontal" selectable={false} className="cp-menu" items={navItems} />
-
-        <Button
-          type="primary"
-          className="cp-contact-btn"
-          onClick={() => {
-            setActiveAuthTab("login");
-            setAuthModalVisible(true);
-          }}
-        >
-          Sign Up
-        </Button>
-      </Header>
+      {/* REPLACED original Header with HSHeader (identical UI/behavior to cleaning page) */}
+      <HSHeader
+        selectedKey="commercial"
+        onSignUp={() => {
+          setActiveAuthTab("login");
+          setAuthModalVisible(true);
+        }}
+      />
 
       <Modal
         title={null}
