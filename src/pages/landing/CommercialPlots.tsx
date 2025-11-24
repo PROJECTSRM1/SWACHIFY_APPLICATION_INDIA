@@ -57,6 +57,9 @@ const HSHeader: React.FC<HSHeaderProps> = ({ selectedKey = "", onSignUp = () => 
     { key: "rentals", label: <Link to="/rentals">Rentals</Link> },
     { key: "commercial", label: <Link to="/commercial-plots">Buy&Sale Properties</Link> },
     { key: "materials", label: <Link to="/ConstructionMaterials">Construction Materials</Link> },
+    { key: "freelancer", label: <Link to="/Freelancer">Freelancer</Link> },
+    //  { key: "location", label: <Link to="">Location</Link> },
+
   ];
 
   const selectedKeysArray = selectedKey ? [selectedKey] : [];
