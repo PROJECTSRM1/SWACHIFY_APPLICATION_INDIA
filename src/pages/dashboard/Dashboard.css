@@ -7,6 +7,11 @@
 /* MAIN SECTION */
 .services-section {
   padding: 40px 60px;
+  text-align: center;     /* <-- centers the title and search bar */
+  display: flex;          
+  flex-direction: column; /* stack title + search vertical */
+  align-items: center;    /* center horizontally */
+  justify-content: center;
 }
 
 .services-title {
