@@ -14,17 +14,37 @@ const Dashboard: React.FC = () => {
   // List of services that will be displayed
   const servicesList = [
     { name: "Cleaning Service", component: <CleaningService /> },
-    { name: "Packers and Movers", component: <Packersandmovers /> },
+    { name: "Packers and Movers / Transport", component: <Packersandmovers /> },
     { name: "Home Services", component: <HomeServices /> },
-    { name: "Rental Services", component: <ServicesPage /> },
+    { name: "Home & Apartments Rental", component: <ServicesPage /> },
     { name: "Construction Services", component: <ConstructionServices /> },
     { name: "Buy & Sale Products", component: <BuySaleProducts /> },
   ];
 
   // Filter based on search input
-  const filteredServices = servicesList.filter(service =>
-    service.name.toLowerCase().includes(searchQuery.toLowerCase())
+  // Normalize strings for strong matching
+const normalize = (str: string) =>
+  str
+    .toLowerCase()
+    .replace(/\s+/g, "")        // remove spaces
+    .replace(/[^a-z0-9]/g, ""); // remove symbols
+
+// Filter based on search input (strong + fuzzy)
+const filteredServices = servicesList.filter((service) => {
+  const name = normalize(service.name);
+  const query = normalize(searchQuery);
+
+  if (!query) return true;
+
+  // Fuzzy match
+  return (
+    name.includes(query) ||
+    query.includes(name) ||
+    name.startsWith(query) ||
+    name.endsWith(query)
   );
+});
+
 
   return (
     <div className="dashboard-container">
