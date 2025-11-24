@@ -117,7 +117,7 @@ const EquipmentDetails: React.FC<FormProps> = ({ id, onClose }) => {
               <h3 className="section-title">Additional Services</h3>
 
               <div className="checkbox-row">
-                <label><input type="checkbox" /> Unloading Service</label>
+                <label><input type="checkbox"/> Unloading Service</label>
                 <label><input type="checkbox" /> Quality Certificate</label>
                 <label><input type="checkbox" /> Installation Support</label>
                 <label><input type="checkbox" /> Storage Option</label>
