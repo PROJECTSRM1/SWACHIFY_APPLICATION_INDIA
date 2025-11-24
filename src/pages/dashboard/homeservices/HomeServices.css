@@ -28,73 +28,82 @@
 /* ===========================================
    🔹 COMPACT TOP HEADER (Reduced height)
 =========================================== */
+/* MATCHES Cleaning Service Header Size */
+/* EXACT MATCH OF .cs-header */
 .services-top-banner {
+  background: #089823;          /* Only color is different */
+  color: #fff;
+  padding: 22px 28px;           /* SAME as .cs-header */
+  border-radius: 12px;          /* SAME */
+  margin-bottom: 24px;          /* SAME */
+
   display: flex;
-  justify-content: space-between;
   align-items: center;
-
-  background: #089823;
-  color: white;
-
-  padding: 14px 18px;          /* ↓ Reduced height */
-  border-radius: 10px;
+  justify-content: space-between;
 
   width: 100%;
   max-width: 1250px;
-
   margin: 0 auto 24px auto;
-  flex-wrap: wrap;
-  gap: 10px;
+
+  flex-wrap: nowrap;            /* Force same layout as cleaning header */
+  gap: 14px;                    /* SAME as .cs-header-left gap */
 
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.10);
 }
 
-/* Left Section */
+/* LEFT SIDE — Same as .cs-header-left */
 .banner-left {
   display: flex;
   align-items: center;
-  gap: 10px;                   /* ↓ Smaller spacing */
+  gap: 14px;                    /* EXACT same gap */
 }
 
-/* Icon Box (Smaller Version) */
+/* ICON — Same as .cs-icon */
 .banner-icon {
-  width: 38px;                 /* ↓ Smaller */
-  height: 38px;
-  background: rgba(255, 255, 255, 0.25);
-  border-radius: 10px;
-
+  background: rgba(255, 255, 255, 0.18);
+  padding: 12px;                /* SAME SIZE */
+  border-radius: 50%;           /* SAME SHAPE */
   display: flex;
   align-items: center;
   justify-content: center;
-
-  font-size: 18px;             /* ↓ Smaller icon */
+  font-size: 20px;              /* SAME ICON SIZE */
   color: white;
 }
 
+/* TITLE — Same as .cs-header-title */
 .banner-title {
   margin: 0;
-  font-size: 18px;             /* ↓ Reduced */
-  font-weight: 600;
+  color: #fff;
+  font-weight: 700;
+  font-size: 22px;              /* SAME */
 }
 
+/* SUBTITLE — Same as .cs-header-sub */
 .banner-subtitle {
-  margin: 0;
-  font-size: 13px;             /* ↓ Reduced */
-  opacity: 0.9;
+  margin-top: 6px;
+  color: #e8eeff;
+  font-size: 13px;              /* SAME */
 }
 
-/* View All Button – smaller */
+/* BUTTON — EXACT same as .cs-top-button */
 .header-viewall-btn {
   background: #fff !important;
-  color: black !important;
+  color: #000 !important;
+
+  padding: 8px 18px !important; /* SAME */
+  border-radius: 10px !important;
+  font-weight: 600 !important;
+
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08) !important;
   border: none !important;
-
-  padding: 4px 12px !important;  /* ↓ Smaller button */
-  border-radius: 5px !important;
-
-  font-size: 13px !important;
-  font-weight: 500;
 }
+
+.header-viewall-btn:hover {
+  background: #ffffff !important;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12) !important;
+  transform: translateY(-2px);
+}
+
 
 
 /* =======================================================
