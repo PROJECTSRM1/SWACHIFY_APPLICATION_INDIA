@@ -15,7 +15,7 @@ const HeaderBar: React.FC = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    navigate("/");
+    navigate("/landing");
   };
 
   const handleCartClick = () => {
