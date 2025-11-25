@@ -1,25 +1,25 @@
+
+
 .machinery-wrapper {
   width: 100%;
   background: #f8fafc;
   min-height: 100vh;
-  padding-bottom: 20px;
-  margin-left: 95px;
-  margin: 0 ;
-  padding: 0 ;
+  padding: 0;
+  margin: 0;
 }
 
 .machinery-header {
   width: 100%;
   background: #d97706;
-  padding: 10px 20px;
+  padding: 15px 20px;
   color: white;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
   border-radius: 14px;
 }
 
 .machinery-header h2 {
   margin: 0;
-  font-size: 26px;
+  font-size: 15px;
   font-weight: 700;
 }
 
@@ -28,15 +28,15 @@
   font-size: 15px;
 }
 
+
+
 .machinery-grid {
   width: 100%;
-  padding: 0 25px;
+  padding: 0 20px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 22px;
- 
 }
-
 
 .machinery-card {
   background: white;
@@ -85,11 +85,6 @@
   font-size: 16px;
 }
 
-.mach-section-title{
-  font-size: 17px;
-  margin-top: 5px;
-}
-
 .machinery-btn {
   background: #d97706;
   color: white;
@@ -97,13 +92,14 @@
   border: none;
   border-radius: 12px;
   cursor: pointer;
-  width: 140px;
+  width: 130px;
   font-size: 14px;
 }
 
 .machinery-btn:hover {
   background: #b45309;
 }
+
 
 
 .mach-details-modal {
@@ -135,10 +131,6 @@
   align-items: center;
 }
 
-.mach-details-header h2 {
-  font-size: 24px;
-  font-weight: 700;
-}
 
 
 .mach-top-section {
@@ -168,7 +160,7 @@
 .mach-service-price-box {
   background: #eef2ff;
   text-align: center;
-  padding: px;
+  padding: 10px;
   border-radius: 10px;
   margin-top: 10px;
 }
@@ -192,7 +184,8 @@
   margin-right: 5px;
 }
 
-/* FORM SIDE */
+
+
 .mach-form-side {
   width: 60%;
 }
@@ -218,18 +211,36 @@
   margin-top: 5px;
 }
 
+.mach-form-item.full-width textarea {
+  width: 208% !important;
+  height: 100px !important;
+  padding: 12px 14px;
+  font-size: 13px;
+  border-radius: 10px;
+}
+
 .mach-checkbox-row {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 0px 0px;
+  column-gap: 40px;      
+  row-gap: 12px;         
+  margin-top: 12px;
 }
 
 .mach-checkbox-row label {
   display: flex;
   align-items: center;
-  gap: 5px;
-  font-size: 13px;
+  gap: 8px;              
+  white-space: nowrap;   
+  font-size: 12px;
+  cursor: pointer;
 }
+
+.mach-checkbox-row input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+}
+
 
 .mach-button-row {
   display: flex;
@@ -254,9 +265,8 @@
   color: white;
 }
 
-/* ---------- RESPONSIVE FIXES ---------- */
 
-/* TABLET */
+
 @media (max-width: 900px) {
   .machinery-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -272,40 +282,48 @@
   }
 }
 
-/* MOBILE */
+
 @media (max-width: 600px) {
   .machinery-wrapper {
-    width: 100%;
-    margin-left: 0;
-    padding: 12px;
-  }
-
-  .machinery-header {
-    border-radius: 10px;
-    padding: 12px;
-    text-align: center;
-  }
-
-  .machinery-header h2 {
-    font-size: 20px;
+    padding: 0;
   }
 
   .machinery-grid {
-    grid-template-columns: 1fr;
-    padding: 0 10px;
+    grid-template-columns: 1fr !important;
+    padding: 0 10px !important;
+  }
+
+  .machinery-card {
+    width: 100%;
+    margin: 0 auto;
+    padding: 14px;
+    border-radius: 14px;
+  }
+
+  .card-img img {
+    height: 160px;
+  }
+
+  .mach-details-box {
+    width: 95% !important;
+    padding: 15px !important;
+  }
+
+  .mach-top-section {
+    flex-direction: column;
+    gap: 15px;
   }
 
   .mach-checkbox-row {
     grid-template-columns: 1fr;
-    gap: 0px 0px;
   }
 }
 
-.mach-form-item.full-width textarea {
-  width: 205% !important;
-  height: 100px !important;  
-  padding: 12px 14px;
-  font-size: 13px;
-  border-radius: 10px;
-
+.mach-close-btn {
+  width: 40px;
+  height: 40px;
+  background: #f3f4f6;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
 }

@@ -191,20 +191,20 @@ const MOCK_PROPERTY_LISTINGS: PropertyListing[] = [
     description:
       '8,000 sq.ft. office plot in a prime financial corridor, with approvals for high-rise corporate development and strong rental demand.',
   },
-  {
-    id: 4,
-    title: 'Shopping Complex Land',
-    listingType: 'sale',
-    price: 35000000, // ₹3.5 Cr
-    area: 15000,
-    location: 'Suburban Area, Hyderabad',
-    tags: ['Mall Approved', 'Parking Space', 'High Footfall'],
-    roi: '18–22% per annum',
-    imagePath: Land,
-    propertyType: 'Retail',
-    description:
-      '15,000 sq.ft. plot pre-approved for a shopping complex with dedicated parking and strong residential catchment.',
-  },
+  // {
+  //   id: 4,
+  //   title: 'Shopping Complex Land',
+  //   listingType: 'sale',
+  //   price: 35000000, // ₹3.5 Cr
+  //   area: 15000,
+  //   location: 'Suburban Area, Hyderabad',
+  //   tags: ['Mall Approved', 'Parking Space', 'High Footfall'],
+  //   roi: '18–22% per annum',
+  //   imagePath: Land,
+  //   propertyType: 'Retail',
+  //   description:
+  //     '15,000 sq.ft. plot pre-approved for a shopping complex with dedicated parking and strong residential catchment.',
+  // },
   {
     id: 5,
     title: 'Boutique Hotel Development Land',
@@ -212,7 +212,7 @@ const MOCK_PROPERTY_LISTINGS: PropertyListing[] = [
     price: 15000000,
     area: 5000,
     location: 'Beachfront Area, Goa',
-    tags: ['High Tourist Footfall', 'Sea Facing', 'Zoning Approved'],
+    tags: ['High Tourist Footfall', 'Sea Facing'],
     roi: '18–20% per annum',
     imagePath: Land,
     propertyType: 'Land/Commercial',
@@ -282,30 +282,38 @@ const PropertyCard: React.FC<{
         />
       }
     >
+  // ...
       <Card.Meta
         title={<span className="service-card-title">{property.title}</span>}
         description={
+          // FIX: Ensure this is the single, top-level element for the description prop
           <Space direction="vertical" style={{ width: '100%' }}>
-            <Text type="secondary" className="text-with-icon-align">
-              <EnvironmentOutlined /> {property.location}
-            </Text>
-            <Title level={4} className="price-title">
-              {formatINR(property.price)}
-            </Title>
-            <Text type="secondary">
-              {property.area} sq.ft • Type: {property.propertyType}
-            </Text>
-            <Space size={[0, 8]} wrap className="tags-space-top">
-              {property.tags.map((tag) => (
-                <Tag key={tag}>{tag}</Tag>
-              ))}
-            </Space>
-            <Text className="roi-text">
-              <RiseOutlined /> {property.roi}
-            </Text>
-            <Text className="property-card-description">
-              {property.description}
-            </Text>
+            
+            {/* Wrapper for variable content to enable flex-grow and equal height */}
+            <div className="property-card-content-wrapper">
+              <Text type="secondary" className="text-with-icon-align">
+                <EnvironmentOutlined /> {property.location}
+              </Text>
+              <Title level={4} className="price-title">
+                {formatINR(property.price)}
+              </Title>
+              <Text type="secondary">
+                {property.area} sq.ft • Type: {property.propertyType}
+              </Text>
+              <Space size={[0, 8]} wrap className="tags-space-top">
+                {property.tags.map((tag) => (
+                  <Tag key={tag}>{tag}</Tag>
+                ))}
+              </Space>
+              <Text className="roi-text">
+                <RiseOutlined /> {property.roi}
+              </Text>
+              <Text className="property-card-description">
+                {property.description}
+              </Text>
+            </div>
+            
+            {/* Button group - positioned using margin-top: auto in CSS */}
             <Space className="button-group-space-top" wrap>
               <Button type="primary" size="middle" onClick={() => onViewDetails(property)}>
                 Contact / Negotiate
@@ -314,9 +322,11 @@ const PropertyCard: React.FC<{
                 View Details
               </Button>
             </Space>
+
           </Space>
         }
       />
+
     </Card>
   );
 };

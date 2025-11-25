@@ -1,3 +1,4 @@
+// Home_Service.tsx
 import React, { useState } from "react";
 import {
   Menu,
@@ -12,6 +13,8 @@ import {
   Input,
   Checkbox,
   message,
+  DatePicker,
+  Select,
 } from "antd";
 import {
   ToolOutlined,
@@ -36,6 +39,7 @@ import "./homeservice.css";
 const HERO_BG = "../src/assets/landingimages/hero.png"; // keep as your path
 const { Title, Paragraph } = Typography;
 const { TabPane } = Tabs;
+const { Option } = Select;
 
 const navItems = [
   { key: "home", label: <Link to="/landing">Home</Link> },
@@ -45,8 +49,7 @@ const navItems = [
   { key: "rentals", label: <Link to="/rentals">Rentals</Link> },
   { key: "commercial", label: <Link to="/commercial-plots">Buy&Sale Properties</Link> },
   { key: "materials", label: <Link to="/ConstructionMaterials">Construction Materials</Link> },
-   { key: "freelancer", label: <Link to="/Freelancer">Freelancer</Link> },
-    // { key: "location", label: <Link to="">Location</Link> },
+  { key: "freelancer", label: <Link to="/Freelancer">Freelancer</Link> },
 ];
 
 const cardRows = [
@@ -177,6 +180,12 @@ const Home_Service: React.FC = () => {
       return Promise.resolve();
     }
     return Promise.reject(new Error("Passwords do not match"));
+  };
+
+  // Booking form submit handler (demo)
+  const onBookingSubmit = (values: any) => {
+    console.log("Booking values:", values);
+    message.success("Booking request submitted");
   };
 
   return (
@@ -347,7 +356,7 @@ const Home_Service: React.FC = () => {
         </Row>
       </div>
 
-      {/* Service cards and subsequent sections unchanged (kept as your existing code) */}
+      {/* Service cards and subsequent sections unchanged */}
       {cardRows.map((row, idx) => (
         <div key={idx} className="hs-section-root">
           {idx === 0 && (
@@ -391,7 +400,159 @@ const Home_Service: React.FC = () => {
         </div>
       ))}
 
-      {/* Emergency section (kept unchanged) */}
+      {/* Pricing and Booking sections (unchanged structure) */}
+      <div className="hs-pricing-wrap">
+        <div className="hs-pricing-head">
+          <h2>Maintenance Packages</h2>
+          <p>Save money with our regular maintenance plans</p>
+        </div>
+
+        <Row gutter={[24, 24]} justify="center">
+          <Col xs={24} sm={24} md={8}>
+            <div className="hs-price-card">
+              <div className="hs-price-title">Basic Maintenance</div>
+              <div className="hs-price-amount">
+                <span className="hs-price-dollar">$199</span><span className="hs-price-suffix">/month</span>
+              </div>
+
+              <ul className="hs-price-features">
+                <li><span className="hs-check">✔</span> 2 service calls per month</li>
+                <li><span className="hs-check">✔</span> Priority scheduling</li>
+                <li><span className="hs-check">✔</span> 10% off parts</li>
+                <li><span className="hs-check">✔</span> Basic electrical & plumbing</li>
+                <li><span className="hs-check">✔</span> Free inspection</li>
+              </ul>
+
+              <Button className="hs-choose-btn hs-choose-btn-outline" block>Choose Plan</Button>
+            </div>
+          </Col>
+
+          <Col xs={24} sm={24} md={8}>
+            <div className="hs-price-popular-wrap">
+              <div className="hs-popular-badge">Most Popular</div>
+              <div className="hs-price-card hs-price-card-popular">
+                <div className="hs-price-title">Home Care Plus</div>
+                <div className="hs-price-amount">
+                  <span className="hs-price-dollar">$349</span><span className="hs-price-suffix">/month</span>
+                </div>
+
+                <ul className="hs-price-features">
+                  <li><span className="hs-check">✔</span> 4 service calls per month</li>
+                  <li><span className="hs-check">✔</span> 24/7 emergency service</li>
+                  <li><span className="hs-check">✔</span> 20% off parts</li>
+                  <li><span className="hs-check">✔</span> All services included</li>
+                  <li><span className="hs-check">✔</span> Annual deep inspection</li>
+                  <li><span className="hs-check">✔</span> Preventive maintenance</li>
+                </ul>
+
+                <Button className="hs-choose-btn hs-choose-btn-primary" block>Choose Plan</Button>
+              </div>
+            </div>
+          </Col>
+
+          <Col xs={24} sm={24} md={8}>
+            <div className="hs-price-card">
+              <div className="hs-price-title">Premium Protection</div>
+              <div className="hs-price-amount">
+                <span className="hs-price-dollar">$599</span><span className="hs-price-suffix">/month</span>
+              </div>
+
+              <ul className="hs-price-features">
+                <li><span className="hs-check">✔</span> Unlimited service calls</li>
+                <li><span className="hs-check">✔</span> Priority emergency service</li>
+                <li><span className="hs-check">✔</span> 30% off parts</li>
+                <li><span className="hs-check">✔</span> All services & repairs</li>
+                <li><span className="hs-check">✔</span> Quarterly inspections</li>
+                <li><span className="hs-check">✔</span> Extended warranty</li>
+              </ul>
+
+              <Button className="hs-choose-btn hs-choose-btn-outline" block>Choose Plan</Button>
+            </div>
+          </Col>
+        </Row>
+      </div>
+
+      <div className="hs-booking-wrap">
+        <div className="hs-booking-head">
+          <h2>Schedule a Service</h2>
+          <p>Book your home service appointment today</p>
+        </div>
+
+        <div className="hs-booking-card">
+          <Form layout="vertical" onFinish={onBookingSubmit} initialValues={{ serviceType: "Select" }}>
+            <Row gutter={[20, 12]}>
+              <Col xs={24} sm={12}>
+                <Form.Item label="Full Name " name="fullname" rules={[{ required: true }]}>
+                  <Input className="hs-booking-input" placeholder="John Doe" />
+                </Form.Item>
+              </Col>
+
+              <Col xs={24} sm={12}>
+                <Form.Item label="Email " name="email" rules={[{ required: true, type: "email" }]}>
+                  <Input className="hs-booking-input" placeholder="john@example.com" />
+                </Form.Item>
+              </Col>
+
+              <Col xs={24} sm={12}>
+                <Form.Item label="Phone Number " name="phone" rules={[{ required: true }]}>
+                  <Input className="hs-booking-input" placeholder="+1 (555) 123-4567" />
+                </Form.Item>
+              </Col>
+
+              <Col xs={24} sm={12}>
+                <Form.Item label="Service Type " name="serviceType" rules={[{ required: true }]}>
+                  <Select className="hs-booking-input" placeholder="Select Home Services">
+                    <Option value="cleaning">Cleaning</Option>
+                    <Option value="plumbing">Plumbing</Option>
+                    <Option value="electrical">Electrical</Option>
+                    <Option value="carpentry">Carpentry</Option>
+                    <Option value="hvac">HVAC</Option>
+                  </Select>
+                </Form.Item>
+              </Col>
+
+              <Col xs={24}>
+                <Form.Item label="Service Address " name="address" rules={[{ required: true }]}>
+                  <Input className="hs-booking-input" placeholder="123 Main St, City, State, ZIP" />
+                </Form.Item>
+              </Col>
+
+              <Col xs={24} sm={12}>
+                <Form.Item label="Preferred Date " name="date" rules={[{ required: true }]}>
+                  {/* removed inline style; styling handled via CSS */}
+                  <DatePicker className="date-input" />
+                </Form.Item>
+              </Col>
+
+              <Col xs={24} sm={12}>
+                <Form.Item label="Preferred Time " name="time" rules={[{ required: true }]}>
+                  <Select className="hs-booking-input" placeholder="Select time slot">
+                    <Option value="morning">Morning (9am - 12pm)</Option>
+                    <Option value="afternoon">Afternoon (12pm - 4pm)</Option>
+                    <Option value="evening">Evening (4pm - 8pm)</Option>
+                  </Select>
+                </Form.Item>
+              </Col>
+
+              <Col xs={24}>
+                <Form.Item label="Additional Details" name="details">
+                  <Input.TextArea className="hs-booking-textarea" placeholder="Tell us more about your requirements..." />
+                </Form.Item>
+              </Col>
+
+              <Col xs={24}>
+                <Form.Item>
+                  <Button htmlType="submit" className="hs-booking-submit">
+                    Submit Booking Request
+                  </Button>
+                </Form.Item>
+              </Col>
+            </Row>
+          </Form>
+        </div>
+      </div>
+
+      {/* Emergency section (unchanged) */}
       <div className="hs-emergency-wrap">
         <div className="hs-emergency-head">
           <h2>24/7 Emergency Services</h2>
@@ -447,7 +608,7 @@ const Home_Service: React.FC = () => {
         </div>
       </div>
 
-      {/* Footer (kept unchanged) */}
+      {/* Footer (unchanged) */}
       <footer className="hs-footer">
         <div className="hs-footer-inner">
           <div className="hs-footer-col hs-footer-about">

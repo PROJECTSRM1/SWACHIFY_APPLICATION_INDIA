@@ -26,8 +26,19 @@ import {
 } from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom";
 import "./ConstructionMaterials.css";
-import heroImage from "../../assets/landingimages/brickwall.jpg";
-import heroImage1 from "../../assets/landingimages/brickwall.jpg";
+import brickwalss from "../../assets/landingimages/brickwall.jpg";
+
+
+import premiumportlandcement from "../../assets/landingimages/PremiumPortlandCement.jpg";
+import tmtsteelbars from "../../assets/landingimages/TMTSteelBars.jpg";
+import aacblocks from "../../assets/landingimages/AACBlocks.jpeg";
+import msand from "../../assets/landingimages/M.Sand.jpg";
+import cementandconcrete from "../../assets/landingimages/Cement&Concrete.jpg";
+import steelandmetals from "../../assets/landingimages/Steel&Metals.jpg";
+import bricksandblocks from "../../assets/landingimages/Bricks&Blocks.jpg";
+import sandandaggregates from "../../assets/landingimages/Sand&Aggregates.jpg";
+import roofingmaterials from "../../assets/landingimages/RoofingMaterials.jpg";
+import plumbingandelectrical from "../../assets/landingimages/Plumbing&Electrical.jpeg";
 
 const { Title, Text } = Typography;
 const { Option } = Select;
@@ -91,28 +102,28 @@ const services = [
 const featuredProducts = [
   {
     title: "Premium Portland Cement",
-    image: heroImage1,
+    image: premiumportlandcement,
     price: "$8.50 per bag (50kg)",
     rating: "4.8/5",
     details: ["High Strength", "Quick Setting", "Weather Resistant"],
   },
   {
     title: "TMT Steel Bars (Fe 500)",
-    image: "https://via.placeholder.com/300x200?text=Steel",
+    image: tmtsteelbars,
     price: "$650 per ton",
     rating: "4.9/5",
     details: ["High Tensile", "Corrosion Resistant", "ISI Certified"],
   },
   {
     title: "AAC Blocks",
-    image: "https://via.placeholder.com/300x200?text=AAC+Blocks",
+    image: aacblocks,
     price: "$2.20 per block",
     rating: "4.7/5",
     details: ["Lightweight", "Thermal Insulation", "Fire Resistant"],
   },
   {
     title: "M-Sand (Manufactured Sand)",
-    image: "https://via.placeholder.com/300x200?text=MSand",
+    image: msand,
     price: "$45 per ton",
     rating: "4.6/5",
     details: ["Consistent Quality", "Eco Friendly", "No Impurities"],
@@ -122,32 +133,32 @@ const productCategories = [
   {
     title: "Cement & Concrete",
     items: ["Portland Cement", "Ready-Mix Concrete", "Mortar", "Grout"],
-    image: "https://via.placeholder.com/400x260?text=Cement",
+    image: cementandconcrete,
   },
   {
     title: "Steel & Metals",
     items: ["TMT Bars", "Steel Beams", "Wire Mesh", "Angles & Channels"],
-    image: "https://via.placeholder.com/400x260?text=Steel",
+    image: steelandmetals,
   },
   {
     title: "Bricks & Blocks",
     items: ["Red Bricks", "Fly Ash Bricks", "AAC Blocks", "Concrete Blocks"],
-    image: "https://via.placeholder.com/400x260?text=Bricks",
+    image: bricksandblocks,
   },
   {
     title: "Sand & Aggregates",
     items: ["River Sand", "M Sand", "Coarse Aggregates", "Stone Chips"],
-    image: "https://via.placeholder.com/400x260?text=Sand",
+    image: sandandaggregates,
   },
   {
     title: "Roofing Materials",
     items: ["Roof Tiles", "Metal Sheets", "Waterproofing", "Insulation"],
-    image: "https://via.placeholder.com/400x260?text=Roofing",
+    image: roofingmaterials,
   },
   {
     title: "Plumbing & Electrical",
     items: ["PPR Pipes", "Copper Wires", "Switches", "Fittings"],
-    image: "https://via.placeholder.com/400x260?text=Plumbing",
+    image: plumbingandelectrical,
   },
 ];
 /* ================= AUTH MODAL ================= */
@@ -394,10 +405,15 @@ const ConstructionMaterials: React.FC = () => {
     <div className="construction-materials-container">
       <NavbarSection menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
       {/* HERO */}
-      <section
-        className="hero-section"
-        style={{ backgroundImage: `url(${heroImage})` }}
-      >
+<section
+  className="hero-section"
+  style={{
+    backgroundImage: `url(${brickwalss})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  }}
+>
+
         <div className="hero-overlay">
           <h1>Quality Building Materials at Best Prices</h1>
           <p>Browse our comprehensive range of construction materials.</p>

@@ -5,13 +5,13 @@
 }
 
 /* ---------------- HEADER ---------------- */
-.header {
+.freelancer-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between;  /* 👈 pushes left + right apart */
   align-items: center;
-  padding: 18px 40px;
-  background: white;
-  border-bottom: 1px solid #e5e7eb;
+  background: #ffffff;
+  padding: 10px 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .logo h2 {
@@ -30,13 +30,41 @@
 }
 
 /* ---------------- HERO SECTION ---------------- */
-.find-workers {
- background: linear-gradient(to bottom, #becfe6, white);
+/* .find-workers {
+ background: linear-gradient(to right, #becfe6, white);
   padding: 40px 60px;
   border-radius: 12px;
   margin: 30px 40px;
   text-align: left;
+} */
+/* .find-workers {
+  background: linear-gradient(to right, #becfe6, white);
+  padding: 40px 60px;
+  border-radius: 12px;
+  margin: 30px 40px;
+  text-align: left;
+  position: relative;
+  Make sure content does not overlap image
+  min-height: 200px; /* adjust as needed */
+  /* background-repeat: no-repeat;
+  background-position:  center;
+  background-size: contain;
+} */ */
+ .find-workers {
+  padding: 40px 60px;
+  border-radius: 12px;
+  margin: 30px 40px;
+  text-align: left;
+  /* position: relative; */
+  min-height: 90vh;  /* Use 60% of viewport height */
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
+
+
+
 
 .find-workers h1 {
   font-size: 28px;
@@ -141,4 +169,125 @@
   border-radius: 6px;
   cursor: pointer;
   font-size: 13px;
+}
+.back-btn-container {
+    margin: 15px 40px;
+}
+
+.back-btn {
+    padding: 12px 24px;
+    /* background-color: #fdfeff; */
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 20px;
+    color: #2828d6;
+    transition: all 0.2s ease;
+}
+
+.back-btn:hover {
+    background-color: #e5e7eb;
+}
+/* ===================== MOBILE RESPONSIVENESS ===================== */
+@media (max-width: 425px) {
+  .dashboard-container {
+    padding: 0 10px;
+  }
+
+  
+  .freelancer-header {
+    /* flex-direction: column;
+    align-items: flex-start; */
+    padding: 10px 15px;
+  }
+
+  .logo h2 {
+    font-size: 18px;
+  }
+
+  .btn-login {
+    font-size: 14px; 
+    margin-top: 8px;
+  }
+
+  .back-btn-container {
+  margin: 10px 15px 20px 15px; /* top, right, bottom, left */
+  width: auto;
+  display: flex;
+  justify-content: flex-start; /* align left */
+}
+
+.back-btn {
+  font-size: 14px;      /* smaller font size */
+  padding: 8px 16px;    /* smaller padding */
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+  /* Hero section */
+  .find-workers {
+    padding: 25px 20px;
+    margin: 20px 10px;
+    text-align: center;
+    border-radius: 10px;
+  }
+
+  .find-workers h1 {
+    font-size: 22px;
+  }
+
+  .hero-sub {
+    font-size: 14px;
+  }
+
+  .view-requests {
+    padding: 10px 22px; /* same as desktop */
+    font-size: 14px;
+  }
+
+  /* Cards container */
+  .cards-container {
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+  }
+
+  .request-card {
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 15px;
+  }
+
+  .request-left {
+    max-width: 100%;
+    margin-bottom: 10px;
+  }
+
+  /* RIGHT SIDE: keep buttons inline and same size */
+  .request-right {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .accept-btn, .view-btn {
+    font-size: 13px;   /* same as desktop */
+    padding: 8px 18px; /* same as desktop */
+    flex: none;         /* prevent auto stretch */
+  }
+
+  .request-title {
+    font-size: 15px;
+  }
+
+  .request-meta {
+    font-size: 12px;
+  }
+
+  .request-desc {
+    font-size: 13px;
+  }
 }
