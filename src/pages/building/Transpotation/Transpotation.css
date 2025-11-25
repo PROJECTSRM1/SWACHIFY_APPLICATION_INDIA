@@ -38,7 +38,7 @@
     width: 100%;
     padding: 20px 40px;
     display: grid;
-    grid-template-columns: repeat(2, 1fr); 
+    grid-template-columns: repeat(3, 1fr); 
     gap: 18px;
     box-sizing: border-box;
 }
@@ -46,12 +46,13 @@
 .transport-card {
   background: #ffffff;
   border-radius: 15px;
-  padding: 16px;
+  padding: 7px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
   transition: 0.2s ease;
   display: flex;
   flex-direction: column;
   height: auto;
+  margin-top: 5px;
 }
 
 .transport-card:hover {
@@ -59,7 +60,7 @@
 }
 .transport-img img {
   width: 100%;
-  height: 170px;        
+  height: 150px;        
   border-radius: 12px;
   object-fit: cover;
 }
@@ -129,11 +130,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-.tf-header h2 {
-  font-size: 24px;
-  font-weight: 600;
 }
 
 .tf-close {
@@ -264,7 +260,7 @@
 }
 
 .tf-field label {
-      font-size: 12px;
+    font-size: 12px;
     font-weight: 600;
     margin-bottom: 4px;
     text-align: left !important;

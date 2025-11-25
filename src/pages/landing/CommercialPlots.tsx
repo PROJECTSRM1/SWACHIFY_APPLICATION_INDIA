@@ -30,6 +30,8 @@ import {
   TwitterOutlined,
   InstagramOutlined,
   LinkedinOutlined,
+  MenuOutlined,
+  CloseOutlined,
 } from "@ant-design/icons";
 
 import { Link, useNavigate } from "react-router-dom";
@@ -55,9 +57,16 @@ const { TabPane } = Tabs;
 type HSHeaderProps = {
   selectedKey?: string;
   onSignUp?: () => void;
+  menuOpen?: boolean;
+  setMenuOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const HSHeader: React.FC<HSHeaderProps> = ({ selectedKey = "", onSignUp = () => {} }) => {
+const HSHeader: React.FC<HSHeaderProps> = ({
+  selectedKey = "",
+  onSignUp = () => {},
+  menuOpen,
+  setMenuOpen,
+}) => {
   const headerNav = [
     { key: "home", label: <Link to="/landing">Home</Link> },
     { key: "cleaning", label: <Link to="/cleaningservice">Cleaning</Link> },
@@ -72,35 +81,66 @@ const HSHeader: React.FC<HSHeaderProps> = ({ selectedKey = "", onSignUp = () => 
   const selectedKeysArray = selectedKey ? [selectedKey] : [];
 
   return (
-    <header className="hs-navbar" role="banner" aria-label="Primary header">
-      <div className="hs-navbar-logo" aria-hidden>
-        <span className="hs-logo-text">SWACHIFY INDIA</span>
-      </div>
+    <>
+      <header className="hs-navbar" role="banner" aria-label="Primary header">
+        <div className="hs-navbar-logo" aria-hidden>
+          <span className="hs-logo-text">SWACHIFY INDIA</span>
+        </div>
 
-      <Menu
-        mode="horizontal"
-        selectedKeys={selectedKeysArray}
-        className="hs-navbar-menu"
-        items={headerNav}
-        role="navigation"
-        aria-label="Primary navigation"
-      />
+        {/* Mobile hamburger button (only visible on mobile via CSS) */}
+        <button
+          className="mobile-menu-icon"
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          onClick={() => setMenuOpen && setMenuOpen((s) => !s)}
+          type="button"
+        >
+          {menuOpen ? <CloseOutlined /> : <MenuOutlined />}
+        </button>
 
-      <Button
-        type="primary"
-        className="hs-contact-btn"
-        onClick={onSignUp}
-        aria-label="Sign up"
-      >
-        Sign Up
-      </Button>
-    </header>
+        <Menu
+          mode="horizontal"
+          selectedKeys={selectedKeysArray}
+          className="hs-navbar-menu"
+          items={headerNav}
+          role="navigation"
+          aria-label="Primary navigation"
+        />
+
+        <Button
+          type="primary"
+          className="hs-contact-btn"
+          onClick={onSignUp}
+          aria-label="Sign up"
+        >
+          Sign Up
+        </Button>
+      </header>
+
+      {/* Mobile dropdown menu (rendered by header) */}
+      {menuOpen && (
+        <ul className="mobile-menu">
+          <li><Link to="/" onClick={() => setMenuOpen && setMenuOpen(false)}>Home</Link></li>
+          <li><Link to="/cleaningservice" onClick={() => setMenuOpen && setMenuOpen(false)}>Cleaning</Link></li>
+          <li><Link to="/LandingPackers" onClick={() => setMenuOpen && setMenuOpen(false)}>Packers & Movers</Link></li>
+          <li><Link to="/home_service" onClick={() => setMenuOpen && setMenuOpen(false)}>Home Services</Link></li>
+          <li><Link to="/rentals" onClick={() => setMenuOpen && setMenuOpen(false)}>Rentals</Link></li>
+          <li><Link to="/commercial-plots" onClick={() => setMenuOpen && setMenuOpen(false)}>Commercial Plots</Link></li>
+          <li><Link to="/ConstructionMaterials" onClick={() => setMenuOpen && setMenuOpen(false)}>Construction Materials</Link></li>
+          <li><Link to="/contactus" onClick={() => setMenuOpen && setMenuOpen(false)}>Contact</Link></li>
+          <li><Link to="/Cart" onClick={() => setMenuOpen && setMenuOpen(false)}>Cart</Link></li>
+          <li><Link to="/Login" onClick={() => setMenuOpen && setMenuOpen(false)}>Login</Link></li>
+        </ul>
+      )}
+    </>
   );
 };
 /* -------------------------
    End HSHeader
    ------------------------- */
 
+/* ... rest of your code unchanged ... (kept exact as you provided) */
+
+/* Product type, data, propertyTypes, etc. */
 type Product = {
   id: number;
   img: string;
@@ -125,6 +165,9 @@ const propertyTypes = [
 ];
 
 const CommercialPlots: React.FC = () => {
+  // --- NEW: menu state for hamburger (added, used only for header mobile) ---
+  const [menuOpen, setMenuOpen] = useState(false);
+
   // search/filter state
   const [searchLocation, setSearchLocation] = useState("");
   const [searchType, setSearchType] = useState<string | undefined>(undefined);
@@ -186,6 +229,8 @@ const CommercialPlots: React.FC = () => {
           setActiveAuthTab("login");
           setAuthModalVisible(true);
         }}
+        menuOpen={menuOpen}
+        setMenuOpen={setMenuOpen}
       />
 
       <Modal
@@ -208,9 +253,9 @@ const CommercialPlots: React.FC = () => {
             <TabPane tab="Login" key="login">
               <Form form={loginForm} layout="vertical" onFinish={onLoginFinish} initialValues={{ remember: true }}>
                 <Form.Item
-                  label="Email or Phone"
+                  label="Email / Phone"
                   name="identifier"
-                  rules={[{ required: true, message: "Please enter email or phone" }]}
+                  rules={[{ required: true, message: "Please enter email / phone" }]}
                 >
                   <Input placeholder="john@example.com or +1 555 123 4567" />
                 </Form.Item>
@@ -432,7 +477,6 @@ const CommercialPlots: React.FC = () => {
 
         {/* =========================
             UPDATED: Schedule a Consultation (Home_Service booking form format)
-            Uses AntD Form, same classes and behavior as Home_Service page
            ========================= */}
         <div className="hs-booking-wrap">
           <div className="hs-booking-head">
@@ -519,7 +563,7 @@ const CommercialPlots: React.FC = () => {
 
       </Content>
 
-           <Footer className="cp-footer">
+      <Footer className="cp-footer">
         <div className="cp-footer-inner">
           <div className="cp-footer-col">
             <h4>About Us</h4>

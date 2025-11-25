@@ -32,6 +32,8 @@ import {
   TwitterOutlined,
   InstagramOutlined,
   LinkedinOutlined,
+  MenuOutlined,
+  CloseOutlined,
 } from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -147,6 +149,9 @@ const Home_Service: React.FC = () => {
   const [authModalVisible, setAuthModalVisible] = useState(false);
   const [activeTab, setActiveTab] = useState<"login" | "register">("login");
 
+  // <-- ADDED: hamburger toggle state
+  const [menuOpen, setMenuOpen] = useState(false);
+
   // react-router navigate
   const navigate = useNavigate();
 
@@ -199,6 +204,16 @@ const Home_Service: React.FC = () => {
           <span className="hs-logo-text">SWACHIFY INDIA</span>
         </div>
 
+        {/* <-- ADDED: hamburger icon placed between logo and menu/button */}
+        <button
+          className="mobile-menu-icon"
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          onClick={() => setMenuOpen((s) => !s)}
+          type="button"
+        >
+          {menuOpen ? <CloseOutlined /> : <MenuOutlined />}
+        </button>
+
         <Menu mode="horizontal" selectedKeys={["home-services"]} className="hs-navbar-menu" items={navItems} />
 
         <Button
@@ -212,6 +227,37 @@ const Home_Service: React.FC = () => {
           Sign Up
         </Button>
       </header>
+
+      {/* <-- ADDED: mobile dropdown menu */}
+      {menuOpen && (
+        <ul className="mobile-menu" role="menu" aria-label="Mobile primary navigation">
+          <li><Link to="/landing" onClick={() => setMenuOpen(false)}>Home</Link></li>
+          <li><Link to="/cleaningservice" onClick={() => setMenuOpen(false)}>Cleaning</Link></li>
+          <li><Link to="/LandingPackers" onClick={() => setMenuOpen(false)}>Packers & Movers</Link></li>
+          <li><Link to="/home_service" onClick={() => setMenuOpen(false)}>Home Services</Link></li>
+          <li><Link to="/rentals" onClick={() => setMenuOpen(false)}>Rentals</Link></li>
+          <li><Link to="/commercial-plots" onClick={() => setMenuOpen(false)}>Commercial Plots</Link></li>
+          <li><Link to="/ConstructionMaterials" onClick={() => setMenuOpen(false)}>Construction Materials</Link></li>
+          <li><Link to="/Freelancer" onClick={() => setMenuOpen(false)}>Freelancer</Link></li>
+
+          <li><Link to="/contactus" onClick={() => setMenuOpen(false)}>Contact</Link></li>
+          <li><Link to="/Cart" onClick={() => setMenuOpen(false)}>Cart</Link></li>
+
+          <li>
+            <a
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                setMenuOpen(false);
+                setActiveTab("login");
+                setAuthModalVisible(true);
+              }}
+            >
+              Login / Sign Up
+            </a>
+          </li>
+        </ul>
+      )}
 
       <Modal
         title={null}
@@ -239,9 +285,9 @@ const Home_Service: React.FC = () => {
                 onFinish={onLoginFinish}
               >
                 <Form.Item
-                  label="Email or Phone"
+                  label="Email / Phone"
                   name="identifier"
-                  rules={[{ required: true, message: "Please enter email or phone" }]}
+                  rules={[{ required: true, message: "Please enter email / phone" }]}
                 >
                   <Input placeholder="john@example.com or +1 555 123 4567" />
                 </Form.Item>
@@ -404,7 +450,6 @@ const Home_Service: React.FC = () => {
         </div>
       ))}
 
-      {/* Pricing and Booking sections (unchanged structure) */}
       <div className="hs-pricing-wrap">
         <div className="hs-pricing-head">
           <h2>Maintenance Packages</h2>
@@ -523,7 +568,6 @@ const Home_Service: React.FC = () => {
 
               <Col xs={24} sm={12}>
                 <Form.Item label="Preferred Date " name="date" rules={[{ required: true }]}>
-                  {/* removed inline style; styling handled via CSS */}
                   <DatePicker className="date-input" />
                 </Form.Item>
               </Col>
@@ -556,7 +600,6 @@ const Home_Service: React.FC = () => {
         </div>
       </div>
 
-      {/* Emergency section (unchanged) */}
       <div className="hs-emergency-wrap">
         <div className="hs-emergency-head">
           <h2>24/7 Emergency Services</h2>
@@ -612,7 +655,6 @@ const Home_Service: React.FC = () => {
         </div>
       </div>
 
-      {/* Footer (unchanged) */}
       <footer className="hs-footer">
         <div className="hs-footer-inner">
           <div className="hs-footer-col hs-footer-about">

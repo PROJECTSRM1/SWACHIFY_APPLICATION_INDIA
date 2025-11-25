@@ -17,8 +17,9 @@ import {
   DollarOutlined,
   UserOutlined,
   ClockCircleOutlined,
-//EnvironmentOutlined,
   MailOutlined,
+  MenuOutlined,
+  CloseOutlined,
 } from '@ant-design/icons';
 import { Link, useNavigate } from 'react-router-dom';
 import './LandingPackers.css';
@@ -34,7 +35,6 @@ import Loadingtransport from '../../assets/landingimages/Loadingtransport.jpg';
 import insurance from '../../assets/landingimages/insurance.jpeg';
 // =====================
 
-// const { Option } = Select;
 const { TabPane } = Tabs;
 
 const navItems = [
@@ -45,8 +45,7 @@ const navItems = [
   { key: "rentals", label: <Link to="/rentals">Rentals</Link> },
   { key: "commercial", label: <Link to="/commercial-plots">Buy&Sale Properties</Link> },
   { key: "materials", label: <Link to="/ConstructionMaterials">Construction Materials</Link> },
-   { key: "freelancer", label: <Link to="/Freelancer">Freelancer</Link> },
-    // { key: "location", label: <Link to="">Location</Link> },
+  { key: "freelancer", label: <Link to="/Freelancer">Freelancer</Link> },
 ];
 
 const services = [
@@ -134,6 +133,7 @@ const LandingPackers: React.FC = () => {
   const [authVisible, setAuthVisible] = useState(false);
   const [loginForm] = Form.useForm();
   const [registerForm] = Form.useForm();
+  const [menuOpen, setMenuOpen] = useState(false); // <-- added hamburger state
   const navigate = useNavigate();
 
   // 🚀 LOGIN → DIRECT NAVIGATION
@@ -180,7 +180,6 @@ const LandingPackers: React.FC = () => {
               <Input.Password placeholder="Password" />
             </Form.Item>
 
-            {/* ⭐ Added Remember Me Checkbox */}
             <Form.Item name="remember" valuePropName="checked">
               <Checkbox>Remember me</Checkbox>
             </Form.Item>
@@ -232,7 +231,7 @@ const LandingPackers: React.FC = () => {
               dependencies={["password"]}
               rules={[
                 { required: true },
-                ({ getFieldValue }) => ({
+                ({ getFieldValue }) => ( {
                   validator(_, value) {
                     return !value || getFieldValue("password") === value
                       ? Promise.resolve()
@@ -263,6 +262,16 @@ const LandingPackers: React.FC = () => {
           <span className="hs-logo-text">SWACHIFY INDIA</span>
         </div>
 
+        {/* ===== Hamburger toggle placed between logo and menu/sign-up (mobile) ===== */}
+        <button
+          className="mobile-menu-icon"
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          onClick={() => setMenuOpen((s) => !s)}
+          type="button"
+        >
+          {menuOpen ? <CloseOutlined /> : <MenuOutlined />}
+        </button>
+
         <Menu mode="horizontal" items={navItems} className="hs-navbar-menu" />
 
         <Button
@@ -273,6 +282,36 @@ const LandingPackers: React.FC = () => {
           Sign Up
         </Button>
       </header>
+
+      {/* ===== Mobile dropdown menu (same behavior used in other pages) ===== */}
+      {menuOpen && (
+        <ul className="mobile-menu" role="menu" aria-label="Mobile primary navigation">
+          <li><Link to="/landing" onClick={() => setMenuOpen(false)}>Home</Link></li>
+          <li><Link to="/cleaningservice" onClick={() => setMenuOpen(false)}>Cleaning</Link></li>
+          <li><Link to="/LandingPackers" onClick={() => setMenuOpen(false)}>Packers & Movers</Link></li>
+          <li><Link to="/home_service" onClick={() => setMenuOpen(false)}>Home Services</Link></li>
+          <li><Link to="/rentals" onClick={() => setMenuOpen(false)}>Rentals</Link></li>
+          <li><Link to="/commercial-plots" onClick={() => setMenuOpen(false)}>Commercial Plots</Link></li>
+          <li><Link to="/ConstructionMaterials" onClick={() => setMenuOpen(false)}>Construction Materials</Link></li>
+          <li><Link to="/Freelancer" onClick={() => setMenuOpen(false)}>Freelancer</Link></li>
+
+          <li><Link to="/contactus" onClick={() => setMenuOpen(false)}>Contact</Link></li>
+          <li><Link to="/Cart" onClick={() => setMenuOpen(false)}>Cart</Link></li>
+
+          <li>
+            <a
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                setMenuOpen(false);
+                setAuthVisible(true);
+              }}
+            >
+              Login / Sign Up
+            </a>
+          </li>
+        </ul>
+      )}
 
       <AuthModal />
 
@@ -294,7 +333,7 @@ const LandingPackers: React.FC = () => {
         <div className="services-row">
           {services.map((s, i) => (
             <Card key={i} className="packes-card">
-              <img src={s.img} className="service-img" />
+              <img src={s.img} className="service-img" alt={s.title} />
               <div className="packes-icon">{s.icon}</div>
               <h3>{s.title}</h3>
               <p>{s.desc}</p>
@@ -311,7 +350,7 @@ const LandingPackers: React.FC = () => {
             <Card
               key={i}
               className="service-card"
-              cover={<img src={t.image} className="service-img" />}
+              cover={<img src={t.image} className="service-img" alt={t.title} />}
             >
               <h3>{t.title}</h3>
               <p>Starting at {t.price}</p>
@@ -337,7 +376,8 @@ const LandingPackers: React.FC = () => {
           </Form.Item>
 
           <Form.Item label="Phone Number" name="phoneNumber" rules={[{ required: true }]}>
-            {/* <Input prefix={<EnvironmentOutlined />} /> */}
+            {/* input intentionally left blank in original */}
+            <Input />
           </Form.Item>
 
           <Button type="primary" block>Submit</Button>
@@ -359,60 +399,59 @@ const LandingPackers: React.FC = () => {
       </section>
 
       {/* FOOTER */}
-{/* FOOTER */}
-<footer className="lr-footer site-footer" role="contentinfo" aria-label="Footer">
-  <div className="lr-footer-inner lr-footer-grid">
-    <div className="lr-footer-col">
-      <h4>About Us</h4>
-      <p className="lr-footer-about">
-        Your trusted partner for all home and property-related services. Quality,
-        reliability, and customer satisfaction guaranteed.
-      </p>
-    </div>
-    <div className="lr-footer-col">
-      <h4>Services</h4>
-      <ul className="lr-footer-list">
-        <li>Cleaning Service</li>
-        <li>Packers & Movers</li>
-        <li>Home Services</li>
-        <li>Rentals</li>
-        <li>Commercial Plots</li>
-        <li>Construction Materials</li>
-      </ul>
-    </div>
-    <div className="lr-footer-col">
-      <h4>Quick Links</h4>
-      <ul className="lr-footer-list">
-        <li>Home</li>
-        <li>About</li>
-        <li>Contact</li>
-        <li>Careers</li>
-      </ul>
-    </div>
-    <div className="lr-footer-col">
-      <h4>Contact Info</h4>
-      <ul className="lr-contact-list">
-        <li className="lr-contact-phone">
-          <span aria-hidden className="lc-contact-icon">📞</span>
-          <span className="lc-contact-text"> +1 (555) 123-4567</span>
-        </li>
-        <li>✉️ &nbsp; info@homeservices.com</li>
-        <li>📍 &nbsp; 123 Service Street, City, State</li>
-      </ul>
-      <div className="lr-footer-socials" aria-hidden>
-        <a className="social" href="#" aria-label="facebook">f</a>
-        <a className="social" href="#" aria-label="twitter">t</a>
-        <a className="social" href="#" aria-label="instagram">ig</a>
-        <a className="social" href="#" aria-label="linkedin">in</a>
-      </div>
-    </div>
-  </div>
+      <footer className="lr-footer site-footer" role="contentinfo" aria-label="Footer">
+        <div className="lr-footer-inner lr-footer-grid">
+          <div className="lr-footer-col">
+            <h4>About Us</h4>
+            <p className="lr-footer-about">
+              Your trusted partner for all home and property-related services. Quality,
+              reliability, and customer satisfaction guaranteed.
+            </p>
+          </div>
+          <div className="lr-footer-col">
+            <h4>Services</h4>
+            <ul className="lr-footer-list">
+              <li>Cleaning Service</li>
+              <li>Packers & Movers</li>
+              <li>Home Services</li>
+              <li>Rentals</li>
+              <li>Commercial Plots</li>
+              <li>Construction Materials</li>
+            </ul>
+          </div>
+          <div className="lr-footer-col">
+            <h4>Quick Links</h4>
+            <ul className="lr-footer-list">
+              <li>Home</li>
+              <li>About</li>
+              <li>Contact</li>
+              <li>Careers</li>
+            </ul>
+          </div>
+          <div className="lr-footer-col">
+            <h4>Contact Info</h4>
+            <ul className="lr-contact-list">
+              <li className="lr-contact-phone">
+                <span aria-hidden className="lc-contact-icon">📞</span>
+                <span className="lc-contact-text"> +1 (555) 123-4567</span>
+              </li>
+              <li>✉️ &nbsp; info@homeservices.com</li>
+              <li>📍 &nbsp; 123 Service Street, City, State</li>
+            </ul>
+            <div className="lr-footer-socials" aria-hidden>
+              <a className="social" href="#" aria-label="facebook">f</a>
+              <a className="social" href="#" aria-label="twitter">t</a>
+              <a className="social" href="#" aria-label="instagram">ig</a>
+              <a className="social" href="#" aria-label="linkedin">in</a>
+            </div>
+          </div>
+        </div>
 
-  <div className="lr-footer-bottom">
-    <div className="lr-footer-sep" />
-    <div className="lr-footer-copy">© 2025 Home Services. All rights reserved.</div>
-  </div>
-</footer>
+        <div className="lr-footer-bottom">
+          <div className="lr-footer-sep" />
+          <div className="lr-footer-copy">© 2025 Home Services. All rights reserved.</div>
+        </div>
+      </footer>
 
     </div>
   );
