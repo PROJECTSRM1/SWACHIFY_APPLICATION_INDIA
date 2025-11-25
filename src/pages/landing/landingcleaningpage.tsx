@@ -1,6 +1,7 @@
 // src/pages/landing/LandingCleaningPage.tsx
 import React, { useState } from "react";
 // add this
+import { setUserDetails } from "../../utils/helpers/storage";
 import { Phone } from "lucide-react";
 // import { Menu } from 'antd'    
 
@@ -188,8 +189,15 @@ const LandingCleaningPage: React.FC = () => {
   // handlers for auth modal forms
   const onLogin = (values: any) => {
     console.log("Login values:", values);
-    // perform login action or call API
-    // close modal first
+    const userData = {
+        name: "Test User",
+        email: values.identifier,
+      };
+      debugger;
+      console.log('__logs',userData)
+      setUserDetails("user", userData);
+    
+      navigate("/app/dashboard");
     setAuthVisible(false);
     // allow modal close animation to finish, then navigate
     setTimeout(() => navigate("/app/dashboard"), 140);

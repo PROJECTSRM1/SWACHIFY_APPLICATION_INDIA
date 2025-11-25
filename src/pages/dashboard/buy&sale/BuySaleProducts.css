@@ -22,6 +22,7 @@
 .module-section {
   margin-top: 16px;
   margin-bottom: 32px;
+  max-width: 2560px;
   max-width: 100%;
   margin-left: auto;
   margin-right: auto;
@@ -97,10 +98,14 @@
   box-shadow: var(--card-shadow);
 }
 
+/* buy&sale/BuySaleProducts.css */
+
 .service-card-main .ant-card-body {
   padding: 12px 14px !important;
   display: flex;
   flex-direction: column;
+  height: 100%; /* Ensure body takes full height of the parent Card */
+  min-height: 150px; /* NEW: Set a minimum height to accommodate varied content */
 }
 
 
@@ -114,7 +119,7 @@
 
 .service-card-title {
   font-weight: 700;
-  font-size: 15px;
+  font-size: 14px;
   color: var(--primary-red);
 }
 
@@ -122,6 +127,8 @@
   font-size: 0.8rem;
   color: var(--text-muted);
 }
+
+
 
 /* ---------- subservice cards (modal 1) ---------- */
 
@@ -171,6 +178,11 @@
 .minimal-back-button {
   background-color: #d90000bf !important;
 }
+
+.buy_sale_view_btn{
+  background-color: #000 !important;
+}
+
 
 /* text alignment & wrapping */
 .subservice-card .ant-card-meta-title,
@@ -380,10 +392,20 @@
 }
 
 /* ---------- responsive ---------- */
+.service-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 12px;
+}
 
 @media (min-width: 769px) {
   .app-container {
-    padding: 20px 48px;
+    padding: 24px;
+    margin: 0 auto;
+    max-width: 1200px;
+    background-color: #fff;
   }
 
   .header-banner {
@@ -394,6 +416,9 @@
 @media (max-width: 768px) {
   .app-container {
     padding: 12px;  
+    background-color: #fff;
+
+
   }
 
   .header-banner {
