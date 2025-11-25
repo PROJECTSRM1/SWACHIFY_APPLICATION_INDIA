@@ -1099,7 +1099,7 @@ const SERVICES_DATA: Service[] = [
       {
         key: 'propListingSale',
         title: 'Property Listing for Sale',
-        description: 'Click to view properties listed for sale.',
+        description: '',
         contentComponent: PropertyListingSaleContent as React.FC<any>,
         imagePath: Modern,
       },
