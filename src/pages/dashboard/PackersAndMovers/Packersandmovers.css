@@ -8,44 +8,41 @@
 }
 
 /* ---------- hero ---------- */
-.pm-hero { 
-  /* margin:20px auto 12px;  */
-  /* width:100%;  */
+.pm-hero {
   margin-left: 52px;
   margin-right: 52px;
 }
 
-.pm-hero-inner { 
-  display:flex; 
-  align-items:center; 
-  justify-content:space-between; 
-  padding:18px; 
-  background:#ff6d00; 
-  border-radius:8px; 
-  color:#fff; 
-  
-  
+.pm-hero-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px;
+  background: #ff6d00;
+  border-radius: 8px;
+  color: #fff;
 }
 .pm-hero-title {
-  margin:0;
-  font-size:20px;
-  font-weight:700;
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
 }
 .pm-hero-sub {
-  margin:4px 0 0;
-  color:rgba(255,255,255,0.95);
-  font-size:13px;
+  margin: 4px 0 0;
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 13px;
 }
 
 /* ---------- cards ---------- */
-.pm-main { 
-  width:95%; 
-  margin:18px; 
+.pm-main {
+  width: 95%;
+  margin: 18px;
   margin-left: 30px;
-  /* margin-right: 52px; */
   margin-right: 20px;
 }
-.pm-cards-wrapper { width:100%; }
+.pm-cards-wrapper {
+  width: 100%;
+}
 
 /* Make columns flex so cards stretch to equal height */
 .ant-row > .ant-col[style*="display: flex"] {
@@ -54,14 +51,14 @@
 
 /* Fixed card height so all cards equal size */
 .pm-card {
-  border-radius:10px;
-  overflow:hidden;
-  box-shadow:0 6px 18px rgba(20,20,20,0.06);
-  border:1px solid #f0f0f0;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(20, 20, 20, 0.06);
+  border: 1px solid #f0f0f0;
   background: #fff;
-  display:flex;
+  display: flex;
   flex-direction: column;
-  height: 340px; /* fixed height to make all cards identical */
+  height: 340px; /* fixed height */
   max-width: 260px;
   margin: 0 auto;
   box-sizing: border-box;
@@ -69,70 +66,68 @@
 
 /* image fixed height */
 .pm-card-image {
-  width:100%;
+  width: 100%;
   height: 150px; /* fixed image height */
   object-fit: cover;
-  display:block;
+  display: block;
 }
 
 /* body takes remaining space */
 .pm-card-body {
-  padding:12px 14px;
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
-  flex:1;
-  box-sizing:border-box;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+  box-sizing: border-box;
 }
 
 /* title/subtitle clamp to avoid growth */
 .pm-card-title {
-  margin:0;
-  font-size:16px;
-  font-weight:600;
-  color:#173648;
-  display:-webkit-box;
-  /* -webkit-line-clamp:1; */
-  -webkit-box-orient:vertical;
-  overflow:hidden;
-  text-overflow:ellipsis;
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #173648;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .pm-card-sub {
-  margin:8px 0 0;
-  color:#6b7785;
-  font-size:13px;
-  line-height:1.4;
-  display:-webkit-box;
-  /* -webkit-line-clamp:2; */
-  -webkit-box-orient:vertical;
-  overflow:hidden;
-  text-overflow:ellipsis;
+  margin: 8px 0 0;
+  color: #6b7785;
+  font-size: 13px;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* footer pinned to bottom of card */
 .pm-card-footer {
-  margin-top:12px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+  margin-top: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .pm-view-btn {
-  background:#fff;
-  border:1px solid #eee;
-  border-radius:8px;
-  padding:6px 10px;
-  font-size:13px;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 13px;
 }
 .pm-price {
-  color:#2b6cff;
-  font-weight:600;
+  color: #2b6cff;
+  font-weight: 600;
 }
 
 /* ---------- full-screen modal overlay ---------- */
 .pm-fullscreen-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(12,16,23,0.65);
+  background: rgba(12, 16, 23, 0.65);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -145,60 +140,110 @@
   background: #fff;
   border-radius: 12px;
   overflow: auto;
-  box-shadow: 0 24px 64px rgba(8,12,20,0.4);
+  box-shadow: 0 24px 64px rgba(8, 12, 20, 0.4);
   outline: none;
   display: flex;
   flex-direction: column;
 }
 .pm-fullscreen-header {
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 18px 22px;
-  border-bottom:1px solid #f2f4f7;
+  border-bottom: 1px solid #f2f4f7;
 }
 .pm-fullscreen-header h2 {
-  margin:0;
-  font-size:20px;
+  margin: 0;
+  font-size: 20px;
 }
 .pm-fullscreen-close {
-  background:transparent;
-  border:none;
-  cursor:pointer;
-  font-size:18px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
   color: #111;
 }
 
 /* Modal body and grid */
 .pm-fullscreen-body {
-  padding:18px 22px 28px;
+  padding: 18px 22px 28px;
 }
-.pm-fullscreen-images { width:100%; }
+.pm-fullscreen-images {
+  width: 100%;
+}
 .pm-fullscreen-card {
-  border-radius:10px;
-  overflow:hidden;
-  box-shadow:0 8px 26px rgba(20,20,20,0.06);
-  border:1px solid #f0f0f0;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 8px 26px rgba(20, 20, 20, 0.06);
+  border: 1px solid #f0f0f0;
   background: #fff;
 }
 .pm-fullscreen-card-image {
-  width:100%;
-  height:200px;
-  object-fit:cover;
-  display:block;
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
 }
-.pm-fullscreen-card-body { padding:12px; text-align:center; }
+
+/* fullscreen card body (layout + gap) */
+.pm-fullscreen-card-body {
+  padding: 12px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
 .pm-fullscreen-card-title {
-  font-weight:600;
-  color:#173648;
+  font-weight: 600;
+  color: #173648;
 }
-.pm-fullscreen-card-sub { color:#6b7785; font-size:13px; margin-top:6px; }
+.pm-fullscreen-card-sub {
+  color: #6b7785;
+  font-size: 13px;
+  margin-top: 6px;
+}
+
+/* actions area within fullscreen card */
+.pm-fullscreen-card-actions {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+/* Book Now button style (green RGB 20,184,120) */
+.pm-book-btn {
+  background: rgb(20, 184, 120);
+  color: #fff;
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(20, 20, 20, 0.08);
+  transition: transform 120ms ease, box-shadow 120ms ease, opacity 120ms ease;
+}
+
+/* override antd's button default styles so our class applies cleanly */
+.pm-book-btn.ant-btn {
+  background: rgb(20, 184, 120);
+  color: #fff;
+  border: none;
+  box-shadow: 0 6px 18px rgba(20, 20, 20, 0.08);
+}
+
+/* hover */
+.pm-book-btn:hover,
+.pm-book-btn:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(20, 20, 20, 0.12);
+  opacity: 0.98;
+}
 
 /* ---------- booking form modal ---------- */
 .pm-form-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(12,16,23,0.55);
+  background: rgba(12, 16, 23, 0.55);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -211,21 +256,24 @@
   overflow: auto;
   background: #fff;
   border-radius: 10px;
-  box-shadow: 0 32px 80px rgba(0,0,0,0.4);
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.4);
 }
 .pm-form-header {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 14px 18px;
-  border-bottom:1px solid #f2f4f7;
+  border-bottom: 1px solid #f2f4f7;
 }
-.pm-form-header h3 { margin:0; font-size:18px; }
+.pm-form-header h3 {
+  margin: 0;
+  font-size: 18px;
+}
 .pm-form-body {
-  display:flex;
+  display: flex;
   gap: 18px;
   padding: 18px;
-  align-items:flex-start;
+  align-items: flex-start;
 }
 /* left column: image + included + price */
 .pm-form-left {
@@ -233,64 +281,152 @@
   min-width: 220px;
 }
 .pm-form-image {
-  width:100%;
-  height:160px;
-  object-fit:cover;
-  border-radius:6px;
-  display:block;
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 6px;
+  display: block;
 }
-.pm-form-desc { color:#6b7785; margin:10px 0 12px; }
-.pm-included h4 { margin:0 0 8px; font-size:15px; }
-.pm-included ul { padding-left:16px; margin:0 0 12px; color:#235; }
-.pm-included li { margin-bottom:6px; font-size:14px; }
+.pm-form-desc {
+  color: #6b7785;
+  margin: 10px 0 12px;
+}
+.pm-included h4 {
+  margin: 0 0 8px;
+  font-size: 15px;
+}
+.pm-included ul {
+  padding-left: 16px;
+  margin: 0 0 12px;
+  color: #235;
+}
+.pm-included li {
+  margin-bottom: 6px;
+  font-size: 14px;
+}
 /* price box */
 .pm-price-box {
-  margin-top:10px;
-  padding:12px;
-  background:#f6fbff;
-  border-radius:8px;
-  border:1px solid #eef6ff;
+  margin-top: 10px;
+  padding: 12px;
+  background: #f6fbff;
+  border-radius: 8px;
+  border: 1px solid #eef6ff;
 }
-.pm-price-label { font-size:13px; color:#6b7785; margin-bottom:6px; }
-.pm-price-value { font-weight:700; color:#0d47a1; font-size:16px; }
+.pm-price-label {
+  font-size: 13px;
+  color: #6b7785;
+  margin-bottom: 6px;
+}
+.pm-price-value {
+  font-weight: 700;
+  color: #0d47a1;
+  font-size: 16px;
+}
 /* right column: form */
 .pm-form-right {
   width: calc(64% - 18px);
 }
-.pm-form-right .ant-form-item { margin-bottom:10px; }
+.pm-form-right .ant-form-item {
+  margin-bottom: 10px;
+}
 /* actions */
 .pm-form-actions {
-  display:flex;
-  justify-content:flex-end;
+  display: flex;
+  justify-content: flex-end;
   padding: 12px 0 24px;
 }
 /* small tweaks */
-.pm-form-inner::-webkit-scrollbar { height:8px; width:8px; }
-.pm-form-inner::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.12); border-radius:8px; }
+.pm-form-inner::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+.pm-form-inner::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.12);
+  border-radius: 8px;
+}
+
+/* ---------- picker / dropdown z-index fixes (important) ---------- */
+/* Ensure AntD pickers and dropdowns appear above overlays/modals */
+.ant-picker-dropdown,
+.rc-picker-panel,
+.ant-select-dropdown,
+.ant-time-picker-panel,
+.ant-picker-dropdown-placement-bottomLeft,
+.ant-picker-dropdown-placement-bottomRight {
+  z-index: 9000 !important;
+}
 
 /* ---------- responsive ---------- */
 @media (max-width: 1200px) {
-  .pm-card { height: 320px; max-width:240px; }
-  .pm-card-image { height:140px; }
+  .pm-card {
+    height: 320px;
+    max-width: 240px;
+  }
+  .pm-card-image {
+    height: 140px;
+  }
 }
 @media (max-width: 1024px) {
-  .pm-card { height: 320px; max-width:230px; }
-  .pm-card-image { height:130px; }
-  .pm-form-body { flex-direction:column; }
-  .pm-form-left, .pm-form-right { width:100%; }
-  .pm-form-left { min-width:auto; }
+  .pm-card {
+    height: 320px;
+    max-width: 230px;
+  }
+  .pm-card-image {
+    height: 130px;
+  }
+  .pm-form-body {
+    flex-direction: column;
+  }
+  .pm-form-left,
+  .pm-form-right {
+    width: 100%;
+  }
+  .pm-form-left {
+    min-width: auto;
+  }
 }
 @media (max-width: 768px) {
-  .pm-fullscreen-inner { width:98%; padding:0; }
-  .pm-fullscreen-body { padding:12px; }
-  .pm-fullscreen-card-image { height:140px; }
-  .pm-hero-inner { padding:14px; }
+  .pm-fullscreen-inner {
+    width: 98%;
+    padding: 0;
+  }
+  .pm-fullscreen-body {
+    padding: 12px;
+  }
+  .pm-fullscreen-card-image {
+    height: 140px;
+  }
+  .pm-hero-inner {
+    padding: 14px;
+  }
 }
 @media (max-width: 576px) {
   /* xs screens: cards stack full width */
-  .pm-card { height: auto; max-width: 100%; display:flex; flex-direction:column; }
-  .pm-card-image { height: 140px; }
-  .pm-card-body { padding:12px; }
-  .pm-hero-title { font-size:18px; }
-  .pm-hero-sub { font-size:12px; }
+  .pm-card {
+    height: auto;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .pm-card-image {
+    height: 140px;
+  }
+  .pm-card-body {
+    padding: 12px;
+  }
+  .pm-hero-title {
+    font-size: 18px;
+  }
+  .pm-hero-sub {
+    font-size: 12px;
+  }
+
+  /* small responsive tweak for Book Now */
+  .pm-fullscreen-card-body {
+    gap: 6px;
+  }
+  .pm-book-btn {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
 }

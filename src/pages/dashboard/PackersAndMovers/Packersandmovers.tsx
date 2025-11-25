@@ -17,10 +17,10 @@ import {
   ShoppingCartOutlined,
   UserOutlined,
   LogoutOutlined,
-  // DownOutlined,
   CloseOutlined,
 } from "@ant-design/icons";
 import "./Packersandmovers.css";
+
 // images (update names/paths as needed)
 import carRentalsImg from "../../../assets/passenger/Car Rentals.jpg";
 import cargoForwardingImg from "../../../assets/passenger/Cargo forwarding.jpg";
@@ -34,8 +34,10 @@ import taxiImg from "../../../assets/passenger/taxi.jpg";
 import taxiCabServiceImg from "../../../assets/passenger/taxiCabServiceImg.jpg";
 import tempControlledImg from "../../../assets/passenger/Temperature controlled.jpg";
 import truckRentalsImg from "../../../assets/passenger/Truck Rentals.jpg";
+
 const { Option } = Select;
 const { TextArea } = Input;
+
 /* helper placeholder */
 function makePlaceholder(text: string, bg = "#cfcfcf") {
   const w = 1000;
@@ -51,6 +53,7 @@ function makePlaceholder(text: string, bg = "#cfcfcf") {
   `;
   return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
 }
+
 /* Form schema typing */
 type FormField =
   | {
@@ -62,14 +65,13 @@ type FormField =
       placeholder?: string;
     };
 
-/* CardImage supports a specific form schema */
 type CardImage = {
   src: string;
   title: string;
   subtitle?: string;
   price?: string;
   included?: string[];
-  formSchema?: FormField[]; // <-- per-submodule form
+  formSchema?: FormField[]; // per-submodule form
 };
 type CardItem = {
   filename: string;
@@ -78,7 +80,8 @@ type CardItem = {
   color?: string;
   images?: CardImage[];
 };
-/* DATA: each submodule includes its own formSchema */
+
+/* DATA */
 const cardsData: CardItem[] = [
   {
     filename: taxiCabServiceImg,
@@ -247,6 +250,7 @@ const cardsData: CardItem[] = [
     ],
   },
 ];
+
 const Packersandmovers: React.FC = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [groupIndex, setGroupIndex] = useState<number | null>(null);
@@ -254,10 +258,10 @@ const Packersandmovers: React.FC = () => {
   const [bookingOpen, setBookingOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState<CardImage | null>(null);
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
-  // store per-submodule form data keyed by `${groupIndex}-${item.title}`
   const [bookingFormsData, setBookingFormsData] = useState<Record<string, any>>({});
   const previouslyFocused = useRef<HTMLElement | null>(null);
   const [form] = Form.useForm();
+
   // open group modal
   const openGroupModal = (idx: number) => {
     previouslyFocused.current = document.activeElement as HTMLElement | null;
@@ -270,6 +274,7 @@ const Packersandmovers: React.FC = () => {
     document.body.style.overflow = "";
     previouslyFocused.current?.focus();
   };
+
   // open booking form for submodule with groupIndex
   const openBookingForm = (img: CardImage, grpIndex: number) => {
     const key = `${grpIndex}-${img.title}`;
@@ -286,12 +291,13 @@ const Packersandmovers: React.FC = () => {
         if (f.type === "checkbox") defaults[f.name] = false;
         else defaults[f.name] = undefined;
       });
-      // also include metadata so payload knows which service/submodule
+      // include metadata
       defaults.serviceGroup = cardsData[grpIndex].title;
       defaults.serviceTitle = img.title;
       defaults.servicePrice = img.price;
       form.setFieldsValue(defaults);
     }
+    // show booking form (group overlay will be hidden by render condition)
     setBookingOpen(true);
   };
   const closeBookingForm = () => {
@@ -299,7 +305,8 @@ const Packersandmovers: React.FC = () => {
     setSelectedImage(null);
     setSelectedKey(null);
   };
-  // global ESC / click outside for group modal
+
+  // ESC / click-outside behavior
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       if (e.key === "Escape") {
@@ -308,7 +315,8 @@ const Packersandmovers: React.FC = () => {
       }
     }
     function onDocClick(e: MouseEvent) {
-      if (groupIndex == null) return;
+      // keep group overlay click-outside behavior only when booking form is NOT open
+      if (groupIndex == null || bookingOpen) return;
       if (!groupOverlayRef.current) return;
       const inner = groupOverlayRef.current.querySelector(".pm-fullscreen-inner");
       if (inner && e.target instanceof Node && !inner.contains(e.target)) closeGroupModal();
@@ -320,10 +328,10 @@ const Packersandmovers: React.FC = () => {
       document.removeEventListener("mousedown", onDocClick);
     };
   }, [groupIndex, bookingOpen]);
+
   // submit - save per-submodule
   const onFinish = (values: any) => {
     if (!selectedKey || !selectedImage) return;
-    // attach metadata
     const payload = {
       ...values,
       serviceTitle: values.serviceTitle || selectedImage.title,
@@ -332,11 +340,11 @@ const Packersandmovers: React.FC = () => {
     };
     setBookingFormsData((prev) => ({ ...prev, [selectedKey]: payload }));
     console.log("Saved booking for", selectedKey, payload);
-    // close after short delay
     setTimeout(() => {
       closeBookingForm();
     }, 250);
   };
+
   // helper to render a field given its schema
   function renderField(field: FormField) {
     const name = field.name;
@@ -358,7 +366,7 @@ const Packersandmovers: React.FC = () => {
       case "select":
         return (
           <Form.Item name={name} label={label} rules={rules}>
-            <Select placeholder={field.placeholder || label}>
+            <Select placeholder={field.placeholder || label} getPopupContainer={() => document.body}>
               {(field.options || []).map((opt) => (
                 <Option key={opt.value} value={opt.value}>
                   {opt.label}
@@ -370,7 +378,7 @@ const Packersandmovers: React.FC = () => {
       case "date":
         return (
           <Form.Item name={name} label={label} rules={rules}>
-            <DatePicker style={{ width: "100%" }} />
+            <DatePicker style={{ width: "100%" }} getPopupContainer={() => document.body} />
           </Form.Item>
         );
       case "number":
@@ -389,6 +397,7 @@ const Packersandmovers: React.FC = () => {
         return null;
     }
   }
+
   return (
     <>
       {/* HERO */}
@@ -398,17 +407,16 @@ const Packersandmovers: React.FC = () => {
             <h2 className="pm-hero-title">Packers &amp; Movers / Transport</h2>
             <p className="pm-hero-sub">{cardsData.length} services available</p>
           </div>
-          <div className="pm-hero-right">
-           
-          </div>
+          <div className="pm-hero-right" />
         </div>
       </section>
+
       {/* CARDS GRID */}
       <main className="pm-main" role="main">
         <div className="pm-container pm-cards-wrapper">
           <Row gutter={[20, 20]} justify="center">
             {cardsData.map((c, idx) => (
-              <Col key={idx} xs={24} sm={6} md={6} lg={6} style={{ display: "flex" }}>
+              <Col key={idx} xs={24} sm={12} md={8} lg={6} style={{ display: "flex" }}>
                 <Card
                   hoverable
                   className="pm-card"
@@ -431,7 +439,7 @@ const Packersandmovers: React.FC = () => {
                       <p className="pm-card-sub">{c.subtitle}</p>
                     </div>
                     <div className="pm-card-footer">
-                      <div className="pm-price">{/* price could go here if needed */}</div>
+                      <div className="pm-price" />
                       <Button className="pm-view-btn" size="small" onClick={() => openGroupModal(idx)}>
                         View Details
                       </Button>
@@ -443,8 +451,11 @@ const Packersandmovers: React.FC = () => {
           </Row>
         </div>
       </main>
-      {/* GROUP modal: shows submodules */}
-      {groupIndex != null && (
+
+      {/* GROUP modal: shows submodules
+          Only render when groupIndex != null AND booking form NOT open.
+      */}
+      {groupIndex != null && !bookingOpen && (
         <div className="pm-fullscreen-overlay" role="dialog" aria-modal="true" ref={groupOverlayRef} tabIndex={-1}>
           <div className="pm-fullscreen-inner" role="document">
             <header className="pm-fullscreen-header">
@@ -482,6 +493,12 @@ const Packersandmovers: React.FC = () => {
                           <div className="pm-fullscreen-card-title">{item.title}</div>
                           <div className="pm-fullscreen-card-sub">{item.subtitle}</div>
                           <div style={{ marginTop: 8, color: "#2b6cff", fontWeight: 700 }}>{item.price}</div>
+
+                          <div className="pm-fullscreen-card-actions">
+                            <Button className="pm-book-btn" onClick={() => openBookingForm(item, groupIndex)} size="middle" type="default">
+                              Book Now
+                            </Button>
+                          </div>
                         </div>
                       </Card>
                     </Col>
@@ -492,6 +509,7 @@ const Packersandmovers: React.FC = () => {
           </div>
         </div>
       )}
+
       {/* Booking dynamic form modal */}
       {bookingOpen && selectedImage && (
         <div className="pm-form-overlay" role="dialog" aria-modal="true">
@@ -527,6 +545,7 @@ const Packersandmovers: React.FC = () => {
                   <div className="pm-price-value">{selectedImage.price}</div>
                 </div>
               </div>
+
               <div className="pm-form-right">
                 <Form form={form} layout="vertical" onFinish={onFinish}>
                   {/* include hidden metadata */}
@@ -539,10 +558,12 @@ const Packersandmovers: React.FC = () => {
                   <Form.Item name="servicePrice" style={{ display: "none" }}>
                     <Input />
                   </Form.Item>
+
                   {/* Render fields from selectedImage.formSchema */}
                   {(selectedImage.formSchema || []).map((f) => (
                     <div key={f.name}>{renderField(f)}</div>
                   ))}
+
                   {/* action buttons */}
                   <div className="pm-form-actions">
                     <Button onClick={closeBookingForm} style={{ marginRight: 12 }}>
@@ -558,6 +579,7 @@ const Packersandmovers: React.FC = () => {
           </div>
         </div>
       )}
+
       {/* Drawer */}
       <Drawer placement="right" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
         <Menu mode="vertical" selectable={false}>
@@ -575,4 +597,5 @@ const Packersandmovers: React.FC = () => {
     </>
   );
 };
+
 export default Packersandmovers;
