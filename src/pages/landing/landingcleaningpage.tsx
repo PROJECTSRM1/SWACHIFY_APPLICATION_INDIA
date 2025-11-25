@@ -1,6 +1,7 @@
 // src/pages/landing/LandingCleaningPage.tsx
 import React, { useState } from "react";
 // add this
+import { setUserDetails } from "../../utils/helpers/storage";
 import { Phone } from "lucide-react";
 // import { Menu } from 'antd'    
 
@@ -233,6 +234,15 @@ const LandingCleaningPage: React.FC = () => {
 
   const onLogin = (values: any) => {
     console.log("Login values:", values);
+    const userData = {
+        name: "Test User",
+        email: values.identifier,
+      };
+      debugger;
+      console.log('__logs',userData)
+      setUserDetails("user", userData);
+    
+      navigate("/app/dashboard");
     setAuthVisible(false);
     setTimeout(() => navigate("/app/dashboard"), 140);
   };

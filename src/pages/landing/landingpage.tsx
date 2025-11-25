@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { setUserDetails } from "../../utils/helpers/storage";
 import {
   Button,
   Card,
@@ -101,6 +102,15 @@ const LandingPage = () => {
   const onLogin = async (values: any) => {
     // TODO: replace with real API call
     console.log("login values", values);
+    const userData = {
+        name: "Test User",
+        email: values.identifier,
+      };
+      
+      console.log('__logs',userData)
+      setUserDetails("user", userData);
+    
+      navigate("/app/dashboard");
     message.success("Login successful");
     closeAuthModal();
     navigate("/app/dashboard");

@@ -1,5 +1,6 @@
 // Home_Service.tsx
 import React, { useState } from "react";
+import { setUserDetails } from "../../utils/helpers/storage";
 import {
   Menu,
   Button,
@@ -159,15 +160,18 @@ const Home_Service: React.FC = () => {
   // Register form
   const [registerForm] = Form.useForm();
 
-  const onLoginFinish = (values: any) => {
-    // Replace with your auth flow
-    console.log("Login values:", values);
-    message.success("Logged in (demo)");
-    setAuthModalVisible(false);
-    loginForm.resetFields();
-    // navigate to dashboard
-    navigate("/app/dashboard");
+ const onLoginFinish = (values: any) => {
+  const userData = {
+    name: "Test User",
+    email: values.identifier,
   };
+  debugger;
+  console.log('__logs',userData)
+  setUserDetails("user", userData);
+
+  navigate("/app/dashboard");
+};
+
 
   const onRegisterFinish = (values: any) => {
     // Replace with real register API call
@@ -176,7 +180,7 @@ const Home_Service: React.FC = () => {
     setAuthModalVisible(false);
     registerForm.resetFields();
     // navigate to dashboard (or welcome/setup page)
-    navigate("app/dashboard");
+    navigate("/app/dashboard");
   };
 
   const onRegisterValidatePassword = (_: any, value: string) => {
