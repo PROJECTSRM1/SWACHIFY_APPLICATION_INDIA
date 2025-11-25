@@ -20,8 +20,7 @@ import {
   CloseOutlined,
 } from "@ant-design/icons";
 import "./Packersandmovers.css";
-
-// images (update names/paths as needed)
+// images (update paths as needed)
 import carRentalsImg from "../../../assets/passenger/Car Rentals.jpg";
 import cargoForwardingImg from "../../../assets/passenger/Cargo forwarding.jpg";
 import carpoolingImg from "../../../assets/passenger/carpooling.jpg";
@@ -81,7 +80,7 @@ type CardItem = {
   images?: CardImage[];
 };
 
-/* DATA */
+/* DATA (same as before) */
 const cardsData: CardItem[] = [
   {
     filename: taxiCabServiceImg,
@@ -262,6 +261,10 @@ const Packersandmovers: React.FC = () => {
   const previouslyFocused = useRef<HTMLElement | null>(null);
   const [form] = Form.useForm();
 
+  // Confirmation popup state (top)
+  const [showConfirmTop, setShowConfirmTop] = useState(false);
+  const [confirmTextTop, setConfirmTextTop] = useState("");
+
   // open group modal
   const openGroupModal = (idx: number) => {
     previouslyFocused.current = document.activeElement as HTMLElement | null;
@@ -300,7 +303,15 @@ const Packersandmovers: React.FC = () => {
     // show booking form (group overlay will be hidden by render condition)
     setBookingOpen(true);
   };
+
+  // Close booking form and reset fields
   const closeBookingForm = () => {
+    // reset visible form fields whenever the booking modal is closed
+    try {
+      form.resetFields();
+    } catch (e) {
+      // ignore if form not yet mounted
+    }
     setBookingOpen(false);
     setSelectedImage(null);
     setSelectedKey(null);
@@ -329,7 +340,7 @@ const Packersandmovers: React.FC = () => {
     };
   }, [groupIndex, bookingOpen]);
 
-  // submit - save per-submodule
+  // submit - save per-submodule (but clear draft so next open is empty)
   const onFinish = (values: any) => {
     if (!selectedKey || !selectedImage) return;
     const payload = {
@@ -338,11 +349,31 @@ const Packersandmovers: React.FC = () => {
       servicePrice: values.servicePrice || selectedImage.price,
       savedAt: new Date().toISOString(),
     };
-    setBookingFormsData((prev) => ({ ...prev, [selectedKey]: payload }));
-    console.log("Saved booking for", selectedKey, payload);
-    setTimeout(() => {
-      closeBookingForm();
-    }, 250);
+
+    // If you want to persist bookings (api/localStorage), do it here.
+    // We intentionally REMOVE the draft from bookingFormsData so the form opens blank next time.
+    setBookingFormsData((prev) => {
+      const copy = { ...prev };
+      if (copy[selectedKey]) delete copy[selectedKey];
+      return copy;
+    });
+
+    console.log("Saved booking (transient) for", selectedKey, payload);
+
+    // show animated confirmation at top
+    setConfirmTextTop(`${payload.serviceTitle} booked`);
+    setShowConfirmTop(true);
+
+    // immediately clear form UI
+    try {
+      form.resetFields();
+    } catch (e) {}
+
+    // hide after 3 seconds
+    window.setTimeout(() => setShowConfirmTop(false), 3000);
+
+    // close form after 1.5s
+    window.setTimeout(() => closeBookingForm(), 1500);
   };
 
   // helper to render a field given its schema
@@ -452,9 +483,7 @@ const Packersandmovers: React.FC = () => {
         </div>
       </main>
 
-      {/* GROUP modal: shows submodules
-          Only render when groupIndex != null AND booking form NOT open.
-      */}
+      {/* GROUP modal */}
       {groupIndex != null && !bookingOpen && (
         <div className="pm-fullscreen-overlay" role="dialog" aria-modal="true" ref={groupOverlayRef} tabIndex={-1}>
           <div className="pm-fullscreen-inner" role="document">
@@ -510,10 +539,10 @@ const Packersandmovers: React.FC = () => {
         </div>
       )}
 
-      {/* Booking dynamic form modal */}
+      {/* Booking form modal */}
       {bookingOpen && selectedImage && (
         <div className="pm-form-overlay" role="dialog" aria-modal="true">
-          <div className="pm-form-inner">
+          <div className="pm-form-inner" role="region" aria-label={`${selectedImage.title} booking form`}>
             <header className="pm-form-header">
               <h3>{selectedImage.title}</h3>
               <button className="pm-fullscreen-close" onClick={closeBookingForm}>
@@ -548,7 +577,7 @@ const Packersandmovers: React.FC = () => {
 
               <div className="pm-form-right">
                 <Form form={form} layout="vertical" onFinish={onFinish}>
-                  {/* include hidden metadata */}
+                  {/* metadata */}
                   <Form.Item name="serviceGroup" style={{ display: "none" }}>
                     <Input />
                   </Form.Item>
@@ -559,21 +588,39 @@ const Packersandmovers: React.FC = () => {
                     <Input />
                   </Form.Item>
 
-                  {/* Render fields from selectedImage.formSchema */}
+                  {/* fields */}
                   {(selectedImage.formSchema || []).map((f) => (
                     <div key={f.name}>{renderField(f)}</div>
                   ))}
 
-                  {/* action buttons */}
+                  {/* actions */}
                   <div className="pm-form-actions">
                     <Button onClick={closeBookingForm} style={{ marginRight: 12 }}>
                       Cancel
                     </Button>
-                    <Button type="primary" htmlType="submit">
-                      Add to Cart
+                    <Button type="primary" htmlType="submit" className="pm-addcart-btn">
+                      <ShoppingCartOutlined style={{ marginRight: 8 }} /> Book Service
                     </Button>
                   </div>
                 </Form>
+              </div>
+            </div>
+
+            {/* TOP confirmation popup */}
+            <div
+              role="status"
+              aria-live="polite"
+              aria-hidden={!showConfirmTop}
+              className={`pm-confirm-top ${showConfirmTop ? "visible" : ""}`}
+            >
+              <div className="pm-confirm-top-inner">
+                <div className="pm-confirm-top-icon" aria-hidden>
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+                    <circle cx="12" cy="12" r="12" fill="#14B878" />
+                    <path d="M7 12.2L10 15.2L17 8.2" stroke="#FFF" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </div>
+                <div className="pm-confirm-top-text">{confirmTextTop}</div>
               </div>
             </div>
           </div>
