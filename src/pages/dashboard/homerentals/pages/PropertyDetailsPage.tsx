@@ -597,7 +597,7 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
                   },
                 ]}
               >
-                <Input placeholder="+1 (555) 000-0000" size="large" />
+                <Input placeholder="+91 9087654321" size="large" />
               </Form.Item>
 
               {/* Residential Form Fields */}
@@ -827,6 +827,7 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
                       size="large"
                       showCount
                       maxLength={500}
+                      className='booking-form-textarea'
                     />
                   </Form.Item>
                 </>

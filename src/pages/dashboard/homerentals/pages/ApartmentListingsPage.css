@@ -111,11 +111,11 @@
   font-size: 18px;
   transition: all 0.2s;
 }
-
+/* 
 .pc-favorite-btn:hover {
   background: #fff;
   color: #ff4d4f;
-}
+} */
 
 .pc-body {
   padding: 20px;
