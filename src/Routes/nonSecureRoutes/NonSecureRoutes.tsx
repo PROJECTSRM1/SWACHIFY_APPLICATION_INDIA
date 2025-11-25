@@ -15,6 +15,7 @@ import LandingCleaningPage from "../../pages/landing/landingcleaningpage";
 //Import rentals page (file: src/pages/landing/landingrentals.tsx)
 import Landingrentals from "../../pages/landing/landingrentals";
 import Freelancer from '../../pages/landing/Freelancer';
+import Freelancerlogin from '../../pages/login/Freelancerlogin';
 
 export const NonSecureRoutes = () => {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ export const NonSecureRoutes = () => {
     const userData: any = getUserDetails('user');
     const currentPath = window.location.pathname;
 
-    if (userData && !currentPath.startsWith('/app')) {
+    if (!userData && !currentPath.startsWith('/app')) {
       navigate('/app/dashboard');
     } else if (userData && (currentPath === '/' || currentPath === '')) {
       navigate('/landing');
@@ -48,6 +49,7 @@ export const NonSecureRoutes = () => {
       {/* rentals landing page */}
       <Route path="/rentals" element={<Landingrentals />} />
       <Route path="/freelancer" element={<Freelancer />} />
+      <Route path="/freelancerlogin" element={<Freelancerlogin />} />
 
       
     </Routes>
