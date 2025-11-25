@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Row, Col, Modal } from 'antd';
-import { HomeOutlined } from '@ant-design/icons';
+
 import ServiceCard from '../components/ServiceCard';
 import PropertyTypePage from './PropertyTypePage';
 import CommercialPropertyTypePage from './CommercialPropertyTypePage';
@@ -61,9 +61,7 @@ const ServicesPage: React.FC = () => {
     <div className="services-page">
       <section className="services-hero">
         <div className="hero-content">
-          <div className="hero-icon">
-            <HomeOutlined style={{ fontSize: '24px' }} />
-          </div>
+         
           <div className="hero-text">
             <h2>Home & Apartments Rental</h2>
             <p className="muted">2 services available</p>

@@ -100,23 +100,27 @@ const handleFormCancel = () => {
     <div className="home-services-container">
       {/* HEADER */}
       <div className="services-top-banner">
-          <div className="banner-left">
-              <div className="banner-icon">
-      <ToolOutlined />
-    </div>
 
-    <div>
-      <h2 className="banner-title">Home Services</h2>
-      <p className="banner-subtitle">{services.length} services available</p>
-    </div>
+        <div className="banner-left">
+  <div className="banner-icon"><ToolOutlined /></div>
+
+  <div className="banner-text">
+    <h2 className="banner-title">Home Services</h2>
+    <p className="banner-subtitle">{services.length} services available</p>
   </div>
+</div>
+
+ 
+
 
         <Button
-          className="header-viewall-btn"
-          onClick={() => setShowAll(!showAll)}
-        >
-          {showAll ? "Show Less" : "View All"}
-        </Button>
+  size="small"
+  className="header-viewall-btn"
+  onClick={() => setShowAll(!showAll)}
+>
+  {showAll ? "Show Less" : "View All"}
+</Button>
+
       </div>
 
       {/* GRID */}

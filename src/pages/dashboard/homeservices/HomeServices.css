@@ -28,73 +28,122 @@
 /* ===========================================
    🔹 COMPACT TOP HEADER (Reduced height)
 =========================================== */
+/* MATCHES Cleaning Service Header Size */
+/* EXACT MATCH OF .cs-header */
+/* ============================================
+   MAKE HOME SERVICES HEADER MATCH CLEANING
+============================================ */
+/* ---------------------------------------------
+   HOME SERVICES HEADER — EXACT CLEANING MATCH
+--------------------------------------------- */
 .services-top-banner {
   display: flex;
   justify-content: space-between;
   align-items: center;
 
+  width: 100%;
+  padding: 14px 18px;
+
   background: #089823;
   color: white;
-
-  padding: 14px 18px;          /* ↓ Reduced height */
   border-radius: 10px;
+  margin-bottom: 24px;
 
-  width: 100%;
-  max-width: 1350px;         /* ⬆ Wider banner */
-
-  margin: 0 auto 24px auto;
-  flex-wrap: wrap;
   gap: 10px;
 
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.10);
+  /* Important: keep elements in 1 line */
+  white-space: nowrap;
 }
 
-/* Left Section */
+
+/* LEFT SIDE */
 .banner-left {
   display: flex;
-  align-items: center;
-  gap: 10px;                   /* ↓ Smaller spacing */
+  align-items: center;          /* ← Centers icon + text vertically */
+  gap: 14px;
 }
 
-/* Icon Box (Smaller Version) */
+/* ICON – same size as Cleaning Services */
 .banner-icon {
-  width: 38px;                 /* ↓ Smaller */
-  height: 38px;
-  background: rgba(255, 255, 255, 0.25);
-  border-radius: 10px;
-
+  width: 42px;
+  height: 42px;
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 50%;
+  
   display: flex;
   align-items: center;
   justify-content: center;
 
-  font-size: 18px;             /* ↓ Smaller icon */
-  color: white;
+  font-size: 20px;
+  color: #fff;
 }
 
+/* TEXT ALIGNMENT FIX */
+.banner-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;      /* ← PERFECT VERTICAL ALIGNMENT */
+}
+
+/* TITLE */
 .banner-title {
   margin: 0;
-  font-size: 18px;             /* ↓ Reduced */
   font-weight: 600;
+  font-size: 19px !important;
+  color: #fff;
 }
 
+/* SUBTITLE */
 .banner-subtitle {
-  margin: 0;
-  font-size: 13px;             /* ↓ Reduced */
-  opacity: 0.9;
+  margin-top: 0px;              /* tighter like cleaning services */
+  font-size: 13px;
+  color: #e8eeff;
 }
 
-/* View All Button – smaller */
+/* BUTTON SAME SIZE AS CLEANING */
 .header-viewall-btn {
   background: #fff !important;
-  color: black !important;
+  color: #000 !important;
+
+  /* ✨ Make button small */
+  padding: 3px 10px !important;
+  height: 26px !important;
+  font-size: 12px !important;
+  border-radius: 6px !important;
+  min-width: 85px !important;
+  width: auto !important;
+
+  /* prevents stretching */
+  flex-shrink: 0 !important;
+
   border: none !important;
+  font-weight: 600 !important;
+  white-space: nowrap !important;
 
-  padding: 4px 12px !important;  /* ↓ Smaller button */
-  border-radius: 5px !important;
+  /* ensure alignment to right */
+  margin-left: auto !important;
 
-  font-size: 13px !important;
-  font-weight: 500;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1) !important;
 }
+
+
+
+
+
+.header-viewall-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12) !important;
+}
+
+.header-viewall-btn.ant-btn {
+  padding: 0 10px !important;
+  height: 24px !important;
+  font-size: 11px !important;
+  min-width: 70px !important;
+  width: auto !important;
+  line-height: 22px !important;
+}
+
 
 
 /* =======================================================
@@ -157,7 +206,7 @@
 }
 
 .details-btn {
-  background: #06A826 !important;
+  background: #000 !important;
   color: white !important;
   border: none !important;
   height: 30px !important;
@@ -225,5 +274,40 @@
 
   .service-image {
     height: 130px;
+  }
+}
+
+@media (max-width: 320px) {
+  .services-top-banner {
+    padding: 12px 12px;
+    gap: 6px;
+  }
+
+  .banner-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+  }
+
+  .banner-title {
+    font-size: 16px !important;
+  }
+
+  .banner-subtitle {
+    font-size: 11px !important;
+  }
+
+  /* FIX BUTTON FOR 320PX */
+  .header-viewall-btn.ant-btn {
+    height: 22px !important;
+    min-width: 60px !important;
+    font-size: 10px !important;
+    padding: 0 6px !important;
+    white-space: nowrap !important;
+  }
+
+  /* Prevent wrapping */
+  .services-top-banner {
+    flex-wrap: nowrap !important;
   }
 }

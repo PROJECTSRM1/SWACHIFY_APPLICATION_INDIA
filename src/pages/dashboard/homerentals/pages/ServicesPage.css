@@ -2,53 +2,68 @@
   max-width: 1200px;
   margin: 40px auto;
   padding: 0 24px 60px;
-  
 }
 
+/* ===== Hero Section ===== */
+
+/* ===== Hero Section (Compact + Left-aligned) ===== */
+
+/* ===== Hero Section (No Icon + Compact) ===== */
+
+/* ===== Hero Section (Compact + Left-aligned, Slightly Taller) ===== */
+
 .services-hero {
-  background: linear-gradient(90deg, var(--primary-color), #a78bfa);
+  background: var(--primary-color);
   color: #fff;
   border-radius: var(--radius-lg);
-  padding: 24px 32px;
-  margin-bottom: 32px;
-  box-shadow: var(--shadow-lg);
+  padding: 16px 22px;      /* increased height a little */
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* content stays on the left */
 }
+
 
 .hero-content {
   display: flex;
-  align-items: center;
-  gap: 20px;
+  flex-direction: column;  /* title + subtitle under each other */
+  align-items: flex-start; /* ensures text stays left */
+  gap: 4px;
 }
 
-.hero-icon {
-  width: 56px;
-  height: 56px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255, 255, 255, 0.15);
-  color: #fff;
-}
-
+/* title */
 .hero-text h2 {
   margin: 0;
-  font-size: 24px;
+  font-size: 22px;         /* slightly larger title */
   font-weight: 600;
-  color: #fff;
+  line-height: 1.2;
 }
 
+/* subtitle */
 .hero-text .muted {
+  margin: 0;
+  font-size: 13px;         /* clean small subtitle */
   color: rgba(255, 255, 255, 0.85);
-  font-size: 14px;
-  margin-top: 4px;
 }
 
-.services-grid1 {
-  margin-top: 0;
+
+
+/* ===== Services Grid ===== */
+
+.services-grid1 .ant-row {
+  display: flex;
+  justify-content: center !important;
+  align-items: center;
+  width: 100%;
 }
 
-/* Modal styles */
+.services-grid1 .ant-col {
+  display: flex;
+  justify-content: center;
+}
+
+/* ===== Modal Styles ===== */
+
 .browse-modal .ant-modal-body {
   padding: 0;
   max-height: 80vh;
@@ -61,7 +76,8 @@
   padding: 24px;
 }
 
-/* Mobile Responsive Styles */
+/* ===== Responsive ===== */
+
 @media (max-width: 768px) {
   .services-page {
     margin: 20px auto;
@@ -70,7 +86,6 @@
 
   .services-hero {
     padding: 20px 16px;
-    margin-bottom: 24px;
   }
 
   .hero-content {
@@ -82,15 +97,10 @@
   .hero-icon {
     width: 48px;
     height: 48px;
-    font-size: 20px;
   }
 
   .hero-text h2 {
     font-size: 20px;
-  }
-
-  .hero-text .muted {
-    font-size: 13px;
   }
 }
 
@@ -108,6 +118,7 @@
   }
 }
 
+/* ===== Reset + Theme Variables ===== */
 
 * {
   margin: 0;
@@ -118,44 +129,21 @@
 :root {
   --primary-color: #8b5cf6;
   --primary-dark: #6d28d9;
-  --secondary-color: #1e40af;
   --text-primary: #1f2937;
   --text-secondary: #6b7280;
   --text-muted: #9ca3af;
-  --bg-white: #ffffff;
   --bg-light: #f9fafb;
-  --border-color: #e5e7eb;
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-  --radius: 10px;
   --radius-lg: 12px;
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
   background-color: var(--bg-light);
+  color: var(--text-primary);
   line-height: 1.6;
-}
-
-.app-root {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-.app-main {
-  flex: 1;
 }
 
 .muted {
   color: var(--text-muted);
 }
-
-
-
