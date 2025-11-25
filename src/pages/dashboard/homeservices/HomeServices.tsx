@@ -114,11 +114,13 @@ const handleFormCancel = () => {
 
 
         <Button
-          className="header-viewall-btn"
-          onClick={() => setShowAll(!showAll)}
-        >
-          {showAll ? "Show Less" : "View All"}
-        </Button>
+  size="small"
+  className="header-viewall-btn"
+  onClick={() => setShowAll(!showAll)}
+>
+  {showAll ? "Show Less" : "View All"}
+</Button>
+
       </div>
 
       {/* GRID */}
