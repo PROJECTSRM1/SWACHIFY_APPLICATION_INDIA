@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Row, Col, Modal } from 'antd';
-import { HomeOutlined } from '@ant-design/icons';
+
 import ServiceCard from '../components/ServiceCard';
 import PropertyTypePage from './PropertyTypePage';
 import CommercialPropertyTypePage from './CommercialPropertyTypePage';
