@@ -23,11 +23,12 @@ import {
   TwitterOutlined,
   InstagramOutlined,
   LinkedinOutlined,
+  MenuOutlined,
+  CloseOutlined,
 } from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom";
 import "./ConstructionMaterials.css";
 import brickwalss from "../../assets/landingimages/brickwall.jpg";
-
 
 import premiumportlandcement from "../../assets/landingimages/PremiumPortlandCement.jpg";
 import tmtsteelbars from "../../assets/landingimages/TMTSteelBars.jpg";
@@ -66,6 +67,17 @@ const NavbarSection: React.FC<NavbarProps> = ({ menuOpen, setMenuOpen }) => (
       <div className="hs-navbar-logo">
         <span className="hs-logo-text">SWACHIFY INDIA</span>
       </div>
+
+      {/* === ADDED: mobile hamburger toggle button (mirrors other pages) */}
+      <button
+        className="mobile-menu-icon"
+        aria-label={menuOpen ? "Close menu" : "Open menu"}
+        onClick={() => setMenuOpen((s) => !s)}
+        type="button"
+      >
+        {menuOpen ? <CloseOutlined /> : <MenuOutlined />}
+      </button>
+
       <Menu
         mode="horizontal"
         selectedKeys={["home-services"]}

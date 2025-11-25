@@ -6,15 +6,19 @@ import {
   MenuOutlined,
   CloseOutlined,
 } from "@ant-design/icons";
-import { Menu, Drawer } from "antd";
+import { Menu, Drawer, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import "./header.css";
+
 
 const HeaderBar: React.FC = () => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleLogout = () => {
+
+    localStorage.removeItem("user");
+    message.success("logout successful");
     navigate("/landing");
   };
 
