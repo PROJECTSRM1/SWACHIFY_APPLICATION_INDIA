@@ -502,3 +502,48 @@
   color: #000000 !important;
   opacity: 0.85;
 }
+/* Footer social icons (in CommercialPlots) - matches Home_Service look */
+.cp-footer-socials {
+  margin-top: 14px;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.cp-footer-socials a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: rgba(11,18,32,0.85); /* dark square */
+  color: #cbd5e1; /* icon color */
+  font-size: 16px;
+  border: 1px solid rgba(255,255,255,0.03);
+  transition: transform .18s ease, box-shadow .18s ease, background .12s ease;
+  box-shadow: 0 4px 10px rgba(2,6,23,0.25);
+  text-decoration: none;
+}
+
+/* Icon inside anchors */
+.cp-footer-socials a .anticon {
+  font-size: 16px;
+  line-height: 1;
+}
+
+/* Hover / focus effects */
+.cp-footer-socials a:hover,
+.cp-footer-socials a:focus {
+  transform: translateY(-4px);
+  background: rgba(11,18,32,0.96);
+  box-shadow: 0 8px 20px rgba(2,6,23,0.32);
+  color: #fff;
+  outline: none;
+}
+
+/* Keep mobile spacing consistent */
+@media (max-width: 600px) {
+  .cp-footer-socials { gap: 10px; margin-top: 12px; }
+  .cp-footer-socials a { width: 44px; height: 44px; border-radius: 10px; }
+}
