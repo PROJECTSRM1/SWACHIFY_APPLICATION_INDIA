@@ -27,7 +27,6 @@ import {
   RiseOutlined,
   EnvironmentOutlined,
   PlusOutlined,
-  ArrowLeftOutlined,
   EyeOutlined,
   FileTextOutlined,
   DollarOutlined,
@@ -1314,7 +1313,7 @@ const renderMainServices = () => (
         onClick={handleBackToMain}
         type="text"
         className="minimal-back-button back-button-style"
-        icon={<ArrowLeftOutlined />}
+        // icon={<ArrowLeftOutlined />}
       />
       <Title level={3} className="modal-title-no-margin">
         {currentService?.title} 
@@ -1328,7 +1327,7 @@ const renderMainServices = () => (
         onClick={handleBackToSubservices}
         type="text"
         className="minimal-back-button back-button-style"
-        icon={<ArrowLeftOutlined />}
+        // icon={<ArrowLeftOutlined />}
       />
       <Title level={3} className="modal-title-no-margin">
         {currentSubservice?.title}
@@ -1342,7 +1341,7 @@ const renderMainServices = () => (
         onClick={handleClosePropertyDetail}
         type="text"
         className="minimal-back-button back-button-style"
-        icon={<ArrowLeftOutlined />}
+        // icon={<ArrowLeftOutlined />}
       />
       <Title level={3} className="modal-title-no-margin">
         {selectedProperty?.title || 'Property Details'}
