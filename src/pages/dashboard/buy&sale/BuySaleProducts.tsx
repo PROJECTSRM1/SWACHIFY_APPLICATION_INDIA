@@ -318,7 +318,7 @@ const PropertyCard: React.FC<{
               <Button type="primary" size="middle" onClick={() => onViewDetails(property)}>
                 Contact / Negotiate
               </Button>
-              <Button size="middle" onClick={() => onViewDetails(property)}>
+              <Button size="middle" className='buy_sale_view_btn' onClick={() => onViewDetails(property)}>
                 View Details
               </Button>
             </Space>
