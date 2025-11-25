@@ -36,39 +36,25 @@
 /* ---------------------------------------------
    HOME SERVICES HEADER — EXACT CLEANING MATCH
 --------------------------------------------- */
-
 .services-top-banner {
-  background: #089823;
-  color: #fff;
-  
-  /* ↓ Reduced height */
-  padding: 16px 28px;          /* Clean and compact, same as CS */
-
-  border-radius: 12px;
-
-  width: 100%;
-  max-width: 1250px;            /* ↑ Increased full width */
-  margin: 0 auto 24px auto;
-
   display: flex;
   justify-content: space-between;
   align-items: center;
 
+  width: 100%;
+  padding: 14px 18px;
+
   background: #089823;
   color: white;
-
-  padding: 14px 18px;          /* ↓ Reduced height */
   border-radius: 10px;
+  margin-bottom: 24px;
 
-  width: 100%;
-  max-width: 1350px;         /* ⬆ Wider banner */
-
-  margin: 0 auto 24px auto;
-  flex-wrap: wrap;
   gap: 10px;
 
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.10);
+  /* Important: keep elements in 1 line */
+  white-space: nowrap;
 }
+
 
 /* LEFT SIDE */
 .banner-left {
@@ -118,17 +104,46 @@
 .header-viewall-btn {
   background: #fff !important;
   color: #000 !important;
-  padding: 8px 18px !important;
-  border-radius: 10px !important;
-  font-weight: 600 !important;
+
+  /* ✨ Make button small */
+  padding: 3px 10px !important;
+  height: 26px !important;
+  font-size: 12px !important;
+  border-radius: 6px !important;
+  min-width: 85px !important;
+  width: auto !important;
+
+  /* prevents stretching */
+  flex-shrink: 0 !important;
+
   border: none !important;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.08) !important;
+  font-weight: 600 !important;
+  white-space: nowrap !important;
+
+  /* ensure alignment to right */
+  margin-left: auto !important;
+
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1) !important;
 }
+
+
+
+
 
 .header-viewall-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(0,0,0,0.12) !important;
 }
+
+.header-viewall-btn.ant-btn {
+  padding: 0 10px !important;
+  height: 24px !important;
+  font-size: 11px !important;
+  min-width: 70px !important;
+  width: auto !important;
+  line-height: 22px !important;
+}
+
 
 
 /* =======================================================
@@ -259,5 +274,40 @@
 
   .service-image {
     height: 130px;
+  }
+}
+
+@media (max-width: 320px) {
+  .services-top-banner {
+    padding: 12px 12px;
+    gap: 6px;
+  }
+
+  .banner-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+  }
+
+  .banner-title {
+    font-size: 16px !important;
+  }
+
+  .banner-subtitle {
+    font-size: 11px !important;
+  }
+
+  /* FIX BUTTON FOR 320PX */
+  .header-viewall-btn.ant-btn {
+    height: 22px !important;
+    min-width: 60px !important;
+    font-size: 10px !important;
+    padding: 0 6px !important;
+    white-space: nowrap !important;
+  }
+
+  /* Prevent wrapping */
+  .services-top-banner {
+    flex-wrap: nowrap !important;
   }
 }
