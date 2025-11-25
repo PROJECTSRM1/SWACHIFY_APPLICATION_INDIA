@@ -123,6 +123,8 @@
   color: var(--text-muted);
 }
 
+
+
 /* ---------- subservice cards (modal 1) ---------- */
 
 .subservice-list-container {
@@ -171,6 +173,11 @@
 .minimal-back-button {
   background-color: #d90000bf !important;
 }
+
+.buy_sale_view_btn{
+  background-color: #000 !important;
+}
+
 
 /* text alignment & wrapping */
 .subservice-card .ant-card-meta-title,

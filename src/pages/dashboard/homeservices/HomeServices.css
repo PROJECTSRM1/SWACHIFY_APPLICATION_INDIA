@@ -30,80 +30,92 @@
 =========================================== */
 /* MATCHES Cleaning Service Header Size */
 /* EXACT MATCH OF .cs-header */
-.services-top-banner {
-  background: #089823;          /* Only color is different */
-  color: #fff;
-  padding: 22px 28px;           /* SAME as .cs-header */
-  border-radius: 12px;          /* SAME */
-  margin-bottom: 24px;          /* SAME */
+/* ============================================
+   MAKE HOME SERVICES HEADER MATCH CLEANING
+============================================ */
+/* ---------------------------------------------
+   HOME SERVICES HEADER — EXACT CLEANING MATCH
+--------------------------------------------- */
 
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.services-top-banner {
+  background: #089823;
+  color: #fff;
+  
+  /* ↓ Reduced height */
+  padding: 16px 28px;          /* Clean and compact, same as CS */
+
+  border-radius: 12px;
 
   width: 100%;
-  max-width: 1250px;
+  max-width: 1250px;            /* ↑ Increased full width */
   margin: 0 auto 24px auto;
 
-  flex-wrap: nowrap;            /* Force same layout as cleaning header */
-  gap: 14px;                    /* SAME as .cs-header-left gap */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.10);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
 }
 
-/* LEFT SIDE — Same as .cs-header-left */
+/* LEFT SIDE */
 .banner-left {
   display: flex;
-  align-items: center;
-  gap: 14px;                    /* EXACT same gap */
+  align-items: center;          /* ← Centers icon + text vertically */
+  gap: 14px;
 }
 
-/* ICON — Same as .cs-icon */
+/* ICON – same size as Cleaning Services */
 .banner-icon {
+  width: 42px;
+  height: 42px;
   background: rgba(255, 255, 255, 0.18);
-  padding: 12px;                /* SAME SIZE */
-  border-radius: 50%;           /* SAME SHAPE */
+  border-radius: 50%;
+  
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 20px;              /* SAME ICON SIZE */
-  color: white;
+
+  font-size: 20px;
+  color: #fff;
 }
 
-/* TITLE — Same as .cs-header-title */
+/* TEXT ALIGNMENT FIX */
+.banner-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;      /* ← PERFECT VERTICAL ALIGNMENT */
+}
+
+/* TITLE */
 .banner-title {
   margin: 0;
+  font-weight: 600;
+  font-size: 19px !important;
   color: #fff;
-  font-weight: 700;
-  font-size: 22px;              /* SAME */
 }
 
-/* SUBTITLE — Same as .cs-header-sub */
+/* SUBTITLE */
 .banner-subtitle {
-  margin-top: 6px;
+  margin-top: 0px;              /* tighter like cleaning services */
+  font-size: 13px;
   color: #e8eeff;
-  font-size: 13px;              /* SAME */
 }
 
-/* BUTTON — EXACT same as .cs-top-button */
+/* BUTTON SAME SIZE AS CLEANING */
 .header-viewall-btn {
   background: #fff !important;
   color: #000 !important;
-
-  padding: 8px 18px !important; /* SAME */
+  padding: 8px 18px !important;
   border-radius: 10px !important;
   font-weight: 600 !important;
-
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08) !important;
   border: none !important;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08) !important;
 }
 
 .header-viewall-btn:hover {
-  background: #ffffff !important;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12) !important;
   transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12) !important;
 }
-
 
 
 /* =======================================================
@@ -166,7 +178,7 @@
 }
 
 .details-btn {
-  background: #06A826 !important;
+  background: #000 !important;
   color: white !important;
   border: none !important;
   height: 30px !important;

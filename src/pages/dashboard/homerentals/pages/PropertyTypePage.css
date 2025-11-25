@@ -15,14 +15,14 @@
 }
 
 .section-header h1 {
-  font-size: 32px;
+  font-size: 30px;
   font-weight: 700;
   color: var(--secondary-color);
   margin-bottom: 12px;
 }
 
 .section-subtitle {
-  font-size: 16px;
+  font-size: 15px;
   color: var(--text-secondary);
   margin: 0;
 }
@@ -107,14 +107,14 @@
 }
 
 .ptc-title {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 600;
   color: var(--text-primary);
   margin-bottom: 8px;
 }
 
 .ptc-subtitle {
-  font-size: 14px;
+  font-size: 13px;
   color: var(--text-secondary);
   margin: 0;
 }
@@ -164,52 +164,43 @@
   margin: 0;
 }
 
-/* Mobile Responsive Styles */
+/* ===================== 1024px ===================== */
 @media (max-width: 1024px) {
   .property-type-page {
     padding: 0 20px 40px;
   }
-
   .section-header h1 {
-    font-size: 28px;
+    font-size: 26px;
+  }
+
+   .section-subtitle {
+    font-size: 14px;
+  }
+
+  .ptc-title {
+    font-size: 20px;
+  }
+
+  .ptc-subtitle {
+    font-size: 12px;
   }
 }
 
+/* ===================== 768px ===================== */
 @media (max-width: 768px) {
   .property-type-page {
     margin: 20px auto;
     padding: 0 16px 40px;
   }
 
-  .property-type-section,
-  .benefits-section {
-    margin-bottom: 40px;
-  }
-
   .section-header {
     margin-bottom: 24px;
   }
 
-  .section-header h1 {
-    font-size: 24px;
-    margin-bottom: 8px;
-  }
 
-  .section-subtitle {
-    font-size: 14px;
-  }
-
-  .property-cards {
-    margin-top: 24px;
-  }
 
   .ptc-image-wrap {
     height: 220px;
-  }
-
-  .ptc-overlay {
-    top: 12px;
-    left: 12px;
   }
 
   .ptc-icon {
@@ -218,59 +209,40 @@
     font-size: 20px;
   }
 
-  .ptc-view-btn {
-    top: 12px;
-    right: 12px;
-    padding: 6px 12px;
-    font-size: 13px;
-  }
-
-  .ptc-content {
-    padding: 16px;
-  }
-
-  .ptc-title {
-    font-size: 20px;
-  }
-
-  .ptc-subtitle {
-    font-size: 13px;
-  }
-
-  .benefits-grid {
-    margin-top: 24px;
-  }
-
-  .benefit-card {
-    padding: 24px 16px;
-  }
-
-  .benefit-icon {
-    width: 56px;
-    height: 56px;
-    font-size: 24px;
-    margin-bottom: 16px;
-  }
-
-  .benefit-title {
-    font-size: 18px;
-    margin-bottom: 8px;
-  }
-
-  .benefit-description {
-    font-size: 13px;
-  }
+  /* 🔥 AntD Button Override */
+.ptc-view-btn.ant-btn {
+  padding: 7px 12px !important;   /* increased height */
+  height: auto !important;
+  min-width: auto !important;
+  width: auto !important;
+  font-size: 11px !important;
+  border-radius: 14px !important;
+  line-height: normal !important;
 }
-
-@media (max-width: 480px) {
-  .property-type-page {
-    padding: 0 12px 32px;
+  .ptc-view-btn.ant-btn > span {
+    padding: 0 !important;
+    margin: 0 !important;
   }
 
-  .section-header h1 {
+   .section-header h1 {
     font-size: 22px;
   }
 
+  .section-subtitle {
+    font-size: 13px;
+  }
+
+  .ptc-title {
+    font-size: 18px;
+  }
+
+  .ptc-subtitle {
+    font-size: 12px;
+  }
+}
+
+/* ===================== 480px ===================== */
+@media (max-width: 480px) {
   .ptc-image-wrap {
     height: 200px;
   }
@@ -278,4 +250,81 @@
   .ptc-title {
     font-size: 18px;
   }
+   
+  .ptc-view-btn.ant-btn {
+  padding: 6px 10px !important;   /* increased height */
+  font-size: 10px !important;
+  border-radius: 12px !important;
+  min-width: auto !important;
+  width: auto !important;
+}
+
+  .section-header h1 {
+    font-size: 20px;
+    line-height: 1.2;
+  }
+
+  .section-subtitle {
+    font-size: 12px;
+  }
+
+  .ptc-title {
+    font-size: 14px !important;
+    line-height: 1.2;
+    white-space: nowrap; /*prevents breaking */
+  }
+
+  .ptc-subtitle {
+    font-size: 11px;
+  }
+
+
+ 
+}
+
+/* ===================== 380px ===================== */
+@media (max-width: 380px) {
+.ptc-view-btn.ant-btn {
+  padding: 5px 9px !important;   /* increased height */
+  font-size: 9px !important;
+  min-width: auto !important;
+  width: auto !important;
+}
+
+ .section-header h1 {
+    font-size: 18px;
+  }
+
+  .ptc-title {
+    font-size: 15px;
+  }
+
+  .ptc-subtitle {
+    font-size: 10px;
+  }
+
+
+}
+
+/* ===================== 320px ===================== */
+@media (max-width: 320px) {
+.ptc-view-btn.ant-btn {
+  padding: 5px 8px !important;   /* increased height */
+  font-size: 8px !important;
+  min-width: auto !important;
+  width: auto !important;
+}
+
+.section-header h1 {
+    font-size: 16px;
+  }
+
+  .ptc-title {
+    font-size: 14px;
+  }
+
+  .ptc-subtitle {
+    font-size: 9px;
+  }
+
 }

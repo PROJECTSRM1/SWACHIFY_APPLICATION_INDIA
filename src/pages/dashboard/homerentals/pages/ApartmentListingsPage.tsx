@@ -12,7 +12,7 @@ import {
 } from 'antd';
 import {
   SearchOutlined,
-  HeartOutlined,
+  // HeartOutlined,
   EnvironmentOutlined,
   HomeOutlined,
   FilterOutlined,
@@ -352,11 +352,11 @@ const ApartmentListingsPage: React.FC<ApartmentListingsPageProps> = ({
                     >
                       {property.furnishing}
                     </Tag>
-                    <Button
+                    {/* <Button
                       type="text"
                       icon={<HeartOutlined />}
                       className="pc-favorite-btn"
-                    />
+                    /> */}
                   </div>
                 }
               >
