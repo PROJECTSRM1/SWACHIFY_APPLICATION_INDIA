@@ -191,20 +191,20 @@ const MOCK_PROPERTY_LISTINGS: PropertyListing[] = [
     description:
       '8,000 sq.ft. office plot in a prime financial corridor, with approvals for high-rise corporate development and strong rental demand.',
   },
-  {
-    id: 4,
-    title: 'Shopping Complex Land',
-    listingType: 'sale',
-    price: 35000000, // ₹3.5 Cr
-    area: 15000,
-    location: 'Suburban Area, Hyderabad',
-    tags: ['Mall Approved', 'Parking Space', 'High Footfall'],
-    roi: '18–22% per annum',
-    imagePath: Land,
-    propertyType: 'Retail',
-    description:
-      '15,000 sq.ft. plot pre-approved for a shopping complex with dedicated parking and strong residential catchment.',
-  },
+  // {
+  //   id: 4,
+  //   title: 'Shopping Complex Land',
+  //   listingType: 'sale',
+  //   price: 35000000, // ₹3.5 Cr
+  //   area: 15000,
+  //   location: 'Suburban Area, Hyderabad',
+  //   tags: ['Mall Approved', 'Parking Space', 'High Footfall'],
+  //   roi: '18–22% per annum',
+  //   imagePath: Land,
+  //   propertyType: 'Retail',
+  //   description:
+  //     '15,000 sq.ft. plot pre-approved for a shopping complex with dedicated parking and strong residential catchment.',
+  // },
   {
     id: 5,
     title: 'Boutique Hotel Development Land',
