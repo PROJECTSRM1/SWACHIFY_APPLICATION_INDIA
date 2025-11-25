@@ -45,10 +45,16 @@ html, body {
   color: rgb(20,188,166);
 }
 
+/* default: hide hamburger on desktop; show on mobile via media query */
 .mobile-menu-icon {
   display: none;
   font-size: 1.8rem;
   cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 6px;
+  line-height: 1;
+  color: #333;
 }
 
 /* MOBILE DROPDOWN */
@@ -70,16 +76,7 @@ html, body {
   text-decoration: none;
 }
 
-@media (max-width: 900px) {
-  .nav-links {
-    display: none;
-  }
-  .mobile-menu-icon {
-    display: block;
-  }
-}
-
-/* HERO SECTION FIX — stack title, subtitle, button vertically */
+/* HERO SECTION */
 .hero-section {
   width: 100%;
   height: 85vh;
@@ -95,11 +92,11 @@ html, body {
 
 .hero-content {
   display: flex;
-  flex-direction: column;     /* 🔥 stack items vertically */
-  align-items: center;         /* center horizontally */
-  justify-content: center;     /* center vertically */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   max-width: 900px;
-  gap: 20px;                   /* spacing between title → subtitle → button */
+  gap: 20px;
 }
 
 .hero-content h1 {
@@ -114,168 +111,68 @@ html, body {
   margin: 0;
 }
 
-/* Mobile responsiveness */
-@media (max-width: 600px) {
-  .hero-content h1 {
-    font-size: 2rem;
-  }
-  .hero-content p {
-    font-size: 1rem;
-  }
-}
+/* SERVICES / CARDS / OTHER RULES - unchanged from your original css */
+.packes-services { padding: 60px 40px; text-align: center; }
+.packes-card { padding: 20px; text-align: center; }
+.packes-icon { margin-bottom: 12px; }
+.types-of-services { padding: 60px 40px; text-align: center; }
+.service-card img { height: 200px; object-fit: cover; }
+.request-quote { padding: 60px 40px; }
+.request-quote form { max-width: 600px; margin: auto; }
+.how-it-works { padding: 60px 40px; text-align: center; }
+.step { text-align: center; }
+.why-choose-us { padding: 60px 40px; text-align: center; }
+.choose-us-card { text-align: center; padding: 20px; }
 
-
-/* ================= SERVICES ================= */
-.packes-services {
-  padding: 60px 40px;
-  text-align: center;
-}
-
-.packes-card {
-  padding: 20px;
-  text-align: center;
-}
-
-.packes-icon {
-  margin-bottom: 12px;
-}
-
-/* ================= TYPES OF SERVICES ================= */
-.types-of-services {
-  padding: 60px 40px;
-  text-align: center;
-}
-
-.service-card img {
-  height: 200px;
-  object-fit: cover;
-}
-
-/* ================= REQUEST QUOTE ================= */
-.request-quote {
-  padding: 60px 40px;
-}
-
-.request-quote form {
-  max-width: 600px;
-  margin: auto;
-}
-
-/* ================= HOW IT WORKS ================= */
-.how-it-works {
-  padding: 60px 40px;
-  text-align: center;
-}
-
-.step {
-  text-align: center;
-}
-
-/* ================= WHY CHOOSE US ================= */
-.why-choose-us {
-  padding: 60px 40px;
-  text-align: center;
-}
-
-.choose-us-card {
-  text-align: center;
-  padding: 20px;
-}
-
-/* ================= FOOTER ================= */
 .footer {
   background: #06152b;
   color: white;
   padding: 60px 80px;
   margin-top: 60px;
 }
-
 .footer-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 40px;
 }
-
 .footer-bottom {
   text-align: center;
   margin-top: 40px;
   padding-top: 20px;
   border-top: 1px solid rgba(255,255,255,0.2);
 }
-/* ============================
+
+/* ===========================
    SERVICES SECTION ALIGNMENT
-===============================*/
+   (unchanged)
+   =========================== */
+#services-section { text-align: center; padding: 60px 40px; }
+#services-section .section-title { font-size: 2rem; font-weight: 700; margin-bottom: 8px; }
+#services-section .section-subtitle { font-size: 1.1rem; color: #555; margin-bottom: 40px; }
 
-/* ============================
-   SERVICES SECTION ALIGNMENT
-===============================*/
-
-/* Center heading + paragraph */
-#services-section {
-  text-align: center;
-  padding: 60px 40px;
-}
-
-#services-section .section-title {
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 8px;
-}
-
-#services-section .section-subtitle {
-  font-size: 1.1rem;
-  color: #555;
-  margin-bottom: 40px;
-}
-
-/* Perfectly centered 3-card layout */
 #services-section .ant-row {
-  max-width: 1150px;            /* ensures exact center position */
-  margin: 0 auto !important;    /* centers row */
-  padding-left: 10px;           /* fixes visual right-shift */
+  max-width: 1150px;
+  margin: 0 auto !important;
+  padding-left: 10px;
   padding-right: 10px;
   width: 100%;
   display: flex !important;
   justify-content: center !important;
 }
+#services-section .ant-col { flex: 0 0 33.333% !important; max-width: 33.333% !important; }
 
-/* Force 3 cards per row (desktop) */
-#services-section .ant-col {
-  flex: 0 0 33.333% !important;
-  max-width: 33.333% !important;
-}
-
-/* Tablet: 2 per row */
 @media (max-width: 992px) {
-  #services-section .ant-col {
-    flex: 0 0 50% !important;
-    max-width: 50% !important;
-  }
+  #services-section .ant-col { flex: 0 0 50% !important; max-width: 50% !important; }
 }
-
-/* Mobile: 1 per row */
 @media (max-width: 600px) {
-  #services-section .ant-col {
-    flex: 0 0 100% !important;
-    max-width: 100% !important;
-  }
-
-  #services-section .section-title {
-    font-size: 1.6rem;
-  }
-
-  #services-section .section-subtitle {
-    font-size: 1rem;
-    padding: 0 10px;
-  }
+  #services-section .ant-col { flex: 0 0 100% !important; max-width: 100% !important; }
+  #services-section .section-title { font-size: 1.6rem; }
+  #services-section .section-subtitle { font-size: 1rem; padding: 0 10px; }
 }
 
-/* ============================
-   EQUAL-SIZE SERVICE CARDS
-===============================*/
-
+/* Service card sizing (unchanged) */
 #services-section .service-card {
-  min-height: 320px;                 /* same height for all cards */
+  min-height: 320px;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -286,19 +183,8 @@ html, body {
   border-radius: 10px;
   transition: transform .18s ease, box-shadow .18s ease;
 }
-
-#services-section .service-icon {
-  margin-bottom: 10px;
-  line-height: 1;
-}
-
-#services-section .service-title {
-  margin: 6px 0 10px;
-  font-size: 1.05rem;
-  font-weight: 700;
-  text-align: center;
-}
-
+#services-section .service-icon { margin-bottom: 10px; line-height: 1; }
+#services-section .service-title { margin: 6px 0 10px; font-size: 1.05rem; font-weight: 700; text-align: center; }
 #services-section .service-desc {
   flex: 1 1 auto;
   display: flex;
@@ -311,253 +197,118 @@ html, body {
   font-size: 0.95rem;
   max-width: 88%;
 }
+#services-section .learn-more { margin-top: 12px; flex-shrink: 0; align-self: center; text-decoration: none; font-weight: 600; }
+#services-section .service-card:hover { transform: translateY(-6px); box-shadow: 0 14px 32px rgba(0,0,0,0.07); }
 
-#services-section .learn-more {
-  margin-top: 12px;
-  flex-shrink: 0;
-  align-self: center;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-#services-section .service-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 14px 32px rgba(0,0,0,0.07);
-}
-
-/* Mobile adjustments */
 @media (max-width: 992px) {
-  #services-section .service-card {
-    min-height: 300px;
-    padding: 22px 18px !important;
-  }
+  #services-section .service-card { min-height: 300px; padding: 22px 18px !important; }
 }
-
 @media (max-width: 600px) {
-  #services-section .service-card {
-    min-height: 260px;
-    padding: 18px 12px !important;
-  }
-
-  #services-section .service-desc {
-    font-size: 0.94rem;
-    max-width: 94%;
-  }
+  #services-section .service-card { min-height: 260px; padding: 18px 12px !important; }
+  #services-section .service-desc { font-size: 0.94rem; max-width: 94%; }
 }
 
-
-/* ================= WHY CHOOSE US (centered) ================= */
-/* Targets both class names used in different files to be safe */
-#why-choose-section,
-.why-choose-section,
-.why-choose-us {
-  padding: 60px 40px;
-  text-align: center;          /* center headings & intro text */
-  background: transparent;
+/* WHY CHOOSE US (unchanged) */
+#why-choose-section, .why-choose-section, .why-choose-us { padding: 60px 40px; text-align: center; background: transparent; }
+#why-choose-section .container, .why-choose-section .container, .why-choose-us .container { max-width: 1100px; margin: 0 auto; }
+#why-choose-section .ant-row, .why-choose-section .ant-row, .why-choose-us .ant-row {
+  max-width: 1200px; margin: 0 auto !important; display: flex !important; justify-content: center !important; gap: 20px;
 }
-
-/* constrain width and center the cards container */
-#why-choose-section .container,
-.why-choose-section .container,
-.why-choose-us .container {
-  max-width: 1100px;
-  margin: 0 auto;
+#why-choose-section .ant-col, .why-choose-section .ant-col, .why-choose-us .ant-col {
+  flex: 0 0 33.333% !important; max-width: 33.333% !important; display: flex; align-items: stretch;
 }
-
-/* center the row and force predictable column sizes like services */
-#why-choose-section .ant-row,
-.why-choose-section .ant-row,
-.why-choose-us .ant-row {
-  max-width: 1200px;
-  margin: 0 auto !important;
-  display: flex !important;
-  justify-content: center !important;
-  gap: 20px;
+.why-card, .choose-us-card {
+  width: 100%; padding: 20px; display: flex; align-items: center; gap: 12px; text-align: left; min-height: 120px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.04); border-radius: 10px;
 }
+.why-card h4, .choose-us-card h4 { margin: 0 0 6px 0; font-size: 1.05rem; }
+.why-card p, .choose-us-card p { margin: 0; font-size: 0.95rem; color: #555; }
 
-/* make 3 cards per row on desktop (matches services layout) */
-#why-choose-section .ant-col,
-.why-choose-section .ant-col,
-.why-choose-us .ant-col {
-  flex: 0 0 33.333% !important;
-  max-width: 33.333% !important;
-  display: flex;
-  align-items: stretch;
-}
-
-/* style each card so icon+text are vertically centered */
-.why-card,
-.choose-us-card {
-  width: 100%;
-  padding: 20px;
-  display: flex;
-  align-items: center;    /* vertically center icon + text */
-  gap: 12px;
-  text-align: left;       /* keep icon+text left-aligned inside card */
-  min-height: 120px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.04);
-  border-radius: 10px;
-}
-
-/* make the heading inside card slightly bigger */
-.why-card h4,
-.choose-us-card h4 {
-  margin: 0 0 6px 0;
-  font-size: 1.05rem;
-}
-
-/* description smaller */
-.why-card p,
-.choose-us-card p {
-  margin: 0;
-  font-size: 0.95rem;
-  color: #555;
-}
-
-/* Responsive: 2 columns tablet, 1 column mobile */
 @media (max-width: 992px) {
-  #why-choose-section .ant-col,
-  .why-choose-section .ant-col,
-  .why-choose-us .ant-col {
-    flex: 0 0 50% !important;
-    max-width: 50% !important;
+  #why-choose-section .ant-col, .why-choose-section .ant-col, .why-choose-us .ant-col {
+    flex: 0 0 50% !important; max-width: 50% !important;
   }
 }
-
 @media (max-width: 600px) {
-  #why-choose-section .ant-col,
-  .why-choose-section .ant-col,
-  .why-choose-us .ant-col {
-    flex: 0 0 100% !important;
-    max-width: 100% !important;
+  #why-choose-section .ant-col, .why-choose-section .ant-col, .why-choose-us .ant-col {
+    flex: 0 0 100% !important; max-width: 100% !important;
   }
-
-  /* on mobile center the card content */
-  .why-card,
-  .choose-us-card {
-    text-align: center;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    min-height: auto;
-  }
-
-  .why-card h4,
-  .choose-us-card h4 {
-    font-size: 1rem;
-  }
-
-  .why-card p,
-  .choose-us-card p {
-    font-size: 0.95rem;
-  }
+  .why-card, .choose-us-card { text-align: center; flex-direction: column; align-items: center; gap: 10px; min-height: auto; }
+  .why-card h4, .choose-us-card h4 { font-size: 1rem; }
+  .why-card p, .choose-us-card p { font-size: 0.95rem; }
 }
 
-/* ===== compact navbar for hs-navbar / hs-navbar-menu (ADD THIS) ===== */
-
-/* Make sure header class names used in TSX are handled */
+/* ===== compact header rules for hs-navbar / hs-navbar-menu ===== */
 .hs-navbar {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* keep logo left and sign-up right */
+  justify-content: space-between;
   gap: 16px;
-  padding: 12px 24px; /* slightly reduced padding so more space for menu */
+  padding: 12px 24px;
   box-sizing: border-box;
 }
 
-/* Prevent the Menu from stretching full width and remove extra internal spacing */
-.hs-navbar .hs-navbar-menu {
-  width: auto;               /* don't force it to full width */
-  flex: 1 1 auto;            /* allow it to grow but not push things off */
-  display: flex;
-  justify-content: center;   /* center the nav links (change to flex-start if you want left) */
-  align-items: center;
-  overflow: visible;
-}
+/* ordering so items display left-to-right as:
+   [logo] [hamburger icon] [menu (desktop)] [signup button]
+   On mobile the menu will be hidden and hamburger visible */
+.hs-navbar-logo { order: 0; flex: 0 0 auto; margin-right: 8px; }
+.mobile-menu-icon { order: 1; flex: 0 0 auto; margin: 0 12px; }
+.hs-navbar .hs-navbar-menu { order: 2; flex: 1 1 auto; display: flex; justify-content: center; align-items: center; overflow: visible; }
+.hs-contact-btn { order: 3; flex: 0 0 auto; margin-left: 12px; }
 
-/* AntD horizontal menu - make items compact */
+/* AntD horizontal menu - compact */
 .hs-navbar .hs-navbar-menu .ant-menu-horizontal {
   display: flex;
-  gap: 6px;                 /* small gap between items (was large before) */
+  gap: 6px;
   align-items: center;
   line-height: 1;
   background: transparent;
   border-bottom: none;
 }
-
-/* Reduce padding inside each menu item */
 .hs-navbar .hs-navbar-menu .ant-menu-item {
-  padding: 0 10px;          /* compact left/right padding */
+  padding: 0 10px;
   height: auto;
   display: flex;
   align-items: center;
   font-weight: 600;
-  font-size: 0.98rem;       /* slightly smaller to fit more items */
-  white-space: nowrap;      /* keep label on one line */
+  font-size: 0.98rem;
+  white-space: nowrap;
 }
-
-/* If Link within menu has extra margin, remove it */
 .hs-navbar .hs-navbar-menu .ant-menu-item a {
   margin: 0;
   padding: 8px 4px;
   display: inline-block;
 }
 
-/* make sure logo doesn't shrink too small */
-.hs-navbar-logo {
-  flex: 0 0 auto;
-  margin-right: 8px;
+/* tighter variants */
+.hs-navbar-menu { margin-left: 10px !important; padding: 0 !important; }
+.hs-navbar-menu .ant-menu-horizontal { gap: 4px !important; padding: 0 !important; margin: 0 !important; border-bottom: none !important; }
+.hs-navbar-menu .ant-menu-item { padding: 0 4px !important; margin: 0 !important; font-size: 0.85rem !important; font-weight: 600 !important; white-space: nowrap !important; flex-shrink: 0 !important; min-width: 0 !important; }
+.hs-navbar-menu .ant-menu-item a { padding: 1px 0px !important; margin: 0 !important; font-size: 0.85rem !important; }
+.hs-navbar-menu .ant-menu-item::after { display: none !important; }
+.hs-navbar-menu { overflow: visible !important; }
+
+/* MOBILE BEHAVIOR:
+   - hide the full menu on small screens
+   - show the hamburger icon and keep its position between logo and sign-up
+*/
+@media (max-width: 900px) {
+  /* hide the desktop menu */
+  .hs-navbar .hs-navbar-menu { display: none !important; }
+
+  /* show the hamburger */
+  .mobile-menu-icon { display: block; }
+
+  /* keep Sign Up visible but compact (you previously had an option to hide it on very small screens) */
+  .hs-contact-btn { display: block; padding: 8px 14px; border-radius: 8px; }
+
+  /* mobile menu list styling remains (the dropdown) */
+  .mobile-menu { display: block; }
 }
 
-/* keep the Sign Up button visible and not pushed off-screen */
-.hs-contact-btn {
-  flex: 0 0 auto;
-  margin-left: 12px;
+/* Minor touch target improvements */
+.mobile-menu-icon:focus,
+.mobile-menu-icon:hover {
+  outline: none;
+  transform: scale(1.02);
 }
-
-/* =============================
-   FINAL ULTRA-TIGHT NAVBAR (100% ZOOM)
-   ============================= */
-
-/* Move menu close to logo */
-.hs-navbar-menu {
-  margin-left: 10px !important;
-  padding: 0 !important;
-}
-
-/* Tighter gap between items */
-.hs-navbar-menu .ant-menu-horizontal {
-  gap: 4px !important;          /* ultra tight gap */
-  padding: 0 !important;
-  margin: 0 !important;
-  border-bottom: none !important;
-}
-
-/* Shrink each menu item */
-.hs-navbar-menu .ant-menu-item {
-  padding: 0 4px !important;    /* ultra narrow padding */
-  margin: 0 !important;
-  font-size: 0.85rem !important; /* smaller text so everything fits at 100% */
-  font-weight: 600 !important;
-  white-space: nowrap !important;
-  flex-shrink: 0 !important;
-  min-width: 0 !important;
-}
-
-/* Shrink anchor text */
-.hs-navbar-menu .ant-menu-item a {
-  padding: 1px 0px !important;
-  margin: 0 !important;
-  font-size: 0.85rem !important;
-}
-
-/* Remove underline */
-.hs-navbar-menu .ant-menu-item::after {
-  display: none !important;
-}
-
-/* Keep navbar fixed and static */
-.hs-navbar-menu {
-  overflow: visible !important;
-}
-
