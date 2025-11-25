@@ -220,12 +220,16 @@ height: 48px;
 font-size: 20px;
 }
 
-.ptc-view-btn {
-top: 12px;
-right: 12px;
-padding: 6px 12px;
-font-size: 13px;
+.ptc-view-btn.ant-btn {
+  padding: 7px 12px !important;   /* increased height */
+  height: auto !important;
+  min-width: auto !important;
+  width: auto !important;
+  font-size: 11px !important;
+  border-radius: 14px !important;
+  line-height: normal !important;
 }
+
 
 .ptc-content {
 padding: 16px;
@@ -293,8 +297,18 @@ height: 200px;
 }
 
 .ptc-title {
-font-size: 18px;
+font-size: 14px !important;
+flex-wrap: nowrap;
 }
+
+.ptc-view-btn.ant-btn {
+  padding: 6px 10px !important;   /* increased height */
+  font-size: 10px !important;
+  border-radius: 12px !important;
+  min-width: auto !important;
+  width: auto !important;
+}
+
 }
 
 /* Extra small mobile screens adjustments for View Properties button */
@@ -314,15 +328,23 @@ right: 8px;
 padding: 3px 6px;
 font-size: 11px;
 }
+.ptc-view-btn.ant-btn {
+  padding: 5px 9px !important;   /* increased height */
+  font-size: 9px !important;
+  min-width: auto !important;
+  width: auto !important;
+}
+
 }
 
 @media (max-width: 320px) {
-.ptc-view-btn {
-top: 6px;
-right: 6px;
-padding: 2px 4px;
-font-size: 10px;
+.ptc-view-btn.ant-btn {
+  padding: 5px 8px !important;   /* increased height */
+  font-size: 8px !important;
+  min-width: auto !important;
+  width: auto !important;
 }
+
 }
 @media (max-width: 375px) {
 .ptc-view-btn {
@@ -332,6 +354,6 @@ margin: 8px auto 0 auto;
 top: auto;
 right: auto;
 padding: 4px 8px;
-font-size: 11px;
+font-size: 10px;
 }
 }
