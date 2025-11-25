@@ -11,14 +11,14 @@ const transportServices = [
     id: 1,
     title: "Material Pickup",
     description: "Fast and safe pickup services from suppliers or construction sites.",
-    price: "$50",
+    price: "₹500",
     img: materialpickupimg
   },
   {
     id: 2,
     title: "Material Delivery Services",
     description: "Secure and timely delivery of materials to your construction location.",
-    price: "$70",
+    price: "₹700",
     img: deliveryservicesimg
   },
 ];
