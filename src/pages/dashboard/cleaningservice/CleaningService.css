@@ -593,3 +593,27 @@ body,
   background: transparent !important;
 }
 
+.tf-field input[type="date"],
+.custom-date-input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #dcdcdc;
+  border-radius: 8px;
+  font-size: 15px;
+  outline: none;
+  background-color: #fff;
+  height: 42px;
+}
+
+.tf-field input[type="date"]:focus,
+.custom-date-input:focus {
+  border-color: #005cfa;
+  box-shadow: 0 0 0 2px rgba(0, 92, 250, 0.25);
+}
+
+.tf-field label {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  display: block;
+}
