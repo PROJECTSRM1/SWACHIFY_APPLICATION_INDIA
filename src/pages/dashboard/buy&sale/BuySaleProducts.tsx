@@ -27,7 +27,6 @@ import {
   RiseOutlined,
   EnvironmentOutlined,
   PlusOutlined,
-  ArrowLeftOutlined,
   EyeOutlined,
   FileTextOutlined,
   DollarOutlined,
@@ -1100,7 +1099,7 @@ const SERVICES_DATA: Service[] = [
       {
         key: 'propListingSale',
         title: 'Property Listing for Sale',
-        description: 'Click to view properties listed for sale.',
+        description: '',
         contentComponent: PropertyListingSaleContent as React.FC<any>,
         imagePath: Modern,
       },
@@ -1167,14 +1166,14 @@ const SERVICES_DATA: Service[] = [
       {
         key: 'delivery',
         title: 'Home Delivery & Tracking',
-        description: 'Click to manage delivery partners and zones.',
+        description: '',
         contentComponent: OnlineDeliveryContent,
         imagePath: d,
       },
       {
         key: 'offers',
         title: 'Online Offers & Coupons',
-        description: 'Click to create coupons and promo campaigns.',
+        description: '',
         contentComponent: OnlineOffersContent,
         imagePath: e,
       },
@@ -1314,7 +1313,7 @@ const renderMainServices = () => (
         onClick={handleBackToMain}
         type="text"
         className="minimal-back-button back-button-style"
-        icon={<ArrowLeftOutlined />}
+        // icon={<ArrowLeftOutlined />}
       />
       <Title level={3} className="modal-title-no-margin">
         {currentService?.title} 
@@ -1328,7 +1327,7 @@ const renderMainServices = () => (
         onClick={handleBackToSubservices}
         type="text"
         className="minimal-back-button back-button-style"
-        icon={<ArrowLeftOutlined />}
+        // icon={<ArrowLeftOutlined />}
       />
       <Title level={3} className="modal-title-no-margin">
         {currentSubservice?.title}
@@ -1342,7 +1341,7 @@ const renderMainServices = () => (
         onClick={handleClosePropertyDetail}
         type="text"
         className="minimal-back-button back-button-style"
-        icon={<ArrowLeftOutlined />}
+        // icon={<ArrowLeftOutlined />}
       />
       <Title level={3} className="modal-title-no-margin">
         {selectedProperty?.title || 'Property Details'}
