@@ -258,7 +258,9 @@
   font-weight: 600 !important;
 }
 
-/* ----- Pricing / plans ----- */
+/* ==================
+   PRICING / PLANS
+   ================== */
 .hs-pricing-wrap {
   padding: 56px 18px;
   max-width: 1250px;
@@ -315,24 +317,124 @@
   flex: 1 1 auto;
 }
 .hs-price-features li { margin: 12px 0; color: #374151; font-size: 0.98rem; display: flex; align-items: center; }
-.hs-check { color: #14b8a6; margin-right: 10px; font-size: 18px; }
+.hs-check { color: #050505; margin-right: 10px; font-size: 18px; }
 .hs-choose-btn { border-radius: 10px !important; padding: 12px 18px !important; font-weight: 700 !important; font-size: 0.99rem !important; margin-top: 12px; }
 .hs-choose-btn-primary { background: #ff7a1a !important; color: #fff !important; border: none !important; box-shadow: 0 6px 18px rgba(255,122,26,0.14); }
 .hs-choose-btn-outline { background: transparent !important; border: 2px solid rgba(0,0,0,0.06) !important; color: #111 !important; }
 
-/* ----- Booking form ----- */
+/* Booking form */
 .hs-booking-wrap { max-width: 920px; margin: 60px auto; text-align: center; padding: 10px; }
 .hs-booking-head h2 { font-size: 2rem; font-weight: 700; color: #111; }
 .hs-booking-head p { color: #6b7280; font-size: 1.05rem; margin-bottom: 30px; }
 .hs-booking-card { padding: 30px 32px; border-radius: 20px !important; background: #fff; box-shadow: 0 4px 22px rgba(0,0,0,0.06); text-align: left; }
 .hs-booking-label { display: block; font-weight: 600; color: #333; margin-bottom: 6px; }
-.hs-booking-input { width: 100%; padding: 12px 14px; border: 1px solid #e6e9ee; border-radius: 10px; font-size: 0.98rem; background: #f8f9fb; }
-.hs-booking-input:focus, .hs-booking-textarea:focus { outline: none; border-color: #2563eb; background: #fff; }
-.date-input { display: flex; align-items: center; background: #f8f9fb; border: 1px solid #e6e9ee; border-radius: 10px; padding-left: 12px; }
-.date-input input { border: none; padding: 12px; background: transparent; flex: 1; }
+
+/* regular text input style (already used) */
+.hs-booking-input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #e6e9ee;
+  border-radius: 10px;
+  font-size: 0.98rem;
+  background: #f8f9fb;
+  box-sizing: border-box;
+}
+
+/* ensure textarea looks same */
 .hs-booking-textarea { width: 100%; height: 120px; padding: 14px; border-radius: 10px; border: 1px solid #e6e9ee; background: #f8f9fb; font-size: 1rem; resize: none; }
-.hs-booking-submit { width: 100%; background: #0f0f1a; color: #fff; padding: 14px; border-radius: 10px; font-weight: 700; font-size: 1rem; margin-top: 10px; border: none; }
-.hs-booking-submit:hover { background: #1a1a2e; }
+
+/* ============== ANTD SELECT & PICKER STYLING ==============
+   Make AntD Select & DatePicker match .hs-booking-input appearance
+   This is the key block that makes the form look like your 2nd image.
+   ============================================================== */
+
+/* Make Select container adopt our booking-input class sizing */
+.hs-booking-input.ant-select,
+.hs-booking-input.ant-select-focused,
+.hs-booking-input .ant-select {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Style the Select's visible selector to look like the inputs */
+.hs-booking-input .ant-select-selector {
+  background: #f8f9fb !important;
+  border: 1px solid #e6e9ee !important;
+  border-radius: 10px !important;
+  height: 44px !important;
+  display: flex !important;
+  align-items: center !important;
+  padding: 0 12px !important;
+  box-sizing: border-box !important;
+}
+
+/* Keep placeholder / selected text vertically centered */
+.hs-booking-input .ant-select-selection-item,
+.hs-booking-input .ant-select-selection-placeholder {
+  line-height: 44px !important;
+  height: 44px !important;
+  display: inline-block !important;
+  padding: 0 !important;
+}
+
+/* Make the caret / arrow sit at the right inside the selector */
+.hs-booking-input .ant-select-arrow {
+  margin-left: 8px !important;
+  color: rgba(0,0,0,0.45);
+  font-size: 14px;
+}
+
+/* DatePicker wrapper (we used class `date-input` in JSX) */
+.date-input {
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 10px;
+  background: #f8f9fb;
+  border: 1px solid #e6e9ee;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+}
+
+/* Make the internal AntD picker input transparent so the wrapper styles show */
+.date-input .ant-picker {
+  width: 100%;
+  border: none;
+  background: transparent;
+  height: 44px;
+  display: flex;
+  align-items: center;
+}
+
+/* ensure the textual input area lines up */
+.date-input .ant-picker-input > input {
+  height: 44px;
+  line-height: 44px;
+  border: none;
+  background: transparent;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* adjust the icon inside the picker to align */
+.date-input .ant-picker-suffix {
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(0,0,0,0.45);
+}
+
+/* add subtle focus effect to both select and date */
+.hs-booking-input .ant-select-selector:focus,
+.hs-booking-input .ant-select-selector:hover,
+.date-input .ant-picker:hover {
+  outline: none;
+  border-color: #c6d5ff;
+  box-shadow: 0 2px 8px rgba(38,80,255,0.06);
+}
+
+/* ================================================================= */
 
 /* ----- Footer ----- */
 .hs-footer { background: #0f1724; color: #cbd5e1; padding: 48px 20px 18px; margin-top: 40px; font-family: inherit; }
@@ -356,7 +458,14 @@
   .hs-card-img { height: 120px; }
   .hs-card { min-height: 360px; }
   .hs-footer-inner { grid-template-columns: repeat(2, 1fr); gap: 26px; }
+
+  /* Pricing cards: stack 2 across */
+  .hs-pricing-wrap .ant-row,
+  .hs-pricing-wrap .ant-col {
+    width: 100%;
+  }
 }
+
 @media (max-width: 600px) {
   .hs-hero-inner { margin-left: 0; max-width: 99vw; }
   .hs-hero-head { font-size: 1.5rem; }
@@ -367,7 +476,19 @@
   .hs-pricing-wrap { padding: 36px 12px; }
   .hs-booking-card { padding: 22px; }
   .hs-footer-inner { grid-template-columns: 1fr; gap: 18px; }
+
+  /* Booking form: full-width stacking */
+  .hs-booking-card .ant-row > .ant-col {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Price card layout: have spacing around each card vertically */
+  .hs-pricing-wrap .ant-col {
+    margin-bottom: 18px;
+  }
 }
+
 /* Contact button in header - match Commercial page look */
 .hs-contact-btn {
   background: #111827 !important;
@@ -396,14 +517,13 @@
 
 /* ========== Mobile header: logo -> menu -> Contact (no overlap with hero) ========== */
 @media (max-width: 768px) {
-  /* Make navbar a stacked block and keep it above the hero */
   .hs-navbar {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 8px;
     padding: 10px 12px 16px;
-    background: #fff;                /* solid background so hero won't show through */
+    background: #fff;
     border-bottom: 1px solid #f0f0f0;
     box-shadow: 0 6px 18px rgba(6,21,38,0.06);
     position: sticky;
@@ -413,7 +533,6 @@
     box-sizing: border-box;
   }
 
-  /* Logo row centered and full width */
   .hs-navbar-logo {
     width: 100%;
     display: flex;
@@ -425,7 +544,6 @@
     order: 1;
   }
 
-  /* Show the menu (which was hidden) and make it vertical list */
   .hs-navbar-menu {
     display: flex !important;
     flex-direction: column;
@@ -438,7 +556,6 @@
     background: transparent;
   }
 
-  /* If your menu uses AntD .ant-menu-item, ensure they are full-width rows */
   .hs-navbar-menu .ant-menu-item {
     width: 100%;
     display: flex !important;
@@ -450,7 +567,6 @@
   }
   .hs-navbar-menu .ant-menu-item:last-child { border-bottom: none; }
 
-  /* Menu anchor/link styling (centered) */
   .hs-navbar-menu a {
     display: inline-block;
     width: 100%;
@@ -460,10 +576,9 @@
     padding: 4px 0;
   }
 
-  /* Contact button becomes part of header flow and sits below menu */
   .hs-contact-btn {
     order: 3;
-    position: relative !important;   /* ensure participates in layout */
+    position: relative !important;
     width: calc(100% - 28px);
     max-width: 420px;
     display: inline-flex;
@@ -479,23 +594,14 @@
     z-index: 2;
   }
 
-  /* Ensure menu and button are not absolutely positioned by other rules */
   .hs-navbar .hs-contact-btn,
   .hs-navbar .hs-navbar-menu {
     position: static !important;
   }
 
-  /* Create visual separation so hero sits below header cleanly */
   .hs-hero { margin-top: 8px; z-index: 1; }
-
-  /* Slight typography adjustments to avoid wrapping overflow */
   .hs-hero-head { font-size: 1.6rem !important; line-height: 1.06; }
-
-  /* Reduce paddings that may push hero up */
   .hs-hero { padding: 24px 12px; min-height: 220px; }
-
-  /* If you hide menu earlier with display:none on .hs-navbar-menu at this breakpoint,
-     this override restores it. */
 }
 
 /* Extra tiny screens */
@@ -504,6 +610,7 @@
   .hs-navbar-menu .ant-menu-item { padding: 8px 10px !important; }
   .hs-hero-head { font-size: 1.4rem !important; }
 }
+
 /* Modal / auth tab tweaks */
 .ant-modal-content {
   border-radius: 12px;
@@ -526,4 +633,49 @@
     font-size: 15px;
     padding: 8px 6px;
   }
+}
+
+
+
+/* Fix double-rounded Select: make outer wrapper transparent and let the inner selector show the input styling */
+.hs-booking-input.ant-select {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Ensure outer wrapper doesn't influence size — keep width but remove inner spacing */
+.hs-booking-input.ant-select .ant-select-selector {
+  /* keep the selector styling we already use */
+  background: #f8f9fb !important;
+  border: 1px solid #e6e9ee !important;
+  border-radius: 10px !important;
+  height: 44px !important;
+  display: flex !important;
+  align-items: center !important;
+  padding: 0 12px !important;
+  box-sizing: border-box !important;
+}
+
+/* Remove the default ant-select padding if any (helps the inner selector to line up) */
+.hs-booking-input.ant-select .ant-select-selection-placeholder,
+.hs-booking-input.ant-select .ant-select-selection-item {
+  line-height: 44px !important;
+  height: 44px !important;
+  padding: 0 !important;
+}
+
+
+
+.hs-booking-submit {
+  width: 100%;
+  background: #000 !important;   /* PURE BLACK */
+  color: #fff !important;
+  padding: 14px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 1rem;
+  margin-top: 10px;
+  border: none;
 }

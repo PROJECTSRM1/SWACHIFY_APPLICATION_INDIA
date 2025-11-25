@@ -79,26 +79,51 @@ html, body {
   }
 }
 
-/* ================= HERO ================= */
-.packes-hero {
+/* HERO SECTION FIX — stack title, subtitle, button vertically */
+.hero-section {
   width: 100%;
   height: 85vh;
   background-size: cover;
   background-position: center;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  padding-left: 60px;
-  color: #fff;
-  text-shadow: 1px 1px 4px black;
+  justify-content: center;
+  padding: 0 20px;
+  text-align: center;
+  color: white;
 }
 
-.hero-overlay h1 {
+.hero-content {
+  display: flex;
+  flex-direction: column;     /* 🔥 stack items vertically */
+  align-items: center;         /* center horizontally */
+  justify-content: center;     /* center vertically */
+  max-width: 900px;
+  gap: 20px;                   /* spacing between title → subtitle → button */
+}
+
+.hero-content h1 {
   font-size: 3rem;
+  font-weight: 800;
+  margin: 0;
 }
-.hero-overlay p {
-  font-size: 1.2rem;
+
+.hero-content p {
+  font-size: 1.3rem;
+  max-width: 700px;
+  margin: 0;
 }
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+  .hero-content p {
+    font-size: 1rem;
+  }
+}
+
 
 /* ================= SERVICES ================= */
 .packes-services {
@@ -181,6 +206,10 @@ html, body {
    SERVICES SECTION ALIGNMENT
 ===============================*/
 
+/* ============================
+   SERVICES SECTION ALIGNMENT
+===============================*/
+
 /* Center heading + paragraph */
 #services-section {
   text-align: center;
@@ -199,10 +228,12 @@ html, body {
   margin-bottom: 40px;
 }
 
-/* Center the cards container */
+/* Perfectly centered 3-card layout */
 #services-section .ant-row {
-  max-width: 1200px;     /* allows 3 cards to fit */
-  margin: 0 auto !important;
+  max-width: 1150px;            /* ensures exact center position */
+  margin: 0 auto !important;    /* centers row */
+  padding-left: 10px;           /* fixes visual right-shift */
+  padding-right: 10px;
   width: 100%;
   display: flex !important;
   justify-content: center !important;
@@ -229,7 +260,6 @@ html, body {
     max-width: 100% !important;
   }
 
-  /* make heading look good on mobile */
   #services-section .section-title {
     font-size: 1.6rem;
   }
@@ -239,23 +269,82 @@ html, body {
     padding: 0 10px;
   }
 }
-/* Desktop navbar links */
-.nav-links li a {
-  font-size: 1.15rem !important;   /* bigger text */
-  font-weight: 600 !important;      /* bold */
+
+/* ============================
+   EQUAL-SIZE SERVICE CARDS
+===============================*/
+
+#services-section .service-card {
+  min-height: 320px;                 /* same height for all cards */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 28px 20px !important;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+  border-radius: 10px;
+  transition: transform .18s ease, box-shadow .18s ease;
 }
 
-/* Logo text (optional) */
-.nav-logo {
-  font-size: 2rem !important;
-  font-weight: 700 !important;
+#services-section .service-icon {
+  margin-bottom: 10px;
+  line-height: 1;
 }
 
-/* Mobile menu links */
-.mobile-menu li a {
-  font-size: 1.15rem !important;
-  font-weight: 600 !important;
+#services-section .service-title {
+  margin: 6px 0 10px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-align: center;
 }
+
+#services-section .service-desc {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 0 6px 12px;
+  line-height: 1.6;
+  color: #555;
+  font-size: 0.95rem;
+  max-width: 88%;
+}
+
+#services-section .learn-more {
+  margin-top: 12px;
+  flex-shrink: 0;
+  align-self: center;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+#services-section .service-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 32px rgba(0,0,0,0.07);
+}
+
+/* Mobile adjustments */
+@media (max-width: 992px) {
+  #services-section .service-card {
+    min-height: 300px;
+    padding: 22px 18px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  #services-section .service-card {
+    min-height: 260px;
+    padding: 18px 12px !important;
+  }
+
+  #services-section .service-desc {
+    font-size: 0.94rem;
+    max-width: 94%;
+  }
+}
+
 
 /* ================= WHY CHOOSE US (centered) ================= */
 /* Targets both class names used in different files to be safe */
