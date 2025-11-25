@@ -112,11 +112,11 @@
   align-items: center;
 }
 .pm-view-btn {
-  background: #fff;
-  border: 1px solid #eee;
-  border-radius: 8px;
-  padding: 6px 10px;
-  font-size: 13px;
+  background:#fff;
+  border:1px solid #eee;
+  border-radius:8px;
+  padding:6px 10px;
+  font-size:13px;
 }
 .pm-price {
   color: #2b6cff;

@@ -12,7 +12,7 @@ import {
 } from "antd";
 import {
   SearchOutlined,
-  HeartOutlined,
+  // HeartOutlined,
   EnvironmentOutlined,
   HomeOutlined,
   // FilterOutlined,
@@ -362,7 +362,7 @@ const CommercialListingsPage: React.FC<CommercialListingsPageProps> = ({
                   <img src={property.image} alt={property.title} className="pc-image" />
                   <Tag className="pc-furnishing-tag">{property.furnishing}</Tag>
 
-                  <Button type="text" icon={<HeartOutlined />} className="pc-favorite-btn" />
+                  {/* <Button type="text" icon={<HeartOutlined />} className="pc-favorite-btn" /> */}
                 </div>
               }
             >

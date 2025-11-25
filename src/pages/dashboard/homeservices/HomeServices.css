@@ -28,7 +28,28 @@
 /* ===========================================
    🔹 COMPACT TOP HEADER (Reduced height)
 =========================================== */
+/* MATCHES Cleaning Service Header Size */
+/* EXACT MATCH OF .cs-header */
+/* ============================================
+   MAKE HOME SERVICES HEADER MATCH CLEANING
+============================================ */
+/* ---------------------------------------------
+   HOME SERVICES HEADER — EXACT CLEANING MATCH
+--------------------------------------------- */
+
 .services-top-banner {
+  background: #089823;
+  color: #fff;
+  
+  /* ↓ Reduced height */
+  padding: 16px 28px;          /* Clean and compact, same as CS */
+
+  border-radius: 12px;
+
+  width: 100%;
+  max-width: 1250px;            /* ↑ Increased full width */
+  margin: 0 auto 24px auto;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -49,51 +70,64 @@
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.10);
 }
 
-/* Left Section */
+/* LEFT SIDE */
 .banner-left {
   display: flex;
-  align-items: center;
-  gap: 10px;                   /* ↓ Smaller spacing */
+  align-items: center;          /* ← Centers icon + text vertically */
+  gap: 14px;
 }
 
-/* Icon Box (Smaller Version) */
+/* ICON – same size as Cleaning Services */
 .banner-icon {
-  width: 38px;                 /* ↓ Smaller */
-  height: 38px;
-  background: rgba(255, 255, 255, 0.25);
-  border-radius: 10px;
-
+  width: 42px;
+  height: 42px;
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 50%;
+  
   display: flex;
   align-items: center;
   justify-content: center;
 
-  font-size: 18px;             /* ↓ Smaller icon */
-  color: white;
+  font-size: 20px;
+  color: #fff;
 }
 
+/* TEXT ALIGNMENT FIX */
+.banner-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;      /* ← PERFECT VERTICAL ALIGNMENT */
+}
+
+/* TITLE */
 .banner-title {
   margin: 0;
-  font-size: 18px;             /* ↓ Reduced */
   font-weight: 600;
+  font-size: 19px !important;
+  color: #fff;
 }
 
+/* SUBTITLE */
 .banner-subtitle {
-  margin: 0;
-  font-size: 13px;             /* ↓ Reduced */
-  opacity: 0.9;
+  margin-top: 0px;              /* tighter like cleaning services */
+  font-size: 13px;
+  color: #e8eeff;
 }
 
-/* View All Button – smaller */
+/* BUTTON SAME SIZE AS CLEANING */
 .header-viewall-btn {
   background: #fff !important;
-  color: black !important;
+  color: #000 !important;
+  padding: 8px 18px !important;
+  border-radius: 10px !important;
+  font-weight: 600 !important;
   border: none !important;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08) !important;
+}
 
-  padding: 4px 12px !important;  /* ↓ Smaller button */
-  border-radius: 5px !important;
-
-  font-size: 13px !important;
-  font-weight: 500;
+.header-viewall-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12) !important;
 }
 
 
@@ -157,7 +191,7 @@
 }
 
 .details-btn {
-  background: #06A826 !important;
+  background: #000 !important;
   color: white !important;
   border: none !important;
   height: 30px !important;

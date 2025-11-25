@@ -44,8 +44,20 @@
   margin-top: 4px;
 }
 
-.services-grid1 {
-  margin-top: 0;
+/* .services-grid1 {
+  
+} */
+
+
+.services-grid1 .ant-row {
+  display: flex;
+  justify-content: center !important;
+  align-items: center;
+}
+
+.services-grid1 .ant-col {
+  display: flex;
+  justify-content: center;
 }
 
 /* Modal styles */
