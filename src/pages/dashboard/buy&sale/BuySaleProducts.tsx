@@ -1166,14 +1166,14 @@ const SERVICES_DATA: Service[] = [
       {
         key: 'delivery',
         title: 'Home Delivery & Tracking',
-        description: 'Click to manage delivery partners and zones.',
+        description: '',
         contentComponent: OnlineDeliveryContent,
         imagePath: d,
       },
       {
         key: 'offers',
         title: 'Online Offers & Coupons',
-        description: 'Click to create coupons and promo campaigns.',
+        description: '',
         contentComponent: OnlineOffersContent,
         imagePath: e,
       },
