@@ -40,7 +40,7 @@
   border-radius: 10px;
 
   width: 100%;
-  max-width: 1250px;
+  max-width: 1350px;         /* ⬆ Wider banner */
 
   margin: 0 auto 24px auto;
   flex-wrap: wrap;
