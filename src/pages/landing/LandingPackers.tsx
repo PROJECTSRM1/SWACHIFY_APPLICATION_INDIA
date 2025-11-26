@@ -1,11 +1,13 @@
 // src/pages/landing/LandingPackers.tsx
 import React, { useState } from 'react';
+import CommonHeader from "../../pages/landing/Header";
+import "../../pages/landing/Header.css"; // import CSS for header
 import {
   Card,
   Button,
   Form,
   Input,
-  Menu,
+  // Menu,
   Modal,
   Tabs,
   Checkbox
@@ -18,10 +20,10 @@ import {
   UserOutlined,
   ClockCircleOutlined,
   MailOutlined,
-  MenuOutlined,
-  CloseOutlined,
+  // MenuOutlined,
+  // CloseOutlined,
 } from '@ant-design/icons';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './LandingPackers.css';
 
 // === IMAGE IMPORTS ===
@@ -37,16 +39,7 @@ import insurance from '../../assets/landingimages/insurance.jpeg';
 
 const { TabPane } = Tabs;
 
-const navItems = [
-  { key: "home", label: <Link to="/landing">Home</Link> },
-  { key: "cleaning", label: <Link to="/cleaningservice">Cleaning</Link> },
-  { key: "packers", label: <Link to="/LandingPackers">Packers & Movers</Link> },
-  { key: "home_services", label: <Link to="/home_service">Home Services</Link> },
-  { key: "rentals", label: <Link to="/rentals">Rentals</Link> },
-  { key: "commercial", label: <Link to="/commercial-plots">Buy&Sale Properties</Link> },
-  { key: "materials", label: <Link to="/ConstructionMaterials">Construction Materials</Link> },
-  { key: "freelancer", label: <Link to="/Freelancer">Freelancer</Link> },
-];
+
 
 const services = [
   {
@@ -133,7 +126,7 @@ const LandingPackers: React.FC = () => {
   const [authVisible, setAuthVisible] = useState(false);
   const [loginForm] = Form.useForm();
   const [registerForm] = Form.useForm();
-  const [menuOpen, setMenuOpen] = useState(false); // <-- added hamburger state
+  // const [menuOpen, setMenuOpen] = useState(false); // <-- added hamburger state
   const navigate = useNavigate();
 
   // 🚀 LOGIN → DIRECT NAVIGATION
@@ -256,62 +249,8 @@ const LandingPackers: React.FC = () => {
   return (
     <div className="packers-container">
 
-      {/* HEADER */}
-      <header className="hs-navbar">
-        <div className="hs-navbar-logo">
-          <span className="hs-logo-text">SWACHIFY INDIA</span>
-        </div>
-
-        {/* ===== Hamburger toggle placed between logo and menu/sign-up (mobile) ===== */}
-        <button
-          className="mobile-menu-icon"
-          aria-label={menuOpen ? "Close menu" : "Open menu"}
-          onClick={() => setMenuOpen((s) => !s)}
-          type="button"
-        >
-          {menuOpen ? <CloseOutlined /> : <MenuOutlined />}
-        </button>
-
-        <Menu mode="horizontal" items={navItems} className="hs-navbar-menu" />
-
-        <Button
-          type="primary"
-          className="hs-contact-btn"
-          onClick={() => setAuthVisible(true)}
-        >
-          Sign Up
-        </Button>
-      </header>
-
-      {/* ===== Mobile dropdown menu (same behavior used in other pages) ===== */}
-      {menuOpen && (
-        <ul className="mobile-menu" role="menu" aria-label="Mobile primary navigation">
-          <li><Link to="/landing" onClick={() => setMenuOpen(false)}>Home</Link></li>
-          <li><Link to="/cleaningservice" onClick={() => setMenuOpen(false)}>Cleaning</Link></li>
-          <li><Link to="/LandingPackers" onClick={() => setMenuOpen(false)}>Packers & Movers</Link></li>
-          <li><Link to="/home_service" onClick={() => setMenuOpen(false)}>Home Services</Link></li>
-          <li><Link to="/rentals" onClick={() => setMenuOpen(false)}>Rentals</Link></li>
-          <li><Link to="/commercial-plots" onClick={() => setMenuOpen(false)}>Commercial Plots</Link></li>
-          <li><Link to="/ConstructionMaterials" onClick={() => setMenuOpen(false)}>Construction Materials</Link></li>
-          <li><Link to="/Freelancer" onClick={() => setMenuOpen(false)}>Freelancer</Link></li>
-
-          <li><Link to="/contactus" onClick={() => setMenuOpen(false)}>Contact</Link></li>
-          <li><Link to="/Cart" onClick={() => setMenuOpen(false)}>Cart</Link></li>
-
-          <li>
-            <a
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                setMenuOpen(false);
-                setAuthVisible(true);
-              }}
-            >
-              Login / Sign Up
-            </a>
-          </li>
-        </ul>
-      )}
+<CommonHeader selectedKey="LandingPackers" />
+     
 
       <AuthModal />
 
