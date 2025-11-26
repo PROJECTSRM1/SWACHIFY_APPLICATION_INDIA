@@ -1,43 +1,47 @@
-import React, { createContext, useContext, useMemo, useState } from 'react';
-import type { ReactNode } from 'react';
+import { createContext, useContext, useState } from "react";
+
 
 export interface CartItem {
   id: number;
   title: string;
-  price: number;
-  quantity: number;
   image: string;
+  quantity: number;
+  price: string|number;
   totalPrice: number;
+
+
+  customerName: string;
+  deliveryType: string;
+  deliveryDate: string;
+  contact: string;
+  address: string;
+  instructions: string;
 }
 
-interface CartContextValue {
+
+interface CartContextType {
   cart: CartItem[];
   addToCart: (item: CartItem) => void;
   removeFromCart: (id: number) => void;
 }
 
-const CartContext = createContext<CartContextValue | undefined>(undefined);
 
-export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+const CartContext = createContext<CartContextType | undefined>(undefined);
+
+
+export const CartProvider = ({ children }: any) => {
   const [cart, setCart] = useState<CartItem[]>([]);
 
-  const addToCart: CartContextValue['addToCart'] = (item) => {
-    setCart((prev) => {
-      const existing = prev.find((c) => c.id === item.id);
-      if (existing) {
-        const quantity = existing.quantity + item.quantity;
-        const totalPrice = quantity * existing.price;
-        return prev.map((c) =>
-          c.id === item.id ? { ...c, quantity, totalPrice } : c,
-        );
-      }
-      return [...prev, { ...item, totalPrice: item.price * item.quantity }];
-    });
+
+  const addToCart = (item: CartItem) => {
+    setCart((prev) => [...prev, item]);
   };
+
 
   const removeFromCart = (id: number) => {
     setCart((prev) => prev.filter((item) => item.id !== id));
   };
+
 
   return (
     <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
@@ -45,6 +49,7 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     </CartContext.Provider>
   );
 };
+
 
 export const useCart = () => {
   const ctx = useContext(CartContext);
