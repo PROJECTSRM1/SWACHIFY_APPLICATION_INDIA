@@ -59,7 +59,7 @@ export type SubService = {
   title: string;
   description: string;
   image: string;
-  price: string;
+  totalprice: string;
   includedList: string[];
   issues: string[];
 };
@@ -85,7 +85,7 @@ export const popupData: PopupDataType =
       title: "Home Cleaning",
       description: "Complete home cleaning with sanitation",
       image: cleaning,
-      price: "₹799",
+      totalprice: "₹799",
       includedList: [
         "Professional staff",
         "Eco-friendly products",
@@ -106,7 +106,7 @@ export const popupData: PopupDataType =
       title: "Mattress Cleaning",
       description: "Deep mattress cleaning and sanitizing",
       image: mattress,
-      price: "₹499",
+      totalprice: "₹499",
       includedList: [
         "Deep vacuuming",
         "Dust mite removal",
@@ -127,7 +127,7 @@ export const popupData: PopupDataType =
       title: "Kitchen Cleaning",
       description: "Deep kitchen cleaning and degreasing",
       image: kitchen,
-      price: "₹649",
+      totalprice: "₹649",
       includedList: [
         "Grease removal",
         "Cabinet exterior cleaning",
@@ -148,7 +148,7 @@ export const popupData: PopupDataType =
       title: "Bathroom Cleaning",
       description: "Deep bathroom cleaning and sanitizing",
       image: bathroom,
-      price: "₹549",
+      totalprice: "₹549",
       includedList: [
         "Tile scrubbing",
         "Hard water stain removal",
@@ -169,7 +169,7 @@ export const popupData: PopupDataType =
       title: "Pest Control & Disinfection",
       description: "Pest removal with complete disinfection",
       image: pestcontroll,
-      price: "₹899",
+      totalprice: "₹899",
       includedList: [
         "Odorless chemicals",
         "Cockroach/ant control",
@@ -197,7 +197,7 @@ export const popupData: PopupDataType =
       title: "Wiring & Lighting Install",
       description: "Professional wiring and lighting installation",
       image: wiringlighting,
-      price: "₹130",
+      totalprice: "₹130",
       includedList: [
         "Certified technician",
         "Safety compliance",
@@ -218,7 +218,7 @@ export const popupData: PopupDataType =
       title: "Fan Appliances Repair",
       description: "Expert repair for all fans",
       image: fanappliances,
-      price: "₹199",
+      totalprice: "₹199",
       includedList: [
         "Genuine spare parts",
         "Warranty included",
@@ -239,7 +239,7 @@ export const popupData: PopupDataType =
       title: "Circuit Breaker & Switchboard Fixing",
       description: "Circuit breaker and switchboard repair",
       image: circuitbreaker,
-      price: "₹199",
+      totalprice: "₹199",
       includedList: [
         "Genuine spare parts",
         "Warranty included",
@@ -260,7 +260,7 @@ export const popupData: PopupDataType =
       title: "Smart Home Device Installation",
       description: "Smart device setup and configuration",
       image: smarthomedevice,
-      price: "₹199",
+      totalprice: "₹199",
       includedList: [
         "Device configuration",
         "Warranty included",
@@ -287,7 +287,7 @@ export const popupData: PopupDataType =
       title: "Leak Repair",
       description: "Quick and reliable leak fixing",
       image: leakrepair,
-      price: "₹499",
+      totalprice: "₹499",
       includedList: [
         "Certified technician",
         "Quality tools and equipment",
@@ -308,7 +308,7 @@ export const popupData: PopupDataType =
       title: "Pipe Fitting",
       description: "Professional installation of new pipes",
       image: pipefittings,
-      price: "₹299",
+      totalprice: "₹299",
       includedList: [
         "Quality fittings used",
         "Skilled plumber",
@@ -329,7 +329,7 @@ export const popupData: PopupDataType =
       title: "Geyser Installation",
       description: "Safe and secure geyser installation",
       image: Geyserinstallation,
-      price: "₹299",
+      totalprice: "₹299",
       includedList: [
         "Secure wall mounting",
         "Pipe and valve setup",
@@ -350,7 +350,7 @@ export const popupData: PopupDataType =
       title: "Bathroom Fitting",
       description: "Complete bathroom fixtures installation",
       image: Bathroomfittings,
-      price: "₹299",
+      totalprice: "₹299",
       includedList: [
         "Tap installation",
         "Shower setup",
@@ -371,7 +371,7 @@ export const popupData: PopupDataType =
       title: "Water Tank",
       description: "Water tank cleaning and maintenance",
       image: Watertank,
-      price: "₹299",
+      totalprice: "₹299",
       includedList: [
         "Tank scrubbing",
         "Sludge removal",
@@ -392,7 +392,7 @@ export const popupData: PopupDataType =
       title: "Drain Cleaning",
       description: "Clogged drain clearing and cleaning",
       image: Drincleaning,
-      price: "₹299",
+      totalprice: "₹299",
       includedList: [
         "Clog inspection",
         "Drain snaking",
@@ -419,7 +419,7 @@ export const popupData: PopupDataType =
       title: "AC Repair",
       description: "Professional AC inspection and repair",
       image: acrepair,
-      price: "₹499",
+      totalprice: "₹499",
       includedList: [
         "Certified technician",
         "Cooling efficiency check",
@@ -440,7 +440,7 @@ export const popupData: PopupDataType =
       title: "Refrigerator Repair",
       description: "Reliable fridge repair and servicing",
       image: refrigeratorrepair,
-      price: "₹299",
+      totalprice: "₹299",
       includedList: [
         "Thermostat check",
         "Cooling issue diagnosis",
@@ -461,7 +461,7 @@ export const popupData: PopupDataType =
       title: "Washing Machine Repairs",
       description: "Complete washing machine repair service",
       image: washingrepair,
-      price: "₹299",
+      totalprice: "₹299",
       includedList: [
         "Drum inspection",
         "Motor check",
@@ -482,7 +482,7 @@ export const popupData: PopupDataType =
       title: "Microwave Servicing",
       description: "Microwave heating and repair service",
       image: microwave,
-      price: "₹299",
+      totalprice: "₹299",
       includedList: [
         "Heating coil check",
         "Door sensor testing",
@@ -503,7 +503,7 @@ export const popupData: PopupDataType =
       title: "TV Servicing",
       description: "Expert LED and LCD servicing",
       image: tvservice,
-      price: "₹299",
+      totalprice: "₹299",
       includedList: [
         "Screen inspection",
         "Motherboard testing",
@@ -524,7 +524,7 @@ export const popupData: PopupDataType =
       title: "Regular Maintenance",
       description: "Routine appliance check and servicing",
       image: regularmaintance,
-      price: "₹299",
+      totalprice: "₹299",
       includedList: [
         "Full appliance inspection",
         "Cleaning and lubrication",
@@ -545,7 +545,7 @@ export const popupData: PopupDataType =
       title: "Spare Parts & Replacement",
       description: "Genuine spare parts with installation",
       image: sparepart,
-      price: "₹299",
+      totalprice: "₹299",
       includedList: [
         "Original spare parts",
         "Expert fitting",
@@ -573,7 +573,7 @@ export const popupData: PopupDataType =
       title: "Custom Furniture Making",
       description: "Beautiful custom furniture built professionally",
       image: customfurniture,
-      price: "₹499",
+      totalprice: "₹499",
       includedList: [
         "Skilled carpenter",
         "Custom design support",
@@ -594,7 +594,7 @@ export const popupData: PopupDataType =
       title: "Furniture Repair",
       description: "Reliable repair for damaged furniture",
       image: furniturerepair,
-      price: "₹299",
+      totalprice: "₹299",
       includedList: [
         "Joint tightening",
         "Surface polishing",
@@ -615,7 +615,7 @@ export const popupData: PopupDataType =
       title: "Doors And Windows Fixing",
       description: "Repairing wooden doors and windows",
       image: doorwindows,
-      price: "₹299",
+      totalprice: "₹299",
       includedList: [
         "Hinge adjustment",
         "Lock repair",
@@ -636,7 +636,7 @@ export const popupData: PopupDataType =
       title: "Wardrobe And Cabinet Installation",
       description: "Professional wardrobe and cabinet setup",
       image: wardrob,
-      price: "₹299",
+      totalprice: "₹299",
       includedList: [
         "Accurate measurement",
         "Wall anchoring",
@@ -662,7 +662,7 @@ export const popupData: PopupDataType =
       title: "Interior Painting",
       description: "Smooth interior home painting",
       image: interiorpainting,
-      price: "₹499",
+      totalprice: "₹499",
       includedList: [
         "Wall sanding",
         "Primer application",
@@ -683,7 +683,7 @@ export const popupData: PopupDataType =
       title: "Exterior Painting",
       description: "Durable exterior wall painting",
       image: exteriorpainting,
-      price: "₹299",
+      totalprice: "₹299",
       includedList: [
         "Weatherproof paint",
         "Surface washing",
@@ -704,7 +704,7 @@ export const popupData: PopupDataType =
       title: "Wallpaper And Touch-Up Works",
       description: "Stylish wallpaper and touchups",
       image: wallpaper,
-      price: "₹299",
+      totalprice: "₹299",
       includedList: [
         "Wallpaper installation",
         "Bubble removal",
@@ -725,7 +725,7 @@ export const popupData: PopupDataType =
       title: "Water Proofing",
       description: "Effective leakage and seepage protection",
       image: waterproof,
-      price: "₹299",
+      totalprice: "₹299",
       includedList: [
         "Crack filling",
         "Waterproof coating",
@@ -746,7 +746,7 @@ export const popupData: PopupDataType =
       title: "Wall Repair",
       description: "Professional wall crack repairs",
       image: wallrepair,
-      price: "₹299",
+      totalprice: "₹299",
       includedList: [
         "Crack filling",
         "Hole patching",
@@ -771,7 +771,7 @@ export const popupData: PopupDataType =
       title: "AC Installation",
       description: "Professional AC unit installation",
       image: acinstalla,
-      price: "₹499",
+      totalprice: "₹499",
       includedList: [
         "Proper wall mounting",
         "Pipe connection setup",
@@ -792,7 +792,7 @@ export const popupData: PopupDataType =
       title: "AC Service",
       description: "Complete AC cleaning service",
       image: acservice,
-      price: "₹299",
+      totalprice: "₹299",
       includedList: [
         "Filter wash",
         "Cooling coil cleaning",
@@ -813,7 +813,7 @@ export const popupData: PopupDataType =
       title: "AC Duct Cleaning",
       description: "Deep duct airflow cleaning",
       image: acduct,
-      price: "₹299",
+      totalprice: "₹299",
       includedList: [
         "Dust removal",
         "Duct sanitization",
@@ -834,7 +834,7 @@ export const popupData: PopupDataType =
       title: "AC Filter Replacement",
       description: "Quick filter replacement service",
       image: acfilter,
-      price: "₹299",
+      totalprice: "₹299",
       includedList: [
         "New filter installation",
         "Filter quality check",
@@ -855,7 +855,7 @@ export const popupData: PopupDataType =
       title: "Cooling System Maintenance",
       description: "Complete cooling system checkup",
       image: cooling,
-      price: "₹299",
+      totalprice: "₹299",
       includedList: [
         "Compressor check",
         "Thermostat testing",
@@ -883,7 +883,7 @@ export const popupData: PopupDataType =
       title: "Lawn Maintenance",
       description: "Regular lawn grooming and care",
       image: lawnmaintaince,
-      price: "₹130",
+      totalprice: "₹130",
       includedList: [
         "Grass trimming",
         "Weed removal",
@@ -904,7 +904,7 @@ export const popupData: PopupDataType =
       title: "Landscaping",
       description: "Complete garden design service",
       image: landscaping,
-      price: "₹199",
+      totalprice: "₹199",
       includedList: [
         "Garden planning",
         "Plant selection",
@@ -925,7 +925,7 @@ export const popupData: PopupDataType =
       title: "Outdoor Cleaning",
       description: "Thorough outdoor area cleaning",
       image: outdoorcleaning,
-      price: "₹199",
+      totalprice: "₹199",
       includedList: [
         "Surface washing",
         "Debris removal",
@@ -946,7 +946,7 @@ export const popupData: PopupDataType =
       title: "Garden Pest Control & Care",
       description: "Garden pest removal treatment",
       image: gardenpest,
-      price: "₹199",
+      totalprice: "₹199",
       includedList: [
         "Safe chemicals",
         "Plant protection",
@@ -975,7 +975,7 @@ export const popupData: PopupDataType =
       title: "TV Mounting",
       description: "Secure TV wall installation",
       image: tvmounting,
-      price: "₹499",
+      totalprice: "₹499",
       includedList: [
         "Accurate wall measurement",
         "Sturdy mounting brackets",
@@ -996,7 +996,7 @@ export const popupData: PopupDataType =
       title: "Shelf Mounting",
       description: "Wall shelf installation help",
       image: shelfmounting,
-      price: "₹299",
+      totalprice: "₹299",
       includedList: [
         "Proper level alignment",
         "Strong fasteners",
@@ -1017,7 +1017,7 @@ export const popupData: PopupDataType =
       title: "Fixture Repair",
       description: "Minor home fixture repair",
       image: fixturerepair,
-      price: "₹299",
+      totalprice: "₹299",
       includedList: [
         "Inspection of fixture",
         "Minor adjustments",
@@ -1038,7 +1038,7 @@ export const popupData: PopupDataType =
       title: "Furniture Repair",
       description: "Basic furniture fixing service",
       image: furniturerepair,
-      price: "₹299",
+      totalprice: "₹299",
       includedList: [
         "Minor wood repair",
         "Loose joint fixing",
@@ -1059,7 +1059,7 @@ export const popupData: PopupDataType =
       title: "Minor Home Maintenance",
       description: "Small home fixes service",
       image: minorhome,
-      price: "₹299",
+      totalprice: "₹299",
       includedList: [
         "General inspections",
         "Minor repairs",
@@ -1086,7 +1086,7 @@ export const popupData: PopupDataType =
       title: "CCTV Installation",
       description: "Professional CCTV setup service",
       image: cctvinstallation,
-      price: "₹499",
+      totalprice: "₹499",
       includedList: [
         "HD camera setup",
         "Cable routing & fixing",
@@ -1107,7 +1107,7 @@ export const popupData: PopupDataType =
       title: "Door Lock Installation",
       description: "Secure lock fitting service",
       image: doorlock,
-      price: "₹299",
+      totalprice: "₹299",
       includedList: [
         "Lock alignment",
         "Door drilling (if needed)",
@@ -1128,7 +1128,7 @@ export const popupData: PopupDataType =
       title: "Alarm System Setup",
       description: "House alarm installation service",
       image: alaramsystem,
-      price: "₹299",
+      totalprice: "₹299",
       includedList: [
         "Sensor placement",
         "Control panel setup",
@@ -1149,7 +1149,7 @@ export const popupData: PopupDataType =
       title: "Motion Sensor Systems",
       description: "Motion sensor setup service",
       image: motioncensor,
-      price: "₹299",
+      totalprice: "₹299",
       includedList: [
         "Sensor positioning",
         "Range calibration",
@@ -1170,7 +1170,7 @@ export const popupData: PopupDataType =
       title: "Smart Security Device Setup",
       description: "Smart device installation service",
       image: smartsecuritydevicesetup,
-      price: "₹299",
+      totalprice: "₹299",
       includedList: [
         "Smart hub connection",
         "WiFi pairing setup",
