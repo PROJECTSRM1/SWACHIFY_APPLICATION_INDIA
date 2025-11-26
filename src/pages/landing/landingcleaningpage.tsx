@@ -3,6 +3,8 @@ import React, { useState } from "react";
 // add this
 import { setUserDetails } from "../../utils/helpers/storage";
 import { Phone } from "lucide-react";
+import CommonHeader from "../../pages/landing/Header";
+import "../../pages/landing/Header.css"; // import CSS for header
 // import { Menu } from 'antd'    
 
 /***** ADDED ICONS: Menu & Close for hamburger *****/
@@ -15,7 +17,7 @@ import {
   Input,
   Select,
   DatePicker,
-  Menu,
+  // Menu,
   Modal,
   Tabs,
   Checkbox,
@@ -30,11 +32,11 @@ import {
   // PhoneOutlined,
   MailOutlined,
   EnvironmentOutlined,
-  MenuOutlined,
-  CloseOutlined,
+  // MenuOutlined,
+  // CloseOutlined,
 } from "@ant-design/icons";
 
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import "./landingcleaningpage.css";
 
 /* (asset imports and placeholders unchanged) */
@@ -60,104 +62,21 @@ type HSHeaderProps = {
 };
 
 export const HSHeader: React.FC<HSHeaderProps> = ({
-  selectedKey = "",
-  onSignUp = () => {},
+  // selectedKey = "",
+  // // onSignUp = () => {},
 }) => {
-  const [menuOpen, setMenuOpen] = useState(false);
+  // const [menuOpen, setMenuOpen] = useState(false);
 
-  const headerNav = [
-    { key: "home", label: <Link to="/landing">Home</Link> },
-    { key: "cleaning", label: <Link to="/cleaningservice">Cleaning</Link> },
-    { key: "packers", label: <Link to="/LandingPackers">Packers & Movers</Link> },
-    { key: "home_services", label: <Link to="/home_service">Home Services</Link> },
-    { key: "rentals", label: <Link to="/rentals">Rentals</Link> },
-    { key: "commercial", label: <Link to="/commercial-plots">Buy&Sale Properties</Link> },
-    { key: "materials", label: <Link to="/ConstructionMaterials">Construction Materials</Link> },
-    { key: "freelancer", label: <Link to="/Freelancer">Freelancer</Link> }
-  ];
+ 
 
   // IMPORTANT: ensure if selectedKey is empty we pass an empty array so AntD highlights nothing.
-  const selectedKeysArray = selectedKey ? [selectedKey] : [];
+  // const selectedKeysArray = selectedKey ? [selectedKey] : [];
 
   return (
-    <header className="hs-navbar" role="banner" aria-label="Primary header">
-      <div className="hs-navbar-logo" aria-hidden>
-        <span className="hs-logo-text">SWACHIFY INDIA</span>
-      </div>
-
-      {/* ======= NEW: Hamburger button placed between logo and menu/sign-up ======= */}
-      <button
-        className="mobile-menu-icon"
-        aria-label={menuOpen ? "Close menu" : "Open menu"}
-        onClick={() => setMenuOpen((s) => !s)}
-        type="button"
-      >
-        {menuOpen ? <CloseOutlined /> : <MenuOutlined />}
-      </button>
-
-      <Menu
-        mode="horizontal"
-        selectedKeys={selectedKeysArray}
-        className="hs-navbar-menu"
-        items={headerNav}
-        role="navigation"
-        aria-label="Primary navigation"
-      />
-
-      <Button
-        type="primary"
-        className="hs-contact-btn"
-        onClick={onSignUp}
-        aria-label="Sign up"
-      >
-        Sign Up
-      </Button>
-
-      {/* ======= DROPDOWN MOBILE MENU (toggled by hamburger) ======= */}
-      {menuOpen && (
-        <ul className="mobile-menu" role="menu" aria-label="Mobile primary navigation">
-          {headerNav.map((nav) => (
-            <li key={nav.key} role="none">
-              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-              <a
-                role="menuitem"
-                href="#"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setMenuOpen(false);
-                  // use Link's navigation by programmatic fallback:
-                  // If nav.label is a Link, click it by navigating to same path:
-                  // We extract the 'to' prop if present.
-                  // For simplicity, replace with window.location (safe for client routing dev).
-                  const linkEl = (nav.label as any)?.props?.to;
-                  if (linkEl) {
-                    window.location.href = linkEl;
-                  }
-                }}
-              >
-                {/* render the label (Link) text without changing original Link logic */}
-                {/** If label is a Link component, render its children text */}
-                {typeof nav.label === "string" ? nav.label : (nav.label as any).props?.children ?? nav.key}
-              </a>
-            </li>
-          ))}
-
-          <li role="none">
-            <a
-              role="menuitem"
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                setMenuOpen(false);
-                onSignUp();
-              }}
-            >
-              Login / Sign Up
-            </a>
-          </li>
-        </ul>
-      )}
-    </header>
+  <div>
+<CommonHeader selectedKey="cleaningservice" />
+    
+  </div>
   );
 };
 /* ================================
@@ -238,7 +157,7 @@ const LandingCleaningPage: React.FC = () => {
         name: "Test User",
         email: values.identifier,
       };
-      debugger;
+      
       console.log('__logs',userData)
       setUserDetails("user", userData);
     

@@ -1,18 +1,20 @@
 // Home_Service.tsx
-import React, { useState } from "react";
-import { setUserDetails } from "../../utils/helpers/storage";
+// import React, { useState } from "react";
+// import { setUserDetails } from "../../utils/helpers/storage";
+import CommonHeader from "../../pages/landing/Header";
+import "../../pages/landing/Header.css"; // import CSS for header
 import {
-  Menu,
+  // Menu,
   Button,
   Row,
   Col,
   Typography,
   Card,
-  Modal,
-  Tabs,
+  // Modal,
+  // Tabs,
   Form,
   Input,
-  Checkbox,
+  // Checkbox,
   message,
   DatePicker,
   Select,
@@ -32,28 +34,19 @@ import {
   TwitterOutlined,
   InstagramOutlined,
   LinkedinOutlined,
-  MenuOutlined,
-  CloseOutlined,
+  // MenuOutlined,
+  // CloseOutlined,
 } from "@ant-design/icons";
-import { Link, useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 import "./homeservice.css";
 
 const HERO_BG = "../src/assets/landingimages/hero.png"; // keep as your path
 const { Title, Paragraph } = Typography;
-const { TabPane } = Tabs;
+// const { TabPane } = Tabs;
 const { Option } = Select;
 
-const navItems = [
-  { key: "home", label: <Link to="/landing">Home</Link> },
-  { key: "cleaning", label: <Link to="/cleaningservice">Cleaning</Link> },
-  { key: "packers", label: <Link to="/LandingPackers">Packers & Movers</Link> },
-  { key: "home_services", label: <Link to="/home_service">Home Services</Link> },
-  { key: "rentals", label: <Link to="/rentals">Rentals</Link> },
-  { key: "commercial", label: <Link to="/commercial-plots">Buy&Sale Properties</Link> },
-  { key: "materials", label: <Link to="/ConstructionMaterials">Construction Materials</Link> },
-  { key: "freelancer", label: <Link to="/Freelancer">Freelancer</Link> },
-];
+
 
 const cardRows = [
   [
@@ -146,50 +139,50 @@ const cardRows = [
 ];
 
 const Home_Service: React.FC = () => {
-  const [authModalVisible, setAuthModalVisible] = useState(false);
-  const [activeTab, setActiveTab] = useState<"login" | "register">("login");
+  // const [authModalVisible, setAuthModalVisible] = useState(false);
+  // const [activeTab, setActiveTab] = useState<"login" | "register">("login");
 
   // <-- ADDED: hamburger toggle state
-  const [menuOpen, setMenuOpen] = useState(false);
+  // const [menuOpen, setMenuOpen] = useState(false);
 
   // react-router navigate
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   // Login form
-  const [loginForm] = Form.useForm();
+  // const [loginForm] = Form.useForm();
   // Register form
-  const [registerForm] = Form.useForm();
+  // const [registerForm] = Form.useForm();
 
- const onLoginFinish = (values: any) => {
-  const userData = {
-    name: "Test User",
-    email: values.identifier,
-  };
-  debugger;
-  console.log('__logs',userData)
-  setUserDetails("user", userData);
+//  const onLoginFinish = (values: any) => {
+//   const userData = {
+//     name: "Test User",
+//     email: values.identifier,
+//   };
+//   debugger;
+//   console.log('__logs',userData)
+//   setUserDetails("user", userData);
 
-  navigate("/app/dashboard");
-};
+//   navigate("/app/dashboard");
+// };
 
 
-  const onRegisterFinish = (values: any) => {
-    // Replace with real register API call
-    console.log("Register values:", values);
-    message.success("Registered (demo)");
-    setAuthModalVisible(false);
-    registerForm.resetFields();
-    // navigate to dashboard (or welcome/setup page)
-    navigate("/app/dashboard");
-  };
+  // const onRegisterFinish = (values: any) => {
+  //   // Replace with real register API call
+  //   console.log("Register values:", values);
+  //   message.success("Registered (demo)");
+  //   setAuthModalVisible(false);
+  //   registerForm.resetFields();
+  //   // navigate to dashboard (or welcome/setup page)
+  //   navigate("/app/dashboard");
+  // };
 
-  const onRegisterValidatePassword = (_: any, value: string) => {
-    const password = registerForm.getFieldValue("password");
-    if (!value || value === password) {
-      return Promise.resolve();
-    }
-    return Promise.reject(new Error("Passwords do not match"));
-  };
+  // const onRegisterValidatePassword = (_: any, value: string) => {
+  //   const password = registerForm.getFieldValue("password");
+  //   if (!value || value === password) {
+  //     return Promise.resolve();
+  //   }
+  //   return Promise.reject(new Error("Passwords do not match"));
+  // };
 
   // Booking form submit handler (demo)
   const onBookingSubmit = (values: any) => {
@@ -199,178 +192,8 @@ const Home_Service: React.FC = () => {
 
   return (
     <div className="hs-root">
-      <header className="hs-navbar">
-        <div className="hs-navbar-logo">
-          <span className="hs-logo-text">SWACHIFY INDIA</span>
-        </div>
-
-        {/* <-- ADDED: hamburger icon placed between logo and menu/button */}
-        <button
-          className="mobile-menu-icon"
-          aria-label={menuOpen ? "Close menu" : "Open menu"}
-          onClick={() => setMenuOpen((s) => !s)}
-          type="button"
-        >
-          {menuOpen ? <CloseOutlined /> : <MenuOutlined />}
-        </button>
-
-        <Menu mode="horizontal" selectedKeys={["home-services"]} className="hs-navbar-menu" items={navItems} />
-
-        <Button
-          type="primary"
-          className="hs-contact-btn"
-          onClick={() => {
-            setActiveTab("login");
-            setAuthModalVisible(true);
-          }}
-        >
-          Sign Up
-        </Button>
-      </header>
-
-      {/* <-- ADDED: mobile dropdown menu */}
-      {menuOpen && (
-        <ul className="mobile-menu" role="menu" aria-label="Mobile primary navigation">
-          <li><Link to="/landing" onClick={() => setMenuOpen(false)}>Home</Link></li>
-          <li><Link to="/cleaningservice" onClick={() => setMenuOpen(false)}>Cleaning</Link></li>
-          <li><Link to="/LandingPackers" onClick={() => setMenuOpen(false)}>Packers & Movers</Link></li>
-          <li><Link to="/home_service" onClick={() => setMenuOpen(false)}>Home Services</Link></li>
-          <li><Link to="/rentals" onClick={() => setMenuOpen(false)}>Rentals</Link></li>
-          <li><Link to="/commercial-plots" onClick={() => setMenuOpen(false)}>Commercial Plots</Link></li>
-          <li><Link to="/ConstructionMaterials" onClick={() => setMenuOpen(false)}>Construction Materials</Link></li>
-          <li><Link to="/Freelancer" onClick={() => setMenuOpen(false)}>Freelancer</Link></li>
-
-          <li><Link to="/contactus" onClick={() => setMenuOpen(false)}>Contact</Link></li>
-          <li><Link to="/Cart" onClick={() => setMenuOpen(false)}>Cart</Link></li>
-
-          <li>
-            <a
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                setMenuOpen(false);
-                setActiveTab("login");
-                setAuthModalVisible(true);
-              }}
-            >
-              Login / Sign Up
-            </a>
-          </li>
-        </ul>
-      )}
-
-      <Modal
-        title={null}
-        centered
-        open={authModalVisible}
-        onCancel={() => setAuthModalVisible(false)}
-        footer={null}
-        bodyStyle={{ padding: 0 }}
-        width={420}
-        destroyOnClose
-      >
-        <div style={{ padding: 22 }}>
-          <Tabs
-            activeKey={activeTab}
-            onChange={(key) => setActiveTab(key as "login" | "register")}
-            centered
-            size="large"
-          >
-            <TabPane tab="Login" key="login">
-              <Form
-                form={loginForm}
-                layout="vertical"
-                name="loginForm"
-                initialValues={{ remember: true }}
-                onFinish={onLoginFinish}
-              >
-                <Form.Item
-                  label="Email / Phone"
-                  name="identifier"
-                  rules={[{ required: true, message: "Please enter email / phone" }]}
-                >
-                  <Input placeholder="john@example.com or +1 555 123 4567" />
-                </Form.Item>
-
-                <Form.Item
-                  label="Password"
-                  name="password"
-                  rules={[{ required: true, message: "Please enter your password" }]}
-                >
-                  <Input.Password placeholder="Password" />
-                </Form.Item>
-
-                <Form.Item name="remember" valuePropName="checked" style={{ marginBottom: 6 }}>
-                  <Checkbox>Remember me</Checkbox>
-                </Form.Item>
-
-                <Form.Item style={{ marginBottom: 0 }}>
-                  <Button type="primary" htmlType="submit" block>
-                    Login
-                  </Button>
-                </Form.Item>
-              </Form>
-            </TabPane>
-
-            <TabPane tab="Register" key="register">
-              <Form form={registerForm} layout="vertical" name="registerForm" onFinish={onRegisterFinish}>
-                <Form.Item
-                  label="Full name"
-                  name="name"
-                  rules={[{ required: true, message: "Please enter your name" }]}
-                >
-                  <Input placeholder="John Doe" />
-                </Form.Item>
-
-                <Form.Item
-                  label="Email"
-                  name="email"
-                  rules={[
-                    { required: true, message: "Please enter your email" },
-                    { type: "email", message: "Please enter a valid email" },
-                  ]}
-                >
-                  <Input placeholder="john@example.com" />
-                </Form.Item>
-
-                <Form.Item
-                  label="Phone"
-                  name="phone"
-                  rules={[{ required: true, message: "Please enter your phone number" }]}
-                >
-                  <Input placeholder="+1 555 123 4567" />
-                </Form.Item>
-
-                <Form.Item
-                  label="Password"
-                  name="password"
-                  rules={[{ required: true, message: "Please provide a password" }]}
-                >
-                  <Input.Password placeholder="Choose a password" />
-                </Form.Item>
-
-                <Form.Item
-                  label="Confirm Password"
-                  name="confirm"
-                  dependencies={["password"]}
-                  rules={[
-                    { required: true, message: "Please confirm your password" },
-                    { validator: onRegisterValidatePassword },
-                  ]}
-                >
-                  <Input.Password placeholder="Confirm password" />
-                </Form.Item>
-
-                <Form.Item>
-                  <Button type="primary" htmlType="submit" block>
-                    Register
-                  </Button>
-                </Form.Item>
-              </Form>
-            </TabPane>
-          </Tabs>
-        </div>
-      </Modal>
+   
+<CommonHeader selectedKey="home_service" />
 
       <div
         className="hs-hero"
@@ -449,7 +272,60 @@ const Home_Service: React.FC = () => {
           </Row>
         </div>
       ))}
+    <div className="hs-emergency-wrap">
+        <div className="hs-emergency-head">
+          <h2>24/7 Emergency Services</h2>
+          <p>Home emergencies don't wait. Neither do we. Our rapid response team is available round the clock.</p>
+        </div>
 
+        <Row gutter={[28, 32]} justify="center" className="hs-cards-row">
+          <Col xs={24} sm={12} md={6}>
+            <Card className="hs-em-card" bordered={false}>
+              <div className="hs-em-icon">
+                <ApiOutlined style={{ fontSize: 40, color: "#e53935", background: "#ffebee", padding: 12, borderRadius: "50%" }} />
+              </div>
+              <div className="hs-em-title">Burst Pipes</div>
+              <div className="hs-em-response">Response: 30 min</div>
+            </Card>
+          </Col>
+
+          <Col xs={24} sm={12} md={6}>
+            <Card className="hs-em-card" bordered={false}>
+              <div className="hs-em-icon">
+                <ThunderboltOutlined style={{ fontSize: 40, color: "#e53935", background: "#ffebee", padding: 12, borderRadius: "50%" }} />
+              </div>
+              <div className="hs-em-title">Power Outage</div>
+              <div className="hs-em-response">Response: 45 min</div>
+            </Card>
+          </Col>
+
+          <Col xs={24} sm={12} md={6}>
+            <Card className="hs-em-card" bordered={false}>
+              <div className="hs-em-icon">
+                <ToolOutlined style={{ fontSize: 40, color: "#e53935", background: "#ffebee", padding: 12, borderRadius: "50%" }} />
+              </div>
+              <div className="hs-em-title">Gas Leaks</div>
+              <div className="hs-em-response">Response: 20 min</div>
+            </Card>
+          </Col>
+
+          <Col xs={24} sm={12} md={6}>
+            <Card className="hs-em-card" bordered={false}>
+              <div className="hs-em-icon">
+                <BuildOutlined style={{ fontSize: 40, color: "#e53935", background: "#ffebee", padding: 12, borderRadius: "50%" }} />
+              </div>
+              <div className="hs-em-title">Heating Failure</div>
+              <div className="hs-em-response">Response: 1 hour</div>
+            </Card>
+          </Col>
+        </Row>
+
+        <div className="hs-emergency-btn-wrap">
+          <Button type="primary" className="hs-emergency-main-btn">
+            Call Emergency: +1 (555) 911-HOME
+          </Button>
+        </div>
+      </div>
       <div className="hs-pricing-wrap">
         <div className="hs-pricing-head">
           <h2>Maintenance Packages</h2>
@@ -600,60 +476,7 @@ const Home_Service: React.FC = () => {
         </div>
       </div>
 
-      <div className="hs-emergency-wrap">
-        <div className="hs-emergency-head">
-          <h2>24/7 Emergency Services</h2>
-          <p>Home emergencies don't wait. Neither do we. Our rapid response team is available round the clock.</p>
-        </div>
-
-        <Row gutter={[28, 32]} justify="center" className="hs-cards-row">
-          <Col xs={24} sm={12} md={6}>
-            <Card className="hs-em-card" bordered={false}>
-              <div className="hs-em-icon">
-                <ApiOutlined style={{ fontSize: 40, color: "#e53935", background: "#ffebee", padding: 12, borderRadius: "50%" }} />
-              </div>
-              <div className="hs-em-title">Burst Pipes</div>
-              <div className="hs-em-response">Response: 30 min</div>
-            </Card>
-          </Col>
-
-          <Col xs={24} sm={12} md={6}>
-            <Card className="hs-em-card" bordered={false}>
-              <div className="hs-em-icon">
-                <ThunderboltOutlined style={{ fontSize: 40, color: "#e53935", background: "#ffebee", padding: 12, borderRadius: "50%" }} />
-              </div>
-              <div className="hs-em-title">Power Outage</div>
-              <div className="hs-em-response">Response: 45 min</div>
-            </Card>
-          </Col>
-
-          <Col xs={24} sm={12} md={6}>
-            <Card className="hs-em-card" bordered={false}>
-              <div className="hs-em-icon">
-                <ToolOutlined style={{ fontSize: 40, color: "#e53935", background: "#ffebee", padding: 12, borderRadius: "50%" }} />
-              </div>
-              <div className="hs-em-title">Gas Leaks</div>
-              <div className="hs-em-response">Response: 20 min</div>
-            </Card>
-          </Col>
-
-          <Col xs={24} sm={12} md={6}>
-            <Card className="hs-em-card" bordered={false}>
-              <div className="hs-em-icon">
-                <BuildOutlined style={{ fontSize: 40, color: "#e53935", background: "#ffebee", padding: 12, borderRadius: "50%" }} />
-              </div>
-              <div className="hs-em-title">Heating Failure</div>
-              <div className="hs-em-response">Response: 1 hour</div>
-            </Card>
-          </Col>
-        </Row>
-
-        <div className="hs-emergency-btn-wrap">
-          <Button type="primary" className="hs-emergency-main-btn">
-            Call Emergency: +1 (555) 911-HOME
-          </Button>
-        </div>
-      </div>
+  
 
       <footer className="hs-footer">
         <div className="hs-footer-inner">
