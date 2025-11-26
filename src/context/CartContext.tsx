@@ -1,35 +1,55 @@
-import { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState } from 'react';
+import type { ReactNode } from 'react';
 
 export interface CartItem {
   id: number;
   title: string;
-  image: string;
+  price: number|string;
   quantity: number;
-  price: string;
+  image: string;
   totalPrice: number;
-
-  customerName: string;
-  deliveryType: string;
-  deliveryDate: string;
-  contact: string;
-  address: string;
-  instructions: string;
 }
 
-interface CartContextType {
+interface CartContextValue {
   cart: CartItem[];
   addToCart: (item: CartItem) => void;
   removeFromCart: (id: number) => void;
 }
 
-const CartContext = createContext<CartContextType | undefined>(undefined);
+const CartContext = createContext<CartContextValue | undefined>(undefined);
 
-export const CartProvider = ({ children }: any) => {
+export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [cart, setCart] = useState<CartItem[]>([]);
 
-  const addToCart = (item: CartItem) => {
-    setCart((prev) => [...prev, item]);
-  };
+  const addToCart: CartContextValue['addToCart'] = (item) => {
+  setCart((prev) => {
+    const existing = prev.find((c) => c.id === item.id);
+
+    // Convert price to a clean number
+    const numericPrice = Number(String(item.price).replace(/[^0-9.]/g, ""));
+
+    if (existing) {
+      const newQuantity = existing.quantity + item.quantity;
+      const newTotalPrice = newQuantity * numericPrice;
+
+      return prev.map((c) =>
+        c.id === item.id
+          ? { ...c, quantity: newQuantity, totalPrice: newTotalPrice, price: numericPrice }
+          : c
+      );
+    }
+
+    return [
+      ...prev,
+      {
+        ...item,
+        price: numericPrice,
+        totalPrice: numericPrice * item.quantity,
+      },
+    ];
+  });
+};
+
 
   const removeFromCart = (id: number) => {
     setCart((prev) => prev.filter((item) => item.id !== id));

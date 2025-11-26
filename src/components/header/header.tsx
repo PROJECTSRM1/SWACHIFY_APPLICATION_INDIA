@@ -16,7 +16,7 @@ import "./header.css";
 
 
 const HeaderBar: React.FC = () => {
-  const [, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const { cart ,removeFromCart } = useCart();
   const [cartOpen, setCartOpen] = useState(false);
@@ -93,7 +93,7 @@ const HeaderBar: React.FC = () => {
 
       <div className="header-left">
         <HomeOutlined className="logo-icon" />
-        <span className="logo-text">HomeServices</span>
+        <span className="logo-text">Home</span>
       </div>
 
       
@@ -123,6 +123,53 @@ const HeaderBar: React.FC = () => {
           onClick={() => setOpen(true)}
         />
       </div>
+      <Drawer
+  title="Menu"
+  placement="left"
+  onClose={() => setOpen(false)}
+  open={open}
+>
+  <Menu
+    mode="vertical"
+    items={[
+      ...centerMenu,   // existing items
+      {
+        key: "cart",
+        label: (
+          <span
+            onClick={() => {
+              setCartOpen(true);
+              setOpen(false);
+            }}
+          >
+            <ShoppingCartOutlined /> Cart ({cart.length})
+          </span>
+        )
+      },
+      {
+        key: "logout",
+        label: (
+          <span
+            onClick={() => {
+              handleLogout();
+              setOpen(false);
+            }}
+          >
+            <LogoutOutlined /> Logout
+          </span>
+        )
+      }
+    ]}
+    onClick={(info) => {
+      
+      if (info.key !== "cart" && info.key !== "logout") {
+        handleNavigate(info.key);
+        setOpen(false);
+      }
+    }}
+  />
+</Drawer>
+
 
     <Drawer
   title="Your Cart"
@@ -134,23 +181,38 @@ const HeaderBar: React.FC = () => {
   {cart.length === 0 ? (
     <p>Your cart is empty</p>
   ) : (
-    <div className="cart-list">
-      {cart.map((item, index) => (
-        <div key={index} className="cart-item">
-          <img src={item.image} alt={item.title} style={{ width: 70, borderRadius: 6 }} />
+   <div className="cart-list">
+  {cart.map((item, index) => (
+    <div key={index} className="cart-item">
 
-          <div style={{ marginLeft: 10 }}>
-            <h4>{item.title}</h4>
-            <p>Qty: {item.quantity}</p>
-            <p>Total: ₹{item.totalPrice}</p>
-          </div>
-          <div>
-            <Button type="dashed">Buy Now</Button>
-            <Button type="primary" onClick={()=>removeFromCart(item.id)}>Remove From Cart</Button>
-          </div>
-        </div>
-      ))}
+      {/* IMAGE */}
+      <img src={item.image} alt={item.title} />
+
+      {/* DETAILS */}
+      <div className="cart-item-details">
+        <h4>{item.title}</h4>
+        <p>Qty: {item.quantity}</p>
+        <p>Total: ₹{item.totalPrice}</p>
+      </div>
+
+      {/* BUTTONS */}
+      <div className="cart-buttons">
+        <Button>
+          Buy Now
+        </Button>
+
+        <Button
+          danger
+          type="primary"
+          onClick={() => removeFromCart(item.id)}
+        >
+          Remove
+        </Button>
+      </div>
     </div>
+  ))}
+</div>
+
   )}
 </Drawer>
 
