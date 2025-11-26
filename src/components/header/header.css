@@ -216,3 +216,53 @@ html, body {
 .cart-buttons .ant-btn {
   width: 130px;
 }
+
+/* ///////////////// */
+/* Cart item buttons — compact on desktop, full-width on very small screens */
+.cart-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  /* align buttons to the right so they don't stretch */
+  align-items: flex-end;
+  justify-content: flex-start;
+}
+
+/* Make AntD buttons compact and prevent full-width stretching */
+.cart-buttons .ant-btn {
+  width: auto !important;        /* don't let flex container force full width */
+  min-width: 84px;               /* keep them tappable/clickable */
+  padding: 6px 12px;             /* smaller padding */
+  height: 34px;                  /* slightly shorter */
+  font-size: 13px;
+  border-radius: 8px;
+  box-sizing: border-box;
+  white-space: nowrap;
+}
+
+/* Optional: small visual difference between primary and secondary */
+.cart-buttons .ant-btn.ant-btn-primary {
+  /* primary (Buy Now) */
+  font-weight: 700;
+  box-shadow: 0 6px 18px rgba(43, 108, 255, 0.12);
+}
+
+.cart-buttons .ant-btn:not(.ant-btn-primary) {
+  /* secondary (Remove) */
+  background: rgb(20,184,166);
+  border: 1px solid #39f0e1;
+}
+
+/* Responsive: on small screens stack full-width buttons for easier tapping */
+@media (max-width: 480px) {
+  .cart-buttons {
+    align-items: stretch; /* allow buttons to fill the available width */
+  }
+  .cart-buttons .ant-btn {
+    width: 100% !important;
+    min-width: 0;
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+}
