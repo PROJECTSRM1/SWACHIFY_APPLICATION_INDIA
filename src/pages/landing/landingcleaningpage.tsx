@@ -238,7 +238,7 @@ const LandingCleaningPage: React.FC = () => {
         name: "Test User",
         email: values.identifier,
       };
-      debugger;
+      
       console.log('__logs',userData)
       setUserDetails("user", userData);
     
