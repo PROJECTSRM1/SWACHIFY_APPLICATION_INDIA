@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
 
-
 export interface CartItem {
   id: number;
   title: string;
@@ -13,9 +12,8 @@ export interface CartItem {
 
 interface CartContextValue {
   cart: CartItem[];
-  addToCart: (item: Omit<CartItem, 'totalPrice'>) => void;
+  addToCart: (item: CartItem) => void;
   removeFromCart: (id: number) => void;
-  clearCart: () => void;
 }
 
 const CartContext = createContext<CartContextValue | undefined>(undefined);
@@ -37,21 +35,19 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     });
   };
 
-  const removeFromCart = (id: number) =>
-    setCart((prev) => prev.filter((c) => c.id !== id));
+  const removeFromCart = (id: number) => {
+    setCart((prev) => prev.filter((item) => item.id !== id));
+  };
 
-  const clearCart = () => setCart([]);
-
-  const value = useMemo(
-    () => ({ cart, addToCart, removeFromCart, clearCart }),
-    [cart],
+  return (
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
+      {children}
+    </CartContext.Provider>
   );
-
-  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 };
 
-export const useCart = (): CartContextValue => {
+export const useCart = () => {
   const ctx = useContext(CartContext);
-  if (!ctx) throw new Error('useCart must be used within CartProvider');
+  if (!ctx) throw new Error("useCart must be used inside CartProvider");
   return ctx;
 };

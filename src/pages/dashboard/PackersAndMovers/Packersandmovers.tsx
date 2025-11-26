@@ -1,3 +1,4 @@
+// Packersandmovers.tsx
 import React, { useEffect, useRef, useState } from "react";
 import {
   Row,
@@ -33,6 +34,10 @@ import taxiImg from "../../../assets/passenger/taxi.jpg";
 import taxiCabServiceImg from "../../../assets/passenger/taxiCabServiceImg.jpg";
 import tempControlledImg from "../../../assets/passenger/Temperature controlled.jpg";
 import truckRentalsImg from "../../../assets/passenger/Truck Rentals.jpg";
+
+// <-- ADDED: cart + navigation imports -->
+import { useNavigate } from "react-router-dom";
+import { useCart } from "../../../context/CartContext";
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -265,6 +270,10 @@ const Packersandmovers: React.FC = () => {
   const [showConfirmTop, setShowConfirmTop] = useState(false);
   const [confirmTextTop, setConfirmTextTop] = useState("");
 
+  // <-- ADDED: cart + navigate hooks (keeps your context API unchanged) -->
+  const { addToCart } = useCart();
+  const navigate = useNavigate();
+
   // open group modal
   const openGroupModal = (idx: number) => {
     previouslyFocused.current = document.activeElement as HTMLElement | null;
@@ -360,6 +369,37 @@ const Packersandmovers: React.FC = () => {
 
     console.log("Saved booking (transient) for", selectedKey, payload);
 
+    // ---------- ADDED: build cart item and add to cart using your existing addToCart ----------
+    const cartId = Date.now(); // unique id for this booking instance
+    const parsedPrice = (() => {
+      const p = String(payload.servicePrice || selectedImage.price || "0");
+      const n = parseFloat(p.replace(/[^0-9.-]+/g, ""));
+      return isNaN(n) ? 0 : n;
+    })();
+
+    const cartItem = {
+      id: cartId,
+      title: payload.serviceTitle,
+      image: selectedImage.src || "",
+      quantity: 1,
+      price: String(payload.servicePrice || selectedImage.price || "0"),
+      totalPrice: parsedPrice * 1,
+
+      customerName: payload.customerName || "",
+      deliveryType: payload.deliveryType || payload.rentalType || "",
+      deliveryDate: payload.date || payload.serviceDate || payload.deliveryDate || "",
+      contact: payload.contact || "",
+      address: payload.address || "",
+      instructions: payload.instructions || "",
+    };
+
+    try {
+      addToCart(cartItem); // uses your existing CartContext API
+    } catch (e) {
+      console.warn("addToCart failed", e);
+    }
+    // ---------- end addToCart ----------
+
     // show animated confirmation at top
     setConfirmTextTop(`${payload.serviceTitle} booked`);
     setShowConfirmTop(true);
@@ -374,6 +414,9 @@ const Packersandmovers: React.FC = () => {
 
     // close form after 1.5s
     window.setTimeout(() => closeBookingForm(), 1500);
+
+    // navigate to cart after a short delay so user sees confirmation
+    window.setTimeout(() => navigate("/cart"), 400);
   };
 
   // helper to render a field given its schema
@@ -612,6 +655,8 @@ const Packersandmovers: React.FC = () => {
               aria-live="polite"
               aria-hidden={!showConfirmTop}
               className={`pm-confirm-top ${showConfirmTop ? "visible" : ""}`}
+              onClick={() => navigate("/cart")} // <-- ADDED: click goes to cart
+              style={{ cursor: "pointer" }}
             >
               <div className="pm-confirm-top-inner">
                 <div className="pm-confirm-top-icon" aria-hidden>
@@ -644,5 +689,4 @@ const Packersandmovers: React.FC = () => {
     </>
   );
 };
-
 export default Packersandmovers;
