@@ -99,6 +99,36 @@ export default function ServiceRequestForm({
           onFinish={handleFinish}
           className="sdform-ant-form"
         >
+          {/* <Form.Item
+          label="Cleaning Type"
+          name ="cleaningType"
+          rules={[{required:true, message:"Please select cleaning type"}]}
+          >
+               <Select
+                placeholder="Select Cleaning type"
+                options={[
+                  { label: "Regular Cleaning", value: "regularcleaning" },
+                  { label: "Deep Cleaning", value: "deepcleaning" },
+                ]}
+              />
+
+          </Form.Item> */}
+          {title.toLowerCase().includes("cleaning") && (
+  <Form.Item
+    label="Cleaning Type"
+    name="cleaningType"
+    rules={[{ required: true, message: "Please select cleaning type" }]}
+  >
+    <Select
+      placeholder="Select Cleaning type"
+      options={[
+        { label: "Regular Cleaning", value: "regularcleaning" },
+        { label: "Deep Cleaning", value: "deepcleaning" },
+      ]}
+    />
+  </Form.Item>
+)}
+
           <div className="sdform-ant-two-col">
             <Form.Item
               label="Issue"
@@ -172,13 +202,13 @@ export default function ServiceRequestForm({
             </Form.Item>
           </div>
 
-          <Form.Item
+          {/* <Form.Item
             label="Service Address"
             name="serviceAddress"
             rules={[{ required: true, message: "Address required" }]}
           >
             <Input />
-          </Form.Item>
+          </Form.Item> */}
 
           {/* BUTTONS */}
           <div className="sdform-ant-buttons">
