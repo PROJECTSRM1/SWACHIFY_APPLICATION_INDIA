@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import CommonHeader from "../../pages/landing/Header";
+import "../../pages/landing/Header.css"; // import CSS for header
 import {
   Row,
   Col,
@@ -8,7 +10,7 @@ import {
   Input,
   Select,
   DatePicker,
-  Menu,
+  // Menu,
   Modal,
   Tabs,
   Checkbox
@@ -30,11 +32,11 @@ import {
   InstagramOutlined,
   FilterOutlined,
   LinkedinOutlined,
-  MenuOutlined,
-  CloseOutlined
+  // MenuOutlined,
+  // CloseOutlined
 } from "@ant-design/icons";
 
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./landingrentals.css";
 
 const { Option } = Select;
@@ -47,80 +49,19 @@ type HSHeaderProps = {
 };
 
 export const HSHeader: React.FC<HSHeaderProps> = ({
-  selectedKey = "",
-  onSignUp = () => {}
+  // selectedKey = "",
+  // onSignUp = () => {}
 }) => {
-  const [menuOpen, setMenuOpen] = useState(false);
+  // const [menuOpen, setMenuOpen] = useState(false);
 
-  const headerNav = [
-    { key: "home", label: <Link to="/landing">Home</Link> },
-    { key: "cleaning", label: <Link to="/cleaningservice">Cleaning</Link> },
-    { key: "packers", label: <Link to="/LandingPackers">Packers & Movers</Link> },
-    { key: "home_services", label: <Link to="/home_service">Home Services</Link> },
-    { key: "rentals", label: <Link to="/rentals">Rentals</Link> },
-    { key: "commercial", label: <Link to="/commercial-plots">Buy&Sale Properties</Link> },
-    { key: "materials", label: <Link to="/ConstructionMaterials">Construction Materials</Link> },
-    { key: "freelancer", label: <Link to="/Freelancer">Freelancer</Link> },
-  ];
 
-  const selectedKeysArray = selectedKey ? [selectedKey] : [];
+  // const selectedKeysArray = selectedKey ? [selectedKey] : [];
 
   return (
-    <header className="hs-navbar">
-      <div className="hs-navbar-logo">
-        <span className="hs-logo-text">SWACHIFY INDIA</span>
-      </div>
+ <div>
+<CommonHeader selectedKey="rentals" />
 
-      {/* HAMBURGER BUTTON */}
-      <button
-        className="mobile-menu-icon"
-        onClick={() => setMenuOpen(!menuOpen)}
-      >
-        {menuOpen ? <CloseOutlined /> : <MenuOutlined />}
-      </button>
-
-      {/* DESKTOP MENU */}
-      <Menu
-        mode="horizontal"
-        selectedKeys={selectedKeysArray}
-        className="hs-navbar-menu"
-        items={headerNav}
-      />
-
-      <Button type="primary" className="hs-contact-btn" onClick={onSignUp}>
-        Sign Up
-      </Button>
-
-      {/* MOBILE MENU */}
-      {menuOpen && (
-        <ul className="mobile-menu">
-          <li><Link to="/landing" onClick={() => setMenuOpen(false)}>Home</Link></li>
-          <li><Link to="/cleaningservice" onClick={() => setMenuOpen(false)}>Cleaning</Link></li>
-          <li><Link to="/LandingPackers" onClick={() => setMenuOpen(false)}>Packers & Movers</Link></li>
-          <li><Link to="/home_service" onClick={() => setMenuOpen(false)}>Home Services</Link></li>
-          <li><Link to="/rentals" onClick={() => setMenuOpen(false)}>Rentals</Link></li>
-          <li><Link to="/commercial-plots" onClick={() => setMenuOpen(false)}>Buy&Sale Properties</Link></li>
-          <li><Link to="/ConstructionMaterials" onClick={() => setMenuOpen(false)}>Construction Materials</Link></li>
-          <li><Link to="/Freelancer" onClick={() => setMenuOpen(false)}>Freelancer</Link></li>
-
-          <li>
-            <Link
-              to="#"
-              onClick={() => {
-                setMenuOpen(false);
-                onSignUp();
-              }}
-            >
-              Login
-            </Link>
-          </li>
-
-          <li>
-            <Link to="/Cart" onClick={() => setMenuOpen(false)}>Cart</Link>
-          </li>
-        </ul>
-      )}
-    </header>
+ </div>
   );
 };
 /* ========================= END HEADER ========================= */

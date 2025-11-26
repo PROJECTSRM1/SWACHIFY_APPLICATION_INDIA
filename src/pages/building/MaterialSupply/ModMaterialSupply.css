@@ -1,6 +1,7 @@
+
 .material-wrapper {
   width: 100%;
-  background: transparent;
+  background: white;
   min-height: 90vh;
   padding: 0 !important;
   margin: 0 !important;
@@ -135,6 +136,7 @@
   border: none;
   background: #f1f5f9;
   cursor: pointer;
+  width: 10% !important;
 }
 
 .top-section {

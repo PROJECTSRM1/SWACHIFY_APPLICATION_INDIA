@@ -133,10 +133,13 @@
 }
 
 .tf-close {
-  font-size: 22px;
-  background: none;
+  width: 40px;
+  height: 40px;
+  background: #f3f4f6;
   border: none;
+  border-radius: 8px;
   cursor: pointer;
+  width: 10% !important;
 }
 
 .tf-main {
@@ -361,8 +364,6 @@ textarea {
 
 }
 
-
-
 @media (max-width: 600px) {
 
   .transport-wrapper {
@@ -413,16 +414,9 @@ textarea {
   .tf-checkbox-group {
     grid-template-columns: 1fr !important;
     gap: 10px 0;
-  }
-
-  .tf-btn {
-    padding: 10px;
-    font-size: 14px;
-  }
+  } 
 
 }
-
-
 
 @media (max-width: 420px) {
 
@@ -453,6 +447,7 @@ textarea {
     height: 60px;
     font-size: 11px;
   }
+  
 }
 
 
