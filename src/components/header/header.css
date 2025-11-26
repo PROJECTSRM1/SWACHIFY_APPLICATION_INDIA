@@ -173,3 +173,46 @@ html, body {
 .drawer-icons .header-icon-large {
   cursor: pointer;
 }
+.cart-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cart-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  padding: 15px;
+  border-radius: 8px;
+  background: #fafafa;
+  border: 1px solid #eee;
+}
+
+.cart-item img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.cart-item-details {
+  flex: 1;
+}
+
+.cart-item-details h4 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.cart-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: green;
+}
+
+.cart-buttons .ant-btn {
+  width: 130px;
+}
