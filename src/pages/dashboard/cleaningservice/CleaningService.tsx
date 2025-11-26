@@ -76,6 +76,7 @@ import solidImg from "../../../assets/CleaningServices/solidwh.png";
 import disposalImg from "../../../assets/CleaningServices/chemicalwh.png";
 import labImg from "../../../assets/CleaningServices/laboratory_cleaning.png";
 import cliniImg from "../../../assets/CleaningServices/clinic_image.png";
+import { useCart, type CartItem } from "../../../context/CartContext";
 
 
 const { Title, Paragraph } = Typography;
@@ -188,6 +189,9 @@ const formatINR = (value: number | null) => {
 /* ------------------------------------------------ */
 
 const CleaningService: React.FC = () => {
+
+  const { addToCart } = useCart();
+
   const [showAll, setShowAll] = useState(false);
 
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
@@ -468,16 +472,34 @@ const CleaningService: React.FC = () => {
     setComputedPrice(total);
   };
 
-  const onAddToCart = (values: any) => {
-    const payload = {
-      module: selectedModule,
-      form: values,
-      totalPrice: computedPrice ?? 0,
-    };
-    console.log("Add to cart:", payload);
-    message.success(`${selectedModule?.title} added to cart — ${formatINR(computedPrice || 0)}`);
-    setIsDetailsModalOpen(false);
+ const onAddToCart = (values: any) => {
+  if (!selectedModule) return;
+
+  const cartItem: CartItem = {
+    id: Date.now(),
+    title: selectedModule.title,
+    image: selectedModule.image,
+    quantity: 1,
+    price: selectedModule.price,
+    totalPrice: computedPrice ?? 0,
+
+    customerName: "",
+    deliveryType: "",
+    deliveryDate: "",
+    contact: "",
+    address: "",
+    instructions: values?.instructions || "",
   };
+
+  addToCart(cartItem);
+
+  message.success(
+    `${selectedModule.title} added to cart — ${formatINR(computedPrice || 0)}`
+  );
+
+  setIsDetailsModalOpen(false);
+};
+
 
   const handleDetailsCancel = () => {
     setIsDetailsModalOpen(false);
