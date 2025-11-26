@@ -1,6 +1,7 @@
 import { Modal, Form, Input, Select, DatePicker, Button, Card } from "antd";
 import "./ServiceDetailsForm.css";
 import dayjs from "dayjs";
+import { useCart } from "../../../context/CartContext";
 
 
 interface ServiceRequestFormProps {
@@ -10,7 +11,7 @@ interface ServiceRequestFormProps {
   description: string;
   includedList: string[];
   issues: string[];
-  price: string;
+  totalprice: string;
   onCancel: () => void;
   onSubmit: (formData: any) => void;
 }
@@ -22,32 +23,48 @@ export default function ServiceRequestForm({
   description,
   includedList,
   issues,
-  price,
+  totalprice,
   onCancel,
   onSubmit,
 }: ServiceRequestFormProps) {
   const [form] = Form.useForm();
 
-  const handleFinish = (values: any) => {
+  const { addToCart } = useCart();
 
-      const payload = {
+
+
+
+
+
+
+
+const handleFinish = (values: any) => {
+  const payload = {
+    id: Date.now(), // internal use only
+    title,
+    image,
+    // totalprice,
+    // totalPrice: Number(totalprice.valueOf),
+    totalPrice: Number(String(totalprice).replace(/[^0-9.]/g, "")),
+
     ...values,
     preferredDate: values.preferredDate?.format("YYYY-MM-DD"),
   };
 
-  onSubmit(payload);
-   
+  addToCart(payload); // 🛒 Add to cart
+  onSubmit(payload);  // 📩 Call parent callback too
 
-    setTimeout(() => {
-      Modal.success({
-        title: "Added to Cart",
-        content: "Your service request has been successfully added to your cart.",
-        centered: true,
-      });
-    }, 250);
-    form.resetFields();
+  Modal.success({
+    title: "Added to Cart",
+    content: "Your service has been successfully added to your cart",
+    centered: true,
+    
+  });
 
-  };
+  form.resetFields();
+  onCancel();
+};
+
 
   
 
@@ -71,7 +88,7 @@ export default function ServiceRequestForm({
 
         <div className="sdform-price-wrapper">
           <div className="sdform-price-title">Service Price</div>
-          <div className="sdform-price-value">{price}</div>
+          <div className="sdform-price-value">{totalprice}</div>
         </div>
       </div>
 
@@ -99,6 +116,36 @@ export default function ServiceRequestForm({
           onFinish={handleFinish}
           className="sdform-ant-form"
         >
+          {/* <Form.Item
+          label="Cleaning Type"
+          name ="cleaningType"
+          rules={[{required:true, message:"Please select cleaning type"}]}
+          >
+               <Select
+                placeholder="Select Cleaning type"
+                options={[
+                  { label: "Regular Cleaning", value: "regularcleaning" },
+                  { label: "Deep Cleaning", value: "deepcleaning" },
+                ]}
+              />
+
+          </Form.Item> */}
+          {title.toLowerCase().includes("cleaning") && (
+  <Form.Item
+    label="Cleaning Type"
+    name="cleaningType"
+    rules={[{ required: true, message: "Please select cleaning type" }]}
+  >
+    <Select
+      placeholder="Select Cleaning type"
+      options={[
+        { label: "Regular Cleaning", value: "regularcleaning" },
+        { label: "Deep Cleaning", value: "deepcleaning" },
+      ]}
+    />
+  </Form.Item>
+)}
+
           <div className="sdform-ant-two-col">
             <Form.Item
               label="Issue"
@@ -172,13 +219,13 @@ export default function ServiceRequestForm({
             </Form.Item>
           </div>
 
-          <Form.Item
+          {/* <Form.Item
             label="Service Address"
             name="serviceAddress"
             rules={[{ required: true, message: "Address required" }]}
           >
             <Input />
-          </Form.Item>
+          </Form.Item> */}
 
           {/* BUTTONS */}
           <div className="sdform-ant-buttons">
