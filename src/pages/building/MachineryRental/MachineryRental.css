@@ -299,7 +299,7 @@
     padding: 5px;
     border-radius: 14px;
   }
-
+  
   .card-img img {
     height: 160px;
   }
@@ -326,4 +326,5 @@
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  width: 10% !important;
 }
