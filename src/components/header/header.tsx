@@ -93,7 +93,7 @@ const HeaderBar: React.FC = () => {
 
       <div className="header-left">
         <HomeOutlined className="logo-icon" />
-        <span className="logo-text">HomeServices</span>
+        <span className="logo-text">Home</span>
       </div>
 
       
