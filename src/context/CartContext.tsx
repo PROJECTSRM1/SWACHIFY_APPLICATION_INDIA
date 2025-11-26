@@ -1,34 +1,38 @@
-import { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useMemo, useState } from 'react';
+import type { ReactNode } from 'react';
 
 export interface CartItem {
   id: number;
   title: string;
-  image: string;
+  price: number;
   quantity: number;
-  price: string;
+  image: string;
   totalPrice: number;
-
-  customerName: string;
-  deliveryType: string;
-  deliveryDate: string;
-  contact: string;
-  address: string;
-  instructions: string;
 }
 
-interface CartContextType {
+interface CartContextValue {
   cart: CartItem[];
   addToCart: (item: CartItem) => void;
   removeFromCart: (id: number) => void;
 }
 
-const CartContext = createContext<CartContextType | undefined>(undefined);
+const CartContext = createContext<CartContextValue | undefined>(undefined);
 
-export const CartProvider = ({ children }: any) => {
+export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [cart, setCart] = useState<CartItem[]>([]);
 
-  const addToCart = (item: CartItem) => {
-    setCart((prev) => [...prev, item]);
+  const addToCart: CartContextValue['addToCart'] = (item) => {
+    setCart((prev) => {
+      const existing = prev.find((c) => c.id === item.id);
+      if (existing) {
+        const quantity = existing.quantity + item.quantity;
+        const totalPrice = quantity * existing.price;
+        return prev.map((c) =>
+          c.id === item.id ? { ...c, quantity, totalPrice } : c,
+        );
+      }
+      return [...prev, { ...item, totalPrice: item.price * item.quantity }];
+    });
   };
 
   const removeFromCart = (id: number) => {
