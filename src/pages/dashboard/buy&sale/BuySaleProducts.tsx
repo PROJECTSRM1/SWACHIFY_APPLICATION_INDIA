@@ -27,7 +27,6 @@ import {
   RiseOutlined,
   EnvironmentOutlined,
   PlusOutlined,
-  ArrowLeftOutlined,
   EyeOutlined,
   FileTextOutlined,
   DollarOutlined,
@@ -191,20 +190,6 @@ const MOCK_PROPERTY_LISTINGS: PropertyListing[] = [
     description:
       '8,000 sq.ft. office plot in a prime financial corridor, with approvals for high-rise corporate development and strong rental demand.',
   },
-  // {
-  //   id: 4,
-  //   title: 'Shopping Complex Land',
-  //   listingType: 'sale',
-  //   price: 35000000, // ₹3.5 Cr
-  //   area: 15000,
-  //   location: 'Suburban Area, Hyderabad',
-  //   tags: ['Mall Approved', 'Parking Space', 'High Footfall'],
-  //   roi: '18–22% per annum',
-  //   imagePath: Land,
-  //   propertyType: 'Retail',
-  //   description:
-  //     '15,000 sq.ft. plot pre-approved for a shopping complex with dedicated parking and strong residential catchment.',
-  // },
   {
     id: 5,
     title: 'Boutique Hotel Development Land',
@@ -282,7 +267,6 @@ const PropertyCard: React.FC<{
         />
       }
     >
-  // ...
       <Card.Meta
         title={<span className="service-card-title">{property.title}</span>}
         description={
@@ -1115,7 +1099,7 @@ const SERVICES_DATA: Service[] = [
       {
         key: 'propListingSale',
         title: 'Property Listing for Sale',
-        description: 'Click to view properties listed for sale.',
+        description: '',
         contentComponent: PropertyListingSaleContent as React.FC<any>,
         imagePath: Modern,
       },
@@ -1182,14 +1166,14 @@ const SERVICES_DATA: Service[] = [
       {
         key: 'delivery',
         title: 'Home Delivery & Tracking',
-        description: 'Click to manage delivery partners and zones.',
+        description: '',
         contentComponent: OnlineDeliveryContent,
         imagePath: d,
       },
       {
         key: 'offers',
         title: 'Online Offers & Coupons',
-        description: 'Click to create coupons and promo campaigns.',
+        description: '',
         contentComponent: OnlineOffersContent,
         imagePath: e,
       },
@@ -1329,7 +1313,7 @@ const renderMainServices = () => (
         onClick={handleBackToMain}
         type="text"
         className="minimal-back-button back-button-style"
-        icon={<ArrowLeftOutlined />}
+        // icon={<ArrowLeftOutlined />}
       />
       <Title level={3} className="modal-title-no-margin">
         {currentService?.title} 
@@ -1343,7 +1327,7 @@ const renderMainServices = () => (
         onClick={handleBackToSubservices}
         type="text"
         className="minimal-back-button back-button-style"
-        icon={<ArrowLeftOutlined />}
+        // icon={<ArrowLeftOutlined />}
       />
       <Title level={3} className="modal-title-no-margin">
         {currentSubservice?.title}
@@ -1357,7 +1341,7 @@ const renderMainServices = () => (
         onClick={handleClosePropertyDetail}
         type="text"
         className="minimal-back-button back-button-style"
-        icon={<ArrowLeftOutlined />}
+        // icon={<ArrowLeftOutlined />}
       />
       <Title level={3} className="modal-title-no-margin">
         {selectedProperty?.title || 'Property Details'}

@@ -10,7 +10,7 @@ import {
   Input,
   InputNumber,
  // Checkbox,
-  DatePicker,
+ // DatePicker,
   message,
 } from "antd";
 // import { ThunderboltFilled } from "@ant-design/icons";
@@ -730,11 +730,22 @@ const CleaningService: React.FC = () => {
                     </Form.Item> */}
 
                     <div className="form-row">
-                      {cfg.preferredDate && (
-                        <Form.Item name="preferredDate" label="Preferred Date">
-                          <DatePicker className="full-width-datepicker" />
-                        </Form.Item>
-                      )}
+                    {cfg.preferredDate && (
+  <Form.Item
+    name="preferredDate"
+    label="Preferred Date"
+    rules={[{ required: true, message: "Select a date" }]}
+    className="full-width-datepicker"
+  >
+    <div className="tf-field">
+      <input
+        type="date"
+        className="custom-date-input"
+      />
+    </div>
+  </Form.Item>
+)}
+
 
                       <Form.Item name="hours" label="Estimated Hours (optional)">
                         <InputNumber min={1} className="full-width-inputnumber" />

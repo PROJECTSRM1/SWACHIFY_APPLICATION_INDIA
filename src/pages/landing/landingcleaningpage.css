@@ -1178,4 +1178,107 @@ body {
 }
 
 
+/* ----------------------------
+   Hamburger + mobile menu styles
+   (Added to enable HSHeader hamburger)
+   ---------------------------- */
+
+/* default: hide hamburger on desktop */
+.mobile-menu-icon {
+  display: none;
+  font-size: 1.6rem;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 8px;
+  line-height: 1;
+  color: #262626;
+  align-self: center;
+}
+
+/* mobile dropdown list styling (same look/feel as landing page) */
+.mobile-menu {
+  width: 100%;
+  background: #fff;
+  list-style: none;
+  padding: 14px 20px;
+  box-shadow: 0 8px 28px rgba(6,21,38,0.08);
+  margin: 8px 0 0 0;
+  box-sizing: border-box;
+  border-radius: 8px;
+}
+
+/* mobile items */
+.mobile-menu li {
+  padding: 10px 6px;
+  border-bottom: 1px solid rgba(16,24,40,0.04);
+}
+
+.mobile-menu li:last-child {
+  border-bottom: none;
+}
+
+.mobile-menu li a {
+  color: #0b2a3a;
+  text-decoration: none;
+  display: block;
+  width: 100%;
+  font-weight: 600;
+}
+
+/* Show hamburger on small screens and keep it between logo and sign-up */
+@media (max-width: 768px) {
+  .mobile-menu-icon {
+    display: block; /* show hamburger */
+  }
+
+  /* keep the menu visible behavior you already have — hamburger toggles mobile-menu above */
+  /* ensure the Sign Up button and menu don't overlap the hamburger */
+  .hs-navbar {
+    align-items: center;
+    gap: 8px;
+  }
+
+  .hs-navbar-logo {
+    order: 0;
+    flex: 0 0 auto;
+    width: auto;
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .mobile-menu-icon {
+    order: 1;
+    margin-left: 6px;
+    margin-right: 6px;
+    flex: 0 0 auto;
+  }
+
+  .hs-navbar .hs-navbar-menu {
+    order: 2;
+    /* keep existing responsive behavior; do not forcibly hide it */
+  }
+
+  .hs-contact-btn {
+    order: 3;
+    flex: 0 0 auto;
+  }
+
+  /* make mobile menu items centered visually */
+  .mobile-menu li a {
+    text-align: left;
+    padding-left: 6px;
+  }
+}
+
+/* ensure mobile dropdown overlays content nicely when opened */
+@media (max-width: 480px) {
+  .mobile-menu {
+    padding: 12px;
+    border-radius: 6px;
+  }
+}
+
+
+
 

@@ -128,4 +128,23 @@
   .sdp-img {
     height: 125px;
   }
+    .sdp-footer {
+    gap: 6px; /* optional - reduces spacing */
+  }
+
+  .sdp-btn {
+    padding: 4px 6px !important;
+    font-size: 10px !important;
+    border-radius: 4px;
+    min-width: auto !important;     /* remove default min-width */
+    width: auto !important;         /* allow it to shrink */
+    flex-shrink: 1 !important;      /* allow flexbox to shrink it */
+  }
+  .sdp-modal .ant-modal-close {
+    top: 4px !important;
+    right: 14px !important;
+  }
 }
+
+
+

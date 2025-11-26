@@ -1,4 +1,3 @@
-// src/pages/landing/LandingPage.tsx
 import { useState } from "react";
 import { setUserDetails } from "../../utils/helpers/storage";
 import {
@@ -25,6 +24,8 @@ import {
   BuildOutlined,
   EyeInvisibleOutlined,
   EyeTwoTone,
+  MenuOutlined,
+  CloseOutlined,
 } from "@ant-design/icons";
 
 import "./landingpage.css";
@@ -38,8 +39,8 @@ const navItems = [
   { key: "rentals", label: <Link to="/rentals">Rentals</Link> },
   { key: "commercial", label: <Link to="/commercial-plots">Buy&Sale Properties</Link> },
   { key: "materials", label: <Link to="/ConstructionMaterials">Construction Materials</Link> },
-   { key: "freelancer", label: <Link to="/Freelancer">Freelancer</Link> },
-    // { key: "location", label: <Link to="">Location</Link> },
+  { key: "freelancer", label: <Link to="/Freelancer">Freelancer</Link> },
+   // { key: "location", label: <Link to="">Location</Link> },
 ];
 
 const services = [
@@ -136,6 +137,16 @@ const LandingPage = () => {
         <div className="hs-navbar-logo">
           <span className="hs-logo-text">SWACHIFY INDIA</span>
         </div>
+
+        {/* Hamburger toggle for mobile — placed between logo and menu/button */}
+        <button
+          className="mobile-menu-icon"
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          onClick={() => setMenuOpen((s) => !s)}
+          type="button"
+        >
+          {menuOpen ? <CloseOutlined /> : <MenuOutlined />}
+        </button>
 
         <Menu
           mode="horizontal"
@@ -390,7 +401,7 @@ const LandingPage = () => {
           <TabPane tab="Login" key="login">
             <Form layout="vertical" name="loginForm" onFinish={onLogin} preserve={false}>
               <Form.Item
-                label={<span style={{ color: "#ff4d4f" }}> Email / Phone</span>}
+                label="Email / Phone"
                 name="identifier"
                 rules={[{ required: true, message: "Please input email / phone" }]}
               >
@@ -398,7 +409,7 @@ const LandingPage = () => {
               </Form.Item>
 
               <Form.Item
-                label={<span style={{ color: "#ff4d4f" }}> Password</span>}
+                label="Password"
                 name="password"
                 rules={[{ required: true, message: "Please input password" }]}
               >
@@ -425,7 +436,7 @@ const LandingPage = () => {
           <TabPane tab="Register" key="register">
             <Form layout="vertical" name="registerForm" onFinish={onRegister} preserve={false}>
               <Form.Item
-                label={<span style={{ color: "#ff4d4f" }}> Full name</span>}
+                label="Full name"
                 name="fullname"
                 rules={[{ required: true, message: "Please input your full name" }]}
               >
@@ -433,7 +444,7 @@ const LandingPage = () => {
               </Form.Item>
 
               <Form.Item
-                label={<span style={{ color: "#ff4d4f" }}> Email</span>}
+                label="Email"
                 name="email"
                 rules={[
                   { required: true, message: "Please input your email" },
@@ -444,7 +455,7 @@ const LandingPage = () => {
               </Form.Item>
 
               <Form.Item
-                label={<span style={{ color: "#ff4d4f" }}> Phone</span>}
+                label="Phone"
                 name="phone"
                 rules={[{ required: true, message: "Please input your phone" }]}
               >
@@ -452,7 +463,7 @@ const LandingPage = () => {
               </Form.Item>
 
               <Form.Item
-                label={<span style={{ color: "#ff4d4f" }}> Password</span>}
+                label="Password"
                 name="password"
                 rules={[{ required: true, message: "Please input a password" }]}
                 hasFeedback
@@ -464,7 +475,7 @@ const LandingPage = () => {
               </Form.Item>
 
               <Form.Item
-                label={<span style={{ color: "#ff4d4f" }}> Confirm Password</span>}
+                label="Confirm Password"
                 name="confirm"
                 dependencies={["password"]}
                 hasFeedback

@@ -208,7 +208,7 @@
   .sdform-ant-title {
     font-size: 14px;
   }
-
+ 
   .sdform-ant-image {
     border-radius: 4px;
   }
@@ -221,5 +221,28 @@
   .sdform-ant-form .ant-select-selector,
   .sdform-ant-form .ant-picker {
     height: 28px !important;
+  }
+}
+
+/* FIX: Keep close (X) button at the top-right always */
+.sdform-ant-modal .ant-modal-close {
+  position: absolute !important;
+  top: 6px !important;
+  right: 6px !important;
+  left: auto !important;
+  transform: none !important;
+  z-index: 9999 !important;
+}
+
+/* Ensure modal header has space for close button */
+.sdform-ant-modal .ant-modal-header {
+  padding-right: 40px !important;
+}
+
+/* Mobile-specific adjustment */
+@media (max-width: 700px) {
+  .sdform-ant-modal .ant-modal-close {
+    top: 4px !important;
+    right: 4px !important;
   }
 }

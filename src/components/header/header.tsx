@@ -4,23 +4,35 @@ import {
   ShoppingCartOutlined,
   LogoutOutlined,
   MenuOutlined,
-  CloseOutlined,
+  //CloseOutlined,
 } from "@ant-design/icons";
-import { Menu, Drawer } from "antd";
+import { useCart } from "../../../src/context/CartContext";
+
+
+
+import { Menu, Drawer, message, Button } from "antd";
 import { useNavigate } from "react-router-dom";
 import "./header.css";
 
+
 const HeaderBar: React.FC = () => {
-  const [open, setOpen] = useState(false);
+  const [, setOpen] = useState(false);
   const navigate = useNavigate();
+  const { cart ,removeFromCart } = useCart();
+  const [cartOpen, setCartOpen] = useState(false);
+
 
   const handleLogout = () => {
+
+    localStorage.removeItem("user");
+    message.success("logout successful");
     navigate("/landing");
   };
 
   const handleCartClick = () => {
-    navigate("/cart"); // <-- cart navigation added
-  };
+  setCartOpen(true);   // open popup instead of navigate
+};
+
 
   const handleNavigate = (key: String)=>{
     if(key=="cleaning"){
@@ -93,10 +105,11 @@ const HeaderBar: React.FC = () => {
       </div>
 
       <div className="header-right">
-        {/* Cart with navigation */}
+       
         <span className="header-item-cart" onClick={handleCartClick}>
-          <ShoppingCartOutlined className="header-icon-cart" /> Cart
-        </span>
+  <ShoppingCartOutlined className="header-icon-cart" /> Cart ({cart.length})
+</span>
+
 
         {/* Logout with navigation */}
         <span className="header-item" onClick={handleLogout}>
@@ -111,34 +124,36 @@ const HeaderBar: React.FC = () => {
         />
       </div>
 
-      <Drawer
-        placement="left"
-        onClose={() => setOpen(false)}
-        open={open}
-        closable={false}
-        title={
-          <div className="drawer-header">
-            <span className="logo-text">HomeServices</span>
-            <CloseOutlined onClick={() => setOpen(false)} />
+    <Drawer
+  title="Your Cart"
+  placement="right"
+  width={350}
+  onClose={() => setCartOpen(false)}
+  open={cartOpen}
+>
+  {cart.length === 0 ? (
+    <p>Your cart is empty</p>
+  ) : (
+    <div className="cart-list">
+      {cart.map((item, index) => (
+        <div key={index} className="cart-item">
+          <img src={item.image} alt={item.title} style={{ width: 70, borderRadius: 6 }} />
+
+          <div style={{ marginLeft: 10 }}>
+            <h4>{item.title}</h4>
+            <p>Qty: {item.quantity}</p>
+            <p>Total: ₹{item.totalPrice}</p>
           </div>
-        }
-      >
-        <Menu mode="vertical" items={centerMenu} />
-
-        <div className="drawer-icons">
-          {/* Drawer cart with navigation */}
-          <ShoppingCartOutlined
-            className="header-icon-cart"
-            onClick={handleCartClick}
-          />
-
-          {/* Drawer logout */}
-          <LogoutOutlined
-            className="header-icon-large"
-            onClick={handleLogout}
-          />
+          <div>
+            <Button type="dashed">Buy Now</Button>
+            <Button type="primary" onClick={()=>removeFromCart(item.id)}>Remove From Cart</Button>
+          </div>
         </div>
-      </Drawer>
+      ))}
+    </div>
+  )}
+</Drawer>
+
     </div>
   );
 };
