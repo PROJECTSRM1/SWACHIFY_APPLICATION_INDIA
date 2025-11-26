@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from "react";
 
-interface CartItem {
+export interface CartItem {
   id: number;
   title: string;
   image: string;
@@ -19,7 +19,7 @@ interface CartItem {
 interface CartContextType {
   cart: CartItem[];
   addToCart: (item: CartItem) => void;
-  removeFromCart:(item:number) =>void;
+  removeFromCart: (id: number) => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -30,20 +30,20 @@ export const CartProvider = ({ children }: any) => {
   const addToCart = (item: CartItem) => {
     setCart((prev) => [...prev, item]);
   };
-  const removeFromCart = (id:any) => {
-  setCart(prevCart => prevCart.filter(item => item.id !== id));
-};
 
- return (
-  <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
-    {children}
-  </CartContext.Provider>
-);
+  const removeFromCart = (id: number) => {
+    setCart((prev) => prev.filter((item) => item.id !== id));
+  };
 
+  return (
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
+      {children}
+    </CartContext.Provider>
+  );
 };
 
 export const useCart = () => {
-  const context = useContext(CartContext);
-  if (!context) throw new Error("useCart must be used inside CartProvider");
-  return context;
+  const ctx = useContext(CartContext);
+  if (!ctx) throw new Error("useCart must be used inside CartProvider");
+  return ctx;
 };
