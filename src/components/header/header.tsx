@@ -4,7 +4,7 @@ import {
   ShoppingCartOutlined,
   LogoutOutlined,
   MenuOutlined,
-  CloseOutlined,
+  //CloseOutlined,
 } from "@ant-design/icons";
 import { useCart } from "../../../src/context/CartContext";
 
@@ -16,7 +16,7 @@ import "./header.css";
 
 
 const HeaderBar: React.FC = () => {
-  const [open, setOpen] = useState(false);
+  const [, setOpen] = useState(false);
   const navigate = useNavigate();
   const { cart ,removeFromCart } = useCart();
   const [cartOpen, setCartOpen] = useState(false);
