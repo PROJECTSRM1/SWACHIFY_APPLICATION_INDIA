@@ -12,7 +12,7 @@ import Transpotation from "../building/Transpotation/Transpotation";
 import ModalWrapper from "../../components/ModalWrapper";
 
 
-import materialImg from "../../assets/Building/material supply.png";
+import materialImg from "../../assets/Building/material supply.jpg";
 import rentalImg from "../../assets/Building/rental.jpg";
 import transportImg from "../../assets/Building/transportation.jpg";
 import bulkImg from "../../assets/Building/BulkProcurement.jpg";
