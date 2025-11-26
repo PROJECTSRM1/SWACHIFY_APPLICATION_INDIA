@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import { useCart } from "../../../context/CartContext";
 
 import excavatorImg from "../../../assets/Building/excavator.jpg";
 import loaderImg from "../../../assets/Building/loader.jpg";
 import craneImg from "../../../assets/Building/crane.jpg";
 import mixerImg from "../../../assets/Building/concretemixer.jpg";
+import { message } from "antd";
 
 const machinery = [
   { id: 1, title: "Excavator Rental", price: "150", img: excavatorImg, description: "Heavy-duty excavators suitable for construction and earthwork tasks." },
@@ -21,8 +23,38 @@ const MachineryDetails: React.FC<FormProps> = ({ id, onClose }) => {
 
   const machine = machinery.find((item) => item.id === id);
   const [quantity, setQuantity] = useState(1);
+  const { addToCart } = useCart();
+const [customerName, setCustomerName] = useState("");
+const [rentalType, setRentalType] = useState("");
+const [rentalDate, setRentalDate] = useState("");
+const [contact, setContact] = useState("");
+const [address, setAddress] = useState("");
+const [instructions, setInstructions] = useState("");
+
+
+
 
   if (!machine) return null;
+  const handleaddtocart = () =>{
+   addToCart({
+    id: machine.id,
+    title: machine.title,
+    image: machine.img,
+    quantity,
+    price: machine.price,
+    totalPrice,
+
+    customerName,
+    deliveryType: rentalType,
+    deliveryDate: rentalDate,
+    contact,
+    address,
+    instructions
+  });
+  message.success("item added to cart");
+
+  onClose();  
+};
 
   const totalPrice = Number(machine.price) * quantity;
 
@@ -71,12 +103,12 @@ const MachineryDetails: React.FC<FormProps> = ({ id, onClose }) => {
               <div className="mach-row">
                 <div className="mach-form-item">
                   <label>Customer Name</label>
-                  <input type="text" placeholder="Enter customer name" />
+                  <input type="text" placeholder="Enter customer name" value={customerName} onChange={(e)=>setCustomerName(e.target.value)} />
                 </div>
 
                 <div className="mach-form-item">
                   <label>Rental Type</label>
-                  <select>
+                  <select value={rentalType} onChange={(e)=>setRentalType(e.target.value)}>
                     <option>Select</option>
                     <option>With Operator</option>
                     <option>Without Operator</option>
@@ -97,18 +129,18 @@ const MachineryDetails: React.FC<FormProps> = ({ id, onClose }) => {
 
                 <div className="mach-form-item">
                   <label>Rental Date</label>
-                  <input type="date" />
+                  <input type="date" value={rentalDate} onChange={(e)=>setRentalDate(e.target.value)} />
                 </div>
               </div>
 
               <div className="mach-form-item full-width">
                 <label>Contact Number</label>
-                <input type="text" placeholder="Enter contact number" />
+                <input type="text" placeholder="Enter contact number" value={contact} onChange={(e)=>setContact(e.target.value)} />
               </div>
 
               <div className="mach-form-item full-width">
                 <label>Site Address</label>
-                <textarea placeholder="Enter site address"></textarea>
+                <textarea placeholder="Enter site address" value={address} onChange={(e)=>setAddress(e.target.value)}></textarea>
               </div>
 
               <h3 className="mach-section-title">Additional Services</h3>
@@ -122,12 +154,12 @@ const MachineryDetails: React.FC<FormProps> = ({ id, onClose }) => {
 
               <div className="mach-form-item full-width">
                 <label>Special Instructions</label>
-                <textarea placeholder="Any specific requirements..." />
+                <textarea placeholder="Any specific requirements..." value={instructions} onChange={(e)=>setInstructions(e.target.value)}/>
               </div>
 
               <div className="mach-button-row">
                 <button className="mach-cancel-btn" onClick={onClose}>Cancel</button>
-                <button className="mach-add-btn">Add to Cart</button>
+                <button className="mach-add-btn" onClick={handleaddtocart}>Add to Cart</button>
               </div>
 
             </div>

@@ -22,7 +22,7 @@ const MaterialSupply: React.FC = () => {
   const [selectedId, setSelectedId] = useState<number | null>(null);
 
   return (
-    <div className="material-wrapper">
+      <div className="material-wrapper">
       <div className="rd-imgeader">
         <h2>Material Supply</h2>
         <p>{materials.length} services available</p>

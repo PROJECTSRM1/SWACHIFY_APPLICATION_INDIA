@@ -2056,3 +2056,132 @@
     display: none !important;
   }
 }
+
+
+    
+/* ===== AMENITIES (lavender pills) - replace prior .lr-amenities blocks ===== */
+
+.lr-amenities {
+  background: #fbfdff;
+  padding: 72px 20px;
+  box-sizing: border-box;
+}
+
+.lr-amenities-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+}
+
+/* top area: centered button + title */
+.lr-amenities-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 26px;
+}
+
+.lr-view-all-btn {
+  display: inline-block;
+  background: #ffffff;
+  color: #0b1724;
+  border: 1px solid rgba(16,34,51,0.06);
+  padding: 10px 18px;
+  border-radius: 12px;
+  font-weight: 700;
+  box-shadow: 0 6px 18px rgba(16,34,51,0.04);
+}
+
+.lr-amenities .lr-section-title {
+  font-size: 1.9rem;
+  font-weight: 700;
+  margin: 0;
+  color: #102233;
+}
+
+.lr-amenities .lr-sub {
+  color: var(--muted);
+  margin: 0;
+  font-size: 1rem;
+  max-width: 760px;
+}
+
+/* GRID: responsive centered boxes */
+.lr-amenities-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 22px 28px;
+  align-items: stretch;
+  justify-items: center;
+  padding: 18px 6px 6px;
+  box-sizing: border-box;
+  margin-top: 12px;
+}
+
+/* each amenity box - lavender pill like screenshot */
+.lr-amenity {
+  width: 100%;
+  max-width: 260px;
+  min-height: 68px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  border-radius: 12px;
+  background: rgba(123,44,255,0.06);
+  border: 1px solid rgba(123,44,255,0.06);
+  box-shadow: none;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+/* check icon wrapper */
+.lr-amenity-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  border-radius: 8px;
+  background: rgba(123,44,255,0.10);
+  flex-shrink: 0;
+}
+
+.lr-amenity-check svg path,
+.lr-amenity-check svg { stroke: #7B2CFF; fill: none; }
+
+.lr-amenity-text {
+  font-size: 0.98rem;
+  color: #102233;
+  font-weight: 600;
+  line-height: 1.2;
+  word-break: break-word;
+}
+
+/* Responsive breakpoints for amenities */
+@media (max-width: 1100px) {
+  .lr-amenities-grid { grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .lr-amenity { max-width: 240px; min-height: 72px; padding: 12px 16px; }
+  .lr-amenity-check { width: 34px; height: 34px; min-width: 34px; }
+  .lr-amenity-text { font-size: 0.98rem; }
+}
+
+@media (max-width: 768px) {
+  .lr-amenities { padding: 48px 14px; }
+  .lr-amenities-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .lr-amenity { max-width: 92%; min-height: 64px; padding: 12px 14px; border-radius: 12px; }
+  .lr-amenity-check { width: 32px; height: 32px; min-width: 32px; }
+  .lr-amenity-text { font-size: 0.96rem; }
+}
+
+@media (max-width: 420px) {
+  .lr-amenities-grid { grid-template-columns: 1fr; gap: 12px; padding: 8px 6px; }
+  .lr-amenity { max-width: 100%; min-height: 56px; padding: 10px 12px; border-radius: 10px; }
+  .lr-amenity-check { width: 28px; height: 28px; min-width: 28px; }
+  .lr-amenity-text { font-size: 0.94rem; }
+}
+
+.lr-amenities-inner { padding-top: 6px; padding-bottom: 6px; }

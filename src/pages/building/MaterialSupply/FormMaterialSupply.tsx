@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "../MaterialSupply/ModMaterialSupply.css";
+import { useCart } from "../../../context/CartContext";
+
 
 import cementimg from "../../../assets/Building/cement.jpg";
 import sandimg from "../../../assets/Building/sand.jpg";
@@ -29,6 +31,34 @@ const EquipmentDetails: React.FC<FormProps> = ({ id, onClose }) => {
   if (!material) return null;
 
   const totalPrice = Number(material.price) * quantity;
+  const { addToCart } = useCart();
+  const handleAddToCart = () => {
+  const customerName = (document.querySelector(".form-side input[placeholder='Site manager name']") as HTMLInputElement)?.value;
+  const deliveryType = (document.querySelector(".form-side select") as HTMLSelectElement)?.value;
+  const deliveryDate = (document.querySelector(".form-side input[type='date']") as HTMLInputElement)?.value;
+  const contact = (document.querySelector(".form-side input[placeholder='Contact number']") as HTMLInputElement)?.value;
+  const address = (document.querySelector(".form-side textarea[placeholder='Construction site address']") as HTMLTextAreaElement)?.value;
+  const instructions = (document.querySelector(".form-side textarea[placeholder='Any specific requirements...']") as HTMLTextAreaElement)?.value;
+
+  addToCart({
+    id: material.id,
+    title: material.title,
+    image: material.img,
+    quantity,
+    price: material.price,
+    totalPrice,
+    customerName,
+    deliveryType,
+    deliveryDate,
+    contact,
+    address,
+    instructions
+  });
+
+  alert("Item added to cart!");
+  onClose();
+};
+
 
   return (
     <div className="details-modal">
@@ -130,7 +160,7 @@ const EquipmentDetails: React.FC<FormProps> = ({ id, onClose }) => {
 
               <div className="button-row">
                 <button className="cancel-btn" onClick={onClose}>Cancel</button>
-                <button className="add-btn">Add to Cart</button>
+                <button className="add-btn" onClick={handleAddToCart}>Add to Cart</button>
               </div>
 
             </div>
