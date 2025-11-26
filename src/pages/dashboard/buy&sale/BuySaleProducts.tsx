@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useCallback } from 'react';
+import { useCart } from '../../../context/CartContext';
 import {
   Card,
   Form,
@@ -113,6 +114,7 @@ interface PropertyDetailViewProps {
   property: PropertyListing;
   onOpenDocVerify: () => void;
 }
+
 
 interface PropertyFormValues {
   propertyType: string;
@@ -270,10 +272,7 @@ const PropertyCard: React.FC<{
       <Card.Meta
         title={<span className="service-card-title">{property.title}</span>}
         description={
-          // FIX: Ensure this is the single, top-level element for the description prop
           <Space direction="vertical" style={{ width: '100%' }}>
-            
-            {/* Wrapper for variable content to enable flex-grow and equal height */}
             <div className="property-card-content-wrapper">
               <Text type="secondary" className="text-with-icon-align">
                 <EnvironmentOutlined /> {property.location}
@@ -296,31 +295,45 @@ const PropertyCard: React.FC<{
                 {property.description}
               </Text>
             </div>
-            
-            {/* Button group - positioned using margin-top: auto in CSS */}
+
             <Space className="button-group-space-top" wrap>
-              <Button type="primary" size="middle" onClick={() => onViewDetails(property)}>
-                Contact / Negotiate
-              </Button>
-              <Button size="middle" className='buy_sale_view_btn' onClick={() => onViewDetails(property)}>
+              <Button
+                size="middle"
+                className="buy_sale_view_btn"
+                onClick={() => onViewDetails(property)}
+              >
                 View Details
               </Button>
             </Space>
-
           </Space>
         }
       />
-
     </Card>
   );
 };
 
+
+
 /* ---------- price negotiation (INR) ---------- */
 
-const PriceNegotiationContent: React.FC<ContentComponentProps & { currentPrice: number }> = ({
+const PriceNegotiationContent: React.FC<ContentComponentProps & { currentPrice: number; property: PropertyListing  }> = ({
   currentPrice,
+  property,
 }) => {
   const [form] = Form.useForm<PriceNegotiationFormValues>();
+
+   const { addToCart } = useCart();
+
+  const handleAddToCart = () => {
+    addToCart({
+      id: property.id,
+      title: property.title,
+      price: property.price,
+      quantity: 1,
+      image: property.imagePath,
+    });
+    message.success('Property added to cart');
+  };
 
   const [priceComparison, setPriceComparison] = useState<{
     diff: number;
@@ -631,9 +644,9 @@ const PriceNegotiationContent: React.FC<ContentComponentProps & { currentPrice: 
           )}
         </Row>
 
-        <Button type="primary" htmlType="submit">
-          Submit Enquiry & Offer
-        </Button>
+        <Button size="middle" onClick={handleAddToCart}>
+                Add to Cart
+              </Button>
       </Form>
     </div>
   );
@@ -733,9 +746,10 @@ const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({
 
         <Col xs={24} lg={14}>
           <Divider orientation="left">
-            <EyeOutlined /> Price Analysis & Negotiation
-          </Divider>
-          <PriceNegotiationContent currentPrice={property.price} />
+  <EyeOutlined /> Price Analysis & Negotiation
+</Divider>
+<PriceNegotiationContent currentPrice={property.price} property={property} />
+
         </Col>
       </Row>
     </div>
