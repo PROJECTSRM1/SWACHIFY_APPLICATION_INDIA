@@ -449,7 +449,60 @@ const Home_Service: React.FC = () => {
           </Row>
         </div>
       ))}
+    <div className="hs-emergency-wrap">
+        <div className="hs-emergency-head">
+          <h2>24/7 Emergency Services</h2>
+          <p>Home emergencies don't wait. Neither do we. Our rapid response team is available round the clock.</p>
+        </div>
 
+        <Row gutter={[28, 32]} justify="center" className="hs-cards-row">
+          <Col xs={24} sm={12} md={6}>
+            <Card className="hs-em-card" bordered={false}>
+              <div className="hs-em-icon">
+                <ApiOutlined style={{ fontSize: 40, color: "#e53935", background: "#ffebee", padding: 12, borderRadius: "50%" }} />
+              </div>
+              <div className="hs-em-title">Burst Pipes</div>
+              <div className="hs-em-response">Response: 30 min</div>
+            </Card>
+          </Col>
+
+          <Col xs={24} sm={12} md={6}>
+            <Card className="hs-em-card" bordered={false}>
+              <div className="hs-em-icon">
+                <ThunderboltOutlined style={{ fontSize: 40, color: "#e53935", background: "#ffebee", padding: 12, borderRadius: "50%" }} />
+              </div>
+              <div className="hs-em-title">Power Outage</div>
+              <div className="hs-em-response">Response: 45 min</div>
+            </Card>
+          </Col>
+
+          <Col xs={24} sm={12} md={6}>
+            <Card className="hs-em-card" bordered={false}>
+              <div className="hs-em-icon">
+                <ToolOutlined style={{ fontSize: 40, color: "#e53935", background: "#ffebee", padding: 12, borderRadius: "50%" }} />
+              </div>
+              <div className="hs-em-title">Gas Leaks</div>
+              <div className="hs-em-response">Response: 20 min</div>
+            </Card>
+          </Col>
+
+          <Col xs={24} sm={12} md={6}>
+            <Card className="hs-em-card" bordered={false}>
+              <div className="hs-em-icon">
+                <BuildOutlined style={{ fontSize: 40, color: "#e53935", background: "#ffebee", padding: 12, borderRadius: "50%" }} />
+              </div>
+              <div className="hs-em-title">Heating Failure</div>
+              <div className="hs-em-response">Response: 1 hour</div>
+            </Card>
+          </Col>
+        </Row>
+
+        <div className="hs-emergency-btn-wrap">
+          <Button type="primary" className="hs-emergency-main-btn">
+            Call Emergency: +1 (555) 911-HOME
+          </Button>
+        </div>
+      </div>
       <div className="hs-pricing-wrap">
         <div className="hs-pricing-head">
           <h2>Maintenance Packages</h2>
@@ -600,60 +653,7 @@ const Home_Service: React.FC = () => {
         </div>
       </div>
 
-      <div className="hs-emergency-wrap">
-        <div className="hs-emergency-head">
-          <h2>24/7 Emergency Services</h2>
-          <p>Home emergencies don't wait. Neither do we. Our rapid response team is available round the clock.</p>
-        </div>
-
-        <Row gutter={[28, 32]} justify="center" className="hs-cards-row">
-          <Col xs={24} sm={12} md={6}>
-            <Card className="hs-em-card" bordered={false}>
-              <div className="hs-em-icon">
-                <ApiOutlined style={{ fontSize: 40, color: "#e53935", background: "#ffebee", padding: 12, borderRadius: "50%" }} />
-              </div>
-              <div className="hs-em-title">Burst Pipes</div>
-              <div className="hs-em-response">Response: 30 min</div>
-            </Card>
-          </Col>
-
-          <Col xs={24} sm={12} md={6}>
-            <Card className="hs-em-card" bordered={false}>
-              <div className="hs-em-icon">
-                <ThunderboltOutlined style={{ fontSize: 40, color: "#e53935", background: "#ffebee", padding: 12, borderRadius: "50%" }} />
-              </div>
-              <div className="hs-em-title">Power Outage</div>
-              <div className="hs-em-response">Response: 45 min</div>
-            </Card>
-          </Col>
-
-          <Col xs={24} sm={12} md={6}>
-            <Card className="hs-em-card" bordered={false}>
-              <div className="hs-em-icon">
-                <ToolOutlined style={{ fontSize: 40, color: "#e53935", background: "#ffebee", padding: 12, borderRadius: "50%" }} />
-              </div>
-              <div className="hs-em-title">Gas Leaks</div>
-              <div className="hs-em-response">Response: 20 min</div>
-            </Card>
-          </Col>
-
-          <Col xs={24} sm={12} md={6}>
-            <Card className="hs-em-card" bordered={false}>
-              <div className="hs-em-icon">
-                <BuildOutlined style={{ fontSize: 40, color: "#e53935", background: "#ffebee", padding: 12, borderRadius: "50%" }} />
-              </div>
-              <div className="hs-em-title">Heating Failure</div>
-              <div className="hs-em-response">Response: 1 hour</div>
-            </Card>
-          </Col>
-        </Row>
-
-        <div className="hs-emergency-btn-wrap">
-          <Button type="primary" className="hs-emergency-main-btn">
-            Call Emergency: +1 (555) 911-HOME
-          </Button>
-        </div>
-      </div>
+  
 
       <footer className="hs-footer">
         <div className="hs-footer-inner">

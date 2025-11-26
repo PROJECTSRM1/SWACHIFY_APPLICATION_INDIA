@@ -432,15 +432,38 @@ const Landingrentals: React.FC = () => {
 
         {/* AMENITIES */}
         <section className="lr-amenities">
-          <h2 className="lr-section-title">Premium Amenities</h2>
-          <div className="lr-amenities-grid">
-            {[
-              "24/7 Security", "Swimming Pool", "Gym", "Parking",
-              "Power Backup", "Elevator", "Garden", "Play Area",
-              "Club House", "Maintenance Staff"
-            ].map((a, i) => (
-              <div key={i} className="lr-amenity">{a}</div>
-            ))}
+          <div className="lr-amenities-inner">
+            <div className="lr-amenities-top">
+              <button className="lr-view-all-btn">View All Properties</button>
+              <div>
+                <h2 className="lr-section-title">Premium Amenities</h2>
+                <p className="lr-sub">Enjoy world-class facilities and amenities in our properties</p>
+              </div>
+            </div>
+
+            <div className="lr-amenities-grid">
+              {[
+                "24/7 Security",
+                "Swimming Pool",
+                "Gym & Fitness Center",
+                "Parking",
+                "Power Backup",
+                "Elevator",
+                "Garden/Park",
+                "Children's Play Area",
+                "Club House",
+                "Maintenance Staff"
+              ].map((a, i) => (
+                <div key={i} className="lr-amenity">
+                  <span className="lr-amenity-check" aria-hidden>
+                    <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+                      <path d="M1.5 6.5L5.5 10.5L14.5 1.5" stroke="#7B2CFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </span>
+                  <div className="lr-amenity-text">{a}</div>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 
@@ -487,7 +510,7 @@ const Landingrentals: React.FC = () => {
 
                 <Col xs={24} md={12}>
                   <Form.Item label="Preferred Date" name="date" rules={[{ required: true }]}>
-                    <DatePicker />
+                    <DatePicker className="lr-datepicker" />
                   </Form.Item>
                 </Col>
 
