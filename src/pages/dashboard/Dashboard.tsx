@@ -19,6 +19,7 @@ const Dashboard: React.FC = () => {
     { name: "Home & Apartments Rental", component: <ServicesPage /> },
     { name: "Construction Services", component: <ConstructionServices /> },
     { name: "Buy & Sale Products", component: <BuySaleProducts /> },
+    
   ];
 
   // Filter based on search input
