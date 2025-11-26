@@ -1,7 +1,6 @@
 import { createContext, useContext, useState } from "react";
 
 
-
 export interface CartItem {
   id: number;
   title: string;
@@ -9,7 +8,6 @@ export interface CartItem {
   quantity: number;
   price: string|number;
   totalPrice: number;
-
 
 
   customerName: string;
@@ -21,7 +19,6 @@ export interface CartItem {
 }
 
 
-
 interface CartContextType {
   cart: CartItem[];
   addToCart: (item: CartItem) => void;
@@ -29,14 +26,11 @@ interface CartContextType {
 }
 
 
-
 const CartContext = createContext<CartContextType | undefined>(undefined);
-
 
 
 export const CartProvider = ({ children }: any) => {
   const [cart, setCart] = useState<CartItem[]>([]);
-
 
 
   const addToCart = (item: CartItem) => {
@@ -44,11 +38,9 @@ export const CartProvider = ({ children }: any) => {
   };
 
 
-
   const removeFromCart = (id: number) => {
     setCart((prev) => prev.filter((item) => item.id !== id));
   };
-
 
 
   return (
@@ -57,7 +49,6 @@ export const CartProvider = ({ children }: any) => {
     </CartContext.Provider>
   );
 };
-
 
 
 export const useCart = () => {
