@@ -1,3 +1,4 @@
+// PropertyDetailsPage.tsx
 import React from 'react';
 import {
   Row,
@@ -10,7 +11,6 @@ import {
   Button,
   Rate,
   Tag,
-  // Space,
   Carousel,
   message,
 } from 'antd';
@@ -35,17 +35,14 @@ import luxryvillaImg from '../../../../assets/HomeRental/luxrayVilla.jpg';
 import commercialImg from '../../../../assets/HomeRental/beautifulkitchen.jpg';
 import officeImg from '../../../../assets/HomeRental/moderndining.jpg';
 import bathroomimg from "../../../../assets/HomeRental/modernbathroom.jpg";
-import bedroomImg from "../../../../assets/HomeRental/classicbedroom.jpg"
-import kitchenImg from "../../../../assets/HomeRental/classicbedroom.jpg"
-import luxkitchenImg  from "../../../../assets/HomeRental/luxury-modern-white-kitchen.jpg";
-import moderbathroomImg from "../../../../assets/HomeRental/smarthometechnology.jpg"
-import modernBathroomImg from "../../../../assets/HomeRental/smarthometechnology.jpg"
-import villaImg2 from "../../../../assets/HomeRental/VillaLuxury.jpg"
+import bedroomImg from "../../../../assets/HomeRental/classicbedroom.jpg";
+import kitchenImg from "../../../../assets/HomeRental/classicbedroom.jpg";
+import luxkitchenImg from "../../../../assets/HomeRental/luxury-modern-white-kitchen.jpg";
+import moderbathroomImg from "../../../../assets/HomeRental/smarthometechnology.jpg";
+import modernBathroomImg from "../../../../assets/HomeRental/smarthometechnology.jpg";
+import villaImg2 from "../../../../assets/HomeRental/VillaLuxury.jpg";
 
 /*Commericial*/
-// import opelPlotImg from "../assests/HomeRental/openplot.jpg"
-
-
 import plot1Img from "../../../../assets/HomeRental/openplot3.jpg";
 import plot2Img from "../../../../assets/HomeRental/openplot2.jpg";
 import plot3Img from "../../../../assets/HomeRental/openplot3.jpg";
@@ -61,6 +58,9 @@ import warehouseImg2 from "../../../../assets/HomeRental/warehouse3.jpg";
 import warehouseImg3 from "../../../../assets/HomeRental/WareHouse.jpg";
 import warehouseImg4 from "../../../../assets/HomeRental/openplot3.jpg";
 
+// <-- ADDED: cart + navigation imports -->
+import { useNavigate } from "react-router-dom";
+import { useCart } from "../../../../context/CartContext";
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -87,6 +87,10 @@ interface PropertyDetailsPageProps {
 
 const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, onClose }) => {
   const [form] = Form.useForm();
+
+  // <-- ADDED: use cart + navigate hooks (no change to your CartContext required) -->
+  const { addToCart } = useCart();
+  const navigate = useNavigate();
 
   // Details for each property (ids match ApartmentListingsPage)
   const propertiesById: Record<string, PropertyDetails> = {
@@ -132,7 +136,7 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
       images: [apartment3Img,bedroomImg,kitchenImg,bathroomimg],
       description: 'Penthouse with panoramic views and premium finishes.',
     },
-       'apt-4': {
+    'apt-4': {
       id: 'apt-4',
       title: 'Luxury 4 BHK Apartment',
       rating: 4.8,
@@ -160,7 +164,6 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
       images: [villa1Img, luxryvillaImg,commercialImg, apartment3Img],
       description: 'Luxury villa with private pool and lake views.',
     },
-
     'villa-2': {
       id: 'villa-2',
       title: 'Modern 3 BHK Villa',
@@ -175,7 +178,6 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
       images: [villa1Img, villa2Img,luxryvillaImg],
       description: 'Contemporary villa in a premium gated community.',
     },
-    
     'villa-3': {
       id: 'villa-3',
       title: 'Modern 4 BHK Villa',
@@ -190,7 +192,7 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
       images: [villa1Img, villa2Img,luxryvillaImg],
       description: 'Contemporary villa in a premium gated community.',
     },
-     'villa-4': {
+    'villa-4': {
       id: 'villa-4',
       title: 'Modern 2 BHK Villa',
       rating: 4.7,
@@ -204,9 +206,6 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
       images: [villaImg2,luxryvillaImg,villa1Img],
       description: 'Contemporary villa in a premium gated community.',
     },
-
-    /*Independenthouses*/
-
     'house-1': {
       id: 'house-1',
       title: ' 1 BHK Independent House',
@@ -249,22 +248,6 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
       images: [house2Img, house1Img, officeImg , bathroomimg],
       description: 'Cozy corner house perfect for small families.',
     },
-    // 'house-4': {
-    //   id: 'house-4',
-    //   title: '2 BHK Modern House',
-    //   rating: 4.4,
-    //   location: 'Suburban Residency',
-    //   beds: 2,
-    //   baths: 2,
-    //   sqft: 1600,
-    //   furnishing: 'Semi Furnished',
-    //   amenities: ['Parking', 'Playground', 'Security'],
-    //   price: 1800,
-    //   images: [house2Img, house1Img, officeImg , bathroomimg],
-    //   description: 'Cozy corner house perfect for small families.',
-    // },
-
-    // Commercial Properties
     'shop-1': {
       id: 'shop-1',
       title: 'Prime Roadside Shop',
@@ -289,7 +272,7 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
       images:[startup4Img, officeImg, startup3Img],
       description: 'Premium showroom space in a high-end shopping mall.',
     },
-     'shop-3': {
+    'shop-3': {
       id: 'shop-3',
       title: 'Luxury Retail Showroom',
       rating: 4.8,
@@ -301,7 +284,7 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
       images: [startup3Img,startup4Img,startup3Img],
       description: 'Premium showroom space in a high-end shopping mall.',
     },
-     'shop-4': {
+    'shop-4': {
       id: 'shop-4',
       title: 'Luxury Retail Showroom',
       rating: 4.8,
@@ -313,9 +296,6 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
       images: [startup1Img,startup2Img],
       description: 'Premium showroom space in a high-end shopping mall.',
     },
-
-/*WareHouse*/
-
     'warehouse-1': {
       id: 'warehouse-1',
       title: 'Large Industrial Warehouse',
@@ -340,7 +320,7 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
       images: [warehouseImg1,warehouseImg2,warehouseImg3],
       description: 'Medium-sized warehouse with loading dock facilities.',
     },
-     'warehouse-3': {
+    'warehouse-3': {
       id: 'warehouse-3',
       title: 'Medium Storage Warehouse',
       rating: 4.3,
@@ -352,7 +332,7 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
       images: [warehouseImg4,warehouseImg3],
       description: 'Medium-sized warehouse with loading dock facilities.',
     },
-     'warehouse-4': {
+    'warehouse-4': {
       id: 'warehouse-4',
       title: 'Medium Storage Warehouse',
       rating: 4.3,
@@ -363,9 +343,6 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
       price: 3500,
       images: [warehouseImg2,warehouseImg1],
       description: 'Medium-sized warehouse with loading dock facilities.',
-
-
-      /*OpenPlots*/
     },
     'plot-1': {
       id: 'plot-1',
@@ -391,7 +368,7 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
       images: [plot2Img,plot4Img],
       description: 'Corner plot in the heart of the business district with all approvals.',
     },
-     'plot-3': {
+    'plot-3': {
       id: 'plot-3',
       title: 'Prime Commercial Plot',
       rating: 4.7,
@@ -403,7 +380,7 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
       images: [plot4Img,plot3Img,plot2Img],
       description: 'Prime commercial plot with all utilities and excellent road connectivity.',
     },
-     'plot-4': {
+    'plot-4': {
       id: 'plot-4',
       title: 'Prime Commercial Plot',
       rating: 4.7,
@@ -449,7 +426,47 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
   const onFinish = (values: any) => {
     console.log('Form values:', values);
     message.success('Your inquiry has been submitted! Our team will contact you within 24 hours.');
+
+    // ---- ADDED: Build cart item and add to cart using your existing useCart() API ----
+    // Create a unique numeric id for the cart item instance
+    const cartId = Date.now();
+
+    // Choose a representative image (first image if available)
+    const image = property.images && property.images.length > 0 ? property.images[0] : '';
+
+    // Use property.price (number) but CartContext expects price as string in your model => convert
+    const priceString = String(property.price || 0);
+    const unitPrice = Number(property.price || 0);
+
+    // Map common form fields into cart metadata (customerName, deliveryType, deliveryDate etc.)
+    const cartItem = {
+      id: cartId,
+      title: property.title,
+      image,
+      quantity: 1,
+      price: priceString,
+      totalPrice: unitPrice * 1,
+
+      customerName: values.fullName || '',
+      deliveryType: values.leaseDuration || values.businessType || values.intendedUse || '',
+      deliveryDate: values.moveInDate ? dayjs(values.moveInDate).format('YYYY-MM-DD') : (values.expectedStartDate ? dayjs(values.expectedStartDate).format('YYYY-MM-DD') : (values.expectedPurchaseDate ? dayjs(values.expectedPurchaseDate).format('YYYY-MM-DD') : '')),
+      contact: values.phone || '',
+      address: '', // form doesn't capture address in this page — keep empty or extend form to collect
+      instructions: values.message || '',
+    };
+
+    try {
+      addToCart(cartItem); // uses your existing CartContext API
+    } catch (e) {
+      console.warn("addToCart failed", e);
+    }
+    // ---- end addToCart ----
+
+    // Reset form (your existing behavior)
     form.resetFields();
+
+    // Navigate to cart after a short delay so user sees the success message
+    setTimeout(() => navigate('/cart'), 400);
   };
 
   return (
