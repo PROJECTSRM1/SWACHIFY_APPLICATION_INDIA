@@ -86,7 +86,7 @@ return (
 <div className="cs-wrapper">
 <div className="cs-header1">
 <span className="cs-title">Building & Construction Raw Materials</span>
-<span className="cs-subtitle">4 services available</span>
+<span className="cs-subtitle">{services.length}services available</span>
 </div>
 
 

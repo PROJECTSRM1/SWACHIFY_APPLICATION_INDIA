@@ -11,12 +11,12 @@ import pipesimg from "../../../assets/Building/pipes.jpg";
 import tilesimg from "../../../assets/Building/tiles.jpg";
 
 const materials = [
-  { id: 1, title: "Cement", price: "800", img: cementimg, description: "Premium quality cement for construction" },
-  { id: 2, title: "Sand", price: "450", img: sandimg, description: "River sand and M sand for construction" },
-  { id: 3, title: "Bricks", price: "200", img: brickimg, description: "Red bricks and fly ash bricks" },
-  { id: 4, title: "Steel & TMT Bars", price: "650", img: steelimg, description: "High grade steel bars and rods" },
-  { id: 5, title: "Pipes", price: "250", img: pipesimg, description: "PVC and plumbing pipes for water supply" },
-  { id: 6, title: "Marble & Tiles", price: "450", img: tilesimg, description: "Premium marble and flooring tiles" },
+  { id: 1, title: "Cement", price: "800", img: cementimg,},
+  { id: 2, title: "Sand", price: "450", img: sandimg,},
+  { id: 3, title: "Bricks", price: "200", img: brickimg, },
+  { id: 4, title: "Steel & TMT Bars", price: "650", img: steelimg,},
+  { id: 5, title: "Pipes", price: "250", img: pipesimg,},
+  { id: 6, title: "Marble & Tiles", price: "450", img: tilesimg,},
 ];
 
 interface FormProps {
@@ -75,9 +75,6 @@ const EquipmentDetails: React.FC<FormProps> = ({ id, onClose }) => {
             <div className="image-box">
               <img src={material.img} alt={material.title} />
             </div>
-
-            <p className="material-description">{material.description}</p>
-
             <div className="service-price-box">
               <p className="sp-title">Service Price</p>
               <p className="sp-value">₹{totalPrice}</p>

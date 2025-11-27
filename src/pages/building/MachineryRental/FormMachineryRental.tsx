@@ -8,10 +8,10 @@ import mixerImg from "../../../assets/Building/concretemixer.jpg";
 import { message } from "antd";
 
 const machinery = [
-  { id: 1, title: "Excavator Rental", price: "150", img: excavatorImg, description: "Heavy-duty excavators suitable for construction and earthwork tasks." },
-  { id: 2, title: "Loader Rental", price: "200", img: loaderImg, description: "Efficient loaders for material handling and lifting tasks." },
-  { id: 3, title: "Crane Rental", price: "300", img: craneImg, description: "High-capacity cranes for lifting heavy materials and machinery." },
-  { id: 4, title: "Concrete Mixer Rental", price: "120", img: mixerImg, description: "Portable and truck-mounted concrete mixers for efficient construction." },
+  { id: 1, title: "Excavator Rental", price: "150", img: excavatorImg,  },
+  { id: 2, title: "Loader Rental", price: "200", img: loaderImg, },
+  { id: 3, title: "Crane Rental", price: "300", img: craneImg,},
+  { id: 4, title: "Concrete Mixer Rental", price: "120", img: mixerImg,},
 ];
 
 interface FormProps {
@@ -75,9 +75,6 @@ const [instructions, setInstructions] = useState("");
             <div className="mach-image-box">
               <img src={machine.img} alt={machine.title} />
             </div>
-
-            <p className="mach-description">{machine.description}</p>
-
             <div className="mach-service-price-box">
               <p className="mach-sp-title">Rental Price</p>
               <p className="mach-sp-value">₹{totalPrice}</p>

@@ -6,8 +6,8 @@ import materialpickupimg from "../../../assets/Building/material pickup.jpg";
 import deliveryservicesimg from "../../../assets/Building/Delivery services.jpg";
 
 const Transportation = [
-  { id: 1, title: "Material Supply", price: "800", img: materialpickupimg, description: "Premium quality cement for construction" },
-  { id: 2, title: "Delivery Services", price: "450", img: deliveryservicesimg, description: "River sand and M sand for construction" },
+  { id: 1, title: "Material Supply", price: "800", img: materialpickupimg, },
+  { id: 2, title: "Delivery Services", price: "450", img: deliveryservicesimg, },
 ];
 
 interface FormProps {
@@ -43,7 +43,7 @@ const TransportationForm: React.FC<FormProps> = ({ id, onClose }) => {
     address,
     instructions
   });
-
+  alert("Item added to cart!");
   onClose();  
 };
 
@@ -65,9 +65,6 @@ const TransportationForm: React.FC<FormProps> = ({ id, onClose }) => {
             <div className="tf-image">
               <img src={material.img} alt={material.title} />
             </div>
-
-            <p className="tf-description">{material.description}</p>
-
             <div className="tf-price-box">
               <p className="tf-price-label">Service Price</p>
               <p className="tf-price-value">₹{totalPrice}</p>
