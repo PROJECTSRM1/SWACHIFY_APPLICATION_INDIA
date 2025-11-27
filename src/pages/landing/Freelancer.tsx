@@ -1,131 +1,412 @@
-//import React from "react";
-import "./Freelancer.css";
 import { useNavigate } from "react-router-dom";
-import freelancerHeroImg from '../../assets/landingimages/freelancer.png';
+import React, { useState } from "react";
 
+import {
+  // SearchOutlined,
+  EnvironmentOutlined,
+  ClockCircleOutlined,
+  DollarCircleOutlined,
+  StarOutlined,
+  UserOutlined,
+  ArrowRightOutlined,
+  SafetyCertificateOutlined,
+  RiseOutlined,
+  PhoneOutlined,
+  MailOutlined,
+  FacebookOutlined,
+  TwitterOutlined,
+  InstagramOutlined,
+  LinkedinOutlined,
+} from "@ant-design/icons";
 
+import {
+  Layout,
+  Input,
+  Button,
+  Row,
+  Col,
+  Card,
+  Tag,
+  Statistic,
+  Menu,
+  Modal,
+  Tabs,
+  Form,
+  // Checkbox,
+  message,
+} from "antd";
 
-const Freelancer = () => {
+import "./Freelancer.css";
 
-    const navigate = useNavigate();
-    return (
-        <div className="dashboard-container">
+const {  Content } = Layout;
+const { TabPane } = Tabs;
 
-            {/* HEADER */}
-            <header className="freelancer-header">
-                <div className="logo">
-                    <h2>Swachify Freelance</h2>
+// Navigation items from Home Service
+const navItems = [
+  { key: "home", label: <a href="/landing">Home</a> },
+  { key: "cleaning", label: <a href="/cleaningservice">Cleaning</a> },
+  { key: "packers", label: <a href="/LandingPackers">Packers & Movers</a> },
+  { key: "home_services", label: <a href="/home_service">Home Services</a> },
+  { key: "rentals", label: <a href="/rentals">Rentals</a> },
+  { key: "commercial", label: <a href="/commercial-plots">Buy&Sale Properties</a> },
+  { key: "materials", label: <a href="/ConstructionMaterials">Construction Materials</a> },
+  { key: "freelancer", label: <a href="/Freelancer">Freelancer</a> },
+];
+
+// Categories
+const serviceCategories = [
+  { icon: "🏠", name: "Home Services", count: 156 },
+  { icon: "🔧", name: "Repair & Fix", count: 89 },
+  { icon: "🎨", name: "Creative Work", count: 234 },
+  { icon: "💼", name: "Business Help", count: 178 },
+  { icon: "🚚", name: "Moving & Shifting", count: 67 },
+  { icon: "🧹", name: "Cleaning Services", count: 145 },
+];
+
+// Live Requests
+const liveRequests = [
+  {
+    id: 1,
+    title: "House Shifting - Packing",
+    location: "Gachibowli, Hyderabad",
+    price: "₹1200",
+    timeAgo: "10 min ago",
+    urgency: "high",
+    category: "Moving",
+    description: "Need help packing and loading luggage for a 2BHK.",
+  },
+  {
+    id: 2,
+    title: "Deep Cleaning - Apartment",
+    location: "Banjara Hills, Hyderabad",
+    price: "₹1200",
+    timeAgo: "35 min ago",
+    urgency: "medium",
+    category: "Cleaning",
+    description: "Deep cleaning required for 3BHK apartment.",
+  },
+  {
+    id: 3,
+    title: "Plumbing Repair",
+    location: "Madhapur, Hyderabad",
+    price: "₹800",
+    timeAgo: "1 hour ago",
+    urgency: "high",
+    category: "Repair",
+    description: "Fix leaking kitchen sink and bathroom tap.",
+  },
+];
+
+const stats = [
+  { icon: <RiseOutlined />, label: "Active Tasks", value: "2,456+" },
+  { icon: <UserOutlined />, label: "Freelancers", value: "10,000+" },
+  { icon: <StarOutlined />, label: "Avg Rating", value: "4.8" },
+  { icon: <SafetyCertificateOutlined />, label: "Verified Jobs", value: "100%" },
+];
+
+export default function Freelancer() {
+  const navigate = useNavigate();
+
+  // -----------------------------
+  // Sign Up / Login Modal (copied)
+  // -----------------------------
+  const [authModalVisible, setAuthModalVisible] = useState(false);
+  const [activeTab, setActiveTab] = useState("login");
+
+  const [loginForm] = Form.useForm();
+  const [registerForm] = Form.useForm();
+
+  const onLoginFinish = () => {
+    message.success("Logged in (demo)");
+    setAuthModalVisible(false);
+  };
+
+  const onRegisterFinish = () => {
+    message.success("Registered (demo)");
+    setAuthModalVisible(false);
+  };
+
+  return (
+    <Layout className="swf-layout">
+
+      {/* --------------------------- */}
+      {/*   HOME-SERVICE HEADER HERE   */}
+      {/* --------------------------- */}
+      <header className="hs-navbar">
+        <div className="hs-navbar-logo">
+          <span className="hs-logo-text">SWACHIFY INDIA</span>
+        </div>
+
+        <Menu
+          mode="horizontal"
+          selectedKeys={["freelancer"]}
+          className="hs-navbar-menu"
+          items={navItems}
+        />
+
+        <Button
+          type="primary"
+          className="hs-contact-btn"
+          onClick={() => {
+            setActiveTab("login");
+            setAuthModalVisible(true);
+          }}
+        >
+          Sign Up
+        </Button>
+      </header>
+
+      {/* Modal */}
+      <Modal
+        centered
+        open={authModalVisible}
+        footer={null}
+        onCancel={() => setAuthModalVisible(false)}
+        width={420}
+      >
+        <Tabs activeKey={activeTab} onChange={(k) => setActiveTab(k)}>
+          <TabPane tab="Login" key="login">
+            <Form form={loginForm} layout="vertical" onFinish={onLoginFinish}>
+              <Form.Item name="identifier" label="Email or Phone" rules={[{ required: true }]}>
+                <Input />
+              </Form.Item>
+              <Form.Item name="password" label="Password" rules={[{ required: true }]}>
+                <Input.Password />
+              </Form.Item>
+              <Button type="primary" htmlType="submit" block>
+                Login
+              </Button>
+            </Form>
+          </TabPane>
+
+          <TabPane tab="Register" key="register">
+            <Form form={registerForm} layout="vertical" onFinish={onRegisterFinish}>
+              <Form.Item name="name" label="Full Name" rules={[{ required: true }]}>
+                <Input />
+              </Form.Item>
+              <Form.Item name="email" label="Email" rules={[{ required: true }]}>
+                <Input />
+              </Form.Item>
+              <Form.Item name="phone" label="Phone" rules={[{ required: true }]}>
+                <Input />
+              </Form.Item>
+              <Form.Item name="password" label="Password" rules={[{ required: true }]}>
+                <Input.Password />
+              </Form.Item>
+              <Button type="primary" htmlType="submit" block>
+                Register
+              </Button>
+            </Form>
+          </TabPane>
+        </Tabs>
+      </Modal>
+
+      {/* --------------------------- */}
+      {/*          HERO SECTION        */}
+      {/* --------------------------- */}
+
+      <div className="swf-hero">
+        <div className="swf-hero-overlay"></div>
+
+        <Content className="swf-hero-content">
+          <h1 className="swf-hero-title">
+            Find the Right Tasks <br /> That Match Your Skills
+          </h1>
+
+          <p className="swf-hero-sub">Verified jobs. Nearby opportunities. Instant earning.</p>
+
+          <div className="swf-hero-buttons">
+            <Button
+              type="default"
+              size="large"
+              shape="round"
+              onClick={() => navigate("/servicerequests")}
+              icon={<ArrowRightOutlined />}
+            >
+              View Live Requests
+            </Button>
+
+            <Button
+              type="default"
+              size="large"
+              shape="round"
+              onClick={() => navigate("/freelancerregistration")}
+            >
+              Become a Freelancer
+            </Button>
+          </div>
+
+          <Row gutter={16} className="swf-stats">
+            {stats.map((s, index) => (
+              <Col xs={12} md={6} key={index}>
+                <Card bordered={false} className="swf-stat-card">
+                  <Statistic
+                    title={s.label}
+                    value={s.value}
+                    prefix={s.icon}
+                    valueStyle={{ color: "#fff" }}
+                  />
+                </Card>
+              </Col>
+            ))}
+          </Row>
+        </Content>
+      </div>
+
+      {/* Categories */}
+      <Content className="swf-section">
+        <h2 className="swf-section-title">Browse Categories</h2>
+
+        <Row gutter={[20, 20]}>
+          {serviceCategories.map((cat, i) => (
+            <Col xs={12} sm={8} md={6} lg={4} key={i}>
+              <Card hoverable className="swf-category-card">
+                <div className="swf-category-icon">{cat.icon}</div>
+                <h4 className="swf-category-name">{cat.name}</h4>
+                <p className="swf-category-count">{cat.count} jobs</p>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+      </Content>
+
+      {/* Live Requests */}
+      <Content className="swf-section">
+        <div className="swf-section-header">
+          <div>
+            <h2>Live Service Requests Near You</h2>
+            <p>Accept a task and start earning instantly</p>
+          </div>
+
+          <Button
+            type="primary"
+            shape="round"
+            icon={<ArrowRightOutlined />}
+            onClick={() => navigate("/servicerequests")}
+          >
+            View All
+          </Button>
+        </div>
+
+        <Row gutter={[20, 20]}>
+          {liveRequests.map((req) => (
+            <Col xs={24} md={12} lg={8} key={req.id}>
+              <Card hoverable className="swf-request-card">
+                <Tag
+                  color={
+                    req.urgency === "high"
+                      ? "red"
+                      : req.urgency === "medium"
+                      ? "gold"
+                      : "green"
+                  }
+                  className="swf-urgency-tag"
+                >
+                  {req.urgency === "high" ? "Urgent" : req.category}
+                </Tag>
+
+                <h3 className="swf-request-title">{req.title}</h3>
+                <p className="swf-request-desc">{req.description}</p>
+
+                <div className="swf-request-info">
+                  <p>
+                    <EnvironmentOutlined /> {req.location}
+                  </p>
+                  <p>
+                    <ClockCircleOutlined /> {req.timeAgo}
+                  </p>
                 </div>
 
-                <nav>
-                    <button className="btn-login" onClick={() => navigate("/freelancerlogin")}>
-                        Login
-                    </button>
-                </nav>
-            </header>
-            <div className="back-btn-container">
-                <button className="back-btn" onClick={() => navigate("/landing")}>
-                    &larr; Back
-                </button>
+                <div className="swf-request-bottom">
+                  <span className="swf-price">
+                    <DollarCircleOutlined /> {req.price}
+                  </span>
+
+                  <div className="swf-request-actions">
+                    <Button type="primary" shape="round">
+                      Accept
+                    </Button>
+                    <Button shape="round">View</Button>
+                  </div>
+                </div>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+      </Content>
+
+      {/* Footer */}
+      <footer className="hs-footer">
+        <div className="hs-footer-inner">
+          <div className="hs-footer-col hs-footer-about">
+            <h4>About Us</h4>
+            <p>
+              Your trusted partner for all home and property-related services.
+              Quality, reliability, and customer satisfaction guaranteed.
+            </p>
+          </div>
+
+          <div className="hs-footer-col hs-footer-services">
+            <h4>Services</h4>
+            <ul>
+              <li>Cleaning Service</li>
+              <li>Packers & Movers</li>
+              <li>Home Services</li>
+              <li>Rentals</li>
+              <li>Commercial Plots</li>
+              <li>Construction Materials</li>
+            </ul>
+          </div>
+
+          <div className="hs-footer-col hs-footer-links">
+            <h4>Quick Links</h4>
+            <ul>
+              <li>Home</li>
+              <li>About</li>
+              <li>Contact</li>
+              <li>Careers</li>
+            </ul>
+          </div>
+
+          <div className="hs-footer-col hs-footer-contact">
+            <h4>Contact Info</h4>
+            <div className="hs-contact-row">
+              <PhoneOutlined />
+              <span>+1 (555) 123-4567</span>
+            </div>
+            <div className="hs-contact-row">
+              <MailOutlined />
+              <span>info@homeservices.com</span>
+            </div>
+            <div className="hs-contact-row">
+              <EnvironmentOutlined />
+              <span>123 Service Street, City, State</span>
             </div>
 
-
-            {/* HERO */}
-            {/* <section
-                className="find-workers"
-                style={{
-                    backgroundImage: `url(${freelancerHeroImg})`,
-                    backgroundSize: 'contain',
-                    backgroundRepeat: 'no-repeat',
-                    backgroundPosition: 'right center',
-                }}
-            >
-                <h1>Find the Right Tasks That Fit Your Skills</h1>
-                <p className="hero-sub">Book services and let verified workers accept nearby requests.</p>
-                <button className="view-requests">View Live Requests</button>
-            </section> */}
-
-            <section
-                className="find-workers"
-                style={{
-                    backgroundImage: `url(${freelancerHeroImg})`,
-                    // backgroundSize: 'cover',      // Make image cover entire section
-                    backgroundRepeat: 'no-repeat',
-                    height:400,
-                    
-
-                    backgroundPosition: 'center', // Center the image
-                    color: '#111827',             // Ensure text color is visible
-                }}
-            >
-                <h1>Find the Right Tasks That Fit Your Skills</h1>
-                <p className="hero-sub">Book services and let verified workers accept nearby requests.</p>
-                <button className="view-requests">View Live Requests</button>
-            </section>
-
-
-
-            {/* LIVE REQUESTS */}
-            <section className="live-requests">
-                <h3>Live Service Requests Near You</h3>
-
-                <div className="cards-container">
-
-                    {/* CARD 1 */}
-                    <div className="request-card">
-                        <div className="request-left">
-                            <div className="request-title">House Shifting - Packing</div>
-                            <div className="request-meta">Gachibowli, Hyderabad • ₹1200</div>
-                            <div className="request-desc">
-                                Need help packing and loading luggage for a 2BHK.
-                            </div>
-                            <button className="view-btn">View</button>
-                        </div>
-
-                        <div className="request-right">
-                            <div className="time-text">10 min ago</div>
-                            <button className="accept-btn">Accept</button>
-                        </div>
-                    </div>
-
-                    {/* CARD 2 */}
-                    <div className="request-card">
-                        <div className="request-left">
-                            <div className="request-title">Deep Cleaning - Apartment</div>
-                            <div className="request-meta">Banjara Hills, Hyderabad • ₹1200</div>
-                            <div className="request-desc">
-                                Deep cleaning required for 3BHK apartment.
-                            </div>
-                            <button className="view-btn">View</button>
-                        </div>
-
-                        <div className="request-right">
-                            <div className="time-text">35 min ago</div>
-                            <button className="accept-btn">Accept</button>
-                        </div>
-                    </div>
-
-                    {/* CARD 3 */}
-                    <div className="request-card">
-                        <div className="request-left">
-                            <div className="request-title">Office Sanitization</div>
-                            <div className="request-meta">Madhapur, Hyderabad • ₹3000</div>
-                            <div className="request-desc">
-                                Full office sanitization after renovation.
-                            </div>
-                            <button className="view-btn">View</button>
-                        </div>
-
-                        <div className="request-right">
-                            <div className="time-text">1 hour ago</div>
-                            <button className="accept-btn">Accept</button>
-                        </div>
-                    </div>
-
-                </div>
-            </section>
+            <div className="hs-footer-socials">
+              <a>
+                <FacebookOutlined />
+              </a>
+              <a>
+                <TwitterOutlined />
+              </a>
+              <a>
+                <InstagramOutlined />
+              </a>
+              <a>
+                <LinkedinOutlined />
+              </a>
+            </div>
+          </div>
         </div>
-    );
-};
 
-export default Freelancer;
+        <div className="hs-footer-bottom">
+          <div className="hs-footer-line" />
+          <div className="hs-footer-copy">
+            © {new Date().getFullYear()} Home Services. All rights reserved.
+          </div>
+        </div>
+      </footer>
+    </Layout>
+  );
+}

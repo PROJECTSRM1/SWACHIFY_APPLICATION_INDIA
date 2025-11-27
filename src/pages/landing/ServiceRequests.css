@@ -1,0 +1,482 @@
+
+/* header wrapper */
+
+
+.requests-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 0; /* Header no padding, same as HomeService */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.header-inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Logo section */
+.hs-navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-square {
+  width: 42px;
+  height: 42px;
+  background: #303030;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 20px;
+  color: white;
+}
+
+/* Navigation Bar */
+.hs-nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.hs-nav-link {
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  color: #374151;
+  transition: 0.2s ease;
+}
+
+.hs-nav-link:hover {
+  color: #111827;
+}
+
+/* Header Right Buttons */
+.hs-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.hs-login-btn {
+  background: transparent;
+  border: none;
+  font-size: 15px;
+  cursor: pointer;
+  color: #374151;
+}
+
+.hs-login-btn:hover {
+  color: #111827;
+}
+
+.hs-signup-btn {
+  padding: 6px 16px;
+  border-radius: 8px;
+  background: #1677ff;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.25s ease;
+}
+
+.hs-signup-btn:hover {
+  background: #0f62d6;
+}
+
+
+
+/* -------------------------
+   Service Requests page styles
+   (your original CSS - kept and slightly reorganized)
+   ------------------------- */
+
+/* Page center container */
+.sr-page {
+  background: #f5f5f5;
+  min-height: 100vh;
+  padding: 28px 18px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  box-sizing: border-box;
+  font-family: "Inter", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* white container with rounded corners */
+.sr-container {
+  width: 100%;
+  max-width: 1160px;
+  /* slightly narrower */
+  background: transparent;
+  margin-top: 22px;
+}
+
+/* header/title */
+.sr-header .sr-title {
+  font-size: 22px;
+  margin: 6px 0 12px 0;
+  color: #1e1e1e;
+  font-weight: 600;
+}
+
+/* Search area */
+.sr-search-wrap {
+  background: #fff;
+  padding: 18px;
+  border-radius: 14px;
+  box-shadow: 0 6px 20px rgba(20, 20, 20, 0.06);
+  margin-bottom: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+.sr-search-inner {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.sr-search-input {
+  flex: 1;
+  border-radius: 10px;
+  padding-right: 0;
+  height: 46px;
+  box-shadow: none;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  font-size: 14px;
+}
+
+/* Search button inside input */
+.sr-search-btn {
+  background: #0fa389;
+  border-color: #0fa389;
+  height: 36px;
+  margin-right: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sr-filter-btn {
+  border-radius: 10px;
+  padding: 7px 12px;
+  height: 40px;
+  background: #09a86a;
+  border: 2px solid #09a86a;
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+}
+
+.sr-filter-btn.active {
+  box-shadow: 0 0 0 4px rgba(10, 160, 140, 0.08);
+}
+
+/* Filters panel */
+.sr-filters-panel {
+  margin-top: 8px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Filter groups */
+.sr-filter-group {
+  padding: 4px 6px;
+}
+
+.sr-filter-heading {
+  color: #555;
+  font-weight: 700;
+  margin-bottom: 8px;
+  font-size: 16px;
+}
+
+/* chips - increased font size & padding per request */
+.sr-chip {
+  cursor: pointer;
+  border-radius: 14px;
+  padding: 8px 14px;
+  background: #10b59a;
+  /* teal */
+  color: #fff;
+  border: none;
+  user-select: none;
+  font-size: 15px;
+  /* increased font-size */
+  font-weight: 700;
+}
+
+.sr-chip:hover {
+  opacity: 0.92;
+}
+
+.sr-chip.active-chip {
+  background: #e43b3b;
+  /* red for active */
+  border: 2px solid #c92b2b;
+  color: #fff;
+}
+
+/* Found count */
+.sr-found {
+  color: #7b7b7b;
+  margin: 18px 0 12px 6px;
+  font-size: 16px;
+}
+
+.sr-count {
+  color: #0f8f79;
+  font-weight: 700;
+}
+
+/* Cards grid */
+.sr-cards {
+  margin-bottom: 40px;
+}
+
+/* Card styling - decreased size and tighter spacing */
+.sr-card {
+  border-radius: 12px;
+  min-height: 270px;
+  /* decreased from before */
+  height: 100%;
+  padding: 14px;
+  /* decreased padding */
+  box-shadow: 0 6px 18px rgba(31, 31, 31, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Top tags inside card */
+.sr-card-header {
+  margin-bottom: 6px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.sr-urgent {
+  background: #fff6f6;
+  color: #d9534f;
+  border: 1px solid rgba(217, 83, 79, 0.12);
+  border-radius: 10px;
+  padding: 4px 8px;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.sr-distance {
+  margin-left: 8px;
+  background: #f6fbfa;
+  color: #444;
+  border-radius: 10px;
+  padding: 4px 8px;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  font-size: 13px;
+}
+
+/* Title & desc - align text properly and reduce size slightly */
+.sr-card-title {
+  margin: 6px 0 6px 0;
+  font-size: 18px;
+  /* decreased */
+  font-weight: 700;
+  color: #111;
+  line-height: 1.1;
+}
+
+.sr-card-desc {
+  color: #707070;
+  margin-bottom: 12px;
+  line-height: 1.4;
+  font-size: 13.5px;
+}
+
+/* meta row: tightened spacing and aligned */
+.sr-meta {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 16px;
+  color: #6d6d6d;
+  font-weight: 500;
+  margin-bottom: 8px;
+  font-size: 13px;
+}
+
+.sr-meta-left,
+.sr-meta-middle,
+.sr-meta-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sr-meta-text {
+  color: #6d6d6d;
+}
+
+/* divider */
+.sr-divider {
+  height: 1px;
+  background: rgba(0, 0, 0, 0.04);
+  margin: 8px 0;
+}
+
+/* bottom area */
+.sr-card-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+/* price */
+.sr-price {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #111;
+}
+
+.sr-currency {
+  font-size: 16px;
+  color: #111;
+}
+
+.sr-amount {
+  color: #0f4aa8;
+  font-weight: 800;
+}
+
+/* action buttons - identical size (smaller) */
+.sr-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.sr-accept,
+.sr-details {
+  min-width: 84px;
+  height: 36px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/* Accept (red) & Details (teal) color */
+.sr-accept {
+  background: #d92121;
+  border-color: #d92121;
+  color: #fff;
+}
+
+.sr-accept:hover {
+  opacity: 0.95;
+}
+
+.sr-details {
+  background: #11b39a;
+  border-color: #11b39a;
+  color: #fff;
+}
+
+.sr-details:hover {
+  opacity: 0.95;
+}
+
+/* No requests styling + animation */
+.sr-no-requests {
+  display: flex;
+  justify-content: flex-start;
+  /* left aligned per request */
+  padding: 20px;
+}
+
+.sr-no-anim {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  animation: srPop 700ms ease;
+}
+
+.sr-no-sub {
+  color: #8a8a8a;
+  font-size: 14px;
+}
+
+/* pop/fade-in animation */
+@keyframes srPop {
+  0% {
+    transform: translateY(-6px) scale(0.98);
+    opacity: 0;
+  }
+
+  60% {
+    transform: translateY(3px) scale(1.02);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+/* small responsiveness tweaks */
+@media (max-width: 992px) {
+  .sr-container {
+    max-width: 920px;
+  }
+
+  .sr-card-title {
+    font-size: 17px;
+  }
+
+  .swf-header {
+    padding: 0 12px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sr-container {
+    padding: 0 8px;
+    max-width: 720px;
+  }
+
+  .sr-search-inner {
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+  }
+
+  .sr-filter-btn {
+    width: 154px;
+    margin-left: auto;
+  }
+
+  .sr-card {
+    min-height: 300px;
+  }
+
+  
+}
+

@@ -1,123 +1,185 @@
-/* ===================== MODAL BACKDROP ===================== */
-.modal-container {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.4);
+/* Full layout wrapper */
+.swf-login-wrapper {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #eef5ff 0%, #ffffff 50%, #f6ecff 100%);
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 40px;
+  position: relative;
+  overflow: hidden;
+  font-family: "Inter", sans-serif;
 }
 
-/* ===================== MODAL BOX ===================== */
-.modal-box {
-  background: #fff;
-  width: 520px;
-  border-radius: 12px;
-  padding: 25px 30px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-
-/* ===================== HEADER TABS ===================== */
-.header {
+/* BACK BUTTON */
+.swf-login-back {
+  position: absolute;
+  top: 25px;
+  left: 25px;
   display: flex;
-  gap: 30px;
-  border-bottom: 1px solid #e6e6e6;
-  padding-bottom: 10px;
-  margin-bottom: 20px;
-  justify-content: center;
-}
-
-.tab {
-  font-size: 16px;
-  padding-bottom: 8px;
-  cursor: pointer;
-  color: #444;
-}
-
-.tab.active {
-  color: #2563eb;
-  border-bottom: 2px solid #2563eb;
-}
-
-/* ===================== FORM ===================== */
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.label {
-  font-size: 14px;
-  font-weight: 500;
-  color: #333;
-}
-
-.req {
-  color: red;
-}
-
-/* Inputs & Textarea */
-.input,
-.textarea,
-.file-input {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 14px;
-}
-
-.textarea {
-  min-height: 80px;
-  resize: vertical;
-}
-
-/* ===================== REMEMBER ROW ===================== */
-.remember-row {
-  display: flex;
+  gap: 8px;
   align-items: center;
-  gap: 6px;
-  margin-top: 5px;
-}
-
-/* ===================== BUTTON ===================== */
-.login-btn {
-  width: 100%;
-  margin-top: 10px;
-  padding: 10px;
-  background: #d60000;
-  color: white;
+  background: transparent;
   border: none;
-  border-radius: 6px;
+  color: #333;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+.swf-login-back:hover {
+  transform: translateX(-4px);
+  color: #1677ff;
+}
+
+/* 2 column container */
+.swf-login-container {
+  width: 100%;
+  max-width: 1100px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+}
+
+@media (min-width: 992px) {
+  .swf-login-container {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* BRAND PANEL */
+.swf-login-brand {
+  display: none;
+}
+@media (min-width: 992px) {
+  .swf-login-brand {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.swf-brand-inner {
+  background: linear-gradient(135deg, #1677ff, #722ed1);
+  color: white;
+  padding: 40px;
+  border-radius: 24px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
+}
+
+.swf-brand-logo {
+  font-size: 42px;
+  background: white;
+  color: #1677ff;
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.swf-brand-title {
+  margin-top: 20px;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.swf-brand-sub {
+  margin-top: 10px;
+  opacity: 0.9;
+}
+
+.swf-benefits {
+  margin-top: 25px;
+  line-height: 2;
+  list-style: none;
+  padding: 0;
+}
+.swf-benefits li {
   font-size: 16px;
+}
+
+/* LOGIN CARD */
+.swf-login-card {
+  border-radius: 24px !important;
+  padding: 32px 32px;
+  backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.65);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.12);
+  animation: fadeIn 0.6s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.swf-login-title {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.swf-login-sub {
+  color: #666;
+  margin-bottom: 20px;
+}
+
+/* Inputs */
+.swf-input {
+  border-radius: 12px !important;
+  height: 48px;
+  transition: 0.2s ease;
+}
+.swf-input:hover, .swf-input:focus-within {
+  border-color: #1677ff !important;
+}
+
+/* Remember + Forgot */
+.swf-row-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.swf-forgot {
+  color: #1677ff;
+  cursor: pointer;
+  font-size: 14px;
+}
+.swf-forgot:hover {
+  text-decoration: underline;
+}
+
+/* Submit Button */
+.swf-submit {
+  height: 48px !important;
+  border-radius: 12px !important;
+  font-weight: 600;
+}
+
+/* Social buttons */
+.swf-social {
+  height: 45px;
+  border-radius: 10px !important;
+  font-weight: 500;
+}
+
+/* Signup */
+.swf-signup {
+  text-align: center;
+  margin-top: 20px;
+  color: #666;
+}
+
+.swf-signup-link {
+  background: none;
+  border: none;
+  margin-left: 4px;
+  color: #1677ff;
+  font-weight: 600;
   cursor: pointer;
 }
-
-/* ===================== HORIZONTAL FILE UPLOAD FIELDS ===================== */
-.file-row {
-  display: flex;
-  gap: 15px;
-  width: 100%;
-}
-
-.file-group {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.file-group .file-input {
-  height: 42px;
-}
-
-/* ===================== RESPONSIVE ===================== */
-@media (max-width: 600px) {
-  .modal-box {
-    width: 95%;
-  }
-
-  .file-row {
-    flex-direction: column;
-  }
+.swf-signup-link:hover {
+  text-decoration: underline;
 }

@@ -40,7 +40,6 @@ import insurance from '../../assets/landingimages/insurance.jpeg';
 const { TabPane } = Tabs;
 
 
-
 const services = [
   {
     img: packingServicesImg,
