@@ -113,13 +113,13 @@ const handleFormCancel = () => {
  
 
 
-        <Button
+  <Button
   size="small"
   className="header-viewall-btn"
   onClick={() => setShowAll(!showAll)}
 >
-  {showAll ? "Show Less" : "View All"}
-</Button>
+  {showAll ? "Show Less" : "View All Services"}
+  </Button>
 
       </div>
 

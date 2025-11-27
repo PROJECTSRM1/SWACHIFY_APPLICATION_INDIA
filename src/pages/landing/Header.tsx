@@ -125,9 +125,12 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({ selectedKey = "home"
       // Also set via your helper for app usage
       setUserDetails("user", { name: fullname, email, phone, address });
 
-      message.success("Registration successful. You are now logged in.");
-      closeAuthModal();
-      navigate("/app/dashboard");
+      // <-- CHANGED: after registering, send user to Login tab instead of dashboard
+      message.success("Registration successful. Please login to continue.");
+      // switch to login tab and keep modal open so user can enter credentials
+      setActiveAuthTab("login");
+      // ensure modal is visible (in case registration was triggered elsewhere)
+      setAuthModalVisible(true);
     } catch (err) {
       console.error("Registration error", err);
       message.error("An error occurred while registering.");
@@ -243,7 +246,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({ selectedKey = "home"
                 <Input />
               </Form.Item>
 
-              <Form.Item label="Phone" name="phone" rules={[{ required: true }]}>
+              <Form.Item label="Phone" name="phone" rules={[{ required: true }]} >
                 <Input />
               </Form.Item>
 
