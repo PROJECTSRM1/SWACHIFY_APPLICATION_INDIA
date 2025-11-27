@@ -404,7 +404,6 @@ const ConstructionMaterials: React.FC = () => {
       <section className="product-categories">
         <div className="pc-inner">
           <h2>Product Categories</h2>
-          <p className="pc-sub">3 cards on top, 3 below — centered properly.</p>
           <div className="pc-grid">
             {productCategories.map((category, i) => (
               <article key={i} className="pc-grid-item">

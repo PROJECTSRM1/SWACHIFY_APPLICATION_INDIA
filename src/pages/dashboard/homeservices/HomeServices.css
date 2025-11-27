@@ -10,82 +10,54 @@
 .home-services-container {
   width: 100%;
   max-width: 1200px;
-  padding: 0 20px;    /* ✔ Equal left-right spacing */
+  padding: 0 20px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-
-
 /* =======================================================
-   TOP BANNER (Reduced Size + Centered)
+   TOP BANNER — MATCH Cleaning Services Style
 ======================================================= */
-/* -----------------------------
-   TOP BANNER (Slightly Larger)
------------------------------ */
-/* ===========================================
-   🔹 COMPACT TOP HEADER (Reduced height)
-=========================================== */
-/* MATCHES Cleaning Service Header Size */
-/* EXACT MATCH OF .cs-header */
-/* ============================================
-   MAKE HOME SERVICES HEADER MATCH CLEANING
-============================================ */
-/* ---------------------------------------------
-   HOME SERVICES HEADER — EXACT CLEANING MATCH
---------------------------------------------- */
 .services-top-banner {
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   width: 100%;
-  padding: 14px 18px;
-
-  background: #089823;
+  padding: 22px 28px;
+  background: #005cfa;
   color: white;
-  border-radius: 10px;
+  border-radius: 12px;
   margin-bottom: 24px;
-
   gap: 10px;
-
-  /* Important: keep elements in 1 line */
   white-space: nowrap;
 }
 
-
-/* LEFT SIDE */
 .banner-left {
   display: flex;
-  align-items: center;          /* ← Centers icon + text vertically */
+  align-items: center;
   gap: 14px;
 }
 
-/* ICON – same size as Cleaning Services */
 .banner-icon {
   width: 42px;
   height: 42px;
   background: rgba(255, 255, 255, 0.18);
   border-radius: 50%;
-  
   display: flex;
   align-items: center;
   justify-content: center;
-
   font-size: 20px;
   color: #fff;
 }
 
-/* TEXT ALIGNMENT FIX */
 .banner-text {
   display: flex;
   flex-direction: column;
-  justify-content: center;      /* ← PERFECT VERTICAL ALIGNMENT */
+  justify-content: center;
 }
 
-/* TITLE */
 .banner-title {
   margin: 0;
   font-weight: 600;
@@ -93,91 +65,86 @@
   color: #fff;
 }
 
-/* SUBTITLE */
 .banner-subtitle {
-  margin-top: 0px;              /* tighter like cleaning services */
+  margin-top: 0px;
   font-size: 13px;
   color: #e8eeff;
 }
 
-/* BUTTON SAME SIZE AS CLEANING */
-.header-viewall-btn {
-  background: #fff !important;
+
+/* Force width override on Ant button */
+.header-viewall-btn,
+.header-viewall-btn.ant-btn {
+  width: 120px !important; /* Change size here */
+  min-width: 120px !important; /* Critical */
+  max-width: 200px !important; /* Prevents expansion */
+  padding: 0 !important; /* Removes extra space inside */
+   background: #fff !important;
   color: #000 !important;
-
-  /* ✨ Make button small */
-  padding: 3px 10px !important;
-  height: 26px !important;
-  font-size: 12px !important;
-  border-radius: 6px !important;
-  min-width: 85px !important;
-  width: auto !important;
-
-  /* prevents stretching */
-  flex-shrink: 0 !important;
-
   border: none !important;
+  height: 36px !important;
+  font-size: 13px !important;
+  
+  border-radius: 4px !important;
   font-weight: 600 !important;
   white-space: nowrap !important;
-
-  /* ensure alignment to right */
   margin-left: auto !important;
-
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1) !important;
+  cursor: pointer;
+  transition: 0.3s ease;
 }
-
-
-
 
 
 .header-viewall-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0,0,0,0.12) !important;
+  transform: translateY(-3px);
+  box-shadow:
+    0 6px 15px rgba(0, 0, 0, 0.20),
+    0 12px 30px rgba(0, 0, 0, 0.18) !important;
 }
-
-.header-viewall-btn.ant-btn {
-  padding: 0 10px !important;
-  height: 24px !important;
-  font-size: 11px !important;
-  min-width: 70px !important;
-  width: auto !important;
-  line-height: 22px !important;
-}
-
-
 
 /* =======================================================
-   GRID (Perfectly centered & equal spacing)
+   GRID RESPONSIVE
 ======================================================= */
 .home-services-container .services-card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
   gap: 20px;
   width: 100%;
-  max-width: 1200px;   /* ✔ Now matches header width */
+  max-width: 1200px;
   justify-items: center;
 }
 
-
-
 /* =======================================================
-   SERVICE CARD
+   SERVICE CARD — Increased Shadow ✔
 ======================================================= */
 .service-card {
   width: 100%;
-  max-width: 250px;
-  border-radius: 12px !important;
-  padding: 10px !important;
+  max-width: 260px;
+  background: #ffffff;
+  border-radius: 10px;
   overflow: hidden;
-  border: 1px solid #e4e4e4;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid #e6e6e6 !important;
+  box-shadow:
+    0 10px 28px rgba(0, 0, 0, 0.20),
+    0 4px 18px rgba(0, 0, 0, 0.12);
+  padding: 0 0 14px 0 !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: 0.35s ease;
 }
 
+/* FULL BLACK HOVER SHADOW */
 .service-card:hover {
-  transform: translateY(-4px) scale(1.03);
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12);
+  transform: translateY(-12px) scale(1.07);
+  box-shadow:
+    0 25px 65px rgba(0, 0, 0, 1),
+    0 15px 35px rgba(0, 0, 0, 1),
+    0 0 20px rgba(0, 0, 0, 1);
+  transition: transform 0.12s ease-out, box-shadow 0.12s ease-out;
+  opacity: 1;
 }
 
+/* IMAGE */
 .service-image {
   height: 160px;
   width: 100%;
@@ -189,125 +156,57 @@
   transform: scale(1.06);
 }
 
+/* TITLE */
 .service-title {
   font-size: 16px;
   font-weight: 600;
   margin-top: 10px;
-
-  
   height: 40px;
   line-height: 20px;
+  text-align: center;
   overflow: hidden;
-
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  text-overflow: ellipsis;
-
 }
 
+/* BUTTON */
 .details-btn {
   background: #000 !important;
   color: white !important;
   border: none !important;
-  height: 30px !important;
+  height: 32px !important;
   font-size: 13px !important;
+  width: 230px !important;
   border-radius: 5px !important;
   margin-top: 10px;
+  text-align: center;
+  transition: 0.25s ease;
 }
 
 .details-btn:hover {
   opacity: 0.85;
 }
 
-
 /* =======================================================
    RESPONSIVENESS
 ======================================================= */
-
-/* Tablets */
 @media (max-width: 992px) {
-  .home-services-container .services-top-banner {
-    max-width: 700px;
-  }
-
   .service-image {
     height: 150px;
   }
 }
 
-/* Mobiles */
 @media (max-width: 768px) {
-  .home-services-container {
-    padding: 12px;
-  }
-
-  .home-services-container .services-top-banner {
-    padding: 16px 16px;
-    text-align: left;
-  }
-
-  .banner-title {
-    font-size: 18px;
-  }
-
   .service-card {
     max-width: 280px;
   }
 }
 
-/* Small Mobiles */
 @media (max-width: 480px) {
-  .home-services-container .services-top-banner {
-    max-width: 100%;
-    padding: 14px 16px;
-  }
-
-  .banner-icon {
-    width: 36px;
-    height: 36px;
-    font-size: 18px;
-  }
-
   .service-card {
     max-width: 92%;
   }
-
   .service-image {
     height: 130px;
-  }
-}
-
-@media (max-width: 320px) {
-  .services-top-banner {
-    padding: 12px 12px;
-    gap: 6px;
-  }
-
-  .banner-icon {
-    width: 32px;
-    height: 32px;
-    font-size: 16px;
-  }
-
-  .banner-title {
-    font-size: 16px !important;
-  }
-
-  .banner-subtitle {
-    font-size: 11px !important;
-  }
-
-  /* FIX BUTTON FOR 320PX */
-  .header-viewall-btn.ant-btn {
-    height: 22px !important;
-    min-width: 60px !important;
-    font-size: 10px !important;
-    padding: 0 6px !important;
-    white-space: nowrap !important;
-  }
-
-  /* Prevent wrapping */
-  .services-top-banner {
-    flex-wrap: nowrap !important;
   }
 }

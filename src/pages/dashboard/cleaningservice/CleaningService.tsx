@@ -560,8 +560,7 @@ const CleaningService: React.FC = () => {
         </div>
       </div>
 
-      
-      <Modal
+    <Modal
         title={<div className="modal-title-row"><div className="modal-title-text">{categories.find(c => c.key === selectedMainKey)?.title || "Category"}</div></div>}
         open={isCategoryModalOpen}
         onCancel={() => setIsCategoryModalOpen(false)}
@@ -571,6 +570,7 @@ const CleaningService: React.FC = () => {
         wrapClassName="no-h-scroll-modal"
       >
 
+
         <div className="subservices-row">
           {(subservicesByMain[selectedMainKey] || []).map((s) => (
             <div className="subservices-col" key={s.key}>
@@ -578,13 +578,22 @@ const CleaningService: React.FC = () => {
                 <img src={s.image} alt={s.title} className="subservice-img" />
                 <div className="subservice-card-body">
                   <Title level={5} className="subservice-card-title">{s.title}</Title>
-                  <Paragraph className="subservice-card-desc">Click to view {s.title.toLowerCase()} services</Paragraph>
+                  {/* <Paragraph className="subservice-card-desc">Click to view {s.title.toLowerCase()} services</Paragraph> */}
+            <Button 
+  size="middle"
+  type="primary"
+  className="black-btn"
+  onClick={() => openSubservice(s.key)}
+>
+  View Details
+</Button>
                 </div>
               </Card>
             </div>
           ))}
         </div>
       </Modal>
+
 
      
       <Modal

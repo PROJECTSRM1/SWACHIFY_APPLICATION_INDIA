@@ -169,17 +169,18 @@
   overflow: hidden;
   box-shadow: 0 6px 18px rgba(12, 20, 30, 0.06);
   background: #fff;
+  border-color: #dcdcdc !important;
 }
 
 .subservice-img {
-  height: 130px !important;              
-  width: 100%;
+  height: 135px !important;              
+  width: 114%;
   object-fit: cover;
 }
 
 
 .subservice-card-body {
-  padding: 12px;
+  padding: 10px;
   text-align: center;
 }
 .subservice-card-title {
@@ -381,6 +382,8 @@
   min-width: 120px;
   height: 38px;
   font-size: 15px;
+  background-color: white;
+  color: #000;
 }
 
 @media (max-width: 600px) {
