@@ -210,3 +210,9 @@
     height: 130px;
   }
 }
+.service-card button{
+  background-color: #000 !important;
+}
+.service-card button:hover{
+  background-color: #000 !important;
+}
