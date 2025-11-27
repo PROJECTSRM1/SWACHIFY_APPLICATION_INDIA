@@ -47,46 +47,6 @@
   border-bottom: 1px solid #eee;
 }
 
-/* =========================================================
-   RED BUTTONS -> BLUE OVERRIDE (EXCEPT SIGNUP)
-   Targets common "danger"/red button selectors and replaces
-   their background/border color with #3b8fe6, preserving
-   layout and responsiveness. Sign-up buttons excluded.
-   ========================================================= */
-
-/* Exclude sign-up related classes: .signup .sign-up .btn-signup .signUp .ant-btn-signup .hs-contact-btn */
-button:not(.signup):not(.sign-up):not(.btn-signup):not(.signUp):not(.ant-btn-signup):not(.hs-contact-btn),
-input[type="button"]:not(.signup):not(.sign-up):not(.btn-signup):not(.signUp):not(.ant-btn-signup):not(.hs-contact-btn),
-input[type="submit"]:not(.signup):not(.sign-up):not(.btn-signup):not(.signUp):not(.ant-btn-signup):not(.hs-contact-btn),
-.ant-btn-danger:not(.signup):not(.sign-up):not(.btn-signup):not(.signUp):not(.ant-btn-signup):not(.hs-contact-btn),
-.btn-danger:not(.signup):not(.sign-up):not(.btn-signup):not(.signUp):not(.ant-btn-signup):not(.hs-contact-btn),
-.button--danger:not(.signup):not(.sign-up):not(.btn-signup):not(.signUp):not(.ant-btn-signup):not(.hs-contact-btn),
-.btn-red:not(.signup):not(.sign-up):not(.btn-signup):not(.signUp):not(.ant-btn-signup):not(.hs-contact-btn),
-.red-btn:not(.signup):not(.sign-up):not(.btn-signup):not(.signUp):not(.ant-btn-signup):not(.hs-contact-btn) {
-  background: #3b8fe6 !important;
-  border-color: #3b8fe6 !important;
-  color: #ffffff !important;
-}
-
-/* also handle hover/focus states for the same selectors so they don't flash red */
-button:not(.signup):not(.sign-up):not(.btn-signup):not(.signUp):not(.ant-btn-signup):not(.hs-contact-btn):hover,
-input[type="button"]:not(.signup):not(.sign-up):not(.btn-signup):not(.signUp):not(.ant-btn-signup):not(.hs-contact-btn):hover,
-input[type="submit"]:not(.signup):not(.sign-up):not(.btn-signup):not(.signUp):not(.ant-btn-signup):not(.hs-contact-btn):hover,
-.ant-btn-danger:not(.signup):not(.sign-up):not(.btn-signup):not(.signUp):not(.ant-btn-signup):not(.hs-contact-btn):hover,
-.btn-danger:not(.signup):not(.sign-up):not(.btn-signup):not(.signUp):not(.ant-btn-signup):not(.hs-contact-btn):hover,
-.button--danger:not(.signup):not(.sign-up):not(.btn-signup):not(.signUp):not(.ant-btn-signup):not(.hs-contact-btn):hover,
-.btn-red:not(.signup):not(.sign-up):not(.btn-signup):not(.signUp):not(.ant-btn-signup):not(.hs-contact-btn):hover,
-.red-btn:not(.signup):not(.sign-up):not(.btn-signup):not(.signUp):not(.ant-btn-signup):not(.hs-contact-btn):hover {
-  background: #2f7fd1 !important;
-  border-color: #2f7fd1 !important;
-  color: #fff !important;
-}
-
-/* =========================================================
-   End of global red->blue override
-   (Sign-up buttons excluded from above rules)
-   ========================================================= */
-
 
 /* ================= HERO ================= */
 .packes-hero {
@@ -620,6 +580,36 @@ input[type="submit"]:not(.signup):not(.sign-up):not(.btn-signup):not(.signUp):no
 .mobile-menu li {
   margin: 15px 0;
   list-style: none;
+}
+
+/* //Button own */
+
+.hero-overlay button{
+  background-color: #03a2f8 !important;
+  border: #2fddf4 ;
+  box-shadow: none;
+}
+.hero-overlay button:hover{
+  background-color: #f1a438 !important;
+  border: rgb(38, 255, 0) !important;
+}
+.service-card button{
+  background-color:#03a2f8 !important ;
+  border: #2fddf4 ;
+  box-shadow: none;
+}
+.service-card button:hover{
+  background-color: #f1a438 !important;
+  border: rgb(38, 255, 0) !important;
+}
+.request-quote button{
+   background-color:#03a2f8 !important ;
+  border: #2fddf4 ;
+  box-shadow: none; 
+}
+.request-quote button:hover{
+  background-color: #f1a438 !important;
+  border: rgb(38, 255, 0) !important;
 }
 
 
