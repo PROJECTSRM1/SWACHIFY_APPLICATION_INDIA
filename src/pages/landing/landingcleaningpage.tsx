@@ -53,28 +53,7 @@ type HSHeaderProps = {
   onSignUp?: () => void;
 };
 
-<<<<<<< HEAD
-export const HSHeader: React.FC<HSHeaderProps> = ({
-  selectedKey = "",
-  onSignUp = () => {},
-}) => {
-  const headerNav = [
-    { key: "home", label: <Link to="/landing">Home</Link> },
-    { key: "cleaning", label: <Link to="/cleaningservice">Cleaning</Link> },
-    { key: "packers", label: <Link to="/LandingPackers">Packers & Movers</Link> },
-    { key: "home_services", label: <Link to="/home_service">Home Services</Link> },
-    { key: "rentals", label: <Link to="/rentals">Rentals</Link> },
-    { key: "commercial", label: <Link to="/commercial-plots">Buy&Sale Properties</Link> },
-    { key: "materials", label: <Link to="/ConstructionMaterials">Construction Materials</Link> },
-       { key: "freelancer", label: <Link to="/Freelancer">Freelancer</Link> }
-  ];
-
-  // IMPORTANT: ensure if selectedKey is empty we pass an empty array so AntD highlights nothing.
-  const selectedKeysArray = selectedKey ? [selectedKey] : [];
-
-=======
 export const HSHeader: React.FC<HSHeaderProps> = () => {
->>>>>>> main
   return (
     <div>
       <CommonHeader selectedKey="cleaningservice" />
