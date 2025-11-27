@@ -1,4 +1,3 @@
-// src/components/CommonHeader/Header.tsx
 import React, { useState } from "react";
 import { setUserDetails } from "../../utils/helpers/storage";
 import { Link, useNavigate } from "react-router-dom";
@@ -21,9 +20,6 @@ import {
 
 import "./Header.css";
 
-// If you want to use the uploaded file as logo, use this path:
-// const logoPath = "/mnt/data/1507b6e8-4a56-495f-b793-503f30788bda.png";
-
 const navItems = [
   { key: "home", label: <Link to="/landing">Home</Link> },
   { key: "cleaning", label: <Link to="/cleaningservice">Cleaning</Link> },
@@ -37,6 +33,15 @@ const navItems = [
 
 const { TabPane } = Tabs;
 
+type RegisteredUser = {
+  fullname: string;
+  email: string;
+  phone: string;
+  password: string;
+};
+
+const STORAGE_KEY = "swachify_registered_user";
+
 const CommonHeader: React.FC<{ selectedKey?: string }> = ({ selectedKey = "home" }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [authModalVisible, setAuthModalVisible] = useState(false);
@@ -49,48 +54,95 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({ selectedKey = "home"
     setAuthModalVisible(true);
     setMenuOpen(false);
   };
+
   const closeAuthModal = () => setAuthModalVisible(false);
 
   const onLogin = async (values: any) => {
-    // placeholder - replace with real auth call
-    console.log("login values", values);
-     const userData = {
-            name: "Test User",
-            email: values.identifier,
-          };
-          
-          console.log('__logs',userData)
-          setUserDetails("user", userData);
-        
-          navigate("/app/dashboard");
-        message.success("Login successful");
+    try {
+      // values.identifier may be email or phone
+      const identifier = (values.identifier || "").toString().trim();
+      const password = (values.password || "").toString();
 
-    // message.success("Login successful");
-    closeAuthModal();
+      if (!identifier || !password) {
+        message.error("Please enter identifier and password");
+        return;
+      }
+
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (!stored) {
+        message.error("No registered user found. Please register first.");
+        return;
+      }
+
+      const user: RegisteredUser = JSON.parse(stored);
+
+      // match either email OR phone + password
+      const identifierMatches =
+        identifier.toLowerCase() === user.email.toLowerCase() ||
+        identifier === user.phone;
+
+      if (identifierMatches && password === user.password) {
+        // set persisted user details (your helper)
+        setUserDetails("user", { name: user.fullname, email: user.email, phone: user.phone });
+        message.success("Login successful");
+        closeAuthModal();
+        navigate("/app/dashboard");
+      } else {
+        message.error("Invalid credentials. Please check email/phone and password.");
+      }
+    } catch (err) {
+      console.error("Login error", err);
+      message.error("An error occurred while logging in.");
+    }
   };
 
   const onRegister = async (values: any) => {
-    // placeholder - replace with real register call
-    console.log("register values", values);
-    message.success("Registration successful");
-    closeAuthModal();
-    navigate("/app/dashboard");
+    try {
+      const fullname = (values.fullname || "").toString().trim();
+      const email = (values.email || "").toString().trim();
+      const phone = (values.phone || "").toString().trim();
+      const password = (values.password || "").toString();
+
+      if (!fullname || !email || !phone || !password) {
+        message.error("Please fill all required fields");
+        return;
+      }
+
+      // create registered user object
+      const newUser: RegisteredUser = {
+        fullname,
+        email,
+        phone,
+        password,
+      };
+
+      // store in localStorage
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(newUser));
+
+      // Also set via your helper for app usage
+      setUserDetails("user", { name: fullname, email, phone });
+
+      message.success("Registration successful. You are now logged in.");
+      closeAuthModal();
+      navigate("/app/dashboard");
+    } catch (err) {
+      console.error("Registration error", err);
+      message.error("An error occurred while registering.");
+    }
   };
 
   return (
     <>
       <header className="hs-navbar">
         <div className="hs-navbar-logo">
-          {/* Use image logo if available, else text */}
-          {/* <img src={logoPath} alt="logo" className="hs-logo-image" /> */}
           <span className="hs-logo-text">SWACHIFY INDIA</span>
         </div>
 
         <button
           className="mobile-menu-icon"
-          aria-label={menuOpen ? "Close menu" : "Open menu"}
-          onClick={() => setMenuOpen((s) => !s)}
           type="button"
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          onClick={() => setMenuOpen(!menuOpen)}
         >
           {menuOpen ? <CloseOutlined /> : <MenuOutlined />}
         </button>
@@ -102,18 +154,17 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({ selectedKey = "home"
           items={navItems}
         />
 
-<Button
-  type="primary"
-  className="hs-contact-btn"
-  onClick={() => openAuthModal("register")}
-  htmlType="button"      // <--- prevent accidental form submit
->
-  Sign Up
-</Button>
-
+        {/* ONLY CHANGE: added signup-btn class */}
+        <Button
+          // type="primary"
+          className="hs-contact-btn signup-btn"
+          onClick={() => openAuthModal("register")}
+          htmlType="button"
+        >
+          Sign Up
+        </Button>
       </header>
 
-      {/* Mobile dropdown menu */}
       {menuOpen && (
         <ul className="mobile-menu">
           {navItems.map((n) => (
@@ -138,7 +189,6 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({ selectedKey = "home"
         </ul>
       )}
 
-      {/* Auth modal shared across pages */}
       <Modal
         open={authModalVisible}
         onCancel={closeAuthModal}
@@ -154,59 +204,75 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({ selectedKey = "home"
           centered
         >
           <TabPane tab="Login" key="login">
-            <Form layout="vertical" name="loginForm" onFinish={onLogin} preserve={false}>
-              <Form.Item label="Email / Phone" name="identifier" rules={[{ required: true }]}>
+            <Form layout="vertical" onFinish={onLogin} preserve={false}>
+              <Form.Item label="Email / Phone" name="Email/Phone" rules={[{ required: true }]}>
                 <Input placeholder="john@example.com or +1 555 123 4567" />
               </Form.Item>
 
               <Form.Item label="Password" name="password" rules={[{ required: true }]}>
-                <Input.Password placeholder="Password" iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} />
+                <Input.Password iconRender={(v) => (v ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} />
               </Form.Item>
 
               <Form.Item>
-                <Form.Item name="remember" valuePropName="checked" noStyle>
-                  <Checkbox>Remember me</Checkbox>
-                </Form.Item>
+                <Checkbox>Remember me</Checkbox>
               </Form.Item>
 
               <Form.Item>
-                <Button type="primary" block htmlType="submit">Login</Button>
+                <Button
+                  // type="primary"
+                  block
+                  htmlType="submit"
+                >
+                  Login
+                </Button>
               </Form.Item>
             </Form>
           </TabPane>
 
           <TabPane tab="Register" key="register">
-            <Form layout="vertical" name="registerForm" onFinish={onRegister} preserve={false}>
+            <Form layout="vertical" onFinish={onRegister} preserve={false}>
               <Form.Item label="Full name" name="fullname" rules={[{ required: true }]}>
-                <Input placeholder="John Doe" />
+                <Input />
               </Form.Item>
 
               <Form.Item label="Email" name="email" rules={[{ required: true }, { type: "email" }]}>
-                <Input placeholder="john@example.com" />
+                <Input />
               </Form.Item>
 
               <Form.Item label="Phone" name="phone" rules={[{ required: true }]}>
-                <Input placeholder="+1 555 123 4567" />
+                <Input />
               </Form.Item>
 
               <Form.Item label="Password" name="password" rules={[{ required: true }]} hasFeedback>
-                <Input.Password placeholder="Choose a password" iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} />
+                <Input.Password />
               </Form.Item>
 
-              <Form.Item label="Confirm Password" name="confirm" dependencies={["password"]} hasFeedback rules={[
-                { required: true },
-                ({ getFieldValue }) => ({
-                  validator(_, value) {
-                    if (!value || getFieldValue("password") === value) return Promise.resolve();
-                    return Promise.reject(new Error("Passwords do not match"));
-                  },
-                }),
-              ]}>
-                <Input.Password placeholder="Confirm password" iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} />
+              <Form.Item
+                label="Confirm Password"
+                name="confirm"
+                dependencies={["password"]}
+                hasFeedback
+                rules={[
+                  { required: true },
+                  ({ getFieldValue }) => ({
+                    validator(_, value) {
+                      if (!value || getFieldValue("password") === value) return Promise.resolve();
+                      return Promise.reject(new Error("Passwords do not match"));
+                    },
+                  }),
+                ]}
+              >
+                <Input.Password />
               </Form.Item>
 
               <Form.Item>
-                <Button type="primary" block htmlType="submit">Register</Button>
+                <Button
+                  // type="primary"
+                  block
+                  htmlType="submit"
+                >
+                  Register
+                </Button>
               </Form.Item>
             </Form>
           </TabPane>
