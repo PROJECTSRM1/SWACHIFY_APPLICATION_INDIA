@@ -1,0 +1,84 @@
+.registration-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: #f0f4f8;
+    position: relative;
+}
+
+.back-btn {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: none;
+    border: none;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    cursor: pointer;
+    color: #4b5563;
+}
+
+.branding-card {
+    background: linear-gradient(135deg, #7c3aed, #2563eb);
+    color: white;
+    border-radius: 16px;
+    padding: 2rem;
+}
+
+.branding-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.steps-list {
+    margin-top: 2rem;
+}
+
+.step-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.step-circle {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+}
+
+.step-circle.active {
+    background: white;
+    color: #7c3aed;
+}
+
+.reg-card {
+    border-radius: 16px;
+}
+
+.form-error {
+    color: #f44336;
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+}
+
+.step-container {
+    margin-top: 1rem;
+}
+
+.step-container.step3 {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
