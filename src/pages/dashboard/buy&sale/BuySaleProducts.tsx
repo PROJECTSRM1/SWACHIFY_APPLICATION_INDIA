@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useCallback } from 'react';
+import { useCart } from '../../../context/CartContext';
 import {
   Card,
   Form,
@@ -27,7 +28,6 @@ import {
   RiseOutlined,
   EnvironmentOutlined,
   PlusOutlined,
-  ArrowLeftOutlined,
   EyeOutlined,
   FileTextOutlined,
   DollarOutlined,
@@ -115,6 +115,7 @@ interface PropertyDetailViewProps {
   onOpenDocVerify: () => void;
 }
 
+
 interface PropertyFormValues {
   propertyType: string;
   listingType: 'sale' | 'purchase';
@@ -191,20 +192,6 @@ const MOCK_PROPERTY_LISTINGS: PropertyListing[] = [
     description:
       '8,000 sq.ft. office plot in a prime financial corridor, with approvals for high-rise corporate development and strong rental demand.',
   },
-  // {
-  //   id: 4,
-  //   title: 'Shopping Complex Land',
-  //   listingType: 'sale',
-  //   price: 35000000, // ₹3.5 Cr
-  //   area: 15000,
-  //   location: 'Suburban Area, Hyderabad',
-  //   tags: ['Mall Approved', 'Parking Space', 'High Footfall'],
-  //   roi: '18–22% per annum',
-  //   imagePath: Land,
-  //   propertyType: 'Retail',
-  //   description:
-  //     '15,000 sq.ft. plot pre-approved for a shopping complex with dedicated parking and strong residential catchment.',
-  // },
   {
     id: 5,
     title: 'Boutique Hotel Development Land',
@@ -212,7 +199,7 @@ const MOCK_PROPERTY_LISTINGS: PropertyListing[] = [
     price: 15000000,
     area: 5000,
     location: 'Beachfront Area, Goa',
-    tags: ['High Tourist Footfall', 'Sea Facing', 'Zoning Approved'],
+    tags: ['High Tourist Footfall', 'Sea Facing'],
     roi: '18–20% per annum',
     imagePath: Land,
     propertyType: 'Land/Commercial',
@@ -286,31 +273,35 @@ const PropertyCard: React.FC<{
         title={<span className="service-card-title">{property.title}</span>}
         description={
           <Space direction="vertical" style={{ width: '100%' }}>
-            <Text type="secondary" className="text-with-icon-align">
-              <EnvironmentOutlined /> {property.location}
-            </Text>
-            <Title level={4} className="price-title">
-              {formatINR(property.price)}
-            </Title>
-            <Text type="secondary">
-              {property.area} sq.ft • Type: {property.propertyType}
-            </Text>
-            <Space size={[0, 8]} wrap className="tags-space-top">
-              {property.tags.map((tag) => (
-                <Tag key={tag}>{tag}</Tag>
-              ))}
-            </Space>
-            <Text className="roi-text">
-              <RiseOutlined /> {property.roi}
-            </Text>
-            <Text className="property-card-description">
-              {property.description}
-            </Text>
+            <div className="property-card-content-wrapper">
+              <Text type="secondary" className="text-with-icon-align">
+                <EnvironmentOutlined /> {property.location}
+              </Text>
+              <Title level={4} className="price-title">
+                {formatINR(property.price)}
+              </Title>
+              <Text type="secondary">
+                {property.area} sq.ft • Type: {property.propertyType}
+              </Text>
+              <Space size={[0, 8]} wrap className="tags-space-top">
+                {property.tags.map((tag) => (
+                  <Tag key={tag}>{tag}</Tag>
+                ))}
+              </Space>
+              <Text className="roi-text">
+                <RiseOutlined /> {property.roi}
+              </Text>
+              <Text className="property-card-description">
+                {property.description}
+              </Text>
+            </div>
+
             <Space className="button-group-space-top" wrap>
-              <Button type="primary" size="middle" onClick={() => onViewDetails(property)}>
-                Contact / Negotiate
-              </Button>
-              <Button size="middle" onClick={() => onViewDetails(property)}>
+              <Button
+                size="middle"
+                className="buy_sale_view_btn"
+                onClick={() => onViewDetails(property)}
+              >
                 View Details
               </Button>
             </Space>
@@ -321,12 +312,39 @@ const PropertyCard: React.FC<{
   );
 };
 
+
+
 /* ---------- price negotiation (INR) ---------- */
 
-const PriceNegotiationContent: React.FC<ContentComponentProps & { currentPrice: number }> = ({
+const PriceNegotiationContent: React.FC<ContentComponentProps & { currentPrice: number; property: PropertyListing  }> = ({
   currentPrice,
+  property,
 }) => {
   const [form] = Form.useForm<PriceNegotiationFormValues>();
+
+   const { addToCart } = useCart();
+
+  const handleAddToCart = () => {
+  addToCart({
+    id: property.id,
+    title: property.title,
+    price: property.price,
+    quantity: 1,
+    image: property.imagePath,
+
+    totalPrice: Number(property.price),   // or computed
+
+    customerName: "",
+    deliveryType: "",
+    deliveryDate: "",
+    contact: "",
+    address: "",
+    instructions: "",
+  });
+
+  message.success('Property added to cart');
+};
+
 
   const [priceComparison, setPriceComparison] = useState<{
     diff: number;
@@ -637,9 +655,9 @@ const PriceNegotiationContent: React.FC<ContentComponentProps & { currentPrice: 
           )}
         </Row>
 
-        <Button type="primary" htmlType="submit">
-          Submit Enquiry & Offer
-        </Button>
+        <Button size="middle" onClick={handleAddToCart}>
+                Add to Cart
+              </Button>
       </Form>
     </div>
   );
@@ -739,9 +757,10 @@ const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({
 
         <Col xs={24} lg={14}>
           <Divider orientation="left">
-            <EyeOutlined /> Price Analysis & Negotiation
-          </Divider>
-          <PriceNegotiationContent currentPrice={property.price} />
+  <EyeOutlined /> Price Analysis & Negotiation
+</Divider>
+<PriceNegotiationContent currentPrice={property.price} property={property} />
+
         </Col>
       </Row>
     </div>
@@ -1105,7 +1124,7 @@ const SERVICES_DATA: Service[] = [
       {
         key: 'propListingSale',
         title: 'Property Listing for Sale',
-        description: 'Click to view properties listed for sale.',
+        description: '',
         contentComponent: PropertyListingSaleContent as React.FC<any>,
         imagePath: Modern,
       },
@@ -1172,14 +1191,14 @@ const SERVICES_DATA: Service[] = [
       {
         key: 'delivery',
         title: 'Home Delivery & Tracking',
-        description: 'Click to manage delivery partners and zones.',
+        description: '',
         contentComponent: OnlineDeliveryContent,
         imagePath: d,
       },
       {
         key: 'offers',
         title: 'Online Offers & Coupons',
-        description: 'Click to create coupons and promo campaigns.',
+        description: '',
         contentComponent: OnlineOffersContent,
         imagePath: e,
       },
@@ -1319,7 +1338,7 @@ const renderMainServices = () => (
         onClick={handleBackToMain}
         type="text"
         className="minimal-back-button back-button-style"
-        icon={<ArrowLeftOutlined />}
+        // icon={<ArrowLeftOutlined />}
       />
       <Title level={3} className="modal-title-no-margin">
         {currentService?.title} 
@@ -1333,7 +1352,7 @@ const renderMainServices = () => (
         onClick={handleBackToSubservices}
         type="text"
         className="minimal-back-button back-button-style"
-        icon={<ArrowLeftOutlined />}
+        // icon={<ArrowLeftOutlined />}
       />
       <Title level={3} className="modal-title-no-margin">
         {currentSubservice?.title}
@@ -1347,7 +1366,7 @@ const renderMainServices = () => (
         onClick={handleClosePropertyDetail}
         type="text"
         className="minimal-back-button back-button-style"
-        icon={<ArrowLeftOutlined />}
+        // icon={<ArrowLeftOutlined />}
       />
       <Title level={3} className="modal-title-no-margin">
         {selectedProperty?.title || 'Property Details'}

@@ -1,9 +1,11 @@
 // c:/Users/Manikantha.N/Desktop/SWACHIFY_APPLICATION_INDIA/src/pages/landing/ConstructionMaterials.tsx
 import React, { useState, useEffect } from "react";
+import CommonHeader from "../../pages/landing/Header";
+import "../../pages/landing/Header.css"; // import CSS for header
 import {
   Row,
   Col,
-  Menu,
+  // Menu,
   Card,
   Button,
   Typography,
@@ -23,62 +25,48 @@ import {
   TwitterOutlined,
   InstagramOutlined,
   LinkedinOutlined,
+  // MenuOutlined,
+  // CloseOutlined,
 } from "@ant-design/icons";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./ConstructionMaterials.css";
-import heroImage from "../../assets/landingimages/brickwall.jpg";
-import heroImage1 from "../../assets/landingimages/brickwall.jpg";
+import brickwalss from "../../assets/landingimages/brickwall.jpg";
+
+import premiumportlandcement from "../../assets/landingimages/PremiumPortlandCement.jpg";
+import tmtsteelbars from "../../assets/landingimages/TMTSteelBars.jpg";
+import aacblocks from "../../assets/landingimages/AACBlocks.jpeg";
+import msand from "../../assets/landingimages/M.Sand.jpg";
+import cementandconcrete from "../../assets/landingimages/Cement&Concrete.jpg";
+import steelandmetals from "../../assets/landingimages/Steel&Metals.jpg";
+import bricksandblocks from "../../assets/landingimages/Bricks&Blocks.jpg";
+import sandandaggregates from "../../assets/landingimages/Sand&Aggregates.jpg";
+import roofingmaterials from "../../assets/landingimages/RoofingMaterials.jpg";
+import plumbingandelectrical from "../../assets/landingimages/Plumbing&Electrical.jpeg";
 
 const { Title, Text } = Typography;
 const { Option } = Select;
 const { TabPane } = Tabs;
 /* ================= NAV ITEMS ================= */
-const navItems = [
-  { key: "home", label: <Link to="/landing">Home</Link> },
-  { key: "cleaning", label: <Link to="/cleaningservice">Cleaning</Link> },
-  { key: "packers", label: <Link to="/LandingPackers">Packers & Movers</Link> },
-  { key: "home_services", label: <Link to="/home_service">Home Services</Link> },
-  { key: "rentals", label: <Link to="/rentals">Rentals</Link> },
-  { key: "commercial", label: <Link to="/commercial-plots">Buy&Sale Properties</Link> },
-  { key: "materials", label: <Link to="/ConstructionMaterials">Construction Materials</Link> },
-  { key: "freelancer", label: <Link to="/Freelancer">Freelancer</Link> },
-  //  { key: "location", label: <Link to="">Location</Link> },
-];
+// const navItems = [
+//   { key: "home", label: <Link to="/landing">Home</Link> },
+//   { key: "cleaning", label: <Link to="/cleaningservice">Cleaning</Link> },
+//   { key: "packers", label: <Link to="/LandingPackers">Packers & Movers</Link> },
+//   { key: "home_services", label: <Link to="/home_service">Home Services</Link> },
+//   { key: "rentals", label: <Link to="/rentals">Rentals</Link> },
+//   { key: "commercial", label: <Link to="/commercial-plots">Buy&Sale Properties</Link> },
+//   { key: "materials", label: <Link to="/ConstructionMaterials">Construction Materials</Link> },
+//   { key: "freelancer", label: <Link to="/Freelancer">Freelancer</Link> },
+//   //  { key: "location", label: <Link to="">Location</Link> },
+// ];
 /* ================= NAVBAR SECTION ================= */
-interface NavbarProps {
-  menuOpen: boolean;
-  setMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
-const NavbarSection: React.FC<NavbarProps> = ({ menuOpen, setMenuOpen }) => (
+// interface NavbarProps {
+//   menuOpen: boolean;
+//   setMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
+// }
+const NavbarSection: React.FC= ()  => (
   <>
-    <header className="hs-navbar">
-      <div className="hs-navbar-logo">
-        <span className="hs-logo-text">SWACHIFY INDIA</span>
-      </div>
-      <Menu
-        mode="horizontal"
-        selectedKeys={["home-services"]}
-        className="hs-navbar-menu"
-        items={navItems}
-      />
-      <Button type="primary" className="hs-contact-btn">
-        Sign Up
-      </Button>
-    </header>
-    {menuOpen && (
-      <ul className="mobile-menu">
-        <li><Link to="/" onClick={() => setMenuOpen(false)}>Home</Link></li>
-        <li><Link to="/cleaningservice" onClick={() => setMenuOpen(false)}>Cleaning</Link></li>
-        <li><Link to="/LandingPackers" onClick={() => setMenuOpen(false)}>Packers & Movers</Link></li>
-        <li><Link to="/home_service" onClick={() => setMenuOpen(false)}>Home Services</Link></li>
-        <li><Link to="/homeapartment" onClick={() => setMenuOpen(false)}>Rentals</Link></li>
-        <li><Link to="/Buy_SaleHouseProducts" onClick={() => setMenuOpen(false)}>Commercial Plots</Link></li>
-        <li><Link to="/ConstructionMaterials" onClick={() => setMenuOpen(false)}>Construction Materials</Link></li>
-        <li><Link to="/contactus" onClick={() => setMenuOpen(false)}>Contact</Link></li>
-        <li><Link to="/Cart" onClick={() => setMenuOpen(false)}>Cart</Link></li>
-        <li><Link to="/Login" onClick={() => setMenuOpen(false)}>Login</Link></li>
-      </ul>
-    )}
+<CommonHeader selectedKey="ConstructionMaterials" />
+   
   </>
 );
 /* ================= DATA ================= */
@@ -91,28 +79,28 @@ const services = [
 const featuredProducts = [
   {
     title: "Premium Portland Cement",
-    image: heroImage1,
+    image: premiumportlandcement,
     price: "$8.50 per bag (50kg)",
     rating: "4.8/5",
     details: ["High Strength", "Quick Setting", "Weather Resistant"],
   },
   {
     title: "TMT Steel Bars (Fe 500)",
-    image: "https://via.placeholder.com/300x200?text=Steel",
+    image: tmtsteelbars,
     price: "$650 per ton",
     rating: "4.9/5",
     details: ["High Tensile", "Corrosion Resistant", "ISI Certified"],
   },
   {
     title: "AAC Blocks",
-    image: "https://via.placeholder.com/300x200?text=AAC+Blocks",
+    image: aacblocks,
     price: "$2.20 per block",
     rating: "4.7/5",
     details: ["Lightweight", "Thermal Insulation", "Fire Resistant"],
   },
   {
     title: "M-Sand (Manufactured Sand)",
-    image: "https://via.placeholder.com/300x200?text=MSand",
+    image: msand,
     price: "$45 per ton",
     rating: "4.6/5",
     details: ["Consistent Quality", "Eco Friendly", "No Impurities"],
@@ -122,32 +110,32 @@ const productCategories = [
   {
     title: "Cement & Concrete",
     items: ["Portland Cement", "Ready-Mix Concrete", "Mortar", "Grout"],
-    image: "https://via.placeholder.com/400x260?text=Cement",
+    image: cementandconcrete,
   },
   {
     title: "Steel & Metals",
     items: ["TMT Bars", "Steel Beams", "Wire Mesh", "Angles & Channels"],
-    image: "https://via.placeholder.com/400x260?text=Steel",
+    image: steelandmetals,
   },
   {
     title: "Bricks & Blocks",
     items: ["Red Bricks", "Fly Ash Bricks", "AAC Blocks", "Concrete Blocks"],
-    image: "https://via.placeholder.com/400x260?text=Bricks",
+    image: bricksandblocks,
   },
   {
     title: "Sand & Aggregates",
     items: ["River Sand", "M Sand", "Coarse Aggregates", "Stone Chips"],
-    image: "https://via.placeholder.com/400x260?text=Sand",
+    image: sandandaggregates,
   },
   {
     title: "Roofing Materials",
     items: ["Roof Tiles", "Metal Sheets", "Waterproofing", "Insulation"],
-    image: "https://via.placeholder.com/400x260?text=Roofing",
+    image: roofingmaterials,
   },
   {
     title: "Plumbing & Electrical",
     items: ["PPR Pipes", "Copper Wires", "Switches", "Fittings"],
-    image: "https://via.placeholder.com/400x260?text=Plumbing",
+    image: plumbingandelectrical,
   },
 ];
 /* ================= AUTH MODAL ================= */
@@ -377,7 +365,7 @@ const Footer: React.FC<FooterProps> = ({
 };
 /* ================= MAIN PAGE ================= */
 const ConstructionMaterials: React.FC = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
+  // const [menuOpen, setMenuOpen] = useState(false);
   const [authVisible, setAuthVisible] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
@@ -392,12 +380,17 @@ const ConstructionMaterials: React.FC = () => {
   };
   return (
     <div className="construction-materials-container">
-      <NavbarSection menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+      <NavbarSection  />
       {/* HERO */}
-      <section
-        className="hero-section"
-        style={{ backgroundImage: `url(${heroImage})` }}
-      >
+<section
+  className="hero-section"
+  style={{
+    backgroundImage: `url(${brickwalss})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  }}
+>
+
         <div className="hero-overlay">
           <h1>Quality Building Materials at Best Prices</h1>
           <p>Browse our comprehensive range of construction materials.</p>
@@ -411,7 +404,6 @@ const ConstructionMaterials: React.FC = () => {
       <section className="product-categories">
         <div className="pc-inner">
           <h2>Product Categories</h2>
-          <p className="pc-sub">3 cards on top, 3 below — centered properly.</p>
           <div className="pc-grid">
             {productCategories.map((category, i) => (
               <article key={i} className="pc-grid-item">

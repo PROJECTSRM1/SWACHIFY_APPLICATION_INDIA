@@ -1,11 +1,13 @@
 // src/pages/landing/LandingPackers.tsx
 import React, { useState } from 'react';
+import CommonHeader from "../../pages/landing/Header";
+import "../../pages/landing/Header.css"; // import CSS for header
 import {
   Card,
   Button,
   Form,
   Input,
-  Menu,
+  // Menu,
   Modal,
   Tabs,
   Checkbox
@@ -17,10 +19,11 @@ import {
   DollarOutlined,
   UserOutlined,
   ClockCircleOutlined,
-//EnvironmentOutlined,
   MailOutlined,
+  // MenuOutlined,
+  // CloseOutlined,
 } from '@ant-design/icons';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './LandingPackers.css';
 
 // === IMAGE IMPORTS ===
@@ -34,9 +37,9 @@ import Loadingtransport from '../../assets/landingimages/Loadingtransport.jpg';
 import insurance from '../../assets/landingimages/insurance.jpeg';
 // =====================
 
-// const { Option } = Select;
 const { TabPane } = Tabs;
 
+<<<<<<< HEAD
 const navItems = [
   { key: "home", label: <Link to="/landing">Home</Link> },
   { key: "cleaning", label: <Link to="/cleaningservice">Cleaning</Link> },
@@ -48,6 +51,9 @@ const navItems = [
    { key: "freelancer", label: <Link to="/Freelancer">Freelancer</Link> }
     // { key: "location", label: <Link to="">Location</Link> },
 ];
+=======
+
+>>>>>>> main
 
 const services = [
   {
@@ -134,6 +140,7 @@ const LandingPackers: React.FC = () => {
   const [authVisible, setAuthVisible] = useState(false);
   const [loginForm] = Form.useForm();
   const [registerForm] = Form.useForm();
+  // const [menuOpen, setMenuOpen] = useState(false); // <-- added hamburger state
   const navigate = useNavigate();
 
   // 🚀 LOGIN → DIRECT NAVIGATION
@@ -180,7 +187,6 @@ const LandingPackers: React.FC = () => {
               <Input.Password placeholder="Password" />
             </Form.Item>
 
-            {/* ⭐ Added Remember Me Checkbox */}
             <Form.Item name="remember" valuePropName="checked">
               <Checkbox>Remember me</Checkbox>
             </Form.Item>
@@ -232,7 +238,7 @@ const LandingPackers: React.FC = () => {
               dependencies={["password"]}
               rules={[
                 { required: true },
-                ({ getFieldValue }) => ({
+                ({ getFieldValue }) => ( {
                   validator(_, value) {
                     return !value || getFieldValue("password") === value
                       ? Promise.resolve()
@@ -257,22 +263,8 @@ const LandingPackers: React.FC = () => {
   return (
     <div className="packers-container">
 
-      {/* HEADER */}
-      <header className="hs-navbar">
-        <div className="hs-navbar-logo">
-          <span className="hs-logo-text">SWACHIFY INDIA</span>
-        </div>
-
-        <Menu mode="horizontal" items={navItems} className="hs-navbar-menu" />
-
-        <Button
-          type="primary"
-          className="hs-contact-btn"
-          onClick={() => setAuthVisible(true)}
-        >
-          Sign Up
-        </Button>
-      </header>
+<CommonHeader selectedKey="LandingPackers" />
+     
 
       <AuthModal />
 
@@ -294,7 +286,7 @@ const LandingPackers: React.FC = () => {
         <div className="services-row">
           {services.map((s, i) => (
             <Card key={i} className="packes-card">
-              <img src={s.img} className="service-img" />
+              <img src={s.img} className="service-img" alt={s.title} />
               <div className="packes-icon">{s.icon}</div>
               <h3>{s.title}</h3>
               <p>{s.desc}</p>
@@ -311,7 +303,7 @@ const LandingPackers: React.FC = () => {
             <Card
               key={i}
               className="service-card"
-              cover={<img src={t.image} className="service-img" />}
+              cover={<img src={t.image} className="service-img" alt={t.title} />}
             >
               <h3>{t.title}</h3>
               <p>Starting at {t.price}</p>
@@ -337,7 +329,8 @@ const LandingPackers: React.FC = () => {
           </Form.Item>
 
           <Form.Item label="Phone Number" name="phoneNumber" rules={[{ required: true }]}>
-            {/* <Input prefix={<EnvironmentOutlined />} /> */}
+            {/* input intentionally left blank in original */}
+            <Input />
           </Form.Item>
 
           <Button type="primary" block>Submit</Button>
@@ -359,60 +352,59 @@ const LandingPackers: React.FC = () => {
       </section>
 
       {/* FOOTER */}
-{/* FOOTER */}
-<footer className="lr-footer site-footer" role="contentinfo" aria-label="Footer">
-  <div className="lr-footer-inner lr-footer-grid">
-    <div className="lr-footer-col">
-      <h4>About Us</h4>
-      <p className="lr-footer-about">
-        Your trusted partner for all home and property-related services. Quality,
-        reliability, and customer satisfaction guaranteed.
-      </p>
-    </div>
-    <div className="lr-footer-col">
-      <h4>Services</h4>
-      <ul className="lr-footer-list">
-        <li>Cleaning Service</li>
-        <li>Packers & Movers</li>
-        <li>Home Services</li>
-        <li>Rentals</li>
-        <li>Commercial Plots</li>
-        <li>Construction Materials</li>
-      </ul>
-    </div>
-    <div className="lr-footer-col">
-      <h4>Quick Links</h4>
-      <ul className="lr-footer-list">
-        <li>Home</li>
-        <li>About</li>
-        <li>Contact</li>
-        <li>Careers</li>
-      </ul>
-    </div>
-    <div className="lr-footer-col">
-      <h4>Contact Info</h4>
-      <ul className="lr-contact-list">
-        <li className="lr-contact-phone">
-          <span aria-hidden className="lc-contact-icon">📞</span>
-          <span className="lc-contact-text"> +1 (555) 123-4567</span>
-        </li>
-        <li>✉️ &nbsp; info@homeservices.com</li>
-        <li>📍 &nbsp; 123 Service Street, City, State</li>
-      </ul>
-      <div className="lr-footer-socials" aria-hidden>
-        <a className="social" href="#" aria-label="facebook">f</a>
-        <a className="social" href="#" aria-label="twitter">t</a>
-        <a className="social" href="#" aria-label="instagram">ig</a>
-        <a className="social" href="#" aria-label="linkedin">in</a>
-      </div>
-    </div>
-  </div>
+      <footer className="lr-footer site-footer" role="contentinfo" aria-label="Footer">
+        <div className="lr-footer-inner lr-footer-grid">
+          <div className="lr-footer-col">
+            <h4>About Us</h4>
+            <p className="lr-footer-about">
+              Your trusted partner for all home and property-related services. Quality,
+              reliability, and customer satisfaction guaranteed.
+            </p>
+          </div>
+          <div className="lr-footer-col">
+            <h4>Services</h4>
+            <ul className="lr-footer-list">
+              <li>Cleaning Service</li>
+              <li>Packers & Movers</li>
+              <li>Home Services</li>
+              <li>Rentals</li>
+              <li>Commercial Plots</li>
+              <li>Construction Materials</li>
+            </ul>
+          </div>
+          <div className="lr-footer-col">
+            <h4>Quick Links</h4>
+            <ul className="lr-footer-list">
+              <li>Home</li>
+              <li>About</li>
+              <li>Contact</li>
+              <li>Careers</li>
+            </ul>
+          </div>
+          <div className="lr-footer-col">
+            <h4>Contact Info</h4>
+            <ul className="lr-contact-list">
+              <li className="lr-contact-phone">
+                <span aria-hidden className="lc-contact-icon">📞</span>
+                <span className="lc-contact-text"> +1 (555) 123-4567</span>
+              </li>
+              <li>✉️ &nbsp; info@homeservices.com</li>
+              <li>📍 &nbsp; 123 Service Street, City, State</li>
+            </ul>
+            <div className="lr-footer-socials" aria-hidden>
+              <a className="social" href="#" aria-label="facebook">f</a>
+              <a className="social" href="#" aria-label="twitter">t</a>
+              <a className="social" href="#" aria-label="instagram">ig</a>
+              <a className="social" href="#" aria-label="linkedin">in</a>
+            </div>
+          </div>
+        </div>
 
-  <div className="lr-footer-bottom">
-    <div className="lr-footer-sep" />
-    <div className="lr-footer-copy">© 2025 Home Services. All rights reserved.</div>
-  </div>
-</footer>
+        <div className="lr-footer-bottom">
+          <div className="lr-footer-sep" />
+          <div className="lr-footer-copy">© 2025 Home Services. All rights reserved.</div>
+        </div>
+      </footer>
 
     </div>
   );

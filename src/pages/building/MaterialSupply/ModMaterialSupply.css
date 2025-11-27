@@ -1,6 +1,7 @@
+
 .material-wrapper {
   width: 100%;
-  background: transparent;
+  background: white;
   min-height: 90vh;
   padding: 0 !important;
   margin: 0 !important;
@@ -9,16 +10,17 @@
 
 .rd-imgeader {
   width: 100%;
-  background: #d97706;
+  background: #005cfa;
   padding: 14px 16px;
   color: white;
   margin-bottom: 20px;
   border-radius: 14px;
+  margin-top: 25px;
 }
 
 .rd-imgeader h2 {
   margin: 0;
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 600;
 }
 
@@ -39,7 +41,7 @@
 .material-card {
   background: #ffffff;
   border-radius: 16px;
-  padding: 5px;
+  padding: 7px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
   transition: 0.2s ease;
   display: flex;
@@ -58,10 +60,10 @@
 }
 
 .card-content h3 {
-  font-size: 18px;
+  font-size: 16px;
   margin: 10px 0 4px;
   color: #1e293b;
-  font-weight: 700;
+  font-weight: 650;
 }
 
 .desc {
@@ -79,13 +81,13 @@
 }
 
 .price {
-  color: #1e40af;
+  color: black;
   font-size: 16px;
   font-weight: 600;
 }
 
 .details-btn1 {
-  background: #d97706;
+  background: black;
   color: white;
   padding: 8px 12px;
   border: none;
@@ -96,7 +98,7 @@
 }
 
 .details-btn1:hover {
-  background: #b45309;
+  background: black;
 }
 
 .details-modal {
@@ -135,6 +137,7 @@
   border: none;
   background: #f1f5f9;
   cursor: pointer;
+  width: 10% !important;
 }
 
 .top-section {

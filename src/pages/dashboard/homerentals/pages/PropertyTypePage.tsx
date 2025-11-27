@@ -9,7 +9,7 @@ import villaImg from '../../../../assets/HomeRental/villa.jpg';
 import houseImg from '../../../../assets/HomeRental/independent.jpg';
 // import servicedImg from '../assests/apart.jpg';
 // import gardenHouseImg from '../assests/threed.jpg';
-// import officeImg from '../assests/office.jpg';
+// import officeImg from '../assests/office.jpg';   
 
 interface PropertyTypePageProps {
   onSelectType?: (typeId: string) => void;

@@ -1817,4 +1817,374 @@
 }
 
 
+/* =========================
+   HOW IT WORKS — UPDATED
+   Matches Premium Amenities background and stacks vertically on mobile
+   ========================= */
 
+.lr-steps {
+  /* use same background as Premium Amenities section */
+  background: #fbfdff;             /* matches .lr-amenities */
+  padding: 56px 20px;              /* generous vertical spacing */
+  box-sizing: border-box;
+  margin-top: 28px;
+}
+
+.lr-steps-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  text-align: center;
+  padding: 6px 12px;
+}
+
+/* Title */
+.lr-steps-title {
+  margin-bottom: 34px;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #102233;
+}
+
+/* Track: horizontal on desktop, will stack on mobile */
+.lr-steps-track {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  position: relative;
+  padding: 26px 12px 8px;
+  flex-wrap: nowrap;
+}
+
+/* Each step item */
+.lr-step-item {
+  flex: 1 1 0;
+  max-width: 25%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  padding-top: 6px;
+  box-sizing: border-box;
+}
+
+/* circle wrapper used for connector */
+.lr-step-circle-wrap {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+/* horizontal connector line, drawn from each circle except last */
+.lr-step-circle-wrap::after {
+  content: "";
+  position: absolute;
+  height: 2px;
+  background: rgba(123,44,255,0.18);
+  width: calc(100% - 60px); /* leave space around circles */
+  left: calc(50% + 32px);   /* start from right edge of this circle */
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 0;
+}
+
+/* prevent connector on last item */
+.lr-step-item:last-child .lr-step-circle-wrap::after {
+  display: none;
+}
+
+/* purple numbered circle */
+.lr-step-circle {
+  background: var(--accent-r);
+  color: white;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  z-index: 2;
+  box-shadow: 0 8px 20px rgba(16,34,51,0.06);
+  font-size: 1.1rem;
+}
+
+/* label and description beneath */
+.lr-step-label {
+  margin-top: 8px;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #102233;
+}
+
+.lr-step-desc {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 0.95rem;
+  max-width: 220px;
+  text-align: center;
+  line-height: 1.3;
+}
+
+/* Slightly reduce connector line on very wide screens to match screenshot */
+@media (min-width: 1400px) {
+  .lr-step-circle-wrap::after {
+    width: calc(100% - 120px);
+    left: calc(50% + 60px);
+  }
+}
+
+/* --------------------------
+   RESPONSIVE: stack vertically (one-by-one) on small screens
+   -------------------------- */
+@media (max-width: 520px) {
+  .lr-steps {
+    padding: 28px 14px;
+  }
+
+  /* stack the track vertically and center each item */
+  .lr-steps-track {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 26px;
+    padding: 12px;
+  }
+
+  .lr-step-item {
+    max-width: 100%;
+    width: 100%;
+    padding-top: 0;
+    align-items: center;
+    text-align: center;
+  }
+
+  /* hide horizontal connector lines when stacked */
+  .lr-step-circle-wrap::after {
+    display: none;
+  }
+
+  /* make circle slightly smaller on phones */
+  .lr-step-circle {
+    width: 48px;
+    height: 48px;
+    font-size: 1rem;
+  }
+
+  /* labels and descriptions stay centered and readable */
+  .lr-step-label {
+    font-size: 0.98rem;
+    margin-top: 10px;
+  }
+
+  .lr-step-desc {
+    max-width: 320px;
+    font-size: 0.95rem;
+    margin-top: 8px;
+    color: var(--muted);
+  }
+}
+
+/* tablet breakpoint: collapse to two rows (if preferred), but keep connectors off */
+@media (max-width: 992px) and (min-width: 521px) {
+  .lr-steps-track {
+    flex-wrap: wrap;
+    gap: 28px;
+    padding-top: 20px;
+  }
+
+  .lr-step-item {
+    max-width: 50%;
+  }
+
+  /* remove the long connectors when wrap occurs */
+  .lr-step-circle-wrap::after { display: none; }
+}
+
+/* small visual polish: ensure spacing between amenities and steps is consistent */
+.lr-amenities + .lr-steps { margin-top: 18px; }
+
+
+/* === HAMBURGER ICON === */
+.mobile-menu-icon {
+  display: none;
+  font-size: 1.6rem;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 8px;
+  line-height: 1;
+  color: #102233;
+}
+
+/* === MOBILE MENU DROPDOWN === */
+.mobile-menu {
+  width: 100%;
+  background: #fff;
+  list-style: none;
+  padding: 12px 16px;
+  box-shadow: 0 8px 28px rgba(16,34,51,0.08);
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 64px; /* display under header */
+  z-index: 999;
+}
+
+.mobile-menu li {
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(16,24,40,0.04);
+}
+
+.mobile-menu li a {
+  color: #0b1724;
+  text-decoration: none;
+  display: block;
+  width: 100%;
+}
+
+/* === RESPONSIVE BEHAVIOR === */
+@media (max-width: 900px) {
+  .mobile-menu-icon {
+    display: block;
+  }
+
+  .hs-navbar .hs-navbar-menu {
+    display: none !important;
+  }
+}
+
+
+    
+/* ===== AMENITIES (lavender pills) - replace prior .lr-amenities blocks ===== */
+
+.lr-amenities {
+  background: #fbfdff;
+  padding: 72px 20px;
+  box-sizing: border-box;
+}
+
+.lr-amenities-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+}
+
+/* top area: centered button + title */
+.lr-amenities-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 26px;
+}
+
+.lr-view-all-btn {
+  display: inline-block;
+  background: #ffffff;
+  color: #0b1724;
+  border: 1px solid rgba(16,34,51,0.06);
+  padding: 10px 18px;
+  border-radius: 12px;
+  font-weight: 700;
+  box-shadow: 0 6px 18px rgba(16,34,51,0.04);
+}
+
+.lr-amenities .lr-section-title {
+  font-size: 1.9rem;
+  font-weight: 700;
+  margin: 0;
+  color: #102233;
+}
+
+.lr-amenities .lr-sub {
+  color: var(--muted);
+  margin: 0;
+  font-size: 1rem;
+  max-width: 760px;
+}
+
+/* GRID: responsive centered boxes */
+.lr-amenities-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 22px 28px;
+  align-items: stretch;
+  justify-items: center;
+  padding: 18px 6px 6px;
+  box-sizing: border-box;
+  margin-top: 12px;
+}
+
+/* each amenity box - lavender pill like screenshot */
+.lr-amenity {
+  width: 100%;
+  max-width: 260px;
+  min-height: 68px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  border-radius: 12px;
+  background: rgba(123,44,255,0.06);
+  border: 1px solid rgba(123,44,255,0.06);
+  box-shadow: none;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+/* check icon wrapper */
+.lr-amenity-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  border-radius: 8px;
+  background: rgba(123,44,255,0.10);
+  flex-shrink: 0;
+}
+
+.lr-amenity-check svg path,
+.lr-amenity-check svg { stroke: #7B2CFF; fill: none; }
+
+.lr-amenity-text {
+  font-size: 0.98rem;
+  color: #102233;
+  font-weight: 600;
+  line-height: 1.2;
+  word-break: break-word;
+}
+
+/* Responsive breakpoints for amenities */
+@media (max-width: 1100px) {
+  .lr-amenities-grid { grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .lr-amenity { max-width: 240px; min-height: 72px; padding: 12px 16px; }
+  .lr-amenity-check { width: 34px; height: 34px; min-width: 34px; }
+  .lr-amenity-text { font-size: 0.98rem; }
+}
+
+@media (max-width: 768px) {
+  .lr-amenities { padding: 48px 14px; }
+  .lr-amenities-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .lr-amenity { max-width: 92%; min-height: 64px; padding: 12px 14px; border-radius: 12px; }
+  .lr-amenity-check { width: 32px; height: 32px; min-width: 32px; }
+  .lr-amenity-text { font-size: 0.96rem; }
+}
+
+@media (max-width: 420px) {
+  .lr-amenities-grid { grid-template-columns: 1fr; gap: 12px; padding: 8px 6px; }
+  .lr-amenity { max-width: 100%; min-height: 56px; padding: 10px 12px; border-radius: 10px; }
+  .lr-amenity-check { width: 28px; height: 28px; min-width: 28px; }
+  .lr-amenity-text { font-size: 0.94rem; }
+}
+
+.lr-amenities-inner { padding-top: 6px; padding-bottom: 6px; }
+.schedule{
+  background-color: black !important;
+}

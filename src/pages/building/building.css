@@ -7,14 +7,14 @@
 }
 
 .cs-header1 {
-  background: #d97706;
+  background:#005cfa;
   color: #fff;
-  padding: 35px 35px;
+  padding: 20px 35px;
   border-radius: 12px;
   margin-bottom: 24px;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .cs-title {
@@ -67,8 +67,8 @@
 
 .cs-button1 {
   border-radius: 8px ;
- background: #d97706 !important;
-  color: white;
+  background: #000 !important;
+  color: white !important;
 }
 
 @media (max-width: 480px) {
@@ -88,6 +88,8 @@
 
   .cs-subtitle {
     font-size: 12px;
+    text-align: left !important;
+
   }
 
   .cs-grid {

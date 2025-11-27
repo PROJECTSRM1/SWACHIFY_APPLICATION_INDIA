@@ -10,7 +10,7 @@ import {
   Input,
   InputNumber,
  // Checkbox,
-  DatePicker,
+ // DatePicker,
   message,
 } from "antd";
 // import { ThunderboltFilled } from "@ant-design/icons";
@@ -22,11 +22,11 @@ import specializedImg from "../../../assets/CleaningServices/spec.png";
 // import residentialImg from "../../../assets/CleaningServices/resi.png";
 import postImg from "../../../assets/CleaningServices/const.jpg";
 import industrialImg from "../../../assets/CleaningServices/indus.jpg";
-import homeImg from "../../../assets/CleaningServices/homecleaning.jpg";
-import apartmentImg from "../../../assets/CleaningServices/apartmentcleaning.jpg";
-import villaImg from "../../../assets/CleaningServices/villacleaning.jpg";
+import homeImg from "../../../assets/CleaningServices/residencial_cleaning.jpg";
+import apartmentImg from "../../../assets/CleaningServices/1bhk.png";
+import villaImg from "../../../assets/CleaningServices/luxury.jpg";
 import officeImg from "../../../assets/CleaningServices/office.jpg";
-import clinicImg from "../../../assets/CleaningServices/clinic.jpg";
+import clinicImg from "../../../assets/CleaningServices/clinic_image.png";
 import glassImg from "../../../assets/CleaningServices/glass.jpg";
 import floorImg from "../../../assets/CleaningServices/floor.jpg";
 import debrisImg from "../../../assets/CleaningServices/debris.png";
@@ -76,6 +76,7 @@ import solidImg from "../../../assets/CleaningServices/solidwh.png";
 import disposalImg from "../../../assets/CleaningServices/chemicalwh.png";
 import labImg from "../../../assets/CleaningServices/laboratory_cleaning.png";
 import cliniImg from "../../../assets/CleaningServices/clinic_image.png";
+import { useCart, type CartItem } from "../../../context/CartContext";
 
 
 const { Title, Paragraph } = Typography;
@@ -188,6 +189,9 @@ const formatINR = (value: number | null) => {
 /* ------------------------------------------------ */
 
 const CleaningService: React.FC = () => {
+
+  const { addToCart } = useCart();
+
   const [showAll, setShowAll] = useState(false);
 
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
@@ -468,16 +472,34 @@ const CleaningService: React.FC = () => {
     setComputedPrice(total);
   };
 
-  const onAddToCart = (values: any) => {
-    const payload = {
-      module: selectedModule,
-      form: values,
-      totalPrice: computedPrice ?? 0,
-    };
-    console.log("Add to cart:", payload);
-    message.success(`${selectedModule?.title} added to cart — ${formatINR(computedPrice || 0)}`);
-    setIsDetailsModalOpen(false);
+ const onAddToCart = (values: any) => {
+  if (!selectedModule) return;
+
+  const cartItem: CartItem = {
+    id: Date.now(),
+    title: selectedModule.title,
+    image: selectedModule.image,
+    quantity: 1,
+    price: selectedModule.price,
+    totalPrice: computedPrice ?? 0,
+
+    customerName: "",
+    deliveryType: "",
+    deliveryDate: "",
+    contact: "",
+    address: "",
+    instructions: values?.instructions || "",
   };
+
+  addToCart(cartItem);
+
+  message.success(
+    `${selectedModule.title} added to cart — ${formatINR(computedPrice || 0)}`
+  );
+
+  setIsDetailsModalOpen(false);
+};
+
 
   const handleDetailsCancel = () => {
     setIsDetailsModalOpen(false);
@@ -538,8 +560,7 @@ const CleaningService: React.FC = () => {
         </div>
       </div>
 
-      
-      <Modal
+    <Modal
         title={<div className="modal-title-row"><div className="modal-title-text">{categories.find(c => c.key === selectedMainKey)?.title || "Category"}</div></div>}
         open={isCategoryModalOpen}
         onCancel={() => setIsCategoryModalOpen(false)}
@@ -549,6 +570,7 @@ const CleaningService: React.FC = () => {
         wrapClassName="no-h-scroll-modal"
       >
 
+
         <div className="subservices-row">
           {(subservicesByMain[selectedMainKey] || []).map((s) => (
             <div className="subservices-col" key={s.key}>
@@ -556,13 +578,22 @@ const CleaningService: React.FC = () => {
                 <img src={s.image} alt={s.title} className="subservice-img" />
                 <div className="subservice-card-body">
                   <Title level={5} className="subservice-card-title">{s.title}</Title>
-                  <Paragraph className="subservice-card-desc">Click to view {s.title.toLowerCase()} services</Paragraph>
+                  {/* <Paragraph className="subservice-card-desc">Click to view {s.title.toLowerCase()} services</Paragraph> */}
+            <Button 
+  size="middle"
+  type="primary"
+  className="black-btn"
+  onClick={() => openSubservice(s.key)}
+>
+  View Details
+</Button>
                 </div>
               </Card>
             </div>
           ))}
         </div>
       </Modal>
+
 
      
       <Modal
@@ -730,11 +761,22 @@ const CleaningService: React.FC = () => {
                     </Form.Item> */}
 
                     <div className="form-row">
-                      {cfg.preferredDate && (
-                        <Form.Item name="preferredDate" label="Preferred Date">
-                          <DatePicker className="full-width-datepicker" />
-                        </Form.Item>
-                      )}
+                    {cfg.preferredDate && (
+  <Form.Item
+    name="preferredDate"
+    label="Preferred Date"
+    rules={[{ required: true, message: "Select a date" }]}
+    className="full-width-datepicker"
+  >
+    <div className="tf-field">
+      <input
+        type="date"
+        className="custom-date-input"
+      />
+    </div>
+  </Form.Item>
+)}
+
 
                       <Form.Item name="hours" label="Estimated Hours (optional)">
                         <InputNumber min={1} className="full-width-inputnumber" />

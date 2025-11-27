@@ -29,7 +29,7 @@ export const NonSecureRoutes = () => {
 
     if (userData && !currentPath.startsWith('/app')) {
       navigate('/app/dashboard');
-    } else if (userData && (currentPath === '/' || currentPath === '')) {
+    } else if (!userData && (currentPath === '/' || currentPath === '')) {
       navigate('/landing');
     }
   }, [navigate]);

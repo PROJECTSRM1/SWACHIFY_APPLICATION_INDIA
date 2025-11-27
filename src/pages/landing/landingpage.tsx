@@ -1,19 +1,15 @@
-// src/pages/landing/LandingPage.tsx
-import { useState } from "react";
+
+// at top of LandingPage.tsx
+import CommonHeader from "../../pages/landing/Header";
+import "../../pages/landing/Header.css"; // import CSS for header
+import { useNavigate } from "react-router-dom";
+
 import {
   Button,
   Card,
   Row,
   Col,
-  Menu,
-  Modal,
-  Tabs,
-  Form,
-  Input,
-  Checkbox,
-  message,
 } from "antd";
-import { Link, useNavigate } from "react-router-dom";
 
 import {
   HomeOutlined,
@@ -22,13 +18,14 @@ import {
   ShopOutlined,
   ApartmentOutlined,
   BuildOutlined,
-  EyeInvisibleOutlined,
-  EyeTwoTone,
+
+
 } from "@ant-design/icons";
 
 import "./landingpage.css";
 import heroImage from "../../assets/landingimages/hero.jpg";
 
+<<<<<<< HEAD
 const navItems = [
   { key: "home", label: <Link to="/landing">Home</Link> },
   { key: "cleaning", label: <Link to="/cleaningservice">Cleaning</Link> },
@@ -40,6 +37,8 @@ const navItems = [
  { key: "freelancer", label: <Link to="/Freelancer">Freelancer</Link> }
     // { key: "location", label: <Link to="">Location</Link> },
 ];
+=======
+>>>>>>> main
 
 const services = [
   {
@@ -80,39 +79,9 @@ const services = [
   },
 ];
 
-const { TabPane } = Tabs;
 
 const LandingPage = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [authModalVisible, setAuthModalVisible] = useState(false);
-  const [activeAuthTab, setActiveAuthTab] = useState<"login" | "register">("register");
-
-  const navigate = useNavigate();
-
-  const openAuthModal = (tab: "login" | "register" = "register") => {
-    setActiveAuthTab(tab);
-    setAuthModalVisible(true);
-  };
-
-  const closeAuthModal = () => setAuthModalVisible(false);
-
-  // When Login is successful → Go to dashboard
-  const onLogin = async (values: any) => {
-    // TODO: replace with real API call
-    console.log("login values", values);
-    message.success("Login successful");
-    closeAuthModal();
-    navigate("/app/dashboard");
-  };
-
-  // When Register is successful → Go to dashboard
-  const onRegister = async (values: any) => {
-    // TODO: replace with real API call
-    console.log("register values", values);
-    message.success("Registration successful");
-    closeAuthModal();
-    navigate("/app/dashboard");
-  };
+const navigate=useNavigate();
 
   const scrollToServices = () => {
     const section = document.getElementById("services-section");
@@ -121,57 +90,9 @@ const LandingPage = () => {
 
   return (
     <div className="landing-container">
-      {/* 🟦 NAVBAR */}
-      <header className="hs-navbar">
-        <div className="hs-navbar-logo">
-          <span className="hs-logo-text">SWACHIFY INDIA</span>
-        </div>
+     {/* REPLACE old header with this single component */}
+<CommonHeader selectedKey="landing" />
 
-        <Menu
-          mode="horizontal"
-          selectedKeys={["home-services"]}
-          className="hs-navbar-menu"
-          items={navItems}
-        />
-
-        <Button
-          type="primary"
-          className="hs-contact-btn"
-          onClick={() => openAuthModal("register")}
-        >
-          Sign Up
-        </Button>
-      </header>
-
-      {/* DROPDOWN MOBILE MENU */}
-      {menuOpen && (
-        <ul className="mobile-menu">
-          <li><Link to="/" onClick={() => setMenuOpen(false)}>Home</Link></li>
-          <li><Link to="/cleaningservice" onClick={() => setMenuOpen(false)}>Cleaning</Link></li>
-          <li><Link to="/LandingPackers" onClick={() => setMenuOpen(false)}>Packers & Movers</Link></li>
-          <li><Link to="/home_service" onClick={() => setMenuOpen(false)}>Home Services</Link></li>
-          <li><Link to="/rentals" onClick={() => setMenuOpen(false)}>Rentals</Link></li>
-          <li><Link to="/commercial-plots" onClick={() => setMenuOpen(false)}>Commercial Plots</Link></li>
-          <li><Link to="/ConstructionMaterials" onClick={() => setMenuOpen(false)}>Construction Materials</Link></li>
-          <li><Link to="/contactus" onClick={() => setMenuOpen(false)}>Contact</Link></li>
-
-          {/* ⭐ ADDED CART */}
-          <li><Link to="/Cart" onClick={() => setMenuOpen(false)}>Cart</Link></li>
-
-          <li>
-            <Link
-              to="#"
-              onClick={(e) => {
-                e.preventDefault();
-                setMenuOpen(false);
-                openAuthModal("login");
-              }}
-            >
-              Login
-            </Link>
-          </li>
-        </ul>
-      )}
 
       {/* 🟦 HERO SECTION */}
       <section
@@ -180,9 +101,9 @@ const LandingPage = () => {
       >
         <div className="hero-content">
           <h1>Transform Your Home & Property Services</h1>
-          <p>Your trusted solution for cleaning, moving, rentals, construction, and more.</p>
-
-          {/* ⭐ CALL SCROLL FUNCTION */}
+          <p >Your trusted solution for cleaning, moving, rentals, construction, and more.</p> 
+          
+          
           <Button type="primary" size="large" onClick={scrollToServices}>
             Get Started
           </Button>
@@ -190,7 +111,7 @@ const LandingPage = () => {
       </section>
 
       {/* 🟦 SERVICES SECTION */}
-      {/* ⭐ ADDED ID FOR SCROLL TARGET */}
+      
       <section id="services-section" className="services-section">
         <h2 className="section-title">Our Services</h2>
         <p className="section-subtitle">
@@ -362,129 +283,7 @@ const LandingPage = () => {
         </p>
       </footer>
 
-      {/* ===== AUTH MODAL (login / register) ===== */}
-      <Modal
-        open={authModalVisible}
-        onCancel={closeAuthModal}
-        footer={null}
-        centered
-        width={520}
-        bodyStyle={{ padding: 24 }}
-        destroyOnClose
-      >
-        <Tabs
-          activeKey={activeAuthTab}
-          onChange={(key) => setActiveAuthTab(key as "login" | "register")}
-          centered
-        >
-          <TabPane tab="Login" key="login">
-            <Form layout="vertical" name="loginForm" onFinish={onLogin} preserve={false}>
-              <Form.Item
-                label={<span style={{ color: "#ff4d4f" }}> Email / Phone</span>}
-                name="identifier"
-                rules={[{ required: true, message: "Please input email / phone" }]}
-              >
-                <Input placeholder="john@example.com or +1 555 123 4567" />
-              </Form.Item>
-
-              <Form.Item
-                label={<span style={{ color: "#ff4d4f" }}> Password</span>}
-                name="password"
-                rules={[{ required: true, message: "Please input password" }]}
-              >
-                <Input.Password
-                  placeholder="Password"
-                  iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
-                />
-              </Form.Item>
-
-              <Form.Item>
-                <Form.Item name="remember" valuePropName="checked" noStyle>
-                  <Checkbox>Remember me</Checkbox>
-                </Form.Item>
-              </Form.Item>
-
-              <Form.Item>
-                <Button type="primary" block htmlType="submit">
-                  Login
-                </Button>
-              </Form.Item>
-            </Form>
-          </TabPane>
-
-          <TabPane tab="Register" key="register">
-            <Form layout="vertical" name="registerForm" onFinish={onRegister} preserve={false}>
-              <Form.Item
-                label={<span style={{ color: "#ff4d4f" }}> Full name</span>}
-                name="fullname"
-                rules={[{ required: true, message: "Please input your full name" }]}
-              >
-                <Input placeholder="John Doe" />
-              </Form.Item>
-
-              <Form.Item
-                label={<span style={{ color: "#ff4d4f" }}> Email</span>}
-                name="email"
-                rules={[
-                  { required: true, message: "Please input your email" },
-                  { type: "email", message: "Enter a valid email" },
-                ]}
-              >
-                <Input placeholder="john@example.com" />
-              </Form.Item>
-
-              <Form.Item
-                label={<span style={{ color: "#ff4d4f" }}> Phone</span>}
-                name="phone"
-                rules={[{ required: true, message: "Please input your phone" }]}
-              >
-                <Input placeholder="+1 555 123 4567" />
-              </Form.Item>
-
-              <Form.Item
-                label={<span style={{ color: "#ff4d4f" }}> Password</span>}
-                name="password"
-                rules={[{ required: true, message: "Please input a password" }]}
-                hasFeedback
-              >
-                <Input.Password
-                  placeholder="Choose a password"
-                  iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
-                />
-              </Form.Item>
-
-              <Form.Item
-                label={<span style={{ color: "#ff4d4f" }}> Confirm Password</span>}
-                name="confirm"
-                dependencies={["password"]}
-                hasFeedback
-                rules={[
-                  { required: true, message: "Please confirm your password" },
-                  ({ getFieldValue }) => ({
-                    validator(_, value) {
-                      if (!value || getFieldValue("password") === value) {
-                        return Promise.resolve();
-                      }
-                      return Promise.reject(new Error("Passwords do not match"));
-                    },
-                  }),
-                ]}
-              >
-                <Input.Password
-                  placeholder="Confirm password"
-                  iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
-                />
-              </Form.Item>
-
-              <Form.Item>
-                <Button type="primary" block htmlType="submit">
-                  Register
-                </Button>
-              </Form.Item>
-            </Form>
-          </TabPane>
-        </Tabs>
-      </Modal>
+  
     </div>
   );
 };

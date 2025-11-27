@@ -1,17 +1,23 @@
-import React, { useState } from "react";
+// Home_Service.tsx
+// import React, { useState } from "react";
+// import { setUserDetails } from "../../utils/helpers/storage";
+import CommonHeader from "../../pages/landing/Header";
+import "../../pages/landing/Header.css"; // import CSS for header
 import {
-  Menu,
+  // Menu,
   Button,
   Row,
   Col,
   Typography,
   Card,
-  Modal,
-  Tabs,
+  // Modal,
+  // Tabs,
   Form,
   Input,
-  Checkbox,
+  // Checkbox,
   message,
+  DatePicker,
+  Select,
 } from "antd";
 import {
   ToolOutlined,
@@ -28,15 +34,20 @@ import {
   TwitterOutlined,
   InstagramOutlined,
   LinkedinOutlined,
+  // MenuOutlined,
+  // CloseOutlined,
 } from "@ant-design/icons";
-import { Link, useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 import "./homeservice.css";
 
 const HERO_BG = "../src/assets/landingimages/hero.png"; // keep as your path
 const { Title, Paragraph } = Typography;
-const { TabPane } = Tabs;
+// const { TabPane } = Tabs;
+const { Option } = Select;
 
+
+<<<<<<< HEAD
 const navItems = [
   { key: "home", label: <Link to="/landing">Home</Link> },
   { key: "cleaning", label: <Link to="/cleaningservice">Cleaning</Link> },
@@ -48,6 +59,8 @@ const navItems = [
   { key: "freelancer", label: <Link to="/Freelancer">Freelancer</Link> },
     // { key: "location", label: <Link to="">Location</Link> },
 ];
+=======
+>>>>>>> main
 
 const cardRows = [
   [
@@ -140,178 +153,61 @@ const cardRows = [
 ];
 
 const Home_Service: React.FC = () => {
-  const [authModalVisible, setAuthModalVisible] = useState(false);
-  const [activeTab, setActiveTab] = useState<"login" | "register">("login");
+  // const [authModalVisible, setAuthModalVisible] = useState(false);
+  // const [activeTab, setActiveTab] = useState<"login" | "register">("login");
+
+  // <-- ADDED: hamburger toggle state
+  // const [menuOpen, setMenuOpen] = useState(false);
 
   // react-router navigate
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   // Login form
-  const [loginForm] = Form.useForm();
+  // const [loginForm] = Form.useForm();
   // Register form
-  const [registerForm] = Form.useForm();
+  // const [registerForm] = Form.useForm();
 
-  const onLoginFinish = (values: any) => {
-    // Replace with your auth flow
-    console.log("Login values:", values);
-    message.success("Logged in (demo)");
-    setAuthModalVisible(false);
-    loginForm.resetFields();
-    // navigate to dashboard
-    navigate("/app/dashboard");
-  };
+//  const onLoginFinish = (values: any) => {
+//   const userData = {
+//     name: "Test User",
+//     email: values.identifier,
+//   };
+//   debugger;
+//   console.log('__logs',userData)
+//   setUserDetails("user", userData);
 
-  const onRegisterFinish = (values: any) => {
-    // Replace with real register API call
-    console.log("Register values:", values);
-    message.success("Registered (demo)");
-    setAuthModalVisible(false);
-    registerForm.resetFields();
-    // navigate to dashboard (or welcome/setup page)
-    navigate("app/dashboard");
-  };
+//   navigate("/app/dashboard");
+// };
 
-  const onRegisterValidatePassword = (_: any, value: string) => {
-    const password = registerForm.getFieldValue("password");
-    if (!value || value === password) {
-      return Promise.resolve();
-    }
-    return Promise.reject(new Error("Passwords do not match"));
+
+  // const onRegisterFinish = (values: any) => {
+  //   // Replace with real register API call
+  //   console.log("Register values:", values);
+  //   message.success("Registered (demo)");
+  //   setAuthModalVisible(false);
+  //   registerForm.resetFields();
+  //   // navigate to dashboard (or welcome/setup page)
+  //   navigate("/app/dashboard");
+  // };
+
+  // const onRegisterValidatePassword = (_: any, value: string) => {
+  //   const password = registerForm.getFieldValue("password");
+  //   if (!value || value === password) {
+  //     return Promise.resolve();
+  //   }
+  //   return Promise.reject(new Error("Passwords do not match"));
+  // };
+
+  // Booking form submit handler (demo)
+  const onBookingSubmit = (values: any) => {
+    console.log("Booking values:", values);
+    message.success("Booking request submitted");
   };
 
   return (
     <div className="hs-root">
-      <header className="hs-navbar">
-        <div className="hs-navbar-logo">
-          <span className="hs-logo-text">SWACHIFY INDIA</span>
-        </div>
-
-        <Menu mode="horizontal" selectedKeys={["home-services"]} className="hs-navbar-menu" items={navItems} />
-
-        <Button
-          type="primary"
-          className="hs-contact-btn"
-          onClick={() => {
-            setActiveTab("login");
-            setAuthModalVisible(true);
-          }}
-        >
-          Sign Up
-        </Button>
-      </header>
-
-      <Modal
-        title={null}
-        centered
-        open={authModalVisible}
-        onCancel={() => setAuthModalVisible(false)}
-        footer={null}
-        bodyStyle={{ padding: 0 }}
-        width={420}
-        destroyOnClose
-      >
-        <div style={{ padding: 22 }}>
-          <Tabs
-            activeKey={activeTab}
-            onChange={(key) => setActiveTab(key as "login" | "register")}
-            centered
-            size="large"
-          >
-            <TabPane tab="Login" key="login">
-              <Form
-                form={loginForm}
-                layout="vertical"
-                name="loginForm"
-                initialValues={{ remember: true }}
-                onFinish={onLoginFinish}
-              >
-                <Form.Item
-                  label="Email or Phone"
-                  name="identifier"
-                  rules={[{ required: true, message: "Please enter email or phone" }]}
-                >
-                  <Input placeholder="john@example.com or +1 555 123 4567" />
-                </Form.Item>
-
-                <Form.Item
-                  label="Password"
-                  name="password"
-                  rules={[{ required: true, message: "Please enter your password" }]}
-                >
-                  <Input.Password placeholder="Password" />
-                </Form.Item>
-
-                <Form.Item name="remember" valuePropName="checked" style={{ marginBottom: 6 }}>
-                  <Checkbox>Remember me</Checkbox>
-                </Form.Item>
-
-                <Form.Item style={{ marginBottom: 0 }}>
-                  <Button type="primary" htmlType="submit" block>
-                    Login
-                  </Button>
-                </Form.Item>
-              </Form>
-            </TabPane>
-
-            <TabPane tab="Register" key="register">
-              <Form form={registerForm} layout="vertical" name="registerForm" onFinish={onRegisterFinish}>
-                <Form.Item
-                  label="Full name"
-                  name="name"
-                  rules={[{ required: true, message: "Please enter your name" }]}
-                >
-                  <Input placeholder="John Doe" />
-                </Form.Item>
-
-                <Form.Item
-                  label="Email"
-                  name="email"
-                  rules={[
-                    { required: true, message: "Please enter your email" },
-                    { type: "email", message: "Please enter a valid email" },
-                  ]}
-                >
-                  <Input placeholder="john@example.com" />
-                </Form.Item>
-
-                <Form.Item
-                  label="Phone"
-                  name="phone"
-                  rules={[{ required: true, message: "Please enter your phone number" }]}
-                >
-                  <Input placeholder="+1 555 123 4567" />
-                </Form.Item>
-
-                <Form.Item
-                  label="Password"
-                  name="password"
-                  rules={[{ required: true, message: "Please provide a password" }]}
-                >
-                  <Input.Password placeholder="Choose a password" />
-                </Form.Item>
-
-                <Form.Item
-                  label="Confirm Password"
-                  name="confirm"
-                  dependencies={["password"]}
-                  rules={[
-                    { required: true, message: "Please confirm your password" },
-                    { validator: onRegisterValidatePassword },
-                  ]}
-                >
-                  <Input.Password placeholder="Confirm password" />
-                </Form.Item>
-
-                <Form.Item>
-                  <Button type="primary" htmlType="submit" block>
-                    Register
-                  </Button>
-                </Form.Item>
-              </Form>
-            </TabPane>
-          </Tabs>
-        </div>
-      </Modal>
+   
+<CommonHeader selectedKey="home_service" />
 
       <div
         className="hs-hero"
@@ -347,7 +243,7 @@ const Home_Service: React.FC = () => {
         </Row>
       </div>
 
-      {/* Service cards and subsequent sections unchanged (kept as your existing code) */}
+      {/* Service cards and subsequent sections unchanged */}
       {cardRows.map((row, idx) => (
         <div key={idx} className="hs-section-root">
           {idx === 0 && (
@@ -381,7 +277,9 @@ const Home_Service: React.FC = () => {
                     ))}
                   </ul>
 
-                  <Button type="primary" block size="large" className="hs-book-btn">
+                  <Button
+                  //  type="primary"
+                    block size="large" className="hs-book-btn">
                     Book Now
                   </Button>
                 </Card>
@@ -390,9 +288,7 @@ const Home_Service: React.FC = () => {
           </Row>
         </div>
       ))}
-
-      {/* Emergency section (kept unchanged) */}
-      <div className="hs-emergency-wrap">
+    <div className="hs-emergency-wrap">
         <div className="hs-emergency-head">
           <h2>24/7 Emergency Services</h2>
           <p>Home emergencies don't wait. Neither do we. Our rapid response team is available round the clock.</p>
@@ -446,8 +342,158 @@ const Home_Service: React.FC = () => {
           </Button>
         </div>
       </div>
+      <div className="hs-pricing-wrap">
+        <div className="hs-pricing-head">
+          <h2>Maintenance Packages</h2>
+          <p>Save money with our regular maintenance plans</p>
+        </div>
 
-      {/* Footer (kept unchanged) */}
+        <Row gutter={[24, 24]} justify="center">
+          <Col xs={24} sm={24} md={8}>
+            <div className="hs-price-card">
+              <div className="hs-price-title">Basic Maintenance</div>
+              <div className="hs-price-amount">
+                <span className="hs-price-dollar">$199</span><span className="hs-price-suffix">/month</span>
+              </div>
+
+              <ul className="hs-price-features">
+                <li><span className="hs-check">✔</span> 2 service calls per month</li>
+                <li><span className="hs-check">✔</span> Priority scheduling</li>
+                <li><span className="hs-check">✔</span> 10% off parts</li>
+                <li><span className="hs-check">✔</span> Basic electrical & plumbing</li>
+                <li><span className="hs-check">✔</span> Free inspection</li>
+              </ul>
+
+              <Button className="hs-choose-btn hs-choose-btn-outline" block>Choose Plan</Button>
+            </div>
+          </Col>
+
+          <Col xs={24} sm={24} md={8}>
+            <div className="hs-price-popular-wrap">
+              <div className="hs-popular-badge">Most Popular</div>
+              <div className="hs-price-card hs-price-card-popular">
+                <div className="hs-price-title">Home Care Plus</div>
+                <div className="hs-price-amount">
+                  <span className="hs-price-dollar">$349</span><span className="hs-price-suffix">/month</span>
+                </div>
+
+                <ul className="hs-price-features">
+                  <li><span className="hs-check">✔</span> 4 service calls per month</li>
+                  <li><span className="hs-check">✔</span> 24/7 emergency service</li>
+                  <li><span className="hs-check">✔</span> 20% off parts</li>
+                  <li><span className="hs-check">✔</span> All services included</li>
+                  <li><span className="hs-check">✔</span> Annual deep inspection</li>
+                  <li><span className="hs-check">✔</span> Preventive maintenance</li>
+                </ul>
+
+                <Button className="hs-choose-btn hs-choose-btn-primary" block>Choose Plan</Button>
+              </div>
+            </div>
+          </Col>
+
+          <Col xs={24} sm={24} md={8}>
+            <div className="hs-price-card">
+              <div className="hs-price-title">Premium Protection</div>
+              <div className="hs-price-amount">
+                <span className="hs-price-dollar">$599</span><span className="hs-price-suffix">/month</span>
+              </div>
+
+              <ul className="hs-price-features">
+                <li><span className="hs-check">✔</span> Unlimited service calls</li>
+                <li><span className="hs-check">✔</span> Priority emergency service</li>
+                <li><span className="hs-check">✔</span> 30% off parts</li>
+                <li><span className="hs-check">✔</span> All services & repairs</li>
+                <li><span className="hs-check">✔</span> Quarterly inspections</li>
+                <li><span className="hs-check">✔</span> Extended warranty</li>
+              </ul>
+
+              <Button className="hs-choose-btn hs-choose-btn-outline" block>Choose Plan</Button>
+            </div>
+          </Col>
+        </Row>
+      </div>
+
+      <div className="hs-booking-wrap">
+        <div className="hs-booking-head">
+          <h2>Schedule a Service</h2>
+          <p>Book your home service appointment today</p>
+        </div>
+
+        <div className="hs-booking-card">
+          <Form layout="vertical" onFinish={onBookingSubmit} initialValues={{ serviceType: "Select" }}>
+            <Row gutter={[20, 12]}>
+              <Col xs={24} sm={12}>
+                <Form.Item label="Full Name " name="fullname" rules={[{ required: true }]}>
+                  <Input className="hs-booking-input" placeholder="John Doe" />
+                </Form.Item>
+              </Col>
+
+              <Col xs={24} sm={12}>
+                <Form.Item label="Email " name="email" rules={[{ required: true, type: "email" }]}>
+                  <Input className="hs-booking-input" placeholder="john@example.com" />
+                </Form.Item>
+              </Col>
+
+              <Col xs={24} sm={12}>
+                <Form.Item label="Phone Number " name="phone" rules={[{ required: true }]}>
+                  <Input className="hs-booking-input" placeholder="+1 (555) 123-4567" />
+                </Form.Item>
+              </Col>
+
+              <Col xs={24} sm={12}>
+                <Form.Item label="Service Type " name="serviceType" rules={[{ required: true }]}>
+                  <Select className="hs-booking-input" placeholder="Select Home Services">
+                    <Option value="cleaning">Cleaning</Option>
+                    <Option value="plumbing">Plumbing</Option>
+                    <Option value="electrical">Electrical</Option>
+                    <Option value="carpentry">Carpentry</Option>
+                    <Option value="hvac">HVAC</Option>
+                  </Select>
+                </Form.Item>
+              </Col>
+
+              <Col xs={24}>
+                <Form.Item label="Service Address " name="address" rules={[{ required: true }]}>
+                  <Input className="hs-booking-input" placeholder="123 Main St, City, State, ZIP" />
+                </Form.Item>
+              </Col>
+
+              <Col xs={24} sm={12}>
+                <Form.Item label="Preferred Date " name="date" rules={[{ required: true }]}>
+                  <DatePicker className="date-input" />
+                </Form.Item>
+              </Col>
+
+              <Col xs={24} sm={12}>
+                <Form.Item label="Preferred Time " name="time" rules={[{ required: true }]}>
+                  <Select className="hs-booking-input" placeholder="Select time slot">
+                    <Option value="morning">Morning (9am - 12pm)</Option>
+                    <Option value="afternoon">Afternoon (12pm - 4pm)</Option>
+                    <Option value="evening">Evening (4pm - 8pm)</Option>
+                  </Select>
+                </Form.Item>
+              </Col>
+
+              <Col xs={24}>
+                <Form.Item label="Additional Details" name="details">
+                  <Input.TextArea className="hs-booking-textarea" placeholder="Tell us more about your requirements..." />
+                </Form.Item>
+              </Col>
+
+              <Col xs={24}>
+                <Form.Item>
+                  <Button htmlType="submit" className="hs-booking-submit">
+                    Submit Booking Request
+                  </Button>
+                </Form.Item>
+              </Col>
+            </Row>
+          </Form>
+        </div>
+      </div>
+
+  
+
       <footer className="hs-footer">
         <div className="hs-footer-inner">
           <div className="hs-footer-col hs-footer-about">

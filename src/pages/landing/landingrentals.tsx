@@ -1,9 +1,23 @@
 import React, { useState } from "react";
-import { Row, Col, Card, Button, Form, Input, Select, DatePicker, Menu, Modal, Tabs, Checkbox } from "antd";
-// add this
+import CommonHeader from "../../pages/landing/Header";
+import "../../pages/landing/Header.css"; // import CSS for header
+import {
+  Row,
+  Col,
+  Card,
+  Button,
+  Form,
+  Input,
+  Select,
+  DatePicker,
+  // Menu,
+  Modal,
+  Tabs,
+  Checkbox
+} from "antd";
+
 import { Phone } from "lucide-react";
 
-// ADDED ICON IMPORTS (no other imports changed)
 import {
   SearchOutlined,
   HeartOutlined,
@@ -17,22 +31,24 @@ import {
   TwitterOutlined,
   InstagramOutlined,
   FilterOutlined,
-  LinkedinOutlined
+  LinkedinOutlined,
+  // MenuOutlined,
+  // CloseOutlined
 } from "@ant-design/icons";
 
-import { Link, useNavigate } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 import "./landingrentals.css";
 
 const { Option } = Select;
 const { TabPane } = Tabs;
 
-/* ================================ HSHeader component ================================ */
+/* ========================= HSHeader WITH HAMBURGER ========================= */
 type HSHeaderProps = {
   selectedKey?: string;
   onSignUp?: () => void;
 };
 
+<<<<<<< HEAD
 export const HSHeader: React.FC<HSHeaderProps> = ({ selectedKey = "", onSignUp = () => {} }) => {
   const headerNav = [
     { key: "home", label: <Link to="/landing">Home</Link> },
@@ -45,36 +61,26 @@ export const HSHeader: React.FC<HSHeaderProps> = ({ selectedKey = "", onSignUp =
     { key: "freelancer", label: <Link to="/Freelancer">Freelancer</Link> }
       // { key: "location", label: <Link to="">Location</Link> },
   ];
+=======
+export const HSHeader: React.FC<HSHeaderProps> = ({
+  // selectedKey = "",
+  // onSignUp = () => {}
+}) => {
+  // const [menuOpen, setMenuOpen] = useState(false);
+>>>>>>> main
 
-  const selectedKeysArray = selectedKey ? [selectedKey] : [];
+
+  // const selectedKeysArray = selectedKey ? [selectedKey] : [];
 
   return (
-    <header className="hs-navbar" role="banner" aria-label="Primary header">
-      <div className="hs-navbar-logo" aria-hidden>
-        <span className="hs-logo-text">SWACHIFY INDIA</span>
-      </div>
+ <div>
+<CommonHeader selectedKey="rentals" />
 
-      <Menu
-        mode="horizontal"
-        selectedKeys={selectedKeysArray}
-        className="hs-navbar-menu"
-        items={headerNav}
-        role="navigation"
-        aria-label="Primary navigation"
-      />
-
-      <Button
-        type="primary"
-        className="hs-contact-btn"
-        onClick={onSignUp}
-        aria-label="Sign up"
-      >
-        Sign Up
-      </Button>
-    </header>
+ </div>
   );
 };
-/* ================================ End HSHeader ================================ */
+/* ========================= END HEADER ========================= */
+
 
 /* ========== IMAGE IMPORTS ========== */
 import heroimg from "../../assets/landingimages/landingrenatlshero.jpg";
@@ -86,10 +92,10 @@ import apt5 from "../../assets/landingimages/luxuryvillawithpool.jpg";
 import apt6 from "../../assets/landingimages/modern1bhkflat.jpg";
 /* ======================================================= */
 
+
 const Landingrentals: React.FC = () => {
   const [form] = Form.useForm();
 
-  // Auth modal state & forms
   const [authModalVisible, setAuthModalVisible] = useState(false);
   const [activeTab, setActiveTab] = useState<"login" | "register">("login");
   const [loginForm] = Form.useForm();
@@ -106,16 +112,14 @@ const Landingrentals: React.FC = () => {
   };
 
   const onLoginFinish = (values: any) => {
-    console.log("Login values:", values);
-    // close modal, reset, then navigate
+    console.log("Login:", values);
     setAuthModalVisible(false);
     loginForm.resetFields();
     setTimeout(() => navigate("/app/dashboard"), 150);
   };
 
   const onRegisterFinish = (values: any) => {
-    console.log("Register values:", values);
-    // close modal, reset, then navigate
+    console.log("Register:", values);
     setAuthModalVisible(false);
     registerForm.resetFields();
     setTimeout(() => navigate("/app/dashboard"), 150);
@@ -123,13 +127,10 @@ const Landingrentals: React.FC = () => {
 
   const onRegisterValidatePassword = (_: any, value: string) => {
     const password = registerForm.getFieldValue("password");
-    if (!value || value === password) {
-      return Promise.resolve();
-    }
+    if (!value || value === password) return Promise.resolve();
     return Promise.reject(new Error("Passwords do not match"));
   };
 
-  // === FEATURED PROPERTIES DATA ===
   const properties = [
     {
       id: 1,
@@ -142,7 +143,7 @@ const Landingrentals: React.FC = () => {
       baths: 2,
       sqft: "1,200 sqft",
       badges: ["Furnished", "Parking", "Pet Friendly", "Gym"],
-      available: "Immediate",
+      available: "Immediate"
     },
     {
       id: 2,
@@ -155,7 +156,7 @@ const Landingrentals: React.FC = () => {
       baths: 3,
       sqft: "2,100 sqft",
       badges: ["Furnished", "Balcony", "Pool", "Concierge"],
-      available: "Dec 1, 2025",
+      available: "Dec 1, 2025"
     },
     {
       id: 3,
@@ -168,7 +169,7 @@ const Landingrentals: React.FC = () => {
       baths: 1,
       sqft: "550 sqft",
       badges: ["Furnished", "WiFi", "Utilities Inc."],
-      available: "Immediate",
+      available: "Immediate"
     },
     {
       id: 4,
@@ -181,7 +182,7 @@ const Landingrentals: React.FC = () => {
       baths: 3,
       sqft: "2,500 sqft",
       badges: ["Garden", "Parking", "Pet Friendly"],
-      available: "Jan 1, 2026",
+      available: "Jan 1, 2026"
     },
     {
       id: 5,
@@ -194,7 +195,7 @@ const Landingrentals: React.FC = () => {
       baths: 4,
       sqft: "3,800 sqft",
       badges: ["Pool", "Garden", "Garage", "Smart Home"],
-      available: "Immediate",
+      available: "Immediate"
     },
     {
       id: 6,
@@ -207,129 +208,81 @@ const Landingrentals: React.FC = () => {
       baths: 1,
       sqft: "850 sqft",
       badges: ["High Ceilings", "Exposed Brick", "Parking"],
-      available: "Dec 15, 2025",
-    },
+      available: "Dec 15, 2025"
+    }
   ];
-  // === end featured data ===
 
   return (
     <div className="lr-page">
+
+      {/* HEADER */}
       <HSHeader onSignUp={() => setAuthModalVisible(true)} />
 
+      {/* AUTH MODAL */}
       <Modal
-        title={null}
         centered
         open={authModalVisible}
         onCancel={() => setAuthModalVisible(false)}
         footer={null}
         width={420}
         destroyOnClose
-        className="lr-auth-modal"
       >
-        <div className="lr-auth-modal-inner">
-          <Tabs
-            activeKey={activeTab}
-            onChange={(key) => setActiveTab(key as "login" | "register")}
-            centered
-            size="large"
-            className="lr-auth-tabs"
-          >
-            <TabPane tab="Login" key="login">
-              <Form
-                form={loginForm}
-                layout="vertical"
-                name="loginForm"
-                initialValues={{ remember: true }}
-                onFinish={onLoginFinish}
+        <Tabs activeKey={activeTab} onChange={(key) => setActiveTab(key as any)} centered>
+          <TabPane tab="Login" key="login">
+            <Form form={loginForm} layout="vertical" onFinish={onLoginFinish}>
+              <Form.Item name="identifier" label="Email / Phone" rules={[{ required: true }]}>
+                <Input />
+              </Form.Item>
+
+              <Form.Item name="password" label="Password" rules={[{ required: true }]}>
+                <Input.Password />
+              </Form.Item>
+
+              <Form.Item name="remember" valuePropName="checked">
+                <Checkbox>Remember me</Checkbox>
+              </Form.Item>
+
+              <Button type="primary" htmlType="submit" block>Login</Button>
+            </Form>
+          </TabPane>
+
+          <TabPane tab="Register" key="register">
+            <Form form={registerForm} layout="vertical" onFinish={onRegisterFinish}>
+              <Form.Item name="name" label="Full Name" rules={[{ required: true }]}>
+                <Input />
+              </Form.Item>
+
+              <Form.Item name="email" label="Email" rules={[{ required: true, type: "email" }]}>
+                <Input />
+              </Form.Item>
+
+              <Form.Item name="phone" label="Phone" rules={[{ required: true }]}>
+                <Input />
+              </Form.Item>
+
+              <Form.Item name="password" label="Password" rules={[{ required: true }]}>
+                <Input.Password />
+              </Form.Item>
+
+              <Form.Item
+                name="confirm"
+                label="Confirm Password"
+                dependencies={["password"]}
+                rules={[
+                  { required: true },
+                  { validator: onRegisterValidatePassword }
+                ]}
               >
-                <Form.Item
-                  label="Email / Phone"
-                  name="identifier"
-                  rules={[{ required: true, message: "Please enter email or phone" }]}
-                >
-                  <Input placeholder="john@example.com or +1 555 123 4567" />
-                </Form.Item>
+                <Input.Password />
+              </Form.Item>
 
-                <Form.Item
-                  label="Password"
-                  name="password"
-                  rules={[{ required: true, message: "Please enter your password" }]}
-                >
-                  <Input.Password placeholder="Password" />
-                </Form.Item>
-
-                <Form.Item name="remember" valuePropName="checked" style={{ marginBottom: 6 }}>
-                  <Checkbox>Remember me</Checkbox>
-                </Form.Item>
-
-                <Form.Item style={{ marginBottom: 0 }}>
-                  <Button type="primary" htmlType="submit" block>
-                    Login
-                  </Button>
-                </Form.Item>
-              </Form>
-            </TabPane>
-
-            <TabPane tab="Register" key="register">
-              <Form form={registerForm} layout="vertical" name="registerForm" onFinish={onRegisterFinish}>
-                <Form.Item
-                  label="Full name"
-                  name="name"
-                  rules={[{ required: true, message: "Please enter your name" }]}
-                >
-                  <Input placeholder="John Doe" />
-                </Form.Item>
-
-                <Form.Item
-                  label="Email"
-                  name="email"
-                  rules={[
-                    { required: true, message: "Please enter your email" },
-                    { type: "email", message: "Please enter a valid email" },
-                  ]}
-                >
-                  <Input placeholder="john@example.com" />
-                </Form.Item>
-
-                <Form.Item
-                  label="Phone"
-                  name="phone"
-                  rules={[{ required: true, message: "Please enter your phone number" }]}
-                >
-                  <Input placeholder="+1 555 123 4567" />
-                </Form.Item>
-
-                <Form.Item
-                  label="Password"
-                  name="password"
-                  rules={[{ required: true, message: "Please provide a password" }]}
-                >
-                  <Input.Password placeholder="Choose a password" />
-                </Form.Item>
-
-                <Form.Item
-                  label="Confirm Password"
-                  name="confirm"
-                  dependencies={["password"]}
-                  rules={[
-                    { required: true, message: "Please confirm your password" },
-                    { validator: onRegisterValidatePassword },
-                  ]}
-                >
-                  <Input.Password placeholder="Confirm password" />
-                </Form.Item>
-
-                <Form.Item>
-                  <Button type="primary" htmlType="submit" block>
-                    Register
-                  </Button>
-                </Form.Item>
-              </Form>
-            </TabPane>
-          </Tabs>
-        </div>
+              <Button type="primary" htmlType="submit" block>Register</Button>
+            </Form>
+          </TabPane>
+        </Tabs>
       </Modal>
 
+      {/* HERO SECTION */}
       <section
         className="lr-hero lr-hero-with-image"
         style={{
@@ -341,23 +294,17 @@ const Landingrentals: React.FC = () => {
         <div className="lr-hero-inner lr-hero-content">
           <div className="lr-hero-top">
             <small className="lr-hero-sub">
-              <HomeOutlined className="lr-hero-sub-icon" />
-              Home &amp; Apartments Rental
+              <HomeOutlined /> Home & Apartments Rental
             </small>
           </div>
 
           <h1 className="lr-hero-title">Find Your Perfect Home</h1>
-          <p className="lr-hero-desc">
-            Browse thousands of rental properties. From cozy studios to luxury penthouses — find a place you'll love to call home.
-          </p>
 
-          <Form layout="inline" className="lr-search lr-search-hero" onFinish={onSearch}>
-            <Form.Item name="query" className="lr-search-field lr-search-field-hero">
-              <Input placeholder="Enter city or neighborhood" />
-            </Form.Item>
+          <Form layout="inline" onFinish={onSearch} className="lr-search lr-search-hero">
+            <Form.Item name="query"><Input placeholder="Enter city" /></Form.Item>
 
-            <Form.Item name="type" className="lr-search-field lr-search-field-hero">
-              <Select placeholder="Property Type" className="lr-hero-type-select">
+            <Form.Item name="type">
+              <Select placeholder="Property Type">
                 <Option value="apartments">Apartments</Option>
                 <Option value="houses">Houses</Option>
                 <Option value="villas">Villas</Option>
@@ -365,25 +312,24 @@ const Landingrentals: React.FC = () => {
               </Select>
             </Form.Item>
 
-            <Form.Item>
-              <Button type="primary" htmlType="submit" icon={<SearchOutlined />} className="lr-search-btn-hero">
-                Search
-              </Button>
-            </Form.Item>
+            <Button type="primary" htmlType="submit" icon={<SearchOutlined />}>
+              Search
+            </Button>
           </Form>
         </div>
       </section>
 
+      {/* PROPERTY TYPES */}
       <main className="lr-container">
         <section className="lr-types">
           <h2 className="lr-section-title">Browse by Property Type</h2>
 
           <Row gutter={[24, 24]} justify="center">
-            {[ 
+            {[
               { title: "Apartments", count: "1,250+", icon: <HomeOutlined /> },
               { title: "Houses", count: "800+", icon: <ShopOutlined /> },
               { title: "Villas", count: "350+", icon: <CrownOutlined /> },
-              { title: "Studio", count: "600+", icon: <AppstoreOutlined /> },
+              { title: "Studio", count: "600+", icon: <AppstoreOutlined /> }
             ].map((t, i) => (
               <Col xs={24} sm={12} md={6} key={i}>
                 <Card className="lr-type-card" hoverable>
@@ -399,40 +345,31 @@ const Landingrentals: React.FC = () => {
           </Row>
         </section>
 
+        {/* FEATURED PROPERTIES */}
         <section className="lr-featured">
           <div className="lr-featured-head">
-            <div>
-              <h2 className="lr-section-title">Featured Properties</h2>
-              <p className="lr-sub muted">Handpicked properties for you</p>
-            </div>
-            <div className="lr-featured-filter-btn">
-              <Button icon={<FilterOutlined />}>Filters</Button>
-            </div>
+            <h2 className="lr-section-title">Featured Properties</h2>
+            <Button icon={<FilterOutlined />}>Filters</Button>
           </div>
 
           <Row gutter={[24, 24]}>
             {properties.map((p) => (
-              <Col xs={24} sm={12} md={8} lg={8} key={p.id}>
+              <Col xs={24} sm={12} md={8} key={p.id}>
                 <Card
                   hoverable
                   className="lr-prop-card"
                   cover={
                     <div className="lr-cover-wrap">
-                      <img src={p.img} alt={p.title} className="lr-prop-img" />
+                      <img src={p.img} className="lr-prop-img" />
                       <div className="lr-heart"><HeartOutlined /></div>
                       <div className="lr-prop-tag">{p.tag}</div>
                     </div>
                   }
                 >
-                  <h3 className="lr-prop-title">{p.title}</h3>
-                  <div className="lr-prop-loc">📍 {p.location}</div>
-
-                  <div className="lr-prop-price">
-                    <span className="price">{p.price}</span>
-                    <span className="per">/month</span>
-                  </div>
-
-                  <div className="lr-prop-meta">🛏 {p.beds} Beds &nbsp; 🛁 {p.baths} Baths &nbsp; 📐 {p.sqft}</div>
+                  <h3>{p.title}</h3>
+                  <p>📍 {p.location}</p>
+                  <p className="lr-prop-price">{p.price} / month</p>
+                  <p>🛏 {p.beds} Beds | 🛁 {p.baths} Baths | 📐 {p.sqft}</p>
 
                   <div className="lr-prop-tags">
                     {p.badges.map((b, i) => (
@@ -440,70 +377,82 @@ const Landingrentals: React.FC = () => {
                     ))}
                   </div>
 
-                  <div className="lr-available">Available: {p.available}</div>
+                  <p>Available: {p.available}</p>
 
-                  <Button type="primary" block className="lr-schedule-btn">Schedule Viewing</Button>
+                  <Button 
+                  // type="primary" 
+                  className="schedule"
+                   block>Schedule Viewing</Button>
                 </Card>
               </Col>
             ))}
           </Row>
         </section>
 
-        <section className="lr-amenities" aria-labelledby="amenities-heading">
+        {/* AMENITIES */}
+        <section className="lr-amenities">
           <div className="lr-amenities-inner">
             <div className="lr-amenities-top">
-              <div className="lr-amenities-top-btn">
-                <Button className="lr-view-all-btn">View All Properties</Button>
+              <button className="lr-view-all-btn">View All Properties</button>
+              <div>
+                <h2 className="lr-section-title">Premium Amenities</h2>
+                <p className="lr-sub">Enjoy world-class facilities and amenities in our properties</p>
               </div>
-
-              <h2 id="amenities-heading" className="lr-section-title">Premium Amenities</h2>
-              <p className="lr-sub muted">Enjoy world-class facilities and amenities in our properties</p>
             </div>
 
-            <div className="lr-amenities-grid" role="list" aria-label="List of amenities">
-              {[ "24/7 Security","Swimming Pool","Gym & Fitness Center","Parking","Power Backup","Elevator","Garden/Park","Children's Play Area","Club House","Maintenance Staff" ].map((amenity, i) => (
-                <div key={i} className="lr-amenity" role="listitem" aria-label={amenity}>
+            <div className="lr-amenities-grid">
+              {[
+                "24/7 Security",
+                "Swimming Pool",
+                "Gym & Fitness Center",
+                "Parking",
+                "Power Backup",
+                "Elevator",
+                "Garden/Park",
+                "Children's Play Area",
+                "Club House",
+                "Maintenance Staff"
+              ].map((a, i) => (
+                <div key={i} className="lr-amenity">
                   <span className="lr-amenity-check" aria-hidden>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
-                      <path d="M20 6L9 17l-5-5" stroke="#7B2CFF" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+                    <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+                      <path d="M1.5 6.5L5.5 10.5L14.5 1.5" stroke="#7B2CFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                   </span>
-
-                  <span className="lr-amenity-text">{amenity}</span>
+                  <div className="lr-amenity-text">{a}</div>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
+        {/* BOOKING */}
         <section className="lr-booking">
           <h2 className="lr-section-title">Schedule a Viewing</h2>
-          <p className="lr-sub muted">Find your dream home. Schedule a property viewing today.</p>
-
           <div className="lr-booking-card">
-            <Form form={form} layout="vertical" onFinish={onSchedule}>
+            <Form layout="vertical" form={form} onFinish={onSchedule}>
               <Row gutter={16}>
                 <Col xs={24} md={12}>
-                  <Form.Item name="name" label="Full Name" rules={[{ required: true }]}>
-                    <Input placeholder="John Doe" />
+                  <Form.Item label="Full Name" name="name" rules={[{ required: true }]}>
+                    <Input />
                   </Form.Item>
                 </Col>
 
                 <Col xs={24} md={12}>
-                  <Form.Item name="email" label="Email" rules={[{ required: true, type: "email" }]}>
-                    <Input placeholder="john@example.com" />
+                  <Form.Item label="Email" name="email" rules={[{ required: true }]}>
+                    <Input />
                   </Form.Item>
                 </Col>
 
                 <Col xs={24} md={12}>
-                  <Form.Item name="phone" label="Phone Number" rules={[{ required: true }]}>
-                    <Input placeholder="+1 (555) 123-4567" />
+                  <Form.Item label="Phone" name="phone" rules={[{ required: true }]}>
+                    <Input />
                   </Form.Item>
                 </Col>
 
                 <Col xs={24} md={12}>
-                  <Form.Item name="serviceType" label="Service Type" rules={[{ required: true }]}>
-                    <Select placeholder="Select Rental Services">
+                  <Form.Item label="Type" name="serviceType" rules={[{ required: true }]}>
+                    <Select>
                       <Select.Option value="Apartments">Apartments</Select.Option>
                       <Select.Option value="Houses">Houses</Select.Option>
                       <Select.Option value="Villas">Villas</Select.Option>
@@ -513,66 +462,60 @@ const Landingrentals: React.FC = () => {
                 </Col>
 
                 <Col xs={24}>
-                  <Form.Item name="address" label="Service Address" rules={[{ required: true }]}>
-                    <Input placeholder="123 Main St, City, State, ZIP" />
+                  <Form.Item label="Service Address" name="address" rules={[{ required: true }]}>
+                    <Input />
                   </Form.Item>
                 </Col>
 
                 <Col xs={24} md={12}>
-                  <Form.Item name="date" label="Preferred Date" rules={[{ required: true }]}>
+                  <Form.Item label="Preferred Date" name="date" rules={[{ required: true }]}>
                     <DatePicker className="lr-datepicker" />
                   </Form.Item>
                 </Col>
 
                 <Col xs={24} md={12}>
-                  <Form.Item name="time" label="Preferred Time" rules={[{ required: true }]}>
-                    <Select placeholder="Select time slot">
-                      <Select.Option value="09:00-11:00">9:00 AM - 11:00 AM</Select.Option>
-                      <Select.Option value="11:00-13:00">11:00 AM - 1:00 PM</Select.Option>
-                      <Select.Option value="14:00-16:00">2:00 PM - 4:00 PM</Select.Option>
-                      <Select.Option value="16:00-18:00">4:00 PM - 6:00 PM</Select.Option>
+                  <Form.Item label="Preferred Time" name="time" rules={[{ required: true }]}>
+                    <Select>
+                      <Select.Option value="09:00-11:00">9–11 AM</Select.Option>
+                      <Select.Option value="11:00-13:00">11–1 PM</Select.Option>
+                      <Select.Option value="14:00-16:00">2–4 PM</Select.Option>
+                      <Select.Option value="16:00-18:00">4–6 PM</Select.Option>
                     </Select>
                   </Form.Item>
                 </Col>
 
                 <Col xs={24}>
-                  <Form.Item name="details" label="Additional Details">
-                    <Input.TextArea rows={4} placeholder="Tell us more about your requirements..." />
+                  <Form.Item label="Details" name="details">
+                    <Input.TextArea rows={4} />
                   </Form.Item>
                 </Col>
 
-                <Col xs={24}>
-                  <Form.Item>
-                    <Button htmlType="submit" className="lr-submit-btn" size="large" block>
-                      Submit Booking Request
-                    </Button>
-                  </Form.Item>
-                </Col>
+                <Button className="lr-submit-btn" size="large" htmlType="submit" block>
+                  Submit Booking Request
+                </Button>
               </Row>
             </Form>
           </div>
         </section>
       </main>
 
+      {/* FOOTER */}
       <footer className="lr-footer">
         <div className="lr-footer-inner lr-footer-grid">
           <div className="lr-footer-col">
             <h4>About Us</h4>
-            <p className="lr-footer-about">
-              Your trusted partner for all home and property-related services. Quality,
-              reliability, and customer satisfaction guaranteed.
-            </p>
+            <p>Your trusted partner for home and property services.</p>
           </div>
 
           <div className="lr-footer-col">
             <h4>Services</h4>
             <ul className="lr-footer-list">
-              <li>Cleaning Service</li>
+              <li>Cleaning</li>
               <li>Packers & Movers</li>
               <li>Home Services</li>
               <li>Rentals</li>
-              <li>Commercial Plots</li>
-              <li>Construction Materials</li>
+              <li>Commercial</li>
+              <li>Construction</li>
             </ul>
           </div>
 
@@ -589,26 +532,24 @@ const Landingrentals: React.FC = () => {
           <div className="lr-footer-col">
             <h4>Contact Info</h4>
             <ul className="lr-contact-list">
-              <li className="lr-contact-phone">
-                <Phone className="lc-contact-icon lc-thin-phone" aria-hidden />
-                <span className="lc-contact-text"> +1 (555) 123-4567</span>
+              <li>
+                <Phone className="lc-contact-icon" /> +1 (555) 123-4567
               </li>
-              <li><MailOutlined /> &nbsp; info@homeservices.com</li>
-              <li><EnvironmentOutlined /> &nbsp; 123 Service Street, City, State</li>
+              <li><MailOutlined /> info@homeservices.com</li>
+              <li><EnvironmentOutlined /> 123 Street, City</li>
             </ul>
 
             <div className="lr-footer-socials">
-              <a aria-label="facebook" className="social" href="#"><FacebookOutlined /></a>
-              <a aria-label="twitter" className="social" href="#"><TwitterOutlined /></a>
-              <a aria-label="instagram" className="social" href="#"><InstagramOutlined /></a>
-              <a aria-label="linkedin" className="social" href="#"><LinkedinOutlined /></a>
+              <FacebookOutlined />
+              <TwitterOutlined />
+              <InstagramOutlined />
+              <LinkedinOutlined />
             </div>
           </div>
         </div>
 
         <div className="lr-footer-bottom">
-          <div className="lr-footer-sep" />
-          <div className="lr-footer-copy">© 2025 Home Services. All rights reserved.</div>
+          © 2025 Home Services. All rights reserved.
         </div>
       </footer>
     </div>

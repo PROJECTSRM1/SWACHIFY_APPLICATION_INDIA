@@ -1,13 +1,10 @@
 // src/pages/landing/LandingCleaningPage.tsx
 import React, { useState } from "react";
-// add this
+import { setUserDetails } from "../../utils/helpers/storage";
 import { Phone } from "lucide-react";
-// import { Menu } from 'antd'    
+import CommonHeader from "../../pages/landing/Header";
+import "../../pages/landing/Header.css";
 
-// you can keep the AntD PhoneOutlined import if you still use it elsewhere,
-// otherwise remove `PhoneOutlined` from the AntD import list.
-
-/* NOTE: Menu was added to the existing AntD imports because the header uses it */
 import {
   Row,
   Col,
@@ -17,7 +14,6 @@ import {
   Input,
   Select,
   DatePicker,
-  Menu,
   Modal,
   Tabs,
   Checkbox,
@@ -29,17 +25,13 @@ import {
   InstagramOutlined,
   LinkedinOutlined,
   CheckCircleOutlined,
-  // PhoneOutlined,
   MailOutlined,
   EnvironmentOutlined,
 } from "@ant-design/icons";
 
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./landingcleaningpage.css";
 
-// TEMP PLACEHOLDER IMAGES (no errors if files not added yet)
-// When you add images, replace these with proper imports:
-// e.g. import heroImg from "../../assets/cleaning/hero.jpg";
 import s1 from "../../assets/landingimages/landinghomecleaning.jpg";
 import s2 from "../../assets/landingimages/landingofficecleaning.jpg";
 import s3 from "../../assets/landingimages/moveinoutcleaning.jpg";
@@ -49,19 +41,11 @@ import s6 from "../../assets/landingimages/sofa&upholsterycleaning.jpg";
 import s7 from "../../assets/landingimages/landingcarpetcleaning.jpg";
 import s8 from "../../assets/landingimages/postconstruction.jpg";
 
-// --- Optional: screenshot files you've uploaded (paths from conversation) ---
-// They are provided if you want to reference them or preview in dev.
-// /mnt/data/Screenshot 2025-11-21 110102.png
-// /mnt/data/Screenshot 2025-11-21 110111.png
-
 const { TextArea } = Input;
-// removed unused `Option` const to avoid TS warning
-
-
 const { TabPane } = Tabs;
 
 /* ================================
-   HSHeader component (inserted)
+   HSHeader component (no inline styles)
    Re-uses .hs-* CSS classes so it will match your other header/UI
    ================================= */
 type HSHeaderProps = {
@@ -69,6 +53,7 @@ type HSHeaderProps = {
   onSignUp?: () => void;
 };
 
+<<<<<<< HEAD
 export const HSHeader: React.FC<HSHeaderProps> = ({
   selectedKey = "",
   onSignUp = () => {},
@@ -87,30 +72,13 @@ export const HSHeader: React.FC<HSHeaderProps> = ({
   // IMPORTANT: ensure if selectedKey is empty we pass an empty array so AntD highlights nothing.
   const selectedKeysArray = selectedKey ? [selectedKey] : [];
 
+=======
+export const HSHeader: React.FC<HSHeaderProps> = () => {
+>>>>>>> main
   return (
-    <header className="hs-navbar" role="banner" aria-label="Primary header">
-      <div className="hs-navbar-logo" aria-hidden>
-        <span className="hs-logo-text">SWACHIFY INDIA</span>
-      </div>
-
-      <Menu
-        mode="horizontal"
-        selectedKeys={selectedKeysArray}
-        className="hs-navbar-menu"
-        items={headerNav}
-        role="navigation"
-        aria-label="Primary navigation"
-      />
-
-      <Button
-        type="primary"
-        className="hs-contact-btn"
-        onClick={onSignUp}
-        aria-label="Sign up"
-      >
-        Sign Up
-      </Button>
-    </header>
+    <div>
+      <CommonHeader selectedKey="cleaningservice" />
+    </div>
   );
 };
 /* ================================
@@ -170,39 +138,35 @@ const packages = [
 
 const LandingCleaningPage: React.FC = () => {
   const [form] = Form.useForm();
-
-  // new modal state for auth
   const [authVisible, setAuthVisible] = useState(false);
-
-  // keep separate forms for login/register
   const [loginForm] = Form.useForm();
   const [registerForm] = Form.useForm();
-
   const navigate = useNavigate();
 
   const onFinish = (values: any) => {
     console.log("Booking request:", values);
-    // TODO: send booking request to API
   };
 
-  // handlers for auth modal forms
   const onLogin = (values: any) => {
     console.log("Login values:", values);
-    // perform login action or call API
-    // close modal first
+    const userData = {
+      name: "Test User",
+      email: values.identifier,
+    };
+
+    console.log("__logs", userData);
+    setUserDetails("user", userData);
+
     setAuthVisible(false);
-    // allow modal close animation to finish, then navigate
     setTimeout(() => navigate("/app/dashboard"), 140);
   };
 
   const onRegister = (values: any) => {
     console.log("Register values:", values);
-    // perform register action then optionally close modal or keep open
     setAuthVisible(false);
     setTimeout(() => navigate("/app/dashboard"), 140);
   };
 
-  // Renders the Auth modal (Login + Register)
   const AuthModal = () => {
     return (
       <Modal
@@ -210,13 +174,11 @@ const LandingCleaningPage: React.FC = () => {
         onCancel={() => setAuthVisible(false)}
         footer={null}
         centered
-        bodyStyle={{ padding: 28 }}
-        closeIcon={<span style={{ fontSize: 20, color: "#9aa4b2" }}>✕</span>}
-        className="lr-auth-modal" // reuse existing / similar classes you already have in CSS
+        className="lr-auth-modal"
         width={560}
         aria-labelledby="auth-modal-title"
       >
-        <div style={{ maxWidth: 480, margin: "0 auto" }}>
+        <div className="auth-modal-inner">
           <Tabs defaultActiveKey="login" type="line" centered>
             <TabPane tab="Login" key="login">
               <Form
@@ -226,7 +188,7 @@ const LandingCleaningPage: React.FC = () => {
                 initialValues={{ remember: true }}
               >
                 <Form.Item
-                  label={<span style={{ fontWeight: 600 }}>Email / Phone</span>}
+                  label={<span className="form-label">Email / Phone</span>}
                   name="identifier"
                   rules={[{ required: true, message: "Please enter email / phone" }]}
                 >
@@ -234,7 +196,7 @@ const LandingCleaningPage: React.FC = () => {
                 </Form.Item>
 
                 <Form.Item
-                  label={<span style={{ fontWeight: 600 }}>Password</span>}
+                  label={<span className="form-label">Password</span>}
                   name="password"
                   rules={[{ required: true, message: "Please enter your password" }]}
                 >
@@ -246,7 +208,7 @@ const LandingCleaningPage: React.FC = () => {
                 </Form.Item>
 
                 <Form.Item>
-                  <Button type="primary" htmlType="submit" block style={{ height: 44 }}>
+                  <Button type="primary" htmlType="submit" block className="lr-btn-large">
                     Login
                   </Button>
                 </Form.Item>
@@ -254,13 +216,9 @@ const LandingCleaningPage: React.FC = () => {
             </TabPane>
 
             <TabPane tab="Register" key="register">
-              <Form
-                form={registerForm}
-                layout="vertical"
-                onFinish={onRegister}
-              >
+              <Form form={registerForm} layout="vertical" onFinish={onRegister}>
                 <Form.Item
-                  label={<span style={{ fontWeight: 600 }}>Full name</span>}
+                  label={<span className="form-label">Full name</span>}
                   name="fullName"
                   rules={[{ required: true, message: "Please enter your full name" }]}
                 >
@@ -268,7 +226,7 @@ const LandingCleaningPage: React.FC = () => {
                 </Form.Item>
 
                 <Form.Item
-                  label={<span style={{ fontWeight: 600 }}>Email</span>}
+                  label={<span className="form-label">Email</span>}
                   name="email"
                   rules={[{ required: true, type: "email", message: "Please enter valid email" }]}
                 >
@@ -276,7 +234,7 @@ const LandingCleaningPage: React.FC = () => {
                 </Form.Item>
 
                 <Form.Item
-                  label={<span style={{ fontWeight: 600 }}>Phone</span>}
+                  label={<span className="form-label">Phone</span>}
                   name="phone"
                   rules={[{ required: true, message: "Please enter phone number" }]}
                 >
@@ -284,7 +242,7 @@ const LandingCleaningPage: React.FC = () => {
                 </Form.Item>
 
                 <Form.Item
-                  label={<span style={{ fontWeight: 600 }}>Password</span>}
+                  label={<span className="form-label">Password</span>}
                   name="regPassword"
                   rules={[{ required: true, message: "Please choose a password" }]}
                 >
@@ -292,7 +250,7 @@ const LandingCleaningPage: React.FC = () => {
                 </Form.Item>
 
                 <Form.Item
-                  label={<span style={{ fontWeight: 600 }}>Confirm Password</span>}
+                  label={<span className="form-label">Confirm Password</span>}
                   name="confirmPassword"
                   dependencies={["regPassword"]}
                   rules={[
@@ -311,7 +269,7 @@ const LandingCleaningPage: React.FC = () => {
                 </Form.Item>
 
                 <Form.Item>
-                  <Button type="primary" htmlType="submit" block style={{ height: 44 }}>
+                  <Button type="primary" htmlType="submit" block className="lr-btn-large">
                     Register
                   </Button>
                 </Form.Item>
@@ -325,31 +283,17 @@ const LandingCleaningPage: React.FC = () => {
 
   return (
     <div className="lc-page">
-      {/* ========== NAVBAR (added) ========== */}
-    
-      {/* ========== NAVBAR (replaced with HSHeader) ========== */}
-      {/* Pass the onSignUp to open the modal */}
       <HSHeader onSignUp={() => setAuthVisible(true)} />
-      {/* ========== /NAVBAR ========== */}
-
-      {/* render modal */}
       <AuthModal />
 
-      {/* ========== HERO SECTION ========== */}
+      {/* HERO */}
       <section className="lc-hero lc-hero--large">
         <div className="lc-hero-inner">
           <div className="lc-hero-content">
             <div className="lc-hero-top">
               <span className="lc-hero-icon" aria-hidden>
-                {/* sparkle / star icon */}
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                  <path
-                    d="M12 2l1.8 4L18 8l-4 1.8L12 14l-1.8-4L6 8l4.2-2L12 2z"
-                    stroke="currentColor"
-                    strokeWidth="1.3"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
+                <svg className="lc-hero-star" viewBox="0 0 24 24" fill="none" role="img" aria-hidden>
+                  <path className="lc-hero-star-path" d="M12 2l1.8 4L18 8l-4 1.8L12 14l-1.8-4L6 8l4.2-2L12 2z" />
                 </svg>
               </span>
 
@@ -391,12 +335,11 @@ const LandingCleaningPage: React.FC = () => {
           </Row>
         </section>
 
+        {/* INCLUDED */}
         <section className="lc-included" aria-labelledby="included-heading">
           <div className="lc-included-inner">
             <h2 id="included-heading" className="lc-section-title">What's Included</h2>
             <p className="lc-sub muted">Our comprehensive cleaning service covers every corner of your space</p>
-
-            {/* grid of boxes */}
             <div className="lc-included-grid" role="list">
               {[
                 "Deep cleaning of all rooms",
@@ -410,9 +353,8 @@ const LandingCleaningPage: React.FC = () => {
               ].map((txt, i) => (
                 <div key={i} className="lc-included-box" role="listitem" aria-label={txt}>
                   <div className="lc-included-left" aria-hidden>
-                    {/* green check SVG */}
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                      <path d="M20 6L9 17l-5-5" stroke="#16a34a" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+                    <svg className="lc-include-check" viewBox="0 0 24 24" fill="none" role="img" aria-hidden>
+                      <path className="lc-include-check-path" d="M20 6L9 17l-5-5" />
                     </svg>
                   </div>
 
@@ -433,16 +375,12 @@ const LandingCleaningPage: React.FC = () => {
               <Col xs={24} sm={12} md={8} key={i}>
                 <div className={`lc-price-card ${p.popular ? "popular" : ""}`}>
                   {p.popular && <div className="lc-badge">Most Popular</div>}
-
                   <h3>{p.name}</h3>
-
                   <div className="lc-price">
                     <span className="lc-amount">{p.price}</span>
                     <span className="lc-suffix"> / service</span>
                   </div>
-
                   <div className="lc-time">{p.time}</div>
-
                   <ul className="lc-bullets">
                     {p.bullets.map((b, idx) => (
                       <li key={idx}>
@@ -451,8 +389,7 @@ const LandingCleaningPage: React.FC = () => {
                       </li>
                     ))}
                   </ul>
-
-                  <Button type={p.popular ? "primary" : "default"} block>
+                  <Button type={p.popular ? "primary" : "default"} block className="lc-price-cta">
                     Select Package
                   </Button>
                 </div>
@@ -461,7 +398,7 @@ const LandingCleaningPage: React.FC = () => {
           </Row>
         </section>
 
-        {/* BOOKING FORM */}
+        {/* BOOKING */}
         <section className="lc-booking">
           <h2 className="lc-section-title">Book Your Cleaning Service</h2>
           <p className="lc-sub muted">Fill out the form below and we'll get back to you within 24 hours</p>
@@ -540,24 +477,14 @@ const LandingCleaningPage: React.FC = () => {
           </div>
         </section>
 
-        {/* Insert WhyChooseSection here (renders pale-blue row) */}
         <WhyChooseSection />
       </main>
 
-      {/* Insert DarkFooter here */}
       <DarkFooter />
     </div>
   );
 };
 
-/* =========================
-   Helper components (two functions)
-   - WhyChooseSection
-   - DarkFooter
-   Keep them below main component so they don't change existing UI above
-   ========================= */
-
-/* (unchanged) WhyChooseSection and DarkFooter functions kept the same as in your file */
 function WhyChooseSection() {
   return (
     <section className="lc-why pale lc-why-centered" aria-labelledby="why-choose-heading">
@@ -567,17 +494,10 @@ function WhyChooseSection() {
         </h2>
 
         <div className="lc-why-grid" role="list">
-          {/* Item 1 — Shield Icon */}
           <div className="lc-why-item" role="listitem">
             <div className="lc-why-icon-circle" aria-hidden>
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
-                <path
-                  d="M12 2L4 5v6c0 5 4 9 8 9s8-4 8-9V5l-8-3z"
-                  stroke="#fff"
-                  strokeWidth="1.8"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
+              <svg className="lc-why-svg" viewBox="0 0 24 24" fill="none" role="img" aria-hidden>
+                <path className="lc-why-path" d="M12 2L4 5v6c0 5 4 9 8 9s8-4 8-9V5l-8-3z" />
               </svg>
             </div>
 
@@ -587,17 +507,10 @@ function WhyChooseSection() {
             </div>
           </div>
 
-          {/* Item 2 — Sparkle Icon */}
           <div className="lc-why-item" role="listitem">
             <div className="lc-why-icon-circle" aria-hidden>
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
-                <path
-                  d="M12 3l1.8 4 4 1.8-4 1.8L12 15l-1.8-4-4-1.8 4-1.8L12 3z"
-                  stroke="#fff"
-                  strokeWidth="1.8"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
+              <svg className="lc-why-svg" viewBox="0 0 24 24" fill="none" role="img" aria-hidden>
+                <path className="lc-why-path" d="M12 3l1.8 4 4 1.8-4 1.8L12 15l-1.8-4-4-1.8 4-1.8L12 3z" />
               </svg>
             </div>
 
@@ -609,23 +522,8 @@ function WhyChooseSection() {
 
           <div className="lc-why-item" role="listitem">
             <div className="lc-why-icon-circle lc-why-icon-circle--dollar" aria-hidden>
-              <svg
-                className="lc-why-dollar-svg"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <text
-                  x="50%"
-                  y="50%"
-                  textAnchor="middle"
-                  dominantBaseline="middle"
-                  style={{
-                    fontFamily: "Inter, Arial, sans-serif",
-                    fontWeight: 700,
-                    fontSize: "20px",
-                    fill: "#fff",
-                  }}
-                >
+              <svg className="lc-why-dollar-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden>
+                <text className="lc-why-dollar-text" x="50%" y="50%" textAnchor="middle" dominantBaseline="middle">
                   $
                 </text>
               </svg>
@@ -640,12 +538,10 @@ function WhyChooseSection() {
   );
 }
 
-/** DarkFooter: footer matching screenshot (only footer changed) */
 function DarkFooter() {
   return (
     <footer className="lc-footer">
       <div className="lc-footer-inner">
-        {/* Column 1: About */}
         <div className="lc-footer-col">
           <h4 className="lc-footer-title">About Us</h4>
           <p className="lc-footer-about">
@@ -654,7 +550,6 @@ function DarkFooter() {
           </p>
         </div>
 
-        {/* Column 2: Services */}
         <div className="lc-footer-col">
           <h4 className="lc-footer-title">Services</h4>
           <ul className="lc-footer-links" aria-label="Services">
@@ -667,7 +562,6 @@ function DarkFooter() {
           </ul>
         </div>
 
-        {/* Column 3: Quick Links */}
         <div className="lc-footer-col">
           <h4 className="lc-footer-title">Quick Links</h4>
           <ul className="lc-footer-links" aria-label="Quick links">
@@ -678,7 +572,6 @@ function DarkFooter() {
           </ul>
         </div>
 
-        {/* Column 4: Contact Info */}
         <div className="lc-footer-col">
           <h4 className="lc-footer-title">Contact Info</h4>
 
@@ -699,7 +592,6 @@ function DarkFooter() {
             </li>
           </ul>
 
-          {/* Social icons — use the CSS classes already defined in your CSS */}
           <div className="lc-socials" >
             <a aria-label="facebook" className="lc-social-link" href="#"><FacebookOutlined /></a>
             <a aria-label="twitter" className="lc-social-link" href="#"><TwitterOutlined /></a>
@@ -718,5 +610,4 @@ function DarkFooter() {
   );
 }
 
-/* export main component */
 export default LandingCleaningPage;
