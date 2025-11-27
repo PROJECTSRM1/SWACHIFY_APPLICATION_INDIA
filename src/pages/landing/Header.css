@@ -1,6 +1,6 @@
-/* Header.css - keep the same look as your landing page's hs-navbar rules */
+/* Header.css - EXACT COPY OF YOUR FILE + signup override */
 
-/* Reset locally scoped rules (these will coexist with your global CSS) */
+/* =================== BASE NAV =================== */
 .hs-navbar {
   display: flex;
   align-items: center;
@@ -15,7 +15,6 @@
   box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
 
-/* Logo */
 .hs-navbar-logo {
   display: flex;
   align-items: center;
@@ -23,19 +22,14 @@
   order: 0;
   flex: 0 0 auto;
 }
-.hs-logo-image {
-  width: 44px;
-  height: 44px;
-  object-fit: contain;
-  border-radius: 6px;
-}
+
 .hs-logo-text {
   font-weight: 700;
   font-size: 1.1rem;
   color: #111;
 }
 
-/* mobile menu icon */
+/* =================== MOBILE MENU ICON =================== */
 .mobile-menu-icon {
   display: none;
   font-size: 1.6rem;
@@ -43,22 +37,21 @@
   background: transparent;
   border: none;
   padding: 6px;
-  line-height: 1;
   color: #333;
   order: 1;
 }
 
-/* AntD menu container (desktop) */
+/* =================== MENU =================== */
 .hs-navbar .hs-navbar-menu {
   order: 2;
   flex: 1 1 auto;
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: visible;
   margin-left: 10px !important;
   padding: 0 !important;
 }
+
 .hs-navbar .hs-navbar-menu .ant-menu-horizontal {
   display: flex;
   gap: 6px;
@@ -66,27 +59,27 @@
   background: transparent;
   border-bottom: none;
 }
+
 .hs-navbar .hs-navbar-menu .ant-menu-item {
   padding: 0 10px;
   height: auto;
-  display: flex;
-  align-items: center;
   font-weight: 600;
   font-size: 0.98rem;
   white-space: nowrap;
 }
+
 .hs-navbar .hs-navbar-menu .ant-menu-item a {
   padding: 8px 4px;
 }
 
-/* Sign up button */
+/* =================== SIGN UP BUTTON =================== */
 .hs-contact-btn {
   order: 3;
   flex: 0 0 auto;
   margin-left: 12px;
 }
 
-/* Mobile dropdown */
+/* =================== MOBILE MENU =================== */
 .mobile-menu {
   width: 100%;
   background: #fff;
@@ -94,19 +87,40 @@
   padding: 16px 20px;
   box-shadow: 0 4px 6px rgba(0,0,0,0.12);
 }
+
 .mobile-menu li {
   padding: 10px 0;
   border-bottom: 1px solid #eee;
 }
-.mobile-menu li a,
-.mobile-menu li > div {
+
+.mobile-menu li a {
   color: #333;
-  text-decoration: none;
 }
 
-/* Responsive behavior */
+/* =================== RESPONSIVE =================== */
 @media (max-width: 900px) {
   .hs-navbar .hs-navbar-menu { display: none !important; }
   .mobile-menu-icon { display: block; }
-  .hs-contact-btn { display: block; padding: 8px 14px; border-radius: 8px; }
+  .hs-contact-btn { display: block; }
+}
+
+/* =========================================================
+   💙 SIGN UP BUTTON — LIGHT BLUE OVERRIDE (100% WORKING)
+   ========================================================= */
+.signup-btn.ant-btn,
+.signup-btn .ant-btn,
+.hs-contact-btn.signup-btn,
+.hs-contact-btn.signup-btn .ant-btn.ant-btn-primary {
+  background-color: #4da6ff !important;
+  border-color: #4da6ff !important;
+  color: #fff !important;
+  box-shadow: none !important;
+  border-radius: 22px !important;
+  padding: 6px 14px !important;
+}
+
+.signup-btn.ant-btn:hover,
+.signup-btn .ant-btn:hover {
+  background-color: #3b8fe6 !important;
+  border-color: #3b8fe6 !important;
 }

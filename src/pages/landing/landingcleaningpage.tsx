@@ -1,13 +1,10 @@
 // src/pages/landing/LandingCleaningPage.tsx
 import React, { useState } from "react";
-// add this
 import { setUserDetails } from "../../utils/helpers/storage";
 import { Phone } from "lucide-react";
 import CommonHeader from "../../pages/landing/Header";
-import "../../pages/landing/Header.css"; // import CSS for header
-// import { Menu } from 'antd'    
+import "../../pages/landing/Header.css";
 
-/***** ADDED ICONS: Menu & Close for hamburger *****/
 import {
   Row,
   Col,
@@ -17,7 +14,6 @@ import {
   Input,
   Select,
   DatePicker,
-  // Menu,
   Modal,
   Tabs,
   Checkbox,
@@ -29,17 +25,13 @@ import {
   InstagramOutlined,
   LinkedinOutlined,
   CheckCircleOutlined,
-  // PhoneOutlined,
   MailOutlined,
   EnvironmentOutlined,
-  // MenuOutlined,
-  // CloseOutlined,
 } from "@ant-design/icons";
 
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./landingcleaningpage.css";
 
-/* (asset imports and placeholders unchanged) */
 import s1 from "../../assets/landingimages/landinghomecleaning.jpg";
 import s2 from "../../assets/landingimages/landingofficecleaning.jpg";
 import s3 from "../../assets/landingimages/moveinoutcleaning.jpg";
@@ -53,7 +45,7 @@ const { TextArea } = Input;
 const { TabPane } = Tabs;
 
 /* ================================
-   HSHeader component (updated)
+   HSHeader component (no inline styles)
    Re-uses .hs-* CSS classes so it will match your other header/UI
    ================================= */
 type HSHeaderProps = {
@@ -61,33 +53,16 @@ type HSHeaderProps = {
   onSignUp?: () => void;
 };
 
-export const HSHeader: React.FC<HSHeaderProps> = ({
-  // selectedKey = "",
-  // // onSignUp = () => {},
-}) => {
-  // const [menuOpen, setMenuOpen] = useState(false);
-
- 
-
-  // IMPORTANT: ensure if selectedKey is empty we pass an empty array so AntD highlights nothing.
-  // const selectedKeysArray = selectedKey ? [selectedKey] : [];
-
+export const HSHeader: React.FC<HSHeaderProps> = () => {
   return (
-  <div>
-<CommonHeader selectedKey="cleaningservice" />
-    
-  </div>
+    <div>
+      <CommonHeader selectedKey="cleaningservice" />
+    </div>
   );
 };
 /* ================================
    End HSHeader
    ================================= */
-
-/* ============================
-   remainder of file unchanged (only HSHeader above added hamburger)
-   ... rest of LandingCleaningPage component and helpers unchanged
-   (copied exactly from your provided file)
-   ============================ */
 
 const serviceList = [
   { title: "Residential Cleaning", desc: "Homes, apartments, and condos", img: s1 },
@@ -154,14 +129,13 @@ const LandingCleaningPage: React.FC = () => {
   const onLogin = (values: any) => {
     console.log("Login values:", values);
     const userData = {
-        name: "Test User",
-        email: values.identifier,
-      };
-      
-      console.log('__logs',userData)
-      setUserDetails("user", userData);
-    
-      navigate("/app/dashboard");
+      name: "Test User",
+      email: values.identifier,
+    };
+
+    console.log("__logs", userData);
+    setUserDetails("user", userData);
+
     setAuthVisible(false);
     setTimeout(() => navigate("/app/dashboard"), 140);
   };
@@ -179,13 +153,11 @@ const LandingCleaningPage: React.FC = () => {
         onCancel={() => setAuthVisible(false)}
         footer={null}
         centered
-        bodyStyle={{ padding: 28 }}
-        closeIcon={<span style={{ fontSize: 20, color: "#9aa4b2" }}>✕</span>}
         className="lr-auth-modal"
         width={560}
         aria-labelledby="auth-modal-title"
       >
-        <div style={{ maxWidth: 480, margin: "0 auto" }}>
+        <div className="auth-modal-inner">
           <Tabs defaultActiveKey="login" type="line" centered>
             <TabPane tab="Login" key="login">
               <Form
@@ -195,7 +167,7 @@ const LandingCleaningPage: React.FC = () => {
                 initialValues={{ remember: true }}
               >
                 <Form.Item
-                  label={<span style={{ fontWeight: 600 }}>Email / Phone</span>}
+                  label={<span className="form-label">Email / Phone</span>}
                   name="identifier"
                   rules={[{ required: true, message: "Please enter email / phone" }]}
                 >
@@ -203,7 +175,7 @@ const LandingCleaningPage: React.FC = () => {
                 </Form.Item>
 
                 <Form.Item
-                  label={<span style={{ fontWeight: 600 }}>Password</span>}
+                  label={<span className="form-label">Password</span>}
                   name="password"
                   rules={[{ required: true, message: "Please enter your password" }]}
                 >
@@ -215,7 +187,7 @@ const LandingCleaningPage: React.FC = () => {
                 </Form.Item>
 
                 <Form.Item>
-                  <Button type="primary" htmlType="submit" block style={{ height: 44 }}>
+                  <Button type="primary" htmlType="submit" block className="lr-btn-large">
                     Login
                   </Button>
                 </Form.Item>
@@ -223,13 +195,9 @@ const LandingCleaningPage: React.FC = () => {
             </TabPane>
 
             <TabPane tab="Register" key="register">
-              <Form
-                form={registerForm}
-                layout="vertical"
-                onFinish={onRegister}
-              >
+              <Form form={registerForm} layout="vertical" onFinish={onRegister}>
                 <Form.Item
-                  label={<span style={{ fontWeight: 600 }}>Full name</span>}
+                  label={<span className="form-label">Full name</span>}
                   name="fullName"
                   rules={[{ required: true, message: "Please enter your full name" }]}
                 >
@@ -237,7 +205,7 @@ const LandingCleaningPage: React.FC = () => {
                 </Form.Item>
 
                 <Form.Item
-                  label={<span style={{ fontWeight: 600 }}>Email</span>}
+                  label={<span className="form-label">Email</span>}
                   name="email"
                   rules={[{ required: true, type: "email", message: "Please enter valid email" }]}
                 >
@@ -245,7 +213,7 @@ const LandingCleaningPage: React.FC = () => {
                 </Form.Item>
 
                 <Form.Item
-                  label={<span style={{ fontWeight: 600 }}>Phone</span>}
+                  label={<span className="form-label">Phone</span>}
                   name="phone"
                   rules={[{ required: true, message: "Please enter phone number" }]}
                 >
@@ -253,7 +221,7 @@ const LandingCleaningPage: React.FC = () => {
                 </Form.Item>
 
                 <Form.Item
-                  label={<span style={{ fontWeight: 600 }}>Password</span>}
+                  label={<span className="form-label">Password</span>}
                   name="regPassword"
                   rules={[{ required: true, message: "Please choose a password" }]}
                 >
@@ -261,7 +229,7 @@ const LandingCleaningPage: React.FC = () => {
                 </Form.Item>
 
                 <Form.Item
-                  label={<span style={{ fontWeight: 600 }}>Confirm Password</span>}
+                  label={<span className="form-label">Confirm Password</span>}
                   name="confirmPassword"
                   dependencies={["regPassword"]}
                   rules={[
@@ -280,7 +248,7 @@ const LandingCleaningPage: React.FC = () => {
                 </Form.Item>
 
                 <Form.Item>
-                  <Button type="primary" htmlType="submit" block style={{ height: 44 }}>
+                  <Button type="primary" htmlType="submit" block className="lr-btn-large">
                     Register
                   </Button>
                 </Form.Item>
@@ -297,20 +265,14 @@ const LandingCleaningPage: React.FC = () => {
       <HSHeader onSignUp={() => setAuthVisible(true)} />
       <AuthModal />
 
-      {/* HERO, sections, footer etc. — unchanged from your original file */}
+      {/* HERO */}
       <section className="lc-hero lc-hero--large">
         <div className="lc-hero-inner">
           <div className="lc-hero-content">
             <div className="lc-hero-top">
               <span className="lc-hero-icon" aria-hidden>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                  <path
-                    d="M12 2l1.8 4L18 8l-4 1.8L12 14l-1.8-4L6 8l4.2-2L12 2z"
-                    stroke="currentColor"
-                    strokeWidth="1.3"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
+                <svg className="lc-hero-star" viewBox="0 0 24 24" fill="none" role="img" aria-hidden>
+                  <path className="lc-hero-star-path" d="M12 2l1.8 4L18 8l-4 1.8L12 14l-1.8-4L6 8l4.2-2L12 2z" />
                 </svg>
               </span>
 
@@ -352,7 +314,7 @@ const LandingCleaningPage: React.FC = () => {
           </Row>
         </section>
 
-        {/* ... rest of file unchanged */}
+        {/* INCLUDED */}
         <section className="lc-included" aria-labelledby="included-heading">
           <div className="lc-included-inner">
             <h2 id="included-heading" className="lc-section-title">What's Included</h2>
@@ -370,8 +332,8 @@ const LandingCleaningPage: React.FC = () => {
               ].map((txt, i) => (
                 <div key={i} className="lc-included-box" role="listitem" aria-label={txt}>
                   <div className="lc-included-left" aria-hidden>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                      <path d="M20 6L9 17l-5-5" stroke="#16a34a" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+                    <svg className="lc-include-check" viewBox="0 0 24 24" fill="none" role="img" aria-hidden>
+                      <path className="lc-include-check-path" d="M20 6L9 17l-5-5" />
                     </svg>
                   </div>
 
@@ -382,6 +344,7 @@ const LandingCleaningPage: React.FC = () => {
           </div>
         </section>
 
+        {/* PRICING */}
         <section className="lc-pricing">
           <h2 className="lc-section-title">Pricing Packages</h2>
           <p className="lc-sub muted">Choose the package that best fits your needs</p>
@@ -405,7 +368,7 @@ const LandingCleaningPage: React.FC = () => {
                       </li>
                     ))}
                   </ul>
-                  <Button type={p.popular ? "primary" : "default"} block>
+                  <Button type={p.popular ? "primary" : "default"} block className="lc-price-cta">
                     Select Package
                   </Button>
                 </div>
@@ -414,6 +377,7 @@ const LandingCleaningPage: React.FC = () => {
           </Row>
         </section>
 
+        {/* BOOKING */}
         <section className="lc-booking">
           <h2 className="lc-section-title">Book Your Cleaning Service</h2>
           <p className="lc-sub muted">Fill out the form below and we'll get back to you within 24 hours</p>
@@ -511,14 +475,8 @@ function WhyChooseSection() {
         <div className="lc-why-grid" role="list">
           <div className="lc-why-item" role="listitem">
             <div className="lc-why-icon-circle" aria-hidden>
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
-                <path
-                  d="M12 2L4 5v6c0 5 4 9 8 9s8-4 8-9V5l-8-3z"
-                  stroke="#fff"
-                  strokeWidth="1.8"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
+              <svg className="lc-why-svg" viewBox="0 0 24 24" fill="none" role="img" aria-hidden>
+                <path className="lc-why-path" d="M12 2L4 5v6c0 5 4 9 8 9s8-4 8-9V5l-8-3z" />
               </svg>
             </div>
 
@@ -530,14 +488,8 @@ function WhyChooseSection() {
 
           <div className="lc-why-item" role="listitem">
             <div className="lc-why-icon-circle" aria-hidden>
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
-                <path
-                  d="M12 3l1.8 4 4 1.8-4 1.8L12 15l-1.8-4-4-1.8 4-1.8L12 3z"
-                  stroke="#fff"
-                  strokeWidth="1.8"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
+              <svg className="lc-why-svg" viewBox="0 0 24 24" fill="none" role="img" aria-hidden>
+                <path className="lc-why-path" d="M12 3l1.8 4 4 1.8-4 1.8L12 15l-1.8-4-4-1.8 4-1.8L12 3z" />
               </svg>
             </div>
 
@@ -549,23 +501,8 @@ function WhyChooseSection() {
 
           <div className="lc-why-item" role="listitem">
             <div className="lc-why-icon-circle lc-why-icon-circle--dollar" aria-hidden>
-              <svg
-                className="lc-why-dollar-svg"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <text
-                  x="50%"
-                  y="50%"
-                  textAnchor="middle"
-                  dominantBaseline="middle"
-                  style={{
-                    fontFamily: "Inter, Arial, sans-serif",
-                    fontWeight: 700,
-                    fontSize: "20px",
-                    fill: "#fff",
-                  }}
-                >
+              <svg className="lc-why-dollar-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden>
+                <text className="lc-why-dollar-text" x="50%" y="50%" textAnchor="middle" dominantBaseline="middle">
                   $
                 </text>
               </svg>
