@@ -476,6 +476,7 @@ input[type="submit"]:not(.signup):not(.sign-up):not(.btn-signup):not(.signUp):no
   max-width: 1200px;
   margin: 0 auto;
   display: grid;
+  
   grid-template-columns: repeat(4, 1fr);
   gap: 36px;
   align-items: start;
