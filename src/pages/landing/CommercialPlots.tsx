@@ -40,7 +40,7 @@ import {  useNavigate } from "react-router-dom";
 import "./commercialplots.css";
 
 /* Update this path to your hero/background image file in your repo */
-import heroImg from "../../assets/landingimages/property4.jfif";
+import heroImg from "../../assets/landingimages/property4.jpg";
 
 /* Replace these imports with your real images */
 import card1 from "../../assets/landingimages/building.jpg";

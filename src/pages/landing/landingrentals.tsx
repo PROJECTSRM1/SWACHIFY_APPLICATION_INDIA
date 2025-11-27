@@ -364,7 +364,10 @@ const Landingrentals: React.FC = () => {
 
                   <p>Available: {p.available}</p>
 
-                  <Button type="primary" block>Schedule Viewing</Button>
+                  <Button 
+                  // type="primary" 
+                  className="schedule"
+                   block>Schedule Viewing</Button>
                 </Card>
               </Col>
             ))}
