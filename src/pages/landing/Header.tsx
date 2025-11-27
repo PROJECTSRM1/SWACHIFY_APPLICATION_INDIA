@@ -38,6 +38,7 @@ type RegisteredUser = {
   email: string;
   phone: string;
   password: string;
+  address?: string;
 };
 
 const STORAGE_KEY = "swachify_registered_user";
@@ -83,7 +84,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({ selectedKey = "home"
 
       if (identifierMatches && password === user.password) {
         // set persisted user details (your helper)
-        setUserDetails("user", { name: user.fullname, email: user.email, phone: user.phone });
+        setUserDetails("user", { name: user.fullname, email: user.email, phone: user.phone, address: user.address });
         message.success("Login successful");
         closeAuthModal();
         navigate("/app/dashboard");
@@ -102,25 +103,27 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({ selectedKey = "home"
       const email = (values.email || "").toString().trim();
       const phone = (values.phone || "").toString().trim();
       const password = (values.password || "").toString();
+      const address = (values.address || "").toString().trim();
 
       if (!fullname || !email || !phone || !password) {
         message.error("Please fill all required fields");
         return;
       }
 
-      // create registered user object
+      // create registered user object (address optional but stored)
       const newUser: RegisteredUser = {
         fullname,
         email,
         phone,
         password,
+        address,
       };
 
       // store in localStorage
       localStorage.setItem(STORAGE_KEY, JSON.stringify(newUser));
 
       // Also set via your helper for app usage
-      setUserDetails("user", { name: fullname, email, phone });
+      setUserDetails("user", { name: fullname, email, phone, address });
 
       message.success("Registration successful. You are now logged in.");
       closeAuthModal();
@@ -205,7 +208,8 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({ selectedKey = "home"
         >
           <TabPane tab="Login" key="login">
             <Form layout="vertical" onFinish={onLogin} preserve={false}>
-              <Form.Item label="Email / Phone" name="Email/Phone" rules={[{ required: true }]}>
+              {/* CORRECTED: name must be "identifier" so onLogin reads values.identifier */}
+              <Form.Item label="Email / Phone" name="identifier" rules={[{ required: true }]}>
                 <Input placeholder="john@example.com or +1 555 123 4567" />
               </Form.Item>
 
@@ -263,6 +267,11 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({ selectedKey = "home"
                 ]}
               >
                 <Input.Password />
+              </Form.Item>
+
+              {/* NEW: Address field placed under Confirm Password */}
+              <Form.Item label="Address" name="address" rules={[{ required: true }]}>
+                <Input.TextArea rows={3} placeholder="Enter your address (street, city, state, pincode)" />
               </Form.Item>
 
               <Form.Item>
