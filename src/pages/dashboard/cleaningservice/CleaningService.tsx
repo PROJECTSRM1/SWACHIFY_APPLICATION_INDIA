@@ -560,49 +560,39 @@ const CleaningService: React.FC = () => {
         </div>
       </div>
 
-     <Modal
-  title={
-    <div className="modal-title-row">
-      <div className="modal-title-text">
-        {categories.find(c => c.key === selectedMainKey)?.title || "Category"}
-      </div>
-    </div>
-  }
-  open={isCategoryModalOpen}
-  onCancel={() => setIsCategoryModalOpen(false)}
-  footer={null}
-  width={1000}
-  centered
-  className="cs-subservice-modal"
+    <Modal
+        title={<div className="modal-title-row"><div className="modal-title-text">{categories.find(c => c.key === selectedMainKey)?.title || "Category"}</div></div>}
+        open={isCategoryModalOpen}
+        onCancel={() => setIsCategoryModalOpen(false)}
+        footer={null}
+        width={920}
+        centered
+        wrapClassName="no-h-scroll-modal"
+      >
+
+
+        <div className="subservices-row">
+          {(subservicesByMain[selectedMainKey] || []).map((s) => (
+            <div className="subservices-col" key={s.key}>
+              <Card className="subservice-card" hoverable onClick={() => openSubservice(s.key)}>
+                <img src={s.image} alt={s.title} className="subservice-img" />
+                <div className="subservice-card-body">
+                  <Title level={5} className="subservice-card-title">{s.title}</Title>
+                  {/* <Paragraph className="subservice-card-desc">Click to view {s.title.toLowerCase()} services</Paragraph> */}
+            <Button 
+  size="middle"
+  type="primary"
+  className="black-btn"
+  onClick={() => openSubservice(s.key)}
 >
-  <div className="cs-subservice-grid">
-    {(subservicesByMain[selectedMainKey] || []).map((s) => (
-      <div className="cs-subservice-card" key={s.key}>
-        
-        <div className="cs-subservice-img-wrap">
-          <img src={s.image} alt={s.title} className="cs-subservice-img" />
+  View Details
+</Button>
+                </div>
+              </Card>
+            </div>
+          ))}
         </div>
-
-        <div className="cs-subservice-content">
-          <h3 className="cs-subservice-title">{s.title}</h3>
-          {/* <p className="cs-subservice-sub"> */}
-            {/* Click to view {s.title.toLowerCase()} services */}
-          {/* </p> */}
-
-          <Button
-            type="primary"
-            size="middle"
-            className="black-btn cs-subservice-btn"
-            onClick={() => openSubservice(s.key)}
-          >
-            View Details
-          </Button>
-        </div>
-
-      </div>
-    ))}
-  </div>
-</Modal>
+      </Modal>
 
 
      
