@@ -89,7 +89,7 @@ const navigate=useNavigate();
           <h1>Transform Your Home & Property Services</h1>
           <p >Your trusted solution for cleaning, moving, rentals, construction, and more.</p> 
           
-          {/* ⭐ CALL SCROLL FUNCTION */}
+          
           <Button type="primary" size="large" onClick={scrollToServices}>
             Get Started
           </Button>
@@ -97,7 +97,7 @@ const navigate=useNavigate();
       </section>
 
       {/* 🟦 SERVICES SECTION */}
-      {/* ⭐ ADDED ID FOR SCROLL TARGET */}
+      
       <section id="services-section" className="services-section">
         <h2 className="section-title">Our Services</h2>
         <p className="section-subtitle">
