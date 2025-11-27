@@ -169,6 +169,7 @@
   overflow: hidden;
   box-shadow: 0 6px 18px rgba(12, 20, 30, 0.06);
   background: #fff;
+  border-color: #dcdcdc !important;
 }
 
 .subservice-img {
@@ -381,6 +382,8 @@
   min-width: 120px;
   height: 38px;
   font-size: 15px;
+  background-color: white;
+  color: #000;
 }
 
 @media (max-width: 600px) {
