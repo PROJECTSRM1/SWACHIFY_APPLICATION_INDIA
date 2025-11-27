@@ -37,12 +37,10 @@
 /* ---------- header banner ---------- */
 
 .header-banner {
-  background-image: linear-gradient(
-      to right,
-      rgba(217, 0, 0, 0.9),
-      rgba(217, 0, 0, 0.75)
-    ),
-    url('../assets/banner.png');
+  background:#005cfa;
+    
+    
+    /* url('../assets/banner.png'); */
   background-size: cover;
   background-position: center;
   border-radius: 16px;
@@ -96,6 +94,7 @@
   flex-direction: column;
   height: 100%;
   transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  border-color: #e8e8e8 !important;
 }
 
 .service-card-main:hover {
@@ -157,6 +156,7 @@
   transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
   display: flex;
   flex-direction: column;
+  border-color: #e8e8e8 !important;
 }
 
 .subservice-card:hover {
@@ -591,8 +591,8 @@
 /* View Details button in semi-transparent red */
 .service-view-btn {
   margin-top: 10px;
-  background-color: #d90000bf !important;
-  border-color: #d90000bf !important;
+  background-color: #000 !important;
+  border: #000;
   color: #ffffff !important;
   font-weight: 600;
   width: 100%;
@@ -603,7 +603,7 @@
 /* Hover — slightly darker red */
 .service-view-btn:hover,
 .service-view-btn:focus {
-  background-color: #d90000bf !important; /* darker variant */
+  background-color: black !important; /* darker variant */
   border-color: #d90000bf !important;
   color: #ffffff !important;
 }

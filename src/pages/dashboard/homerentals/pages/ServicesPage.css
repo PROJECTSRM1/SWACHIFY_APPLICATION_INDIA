@@ -15,7 +15,7 @@
 /* ===== Hero Section (Compact + Left-aligned, Slightly Taller) ===== */
 
 .services-hero {
-  background: var(--primary-color);
+  background: #005cfa;
   color: #fff;
   border-radius: var(--radius-lg);
   padding: 16px 22px;      /* increased height a little */

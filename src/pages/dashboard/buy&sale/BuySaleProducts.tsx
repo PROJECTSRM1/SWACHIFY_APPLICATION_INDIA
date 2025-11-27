@@ -325,15 +325,26 @@ const PriceNegotiationContent: React.FC<ContentComponentProps & { currentPrice: 
    const { addToCart } = useCart();
 
   const handleAddToCart = () => {
-    addToCart({
-      id: property.id,
-      title: property.title,
-      price: property.price,
-      quantity: 1,
-      image: property.imagePath,
-    });
-    message.success('Property added to cart');
-  };
+  addToCart({
+    id: property.id,
+    title: property.title,
+    price: property.price,
+    quantity: 1,
+    image: property.imagePath,
+
+    totalPrice: Number(property.price),   // or computed
+
+    customerName: "",
+    deliveryType: "",
+    deliveryDate: "",
+    contact: "",
+    address: "",
+    instructions: "",
+  });
+
+  message.success('Property added to cart');
+};
+
 
   const [priceComparison, setPriceComparison] = useState<{
     diff: number;

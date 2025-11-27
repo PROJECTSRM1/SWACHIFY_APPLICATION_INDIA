@@ -1,4 +1,94 @@
-/* ===== HERO SECTION ===== */
+/* ================= NAVBAR ================= */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+.nav-logo {
+  font-weight: 700;
+  color: rgb(20, 188, 166);
+  font-size: 1.3rem;
+}
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 22px;
+  margin: 0;
+  padding: 0;
+}
+.nav-links a {
+  color: #222;
+  text-decoration: none;
+  font-weight: 500;
+}
+.mobile-menu-icon {
+  display: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+.mobile-menu {
+  display: none;
+  position: absolute;
+  top: 64px;
+  left: 0;
+  right: 0;
+  background: white;
+  padding: 16px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+.mobile-menu li {
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+/* =========================================================
+   RED BUTTONS -> BLUE OVERRIDE (EXCEPT SIGNUP)
+   Targets common "danger"/red button selectors and replaces
+   their background/border color with #3b8fe6, preserving
+   layout and responsiveness. Sign-up buttons excluded.
+   ========================================================= */
+
+/* Exclude sign-up related classes: .signup .sign-up .btn-signup .signUp .ant-btn-signup .hs-contact-btn */
+button:not(.signup):not(.sign-up):not(.btn-signup):not(.signUp):not(.ant-btn-signup):not(.hs-contact-btn),
+input[type="button"]:not(.signup):not(.sign-up):not(.btn-signup):not(.signUp):not(.ant-btn-signup):not(.hs-contact-btn),
+input[type="submit"]:not(.signup):not(.sign-up):not(.btn-signup):not(.signUp):not(.ant-btn-signup):not(.hs-contact-btn),
+.ant-btn-danger:not(.signup):not(.sign-up):not(.btn-signup):not(.signUp):not(.ant-btn-signup):not(.hs-contact-btn),
+.btn-danger:not(.signup):not(.sign-up):not(.btn-signup):not(.signUp):not(.ant-btn-signup):not(.hs-contact-btn),
+.button--danger:not(.signup):not(.sign-up):not(.btn-signup):not(.signUp):not(.ant-btn-signup):not(.hs-contact-btn),
+.btn-red:not(.signup):not(.sign-up):not(.btn-signup):not(.signUp):not(.ant-btn-signup):not(.hs-contact-btn),
+.red-btn:not(.signup):not(.sign-up):not(.btn-signup):not(.signUp):not(.ant-btn-signup):not(.hs-contact-btn) {
+  background: #3b8fe6 !important;
+  border-color: #3b8fe6 !important;
+  color: #ffffff !important;
+}
+
+/* also handle hover/focus states for the same selectors so they don't flash red */
+button:not(.signup):not(.sign-up):not(.btn-signup):not(.signUp):not(.ant-btn-signup):not(.hs-contact-btn):hover,
+input[type="button"]:not(.signup):not(.sign-up):not(.btn-signup):not(.signUp):not(.ant-btn-signup):not(.hs-contact-btn):hover,
+input[type="submit"]:not(.signup):not(.sign-up):not(.btn-signup):not(.signUp):not(.ant-btn-signup):not(.hs-contact-btn):hover,
+.ant-btn-danger:not(.signup):not(.sign-up):not(.btn-signup):not(.signUp):not(.ant-btn-signup):not(.hs-contact-btn):hover,
+.btn-danger:not(.signup):not(.sign-up):not(.btn-signup):not(.signUp):not(.ant-btn-signup):not(.hs-contact-btn):hover,
+.button--danger:not(.signup):not(.sign-up):not(.btn-signup):not(.signUp):not(.ant-btn-signup):not(.hs-contact-btn):hover,
+.btn-red:not(.signup):not(.sign-up):not(.btn-signup):not(.signUp):not(.ant-btn-signup):not(.hs-contact-btn):hover,
+.red-btn:not(.signup):not(.sign-up):not(.btn-signup):not(.signUp):not(.ant-btn-signup):not(.hs-contact-btn):hover {
+  background: #2f7fd1 !important;
+  border-color: #2f7fd1 !important;
+  color: #fff !important;
+}
+
+/* =========================================================
+   End of global red->blue override
+   (Sign-up buttons excluded from above rules)
+   ========================================================= */
+
+
+/* ================= HERO ================= */
 .packes-hero {
   width: 100%;
   height: 64vh;
@@ -188,11 +278,12 @@
   min-height: 80px;
 }
 /* Submit Button Style */
+/* Keep Sign-up (excluded) untouched. Main submit/update buttons will be blue due to the override above. */
 .quote-form-container .ant-btn {
   font-size: 1rem;
   height: 45px;
   border-radius: 6px;
-  background-color: #1677ff;
+  background-color: #1677ff; /* this remains (will be overridden by global rule if it was red) */
   color: white;
 }
 .quote-form-container .ant-btn:hover {
@@ -254,7 +345,6 @@
   z-index: 3;
   box-shadow: 0 3px 8px rgba(0,0,0,0.06);
 }
-/* Connector line between circles (drawn from each step to the right via pseudo) */
 .hiw-step::after {
   content: "";
   position: absolute;
@@ -266,11 +356,9 @@
   z-index: 1;
   display: none; /* will enable on wide screens */
 }
-/* Hide connector for last step */
 .hiw-step:last-child::after {
   display: none;
 }
-/* Titles and subtitles beneath circle */
 .hiw-texts {
   margin-top: 14px;
   max-width: 220px;
@@ -286,10 +374,8 @@
   color: #6b7280;
   line-height: 1.3;
 }
-/* Show horizontal connectors on wide screens only */
 @media (min-width: 820px) {
   .hiw-step::after { display: block; }
-  /* Tune connectors length per layout - keep them subtle */
   .hiw-step::after {
     left: calc(50% + 32px); /* start just right of current circle */
     right: calc(-50%);      /* extend toward next step */
@@ -298,7 +384,6 @@
     height: 2px;
   }
 }
-/* Responsive: stack vertically on small screens */
 @media (max-width: 819px) {
   .hiw-steps {
     flex-direction: column;
@@ -317,9 +402,7 @@
     width: auto;
     padding-bottom: 0;
   }
-  /* hide horizontal connectors on small screens */
   .hiw-step::after { display: none; }
-  /* draw a vertical mini-connector under the circle for all but last */
   .hiw-step:not(:last-child)::before {
     content: "";
     position: absolute;
@@ -335,7 +418,6 @@
     text-align: left;
   }
 }
-/* small polish */
 .hiw-step-title, .hiw-step-sub { word-break: keep-all; }
 /* ===== WHY CHOOSE US ===== */
 .why-choose-us {
@@ -373,7 +455,6 @@
   font-size: 0.95rem;
   color: #555;
 }
-/* Responsive */
 @media (max-width: 768px) {
   .choose-us-card {
     width: 80%;  /* Bigger on mobile */
@@ -395,6 +476,7 @@
   max-width: 1200px;
   margin: 0 auto;
   display: grid;
+  
   grid-template-columns: repeat(4, 1fr);
   gap: 36px;
   align-items: start;
@@ -470,7 +552,6 @@
   color: rgba(255,255,255,0.55);
   font-size: 14px;
 }
-/* RESPONSIVE */
 @media (max-width: 992px) {
   .lr-footer-inner {
     grid-template-columns: repeat(2, 1fr);
