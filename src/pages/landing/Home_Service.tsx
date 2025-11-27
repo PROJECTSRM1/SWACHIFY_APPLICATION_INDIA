@@ -263,7 +263,9 @@ const Home_Service: React.FC = () => {
                     ))}
                   </ul>
 
-                  <Button type="primary" block size="large" className="hs-book-btn">
+                  <Button
+                  //  type="primary"
+                    block size="large" className="hs-book-btn">
                     Book Now
                   </Button>
                 </Card>
