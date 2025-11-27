@@ -5,7 +5,7 @@ interface SubService {
   title: string;
   description: string;
   image: string;
-  price: string;
+  totalprice: string;
 }
 
 export default function ServiceDetailsPopup({
@@ -44,7 +44,7 @@ export default function ServiceDetailsPopup({
                 <p className="sdp-desc">{service.description}</p>
 
                 <div className="sdp-footer">
-                  <span className="sdp-price">{service.price}</span>
+                  <span className="sdp-price">{service.totalprice}</span>
                   <button
                     className="sdp-btn"
                     onClick={() => onOpenForm(service)}

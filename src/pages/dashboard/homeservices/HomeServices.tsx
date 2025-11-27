@@ -166,7 +166,7 @@ const handleFormCancel = () => {
     description={selectedSubService.description}
     includedList={selectedSubService.includedList}
     issues={selectedSubService.issues}
-    price={selectedSubService.price}
+    totalprice={selectedSubService.totalprice}
   />
 )}     
     </div>

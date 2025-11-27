@@ -173,3 +173,96 @@ html, body {
 .drawer-icons .header-icon-large {
   cursor: pointer;
 }
+.cart-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cart-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  padding: 15px;
+  border-radius: 8px;
+  background: #fafafa;
+  border: 1px solid #eee;
+}
+
+.cart-item img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.cart-item-details {
+  flex: 1;
+}
+
+.cart-item-details h4 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.cart-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: green;
+}
+
+.cart-buttons .ant-btn {
+  width: 130px;
+}
+
+/* ///////////////// */
+/* Cart item buttons — compact on desktop, full-width on very small screens */
+.cart-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  /* align buttons to the right so they don't stretch */
+  align-items: flex-end;
+  justify-content: flex-start;
+}
+
+/* Make AntD buttons compact and prevent full-width stretching */
+.cart-buttons .ant-btn {
+  width: auto !important;        /* don't let flex container force full width */
+  min-width: 84px;               /* keep them tappable/clickable */
+  padding: 6px 12px;             /* smaller padding */
+  height: 34px;                  /* slightly shorter */
+  font-size: 13px;
+  border-radius: 8px;
+  box-sizing: border-box;
+  white-space: nowrap;
+}
+
+/* Optional: small visual difference between primary and secondary */
+.cart-buttons .ant-btn.ant-btn-primary {
+  /* primary (Buy Now) */
+  font-weight: 700;
+  box-shadow: 0 6px 18px rgba(43, 108, 255, 0.12);
+}
+
+.cart-buttons .ant-btn:not(.ant-btn-primary) {
+  /* secondary (Remove) */
+  background: rgb(20,184,166);
+  border: 1px solid #39f0e1;
+}
+
+/* Responsive: on small screens stack full-width buttons for easier tapping */
+@media (max-width: 480px) {
+  .cart-buttons {
+    align-items: stretch; /* allow buttons to fill the available width */
+  }
+  .cart-buttons .ant-btn {
+    width: 100% !important;
+    min-width: 0;
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+}
