@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import HeaderBar from "../../components/header/header";
 import "./Dashboard.css";
+
 import ConstructionServices from "../building/building";
 import Packersandmovers from "./PackersAndMovers/Packersandmovers";
 import BuySaleProducts from "./buy&sale/BuySaleProducts";
@@ -18,37 +18,26 @@ const Dashboard: React.FC = () => {
     { name: "Home & Apartments Rental", component: <ServicesPage /> },
     { name: "Building & Construction Raw Materials", component: <ConstructionServices /> },
     { name: "Buy & Sale Products", component: <BuySaleProducts /> },
-    
   ];
 
-  // Filter based on search input
-  // Normalize strings for strong matching
-const normalize = (str: string) =>
-  str
-    .toLowerCase()
-    .replace(/\s+/g, "")        // remove spaces
-    .replace(/[^a-z0-9]/g, ""); // remove symbols
+  // Normalizer for fuzzy search
+  const normalize = (str: string) =>
+    str.toLowerCase().replace(/\s+/g, "").replace(/[^a-z0-9]/g, "");
 
-// Filter based on search input (strong + fuzzy)
-const filteredServices = servicesList.filter((service) => {
-  const name = normalize(service.name);
-  const query = normalize(searchQuery);
-
-  if (!query) return true;
-
-  // Fuzzy match
-  return (
-    name.includes(query) ||
-    query.includes(name) ||
-    name.startsWith(query) ||
-    name.endsWith(query)
-  );
-});
-
+  const filteredServices = servicesList.filter((service) => {
+    const name = normalize(service.name);
+    const query = normalize(searchQuery);
+    if (!query) return true;
+    return (
+      name.includes(query) ||
+      query.includes(name) ||
+      name.startsWith(query) ||
+      name.endsWith(query)
+    );
+  });
 
   return (
     <div className="dashboard-container">
-      <HeaderBar />
 
       <div className="services-section">
         <h1 className="services-title">Our Services</h1>
