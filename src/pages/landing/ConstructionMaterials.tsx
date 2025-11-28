@@ -1,7 +1,7 @@
 // c:/Users/Manikantha.N/Desktop/SWACHIFY_APPLICATION_INDIA/src/pages/landing/ConstructionMaterials.tsx
 import React, { useState, useEffect } from "react";
 import CommonHeader from "../../pages/landing/Header";
-import "../../pages/landing/Header.css"; // import CSS for header
+import "../../index.css"
 import {
   Row,
   Col,
@@ -31,7 +31,6 @@ import {
 import { useNavigate } from "react-router-dom";
 import "./ConstructionMaterials.css";
 import brickwalss from "../../assets/landingimages/brickwall.jpg";
-
 import premiumportlandcement from "../../assets/landingimages/PremiumPortlandCement.jpg";
 import tmtsteelbars from "../../assets/landingimages/TMTSteelBars.jpg";
 import aacblocks from "../../assets/landingimages/AACBlocks.jpeg";
@@ -42,31 +41,13 @@ import bricksandblocks from "../../assets/landingimages/Bricks&Blocks.jpg";
 import sandandaggregates from "../../assets/landingimages/Sand&Aggregates.jpg";
 import roofingmaterials from "../../assets/landingimages/RoofingMaterials.jpg";
 import plumbingandelectrical from "../../assets/landingimages/Plumbing&Electrical.jpeg";
-
 const { Title, Text } = Typography;
 const { Option } = Select;
 const { TabPane } = Tabs;
-/* ================= NAV ITEMS ================= */
-// const navItems = [
-//   { key: "home", label: <Link to="/landing">Home</Link> },
-//   { key: "cleaning", label: <Link to="/cleaningservice">Cleaning</Link> },
-//   { key: "packers", label: <Link to="/LandingPackers">Packers & Movers</Link> },
-//   { key: "home_services", label: <Link to="/home_service">Home Services</Link> },
-//   { key: "rentals", label: <Link to="/rentals">Rentals</Link> },
-//   { key: "commercial", label: <Link to="/commercial-plots">Buy&Sale Properties</Link> },
-//   { key: "materials", label: <Link to="/ConstructionMaterials">Construction Materials</Link> },
-//   { key: "freelancer", label: <Link to="/Freelancer">Freelancer</Link> },
-//   //  { key: "location", label: <Link to="">Location</Link> },
-// ];
 /* ================= NAVBAR SECTION ================= */
-// interface NavbarProps {
-//   menuOpen: boolean;
-//   setMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
-// }
-const NavbarSection: React.FC= ()  => (
+const NavbarSection: React.FC = () => (
   <>
-<CommonHeader selectedKey="ConstructionMaterials" />
-   
+    <CommonHeader selectedKey="ConstructionMaterials" />
   </>
 );
 /* ================= DATA ================= */
@@ -154,14 +135,14 @@ const AuthModal: React.FC<{ visible: boolean; onClose: () => void; onSuccess: ()
     onClose();
   };
   return (
-    <Modal open={visible} onCancel={onClose} footer={null} centered width={520} className="auth-modal">
-      <Tabs activeKey={activeKey} onChange={(k) => setActiveKey(k)} className="auth-tabs">
+    <Modal open={visible} onCancel={onClose} footer={null} centered width={520} className="sw-lcm-classname-auth-modal">
+      <Tabs activeKey={activeKey} onChange={(k) => setActiveKey(k)} className="sw-lcm-classname-auth-tabs">
         <TabPane tab="Login" key="login">
           <Form layout="vertical" onFinish={handleLoginFinish}>
-            <Form.Item label={<span className="required"> Email / Phone</span>} name="identifier" rules={[{ required: true }]}>
+            <Form.Item label={<span className="sw-lcm-classname-required"> Email / Phone</span>} name="identifier" rules={[{ required: true }]}>
               <Input placeholder="john@example.com" />
             </Form.Item>
-            <Form.Item label={<span className="required">Password</span>} name="password" rules={[{ required: true }]}>
+            <Form.Item label={<span className="sw-lcm-classname-required">Password</span>} name="password" rules={[{ required: true }]}>
               <Input.Password placeholder="Password" />
             </Form.Item>
             <Form.Item>
@@ -174,21 +155,21 @@ const AuthModal: React.FC<{ visible: boolean; onClose: () => void; onSuccess: ()
         </TabPane>
         <TabPane tab="Register" key="register">
           <Form layout="vertical" onFinish={handleRegisterFinish}>
-            <Form.Item name="fullName" label={<span className="required"> Full name</span>} rules={[{ required: true }]}>
+            <Form.Item name="fullName" label={<span className="sw-lcm-classname-required"> Full name</span>} rules={[{ required: true }]}>
               <Input placeholder="John Doe" />
             </Form.Item>
-            <Form.Item name="email" label={<span className="required"> Email</span>} rules={[{ required: true, type: 'email' }]}>
+            <Form.Item name="email" label={<span className="sw-lcm-classname-required"> Email</span>} rules={[{ required: true, type: 'email' }]}>
               <Input placeholder="john@example.com" />
             </Form.Item>
-            <Form.Item name="phone" label={<span className="required"> Phone</span>} rules={[{ required: true }]}>
+            <Form.Item name="phone" label={<span className="sw-lcm-classname-required"> Phone</span>} rules={[{ required: true }]}>
               <Input placeholder="+1 555 123 4567" />
             </Form.Item>
-            <Form.Item name="password" label={<span className="required"> Password</span>} rules={[{ required: true }]}>
+            <Form.Item name="password" label={<span className="sw-lcm-classname-required"> Password</span>} rules={[{ required: true }]}>
               <Input.Password placeholder="Choose a password" />
             </Form.Item>
             <Form.Item
               name="confirm"
-              label={<span className="required"> Confirm Password</span>}
+              label={<span className="sw-lcm-classname-required"> Confirm Password</span>}
               dependencies={["password"]}
               rules={[
                 { required: true },
@@ -218,12 +199,12 @@ const RequestQuote: React.FC = () => {
     navigate("/app/dashboard");
   };
   return (
-    <section className="request-quote">
-      <div className="rq-inner">
-        <Title level={2} className="rq-title">Request a Quote</Title>
-        <Text className="rq-sub">Tell us about your project and get a customized quote</Text>
-        <div className="rq-card">
-          <Form onFinish={handleSubmit} layout="vertical" className="rq-form">
+    <section className="sw-lcm-classname-request-quote">
+      <div className="sw-lcm-classname-rq-inner">
+        <Title level={2} className="sw-lcm-classname-rq-title">Request a Quote</Title>
+        <Text className="sw-lcm-classname-rq-sub">Tell us about your project and get a customized quote</Text>
+        <div className="sw-lcm-classname-rq-card">
+          <Form onFinish={handleSubmit} layout="vertical" className="sw-lcm-classname-rq-form">
             <Row gutter={24}>
               <Col xs={24} sm={12}>
                 <Form.Item label="Full Name *" name="fullName" rules={[{ required: true }]}>
@@ -275,7 +256,7 @@ const RequestQuote: React.FC = () => {
             <Form.Item label="Additional Details" name="details">
               <Input.TextArea placeholder="Tell us more..." rows={4} />
             </Form.Item>
-            <Button type="primary" htmlType="submit" size="large" block>
+            <Button type="primary" htmlType="submit" size="large" block className="sw-lcm-classname-rq-submit">
               Submit Booking Request
             </Button>
           </Form>
@@ -284,7 +265,7 @@ const RequestQuote: React.FC = () => {
     </section>
   );
 };
-/* ================= FOOTER COMPONENT (merged, links as normal white text) ================= */
+/* ================= FOOTER COMPONENT ================= */
 type FooterProps = {
   phone?: string;
   email?: string;
@@ -300,18 +281,18 @@ const Footer: React.FC<FooterProps> = ({
   companyName = "Home Services",
 }) => {
   return (
-    <footer className="lr-footer site-footer" role="contentinfo" aria-label="Footer">
-      <div className="lr-footer-inner lr-footer-grid">
-        <div className="lr-footer-col">
+    <footer className="sw-lcm-classname-lr-footer sw-lcm-classname-site-footer" role="contentinfo" aria-label="Footer">
+      <div className="sw-lcm-classname-lr-footer-inner sw-lcm-classname-lr-footer-grid">
+        <div className="sw-lcm-classname-lr-footer-col">
           <h4 style={{ color: "#fff" }}>About Us</h4>
-          <p className="lr-footer-about" style={{ color: "#fff" }}>
+          <p className="sw-lcm-classname-lr-footer-about" style={{ color: "#fff" }}>
             Your trusted partner for all home and property-related services. Quality,
             reliability, and customer satisfaction guaranteed.
           </p>
         </div>
-        <div className="lr-footer-col">
+        <div className="sw-lcm-classname-lr-footer-col">
           <h4 style={{ color: "#fff" }}>Services</h4>
-          <ul className="lr-footer-list" style={{ color: "#fff" }}>
+          <ul className="sw-lcm-classname-lr-footer-list" style={{ color: "#fff" }}>
             <li style={{ color: "#fff" }}>Cleaning Service</li>
             <li style={{ color: "#fff" }}>Packers &amp; Movers</li>
             <li style={{ color: "#fff" }}>Home Services</li>
@@ -320,43 +301,41 @@ const Footer: React.FC<FooterProps> = ({
             <li style={{ color: "#fff" }}>Construction Materials</li>
           </ul>
         </div>
-        <div className="lr-footer-col">
+        <div className="sw-lcm-classname-lr-footer-col">
           <h4 style={{ color: "#fff" }}>Quick Links</h4>
-          <ul className="lr-footer-list">
-            {/* Changed from Link -> plain text (white) */}
+          <ul className="sw-lcm-classname-lr-footer-list">
             <li style={{ color: "#fff" }}>Home</li>
             <li style={{ color: "#fff" }}>About</li>
             <li style={{ color: "#fff" }}>Contact</li>
             <li style={{ color: "#fff" }}>Careers</li>
           </ul>
         </div>
-        <div className="lr-footer-col">
+        <div className="sw-lcm-classname-lr-footer-col">
           <h4 style={{ color: "#fff" }}>Contact Info</h4>
-          <ul className="lr-contact-list">
-            <li className="lr-contact-phone" style={{ color: "#fff" }}>
-              <PhoneOutlined aria-hidden className="lc-contact-icon" />
-              <span className="lc-contact-text" style={{ color: "#fff" }}> {phone}</span>
+          <ul className="sw-lcm-classname-lr-contact-list">
+            <li className="sw-lcm-classname-lr-contact-phone" style={{ color: "#fff" }}>
+              <PhoneOutlined aria-hidden className="sw-lcm-classname-lc-contact-icon" />
+              <span className="sw-lcm-classname-lc-contact-text" style={{ color: "#fff" }}> {phone}</span>
             </li>
             <li style={{ color: "#fff" }}>
               <MailOutlined aria-hidden /> &nbsp;
-              {/* Changed from anchor -> plain white text */}
               <span style={{ color: "#fff" }}>{email}</span>
             </li>
             <li style={{ color: "#fff" }}>
               <EnvironmentOutlined aria-hidden /> &nbsp; {address}
             </li>
           </ul>
-          <div className="lr-footer-socials" aria-hidden>
-            <a className="social" href="#" aria-label="facebook"><FacebookOutlined /></a>
-            <a className="social" href="#" aria-label="twitter"><TwitterOutlined /></a>
-            <a className="social" href="#" aria-label="instagram"><InstagramOutlined /></a>
-            <a className="social" href="#" aria-label="linkedin"><LinkedinOutlined /></a>
+          <div className="sw-lcm-classname-lr-footer-socials" aria-hidden>
+            <a className="sw-lcm-classname-social" href="#" aria-label="facebook"><FacebookOutlined /></a>
+            <a className="sw-lcm-classname-social" href="#" aria-label="twitter"><TwitterOutlined /></a>
+            <a className="sw-lcm-classname-social" href="#" aria-label="instagram"><InstagramOutlined /></a>
+            <a className="sw-lcm-classname-social" href="#" aria-label="linkedin"><LinkedinOutlined /></a>
           </div>
         </div>
       </div>
-      <div className="lr-footer-bottom">
-        <div className="lr-footer-sep" />
-        <div className="lr-footer-copy" style={{ color: "#fff" }}>
+      <div className="sw-lcm-classname-lr-footer-bottom">
+        <div className="sw-lcm-classname-lr-footer-sep" />
+        <div className="sw-lcm-classname-lr-footer-copy" style={{ color: "#fff" }}>
           &copy; {copyrightYear} {companyName}. All rights reserved.
         </div>
       </div>
@@ -365,11 +344,10 @@ const Footer: React.FC<FooterProps> = ({
 };
 /* ================= MAIN PAGE ================= */
 const ConstructionMaterials: React.FC = () => {
-  // const [menuOpen, setMenuOpen] = useState(false);
   const [authVisible, setAuthVisible] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
-    const btn = document.querySelector(".hs-contact-btn");
+    const btn = document.querySelector(".sw-lcm-classname-hs-contact-btn");
     if (!btn) return;
     const handler = () => setAuthVisible(true);
     btn.addEventListener("click", handler);
@@ -379,40 +357,39 @@ const ConstructionMaterials: React.FC = () => {
     navigate("/app/dashboard");
   };
   return (
-    <div className="construction-materials-container">
-      <NavbarSection  />
+    <div className="sw-lcm-classname-construction-materials-container">
+      <NavbarSection />
       {/* HERO */}
-<section
-  className="hero-section"
-  style={{
-    backgroundImage: `url(${brickwalss})`,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-  }}
->
-
-        <div className="hero-overlay">
+      <section
+        className="sw-lcm-classname-hero-section"
+        style={{
+          backgroundImage: `url(${brickwalss})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        <div className="sw-lcm-classname-hero-overlay">
           <h1>Quality Building Materials at Best Prices</h1>
           <p>Browse our comprehensive range of construction materials.</p>
-          <div className="hero-buttons">
+          <div className="sw-lcm-classname-hero-buttons">
             <Button type="primary" size="large">Browse Catalog</Button>
             <Button size="large">Get Bulk Quote</Button>
           </div>
         </div>
       </section>
       {/* PRODUCT CATEGORIES */}
-      <section className="product-categories">
-        <div className="pc-inner">
+      <section className="sw-lcm-classname-product-categories">
+        <div className="sw-lcm-classname-pc-inner">
           <h2>Product Categories</h2>
-          <div className="pc-grid">
+          <div className="sw-lcm-classname-pc-grid">
             {productCategories.map((category, i) => (
-              <article key={i} className="pc-grid-item">
+              <article key={i} className="sw-lcm-classname-pc-grid-item">
                 <Card
                   hoverable
-                  className="pc-card"
+                  className="sw-lcm-classname-pc-card"
                   cover={<img src={category.image} alt={category.title} />}
                 >
-                  <div className="pc-card-inner">
+                  <div className="sw-lcm-classname-pc-card-inner">
                     <h3>{category.title}</h3>
                     <ul>{category.items.map((it, j) => <li key={j}>{it}</li>)}</ul>
                     <Button type="primary" block>Browse</Button>
@@ -424,13 +401,13 @@ const ConstructionMaterials: React.FC = () => {
         </div>
       </section>
       {/* OUR SERVICES */}
-      <section className="our-services">
-        <div className="os-inner">
+      <section className="sw-lcm-classname-our-services">
+        <div className="sw-lcm-classname-os-inner">
           <h2>Our Services</h2>
-          <div className="services-grid">
+          <div className="sw-lcm-classname-services-grid">
             {services.map((s, i) => (
-              <div key={i} className="service-grid-item">
-                <div className="service-card">
+              <div key={i} className="sw-lcm-classname-service-grid-item">
+                <div className="sw-lcm-classname-service-card">
                   <h3>{s.title}</h3>
                   <p>{s.description}</p>
                 </div>
@@ -440,18 +417,18 @@ const ConstructionMaterials: React.FC = () => {
         </div>
       </section>
       {/* FEATURED PRODUCTS */}
-      <section className="featured-products">
-        <div className="fp-inner">
+      <section className="sw-lcm-classname-featured-products">
+        <div className="sw-lcm-classname-fp-inner">
           <h2>Featured Products</h2>
-          <div className="featured-grid">
+          <div className="sw-lcm-classname-featured-grid">
             {featuredProducts.map((p, i) => (
-              <article key={i} className="featured-item">
-                <div className="featured-card">
-                  <div className="featured-media"><img src={p.image} alt={p.title} /></div>
-                  <div className="featured-body">
+              <article key={i} className="sw-lcm-classname-featured-item">
+                <div className="sw-lcm-classname-featured-card">
+                  <div className="sw-lcm-classname-featured-media"><img src={p.image} alt={p.title} /></div>
+                  <div className="sw-lcm-classname-featured-body">
                     <h3>{p.title}</h3>
-                    <p className="fp-price">Price: {p.price}</p>
-                    <p className="fp-rating">Rating: {p.rating}</p>
+                    <p className="sw-lcm-classname-fp-price">Price: {p.price}</p>
+                    <p className="sw-lcm-classname-fp-rating">Rating: {p.rating}</p>
                     <ul>{p.details.map((d, j) => <li key={j}>{d}</li>)}</ul>
                     <Button type="primary" block>Request Quote</Button>
                   </div>
@@ -464,11 +441,7 @@ const ConstructionMaterials: React.FC = () => {
       {/* REQUEST QUOTE */}
       <RequestQuote />
       {/* AUTH MODAL */}
-      <AuthModal
-        visible={authVisible}
-        onClose={() => setAuthVisible(false)}
-        onSuccess={handleAuthSuccess}
-      />
+      <AuthModal visible={authVisible} onClose={() => setAuthVisible(false)} onSuccess={handleAuthSuccess} />
       {/* FOOTER (merged) */}
       <Footer />
     </div>
