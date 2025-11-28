@@ -216,3 +216,78 @@
 .service-card button:hover{
   background-color: #000 !important;
 }
+
+
+
+
+
+
+
+.services-top-banner {
+  
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+
+.banner-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex: 1 1 auto;
+  min-width: 0; /
+}
+
+
+.header-viewall-btn {
+  order: 0;
+  margin-left: auto !important;
+  width: 120px !important;
+}
+
+
+@media (max-width: 700px) {
+  .services-top-banner {
+    align-items: center;
+    justify-content: flex-start;
+    padding: 16px; 
+  }
+
+ 
+  .header-viewall-btn {
+    order: 2;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    align-self: flex-start;
+    width: auto !important;
+    min-width: 140px !important;
+    max-width: calc(100% - 32px) !important; 
+    padding: 8px 14px !important;
+    border-radius: 8px !important;
+  }
+
+  
+  .banner-left {
+    flex-basis: 100%;
+    width: 100%;
+    gap: 12px;
+  }
+
+  .banner-text {
+   
+    min-width: 0;
+  }
+
+ 
+}
+
+
+@media (max-width: 420px) {
+  .header-viewall-btn {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    align-self: stretch;
+    text-align: center;
+  }
+}
