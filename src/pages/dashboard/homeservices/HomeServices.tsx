@@ -1,9 +1,11 @@
-import { useState } from "react";
-import { Card, Button } from "antd";
+// src/pages/.../HomeServices.tsx
+import  { useState } from "react";
+import { Card, Button,  Modal } from "antd";
 import "../../../index.css";
-import { popupData } from "./popupData"; // Correct import
-import type { PopupCategory } from "./popupData"; // Correct import of type
+import { popupData } from "./popupData"; // existing
+import type { PopupCategory } from "./popupData"; // existing
 import { ToolOutlined } from "@ant-design/icons";
+
 import cleaningservices from "../../../assets/HomeServices/cleaningservices.jpg";
 import electricalservices from "../../../assets/HomeServices/electricalservices.jpg";
 import plumbingservices from "../../../assets/HomeServices/plumbingservices.jpg";
@@ -18,12 +20,19 @@ import homesecurityservice from "../../../assets/HomeServices/homesecuritservice
 import ServiceDetailsPopup from "./ServiceDetailsPopup";
 import ServiceRequestForm from "./ServiceDetailsForm";
 
+// IMPORTANT: this import expects CleaningService.tsx to be in the same folder.
+// If your CleaningService lives elsewhere, fix the path accordingly.
+import CleaningService from "../cleaningservice/CleaningService";
+
 export default function HomeServices() {
   const [selectedService, setSelectedService] = useState<PopupCategory | null>(null);
   const [selectedSubService, setSelectedSubService] = useState<any>(null);
 
   const [detailsPopupOpen, setDetailsPopupOpen] = useState(false);
   const [formPopupOpen, setFormPopupOpen] = useState(false);
+
+  // NEW: open embedded cleaning modal
+  const [cleaningModalOpen, setCleaningModalOpen] = useState(false);
 
   const [showAll, setShowAll] = useState(false);
 
@@ -41,77 +50,74 @@ export default function HomeServices() {
   ];
 
   const displayedCards = showAll ? services : services.slice(0, 4);
-  
-  // OPEN POPUP 1
-const openDetailsPopup = (serviceTitle: string) => {
-  const data = popupData[serviceTitle];
-  if (!data) return;
 
-  setSelectedService(data);
-  setSelectedSubService(null);
+  // OPEN POPUP 1 (modified - opens cleaning modal for cleaning card)
+  const openDetailsPopup = (serviceTitle: string) => {
+    // If user clicked Cleaning Services, open the embedded CleaningService modal
+    if (serviceTitle === "Cleaning Services") {
+      setCleaningModalOpen(true);
+      // ensure other popups are closed
+      setDetailsPopupOpen(false);
+      setFormPopupOpen(false);
+      return;
+    }
 
-  setFormPopupOpen(false);
-  setDetailsPopupOpen(true);
-};
+    const data = popupData[serviceTitle];
+    if (!data) return;
 
-// OPEN POPUP 2
-const openFormPopup = (subService: any) => {
-  setSelectedSubService(subService);
+    setSelectedService(data);
+    setSelectedSubService(null);
 
-  setDetailsPopupOpen(false);
-  setFormPopupOpen(true);
-};
-
-// SUBMIT POPUP 2
-
-const handleFormSubmit = (formData: any) => {
-  const payload = {
-    ...formData,
-    serviceInfo: {
-      title: selectedSubService.title,
-      price: selectedSubService.price,
-      image: selectedSubService.image,
-      description: selectedSubService.description,
-      includedList: selectedSubService.includedList,
-    },
-      //  serviceInfo: selectedSubService,
+    setFormPopupOpen(false);
+    setDetailsPopupOpen(true);
   };
 
-  console.log("Payload to backend:", payload);
+  // OPEN POPUP 2
+  const openFormPopup = (subService: any) => {
+    setSelectedSubService(subService);
 
-  // axios.post("/api/service-request", payload)
-  //   .then(res => console.log(res))
-  //   .catch(err => console.error(err));
+    setDetailsPopupOpen(false);
+    setFormPopupOpen(true);
+  };
 
-  setFormPopupOpen(false);
-  setDetailsPopupOpen(true);
-};
+  // SUBMIT POPUP 2
+  const handleFormSubmit = (formData: any) => {
+    const payload = {
+      ...formData,
+      serviceInfo: {
+        title: selectedSubService.title,
+        price: selectedSubService.price,
+        image: selectedSubService.image,
+        description: selectedSubService.description,
+        includedList: selectedSubService.includedList,
+      },
+    };
 
+    console.log("Payload to backend:", payload);
 
-// CANCEL POPUP 2
-const handleFormCancel = () => {
-  setFormPopupOpen(false);
-  setDetailsPopupOpen(true);
-};
+    // axios.post("/api/service-request", payload) ...
+    setFormPopupOpen(false);
+    setDetailsPopupOpen(true);
+  };
 
-
+  // CANCEL POPUP 2
+  const handleFormCancel = () => {
+    setFormPopupOpen(false);
+    setDetailsPopupOpen(true);
+  };
 
   return (
     <div className="sw-hs-home-services-container">
       {/* HEADER */}
-      <div className="sw-hs-services-top-banner">
+      <div className="services-top-banner">
+        <div className="banner-left">
+          <div className="banner-icon"><ToolOutlined /></div>
 
-        <div className="sw-hs-banner-left">
-  <div className="sw-hs-banner-icon"><ToolOutlined /></div>
-
-  <div className="sw-hs-banner-text">
-    <h2 className="sw-hs-banner-title">Home Services</h2>
-    <p className="sw-hs-banner-subtitle">{services.length} services available</p>
-  </div>
-</div>
-
- 
-
+          <div className="banner-text">
+            <h2 className="banner-title">Home Services</h2>
+            <p className="banner-subtitle">{services.length} services available</p>
+          </div>
+        </div>
 
   <Button
   size="small"
@@ -146,29 +152,54 @@ const handleFormCancel = () => {
         ))}
       </div>
 
-      {detailsPopupOpen && selectedService && (
-  <ServiceDetailsPopup
-    open={detailsPopupOpen}
-    onClose={() => setDetailsPopupOpen(false)}
-    mainTitle={selectedService.mainTitle}
-    subServices={selectedService.subServices}
-    onOpenForm={openFormPopup}
-  />
-)}
+<Modal
+  open={cleaningModalOpen}
+  onCancel={() => setCleaningModalOpen(false)}
+  footer={null}
+  width="95%"
+  centered
+  // allow the modal to show default X (only close control)
+  closable
+  bodyStyle={{
+    padding: 0,
+    // internal scrolling for long content (CleaningService)
+    maxHeight: "80vh",
+    overflowY: "auto",
+  }}
+  wrapClassName="cleaning-embed-wrapper"
+>
+  {/* NOTE: removed the manual 'Close' button so only the modal's X icon will close it */}
+  <div className="cleaning-embed" style={{ padding: 12 }}>
+    <CleaningService />
+  </div>
+</Modal>
 
-{formPopupOpen && selectedSubService && (
-  <ServiceRequestForm
-    open={formPopupOpen}
-    onCancel={handleFormCancel}
-    onSubmit={handleFormSubmit}
-    image={selectedSubService.image}
-    title={selectedSubService.title}
-    description={selectedSubService.description}
-    includedList={selectedSubService.includedList}
-    issues={selectedSubService.issues}
-    totalprice={selectedSubService.totalprice}
-  />
-)}     
+
+      {/* SERVICE DETAILS POPUP (existing) */}
+      {detailsPopupOpen && selectedService && (
+        <ServiceDetailsPopup
+          open={detailsPopupOpen}
+          onClose={() => setDetailsPopupOpen(false)}
+          mainTitle={selectedService.mainTitle}
+          subServices={selectedService.subServices}
+          onOpenForm={openFormPopup}
+        />
+      )}
+
+      {/* SERVICE REQUEST FORM (existing) */}
+      {formPopupOpen && selectedSubService && (
+        <ServiceRequestForm
+          open={formPopupOpen}
+          onCancel={handleFormCancel}
+          onSubmit={handleFormSubmit}
+          image={selectedSubService.image}
+          title={selectedSubService.title}
+          description={selectedSubService.description}
+          includedList={selectedSubService.includedList}
+          issues={selectedSubService.issues}
+          totalprice={selectedSubService.totalprice}
+        />
+      )}
     </div>
   );
 }

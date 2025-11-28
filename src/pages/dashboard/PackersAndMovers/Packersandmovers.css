@@ -1,3 +1,8 @@
+/* Packersandmovers.css (cleaned single copy) */
+/* Force AntD card body padding to 0 so our layout inside cards is exact */
+:where(.css-dev-only-do-not-override-198drv2).ant-card .ant-card-body {
+  padding: 0 !important;
+}
 /* ---------------- container ---------------- */
 .pm-container {
   width: 100%;
@@ -6,20 +11,18 @@
   padding: 0 14px;
   box-sizing: border-box;
 }
-
 /* ---------- hero ---------- */
 .pm-hero {
   margin-left: 52px;
   margin-right: 52px;
 }
-
 .pm-hero-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 18px;
-  background: #ff6d00;
-  border-radius: 8px;
+  background: #005cfa;
+  border-radius: 6px; /* reduced radius (smaller) */
   color: #fff;
 }
 .pm-hero-title {
@@ -32,7 +35,6 @@
   color: rgba(255, 255, 255, 0.95);
   font-size: 13px;
 }
-
 /* ---------- cards ---------- */
 .pm-main {
   width: 95%;
@@ -43,48 +45,45 @@
 .pm-cards-wrapper {
   width: 100%;
 }
-
 /* Make columns flex so cards stretch to equal height */
 .ant-row > .ant-col[style*="display: flex"] {
   display: flex;
 }
-
 /* Fixed card height so all cards equal size */
 .pm-card {
-  border-radius: 10px;
+  border-radius: 4px; /* smaller radius */
   overflow: hidden;
   box-shadow: 0 6px 18px rgba(20, 20, 20, 0.06);
   border: 1px solid #f0f0f0;
   background: #fff;
   display: flex;
   flex-direction: column;
-  height: 340px; /* fixed height */
+  height: 340px; /* kept */
   max-width: 260px;
   margin: 0 auto;
   box-sizing: border-box;
 }
-
 /* image fixed height */
 .pm-card-image {
   width: 100%;
-  height: 150px; /* fixed image height */
+  height: 150px; /* keep image height */
   object-fit: cover;
   display: block;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
 }
-
-/* body takes remaining space */
+/* body takes remaining space - ZERO padding so we control spacing exactly */
 .pm-card-body {
-  padding: 12px 14px;
+  padding: 0 !important;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   flex: 1;
   box-sizing: border-box;
 }
-
-/* title/subtitle clamp to avoid growth */
+/* title/subtitle clamp to avoid growth and center them */
 .pm-card-title {
-  margin: 0;
+  margin: 12px 12px 0;
   font-size: 16px;
   font-weight: 600;
   color: #173648;
@@ -92,9 +91,10 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-align: center;
 }
 .pm-card-sub {
-  margin: 8px 0 0;
+  margin: 8px 12px 0;
   color: #6b7785;
   font-size: 13px;
   line-height: 1.4;
@@ -102,28 +102,70 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-align: center;
 }
-
-/* footer pinned to bottom of card */
+/* footer pinned to bottom of card
+   Center alignment so View Details appears centered.
+*/
 .pm-card-footer {
-  margin-top: 12px;
+  padding: 10px 12px;      /* internal spacing */
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  gap: 12px;
+  justify-content: center; /* center contents horizontally */
+  box-sizing: border-box;
+  width: 100%;
+  margin-top: auto;
+  position: relative;      /* allows absolute positioning if needed later */
 }
-.pm-view-btn {
-  background:#fff;
-  border:1px solid #eee;
-  border-radius:8px;
-  padding:6px 10px;
-  font-size:13px;
-}
+/* Price stays to the left if visible; absolute so it doesn't push button */
 .pm-price {
   color: #2b6cff;
   font-weight: 600;
+  font-size: 15px;
+  white-space: nowrap;
+  margin-right: 8px;
+  flex: 0 0 auto;
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
 }
-
-/* ---------- full-screen modal overlay ---------- */
+/* View Details button: centered, full visual width with small gutters, slightly reduced height (40px) */
+.pm-view-btn {
+  flex: 0 0 auto;
+  width: calc(100% - 28px);  /* leave small in-card gutters */
+  max-width: 100%;
+  height: 40px;              /* requested height */
+  margin: 12px auto 0;       /* top margin effective (12px) */
+  background: #000 !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 4px !important; /* reduced radius */
+  padding: 0 16px !important;    /* horizontal padding only */
+  font-size: 15px;
+  font-weight: 700;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+  cursor: pointer;
+  transition: transform 140ms ease, box-shadow 140ms ease, opacity 140ms ease;
+  box-sizing: border-box;
+}
+.pm-view-btn span,
+.pm-view-btn > * {
+  display: inline-block;
+  line-height: normal;
+}
+.pm-view-btn:hover,
+.pm-view-btn:focus {
+  transform: translateY(-2px);
+  opacity: 0.98;
+  box-shadow: 0 10px 22px rgba(0,0,0,0.14);
+}
+/* ---------- full-screen modal overlay (unchanged except radii) ---------- */
 .pm-fullscreen-overlay {
   position: fixed;
   inset: 0;
@@ -132,13 +174,13 @@
   align-items: center;
   justify-content: center;
   z-index: 5000;
-  padding: 20px;
+  padding: 30px;
 }
 .pm-fullscreen-inner {
   width: min(1200px, 98%);
   max-height: 92vh;
   background: #fff;
-  border-radius: 12px;
+  border-radius: 4px;
   overflow: auto;
   box-shadow: 0 24px 64px rgba(8, 12, 20, 0.4);
   outline: none;
@@ -149,7 +191,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 18px 22px;
+  padding: 16px 18px;
   border-bottom: 1px solid #f2f4f7;
 }
 .pm-fullscreen-header h2 {
@@ -163,16 +205,15 @@
   font-size: 18px;
   color: #111;
 }
-
 /* Modal body and grid */
 .pm-fullscreen-body {
-  padding: 18px 22px 28px;
+  padding: 16px 18px 24px;
 }
 .pm-fullscreen-images {
   width: 100%;
 }
 .pm-fullscreen-card {
-  border-radius: 10px;
+  border-radius: 4px;
   overflow: hidden;
   box-shadow: 0 8px 26px rgba(20, 20, 20, 0.06);
   border: 1px solid #f0f0f0;
@@ -184,8 +225,7 @@
   object-fit: cover;
   display: block;
 }
-
-/* fullscreen card body (layout + gap) */
+/* fullscreen card body */
 .pm-fullscreen-card-body {
   padding: 12px;
   text-align: center;
@@ -202,43 +242,36 @@
   font-size: 13px;
   margin-top: 6px;
 }
-
-/* actions area within fullscreen card */
 .pm-fullscreen-card-actions {
   margin-top: 10px;
   display: flex;
   justify-content: center;
 }
-
-/* Book Now button style (green RGB 20,184,120) */
-.pm-book-btn {
-  background: rgb(20, 184, 120);
-  color: #fff;
-  border-radius: 8px;
-  padding: 6px 14px;
-  font-weight: 600;
-  border: none;
-  cursor: pointer;
-  box-shadow: 0 6px 18px rgba(20, 20, 20, 0.08);
+/* Book Now button style: default previously green; user requested black/white match */
+.pm-book-btn,
+.pm-book-btn.ant-btn {
+  background: #000 !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 4px !important;
+  padding: 8px 14px !important;
+  font-weight: 700 !important;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.12) !important;
   transition: transform 120ms ease, box-shadow 120ms ease, opacity 120ms ease;
 }
-
-/* override antd's button default styles so our class applies cleanly */
-.pm-book-btn.ant-btn {
-  background: rgb(20, 184, 120);
-  color: #fff;
-  border: none;
-  box-shadow: 0 6px 18px rgba(20, 20, 20, 0.08);
-}
-
-/* hover */
 .pm-book-btn:hover,
-.pm-book-btn:focus {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 26px rgba(20, 20, 20, 0.12);
-  opacity: 0.98;
+.pm-book-btn:focus,
+.pm-book-btn:active,
+.pm-book-btn.ant-btn:hover,
+.pm-book-btn.ant-btn:focus,
+.pm-book-btn.ant-btn:active {
+  background: #000 !important;
+  color: #fff !important;
+  border-color: #000 !important;
+  box-shadow: 0 10px 26px rgba(0,0,0,0.14) !important;
+  transform: translateY(-2px) !important;
+  outline: none !important;
 }
-
 /* ---------- booking form modal ---------- */
 .pm-form-overlay {
   position: fixed;
@@ -253,10 +286,42 @@
 .pm-form-inner {
   width: min(980px, 98%);
   max-height: 94vh;
-  overflow: auto;
+  overflow: auto; /* keep scrolling behavior */
   background: #fff;
-  border-radius: 10px;
+  border-radius: 4px;
   box-shadow: 0 32px 80px rgba(0, 0, 0, 0.4);
+  position: relative; /* allow banner positioning */
+}
+/* Banner: hidden by default, shown when .visible is applied */
+.pm-confirm-top {
+  position: sticky;        /* sticks to top of the scrolling modal */
+  top: 0;
+  left: 0;
+  right: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: rgba(20, 184, 120, 0.12);
+  border-bottom: 1px solid rgba(20, 184, 120, 0.28);
+  z-index: 40;
+}
+.pm-confirm-top.visible {
+  display: flex;
+}
+.pm-confirm-top-inner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.pm-confirm-top-text {
+  font-weight: 700;
+  color: #0b4f3a;
+  font-size: 15px;
+}
+.pm-form-inner.has-banner .pm-form-body {
+  margin-top: 56px; /* adjust if banner height changes */
 }
 .pm-form-header {
   display: flex;
@@ -275,7 +340,7 @@
   padding: 18px;
   align-items: flex-start;
 }
-/* left column: image + included + price */
+/* left column */
 .pm-form-left {
   width: 36%;
   min-width: 220px;
@@ -284,7 +349,7 @@
   width: 100%;
   height: 160px;
   object-fit: cover;
-  border-radius: 6px;
+  border-radius: 4px;
   display: block;
 }
 .pm-form-desc {
@@ -309,7 +374,7 @@
   margin-top: 10px;
   padding: 12px;
   background: #f6fbff;
-  border-radius: 8px;
+  border-radius: 4px;
   border: 1px solid #eef6ff;
 }
 .pm-price-label {
@@ -329,50 +394,114 @@
 .pm-form-right .ant-form-item {
   margin-bottom: 10px;
 }
-/* actions */
+/* Replace original hover rule that turned button white.
+   Keep form action buttons black & white in all states. */
 .pm-form-actions {
   display: flex;
   justify-content: flex-end;
   padding: 12px 0 24px;
 }
-/* small tweaks */
-.pm-form-inner::-webkit-scrollbar {
-  height: 8px;
-  width: 8px;
+.pm-form-actions button,
+.pm-form-actions .ant-btn {
+  background: #000 !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 4px !important;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.12) !important;
+  padding: 8px 14px !important;
+  font-weight: 600;
+  transition: transform 140ms ease, box-shadow 140ms ease, opacity 140ms ease;
 }
-.pm-form-inner::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.12);
-  border-radius: 8px;
+.pm-form-actions button:hover,
+.pm-form-actions button:focus,
+.pm-form-actions button:active,
+.pm-form-actions .ant-btn:hover,
+.pm-form-actions .ant-btn:focus,
+.pm-form-actions .ant-btn:active {
+  background: #000 !important;
+  color: #fff !important;
+  border-color: #000 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 10px 26px rgba(0,0,0,0.14) !important;
+  outline: none !important;
 }
-
+.pm-addcart-btn {
+  background: #000 !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 4px !important;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.12) !important;
+  padding: 8px 16px !important;
+  font-weight: 700 !important;
+  transition: transform 140ms ease, box-shadow 140ms ease, opacity 140ms ease;
+}
+.pm-addcart-btn:hover,
+.pm-addcart-btn:focus,
+.pm-addcart-btn:active,
+.pm-addcart-btn.ant-btn:hover,
+.pm-addcart-btn.ant-btn:focus,
+.pm-addcart-btn.ant-btn:active {
+  background: #000 !important;
+  color: #fff !important;
+  border-color: #000 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 10px 26px rgba(0,0,0,0.14) !important;
+  outline: none !important;
+}
+.pm-form-actions .ant-btn:not(.pm-addcart-btn) {
+  background: #000 !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 4px !important;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.08) !important;
+  padding: 8px 14px !important;
+  font-weight: 600;
+  transition: transform 140ms ease, box-shadow 140ms ease, opacity 140ms ease;
+}
+.pm-book-btn:hover,
+.pm-book-btn:focus,
+.pm-book-btn:active,
+.pm-addcart-btn:hover,
+.pm-addcart-btn:focus,
+.pm-addcart-btn:active,
+.pm-form-actions .ant-btn:not(.pm-addcart-btn):hover,
+.pm-form-actions .ant-btn:not(.pm-addcart-btn):focus {
+  transform: translateY(-2px);
+  opacity: 0.96;
+  box-shadow: 0 10px 22px rgba(0,0,0,0.16) !important;
+}
+.pm-book-btn .anticon,
+.pm-addcart-btn .anticon,
+.pm-form-actions .ant-btn:not(.pm-addcart-btn) .anticon,
+.pm-view-btn .anticon {
+  color: inherit !important;
+}
 /* ---------- picker / dropdown z-index fixes (important) ---------- */
-/* Ensure AntD pickers and dropdowns appear above overlays/modals */
 .ant-picker-dropdown,
 .rc-picker-panel,
 .ant-select-dropdown,
 .ant-time-picker-panel,
 .ant-picker-dropdown-placement-bottomLeft,
 .ant-picker-dropdown-placement-bottomRight {
-  z-index: 9000 !important;
+  z-index: 16000 !important;
 }
-
 /* ---------- responsive ---------- */
 @media (max-width: 1200px) {
   .pm-card {
-    height: 320px;
+    height: 340px;
     max-width: 240px;
   }
   .pm-card-image {
-    height: 140px;
+    height: 150px;
   }
 }
 @media (max-width: 1024px) {
   .pm-card {
-    height: 320px;
+    height: 340px;
     max-width: 230px;
   }
   .pm-card-image {
-    height: 130px;
+    height: 140px;
   }
   .pm-form-body {
     flex-direction: column;
@@ -399,9 +528,14 @@
   .pm-hero-inner {
     padding: 14px;
   }
+  /* keep footer horizontal on tablets; button maintains height */
+  .pm-view-btn {
+    height: 40px;
+    width: calc(100% - 28px);
+  }
 }
 @media (max-width: 576px) {
-  /* xs screens: cards stack full width */
+  /* small screens: card footer stacks vertically for better touch targets */
   .pm-card {
     height: auto;
     max-width: 100%;
@@ -412,180 +546,38 @@
     height: 140px;
   }
   .pm-card-body {
+    padding: 0 !important;
+  }
+  .pm-card-footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    justify-content: center;
     padding: 12px;
   }
-  .pm-hero-title {
-    font-size: 18px;
+  .pm-view-btn {
+    width: 100% !important;
+    height: 38px; /* slight reduction on very small screens */
+    margin: 0; /* remove top margin when stacked */
+    border-radius: 4px !important;
   }
-  .pm-hero-sub {
-    font-size: 12px;
-  }
-
-  /* small responsive tweak for Book Now */
-  .pm-fullscreen-card-body {
-    gap: 6px;
-  }
-  .pm-book-btn {
-    padding: 8px 16px;
-    font-size: 14px;
-  }
-}
-/* =========================
-   Top confirmation popup + Add-to-cart styles
-   Paste/merge into your Packersandmovers.css
-   ========================= */
-
-/* Add-to-cart button (keeps previous look) */
-.pm-addcart-btn {
-  background: linear-gradient(90deg, #0d6efd 0%, #2b6cff 100%);
-  color: #fff !important;
-  border: none !important;
-  padding: 8px 16px !important;
-  border-radius: 10px !important;
-  box-shadow: 0 6px 18px rgba(43, 108, 255, 0.22);
-  font-weight: 700;
-  display: inline-flex;
-  align-items: center;
-  transition: transform 220ms ease, box-shadow 220ms ease;
-}
-.pm-addcart-btn:hover,
-.pm-addcart-btn:focus {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 32px rgba(43, 108, 255, 0.32);
-}
-
-/* ---------- TOP-CENTER CONFIRMATION POPUP ---------- */
-/* container (top fixed, centered) */
-.pm-confirm-top {
-  position: fixed;
-  left: 50%;
-  top: 18px; /* distance from top of viewport */
-  transform: translateX(-50%) translateY(-8px) scale(0.98);
-  z-index: 14000;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 300ms cubic-bezier(.2,.9,.2,1), transform 300ms cubic-bezier(.2,.9,.2,1);
-  width: min(92%, 720px); /* responsive width */
-  display: flex;
-  justify-content: center;
-}
-
-/* visible state */
-.pm-confirm-top.visible {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0) scale(1);
-  pointer-events: auto;
-}
-
-/* inner card */
-.pm-confirm-top-inner {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  background: rgba(255,255,255,0.98);
-  backdrop-filter: blur(6px);
-  padding: 10px 16px;
-  border-radius: 12px;
-  box-shadow: 0 18px 48px rgba(8, 12, 20, 0.14);
-  border: 1px solid rgba(10, 40, 120, 0.06);
-  width: 100%;
-  box-sizing: border-box;
-}
-
-/* icon */
-.pm-confirm-top-icon {
-  width: 36px;
-  height: 36px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* message text */
-.pm-confirm-top-text {
-  font-weight: 700;
-  color: #0d2540;
-  font-size: 15px;
-  line-height: 1.1;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* small screens: adjust spacing and text */
-@media (max-width: 600px) {
-  .pm-confirm-top {
+  .pm-price {
+    left: 12px;
+    position: absolute;
     top: 12px;
-    width: min(96%, 420px);
+    transform: none;
   }
-  .pm-confirm-top-inner {
-    padding: 10px 12px;
-    gap: 10px;
-  }
-  .pm-confirm-top-text {
-    font-size: 14px;
-  }
-}
-
-/* even smaller: allow multi-line wrap instead of ellipsis */
-@media (max-width: 380px) {
-  .pm-confirm-top-text {
-    white-space: normal;
-    font-size: 13.5px;
+  /* keep form buttons touch-friendly */
+  .pm-book-btn,
+  .pm-addcart-btn,
+  .pm-form-actions .ant-btn:not(.pm-addcart-btn) {
+    width: 100% !important;
+    height: 40px !important;
   }
 }
-
-/* keep pickers/dropdowns above overlays */
-.ant-picker-dropdown,
-.rc-picker-panel,
-.ant-select-dropdown,
-.ant-time-picker-panel,
-.ant-picker-dropdown-placement-bottomLeft,
-.ant-picker-dropdown-placement-bottomRight {
-  z-index: 16000 !important;
-}
-
-/* Optional: small fade-out animation when disappearing: */
-.pm-confirm-top.visible {
-  animation: pm-top-appear 360ms cubic-bezier(.2,.9,.2,1);
-}
-@keyframes pm-top-appear {
-  0% { opacity: 0; transform: translateX(-50%) translateY(-8px) scale(.98) }
-  60% { opacity: 1; transform: translateX(-50%) translateY(2px) scale(1.02) }
-  100% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1) }
-}
-
-/* ---------------- keep rest of your styles intact ---------------- */
-/* (If you already have hero, cards, forms CSS - keep them) */
-
-/* ---------- optional supporting rules (if missing in your file) ---------- */
-/* container */
-.pm-container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 14px;
-  box-sizing: border-box;
-}
-
-/* basic hero */
-.pm-hero-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 18px;
-  background: #3b8fe6 !important;
-  border-radius: 8px;
-  color: #fff;
-}
-
-/* card basics (kept minimal; use your original CSS for full styles) */
-.pm-card {
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 6px 18px rgba(20, 20, 20, 0.06);
-  border: 1px solid #f0f0f0;
-  background: #fff;
-  display: flex;
-  flex-direction: column;
+/* ensure no horizontal overflow */
+html,
+body,
+#root {
+  overflow-x: hidden;
 }
