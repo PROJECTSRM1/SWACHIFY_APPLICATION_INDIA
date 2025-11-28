@@ -90,7 +90,7 @@ const cardsData: CardItem[] = [
   {
     filename: taxiCabServiceImg,
     title: "Passenger Transport",
-    subtitle: "Reliable taxi, cab, and shuttle services",
+    subtitle: "Reliable taxi, cab, shuttle, and transfer services",
     color: "#2b2b2b",
     images: [
       {
