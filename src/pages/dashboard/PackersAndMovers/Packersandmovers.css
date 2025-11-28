@@ -3,13 +3,12 @@
    - Force AntD card body padding to 0 so our layout inside cards is exact
    - Reduced radius, centered view button, equal-height cards
    - Fixed Book / Add cart / Form action buttons to always be black bg + white text
+   - ADDED: confirmation banner styles (keeps original CSS intact otherwise)
    ========================= */
-
 /* Force AntD card body padding to 0 so our layout inside cards is exact */
 :where(.css-dev-only-do-not-override-198drv2).ant-card .ant-card-body {
   padding: 0 !important;
 }
-
 /* ---------------- container ---------------- */
 .pm-container {
   width: 100%;
@@ -18,7 +17,6 @@
   padding: 0 14px;
   box-sizing: border-box;
 }
-
 /* ---------- hero ---------- */
 .pm-hero {
   margin-left: 52px;
@@ -43,7 +41,6 @@
   color: rgba(255, 255, 255, 0.95);
   font-size: 13px;
 }
-
 /* ---------- cards ---------- */
 .pm-main {
   width: 95%;
@@ -54,12 +51,10 @@
 .pm-cards-wrapper {
   width: 100%;
 }
-
 /* Make columns flex so cards stretch to equal height */
 .ant-row > .ant-col[style*="display: flex"] {
   display: flex;
 }
-
 /* Fixed card height so all cards equal size */
 .pm-card {
   border-radius: 4px; /* smaller radius */
@@ -74,7 +69,6 @@
   margin: 0 auto;
   box-sizing: border-box;
 }
-
 /* image fixed height */
 .pm-card-image {
   width: 100%;
@@ -84,7 +78,6 @@
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
 }
-
 /* body takes remaining space - ZERO padding so we control spacing exactly */
 .pm-card-body {
   padding: 0 !important;
@@ -94,7 +87,6 @@
   flex: 1;
   box-sizing: border-box;
 }
-
 /* title/subtitle clamp to avoid growth and center them */
 .pm-card-title {
   margin: 12px 12px 0;
@@ -118,7 +110,6 @@
   text-overflow: ellipsis;
   text-align: center;
 }
-
 /* footer pinned to bottom of card
    Center alignment so View Details appears centered.
 */
@@ -133,7 +124,6 @@
   margin-top: auto;
   position: relative;      /* allows absolute positioning if needed later */
 }
-
 /* Price stays to the left if visible; absolute so it doesn't push button */
 .pm-price {
   color: #2b6cff;
@@ -147,7 +137,6 @@
   top: 50%;
   transform: translateY(-50%);
 }
-
 /* View Details button: centered, full visual width with small gutters, slightly reduced height (40px) */
 /* Use explicit margin shorthand so top margin works and won't be overridden */
 .pm-view-btn {
@@ -183,7 +172,6 @@
   opacity: 0.98;
   box-shadow: 0 10px 22px rgba(0,0,0,0.14);
 }
-
 /* ---------- full-screen modal overlay (unchanged except radii) ---------- */
 .pm-fullscreen-overlay {
   position: fixed;
@@ -224,7 +212,6 @@
   font-size: 18px;
   color: #111;
 }
-
 /* Modal body and grid */
 .pm-fullscreen-body {
   padding: 16px 18px 24px;
@@ -245,7 +232,6 @@
   object-fit: cover;
   display: block;
 }
-
 /* fullscreen card body */
 .pm-fullscreen-card-body {
   padding: 12px;
@@ -268,7 +254,6 @@
   display: flex;
   justify-content: center;
 }
-
 /* Book Now button style: default previously green; user requested black/white match */
 .pm-book-btn,
 .pm-book-btn.ant-btn {
@@ -281,7 +266,6 @@
   box-shadow: 0 6px 14px rgba(0,0,0,0.12) !important;
   transition: transform 120ms ease, box-shadow 120ms ease, opacity 120ms ease;
 }
-
 /* Ensure Book Now remains black/white on hover, focus, active */
 .pm-book-btn:hover,
 .pm-book-btn:focus,
@@ -296,7 +280,6 @@
   transform: translateY(-2px) !important;
   outline: none !important;
 }
-
 /* ---------- booking form modal ---------- */
 .pm-form-overlay {
   position: fixed;
@@ -308,14 +291,57 @@
   z-index: 6000;
   padding: 18px;
 }
+
+/* >>> CONFIRMATION BANNER START
+   This block adds a top confirmation banner inside the booking form modal.
+   It is shown by adding class "visible" to .pm-confirm-top and by toggling
+   the class "has-banner" on .pm-form-inner to push the form content down.
+   >>> */
 .pm-form-inner {
   width: min(980px, 98%);
   max-height: 94vh;
-  overflow: auto;
+  overflow: auto; /* keep scrolling behavior */
   background: #fff;
   border-radius: 4px;
   box-shadow: 0 32px 80px rgba(0, 0, 0, 0.4);
+  position: relative; /* allow banner positioning */
 }
+/* Banner: hidden by default, shown when .visible is applied */
+.pm-confirm-top {
+  position: sticky;        /* sticks to top of the scrolling modal */
+  top: 0;
+  left: 0;
+  right: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: rgba(20, 184, 120, 0.12);
+  border-bottom: 1px solid rgba(20, 184, 120, 0.28);
+  z-index: 40;
+}
+.pm-confirm-top.visible {
+  display: flex;
+}
+/* internal layout of banner */
+.pm-confirm-top-inner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.pm-confirm-top-text {
+  font-weight: 700;
+  color: #0b4f3a;
+  font-size: 15px;
+}
+/* When banner present, push form body down so content doesn't hide under sticky header */
+.pm-form-inner.has-banner .pm-form-body {
+  margin-top: 56px; /* adjust if banner height changes */
+}
+/* >>> CONFIRMATION BANNER END */
+
+/* Keep original pm-form-inner and related styles for header/body if user doesn't use banner */
 .pm-form-header {
   display: flex;
   justify-content: space-between;
@@ -333,7 +359,6 @@
   padding: 18px;
   align-items: flex-start;
 }
-
 /* left column */
 .pm-form-left {
   width: 36%;
@@ -363,7 +388,6 @@
   margin-bottom: 6px;
   font-size: 14px;
 }
-
 /* price box */
 .pm-price-box {
   margin-top: 10px;
@@ -382,7 +406,6 @@
   color: #0d47a1;
   font-size: 16px;
 }
-
 /* right column: form */
 .pm-form-right {
   width: calc(64% - 18px);
@@ -390,7 +413,6 @@
 .pm-form-right .ant-form-item {
   margin-bottom: 10px;
 }
-
 /* Replace original hover rule that turned button white.
    Keep form action buttons black & white in all states. */
 .pm-form-actions {
@@ -409,7 +431,6 @@
   font-weight: 600;
   transition: transform 140ms ease, box-shadow 140ms ease, opacity 140ms ease;
 }
-
 /* Keep form action buttons black on hover/focus/active too */
 .pm-form-actions button:hover,
 .pm-form-actions button:focus,
@@ -424,7 +445,6 @@
   box-shadow: 0 10px 26px rgba(0,0,0,0.14) !important;
   outline: none !important;
 }
-
 /* Book Service submit button: make it black/white like view details */
 .pm-addcart-btn {
   background: #000 !important;
@@ -436,7 +456,6 @@
   font-weight: 700 !important;
   transition: transform 140ms ease, box-shadow 140ms ease, opacity 140ms ease;
 }
-
 /* Ensure Addcart button remains black/white in all states */
 .pm-addcart-btn:hover,
 .pm-addcart-btn:focus,
@@ -451,7 +470,6 @@
   box-shadow: 0 10px 26px rgba(0,0,0,0.14) !important;
   outline: none !important;
 }
-
 /* Cancel button inside form: match black/white style */
 .pm-form-actions .ant-btn:not(.pm-addcart-btn) {
   background: #000 !important;
@@ -463,7 +481,6 @@
   font-weight: 600;
   transition: transform 140ms ease, box-shadow 140ms ease, opacity 140ms ease;
 }
-
 /* Hover / focus states for buttons */
 .pm-book-btn:hover,
 .pm-book-btn:focus,
@@ -477,7 +494,6 @@
   opacity: 0.96;
   box-shadow: 0 10px 22px rgba(0,0,0,0.16) !important;
 }
-
 /* Ensure icons inherit white color */
 .pm-book-btn .anticon,
 .pm-addcart-btn .anticon,
@@ -485,7 +501,6 @@
 .pm-view-btn .anticon {
   color: inherit !important;
 }
-
 /* ---------- picker / dropdown z-index fixes (important) ---------- */
 /* Ensure AntD pickers and dropdowns appear above overlays/modals */
 .ant-picker-dropdown,
@@ -496,7 +511,6 @@
 .ant-picker-dropdown-placement-bottomRight {
   z-index: 16000 !important;
 }
-
 /* ---------- responsive ---------- */
 @media (max-width: 1200px) {
   .pm-card {
@@ -587,10 +601,9 @@
     height: 40px !important;
   }
 }
-
 /* ensure no horizontal overflow */
 html,
 body,
 #root {
   overflow-x: hidden;
-}
+} 
