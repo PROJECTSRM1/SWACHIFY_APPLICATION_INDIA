@@ -148,6 +148,41 @@
   }
 }
 
+/* /////button new /// */
+
+
+.pc-card-inner button{
+  background-color: yellow !important;
+  border: none;
+  color: rgb(25, 4, 19);
+}
+
+
+.pc-card-inner button:hover{
+  background-color: rgb(136, 220, 235) !important;
+  border: none;
+  color: rgb(25, 4, 19);
+}
+
+
+/* button new */
+
+
+
+.featured-body button{
+  background-color: pink !important;
+  border: none;
+  color: indigo !important;
+}
+
+
+.featured-body button:hover{
+  background-color: rgb(192, 255, 215) !important;
+  border: none;
+  color: indigo !important;
+}
+
+
 /* ================= MOBILE — 375px ================= */
 @media (max-width: 375px) {
   .hero-section {

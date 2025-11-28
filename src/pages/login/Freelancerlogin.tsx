@@ -1,81 +1,171 @@
-// import React, { useState } from "react";
-import { useState } from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  MailOutlined,
+  LockOutlined,
+  ArrowLeftOutlined,
+//   GoogleOutlined,
+//   GithubOutlined,
+} from "@ant-design/icons";
+
+import {
+  Layout,
+  Card,
+  Form,
+  Input,
+  Button,
+  Checkbox,
+//   Divider,
+//   Row,
+//   Col,
+} from "antd";
+
 import "./Freelancerlogin.css";
 
-export default function Login() {
-    const [activeTab, setActiveTab] = useState("login");
+export default function Freelancerlogin() {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+//   const [showPassword, setShowPassword] = useState(false);
+  const [form] = Form.useForm();
 
-    return (
-        <div className="modal-container">
-            <div className="modal-box">
-                <div className="header">
-                    <span
-                        className={`tab ${activeTab === "login" ? "active" : ""}`}
-                        onClick={() => setActiveTab("login")}
-                    >
-                        Login
-                    </span>
-                    <span
-                        className={`tab ${activeTab === "register" ? "active" : ""}`}
-                        onClick={() => setActiveTab("register")}
-                    >
-                        Register
-                    </span>
-                </div>
+  const onFinish = () => {
+    setLoading(true);
 
-                {activeTab === "login" && (
-                    <form className="form">
-                        <label className="label">Email / Phone <span className="req">*</span></label>
-                        <input type="text" className="input" placeholder="john@example.com" />
+    setTimeout(() => {
+      setLoading(false);
+      navigate("/");
+    }, 1300);
+  };
 
-                        <label className="label">Password <span className="req">*</span></label>
-                        <input type="password" className="input" placeholder="Password" />
+  return (
+    <Layout className="swf-login-wrapper">
 
-                        <div className="remember-row">
-                            <input type="checkbox" /> <span>Remember me</span>
-                        </div>
+      {/* BACK BUTTON */}
+      <button className="swf-login-back" onClick={() => navigate("/freelancer")}>
+        <ArrowLeftOutlined />
+        <span>Back</span>
+      </button>
 
-                        <button className="login-btn">Login</button>
-                    </form>
-                )}
+      <div className="swf-login-container">
 
-                {activeTab === "register" && (
-                    <form className="form">
-                        <label className="label">Full name <span className="req">*</span></label>
-                        <input type="text" className="input" placeholder="Enter full name" />
+        {/* LEFT BRAND PANEL */}
+        <div className="swf-login-brand">
+          <div className="swf-brand-inner">
+            <div className="swf-brand-logo">⚡</div>
+            <h2 className="swf-brand-title">Swachify Freelance</h2>
 
-                        <label className="label">Mobile <span className="req">*</span></label>
-                        <input type="text" className="input" placeholder="Enter mobile" />
+            <p className="swf-brand-sub">
+              Empowering freelancers with real-time job opportunities nearby.
+            </p>
 
-                        <label className="label">Email <span className="req">*</span></label>
-                        <input type="email" className="input" placeholder="Enter email" />
-
-                        <label className="label">Password <span className="req">*</span></label>
-                        <input type="password" className="input" placeholder="Enter password" />
-
-                        <label className="label">Skills / Experience Summary</label>
-                        <textarea className="textarea" placeholder="Describe your skills / experience"></textarea>
-
-                        {/* HORIZONTAL FILE INPUT ROW */}
-                        <div className="file-row">
-
-                            <div className="file-group">
-                                <label className="label">Experience Docs (PDF/JPG/PNG)</label>
-                                <input type="file" className="file-input" multiple />
-                            </div>
-
-                            <div className="file-group">
-                                <label className="label">Government ID (Aadhar/PAN/License)</label>
-                                <input type="file" className="file-input" />
-                            </div>
-
-                        </div>
-
-
-                        <button className="login-btn">Register & Continue</button>
-                    </form>
-                )}
-            </div>
+            <ul className="swf-benefits">
+              <li>✨ Instant job requests</li>
+              <li>💼 Manage your projects</li>
+              <li>💰 Track your earnings</li>
+              <li>⭐ Build professional reputation</li>
+            </ul>
+          </div>
         </div>
-    );
+
+        {/* LOGIN CARD */}
+        <Card className="swf-login-card" bordered={false}>
+          <h1 className="swf-login-title">Welcome Back</h1>
+          <p className="swf-login-sub">
+            Login to access your freelancer dashboard
+          </p>
+
+          <Form
+            layout="vertical"
+            form={form}
+            onFinish={onFinish}
+            requiredMark={false}
+          >
+            <Form.Item
+              label="Email Address"
+              name="email"
+              rules={[
+                { required: true, message: "Email is required" },
+                { type: "email", message: "Enter a valid email" },
+              ]}
+            >
+              <Input
+                prefix={<MailOutlined />}
+                placeholder="you@example.com"
+                size="large"
+                className="swf-input"
+              />
+            </Form.Item>
+
+            <Form.Item
+              label="Password"
+              name="password"
+              rules={[
+                { required: true, message: "Password is required" },
+                { min: 6, message: "Minimum 6 characters" },
+              ]}
+            >
+              <Input.Password
+                prefix={<LockOutlined />}
+                size="large"
+                placeholder="••••••••"
+                className="swf-input"
+                visibilityToggle={true}
+              />
+            </Form.Item>
+
+            <div className="swf-row-between">
+              <Checkbox>Remember me</Checkbox>
+              <a className="swf-forgot">Forgot Password?</a>
+            </div>
+
+            <Form.Item>
+              <Button
+                type="primary"
+                htmlType="submit"
+                block
+                size="large"
+                loading={loading}
+                className="swf-submit"
+              >
+                {loading ? "Logging in..." : "Login"}
+              </Button>
+            </Form.Item>
+          </Form>
+
+          {/* <Divider plain>or login with</Divider>
+
+          <Row gutter={12}>
+            <Col span={12}>
+              <Button
+                block
+                icon={<GoogleOutlined />}
+                className="swf-social"
+              >
+                Google
+              </Button>
+            </Col>
+            <Col span={12}>
+              <Button
+                block
+                icon={<GithubOutlined />}
+                className="swf-social"
+              >
+                Github
+              </Button>
+            </Col>
+          </Row> */}
+
+          <p className="swf-signup">
+            Don’t have an account?
+            <button
+              className="swf-signup-link"
+              onClick={() => navigate("/register")}
+            >
+              Sign up free
+            </button>
+          </p>
+        </Card>
+      </div>
+    </Layout>
+  );
 }

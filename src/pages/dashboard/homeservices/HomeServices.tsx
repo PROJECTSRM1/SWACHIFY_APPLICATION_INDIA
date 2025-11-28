@@ -119,13 +119,14 @@ export default function HomeServices() {
           </div>
         </div>
 
-        <Button
-          size="small"
-          className="header-viewall-btn"
-          onClick={() => setShowAll(!showAll)}
-        >
-          {showAll ? "Show Less" : "View All"}
-        </Button>
+  <Button
+  size="small"
+  className="header-viewall-btn"
+  onClick={() => setShowAll(!showAll)}
+>
+  {showAll ? "Show Less" : "View All Services"}
+  </Button>
+
       </div>
 
       {/* GRID */}
