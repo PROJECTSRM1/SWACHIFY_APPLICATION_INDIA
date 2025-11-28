@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Card,
   Typography,
@@ -71,6 +71,7 @@ import solidImg from "../../../assets/CleaningServices/solidwh.png";
 import disposalImg from "../../../assets/CleaningServices/chemicalwh.png";
 import labImg from "../../../assets/CleaningServices/laboratory_cleaning.png";
 import cliniImg from "../../../assets/CleaningServices/clinic_image.png";
+
 import { useCart, type CartItem } from "../../../context/CartContext";
 
 const { Title, Paragraph } = Typography;
@@ -135,7 +136,6 @@ const PRICE_PER_SQFT: Record<string, number> = {
 const getPricePerSqft = (moduleTitle: string): number => {
   const key = moduleTitle.toLowerCase().trim();
   if (PRICE_PER_SQFT[key] != null) return PRICE_PER_SQFT[key];
-
   if (key.includes("living")) return 1.5;
   if (key.includes("bedroom")) return 1.2;
   if (key.includes("kitchen")) return 2.5;
@@ -151,7 +151,6 @@ const getPricePerSqft = (moduleTitle: string): number => {
   if (key.includes("paint")) return 3.0;
   if (key.includes("assembly") || key.includes("production")) return 3.5;
   if (key.includes("warehouse")) return 2.0;
-
   return 1.8;
 };
 
@@ -173,10 +172,10 @@ const formatINR = (value: number | null) => {
   return `₹ ${value.toLocaleString("en-IN")}`;
 };
 
+/* ------------------ Component ------------------ */
 const CleaningService: React.FC = () => {
   const { addToCart } = useCart();
 
-  // keep modal states / selection states unchanged
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
   const [isModulesModalOpen, setIsModulesModalOpen] = useState(false);
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
@@ -197,25 +196,49 @@ const CleaningService: React.FC = () => {
     }
   }, [isDetailsModalOpen, selectedModule, form]);
 
+  const prevOverflowRef = useRef<string | null>(null);
+  useEffect(() => {
+    const anyOpen = isCategoryModalOpen || isModulesModalOpen || isDetailsModalOpen;
+    if (anyOpen) {
+      if (prevOverflowRef.current === null) prevOverflowRef.current = document.body.style.overflow || "";
+      document.body.style.overflow = "hidden";
+      return;
+    }
+    if (prevOverflowRef.current !== null) {
+      document.body.style.overflow = prevOverflowRef.current;
+      prevOverflowRef.current = null;
+    }
+    return;
+  }, [isCategoryModalOpen, isModulesModalOpen, isDetailsModalOpen]);
+
+  useEffect(() => {
+    return () => {
+      if (prevOverflowRef.current !== null) {
+        document.body.style.overflow = prevOverflowRef.current;
+        prevOverflowRef.current = null;
+      }
+    };
+  }, []);
+
   const categories = [
     {
       key: "residential",
       title: "Residential Cleaning",
-      desc: "Complete cleaning solutions for homes, apartments, and villas",
+      desc: "Complete cleaning service solutions for homes, apartments, and villas",
       image: residentialImg,
       count: 13,
     },
     {
       key: "commercial",
       title: "Commercial Cleaning",
-      desc: "Professional cleaning for offices, schools, and commercial spaces",
+      desc: "Professional cleaning  service for offices, schools, and commercial spaces",
       image: commercialImg,
       count: 11,
     },
     {
       key: "specialized",
       title: "Specialized Cleaning",
-      desc: "Expert cleaning for furniture, floors, windows, and sanitization",
+      desc: "Expert cleaning service for furniture, floors, windows, and sanitization",
       image: specializedImg,
       count: 12,
     },
@@ -349,7 +372,6 @@ const CleaningService: React.FC = () => {
 
   const getFieldConfig = (title: string) => {
     const lower = title.toLowerCase();
-
     const config = {
       bedrooms: false,
       bathrooms: false,
@@ -358,51 +380,42 @@ const CleaningService: React.FC = () => {
       preferredDate: true,
       instructions: true,
     };
-
     if (lower.includes("living room")) {
       config.sqft = true;
       return config;
     }
-
     if (lower.includes("bedroom")) {
       config.bedrooms = true;
       config.sqft = true;
       return config;
     }
-
     if (lower.includes("kitchen")) {
       config.sqft = true;
       return config;
     }
-
     if (lower.includes("bathroom")) {
       config.bathrooms = true;
       config.sqft = true;
       return config;
     }
-
     if (lower.includes("studio")) {
       config.sqft = true;
       return config;
     }
-
     if (lower.includes("1 bhk") || lower.includes("2 bhk") || lower.includes("3 bhk") || lower.includes("2 bhk / 3 bhk") || lower.includes("1 bhk apartment") || lower.match(/\b\d+\s*bhk/)) {
       config.bedrooms = true;
       config.sqft = true;
       return config;
     }
-
     if (lower.includes("villa")) {
       config.bedrooms = true;
       config.sqft = true;
       return config;
     }
-
     if (lower.includes("cab") || lower.includes("workstation") || lower.includes("conference") || lower.includes("shop") || lower.includes("mall") || lower.includes("warehouse") || lower.includes("assembly") || lower.includes("production")) {
       config.sqft = true;
       return config;
     }
-
     config.sqft = true;
     return config;
   };
@@ -429,27 +442,22 @@ const CleaningService: React.FC = () => {
       setComputedPrice(null);
       return;
     }
-
     const sqftValRaw = values?.propertySize;
     let sqft = 0;
     if (typeof sqftValRaw === "number") sqft = sqftValRaw;
     else if (typeof sqftValRaw === "string") sqft = parseFloat(sqftValRaw || "0") || 0;
-
     if (!sqft || sqft <= 0) {
       setComputedPrice(null);
       return;
     }
-
     const serviceTypeKey = (values?.serviceType as string) || "standard";
     const addons: string[] = values?.additional || [];
-
     const total = calculatePrice(selectedModule.title, sqft, serviceTypeKey, addons);
     setComputedPrice(total);
   };
 
   const onAddToCart = (values: any) => {
     if (!selectedModule) return;
-
     const cartItem: CartItem = {
       id: Date.now(),
       title: selectedModule.title,
@@ -464,41 +472,26 @@ const CleaningService: React.FC = () => {
       address: "",
       instructions: values?.instructions || "",
     };
-
     addToCart(cartItem);
-
     message.success(
       `${selectedModule.title} added to cart — ${formatINR(computedPrice || 0)}`
     );
-
     setIsDetailsModalOpen(false);
   };
 
   const handleDetailsCancel = () => {
     setIsDetailsModalOpen(false);
-    if (selectedSubKey) {
-      setIsModulesModalOpen(true);
-    }
+    if (selectedSubKey) setIsModulesModalOpen(true);
   };
 
-  // ALWAYS show all categories (all 5)
   const visibleCategories = categories;
   const modulesForSelected = modulesBySubKey[selectedSubKey] || [];
 
   return (
     <div className="page-wrapper">
       <div className="cs-container">
-        {/* HEADER REMOVED - only cards will display */}
 
-        <div
-          className="main-cards-grid"
-          style={{
-            // keep scroll on the page if many cards (optional)
-            maxHeight: "75vh",
-            overflowY: "auto",
-            paddingRight: 12,
-          }}
-        >
+        <div className="main-cards-grid" style={{ paddingRight: 12 }}>
           <div className="main-row">
             {visibleCategories.map((cat) => (
               <div className="main-col" key={cat.key}>
@@ -525,7 +518,6 @@ const CleaningService: React.FC = () => {
           </div>
         </div>
 
-        {/* Category modal (keeps default X close icon only) */}
         <Modal
           title={<div className="modal-title-row"><div className="modal-title-text">{categories.find(c => c.key === selectedMainKey)?.title || "Category"}</div></div>}
           open={isCategoryModalOpen}
@@ -534,17 +526,33 @@ const CleaningService: React.FC = () => {
           width={920}
           centered
           wrapClassName="no-h-scroll-modal"
-          // ensure only default close icon is shown
           closable
         >
           <div className="subservices-row">
             {(subservicesByMain[selectedMainKey] || []).map((s) => (
               <div className="subservices-col" key={s.key}>
-                <Card className="subservice-card" hoverable onClick={() => openSubservice(s.key)}>
+                <Card
+                  className="subservice-card"
+                  hoverable
+                  onClick={() => openSubservice(s.key)}
+                >
                   <img src={s.image} alt={s.title} className="subservice-img" />
                   <div className="subservice-card-body">
                     <Title level={5} className="subservice-card-title">{s.title}</Title>
-                    <Paragraph className="subservice-card-desc">Click to view {s.title.toLowerCase()} services</Paragraph>
+                    {/* <Paragraph className="subservice-card-desc">Click to view {s.title.toLowerCase()} services</Paragraph> */}
+
+                    {/* visible View Details button (prevents double event) */}
+                    <div style={{ marginTop: 12, display: "flex", justifyContent: "center" }}>
+                      <Button
+                        className="black-btn"
+                        onClick={(e) => {
+                          e.stopPropagation(); 
+                          openSubservice(s.key);
+                        }}
+                      >
+                        View Details
+                      </Button>
+                    </div>
                   </div>
                 </Card>
               </div>
@@ -552,7 +560,7 @@ const CleaningService: React.FC = () => {
           </div>
         </Modal>
 
-        {/* Modules modal */}
+        {/* MODULES MODAL */}
         <Modal
           title={<div className="modal-title-row"><div className="modal-title-text">{selectedSubKey ? `${selectedSubKey.charAt(0).toUpperCase() + selectedSubKey.slice(1)} Services` : "Services"}</div></div>}
           open={isModulesModalOpen}
@@ -588,7 +596,7 @@ const CleaningService: React.FC = () => {
           </div>
         </Modal>
 
-        {/* Details modal */}
+        {/* DETAILS MODAL */}
         <Modal
           title={<div className="details-modal-title-row"><div className="details-modal-title-text">{selectedModule?.title}</div></div>}
           open={isDetailsModalOpen}
@@ -704,10 +712,7 @@ const CleaningService: React.FC = () => {
                             className="full-width-datepicker"
                           >
                             <div className="tf-field">
-                              <input
-                                type="date"
-                                className="custom-date-input"
-                              />
+                              <input type="date" className="custom-date-input" />
                             </div>
                           </Form.Item>
                         )}

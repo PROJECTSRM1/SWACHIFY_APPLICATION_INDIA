@@ -4,7 +4,7 @@
   width: 100%;
   max-width: 1350px;
   margin: 0 auto;
-  padding: 20px 28px;
+  padding: 20px 0px;
   box-sizing: border-box;
 }
 
@@ -171,8 +171,9 @@ h4.main-card-title {
 }
 
 .subservice-card-body {
-  padding: 10px;
+  padding: -100px;
   text-align: center;
+  margin-top: 0px;
 }
 .subservice-card-title {
   margin-bottom: 6px !important;
