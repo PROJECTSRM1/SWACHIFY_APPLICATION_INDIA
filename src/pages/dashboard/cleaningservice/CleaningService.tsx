@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import {
   Card,
@@ -9,17 +8,13 @@ import {
   Select,
   Input,
   InputNumber,
- // Checkbox,
- // DatePicker,
   message,
 } from "antd";
-// import { ThunderboltFilled } from "@ant-design/icons";
 import "./CleaningService.css";
 
 import residentialImg from "../../../assets/CleaningServices/resi.png";
 import commercialImg from "../../../assets/CleaningServices/office_cleaning.png";
 import specializedImg from "../../../assets/CleaningServices/spec.png";
-// import residentialImg from "../../../assets/CleaningServices/resi.png";
 import postImg from "../../../assets/CleaningServices/const.jpg";
 import industrialImg from "../../../assets/CleaningServices/indus.jpg";
 import homeImg from "../../../assets/CleaningServices/residencial_cleaning.jpg";
@@ -78,7 +73,6 @@ import labImg from "../../../assets/CleaningServices/laboratory_cleaning.png";
 import cliniImg from "../../../assets/CleaningServices/clinic_image.png";
 import { useCart, type CartItem } from "../../../context/CartContext";
 
-
 const { Title, Paragraph } = Typography;
 const { TextArea } = Input;
 const { Option } = Select;
@@ -86,7 +80,7 @@ const { Option } = Select;
 type Module = {
   title: string;
   desc: string;
-  price: string; 
+  price: string;
   image: string;
 };
 
@@ -111,34 +105,27 @@ const PRICE_PER_SQFT: Record<string, number> = {
   "bedroom cleaning": 1.2,
   "kitchen cleaning": 2.5,
   "bathroom cleaning": 2.0,
-
   "studio apartment": 1.8,
   "1 bhk apartment": 1.75,
   "2 bhk / 3 bhk apartment": 1.65,
-
   "small villas": 2.8,
   "duplex villas": 3.0,
   "luxury villas": 3.5,
-
   "cabin cleaning": 2.5,
   "workstation cleaning": 2.2,
   "conference hall cleaning": 2.0,
-
   "classrooms": 1.7,
   "laboratory cleaning": 2.2,
   "library cleaning": 1.7,
-
   "shop cleaning": 2.5,
   "mall cleaning": 3.0,
   "showroom cleaning": 2.5,
-
   "marble polishing": 4.0,
   "granite polishing": 4.0,
   "indoor dust removal": 2.5,
   "outdoor dust removal": 2.5,
   "paint stain from tiles": 3.0,
   "paint stain from windows": 3.0,
-
   "assembly area cleaning": 3.5,
   "production line cleaning": 4.0,
   "warehouse rack cleaning": 2.0,
@@ -165,7 +152,7 @@ const getPricePerSqft = (moduleTitle: string): number => {
   if (key.includes("assembly") || key.includes("production")) return 3.5;
   if (key.includes("warehouse")) return 2.0;
 
-  return 1.8; 
+  return 1.8;
 };
 
 const calculatePrice = (
@@ -186,14 +173,10 @@ const formatINR = (value: number | null) => {
   return `₹ ${value.toLocaleString("en-IN")}`;
 };
 
-/* ------------------------------------------------ */
-
 const CleaningService: React.FC = () => {
-
   const { addToCart } = useCart();
 
-  const [showAll, setShowAll] = useState(false);
-
+  // keep modal states / selection states unchanged
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
   const [isModulesModalOpen, setIsModulesModalOpen] = useState(false);
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
@@ -207,14 +190,12 @@ const CleaningService: React.FC = () => {
   const [form] = Form.useForm();
 
   useEffect(() => {
-   
     if (isDetailsModalOpen && selectedModule) {
       form.resetFields();
       form.setFieldsValue({ serviceType: "standard", additional: [] });
       setComputedPrice(null);
     }
-    
-  }, [isDetailsModalOpen, selectedModule]);
+  }, [isDetailsModalOpen, selectedModule, form]);
 
   const categories = [
     {
@@ -238,7 +219,7 @@ const CleaningService: React.FC = () => {
       image: specializedImg,
       count: 12,
     },
-     {
+    {
       key: "industrial",
       title: "Industrial Cleaning",
       desc: "Heavy-duty cleaning for factories, warehouses, and industrial facilities",
@@ -252,7 +233,6 @@ const CleaningService: React.FC = () => {
       image: postImg,
       count: 8,
     },
-   
   ];
 
   const subservicesByMain: Record<string, { key: string; title: string; image: string }[]> = {
@@ -318,7 +298,6 @@ const CleaningService: React.FC = () => {
     ],
     clinics: [
       { title: "Laboratory Cleaning", desc: "Specialized cleaning for labs", price: "₹99", image: labImg },
-
       { title: "Clinic Cleaning", desc: "Medical-grade cleaning for clinics", price: "₹149", image: cliniImg },
       { title: "Diagnostic Centers", desc: "Specialized cleaning for diagnostic facilities", price: "₹169", image: diagImg },
     ],
@@ -409,14 +388,12 @@ const CleaningService: React.FC = () => {
 
     if (lower.includes("1 bhk") || lower.includes("2 bhk") || lower.includes("3 bhk") || lower.includes("2 bhk / 3 bhk") || lower.includes("1 bhk apartment") || lower.match(/\b\d+\s*bhk/)) {
       config.bedrooms = true;
-      //config.bathrooms = true;
       config.sqft = true;
       return config;
     }
 
     if (lower.includes("villa")) {
       config.bedrooms = true;
-     // config.bathrooms = true;
       config.sqft = true;
       return config;
     }
@@ -445,7 +422,6 @@ const CleaningService: React.FC = () => {
     setSelectedModule(m);
     setIsModulesModalOpen(false);
     setIsDetailsModalOpen(true);
-   
   };
 
   const computeTotal = (values: any) => {
@@ -460,7 +436,6 @@ const CleaningService: React.FC = () => {
     else if (typeof sqftValRaw === "string") sqft = parseFloat(sqftValRaw || "0") || 0;
 
     if (!sqft || sqft <= 0) {
-      
       setComputedPrice(null);
       return;
     }
@@ -472,34 +447,32 @@ const CleaningService: React.FC = () => {
     setComputedPrice(total);
   };
 
- const onAddToCart = (values: any) => {
-  if (!selectedModule) return;
+  const onAddToCart = (values: any) => {
+    if (!selectedModule) return;
 
-  const cartItem: CartItem = {
-    id: Date.now(),
-    title: selectedModule.title,
-    image: selectedModule.image,
-    quantity: 1,
-    price: selectedModule.price,
-    totalPrice: computedPrice ?? 0,
+    const cartItem: CartItem = {
+      id: Date.now(),
+      title: selectedModule.title,
+      image: selectedModule.image,
+      quantity: 1,
+      price: selectedModule.price,
+      totalPrice: computedPrice ?? 0,
+      customerName: "",
+      deliveryType: "",
+      deliveryDate: "",
+      contact: "",
+      address: "",
+      instructions: values?.instructions || "",
+    };
 
-    customerName: "",
-    deliveryType: "",
-    deliveryDate: "",
-    contact: "",
-    address: "",
-    instructions: values?.instructions || "",
+    addToCart(cartItem);
+
+    message.success(
+      `${selectedModule.title} added to cart — ${formatINR(computedPrice || 0)}`
+    );
+
+    setIsDetailsModalOpen(false);
   };
-
-  addToCart(cartItem);
-
-  message.success(
-    `${selectedModule.title} added to cart — ${formatINR(computedPrice || 0)}`
-  );
-
-  setIsDetailsModalOpen(false);
-};
-
 
   const handleDetailsCancel = () => {
     setIsDetailsModalOpen(false);
@@ -508,302 +481,262 @@ const CleaningService: React.FC = () => {
     }
   };
 
-  const visibleCategories = showAll ? categories : categories.slice(0, 4);
+  // ALWAYS show all categories (all 5)
+  const visibleCategories = categories;
   const modulesForSelected = modulesBySubKey[selectedSubKey] || [];
 
   return (
     <div className="page-wrapper">
-    <div className="cs-container">
-    
-      <div className="cs-header">
-        <div className="cs-header-left">
-          {/* <div className="cs-icon">
-            <ThunderboltFilled className="cs-icon-inner" />
-          </div> */}
-          <div>
-            <Title level={3} className="cs-header-title">Cleaning Services</Title>
-            <p className="cs-header-sub">{categories.length} services available</p>
+      <div className="cs-container">
+        {/* HEADER REMOVED - only cards will display */}
+
+        <div
+          className="main-cards-grid"
+          style={{
+            // keep scroll on the page if many cards (optional)
+            maxHeight: "75vh",
+            overflowY: "auto",
+            paddingRight: 12,
+          }}
+        >
+          <div className="main-row">
+            {visibleCategories.map((cat) => (
+              <div className="main-col" key={cat.key}>
+                <Card className="main-card" hoverable>
+                  <div className="main-card-image-wrap">
+                    <img src={cat.image} alt={cat.title} className="main-card-image" />
+                  </div>
+
+                  <div className="main-card-body">
+                    <Title level={4} className="main-card-title">{cat.title}</Title>
+                    <Paragraph className="main-card-desc">{cat.desc}</Paragraph>
+                    <Button
+                      size="middle"
+                      type="primary"
+                      className="black-btn"
+                      onClick={() => openCategory(cat.key)}
+                    >
+                      View Details
+                    </Button>
+                  </div>
+                </Card>
+              </div>
+            ))}
           </div>
         </div>
 
-        <Button className="cs-top-button" onClick={() => setShowAll(!showAll)}>
-          {showAll ? "View Less" : "View All Services"}
-        </Button>
-      </div>
+        {/* Category modal (keeps default X close icon only) */}
+        <Modal
+          title={<div className="modal-title-row"><div className="modal-title-text">{categories.find(c => c.key === selectedMainKey)?.title || "Category"}</div></div>}
+          open={isCategoryModalOpen}
+          onCancel={() => setIsCategoryModalOpen(false)}
+          footer={null}
+          width={920}
+          centered
+          wrapClassName="no-h-scroll-modal"
+          // ensure only default close icon is shown
+          closable
+        >
+          <div className="subservices-row">
+            {(subservicesByMain[selectedMainKey] || []).map((s) => (
+              <div className="subservices-col" key={s.key}>
+                <Card className="subservice-card" hoverable onClick={() => openSubservice(s.key)}>
+                  <img src={s.image} alt={s.title} className="subservice-img" />
+                  <div className="subservice-card-body">
+                    <Title level={5} className="subservice-card-title">{s.title}</Title>
+                    <Paragraph className="subservice-card-desc">Click to view {s.title.toLowerCase()} services</Paragraph>
+                  </div>
+                </Card>
+              </div>
+            ))}
+          </div>
+        </Modal>
 
-      <div className="main-cards-grid">
-        <div className="main-row">
-          {visibleCategories.map((cat) => (
-            <div className="main-col" key={cat.key}>
-              <Card className="main-card" hoverable>
+        {/* Modules modal */}
+        <Modal
+          title={<div className="modal-title-row"><div className="modal-title-text">{selectedSubKey ? `${selectedSubKey.charAt(0).toUpperCase() + selectedSubKey.slice(1)} Services` : "Services"}</div></div>}
+          open={isModulesModalOpen}
+          onCancel={() => { setIsModulesModalOpen(false); setIsCategoryModalOpen(true); }}
+          footer={null}
+          width={1000}
+          centered
+          wrapClassName="no-h-scroll-modal"
+          closable
+        >
+          <div className={`modules-grid modules-count-${modulesForSelected.length}`} role="list">
+            {modulesForSelected.length ? modulesForSelected.map((m) => (
+              <Card key={m.title} className="module-card" hoverable role="listitem">
+                <img src={m.image} className="module-img" alt={m.title} />
+                <div className="module-content">
+                  <div className="module-title-center">
+                    <Title level={5} className="module-card-title">{m.title}</Title>
+                  </div>
 
-                <div className="main-card-image-wrap">
-                  <img src={cat.image} alt={cat.title} className="main-card-image" />
-                </div>
+                  <Paragraph className="module-desc">{m.desc}</Paragraph>
 
-                <div className="main-card-body">
-                  <Title level={4} className="main-card-title">{cat.title}</Title>
-                  <Paragraph className="main-card-desc">{cat.desc}</Paragraph>
-                      <Button 
-        size="middle"
-        type="primary"
-         className="black-btn"
-        onClick={() => openCategory(cat.key)}
-      >
-        View Details
-      </Button>
-                  
-                </div>
-              </Card>
-            </div>
-          ))}
-        </div>
-      </div>
-
-    <Modal
-        title={<div className="modal-title-row"><div className="modal-title-text">{categories.find(c => c.key === selectedMainKey)?.title || "Category"}</div></div>}
-        open={isCategoryModalOpen}
-        onCancel={() => setIsCategoryModalOpen(false)}
-        footer={null}
-        width={920}
-        centered
-        wrapClassName="no-h-scroll-modal"
-      >
-
-
-        <div className="subservices-row">
-          {(subservicesByMain[selectedMainKey] || []).map((s) => (
-            <div className="subservices-col" key={s.key}>
-              <Card className="subservice-card" hoverable onClick={() => openSubservice(s.key)}>
-                <img src={s.image} alt={s.title} className="subservice-img" />
-                <div className="subservice-card-body">
-                  <Title level={5} className="subservice-card-title">{s.title}</Title>
-                  {/* <Paragraph className="subservice-card-desc">Click to view {s.title.toLowerCase()} services</Paragraph> */}
-            <Button 
-  size="middle"
-  type="primary"
-  className="black-btn"
-  onClick={() => openSubservice(s.key)}
->
-  View Details
-</Button>
+                  <div className="module-footer">
+                    <div className="module-price">{m.price}</div>
+                    <Button size="small" type="primary" className="black-btn" onClick={(e) => { e.stopPropagation(); openModuleDetails(m); }}>
+                      View Details
+                    </Button>
+                  </div>
                 </div>
               </Card>
+            )) : (
+              <div className="empty-services"><Paragraph>No services found.</Paragraph></div>
+            )}
+          </div>
+        </Modal>
+
+        {/* Details modal */}
+        <Modal
+          title={<div className="details-modal-title-row"><div className="details-modal-title-text">{selectedModule?.title}</div></div>}
+          open={isDetailsModalOpen}
+          onCancel={handleDetailsCancel}
+          footer={null}
+          width={920}
+          centered
+          wrapClassName="no-h-scroll-modal"
+          closable
+        >
+          <div className="details-modal-body">
+            <div className="details-left">
+              <img src={selectedModule?.image} alt={selectedModule?.title} className="details-image" />
+              <Paragraph className="details-paragraph">{selectedModule?.desc}</Paragraph>
+
+              <div className="includes-block">
+                <div className="includes-title">What's Included</div>
+                <div className="include-item">• Surface dusting & wiping</div>
+                <div className="include-item">• Floor mopping / vacuum</div>
+                <div className="include-item">• Window wiping</div>
+              </div>
+
+              <div className="price-card">
+                <div className="price-card-label">Service Price</div>
+                <div className="price-card-value">{computedPrice ? formatINR(computedPrice) : (selectedModule?.price || "—")}</div>
+              </div>
             </div>
-          ))}
-        </div>
-      </Modal>
 
+            <div className="details-right">
+              <div className="details-section-title">Service Details</div>
 
-     
-      <Modal
-        title={<div className="modal-title-row"><div className="modal-title-text">{selectedSubKey ? `${selectedSubKey.charAt(0).toUpperCase() + selectedSubKey.slice(1)} Services` : "Services"}</div></div>}
-        open={isModulesModalOpen}
-        onCancel={() => {
-          setIsModulesModalOpen(false);
-          setIsCategoryModalOpen(true);
-        }}
-        footer={null}
-        width={1000}
-        centered
-        wrapClassName="no-h-scroll-modal"
-      >
-        <div className={`modules-grid modules-count-${modulesForSelected.length}`} role="list">
-          {modulesForSelected.length ? modulesForSelected.map((m) => (
-            <Card
-              key={m.title}
-              className="module-card"
-              hoverable
-              //onClick={() => openModuleDetails(m)}
-              role="listitem"
-            >
-              <img src={m.image} className="module-img" alt={m.title} />
-              <div className="module-content">
-                <div className="module-title-center">
-                  <Title level={5} className="module-card-title">{m.title}</Title>
-                </div>
+              <Form
+                form={form}
+                layout="vertical"
+                onFinish={onAddToCart}
+                initialValues={{ additional: [], serviceType: "standard" }}
+                onValuesChange={(_changed, allValues) => computeTotal(allValues)}
+              >
+                {selectedModule && (() => {
+                  const cfg = getFieldConfig(selectedModule.title);
 
-                <Paragraph className="module-desc">{m.desc}</Paragraph>
+                  return (
+                    <>
+                      {cfg.serviceType && (
+                        <Form.Item name="serviceType" label="Service Type" rules={[{ required: true, message: "Choose service type" }]}>
+                          <Select placeholder="Select service type" className="full-width-select">
+                            {selectedModule.title.toLowerCase().includes("room") || selectedModule.title.toLowerCase().includes("bedroom") ? (
+                              <>
+                                <Option value="standard">Regular cleaning</Option>
+                                <Option value="deep">Deep Cleaning</Option>
+                                <Option value="mattress">Move-in/Move-out Cleaning</Option>
+                              </>
+                            ) : selectedModule.title.toLowerCase().includes("kitchen") ? (
+                              <>
+                                <Option value="standard">Regular Cleaning</Option>
+                                <Option value="deep">Deep  Cleaning</Option>
+                                <Option value="grease">Move-in/Move-out</Option>
+                              </>
+                            ) : selectedModule.title.toLowerCase().includes("bathroom") ? (
+                              <>
+                                <Option value="sanitization">Sanitization</Option>
+                                <Option value="deep">Deep Bathroom Clean</Option>
+                              </>
+                            ) : (
+                              <>
+                                <Option value="standard">Regular Cleaning</Option>
+                                <Option value="deep">Deep Cleaning</Option>
+                                <Option value="move">Move-in / Move-out Cleaning</Option>
+                              </>
+                            )}
+                          </Select>
+                        </Form.Item>
+                      )}
 
-                <div className="module-footer">
-                  <div className="module-price">{m.price}</div>
-                  <Button size="small" type="primary" className="black-btn" onClick={(e) => { e.stopPropagation(); openModuleDetails(m); }}>
-                    View Details
+                      {cfg.sqft && (
+                        <Form.Item name="propertySize" label="Property Size (sq ft)" rules={[{ required: true, message: "Enter size" }]}>
+                          <Input placeholder="e.g., 1200" />
+                        </Form.Item>
+                      )}
+
+                      {(cfg.bedrooms || cfg.bathrooms) && (
+                        <div className="form-row">
+                          {cfg.bedrooms && (
+                            <Form.Item name="bedrooms" label="Number of Bedrooms" rules={[{ required: true }]}>
+                              <Select placeholder="Select">
+                                <Option value={0}>0</Option>
+                                <Option value={1}>1</Option>
+                                <Option value={2}>2</Option>
+                                <Option value={3}>3</Option>
+                                <Option value={4}>4+</Option>
+                              </Select>
+                            </Form.Item>
+                          )}
+
+                          {cfg.bathrooms && (
+                            <Form.Item name="bathrooms" label="Number of Bathrooms" rules={[{ required: true }]}>
+                              <Select placeholder="Select">
+                                <Option value={1}>1</Option>
+                                <Option value={2}>2</Option>
+                                <Option value={3}>3+</Option>
+                              </Select>
+                            </Form.Item>
+                          )}
+                        </div>
+                      )}
+
+                      <div className="form-row">
+                        {cfg.preferredDate && (
+                          <Form.Item
+                            name="preferredDate"
+                            label="Preferred Date"
+                            rules={[{ required: true, message: "Select a date" }]}
+                            className="full-width-datepicker"
+                          >
+                            <div className="tf-field">
+                              <input
+                                type="date"
+                                className="custom-date-input"
+                              />
+                            </div>
+                          </Form.Item>
+                        )}
+
+                        <Form.Item name="hours" label="Estimated Hours (optional)">
+                          <InputNumber min={1} className="full-width-inputnumber" />
+                        </Form.Item>
+                      </div>
+
+                      {cfg.instructions && (
+                        <Form.Item name="instructions" label="Special Instructions">
+                          <TextArea rows={3} placeholder="Any specific requirements..." />
+                        </Form.Item>
+                      )}
+                    </>
+                  );
+                })()}
+
+                <div className="details-actions">
+                  <Button onClick={handleDetailsCancel}>Cancel</Button>
+                  <Button type="primary" htmlType="submit" className="black-btn">
+                    Add to Cart
                   </Button>
                 </div>
-              </div>
-            </Card>
-          )) : (
-            <div className="empty-services">
-              <Paragraph>No services found.</Paragraph>
-            </div>
-          )}
-        </div>
-      </Modal>
-
-     
-      <Modal
-        title={<div className="details-modal-title-row"><div className="details-modal-title-text">{selectedModule?.title}</div></div>}
-        open={isDetailsModalOpen}
-        onCancel={handleDetailsCancel}
-        footer={null}
-        width={920}
-        centered
-        wrapClassName="no-h-scroll-modal"
-      >
-        <div className="details-modal-body">
-          <div className="details-left">
-            <img src={selectedModule?.image} alt={selectedModule?.title} className="details-image" />
-            <Paragraph className="details-paragraph">{selectedModule?.desc}</Paragraph>
-
-            <div className="includes-block">
-              <div className="includes-title">What's Included</div>
-              <div className="include-item">• Surface dusting & wiping</div>
-              <div className="include-item">• Floor mopping / vacuum</div>
-              <div className="include-item">• Window wiping</div>
-            </div>
-
-            <div className="price-card">
-              <div className="price-card-label">Service Price</div>
-              <div className="price-card-value">{computedPrice ? formatINR(computedPrice) : (selectedModule?.price || "—")}</div>
+              </Form>
             </div>
           </div>
-
-          <div className="details-right">
-            <div className="details-section-title">Service Details</div>
-
-            <Form
-              form={form}
-              layout="vertical"
-              onFinish={onAddToCart}
-              initialValues={{ additional: [], serviceType: "standard" }}
-              onValuesChange={(_changed, allValues) => computeTotal(allValues)}
-            >
-              {selectedModule && (() => {
-                const cfg = getFieldConfig(selectedModule.title);
-
-                return (
-                  <>
-                    {cfg.serviceType && (
-                      <Form.Item name="serviceType" label="Service Type" rules={[{ required: true, message: "Choose service type" }]}>
-                        <Select placeholder="Select service type" className="full-width-select">
-                          {selectedModule.title.toLowerCase().includes("room") || selectedModule.title.toLowerCase().includes("bedroom") ? (
-                            <>
-                              <Option value="standard">Regular cleaning</Option>
-                              <Option value="deep">Deep Cleaning</Option>
-                              <Option value="mattress">Move-in/Move-out Cleaning</Option>
-                            </>
-                          ) : selectedModule.title.toLowerCase().includes("kitchen") ? (
-                            <>
-                              <Option value="standard">Regular Cleaning</Option>
-                              <Option value="deep">Deep  Cleaning</Option>
-                              <Option value="grease">Move-in/Move-out</Option>
-                            </>
-                          ) : selectedModule.title.toLowerCase().includes("bathroom") ? (
-                            <>
-                              <Option value="sanitization">Sanitization</Option>
-                              <Option value="deep">Deep Bathroom Clean</Option>
-                            </>
-                          ) : (
-                            <>
-                              <Option value="standard">Regular Cleaning</Option>
-                              <Option value="deep">Deep Cleaning</Option>
-                              <Option value="move">Move-in / Move-out Cleaning</Option>
-                              {/* <Option value="recurring">Recurring</Option>
-                              <Option value="sanitization">Sanitization</Option> */}
-                            </>
-                          )}
-                        </Select>
-                      </Form.Item>
-                    )}
-
-                    {cfg.sqft && (
-                      <Form.Item name="propertySize" label="Property Size (sq ft)" rules={[{ required: true, message: "Enter size" }]}>
-                        <Input placeholder="e.g., 1200" />
-                      </Form.Item>
-                    )}
-
-                    {(cfg.bedrooms || cfg.bathrooms) && (
-                      <div className="form-row">
-                        {cfg.bedrooms && (
-                          <Form.Item name="bedrooms" label="Number of Bedrooms" rules={[{ required: true }]}>
-                            <Select placeholder="Select">
-                              <Option value={0}>0</Option>
-                              <Option value={1}>1</Option>
-                              <Option value={2}>2</Option>
-                              <Option value={3}>3</Option>
-                              <Option value={4}>4+</Option>
-                            </Select>
-                          </Form.Item>
-                        )}
-
-                        {cfg.bathrooms && (
-                          <Form.Item name="bathrooms" label="Number of Bathrooms" rules={[{ required: true }]}>
-                            <Select placeholder="Select">
-                              <Option value={1}>1</Option>
-                              <Option value={2}>2</Option>
-                              <Option value={3}>3+</Option>
-                            </Select>
-                          </Form.Item>
-                        )}
-                      </div>
-                    )}
-
-                    {/* <Form.Item name="additional" label="Additional Services">
-                      <Checkbox.Group>
-                        <div className="checkbox-grid">
-                          <Checkbox value="window">Window Cleaning (₹100)</Checkbox>
-                          <Checkbox value="balcony">Balcony Cleaning (₹150)</Checkbox>
-                          <Checkbox value="carpet">Carpet Cleaning (₹200)</Checkbox>
-                          {selectedModule.title.toLowerCase().includes("kitchen") && <Checkbox value="oven">Oven Cleaning (₹300)</Checkbox>}
-                        </div>
-                      </Checkbox.Group>
-                    </Form.Item> */}
-
-                    <div className="form-row">
-                    {cfg.preferredDate && (
-  <Form.Item
-    name="preferredDate"
-    label="Preferred Date"
-    rules={[{ required: true, message: "Select a date" }]}
-    className="full-width-datepicker"
-  >
-    <div className="tf-field">
-      <input
-        type="date"
-        className="custom-date-input"
-      />
-    </div>
-  </Form.Item>
-)}
-
-
-                      <Form.Item name="hours" label="Estimated Hours (optional)">
-                        <InputNumber min={1} className="full-width-inputnumber" />
-                      </Form.Item>
-                    </div>
-
-                    {cfg.instructions && (
-                      <Form.Item name="instructions" label="Special Instructions">
-                        <TextArea rows={3} placeholder="Any specific requirements..." />
-                      </Form.Item>
-                    )}
-                  </>
-                );
-              })()}
-
-              <div className="details-actions">
-                <Button onClick={handleDetailsCancel}>Cancel</Button>
-                <Button type="primary" htmlType="submit" className="black-btn">
-  Add to Cart
-</Button>
-
-              </div>
-            </Form>
-          </div>
-        </div>
-      </Modal>
-    </div>
+        </Modal>
+      </div>
     </div>
   );
 };
