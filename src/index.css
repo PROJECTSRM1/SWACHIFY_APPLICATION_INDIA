@@ -1614,4 +1614,590 @@ html, body {
   color: indigo !important;
 }
 
-/* ///////////// Vamsi Construction Materials ///// */
+/* ///////////// Vamsi Packers and Movers ///// */
+
+/* Packersandmovers.css (cleaned single copy) */
+/* Force AntD card body padding to 0 so our layout inside cards is exact */
+:where(.css-dev-only-do-not-override-198drv2).ant-card .ant-card-body {
+  padding: 0 !important;
+}
+/* ---------------- container ---------------- */
+.sw-pm-container {
+  width: 100%;
+  max-width: 1200px; /* compact */
+  margin: 0 auto;
+  padding: 0 14px;
+  box-sizing: border-box;
+}
+/* ---------- hero ---------- */
+.sw-pm-hero {
+  margin-left: 52px;
+  margin-right: 52px;
+}
+.sw-pm-hero-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px;
+  background: #005cfa;
+  border-radius: 6px; /* reduced radius (smaller) */
+  color: #fff;
+}
+.sw-pm-hero-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+.sw-pm-hero-sub {
+  margin: 4px 0 0;
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 13px;
+}
+/* ---------- cards ---------- */
+.sw-pm-main {
+  width: 95%;
+  margin: 18px;
+  margin-left: 30px;
+  margin-right: 20px;
+}
+.sw-pm-cards-wrapper {
+  width: 100%;
+}
+/* Make columns flex so cards stretch to equal height */
+.ant-row > .ant-col[style*="display: flex"] {
+  display: flex;
+}
+/* Fixed card height so all cards equal size */
+.sw-pm-card {
+  border-radius: 4px; /* smaller radius */
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(20, 20, 20, 0.06);
+  border: 1px solid #f0f0f0;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  height: 340px; /* kept */
+  max-width: 260px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+/* image fixed height */
+.sw-pm-card-image {
+  width: 100%;
+  height: 150px; /* keep image height */
+  object-fit: cover;
+  display: block;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+/* body takes remaining space - ZERO padding so we control spacing exactly */
+.sw-pm-card-body {
+  padding: 0 !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+  box-sizing: border-box;
+}
+/* title/subtitle clamp to avoid growth and center them */
+.sw-pm-card-title {
+  margin: 12px 12px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #173648;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+}
+.sw-pm-card-sub {
+  margin: 8px 12px 0;
+  color: #6b7785;
+  font-size: 13px;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+}
+/* footer pinned to bottom of card
+   Center alignment so View Details appears centered.
+*/
+.sw-pm-card-footer {
+  padding: 10px 12px;      /* internal spacing */
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center; /* center contents horizontally */
+  box-sizing: border-box;
+  width: 100%;
+  margin-top: auto;
+  position: relative;      /* allows absolute positioning if needed later */
+}
+/* Price stays to the left if visible; absolute so it doesn't push button */
+.sw-pm-price {
+  color: #2b6cff;
+  font-weight: 600;
+  font-size: 15px;
+  white-space: nowrap;
+  margin-right: 8px;
+  flex: 0 0 auto;
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+/* View Details button: centered, full visual width with small gutters, slightly reduced height (40px) */
+.sw-pm-view-btn {
+  flex: 0 0 auto;
+  width: calc(100% - 28px);  /* leave small in-card gutters */
+  max-width: 100%;
+  height: 40px;              /* requested height */
+  margin: 12px auto 0;       /* top margin effective (12px) */
+  background: #000 !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 4px !important; /* reduced radius */
+  padding: 0 16px !important;    /* horizontal padding only */
+  font-size: 15px;
+  font-weight: 700;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+  cursor: pointer;
+  transition: transform 140ms ease, box-shadow 140ms ease, opacity 140ms ease;
+  box-sizing: border-box;
+}
+.sw-pm-view-btn span,
+.sw-pm-view-btn > * {
+  display: inline-block;
+  line-height: normal;
+}
+.sw-pm-view-btn:hover,
+.sw-pm-view-btn:focus {
+  transform: translateY(-2px);
+  opacity: 0.98;
+  box-shadow: 0 10px 22px rgba(0,0,0,0.14);
+}
+/* ---------- full-screen modal overlay (unchanged except radii) ---------- */
+.sw-pm-fullscreen-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(12, 16, 23, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5000;
+  padding: 30px;
+}
+.sw-pm-fullscreen-inner {
+  width: min(1200px, 98%);
+  max-height: 92vh;
+  background: #fff;
+  border-radius: 4px;
+  overflow: auto;
+  box-shadow: 0 24px 64px rgba(8, 12, 20, 0.4);
+  outline: none;
+  display: flex;
+  flex-direction: column;
+}
+.sw-pm-fullscreen-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 18px;
+  border-bottom: 1px solid #f2f4f7;
+}
+.sw-pm-fullscreen-header h2 {
+  margin: 0;
+  font-size: 20px;
+}
+.sw-pm-fullscreen-close {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: #111;
+}
+/* Modal body and grid */
+.sw-pm-fullscreen-body {
+  padding: 16px 18px 24px;
+}
+.sw-pm-fullscreen-images {
+  width: 100%;
+}
+.sw-pm-fullscreen-card {
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 8px 26px rgba(20, 20, 20, 0.06);
+  border: 1px solid #f0f0f0;
+  background: #fff;
+}
+.sw-pm-fullscreen-card-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+/* fullscreen card body */
+.sw-pm-fullscreen-card-body {
+  padding: 12px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.sw-pm-fullscreen-card-title {
+  font-weight: 600;
+  color: #173648;
+}
+.sw-pm-fullscreen-card-sub {
+  color: #6b7785;
+  font-size: 13px;
+  margin-top: 6px;
+}
+.sw-pm-fullscreen-card-actions {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+}
+/* Book Now button style: default previously green; user requested black/white match */
+.sw-pm-book-btn,
+.sw-pm-book-btn.ant-btn {
+  background: #000 !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 4px !important;
+  padding: 8px 14px !important;
+  font-weight: 700 !important;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.12) !important;
+  transition: transform 120ms ease, box-shadow 120ms ease, opacity 120ms ease;
+}
+.sw-pm-book-btn:hover,
+.sw-pm-book-btn:focus,
+.sw-pm-book-btn:active,
+.sw-pm-book-btn.ant-btn:hover,
+.sw-pm-book-btn.ant-btn:focus,
+.sw-pm-book-btn.ant-btn:active {
+  background: #000 !important;
+  color: #fff !important;
+  border-color: #000 !important;
+  box-shadow: 0 10px 26px rgba(0,0,0,0.14) !important;
+  transform: translateY(-2px) !important;
+  outline: none !important;
+}
+/* ---------- booking form modal ---------- */
+.sw-pm-form-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(12, 16, 23, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 6000;
+  padding: 18px;
+}
+.sw-pm-form-inner {
+  width: min(980px, 98%);
+  max-height: 94vh;
+  overflow: auto; /* keep scrolling behavior */
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.4);
+  position: relative; /* allow banner positioning */
+}
+/* Banner: hidden by default, shown when .visible is applied */
+.sw-pm-confirm-top {
+  position: sticky;        /* sticks to top of the scrolling modal */
+  top: 0;
+  left: 0;
+  right: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: rgba(20, 184, 120, 0.12);
+  border-bottom: 1px solid rgba(20, 184, 120, 0.28);
+  z-index: 40;
+}
+.sw-pm-confirm-top.visible {
+  display: flex;
+}
+.sw-pm-confirm-top-inner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.sw-pm-confirm-top-text {
+  font-weight: 700;
+  color: #0b4f3a;
+  font-size: 15px;
+}
+.sw-pm-form-inner.has-banner .sw-pm-form-body {
+  margin-top: 56px; /* adjust if banner height changes */
+}
+.sw-pm-form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  border-bottom: 1px solid #f2f4f7;
+}
+.sw-pm-form-header h3 {
+  margin: 0;
+  font-size: 18px;
+}
+.sw-pm-form-body {
+  display: flex;
+  gap: 18px;
+  padding: 18px;
+  align-items: flex-start;
+}
+/* left column */
+.sw-pm-form-left {
+  width: 36%;
+  min-width: 220px;
+}
+.sw-pm-form-image {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 4px;
+  display: block;
+}
+.sw-pm-form-desc {
+  color: #6b7785;
+  margin: 10px 0 12px;
+}
+.sw-pm-included h4 {
+  margin: 0 0 8px;
+  font-size: 15px;
+}
+.sw-pm-included ul {
+  padding-left: 16px;
+  margin: 0 0 12px;
+  color: #235;
+}
+.sw-pm-included li {
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+/* price box */
+.sw-pm-price-box {
+  margin-top: 10px;
+  padding: 12px;
+  background: #f6fbff;
+  border-radius: 4px;
+  border: 1px solid #eef6ff;
+}
+.sw-pm-price-label {
+  font-size: 13px;
+  color: #6b7785;
+  margin-bottom: 6px;
+}
+.sw-pm-price-value {
+  font-weight: 700;
+  color: #0d47a1;
+  font-size: 16px;
+}
+/* right column: form */
+.sw-pm-form-right {
+  width: calc(64% - 18px);
+}
+.sw-pm-form-right .ant-form-item {
+  margin-bottom: 10px;
+}
+/* Replace original hover rule that turned button white.
+   Keep form action buttons black & white in all states. */
+.sw-pm-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 12px 0 24px;
+}
+.sw-pm-form-actions button,
+.sw-pm-form-actions .ant-btn {
+  background: #000 !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 4px !important;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.12) !important;
+  padding: 8px 14px !important;
+  font-weight: 600;
+  transition: transform 140ms ease, box-shadow 140ms ease, opacity 140ms ease;
+}
+.sw-pm-form-actions button:hover,
+.sw-pm-form-actions button:focus,
+.sw-pm-form-actions button:active,
+.sw-pm-form-actions .ant-btn:hover,
+.sw-pm-form-actions .ant-btn:focus,
+.sw-pm-form-actions .ant-btn:active {
+  background: #000 !important;
+  color: #fff !important;
+  border-color: #000 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 10px 26px rgba(0,0,0,0.14) !important;
+  outline: none !important;
+}
+.sw-pm-addcart-btn {
+  background: #000 !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 4px !important;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.12) !important;
+  padding: 8px 16px !important;
+  font-weight: 700 !important;
+  transition: transform 140ms ease, box-shadow 140ms ease, opacity 140ms ease;
+}
+.sw-pm-addcart-btn:hover,
+.sw-pm-addcart-btn:focus,
+.sw-pm-addcart-btn:active,
+.sw-pm-addcart-btn.ant-btn:hover,
+.sw-pm-addcart-btn.ant-btn:focus,
+.sw-pm-addcart-btn.ant-btn:active {
+  background: #000 !important;
+  color: #fff !important;
+  border-color: #000 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 10px 26px rgba(0,0,0,0.14) !important;
+  outline: none !important;
+}
+.sw-pm-form-actions .ant-btn:not(.sw-pm-addcart-btn) {
+  background: #000 !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 4px !important;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.08) !important;
+  padding: 8px 14px !important;
+  font-weight: 600;
+  transition: transform 140ms ease, box-shadow 140ms ease, opacity 140ms ease;
+}
+.sw-pm-book-btn:hover,
+.sw-pm-book-btn:focus,
+.sw-pm-book-btn:active,
+.sw-pm-addcart-btn:hover,
+.sw-pm-addcart-btn:focus,
+.sw-pm-addcart-btn:active,
+.sw-pm-form-actions .ant-btn:not(.sw-pm-addcart-btn):hover,
+.sw-pm-form-actions .ant-btn:not(.sw-pm-addcart-btn):focus {
+  transform: translateY(-2px);
+  opacity: 0.96;
+  box-shadow: 0 10px 22px rgba(0,0,0,0.16) !important;
+}
+.sw-pm-book-btn .anticon,
+.sw-pm-addcart-btn .anticon,
+.sw-pm-form-actions .ant-btn:not(.sw-pm-addcart-btn) .anticon,
+.sw-pm-view-btn .anticon {
+  color: inherit !important;
+}
+/* ---------- picker / dropdown z-index fixes (important) ---------- */
+.ant-picker-dropdown,
+.rc-picker-panel,
+.ant-select-dropdown,
+.ant-time-picker-panel,
+.ant-picker-dropdown-placement-bottomLeft,
+.ant-picker-dropdown-placement-bottomRight {
+  z-index: 16000 !important;
+}
+/* ---------- responsive ---------- */
+@media (max-width: 1200px) {
+  .sw-pm-card {
+    height: 340px;
+    max-width: 240px;
+  }
+  .sw-pm-card-image {
+    height: 150px;
+  }
+}
+@media (max-width: 1024px) {
+  .sw-pm-card {
+    height: 340px;
+    max-width: 230px;
+  }
+  .sw-pm-card-image {
+    height: 140px;
+  }
+  .sw-pm-form-body {
+    flex-direction: column;
+  }
+  .sw-pm-form-left,
+  .sw-pm-form-right {
+    width: 100%;
+  }
+  .sw-pm-form-left {
+    min-width: auto;
+  }
+}
+@media (max-width: 768px) {
+  .sw-pm-fullscreen-inner {
+    width: 98%;
+    padding: 0;
+  }
+  .sw-pm-fullscreen-body {
+    padding: 12px;
+  }
+  .sw-pm-fullscreen-card-image {
+    height: 140px;
+  }
+  .sw-pm-hero-inner {
+    padding: 14px;
+  }
+  /* keep footer horizontal on tablets; button maintains height */
+  .sw-pm-view-btn {
+    height: 40px;
+    width: calc(100% - 28px);
+  }
+}
+@media (max-width: 576px) {
+  /* small screens: card footer stacks vertically for better touch targets */
+  .sw-pm-card {
+    height: auto;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .sw-pm-card-image {
+    height: 140px;
+  }
+  .sw-pm-card-body {
+    padding: 0 !important;
+  }
+  .sw-pm-card-footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    justify-content: center;
+    padding: 12px;
+  }
+  .sw-pm-view-btn {
+    width: 100% !important;
+    height: 38px; /* slight reduction on very small screens */
+    margin: 0; /* remove top margin when stacked */
+    border-radius: 4px !important;
+  }
+  .sw-pm-price {
+    left: 12px;
+    position: absolute;
+    top: 12px;
+    transform: none;
+  }
+  /* keep form buttons touch-friendly */
+  .sw-pm-book-btn,
+  .sw-pm-addcart-btn,
+  .sw-pm-form-actions .ant-btn:not(.sw-pm-addcart-btn) {
+    width: 100% !important;
+    height: 40px !important;
+  }
+}
+/* ensure no horizontal overflow */
+html,
+body,
+#root {
+  overflow-x: hidden;
+}
+
+/* ///////////// Vamsi Packers and Movers ///// */

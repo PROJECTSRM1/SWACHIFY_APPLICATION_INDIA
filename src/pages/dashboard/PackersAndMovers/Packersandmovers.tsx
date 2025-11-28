@@ -20,7 +20,7 @@ import {
   LogoutOutlined,
   CloseOutlined,
 } from "@ant-design/icons";
-import "./Packersandmovers.css";
+import "../../../index.css";
 // images (update paths as needed)
 import carRentalsImg from "../../../assets/passenger/Car Rentals.jpg";
 import cargoForwardingImg from "../../../assets/passenger/Cargo forwarding.jpg";
@@ -39,7 +39,6 @@ import { useNavigate } from "react-router-dom";
 import { useCart } from "../../../context/CartContext";
 const { Option } = Select;
 const { TextArea } = Input;
-
 /* helper placeholder */
 function makePlaceholder(text: string, bg = "#cfcfcf") {
   const w = 1000;
@@ -55,7 +54,6 @@ function makePlaceholder(text: string, bg = "#cfcfcf") {
   `;
   return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
 }
-
 /* Form schema typing */
 type FormField =
   | {
@@ -81,7 +79,6 @@ type CardItem = {
   color?: string;
   images?: CardImage[];
 };
-
 /* DATA (same as before) */
 const cardsData: CardItem[] = [
   {
@@ -230,7 +227,7 @@ const cardsData: CardItem[] = [
         formSchema: [
           { name: "pickup", label: "Pickup Address", type: "text", required: true },
           { name: "delivery", label: "Delivery Address", type: "text", required: true },
-          { name: "temperature", label: "Required Temperature (°C)", type: "number", required: true },
+          { name: "temperature", label: "Required Temperature (Â°C)", type: "number", required: true },
           { name: "weight", label: "Weight (kg)", type: "number" },
           { name: "date", label: "Preferred Date", type: "date" },
         ],
@@ -251,7 +248,6 @@ const cardsData: CardItem[] = [
     ],
   },
 ];
-
 const Packersandmovers: React.FC = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [groupIndex, setGroupIndex] = useState<number | null>(null);
@@ -270,7 +266,6 @@ const Packersandmovers: React.FC = () => {
   // <-- ADDED: cart + navigate hooks (keeps your context API unchanged) -->
   const { addToCart } = useCart();
   const navigate = useNavigate();
-
   // Keep body scroll locked when either modal is open.
   const lockBodyScroll = () => {
     document.body.style.overflow = "hidden";
@@ -278,7 +273,6 @@ const Packersandmovers: React.FC = () => {
   const unlockBodyScroll = () => {
     document.body.style.overflow = "";
   };
-
   // open group modal
   const openGroupModal = (idx: number) => {
     previouslyFocused.current = document.activeElement as HTMLElement | null;
@@ -289,12 +283,11 @@ const Packersandmovers: React.FC = () => {
   };
   const closeGroupModal = () => {
     setGroupIndex(null);
-    // restore body scroll — if bookingOpen is also open we should keep locked,
+    // restore body scroll â€” if bookingOpen is also open we should keep locked,
     // but group modal is only visible when bookingOpen is false, so it's safe to unlock.
     if (!bookingOpen) unlockBodyScroll();
     previouslyFocused.current?.focus();
   };
-
   // open booking form for submodule with groupIndex
   const openBookingForm = (img: CardImage, grpIndex: number) => {
     const key = `${grpIndex}-${img.title}`;
@@ -322,7 +315,6 @@ const Packersandmovers: React.FC = () => {
     // show booking form (group overlay will be hidden by render condition)
     setBookingOpen(true);
   };
-
   // Close booking form and reset fields
   const closeBookingForm = () => {
     // reset visible form fields whenever the booking modal is closed
@@ -338,7 +330,6 @@ const Packersandmovers: React.FC = () => {
     // In our UI group modal is hidden when bookingOpen is true; so it's safe to unlock.
     unlockBodyScroll();
   };
-
   // ESC / click-outside behavior
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
@@ -351,7 +342,7 @@ const Packersandmovers: React.FC = () => {
       // keep group overlay click-outside behavior only when booking form is NOT open
       if (groupIndex == null || bookingOpen) return;
       if (!groupOverlayRef.current) return;
-      const inner = groupOverlayRef.current.querySelector(".pm-fullscreen-inner");
+      const inner = groupOverlayRef.current.querySelector(".sw-pm-fullscreen-inner");
       if (inner && e.target instanceof Node && !inner.contains(e.target)) closeGroupModal();
     }
     document.addEventListener("keydown", onKey);
@@ -361,7 +352,6 @@ const Packersandmovers: React.FC = () => {
       document.removeEventListener("mousedown", onDocClick);
     };
   }, [groupIndex, bookingOpen]);
-
   // Clean up timers and ensure body scroll unlocked on unmount
   useEffect(() => {
     return () => {
@@ -375,7 +365,6 @@ const Packersandmovers: React.FC = () => {
       document.body.style.overflow = "";
     };
   }, []);
-
   // submit - save per-submodule (but clear draft so next open is empty)
   const onFinish = (values: any) => {
     if (!selectedKey || !selectedImage) return;
@@ -393,7 +382,6 @@ const Packersandmovers: React.FC = () => {
       return copy;
     });
     console.log("Saved booking (transient) for", selectedKey, payload);
-
     // ---------- ADDED: build cart item and add to cart using your existing addToCart ----------
     const cartId = Date.now(); // unique id for this booking instance
     const parsedPrice = (() => {
@@ -421,7 +409,6 @@ const Packersandmovers: React.FC = () => {
       console.warn("addToCart failed", e);
     }
     // ---------- end addToCart ----------
-
     // show animated confirmation at top
     setConfirmTextTop(`${payload.serviceTitle} booked`);
     setShowConfirmTop(true);
@@ -439,7 +426,6 @@ const Packersandmovers: React.FC = () => {
     const t3 = window.setTimeout(() => navigate("/cart"), 400);
     timersRef.current.push(t3);
   };
-
   // helper to render a field given its schema
   function renderField(field: FormField) {
     const name = field.name;
@@ -492,35 +478,33 @@ const Packersandmovers: React.FC = () => {
         return null;
     }
   }
-
   return (
     <>
       {/* HERO */}
-      <section className="pm-hero" aria-hidden={false}>
-        <div className="pm-container pm-hero-inner">
-          <div className="pm-hero-left">
-            <h2 className="pm-hero-title">Packers &amp; Movers / Transport</h2>
-            <p className="pm-hero-sub">{cardsData.length} services available</p>
+      <section className="sw-pm-hero" aria-hidden={false}>
+        <div className="sw-pm-container sw-pm-hero-inner">
+          <div className="sw-pm-hero-left">
+            <h2 className="sw-pm-hero-title">Packers &amp; Movers / Transport</h2>
+            <p className="sw-pm-hero-sub">{cardsData.length} services available</p>
           </div>
-          <div className="pm-hero-right" />
+          <div className="sw-pm-hero-right" />
         </div>
       </section>
-
       {/* CARDS GRID */}
-      <main className="pm-main" role="main">
-        <div className="pm-container pm-cards-wrapper">
+      <main className="sw-pm-main" role="main">
+        <div className="sw-pm-container sw-pm-cards-wrapper">
           <Row gutter={[20, 20]} justify="center">
             {cardsData.map((c, idx) => (
               <Col key={idx} xs={24} sm={12} md={8} lg={6} style={{ display: "flex" }}>
                 <Card
                   hoverable
-                  className="pm-card"
+                  className="sw-pm-card"
                   style={{ display: "flex", flexDirection: "column", flex: 1 }}
                   cover={
                     <img
                       src={c.filename}
                       alt={c.title}
-                      className="pm-card-image"
+                      className="sw-pm-card-image"
                       onError={(e) => {
                         (e.currentTarget as HTMLImageElement).onerror = null;
                         (e.currentTarget as HTMLImageElement).src = makePlaceholder(c.title, c.color || "#cfcfcf");
@@ -528,14 +512,14 @@ const Packersandmovers: React.FC = () => {
                     />
                   }
                 >
-                  <div className="pm-card-body">
+                  <div className="sw-pm-card-body">
                     <div>
-                      <h3 className="pm-card-title">{c.title}</h3>
-                      <p className="pm-card-sub">{c.subtitle}</p>
+                      <h3 className="sw-pm-card-title">{c.title}</h3>
+                      <p className="sw-pm-card-sub">{c.subtitle}</p>
                     </div>
-                    <div className="pm-card-footer">
-                      <div className="pm-price" />
-                      <Button className="pm-view-btn" size="small" onClick={() => openGroupModal(idx)}>
+                    <div className="sw-pm-card-footer">
+                      <div className="sw-pm-price" />
+                      <Button className="sw-pm-view-btn" size="small" onClick={() => openGroupModal(idx)}>
                         View Details
                       </Button>
                     </div>
@@ -546,19 +530,18 @@ const Packersandmovers: React.FC = () => {
           </Row>
         </div>
       </main>
-
       {/* GROUP modal */}
       {groupIndex != null && !bookingOpen && (
-        <div className="pm-fullscreen-overlay" role="dialog" aria-modal="true" ref={groupOverlayRef} tabIndex={-1}>
-          <div className="pm-fullscreen-inner" role="document">
-            <header className="pm-fullscreen-header">
-              <h2 id="pm-fullscreen-title">{cardsData[groupIndex].title}</h2>
-              <button className="pm-fullscreen-close" aria-label="Close" onClick={closeGroupModal}>
+        <div className="sw-pm-fullscreen-overlay" role="dialog" aria-modal="true" ref={groupOverlayRef} tabIndex={-1}>
+          <div className="sw-pm-fullscreen-inner" role="document">
+            <header className="sw-pm-fullscreen-header">
+              <h2 id="sw-pm-fullscreen-title">{cardsData[groupIndex].title}</h2>
+              <button className="sw-pm-fullscreen-close" aria-label="Close" onClick={closeGroupModal}>
                 <CloseOutlined />
               </button>
             </header>
-            <div className="pm-fullscreen-body">
-              <Row gutter={[20, 20]} justify="center" className="pm-fullscreen-images">
+            <div className="sw-pm-fullscreen-body">
+              <Row gutter={[20, 20]} justify="center" className="sw-pm-fullscreen-images">
                 {((cardsData[groupIndex].images && cardsData[groupIndex].images!.length > 0
                   ? cardsData[groupIndex].images!
                   : [{ src: cardsData[groupIndex].filename, title: cardsData[groupIndex].title }]) as CardImage[]).map((item, i) => {
@@ -567,12 +550,12 @@ const Packersandmovers: React.FC = () => {
                     <Col key={i} xs={24} sm={12} md={8} lg={6}>
                       <Card
                         hoverable
-                        className="pm-fullscreen-card"
+                        className="sw-pm-fullscreen-card"
                         cover={
                           <img
                             src={item.src}
                             alt={item.title}
-                            className="pm-fullscreen-card-image"
+                            className="sw-pm-fullscreen-card-image"
                             onError={(e) => {
                               (e.currentTarget as HTMLImageElement).onerror = null;
                               (e.currentTarget as HTMLImageElement).src = ph;
@@ -582,12 +565,12 @@ const Packersandmovers: React.FC = () => {
                           />
                         }
                       >
-                        <div className="pm-fullscreen-card-body">
-                          <div className="pm-fullscreen-card-title">{item.title}</div>
-                          <div className="pm-fullscreen-card-sub">{item.subtitle}</div>
+                        <div className="sw-pm-fullscreen-card-body">
+                          <div className="sw-pm-fullscreen-card-title">{item.title}</div>
+                          <div className="sw-pm-fullscreen-card-sub">{item.subtitle}</div>
                           <div style={{ marginTop: 8, color: "#2b6cff", fontWeight: 700 }}>{item.price}</div>
-                          <div className="pm-fullscreen-card-actions">
-                            <Button className="pm-book-btn" onClick={() => openBookingForm(item, groupIndex)} size="middle" type="default">
+                          <div className="sw-pm-fullscreen-card-actions">
+                            <Button className="sw-pm-book-btn" onClick={() => openBookingForm(item, groupIndex)} size="middle" type="default">
                               Book Now
                             </Button>
                           </div>
@@ -601,19 +584,18 @@ const Packersandmovers: React.FC = () => {
           </div>
         </div>
       )}
-
       {/* Booking form modal */}
       {bookingOpen && selectedImage && (
-        <div className="pm-form-overlay" role="dialog" aria-modal="true">
-          <div className="pm-form-inner" role="region" aria-label={`${selectedImage.title} booking form`}>
-            <header className="pm-form-header">
+        <div className="sw-pm-form-overlay" role="dialog" aria-modal="true">
+          <div className="sw-pm-form-inner" role="region" aria-label={`${selectedImage.title} booking form`}>
+            <header className="sw-pm-form-header">
               <h3>{selectedImage.title}</h3>
-              <button className="pm-fullscreen-close" onClick={closeBookingForm}>
+              <button className="sw-pm-fullscreen-close" onClick={closeBookingForm}>
                 <CloseOutlined />
               </button>
             </header>
-            <div className="pm-form-body">
-              <div className="pm-form-left">
+            <div className="sw-pm-form-body">
+              <div className="sw-pm-form-left">
                 <img
                   src={selectedImage.src}
                   alt={selectedImage.title}
@@ -621,23 +603,23 @@ const Packersandmovers: React.FC = () => {
                     (e.currentTarget as HTMLImageElement).onerror = null;
                     (e.currentTarget as HTMLImageElement).src = makePlaceholder(selectedImage.title);
                   }}
-                  className="pm-form-image"
+                  className="sw-pm-form-image"
                 />
-                <p className="pm-form-desc">{selectedImage.subtitle}</p>
-                <div className="pm-included">
+                <p className="sw-pm-form-desc">{selectedImage.subtitle}</p>
+                <div className="sw-pm-included">
                   <h4>What's Included</h4>
                   <ul>
                     {(selectedImage.included || []).map((inc, i) => (
-                      <li key={i}>• {inc}</li>
+                      <li key={i}>â€¢ {inc}</li>
                     ))}
                   </ul>
                 </div>
-                <div className="pm-price-box">
-                  <div className="pm-price-label">Service Price</div>
-                  <div className="pm-price-value">{selectedImage.price}</div>
+                <div className="sw-pm-price-box">
+                  <div className="sw-pm-price-label">Service Price</div>
+                  <div className="sw-pm-price-value">{selectedImage.price}</div>
                 </div>
               </div>
-              <div className="pm-form-right">
+              <div className="sw-pm-form-right">
                 <Form form={form} layout="vertical" onFinish={onFinish}>
                   {/* metadata */}
                   <Form.Item name="serviceGroup" style={{ display: "none" }}>
@@ -654,41 +636,39 @@ const Packersandmovers: React.FC = () => {
                     <div key={f.name}>{renderField(f)}</div>
                   ))}
                   {/* actions */}
-                  <div className="pm-form-actions">
+                  <div className="sw-pm-form-actions">
                     <Button onClick={closeBookingForm} style={{ marginRight: 12 }}>
                       Cancel
                     </Button>
-                    <Button type="primary" htmlType="submit" className="pm-addcart-btn">
+                    <Button type="primary" htmlType="submit" className="sw-pm-addcart-btn">
                       <ShoppingCartOutlined style={{ marginRight: 8 }} /> Book Service
                     </Button>
                   </div>
                 </Form>
               </div>
             </div>
-
             {/* TOP confirmation popup */}
             <div
               role="status"
               aria-live="polite"
               aria-hidden={!showConfirmTop}
-              className={`pm-confirm-top ${showConfirmTop ? "visible" : ""}`}
+              className={`sw-pm-confirm-top ${showConfirmTop ? "visible" : ""}`}
               onClick={() => navigate("/cart")}
               style={{ cursor: "pointer" }}
             >
-              <div className="pm-confirm-top-inner">
-                <div className="pm-confirm-top-icon" aria-hidden>
+              <div className="sw-pm-confirm-top-inner">
+                <div className="sw-pm-confirm-top-icon" aria-hidden>
                   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
                     <circle cx="12" cy="12" r="12" fill="#14B878" />
                     <path d="M7 12.2L10 15.2L17 8.2" stroke="#FFF" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </div>
-                <div className="pm-confirm-top-text">{confirmTextTop}</div>
+                <div className="sw-pm-confirm-top-text">{confirmTextTop}</div>
               </div>
             </div>
           </div>
         </div>
       )}
-
       {/* Drawer */}
       <Drawer placement="right" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
         <Menu mode="vertical" selectable={false}>
