@@ -160,6 +160,22 @@
 
 
 
+.cleaning-embed-wrapper .ant-modal-body {
+  max-height: 80vh !important;
+  overflow-y: auto !important;
+  padding: 0 !important;
+}
+
+/* Ensure inner CleaningService content scrolls properly */
+.cleaning-embed {
+  width: 100%;
+  height: auto;
+  overflow-y: auto;
+  padding-bottom: 20px;
+}
+
+
+
 /* =======================================================
    SERVICE CARD
 ======================================================= */
@@ -311,3 +327,117 @@
     flex-wrap: nowrap !important;
   }
 }
+
+
+
+/* ===== Embedded CleaningService view wrapper ===== */
+.cleaning-embed {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 12px 20px;
+}
+
+/* Back row aligns the button to the left like other headers */
+.cleaning-back-row {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 12px;
+  width: 100%;
+}
+
+/* Back button styling (keeps similar feel to header buttons) */
+.cleaning-back-btn {
+  background: #fff !important;
+  color: #000 !important;
+  border-radius: 8px !important;
+  padding: 6px 12px !important;
+  font-weight: 600 !important;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.06) !important;
+  border: none !important;
+}
+
+/* Slight hover lift */
+.cleaning-back-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.1) !important;
+}
+
+/* Ensure embedded cleaning service uses full width */
+.cleaning-embed .cs-container {
+  max-width: 1200px;
+  padding: 0 !important;
+}
+
+/* Small screens: tighten padding for embedded view */
+@media (max-width: 600px) {
+  .cleaning-embed {
+    padding: 8px 12px;
+  }
+
+  .cleaning-back-btn {
+    padding: 8px 10px !important;
+    font-size: 13px !important;
+  }
+}
+
+
+
+
+
+/* --------------------------
+  Embedded cleaning wrapper
+   - when cleaning is open it uses full width
+---------------------------*/
+.cleaning-embed-wrapper {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  background: transparent;
+}
+
+
+
+
+
+.home-services-container.cleaning-open .services-card-grid {
+  display: none; /* hide home services grid while cleaning embed is open */
+}
+
+
+
+
+/* wrapper for embedded cleaning view */
+.cleaning-embed-wrapper {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  background: transparent;
+}
+
+
+/* ensure internal cleaning content scrolls within modal and matches previous modal styles */
+.cleaning-modal-wrapper .ant-modal-body {
+  padding: 0;
+  max-height: 78vh;
+  overflow-y: auto;
+}
+
+/* small top back button inside modal (if you wire one in CleaningService) */
+.cleaning-back-btn {
+  margin-bottom: 12px;
+  border-radius: 8px;
+}
+
+
+/* If you want to slightly dim the background grid when opening cleaning as an overlay,
+   you can add a blurred/dim style to the parent container — here we are not overlaying,
+   so it's left off. If overlay needed later, we can add .home-services-container.dimmed { filter: blur(2px) opacity(0.6); } */
+
+
+
+
