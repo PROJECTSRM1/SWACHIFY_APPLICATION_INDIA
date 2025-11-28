@@ -3,7 +3,6 @@ import HeaderBar from "../../components/header/header";
 import "./Dashboard.css";
 import ConstructionServices from "../building/building";
 import Packersandmovers from "./PackersAndMovers/Packersandmovers";
-import CleaningService from "./cleaningservice/CleaningService";
 import BuySaleProducts from "./buy&sale/BuySaleProducts";
 import HomeServices from "./homeservices/HomeServices";
 import ServicesPage from "./homerentals/pages/ServicesPage";
@@ -13,7 +12,7 @@ const Dashboard: React.FC = () => {
 
   // List of services that will be displayed
   const servicesList = [
-    { name: "Cleaning Service", component: <CleaningService /> },
+    
     { name: "Packers and Movers / Transport", component: <Packersandmovers /> },
     { name: "Home Services", component: <HomeServices /> },
     { name: "Home & Apartments Rental", component: <ServicesPage /> },
