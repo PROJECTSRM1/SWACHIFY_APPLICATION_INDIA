@@ -1,4 +1,4 @@
-import "./ServiceDetailsPopup.css";
+import "../../../index.css";
 import { Modal } from "antd";
 
 interface SubService {
@@ -28,25 +28,25 @@ export default function ServiceDetailsPopup({
       footer={null}
       width={820}
       centered
-      className="sdp-modal"
+      className="sw-hs-sdp-modal"
     >
-      <div className="sdp-wrapper">
-        <h2 className="sdp-title">{mainTitle}</h2>
-        <p className="sdp-subtitle">Select a service to view details</p>
+      <div className="sw-hs-sdp-wrapper">
+        <h2 className="sw-hs-sdp-title">{mainTitle}</h2>
+        <p className="sw-hs-sdp-subtitle">Select a service to view details</p>
 
-        <div className="sdp-grid">
+        <div className="sw-hs-sdp-grid">
           {subServices.map((service, index) => (
-            <div className="sdp-card" key={index}>
-              <img src={service.image} className="sdp-img" alt={service.title} />
+            <div className="sw-hs-sdp-card" key={index}>
+              <img src={service.image} className="sw-hs-sdp-img" alt={service.title} />
 
-              <div className="sdp-content">
-                <h4 className="sdp-card-title">{service.title}</h4>
-                <p className="sdp-desc">{service.description}</p>
+              <div className="sw-hs-sdp-content">
+                <h4 className="sw-hs-sdp-card-title">{service.title}</h4>
+                <p className="sw-hs-sdp-desc">{service.description}</p>
 
-                <div className="sdp-footer">
-                  <span className="sdp-price">{service.totalprice}</span>
+                <div className="sw-hs-sdp-footer">
+                  <span className="sw-hs-sdp-price">{service.totalprice}</span>
                   <button
-                    className="sdp-btn"
+                    className="sw-hs-sdp-btn"
                     onClick={() => onOpenForm(service)}
                   >
                     View Details

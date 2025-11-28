@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Card, Button } from "antd";
-import "./HomeServices.css";
+import "../../../index.css";
 import { popupData } from "./popupData"; // Correct import
 import type { PopupCategory } from "./popupData"; // Correct import of type
 import { ToolOutlined } from "@ant-design/icons";
@@ -97,16 +97,16 @@ const handleFormCancel = () => {
 
 
   return (
-    <div className="home-services-container">
+    <div className="sw-hs-home-services-container">
       {/* HEADER */}
-      <div className="services-top-banner">
+      <div className="sw-hs-services-top-banner">
 
-        <div className="banner-left">
-  <div className="banner-icon"><ToolOutlined /></div>
+        <div className="sw-hs-banner-left">
+  <div className="sw-hs-banner-icon"><ToolOutlined /></div>
 
-  <div className="banner-text">
-    <h2 className="banner-title">Home Services</h2>
-    <p className="banner-subtitle">{services.length} services available</p>
+  <div className="sw-hs-banner-text">
+    <h2 className="sw-hs-banner-title">Home Services</h2>
+    <p className="sw-hs-banner-subtitle">{services.length} services available</p>
   </div>
 </div>
 
@@ -115,7 +115,7 @@ const handleFormCancel = () => {
 
   <Button
   size="small"
-  className="header-viewall-btn"
+  className="sw-hs-header-viewall-btn"
   onClick={() => setShowAll(!showAll)}
 >
   {showAll ? "Show Less" : "View All Services"}
@@ -124,18 +124,18 @@ const handleFormCancel = () => {
       </div>
 
       {/* GRID */}
-      <div className="services-card-grid">
+      <div className="sw-hs-services-card-grid">
         {displayedCards.map((service, i) => (
-          <div className="service-card-wrapper" key={i}>
+          <div className="sw-hs-service-card-wrapper" key={i}>
             <Card
               hoverable
-              className="service-card"
-              cover={<img src={service.image} alt="" className="service-image" />}
+              className="sw-hs-service-card"
+              cover={<img src={service.image} alt="" className="sw-hs-service-image" />}
             >
-              <h3 className="service-title">{service.title}</h3>
+              <h3 className="sw-hs-service-title">{service.title}</h3>
 
               <Button
-                className="details-btn"
+                className="sw-hs-details-btn"
                 block
                 onClick={() => openDetailsPopup(service.title)}
               >
