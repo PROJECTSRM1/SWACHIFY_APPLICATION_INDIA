@@ -17,8 +17,6 @@ import {
   EnvironmentOutlined,
   GlobalOutlined
 } from "@ant-design/icons";
-
-import "./landingpage.css";
 import heroImage from "../../assets/landingimages/hero.jpg";
 
 const services = [

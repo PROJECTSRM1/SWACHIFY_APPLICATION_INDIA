@@ -23,7 +23,6 @@ import {
   MailOutlined,
 } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
-import './LandingPackers.css';
 // === IMAGE IMPORTS ===
 import heroPackers from '../../assets/landingimages/Packers.jpg';
 import packingServicesImg from '../../assets/landingimages/PackingServices .jpg';

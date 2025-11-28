@@ -29,7 +29,6 @@ import {
   // CloseOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-import "./ConstructionMaterials.css";
 import brickwalss from "../../assets/landingimages/brickwall.jpg";
 import premiumportlandcement from "../../assets/landingimages/PremiumPortlandCement.jpg";
 import tmtsteelbars from "../../assets/landingimages/TMTSteelBars.jpg";
