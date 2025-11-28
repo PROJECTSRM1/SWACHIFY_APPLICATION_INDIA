@@ -34,11 +34,9 @@ import taxiImg from "../../../assets/passenger/taxi.jpg";
 import taxiCabServiceImg from "../../../assets/passenger/taxiCabServiceImg.jpg";
 import tempControlledImg from "../../../assets/passenger/Temperature controlled.jpg";
 import truckRentalsImg from "../../../assets/passenger/Truck Rentals.jpg";
-
 // <-- ADDED: cart + navigation imports -->
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../../../context/CartContext";
-
 const { Option } = Select;
 const { TextArea } = Input;
 
@@ -68,7 +66,6 @@ type FormField =
       options?: { label: string; value: any }[];
       placeholder?: string;
     };
-
 type CardImage = {
   src: string;
   title: string;
@@ -265,25 +262,36 @@ const Packersandmovers: React.FC = () => {
   const [bookingFormsData, setBookingFormsData] = useState<Record<string, any>>({});
   const previouslyFocused = useRef<HTMLElement | null>(null);
   const [form] = Form.useForm();
-
   // Confirmation popup state (top)
   const [showConfirmTop, setShowConfirmTop] = useState(false);
   const [confirmTextTop, setConfirmTextTop] = useState("");
-
+  // timers cleanup
+  const timersRef = useRef<number[]>([]);
   // <-- ADDED: cart + navigate hooks (keeps your context API unchanged) -->
   const { addToCart } = useCart();
   const navigate = useNavigate();
+
+  // Keep body scroll locked when either modal is open.
+  const lockBodyScroll = () => {
+    document.body.style.overflow = "hidden";
+  };
+  const unlockBodyScroll = () => {
+    document.body.style.overflow = "";
+  };
 
   // open group modal
   const openGroupModal = (idx: number) => {
     previouslyFocused.current = document.activeElement as HTMLElement | null;
     setGroupIndex(idx);
-    document.body.style.overflow = "hidden";
+    // lock body while modal open
+    lockBodyScroll();
     setTimeout(() => groupOverlayRef.current?.focus(), 50);
   };
   const closeGroupModal = () => {
     setGroupIndex(null);
-    document.body.style.overflow = "";
+    // restore body scroll — if bookingOpen is also open we should keep locked,
+    // but group modal is only visible when bookingOpen is false, so it's safe to unlock.
+    if (!bookingOpen) unlockBodyScroll();
     previouslyFocused.current?.focus();
   };
 
@@ -309,6 +317,8 @@ const Packersandmovers: React.FC = () => {
       defaults.servicePrice = img.price;
       form.setFieldsValue(defaults);
     }
+    // lock body scroll when booking form is open
+    lockBodyScroll();
     // show booking form (group overlay will be hidden by render condition)
     setBookingOpen(true);
   };
@@ -324,6 +334,9 @@ const Packersandmovers: React.FC = () => {
     setBookingOpen(false);
     setSelectedImage(null);
     setSelectedKey(null);
+    // restore body scrolling - only restore if no other overlay/modal needs it.
+    // In our UI group modal is hidden when bookingOpen is true; so it's safe to unlock.
+    unlockBodyScroll();
   };
 
   // ESC / click-outside behavior
@@ -349,6 +362,20 @@ const Packersandmovers: React.FC = () => {
     };
   }, [groupIndex, bookingOpen]);
 
+  // Clean up timers and ensure body scroll unlocked on unmount
+  useEffect(() => {
+    return () => {
+      // clear any pending timers
+      timersRef.current.forEach((t) => {
+        try {
+          clearTimeout(t);
+        } catch (e) {}
+      });
+      // ensure body unlocked
+      document.body.style.overflow = "";
+    };
+  }, []);
+
   // submit - save per-submodule (but clear draft so next open is empty)
   const onFinish = (values: any) => {
     if (!selectedKey || !selectedImage) return;
@@ -358,7 +385,6 @@ const Packersandmovers: React.FC = () => {
       servicePrice: values.servicePrice || selectedImage.price,
       savedAt: new Date().toISOString(),
     };
-
     // If you want to persist bookings (api/localStorage), do it here.
     // We intentionally REMOVE the draft from bookingFormsData so the form opens blank next time.
     setBookingFormsData((prev) => {
@@ -366,7 +392,6 @@ const Packersandmovers: React.FC = () => {
       if (copy[selectedKey]) delete copy[selectedKey];
       return copy;
     });
-
     console.log("Saved booking (transient) for", selectedKey, payload);
 
     // ---------- ADDED: build cart item and add to cart using your existing addToCart ----------
@@ -376,7 +401,6 @@ const Packersandmovers: React.FC = () => {
       const n = parseFloat(p.replace(/[^0-9.-]+/g, ""));
       return isNaN(n) ? 0 : n;
     })();
-
     const cartItem = {
       id: cartId,
       title: payload.serviceTitle,
@@ -384,7 +408,6 @@ const Packersandmovers: React.FC = () => {
       quantity: 1,
       price: String(payload.servicePrice || selectedImage.price || "0"),
       totalPrice: parsedPrice * 1,
-
       customerName: payload.customerName || "",
       deliveryType: payload.deliveryType || payload.rentalType || "",
       deliveryDate: payload.date || payload.serviceDate || payload.deliveryDate || "",
@@ -392,7 +415,6 @@ const Packersandmovers: React.FC = () => {
       address: payload.address || "",
       instructions: payload.instructions || "",
     };
-
     try {
       addToCart(cartItem); // uses your existing CartContext API
     } catch (e) {
@@ -403,20 +425,19 @@ const Packersandmovers: React.FC = () => {
     // show animated confirmation at top
     setConfirmTextTop(`${payload.serviceTitle} booked`);
     setShowConfirmTop(true);
-
     // immediately clear form UI
     try {
       form.resetFields();
     } catch (e) {}
-
     // hide after 3 seconds
-    window.setTimeout(() => setShowConfirmTop(false), 3000);
-
+    const t1 = window.setTimeout(() => setShowConfirmTop(false), 3000);
+    timersRef.current.push(t1);
     // close form after 1.5s
-    window.setTimeout(() => closeBookingForm(), 1500);
-
+    const t2 = window.setTimeout(() => closeBookingForm(), 1500);
+    timersRef.current.push(t2);
     // navigate to cart after a short delay so user sees confirmation
-    window.setTimeout(() => navigate("/cart"), 400);
+    const t3 = window.setTimeout(() => navigate("/cart"), 400);
+    timersRef.current.push(t3);
   };
 
   // helper to render a field given its schema
@@ -565,7 +586,6 @@ const Packersandmovers: React.FC = () => {
                           <div className="pm-fullscreen-card-title">{item.title}</div>
                           <div className="pm-fullscreen-card-sub">{item.subtitle}</div>
                           <div style={{ marginTop: 8, color: "#2b6cff", fontWeight: 700 }}>{item.price}</div>
-
                           <div className="pm-fullscreen-card-actions">
                             <Button className="pm-book-btn" onClick={() => openBookingForm(item, groupIndex)} size="middle" type="default">
                               Book Now
@@ -617,7 +637,6 @@ const Packersandmovers: React.FC = () => {
                   <div className="pm-price-value">{selectedImage.price}</div>
                 </div>
               </div>
-
               <div className="pm-form-right">
                 <Form form={form} layout="vertical" onFinish={onFinish}>
                   {/* metadata */}
@@ -630,12 +649,10 @@ const Packersandmovers: React.FC = () => {
                   <Form.Item name="servicePrice" style={{ display: "none" }}>
                     <Input />
                   </Form.Item>
-
                   {/* fields */}
                   {(selectedImage.formSchema || []).map((f) => (
                     <div key={f.name}>{renderField(f)}</div>
                   ))}
-
                   {/* actions */}
                   <div className="pm-form-actions">
                     <Button onClick={closeBookingForm} style={{ marginRight: 12 }}>
@@ -655,7 +672,7 @@ const Packersandmovers: React.FC = () => {
               aria-live="polite"
               aria-hidden={!showConfirmTop}
               className={`pm-confirm-top ${showConfirmTop ? "visible" : ""}`}
-              onClick={() => navigate("/cart")} // <-- ADDED: click goes to cart
+              onClick={() => navigate("/cart")}
               style={{ cursor: "pointer" }}
             >
               <div className="pm-confirm-top-inner">
