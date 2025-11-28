@@ -63,9 +63,7 @@
 /* NOTE: the equal-height section is later in the file to ensure overrides apply */
 
 /* Use min-height instead of fixed height so cards with longer content still show button */
-.main-col {
-  /* left intentionally minimal; real layout rules applied later in equal-height block */
-}
+
 
 /* Allow cards to expand vertically if needed; keeps consistent look but prevents clipping */
 .main-card {

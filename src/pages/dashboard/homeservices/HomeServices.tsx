@@ -1,5 +1,5 @@
 // src/pages/.../HomeServices.tsx
-import React, { useState } from "react";
+import  { useState } from "react";
 import { Card, Button,  Modal } from "antd";
 import "./HomeServices.css";
 import { popupData } from "./popupData"; // existing
