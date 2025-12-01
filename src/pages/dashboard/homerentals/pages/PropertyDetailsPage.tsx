@@ -1,4 +1,3 @@
-// PropertyDetailsPage.tsx
 import React from 'react';
 import {
   Row,
@@ -11,6 +10,7 @@ import {
   Button,
   Rate,
   Tag,
+   Space,
   Carousel,
   message,
 } from 'antd';
@@ -21,7 +21,7 @@ import {
   CheckCircleOutlined,
 } from '@ant-design/icons';
 import dayjs from 'dayjs';
-import './PropertyDetailsPage.css';
+import '../../../../index.css';
 
 // Import images from assets folder (reuse the same ones as listings)
 import apartment1Img from '../../../../assets/HomeRental/img.jpg';
@@ -31,18 +31,19 @@ import villa1Img from '../../../../assets/HomeRental/villa.jpg';
 import villa2Img from '../../../../assets/HomeRental/bedroom.jpg';
 import house1Img from '../../../../assets/HomeRental/threed.jpg';
 import house2Img from '../../../../assets/HomeRental/bedroom.jpg';
-import luxryvillaImg from '../../../../assets/HomeRental/luxrayVilla.jpg';
+// import luxryvillaImg from '../assests/HomeRental/luxrayVilla.jpg';
 import commercialImg from '../../../../assets/HomeRental/beautifulkitchen.jpg';
 import officeImg from '../../../../assets/HomeRental/moderndining.jpg';
 import bathroomimg from "../../../../assets/HomeRental/modernbathroom.jpg";
-import bedroomImg from "../../../../assets/HomeRental/classicbedroom.jpg";
-import kitchenImg from "../../../../assets/HomeRental/classicbedroom.jpg";
-import luxkitchenImg from "../../../../assets/HomeRental/luxury-modern-white-kitchen.jpg";
-import moderbathroomImg from "../../../../assets/HomeRental/smarthometechnology.jpg";
-import modernBathroomImg from "../../../../assets/HomeRental/smarthometechnology.jpg";
-import villaImg2 from "../../../../assets/HomeRental/VillaLuxury.jpg";
+import bedroomImg from "../../../../assets/HomeRental/classicbedroom.jpg"
+import kitchenImg from "../../../../assets/HomeRental/classicbedroom.jpg"
+import luxkitchenImg  from "../../../../assets/HomeRental/luxury-modern-white-kitchen.jpg";
+import moderbathroomImg from "../../../../assets/HomeRental/smarthometechnology.jpg"
+import modernBathroomImg from "../../../../assets/HomeRental/smarthometechnology.jpg"
+import villaImg2 from "../../../../assets/HomeRental/VillaLuxury.jpg"
 
 /*Commericial*/
+//import opelPlotImg from "../assests/HomeRental/openplot.jpg"
 import plot1Img from "../../../../assets/HomeRental/openplot3.jpg";
 import plot2Img from "../../../../assets/HomeRental/openplot2.jpg";
 import plot3Img from "../../../../assets/HomeRental/openplot3.jpg";
@@ -58,9 +59,6 @@ import warehouseImg2 from "../../../../assets/HomeRental/warehouse3.jpg";
 import warehouseImg3 from "../../../../assets/HomeRental/WareHouse.jpg";
 import warehouseImg4 from "../../../../assets/HomeRental/openplot3.jpg";
 
-// <-- ADDED: cart + navigation imports -->
-import { useNavigate } from "react-router-dom";
-import { useCart } from "../../../../context/CartContext";
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -87,10 +85,6 @@ interface PropertyDetailsPageProps {
 
 const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, onClose }) => {
   const [form] = Form.useForm();
-
-  // <-- ADDED: use cart + navigate hooks (no change to your CartContext required) -->
-  const { addToCart } = useCart();
-  const navigate = useNavigate();
 
   // Details for each property (ids match ApartmentListingsPage)
   const propertiesById: Record<string, PropertyDetails> = {
@@ -136,7 +130,7 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
       images: [apartment3Img,bedroomImg,kitchenImg,bathroomimg],
       description: 'Penthouse with panoramic views and premium finishes.',
     },
-    'apt-4': {
+       'apt-4': {
       id: 'apt-4',
       title: 'Luxury 4 BHK Apartment',
       rating: 4.8,
@@ -161,9 +155,10 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
       furnishing: 'Fully Furnished',
       amenities: ['Private Pool', 'Garden', 'Parking', 'Security'],
       price: 4200,
-      images: [villa1Img, luxryvillaImg,commercialImg, apartment3Img],
+      images: [villa1Img, commercialImg, apartment3Img],
       description: 'Luxury villa with private pool and lake views.',
     },
+
     'villa-2': {
       id: 'villa-2',
       title: 'Modern 3 BHK Villa',
@@ -175,12 +170,13 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
       furnishing: 'Semi Furnished',
       amenities: ['Garden', 'Parking', 'Security', 'Club House'],
       price: 3500,
-      images: [villa1Img, villa2Img,luxryvillaImg],
+      images: [villa1Img, villa2Img],
       description: 'Contemporary villa in a premium gated community.',
     },
+    
     'villa-3': {
       id: 'villa-3',
-      title: 'Modern 4 BHK Villa',
+      title: 'Luxury 2 BHK Villa',
       rating: 4.7,
       location: 'River Enclave',
       beds: 3,
@@ -189,12 +185,12 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
       furnishing: 'Semi Furnished',
       amenities: ['Garden', 'Parking', 'Security', 'Club House'],
       price: 3500,
-      images: [villa1Img, villa2Img,luxryvillaImg],
+      images: [villa1Img, villa2Img],
       description: 'Contemporary villa in a premium gated community.',
     },
-    'villa-4': {
+     'villa-4': {
       id: 'villa-4',
-      title: 'Modern 2 BHK Villa',
+      title: 'Semi-Modern 3 BHK Villa',
       rating: 4.7,
       location: 'Maldives  Enclave',
       beds: 3,
@@ -203,12 +199,15 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
       furnishing: 'Semi Furnished',
       amenities: ['Garden', 'Parking', 'Security', 'Club House'],
       price: 3500,
-      images: [villaImg2,luxryvillaImg,villa1Img],
+      images: [villaImg2,villa1Img],
       description: 'Contemporary villa in a premium gated community.',
     },
+
+    /*Independenthouses*/
+
     'house-1': {
       id: 'house-1',
-      title: ' 1 BHK Independent House',
+      title: '3 BHK Independent House',
       rating: 4.6,
       location: 'Green Valley Layout',
       beds: 3,
@@ -248,9 +247,24 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
       images: [house2Img, house1Img, officeImg , bathroomimg],
       description: 'Cozy corner house perfect for small families.',
     },
-    'shop-1': {
-      id: 'shop-1',
-      title: 'Prime Roadside Shop',
+     'house-4': {
+      id: 'house-4',
+      title: '2 BHK Modern House',
+      rating: 4.4,
+      location: ' Subbarayapillai Chathiram,Residency',
+      beds: 2,
+      baths: 2,
+      sqft: 1600,
+      furnishing: 'Semi Furnished',
+      amenities: ['Parking', 'Playground', 'Security'],
+      price: 1800,
+      images: [house2Img, house1Img, officeImg , bathroomimg],
+      description: 'Cozy corner house perfect for small families.',
+    },
+    // Commercial Properties//
+    'startup-1': {
+      id: 'startup-1',
+      title: 'Permium StartUp',
       rating: 4.6,
       location: 'City Market Road',
       sqft: 450,
@@ -260,9 +274,9 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
       images: [startup1Img, startup2Img, startup3Img],
       description: 'Prime location shop perfect for retail business with good footfall.',
     },
-    'shop-2': {
-      id: 'shop-2',
-      title: 'Luxury Retail Showroom',
+    'startup-2': {
+      id: 'startUp-2',
+      title: 'Budget StarUp space',
       rating: 4.8,
       location: 'Mall Commercial Block',
       sqft: 900,
@@ -272,9 +286,9 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
       images:[startup4Img, officeImg, startup3Img],
       description: 'Premium showroom space in a high-end shopping mall.',
     },
-    'shop-3': {
-      id: 'shop-3',
-      title: 'Luxury Retail Showroom',
+     'startup-3': {
+      id: 'startup-3',
+      title: 'semi-modern Space',
       rating: 4.8,
       location: 'Mall Commercial Block',
       sqft: 900,
@@ -284,9 +298,9 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
       images: [startup3Img,startup4Img,startup3Img],
       description: 'Premium showroom space in a high-end shopping mall.',
     },
-    'shop-4': {
-      id: 'shop-4',
-      title: 'Luxury Retail Showroom',
+     'startup-4': {
+      id: 'startup-4',
+      title: 'Permium Space',
       rating: 4.8,
       location: 'Mall Commercial Block',
       sqft: 900,
@@ -296,6 +310,9 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
       images: [startup1Img,startup2Img],
       description: 'Premium showroom space in a high-end shopping mall.',
     },
+
+/*WareHouse*/
+
     'warehouse-1': {
       id: 'warehouse-1',
       title: 'Large Industrial Warehouse',
@@ -320,9 +337,9 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
       images: [warehouseImg1,warehouseImg2,warehouseImg3],
       description: 'Medium-sized warehouse with loading dock facilities.',
     },
-    'warehouse-3': {
+     'warehouse-3': {
       id: 'warehouse-3',
-      title: 'Medium Storage Warehouse',
+      title: 'Semi-Medium Storage Warehouse',
       rating: 4.3,
       location: 'City Outskirts',
       sqft: 3000,
@@ -332,9 +349,9 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
       images: [warehouseImg4,warehouseImg3],
       description: 'Medium-sized warehouse with loading dock facilities.',
     },
-    'warehouse-4': {
+     'warehouse-4': {
       id: 'warehouse-4',
-      title: 'Medium Storage Warehouse',
+      title: 'Permium Storage Warehouse',
       rating: 4.3,
       location: 'City Outskirts',
       sqft: 3000,
@@ -343,6 +360,9 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
       price: 3500,
       images: [warehouseImg2,warehouseImg1],
       description: 'Medium-sized warehouse with loading dock facilities.',
+
+
+      /*OpenPlots*/
     },
     'plot-1': {
       id: 'plot-1',
@@ -368,9 +388,9 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
       images: [plot2Img,plot4Img],
       description: 'Corner plot in the heart of the business district with all approvals.',
     },
-    'plot-3': {
+     'plot-3': {
       id: 'plot-3',
-      title: 'Prime Commercial Plot',
+      title: 'Prime  Plot',
       rating: 4.7,
       location: 'Highway Commercial Zone',
       sqft: 10000,
@@ -380,9 +400,9 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
       images: [plot4Img,plot3Img,plot2Img],
       description: 'Prime commercial plot with all utilities and excellent road connectivity.',
     },
-    'plot-4': {
+     'plot-4': {
       id: 'plot-4',
-      title: 'Prime Commercial Plot',
+      title: 'Prime Residentional Plot',
       rating: 4.7,
       location: 'Highway Commercial Zone',
       sqft: 10000,
@@ -426,52 +446,11 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
   const onFinish = (values: any) => {
     console.log('Form values:', values);
     message.success('Your inquiry has been submitted! Our team will contact you within 24 hours.');
-
-    // ---- ADDED: Build cart item and add to cart using your existing useCart() API ----
-    // Create a unique numeric id for the cart item instance
-    const cartId = Date.now();
-
-    // Choose a representative image (first image if available)
-    const image = property.images && property.images.length > 0 ? property.images[0] : '';
-
-    // Use property.price (number) but CartContext expects price as string in your model => convert
-    const priceString = String(property.price || 0);
-    const unitPrice = Number(property.price || 0);
-
-    // Map common form fields into cart metadata (customerName, deliveryType, deliveryDate etc.)
-    const cartItem = {
-      id: cartId,
-      title: property.title,
-      image,
-      quantity: 1,
-      price: priceString,
-      totalPrice: unitPrice * 1,
-
-      customerName: values.fullName || '',
-      deliveryType: values.leaseDuration || values.businessType || values.intendedUse || '',
-      deliveryDate: values.moveInDate ? dayjs(values.moveInDate).format('YYYY-MM-DD') : (values.expectedStartDate ? dayjs(values.expectedStartDate).format('YYYY-MM-DD') : (values.expectedPurchaseDate ? dayjs(values.expectedPurchaseDate).format('YYYY-MM-DD') : '')),
-      contact: values.phone || '',
-      address: '', // form doesn't capture address in this page — keep empty or extend form to collect
-      instructions: values.message || '',
-    };
-
-    try {
-      addToCart(cartItem); // uses your existing CartContext API
-    } catch (e) {
-      console.warn("addToCart failed", e);
-    }
-    // ---- end addToCart ----
-
-    // Reset form (your existing behavior)
     form.resetFields();
-
-    // Navigate to cart after a short delay so user sees the success message
-    setTimeout(() => navigate('/cart'), 400);
   };
-
   return (
-    <div className="property-details-page">
-      <div className="pd-header">
+    <div className="sw-hr-property-details-page">
+      <div className="sw-hr-pd-header">
         <Button
           type="text"
           icon={<ArrowLeftOutlined />}
@@ -479,8 +458,9 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
             if (onClose) {
               onClose();
             }
+            
           }}
-          className="back-btn"
+          className="sw-hr-back-btn"
         >
           Back to Listings
         </Button>
@@ -488,38 +468,39 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
 
       <Row gutter={[32, 32]}>
         <Col xs={24} lg={14}>
-          <Card className="pd-details-card">
-            <div className="pd-image-wrap">
-              <Carousel autoplay dots className="pd-carousel">
+          <Card className="sw-hr-pd-details-card">
+
+            <div className="sw-hr-pd-image-wrap">
+              <Carousel autoplay dots className="sw-hr-pd-carousel">
                 {property.images.map((imgSrc, idx) => (
-                  <div key={`${property.id}-img-${idx}`} className="pd-slide">
-                    <img src={imgSrc} alt={`${property.title} view ${idx + 1}`} className="pd-image" />
+                  <div key={`${property.id}-img-${idx}`} className="sw-hr-pd-slide">
+                    <img src={imgSrc} alt={`${property.title} view ${idx + 1}`} className="sw-hr-pd-image" />
                   </div>
                 ))}
               </Carousel>
             </div>
 
-            <div className="pd-info">
-              <div className="pd-title-section">
-                <h1 className="pd-title">{property.title}</h1>
-                <div className="pd-rating">
+            <div className="sw-hr-pd-info">
+              <div className="sw-hr-pd-title-section">
+                <h1 className="sw-hr-pd-title">{property.title}</h1>
+                <div className="sw-hr-pd-rating">
                   <Rate disabled defaultValue={property.rating} allowHalf style={{ fontSize: 16 }} />
-                  <span className="pd-rating-value">{property.rating}</span>
+                  <span className="sw-hr-pd-rating-value">{property.rating}</span>
                 </div>
               </div>
 
-              <div className="pd-location">
+              <div className="sw-hr-pd-location">
                 <EnvironmentOutlined /> {property.location}
               </div>
 
-              <div className="pd-specs">
+              <div className="sw-hr-pd-specs">
                 {property.beds && <span>🛏️ {property.beds} Bedrooms</span>}
                 {property.baths && <span>🚿 {property.baths} Bathrooms</span>}
                 <span><HomeOutlined /> {property.sqft} sq.ft</span>
               </div>
 
-              <div className="pd-furnishing">
-                <Tag className={`furnishing-tag ${
+              <div className="sw-hr-pd-furnishing">
+                <Tag className={`sw-hr-furnishing-tag ${
                   property.furnishing === 'Fully Furnished' ? 'fully' : 
                   property.furnishing === 'Semi Furnished' ? 'semi' : 
                   property.furnishing === 'Unfurnished' ? 'unfurnished' : 'open-plot'
@@ -528,27 +509,27 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
                 </Tag>
               </div>
 
-              <div className="pd-amenities-section">
-                <h3 className="pd-section-title">Features & Amenities</h3>
-                <div className="pd-amenities">
+              <div className="sw-hr-pd-amenities-section">
+                <h3 className="sw-hr-pd-section-title">Features & Amenities</h3>
+                <div className="sw-hr-pd-amenities">
                   {property.amenities.map((amenity, idx) => (
-                    <div key={idx} className="amenity-item">
-                      <CheckCircleOutlined className="amenity-check" />
+                    <div key={idx} className="sw-hr-amenity-item">
+                      <CheckCircleOutlined className="sw-hr-amenity-check" />
                       <span>{amenity}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className="pd-services-section">
-                <h3 className="pd-section-title">What You Get</h3>
-                <div className="pd-services">
+              <div className="sw-hr-pd-services-section">
+                <h3 className="sw-hr-pd-section-title">What You Get</h3>
+                <div className="sw-hr-pd-services">
                   {services.map((service, idx) => (
-                    <div key={idx} className="service-item">
-                      <CheckCircleOutlined className="service-check" />
+                    <div key={idx} className="sw-hr-service-item">
+                      <CheckCircleOutlined className="sw-hr-service-check" />
                       <div>
-                        <div className="service-title">{service.title}</div>
-                        <div className="service-desc">{service.description}</div>
+                        <div className="sw-hr-service-title">{service.title}</div>
+                        <div className="sw-hr-service-desc">{service.description}</div>
                       </div>
                     </div>
                   ))}
@@ -559,17 +540,17 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
         </Col>
 
         <Col xs={24} lg={10}>
-          <Card className="pd-booking-card">
-            <div className="pd-price-display">
-              <span className="pd-price">${property.price}</span>
-              <span className="pd-price-unit">/month</span>
+          <Card className="sw-hr-pd-booking-card">
+            <div className="sw-hr-pd-price-display">
+              <span className="sw-hr-pd-price">${property.price}</span>
+              <span className="sw-hr-pd-price-unit">/month</span>
             </div>
 
             <Form
               form={form}
               layout="vertical"
               onFinish={onFinish}
-              className="booking-form"
+              className="sw-hr-booking-form"
             >
               {/* Common Fields */}
               <Form.Item
@@ -614,7 +595,7 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
                   },
                 ]}
               >
-                <Input placeholder="+91 9087654321" size="large" />
+                <Input placeholder="+1 (555) 000-0000" size="large" />
               </Form.Item>
 
               {/* Residential Form Fields */}
@@ -844,7 +825,6 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
                       size="large"
                       showCount
                       maxLength={500}
-                      className='booking-form-textarea'
                     />
                   </Form.Item>
                 </>
@@ -871,15 +851,15 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
                 <Button
                   type="primary"
                   htmlType="submit"
-                  size="large"
+                  size="small"
                   block
-                  className="submit-btn"
+                  className="sw-hr-submit-btn"
                 >
                   {isOpenPlot ? 'Submit Inquiry' : isCommercial ? 'Request Quote' : 'Schedule Viewing & Add to Cart'}
                 </Button>
               </Form.Item>
 
-              <p className="form-note">
+              <p className="sw-hr-form-note">
                 Our team will contact you within 24 hours
               </p>
             </Form>
@@ -891,3 +871,4 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
 };
 
 export default PropertyDetailsPage;
+

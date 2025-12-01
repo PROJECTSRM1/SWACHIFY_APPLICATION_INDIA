@@ -12,18 +12,18 @@ import {
 } from "antd";
 import {
   SearchOutlined,
-  // HeartOutlined,
+  HeartOutlined,
   EnvironmentOutlined,
   HomeOutlined,
-  // FilterOutlined,
+  FilterOutlined,
   ArrowLeftOutlined,
 } from "@ant-design/icons";
- import "../pages/CommercialListingsPage.css";
+import '../../../../index.css';
 
 // Import Images
-import shop1Img from "../../../../assets/HomeRental/startup1.jpg"
-import shop2Img from "../../../../assets/HomeRental/startup2.jpg";
+import startup1Img from "../../../../assets/HomeRental/startup1.jpg";
 import startup2Img from "../../../../assets/HomeRental/startup2.jpg";
+import startup3Img from "../../../../assets/HomeRental/startup2.jpg";
 import startup4Img from "../../../../assets/HomeRental/office.jpg";
 
 
@@ -71,52 +71,53 @@ const CommercialListingsPage: React.FC<CommercialListingsPageProps> = ({
   // COMMERCIAL PROPERTIES
   // -----------------------------
 
-  const shopListings: Property[] = [
-    {
-      id: "shop-1",
-      title: "Prime Roadside Shop",
-      rating: 4.6,
-      location: "City Market Road",
-      sqft: 450,
-      furnishing: "Semi Furnished",
-      amenities: ["Parking", "Storage Room"],
-      price: 900,
-      image: shop1Img,
-    },
-    {
-      id: "shop-2",
-      title: "Luxury Retail Showroom",
-      rating: 4.8,
-      location: "Mall Commercial Block",
-      sqft: 900,
-      furnishing: "Fully Furnished",
-      amenities: ["Security", "AC", "Parking"],
-      price: 2000,
-      image: shop2Img,
-    },
-     {
-      id: "shop-3",
-      title: "Luxury Retail Showroom",
-      rating: 4.8,
-      location: "Mall Commercial Block",
-      sqft: 900,
-      furnishing: "Fully Furnished",
-      amenities: ["Security", "AC", "Parking"],
-      price: 2000,
-      image: startup2Img,
-    },
-     {
-      id: "shop-4",
-      title: "Luxury Retail Showroom",
-      rating: 4.8,
-      location: "Mall Commercial Block",
-      sqft: 900,
-      furnishing: "Fully Furnished",
-      amenities: ["Security", "AC", "Parking"],
-      price: 2000,
-      image: startup4Img,
-    },
-  ];
+const shopListings: Property[] = [
+  {
+    id: "shop-1",
+    title: "Premium StartUp",
+    rating: 4.6,
+    location: "City Market Road",
+    sqft: 450,
+    furnishing: "Semi Furnished",
+    amenities: ["Parking", "Storage Room"],
+    price: 900,
+    image: startup1Img,
+  },
+  {
+    id: "shop-2",
+    title: "Budget Showroom",
+    rating: 4.8,
+    location: "Mall Commercial Block",
+    sqft: 900,
+    furnishing: "Fully Furnished",
+    amenities: ["Security", "AC", "Parking"],
+    price: 2000,
+    image: startup2Img,
+  },
+  {
+    id: "shop-3",
+    title: "Semi-modern Showroom",
+    rating: 4.8,
+    location: "Mall Commercial Block",
+    sqft: 900,
+    furnishing: "Fully Furnished",
+    amenities: ["Security", "AC", "Parking"],
+    price: 2000,
+    image: startup3Img,
+  },
+  {
+    id: "shop-4",
+    title: "Premium Showroom",
+    rating: 4.8,
+    location: "Mall Commercial Block",
+    sqft: 900,
+    furnishing: "Fully Furnished",
+    amenities: ["Security", "AC", "Parking"],
+    price: 2000,
+    image: startup4Img,
+  },
+];
+
 /*Startup*/
   const startupListings: Property[] = [
     {
@@ -128,7 +129,7 @@ const CommercialListingsPage: React.FC<CommercialListingsPageProps> = ({
       furnishing: "Fully Furnished",
       amenities: ["Meeting Rooms", "Cafeteria", "Security"],
       price: 3500,
-      image: shop1Img,
+      image: startup1Img,
     },
     {
       id: "startup-2",
@@ -143,18 +144,18 @@ const CommercialListingsPage: React.FC<CommercialListingsPageProps> = ({
     },
      {
       id: "startup-3",
-      title: "Budget Startup Space",
+      title: "semi-modern Startup Space",
       rating: 4.2,
       location: "Innovation Hub",
       sqft: 650,
       furnishing: "Semi Furnished",
       amenities: ["WiFi", "Power Backup"],
       price: 1200,
-      image: shop2Img,
+      image: startup3Img,
     },
      {
       id: "startup-4",
-      title: "Budget Startup Space",
+      title: "premium Startup Space",
       rating: 4.2,
       location: "Innovation Hub",
       sqft: 650,
@@ -190,7 +191,7 @@ const CommercialListingsPage: React.FC<CommercialListingsPageProps> = ({
     },
       {
       id: "warehouse-3",
-      title: "Medium Storage Warehouse",
+      title: "Large Storage Warehouse",
       rating: 4.3,
       location: "City Outskirts",
       sqft: 3000,
@@ -201,7 +202,7 @@ const CommercialListingsPage: React.FC<CommercialListingsPageProps> = ({
     },
       {
       id: "warehouse-4",
-      title: "Medium Storage Warehouse",
+      title: "Semi Storage Warehouse",
       rating: 4.3,
       location: "City Outskirts",
       sqft: 3000,
@@ -239,9 +240,9 @@ const CommercialListingsPage: React.FC<CommercialListingsPageProps> = ({
     },
      {
       id: "plot-3",
-      title: "City Center Plot",
+      title: "City OutSide Plot",
       rating: 4.6,
-      location: "Downtown Business District",
+      location: " Business District",
       sqft: 7500,
       furnishing: "Open Plot",
       amenities: ["Main Road", "Corner Plot", "Approved"],
@@ -250,9 +251,9 @@ const CommercialListingsPage: React.FC<CommercialListingsPageProps> = ({
     },
      {
       id: "plot-4",
-      title: "City Center Plot",
+      title: "Resdentional Plot",
       rating: 4.6,
-      location: "Downtown Business District",
+      location: "kokapeta Business District",
       sqft: 7500,
       furnishing: "Open Plot",
       amenities: ["Main Road", "Corner Plot", "Approved"],
@@ -306,9 +307,9 @@ const CommercialListingsPage: React.FC<CommercialListingsPageProps> = ({
   });
 
   return (
-    <div className="listings-page">
+    <div className="sw-hr-listings-page">
       {/* HEADER */}
-      <div className="listings-header">
+      <div className="sw-hr-listings-header">
         <Button
           type="text"
           icon={<ArrowLeftOutlined />}
@@ -317,17 +318,17 @@ const CommercialListingsPage: React.FC<CommercialListingsPageProps> = ({
               onBack();
             }
           }}
-          className="back-btn"
+          className="sw-hr-back-btn"
         >
           {selectedCategory}
         </Button>
 
-        <div className="listings-search-bar">
+        <div className="sw-hr-listings-search-bar">
           <Search
             placeholder="Search by location or property name..."
             prefix={<SearchOutlined />}
             size="large"
-            className="search-input"
+            className="sw-hr-search-input"
             allowClear
             onSearch={setSearchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -338,7 +339,7 @@ const CommercialListingsPage: React.FC<CommercialListingsPageProps> = ({
             <Select
               value={priceFilter}
               onChange={setPriceFilter}
-              size="large"
+              size="small"
               style={{ width: 150 }}
             >
               <Option value="all">All Prices</Option>
@@ -356,55 +357,56 @@ const CommercialListingsPage: React.FC<CommercialListingsPageProps> = ({
           <Col xs={24} sm={12} lg={12} key={property.id}>
             <Card
               hoverable
-              className="property-card"
+              className="sw-hr-property-card"
               cover={
-                <div className="pc-image-wrap">
-                  <img src={property.image} alt={property.title} className="pc-image" />
-                  <Tag className="pc-furnishing-tag">{property.furnishing}</Tag>
+                <div className="sw-hr-pc-image-wrap">
+                  <img src={property.image} alt={property.title} className="sw-hr-pc-image" />
+                  <Tag className="sw-hr-pc-furnishing-tag">{property.furnishing}</Tag>
 
-                  {/* <Button type="text" icon={<HeartOutlined />} className="pc-favorite-btn" /> */}
+                  <Button type="text" icon={<HeartOutlined />} className="sw-hr-pc-favorite-btn" />
                 </div>
               }
             >
-              <div className="pc-body">
-                <div className="pc-header">
-                  <h3 className="pc-title">{property.title}</h3>
+              <div className="sw-hr-pc-body">
+                <div className="sw-hr-pc-header">
+                  <h3 className="sw-hr-pc-title">{property.title}</h3>
 
-                  <div className="pc-rating">
+                  <div className="sw-hr-pc-rating">
                     <Rate disabled defaultValue={property.rating} allowHalf style={{ fontSize: 14 }} />
-                    <span className="pc-rating-value">{property.rating}</span>
+                    <span className="sw-hr-pc-rating-value">{property.rating}</span>
                   </div>
                 </div>
 
-                <div className="pc-location">
+                <div className="sw-hr-pc-location">
                   <EnvironmentOutlined /> {property.location}
                 </div>
 
-                <div className="pc-specs">
+                <div className="sw-hr-pc-specs">
                   <span>
                     <HomeOutlined /> {property.sqft} sq.ft
                   </span>
                 </div>
 
-                <div className="pc-amenities">
+                <div className="sw-hr-pc-amenities">
                   {property.amenities.map((a, idx) => (
-                    <Tag key={idx} className="amenity-tag">
+                    <Tag key={idx} className="sw-hr-amenity-tag">
                       {a}
                     </Tag>
                   ))}
                 </div>
 
-                <div className="pc-footer">
-                  <div className="pc-price">${property.price}/mo</div>
+                <div className="sw-hr-pc-footer">
+                  <div className="sw-hr-pc-price">${property.price}/mo</div>
 
                   <Button
                     type="primary"
+                    size="small"
                     onClick={() => {
                       if (onSelectProperty) {
                         onSelectProperty(property.id);
                       }
                     }}
-                    className="pc-view-btn"
+                    className="sw-hr-pc-view-btn"
                   >
                     View Details
                   </Button>
