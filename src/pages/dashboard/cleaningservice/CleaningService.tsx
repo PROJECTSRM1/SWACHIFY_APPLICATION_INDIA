@@ -10,7 +10,7 @@ import {
   InputNumber,
   message,
 } from "antd";
-import "./CleaningService.css";
+// import "./CleaningService.css";
 
 import residentialImg from "../../../assets/CleaningServices/resi.png";
 import commercialImg from "../../../assets/CleaningServices/office_cleaning.png";
@@ -488,25 +488,25 @@ const CleaningService: React.FC = () => {
   const modulesForSelected = modulesBySubKey[selectedSubKey] || [];
 
   return (
-    <div className="page-wrapper">
-      <div className="cs-container">
+    <div className="sw-cs-page-wrapper">
+      <div className="sw-cs-cs-container">
 
-        <div className="main-cards-grid" style={{ paddingRight: 12 }}>
-          <div className="main-row">
+        <div className="sw-cs-main-cards-grid" style={{ paddingRight: 12 }}>
+          <div className="sw-cs-main-row">
             {visibleCategories.map((cat) => (
-              <div className="main-col" key={cat.key}>
-                <Card className="main-card" hoverable>
-                  <div className="main-card-image-wrap">
-                    <img src={cat.image} alt={cat.title} className="main-card-image" />
+              <div className="sw-cs-main-col" key={cat.key}>
+                <Card className="sw-cs-main-card" hoverable>
+                  <div className="sw-cs-main-card-image-wrap">
+                    <img src={cat.image} alt={cat.title} className="sw-cs-main-card-image" />
                   </div>
 
-                  <div className="main-card-body">
-                    <Title level={4} className="main-card-title">{cat.title}</Title>
-                    <Paragraph className="main-card-desc">{cat.desc}</Paragraph>
+                  <div className="sw-cs-main-card-body">
+                    <Title level={4} className="sw-cs-main-card-title">{cat.title}</Title>
+                    <Paragraph className="sw-cs-main-card-desc">{cat.desc}</Paragraph>
                     <Button
                       size="middle"
                       type="primary"
-                      className="black-btn"
+                      className="sw-cs-black-btn"
                       onClick={() => openCategory(cat.key)}
                     >
                       View Details
@@ -519,32 +519,32 @@ const CleaningService: React.FC = () => {
         </div>
 
         <Modal
-          title={<div className="modal-title-row"><div className="modal-title-text">{categories.find(c => c.key === selectedMainKey)?.title || "Category"}</div></div>}
+          title={<div className="sw-cs-modal-title-row"><div className="sw-cs-modal-title-text">{categories.find(c => c.key === selectedMainKey)?.title || "Category"}</div></div>}
           open={isCategoryModalOpen}
           onCancel={() => setIsCategoryModalOpen(false)}
           footer={null}
           width={920}
           centered
-          wrapClassName="no-h-scroll-modal"
+          wrapClassName="sw-cs-no-h-scroll-modal"
           closable
         >
-          <div className="subservices-row">
+          <div className="sw-cs-subservices-row">
             {(subservicesByMain[selectedMainKey] || []).map((s) => (
-              <div className="subservices-col" key={s.key}>
+              <div className="sw-cs-subservices-col" key={s.key}>
                 <Card
-                  className="subservice-card"
+                  className="sw-cs-subservice-card"
                   hoverable
                   onClick={() => openSubservice(s.key)}
                 >
-                  <img src={s.image} alt={s.title} className="subservice-img" />
-                  <div className="subservice-card-body">
-                    <Title level={5} className="subservice-card-title">{s.title}</Title>
-                    {/* <Paragraph className="subservice-card-desc">Click to view {s.title.toLowerCase()} services</Paragraph> */}
+                  <img src={s.image} alt={s.title} className="sw-cs-subservice-img" />
+                  <div className="sw-cs-subservice-card-body">
+                    <Title level={5} className="sw-cs-subservice-card-title">{s.title}</Title>
+                    {/* <Paragraph className="sw-cs-subservice-card-desc">Click to view {s.title.toLowerCase()} services</Paragraph> */}
 
                     {/* visible View Details button (prevents double event) */}
                     <div style={{ marginTop: 12, display: "flex", justifyContent: "center" }}>
                       <Button
-                        className="black-btn"
+                        className="sw-cs-black-btn"
                         onClick={(e) => {
                           e.stopPropagation(); 
                           openSubservice(s.key);
@@ -562,71 +562,71 @@ const CleaningService: React.FC = () => {
 
         {/* MODULES MODAL */}
         <Modal
-          title={<div className="modal-title-row"><div className="modal-title-text">{selectedSubKey ? `${selectedSubKey.charAt(0).toUpperCase() + selectedSubKey.slice(1)} Services` : "Services"}</div></div>}
+          title={<div className="sw-cs-modal-title-row"><div className="sw-cs-modal-title-text">{selectedSubKey ? `${selectedSubKey.charAt(0).toUpperCase() + selectedSubKey.slice(1)} Services` : "Services"}</div></div>}
           open={isModulesModalOpen}
           onCancel={() => { setIsModulesModalOpen(false); setIsCategoryModalOpen(true); }}
           footer={null}
           width={1000}
           centered
-          wrapClassName="no-h-scroll-modal"
+          wrapClassName="sw-cs-no-h-scroll-modal"
           closable
         >
-          <div className={`modules-grid modules-count-${modulesForSelected.length}`} role="list">
+          <div className={`sw-cs-modules-grid modules-count-${modulesForSelected.length}`} role="list">
             {modulesForSelected.length ? modulesForSelected.map((m) => (
-              <Card key={m.title} className="module-card" hoverable role="listitem">
-                <img src={m.image} className="module-img" alt={m.title} />
-                <div className="module-content">
-                  <div className="module-title-center">
-                    <Title level={5} className="module-card-title">{m.title}</Title>
+              <Card key={m.title} className="sw-cs-module-card" hoverable role="listitem">
+                <img src={m.image} className="sw-cs-module-img" alt={m.title} />
+                <div className="sw-cs-module-content">
+                  <div className="sw-cs-module-title-center">
+                    <Title level={5} className="sw-cs-module-card-title">{m.title}</Title>
                   </div>
 
-                  <Paragraph className="module-desc">{m.desc}</Paragraph>
+                  <Paragraph className="sw-cs-module-desc">{m.desc}</Paragraph>
 
-                  <div className="module-footer">
-                    <div className="module-price">{m.price}</div>
-                    <Button size="small" type="primary" className="black-btn" onClick={(e) => { e.stopPropagation(); openModuleDetails(m); }}>
+                  <div className="sw-cs-module-footer">
+                    <div className="sw-cs-module-price">{m.price}</div>
+                    <Button size="small" type="primary" className="sw-cs-black-btn" onClick={(e) => { e.stopPropagation(); openModuleDetails(m); }}>
                       View Details
                     </Button>
                   </div>
                 </div>
               </Card>
             )) : (
-              <div className="empty-services"><Paragraph>No services found.</Paragraph></div>
+              <div className="sw-cs-empty-services"><Paragraph>No services found.</Paragraph></div>
             )}
           </div>
         </Modal>
 
         {/* DETAILS MODAL */}
         <Modal
-          title={<div className="details-modal-title-row"><div className="details-modal-title-text">{selectedModule?.title}</div></div>}
+          title={<div className="sw-cs-details-modal-title-row"><div className="sw-cs-details-modal-title-text">{selectedModule?.title}</div></div>}
           open={isDetailsModalOpen}
           onCancel={handleDetailsCancel}
           footer={null}
           width={920}
           centered
-          wrapClassName="no-h-scroll-modal"
+          wrapClassName="sw-cs-no-h-scroll-modal"
           closable
         >
-          <div className="details-modal-body">
-            <div className="details-left">
-              <img src={selectedModule?.image} alt={selectedModule?.title} className="details-image" />
-              <Paragraph className="details-paragraph">{selectedModule?.desc}</Paragraph>
+          <div className="sw-cs-details-modal-body">
+            <div className="sw-cs-details-left">
+              <img src={selectedModule?.image} alt={selectedModule?.title} className="sw-cs-details-image" />
+              <Paragraph className="sw-cs-details-paragraph">{selectedModule?.desc}</Paragraph>
 
-              <div className="includes-block">
-                <div className="includes-title">What's Included</div>
-                <div className="include-item">• Surface dusting & wiping</div>
-                <div className="include-item">• Floor mopping / vacuum</div>
-                <div className="include-item">• Window wiping</div>
+              <div className="sw-cs-includes-block">
+                <div className="sw-cs-includes-title">What's Included</div>
+                <div className="sw-cs-include-item">• Surface dusting & wiping</div>
+                <div className="sw-cs-include-item">• Floor mopping / vacuum</div>
+                <div className="sw-cs-include-item">• Window wiping</div>
               </div>
 
-              <div className="price-card">
-                <div className="price-card-label">Service Price</div>
-                <div className="price-card-value">{computedPrice ? formatINR(computedPrice) : (selectedModule?.price || "—")}</div>
+              <div className="sw-cs-price-card">
+                <div className="sw-cs-price-card-label">Service Price</div>
+                <div className="sw-cs-price-card-value">{computedPrice ? formatINR(computedPrice) : (selectedModule?.price || "—")}</div>
               </div>
             </div>
 
-            <div className="details-right">
-              <div className="details-section-title">Service Details</div>
+            <div className="sw-cs-details-right">
+              <div className="sw-cs-details-section-title">Service Details</div>
 
               <Form
                 form={form}
@@ -642,7 +642,7 @@ const CleaningService: React.FC = () => {
                     <>
                       {cfg.serviceType && (
                         <Form.Item name="serviceType" label="Service Type" rules={[{ required: true, message: "Choose service type" }]}>
-                          <Select placeholder="Select service type" className="full-width-select">
+                          <Select placeholder="Select service type" className="sw-cs-full-width-select">
                             {selectedModule.title.toLowerCase().includes("room") || selectedModule.title.toLowerCase().includes("bedroom") ? (
                               <>
                                 <Option value="standard">Regular cleaning</Option>
@@ -678,7 +678,7 @@ const CleaningService: React.FC = () => {
                       )}
 
                       {(cfg.bedrooms || cfg.bathrooms) && (
-                        <div className="form-row">
+                        <div className="sw-cs-form-row">
                           {cfg.bedrooms && (
                             <Form.Item name="bedrooms" label="Number of Bedrooms" rules={[{ required: true }]}>
                               <Select placeholder="Select">
@@ -703,22 +703,22 @@ const CleaningService: React.FC = () => {
                         </div>
                       )}
 
-                      <div className="form-row">
+                      <div className="sw-cs-form-row">
                         {cfg.preferredDate && (
                           <Form.Item
                             name="preferredDate"
                             label="Preferred Date"
                             rules={[{ required: true, message: "Select a date" }]}
-                            className="full-width-datepicker"
+                            className="sw-cs-full-width-datepicker"
                           >
-                            <div className="tf-field">
-                              <input type="date" className="custom-date-input" />
+                            <div className="sw-cs-tf-field">
+                              <input type="date" className="sw-cs-custom-date-input" />
                             </div>
                           </Form.Item>
                         )}
 
                         <Form.Item name="hours" label="Estimated Hours (optional)">
-                          <InputNumber min={1} className="full-width-inputnumber" />
+                          <InputNumber min={1} className="sw-cs-full-width-inputnumber" />
                         </Form.Item>
                       </div>
 
@@ -731,9 +731,9 @@ const CleaningService: React.FC = () => {
                   );
                 })()}
 
-                <div className="details-actions">
+                <div className="sw-cs-details-actions">
                   <Button onClick={handleDetailsCancel}>Cancel</Button>
-                  <Button type="primary" htmlType="submit" className="black-btn">
+                  <Button type="primary" htmlType="submit" className="sw-cs-black-btn">
                     Add to Cart
                   </Button>
                 </div>
