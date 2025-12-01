@@ -9520,7 +9520,8 @@ body {
   border-radius: 10px;
   cursor: pointer;
   width: 130px;
-  font-size: 14px;
+  font-size: 12px;
+  margin-block-end:auto;
 }
 
 .sw-br-btn:hover {
@@ -9759,12 +9760,13 @@ textarea {
   .sw-br-header {
     border-radius: 1 !important;
     margin: 0 !important;
-    width: 157px;
+    width: 189px;
   }
 
   .sw-br-card {
     width: 105% !important;
     padding: 14px;
+    margin-top: 10px;
   }
 
   /* ★ Perfectly centered, full-width modal */
@@ -9828,6 +9830,7 @@ textarea {
   margin-bottom: 20px;
   border-radius: 14px;
   margin-top: 25px;
+  margin-left: 6px;
 }
 
 .sw-br-machinery-header h2 {
@@ -9892,8 +9895,10 @@ textarea {
 .sw-br-machinery-bottom {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: baseline;
   margin-top: auto;
+
+
 }
 
 .sw-br-machinery-price {
@@ -10139,7 +10144,7 @@ textarea {
 
   .sw-br-machinery-wrapper {
         width: 212px;
-        margin-left: -18px;  
+        margin-left: -16px;  
    }
 
   .sw-br-machinery-grid {
@@ -10260,8 +10265,9 @@ textarea {
 .sw-br-transport-bottom {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: baseline;
   margin-top: auto;
+  
 }
 
 .sw-br-transport-price {
@@ -10560,7 +10566,7 @@ textarea {
   /* Remove all unwanted extra spacing from wrapper */
   .sw-br-transport-wrapper {
         margin-left: -15px !important;
-        width: 117% !important;
+        width: 114% !important;
         overflow-x: auto;
         border: 100px;
   }
@@ -10605,7 +10611,7 @@ textarea {
 .sw-br-bc-header {
   background: #005cfa;
   color: #fff;
-  padding: 20px 35px;
+  padding: 10px 11px;
   border-radius: 12px;
   margin-bottom: 24px;
   display: flex;
@@ -10633,8 +10639,6 @@ textarea {
   gap: 18px;
   border: 10px;
 }
-
-
 /* CARD */
 .sw-br-bc-card {
   border-radius: 12px !important;
@@ -10643,7 +10647,10 @@ textarea {
   transition: 0.2s ease;
   padding: 10px;
 }
-
+.sw-br-bc-btn{
+  background: black;
+  color: white;
+}
 
 .sw-br-bc-card:hover {
   transform: translateY(-4px);
