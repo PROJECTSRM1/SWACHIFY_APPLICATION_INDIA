@@ -109,13 +109,13 @@ export default function HomeServices() {
   return (
     <div className="sw-hs-home-services-container">
       {/* HEADER */}
-      <div className="services-top-banner">
-        <div className="banner-left">
-          <div className="banner-icon"><ToolOutlined /></div>
+      <div className="sw-hs-services-top-banner">
+        <div className="sw-hs-banner-left">
+          <div className="sw-hs-banner-icon"><ToolOutlined /></div>
 
-          <div className="banner-text">
-            <h2 className="banner-title">Home Services</h2>
-            <p className="banner-subtitle">{services.length} services available</p>
+          <div className="sw-hs-banner-text">
+            <h2 className="sw-hs-banner-title">Home Services</h2>
+            <p className="sw-hs-banner-subtitle">{services.length} services available</p>
           </div>
         </div>
 
