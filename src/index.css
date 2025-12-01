@@ -1,4 +1,4 @@
-/* ---------------- updated CleaningService.css  nithin cleaning dash ---------------- */
+/* ---------------- updated CleaningService.css ---------------- */
 
 .sw-cs-cs-container {
   width: 100%;
@@ -657,905 +657,8 @@ body,
   
   margin: 0;
 }
-/* nithin cleaning dash */
 
 
-
-
-  /* ----- Base / layout ----- harish landinghs*/
-  .sw-hsl-hs-root {
-    font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
-    background: #fafbfc;
-    min-height: 100vh;
-    color: #222;
-  }
-
-  /* navbar */
-  .sw-hsl-hs-navbar {
-    height: 68px;
-    display: flex;
-    align-items: center;
-    padding: 0 28px;
-    background: #fff;
-    border-bottom: 1px solid #f0f0f0;
-    z-index: 50;
-  }
-  .sw-hsl-hs-navbar-logo {
-    display: flex;
-    align-items: center;
-    font-size: 1.32rem;
-    font-weight: 700;
-    color: #262626;
-    margin-right: 38px;
-  }
-  .sw-hsl-hs-logo-text {
-    font-weight: 600;
-    color: #262626;
-    font-size: 1.19rem;
-  }
-  .sw-hsl-hs-navbar-menu {
-    flex: 1;
-    min-width: 0;
-    border-bottom: none !important;
-    padding-left: 70px;
-    font-weight: bold;
-  }
-
-  /* ----- Hero ----- */
-  .sw-hsl-hs-hero {
-    min-height: 430px;
-    display: flex;
-    align-items: center;
-    position: relative;
-    background-size: cover !important;
-    background-position: center center !important;
-    padding: 48px 18px;
-  }
-  .sw-hsl-hs-hero::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.28);
-    z-index: 1;
-  }
-  .sw-hsl-hs-hero-content {
-    width: 100%;
-    z-index: 3;
-  }
-  .sw-hsl-hs-hero-inner {
-    margin-left: 4vw;
-    margin-top: 12px;
-    z-index: 3;
-    color: #fff;
-    max-width: 680px;
-  }
-  .sw-hsl-hs-hero-line {
-    display: flex;
-    align-items: center;
-    font-size: 1.17rem;
-    margin-bottom: 14px;
-    color: #fff;
-    gap: 10px;
-    font-weight: 500;
-  }
-  .sw-hsl-hs-hero-head {
-    color: #fff !important;
-    font-weight: 700;
-    font-size: 3rem;
-    margin-bottom: 0.5rem;
-    line-height: 1.07;
-  }
-  .sw-hsl-hs-hero-desc {
-    color: #ffe7d3;
-    font-size: 1.12rem;
-    margin-bottom: 28px;
-    margin-top: 12px;
-    max-width: 650px;
-  }
-  .sw-hsl-hs-hero-actions {
-    display: flex;
-    gap: 16px;
-    margin-top: 12px;
-  }
-  .sw-hsl-hs-book-btn {
-    font-size: 1.08rem;
-    background: black!important;
-    color: #fff !important;
-    border: none !important;
-    border-radius: 8px !important;
-    font-weight: 600;
-    box-shadow: 1px 1.5px 6px 1px rgba(241, 100, 23, 0.08);
-  }
-  .sw-hsl-hs-emergency-btn {
-    font-size: 1.06rem;
-    margin-left: 7px;
-    background: #d94818 !important;
-    border-color: #d94818 !important;
-    color: #fff !important;
-    border-radius: 8px !important;
-    font-weight: 600;
-    box-shadow: 1px 1.5px 6px 1px rgba(241, 100, 23, 0.08);
-  }
-
-  /* ----- Sections / cards ----- */
-  .sw-hsl-hs-section-root {
-    max-width: 1250px;
-    margin: 0 auto;
-    padding: 38px 12px 24px 12px;
-  }
-  .sw-hsl-hs-section-head {
-    text-align: center;
-    margin-bottom: 22px;
-  }
-  .sw-hsl-hs-section-title {
-    font-size: 2.14rem;
-    font-weight: 700;
-    color: #222;
-    letter-spacing: -1px;
-  }
-  .sw-hsl-hs-section-sub {
-    color: #767676;
-    font-size: 1.18rem;
-    margin-bottom: 20px;
-  }
-
-  /* Service cards */
-  .sw-hsl-hs-cards-row {
-    max-width: 1250px;
-    margin: 0 auto;
-  }
-  .sw-hsl-hs-card {
-    width: 100%;
-    border-radius: 20px !important;
-    min-height: 410px;
-    background: #fff;
-    box-shadow: 0 2px 20px 2px #ececec26;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding-bottom: 16px;
-  }
-
-  /* Align card body to center for icon + title, keep features left */
-  .sw-hsl-hs-card .ant-card-body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0 18px 18px;
-  }
-  .sw-hsl-hs-card-img {
-    width: 100%;
-    height: 160px;
-    border-radius: 20px 20px 0 0;
-    object-fit: cover;
-  }
-  .sw-hsl-hs-card-icon {
-    margin-top: 18px;
-  }
-  .sw-hsl-hs-card-title-price {
-    margin-top: 8px;
-    text-align: center;
-  }
-  .sw-hsl-hs-card-title {
-    display: block;
-    font-size: 1.08rem;
-    font-weight: 600;
-    color: #222;
-    margin-bottom: 8px;
-  }
-  .sw-hsl-hs-card-price {
-    color: #6b7280;
-    font-size: 0.98rem;
-  }
-
-  /* features: left aligned, constrained width */
-  .sw-hsl-hs-card-features {
-    list-style: none;
-    padding: 0;
-    margin: 12px auto;
-    width: 100%;
-    max-width: 340px;
-    text-align: left;
-  }
-  .sw-hsl-hs-card-features li {
-    display: flex;
-    align-items: center;
-    margin: 8px 0;
-    color: #374151;
-  }
-  .sw-hsl-hs-check-icon {
-    color: #14b8a6;
-    margin-right: 8px;
-  }
-
-  /* ----- Emergency Section ----- */
-  .sw-hsl-hs-emergency-wrap {
-    background: #fdeeee;
-    padding: 52px 20px;
-    margin-top: 20px;
-    text-align: center;
-    border-radius: 12px;
-  }
-  .sw-hsl-hs-emergency-head h2 {
-    font-size: 2.2rem;
-    font-weight: 700;
-    color: #222;
-  }
-  .sw-hsl-hs-emergency-head p {
-    color: #555;
-    font-size: 1.05rem;
-    margin-top: 10px;
-    margin-bottom: 32px;
-  }
-  .sw-hsl-hs-em-card {
-    border-radius: 18px !important;
-    padding: 18px 12px;
-    background: #fff;
-    min-height: 200px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 18px rgba(0,0,0,0.06);
-    text-align: center;
-  }
-  .sw-hsl-hs-em-icon {
-    margin-bottom: 12px;
-  }
-  .sw-hsl-hs-em-icon img { width: 48px; height: 48px; display:block; }
-  .sw-hsl-hs-em-title {
-    font-size: 1.05rem;
-    font-weight: 600;
-    margin-bottom: 8px;
-    color: #333;
-  }
-  .sw-hsl-hs-em-response {
-    color: #e53946;
-    font-weight: 600;
-  }
-  .sw-hsl-hs-emergency-btn-wrap { margin-top: 34px; }
-  .sw-hsl-hs-emergency-main-btn {
-    background: #e60000 !important;
-    border-radius: 10px !important;
-    padding: 12px 22px !important;
-    font-size: 1rem !important;
-    font-weight: 600 !important;
-  }
-
-  /* ==================
-    PRICING / PLANS
-    ================== */
-  .sw-hsl-hs-pricing-wrap {
-    padding: 56px 18px;
-    max-width: 1250px;
-    margin: 30px auto;
-    text-align: center;
-  }
-  .sw-hsl-hs-pricing-head h2 {
-    font-size: 2.2rem;
-    font-weight: 700;
-    margin-bottom: 8px;
-    color: #222;
-  }
-  .sw-hsl-hs-pricing-head p {
-    margin-bottom: 34px;
-    color: #6b7280;
-    font-size: 1rem;
-  }
-  .sw-hsl-hs-price-card {
-    border-radius: 18px !important;
-    padding: 28px 22px;
-    min-height: 420px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: stretch;
-    background: #fff;
-    box-shadow: 0 2px 18px rgba(0,0,0,0.06);
-  }
-  .sw-hsl-hs-price-popular-wrap { position: relative; margin-top: -6px; }
-  .sw-hsl-hs-price-card-popular { border: 4px solid #ff7a1a !important; box-shadow: 0 10px 30px rgba(255,122,26,0.12); }
-  .sw-hsl-hs-popular-badge {
-    position: absolute;
-    top: -14px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #ff7a1a;
-    color: #fff;
-    padding: 8px 18px;
-    border-radius: 20px;
-    font-weight: 600;
-    font-size: 0.95rem;
-    z-index: 5;
-    box-shadow: 0 6px 18px rgba(255,122,26,0.12);
-  }
-  .sw-hsl-hs-price-title { font-size: 1.26rem; font-weight: 600; color: #222; margin-bottom: 20px; text-align: center; }
-  .sw-hsl-hs-price-amount { text-align: center; margin-bottom: 18px; }
-  .sw-hsl-hs-price-dollar { color: #f7702e; font-weight: 700; font-size: 2.3rem; display: inline-block; line-height: 1; }
-  .sw-hsl-hs-price-suffix { color: #6b7280; font-size: 1rem; margin-left: 6px; vertical-align: bottom; }
-  .sw-hsl-hs-price-features {
-    list-style: none;
-    padding: 0;
-    margin: 8px 10px 22px 10px;
-    text-align: left;
-    flex: 1 1 auto;
-  }
-  .sw-hsl-hs-price-features li { margin: 12px 0; color: #374151; font-size: 0.98rem; display: flex; align-items: center; }
-  .sw-hsl-hs-check { color: #050505; margin-right: 10px; font-size: 18px; }
-  .sw-hsl-hs-choose-btn { border-radius: 10px !important; padding: 12px 18px !important; font-weight: 700 !important; font-size: 0.99rem !important; margin-top: 12px; }
-  .sw-hsl-hs-choose-btn-primary { background: #ff7a1a !important; color: #fff !important; border: none !important; box-shadow: 0 6px 18px rgba(255,122,26,0.14); }
-  .sw-hsl-hs-choose-btn-outline { background: transparent !important; border: 2px solid rgba(0,0,0,0.06) !important; color: #111 !important; }
-
-  /* Booking form */
-  .sw-hsl-hs-booking-wrap { max-width: 920px; margin: 60px auto; text-align: center; padding: 10px; }
-  .sw-hsl-hs-booking-head h2 { font-size: 2rem; font-weight: 700; color: #111; }
-  .sw-hsl-hs-booking-head p { color: #6b7280; font-size: 1.05rem; margin-bottom: 30px; }
-  .sw-hsl-hs-booking-card { padding: 30px 32px; border-radius: 20px !important; background: #fff; box-shadow: 0 4px 22px rgba(0,0,0,0.06); text-align: left; }
-  .sw-hsl-hs-booking-label { display: block; font-weight: 600; color: #333; margin-bottom: 6px; }
-
-  /* regular text input style (already used) */
-  .sw-hsl-hs-booking-input {
-    width: 100%;
-    padding: 12px 14px;
-    border: 1px solid #e6e9ee;
-    border-radius: 10px;
-    font-size: 0.98rem;
-    background: #f8f9fb;
-    box-sizing: border-box;
-  }
-
-  /* ensure textarea looks same */
-  .sw-hsl-hs-booking-textarea { width: 100%; height: 120px; padding: 14px; border-radius: 10px; border: 1px solid #e6e9ee; background: #f8f9fb; font-size: 1rem; resize: none; }
-
-  /* ============== ANTD SELECT & PICKER STYLING ==============
-    Make AntD Select & DatePicker match .hs-booking-input appearance
-    This is the key block that makes the form look like your 2nd image.
-    ============================================================== */
-
-  /* Make Select container adopt our booking-input class sizing */
-  .sw-hsl-hs-booking-input.ant-select,
-  .sw-hsl-hs-booking-input.ant-select-focused,
-  .sw-hsl-hs-booking-input .ant-select {
-    width: 100%;
-    box-sizing: border-box;
-  }
-
-  /* Style the Select's visible selector to look like the inputs */
-  .sw-hsl-hs-booking-input .ant-select-selector {
-    background: #f8f9fb !important;
-    border: 1px solid #e6e9ee !important;
-    border-radius: 10px !important;
-    height: 44px !important;
-    display: flex !important;
-    align-items: center !important;
-    padding: 0 12px !important;
-    box-sizing: border-box !important;
-  }
-
-  /* Keep placeholder / selected text vertically centered */
-  .sw-hsl-hs-booking-input .ant-select-selection-item,
-  .sw-hsl-hs-booking-input .ant-select-selection-placeholder {
-    line-height: 44px !important;
-    height: 44px !important;
-    display: inline-block !important;
-    padding: 0 !important;
-  }
-
-  /* Make the caret / arrow sit at the right inside the selector */
-  .sw-hsl-hs-booking-input .ant-select-arrow {
-    margin-left: 8px !important;
-    color: rgba(0,0,0,0.45);
-    font-size: 14px;
-  }
-
-  /* DatePicker wrapper (we used class `date-input` in JSX) */
-  .sw-hsl-date-input {
-    width: 100%;
-    box-sizing: border-box;
-    border-radius: 10px;
-    background: #f8f9fb;
-    border: 1px solid #e6e9ee;
-    height: 44px;
-    display: flex;
-    align-items: center;
-    padding: 0 12px;
-  }
-
-  /* Make the internal AntD picker input transparent so the wrapper styles show */
-  .sw-hsl-date-input .ant-picker {
-    width: 100%;
-    border: none;
-    background: transparent;
-    height: 44px;
-    display: flex;
-    align-items: center;
-  }
-
-  /* ensure the textual input area lines up */
-  .sw-hsl-date-input .ant-picker-input > input {
-    height: 44px;
-    line-height: 44px;
-    border: none;
-    background: transparent;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  /* adjust the icon inside the picker to align */
-  .sw-hsl-date-input .ant-picker-suffix {
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: rgba(0,0,0,0.45);
-  }
-
-  /* add subtle focus effect to both select and date */
-  .sw-hsl-hs-booking-input .ant-select-selector:focus,
-  .sw-hsl-hs-booking-input .ant-select-selector:hover,
-  .sw-hsl-date-input .ant-picker:hover {
-    outline: none;
-    border-color: #c6d5ff;
-    box-shadow: 0 2px 8px rgba(38,80,255,0.06);
-  }
-
-  /* ================================================================= */
-
-  /* ----- Footer ----- */
-  .sw-hsl-hs-footer { background: #0f1724; color: #cbd5e1; padding: 48px 20px 18px; margin-top: 40px; font-family: inherit; }
-  .sw-hsl-hs-footer-inner { max-width: 1250px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 36px; align-items: start; padding: 0 12px; }
-  .sw-hsl-hs-footer-col h4 { color: #ffffff; font-size: 1.1rem; margin-bottom: 12px; font-weight: 700; }
-  .sw-hsl-hs-footer-col p { color: #9aa6b3; line-height: 1.8; max-width: 320px; margin: 0; }
-  .sw-hsl-hs-footer-col ul { list-style: none; padding: 0; margin: 0; }
-  .sw-hsl-hs-footer-col ul li { margin: 12px 0; color: #9aa6b3; font-size: 0.98rem; }
-  .sw-hsl-hs-contact-row { display: flex; align-items: center; gap: 10px; color: #9aa6b3; margin: 12px 0; font-size: 0.98rem; }
-  .sw-hsl-hs-contact-row svg { font-size: 18px; color: #9aa6b3; }
-  .sw-hsl-hs-footer-socials { margin-top: 14px; display: flex; gap: 14px; }
-  .sw-hsl-hs-footer-socials a { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 8px; background: transparent; color: #cbd5e1; font-size: 16px; border: 1px solid rgba(255,255,255,0.04); transition: all .18s ease; }
-  .sw-hsl-hs-footer-socials a:hover { background: rgba(255,255,255,0.04); transform: translateY(-2px); }
-  .sw-hsl-hs-footer-bottom { max-width: 1250px; margin: 22px auto 0; padding: 0 12px; display: flex; flex-direction: column; align-items: center; }
-  .sw-hsl-hs-footer-line { width: 100%; height: 1px; background: rgba(255,255,255,0.04); margin-bottom: 18px; }
-  .sw-hsl-hs-footer-copy { color: #9aa6b3; padding: 14px 0 30px; font-size: 0.95rem; }
-
-  /* ----- Responsive ----- */
-  @media (max-width: 992px) {
-    .sw-hsl-hs-hero-head { font-size: 2.1rem; }
-    .sw-hsl-hs-card-img { height: 120px; }
-    .sw-hsl-hs-card { min-height: 360px; }
-    .sw-hsl-hs-footer-inner { grid-template-columns: repeat(2, 1fr); gap: 26px; }
-
-    /* Pricing cards: stack 2 across */
-    .sw-hsl-hs-pricing-wrap .ant-row,
-    .sw-hsl-hs-pricing-wrap .ant-col {
-      width: 100%;
-    }
-  }
-
-  @media (max-width: 600px) {
-    .sw-hsl-hs-hero-inner { margin-left: 0; max-width: 99vw; }
-    .sw-hsl-hs-hero-head { font-size: 1.5rem; }
-    .sw-hsl-hs-hero { min-height: 220px; padding: 28px 12px; }
-    .sw-hsl-hs-card-img { height: 110px; }
-    .sw-hsl-hs-card { border-radius: 14px !important; min-height: unset; }
-    .sw-hsl-hs-price-card { min-height: unset; padding: 18px; border-radius: 12px !important; }
-    .sw-hsl-hs-pricing-wrap { padding: 36px 12px; }
-    .sw-hsl-hs-booking-card { padding: 22px; }
-    .sw-hsl-hs-footer-inner { grid-template-columns: 1fr; gap: 18px; }
-
-    /* Booking form: full-width stacking */
-    .sw-hsl-hs-booking-card .ant-row > .ant-col {
-      width: 100% !important;
-      max-width: 100% !important;
-    }
-
-    /* Price card layout: have spacing around each card vertically */
-    .sw-hsl-hs-pricing-wrap .ant-col {
-      margin-bottom: 18px;
-    }
-  }
-
-  /* Contact button in header - match Commercial page look */
-  .sw-hsl-hs-contact-btn {
-    background: #111827 !important;
-    border-color: #111827 !important;
-    color: #fff !important;
-    font-weight: 600;
-    border-radius: 8px !important;
-    padding: 8px 12px;
-    margin-left: 16px;
-    box-shadow: 0 6px 16px rgba(17,24,39,0.08);
-  }
-
-  /* On very small screens, shrink the button and ensure spacing */
-  @media (max-width: 768px) {
-    .sw-hsl-hs-contact-btn {
-      padding: 6px 10px;
-      font-size: 13px;
-      margin-left: 8px;
-    }
-
-    /* hide the large horizontal menu on smaller screens (keeps header clean) */
-    .sw-hsl-hs-navbar-menu {
-      display: none;
-    }
-  }
-
-  /* ========== Mobile header: logo -> menu -> Contact (no overlap with hero) ========== */
-  @media (max-width: 768px) {
-    .sw-hsl-hs-navbar {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 12px 16px;
-      background: #fff;
-      border-bottom: 1px solid #f0f0f0;
-      box-shadow: 0 6px 18px rgba(6,21,38,0.06);
-      position: sticky;
-      top: 0;
-      z-index: 900;
-      height: auto;
-      box-sizing: border-box;
-    }
-
-    .sw-hsl-hs-navbar-logo {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 6px 8px;
-      margin-right: 0;
-      text-align: center;
-      order: 1;
-    }
-
-    .sw-hsl-hs-navbar-menu {
-      display: flex !important;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-      padding: 0;
-      margin: 0;
-      order: 2;
-      gap: 4px;
-      background: transparent;
-    }
-
-    .sw-hsl-hs-navbar-menu .ant-menu-item {
-      width: 100%;
-      display: flex !important;
-      justify-content: center;
-      padding: 10px 12px !important;
-      border-bottom: 1px solid rgba(0,0,0,0.04);
-      box-sizing: border-box;
-      background: transparent;
-    }
-    .sw-hsl-hs-navbar-menu .ant-menu-item:last-child { border-bottom: none; }
-
-    .sw-hsl-hs-navbar-menu a {
-      display: inline-block;
-      width: 100%;
-      text-align: center;
-      font-weight: 600;
-      color: #262626 !important;
-      padding: 4px 0;
-    }
-
-    .sw-hsl-hs-contact-btn {
-      order: 3;
-      position: relative !important;
-      width: calc(100% - 28px);
-      max-width: 420px;
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      margin: 6px 0 0;
-      padding: 8px 12px;
-      border-radius: 8px !important;
-      background: #111827 !important;
-      color: #fff !important;
-      font-weight: 700;
-      box-shadow: 0 8px 20px rgba(17,24,39,0.08);
-      z-index: 2;
-    }
-
-    .sw-hsl-hs-navbar .hs-contact-btn,
-    .sw-hsl-hs-navbar .hs-navbar-menu {
-      position: static !important;
-    }
-
-    .sw-hsl-hs-hero { margin-top: 8px; z-index: 1; }
-    .sw-hsl-hs-hero-head { font-size: 1.6rem !important; line-height: 1.06; }
-    .sw-hsl-hs-hero { padding: 24px 12px; min-height: 220px; }
-  }
-
-  /* Extra tiny screens */
-  @media (max-width: 420px) {
-    .sw-hsl-hs-contact-btn { width: calc(100% - 20px); padding: 8px 10px; font-size: 14px; }
-    .sw-hsl-hs-navbar-menu .ant-menu-item { padding: 8px 10px !important; }
-    .sw-hsl-hs-hero-head { font-size: 1.4rem !important; }
-  }
-
-  /* Modal / auth tab tweaks */
-  .sw-hsl-ant-modal-content {
-    border-radius: 12px;
-    overflow: hidden;
-  }
-
-  .sw-hsl-ant-tabs-nav-list {
-    gap: 8px;
-  }
-
-  /* make auth modal inputs feel a little roomier on mobile */
-  @media (max-width: 600px) {
-    .sw-hsl-ant-modal {
-      padding: 0 12px;
-    }
-    .sw-hsl-ant-modal-content {
-      margin: 12px 6px;
-    }
-    .sw-hsl-ant-tabs-tab {
-      font-size: 15px;
-      padding: 8px 6px;
-    }
-  }
-
-
-
-  /* Fix double-rounded Select: make outer wrapper transparent and let the inner selector show the input styling */
-  .sw-hsl-hs-booking-input.ant-select {
-    background: transparent !important;
-    border: none !important;
-    padding: 0 !important;
-    box-shadow: none !important;
-  }
-
-  /* Ensure outer wrapper doesn't influence size — keep width but remove inner spacing */
-  .sw-hsl-hs-booking-input.ant-select .ant-select-selector {
-    /* keep the selector styling we already use */
-    background: #f8f9fb !important;
-    border: 1px solid #e6e9ee !important;
-    border-radius: 10px !important;
-    height: 44px !important;
-    display: flex !important;
-    align-items: center !important;
-    padding: 0 12px !important;
-    box-sizing: border-box !important;
-  }
-
-  /* Remove the default ant-select padding if any (helps the inner selector to line up) */
-  .sw-hsl-hs-booking-input.ant-select .ant-select-selection-placeholder,
-  .sw-hsl-hs-booking-input.ant-select .ant-select-selection-item {
-    line-height: 44px !important;
-    height: 44px !important;
-    padding: 0 !important;
-  }
-
-
-
-  .sw-hsl-hs-booking-submit {
-    width: 100%;
-    background: #000 !important;   /* PURE BLACK */
-    color: #fff !important;
-    padding: 14px;
-    border-radius: 10px;
-    font-weight: 700;
-    font-size: 1rem;
-    margin-top: 10px;
-    border: none;
-  }
-
-
-  /* ----------------------------
-   Hamburger + mobile menu styles
-   (Added for Home_Service)
-   ---------------------------- */
-
-.sw-hsl-mobile-menu-icon {
-  display: none;
-  font-size: 1.6rem;
-  cursor: pointer;
-  background: transparent;
-  border: none;
-  padding: 6px;
-  line-height: 1;
-  color: #262626;
-  align-self: center;
-}
-
-/* mobile dropdown list styling */
-.sw-hsl-mobile-menu {
-  width: 100%;
-  background: #fff;
-  list-style: none;
-  padding: 12px 16px;
-  box-shadow: 0 8px 28px rgba(6,21,38,0.08);
-  margin: 8px 0 0 0;
-  box-sizing: border-box;
-  border-radius: 8px;
-  position: relative;
-  z-index: 999;
-}
-
-/* mobile items */
-.sw-hsl-mobile-menu li {
-  padding: 10px 6px;
-  border-bottom: 1px solid rgba(16,24,40,0.04);
-}
-
-.sw-hsl-mobile-menu li:last-child {
-  border-bottom: none;
-}
-
-.sw-hsl-mobile-menu li a {
-  color: #0b2a3a;
-  text-decoration: none;
-  display: block;
-  width: 100%;
-  font-weight: 600;
-}
-
-/* Show hamburger on small screens and place it between logo and menu/button */
-@media (max-width: 768px) {
-  .sw-hsl-mobile-menu-icon {
-    display: block; /* show hamburger */
-  }
-
-  /* ensure header items stack/order so hamburger sits between logo and menu/sign-up */
-  .sw-hsl-hs-navbar {
-    align-items: center;
-    gap: 8px;
-  }
-
-  .sw-hsl-hs-navbar-logo {
-    order: 0;
-    flex: 0 0 auto;
-    width: auto;
-    display: flex;
-    justify-content: center;
-  }
-
-  .sw-hsl-mobile-menu-icon {
-    order: 1;
-    margin-left: 6px;
-    margin-right: 6px;
-    flex: 0 0 auto;
-  }
-
-  .sw-hsl-hs-navbar .sw-hsl-hs-navbar-menu {
-    order: 2;
-    width: 100%;
-  }
-
-  .sw-hsl-hs-contact-btn {
-    order: 3;
-    flex: 0 0 auto;
-  }
-
-  /* ensure mobile dropdown sits below header and doesn't overlap hero */
-  .sw-hsl-mobile-menu {
-    margin-top: 10px;
-  }
-
-  /* hide AntD horizontal menu on small screens (we use our dropdown instead) */
-  .sw-hsl-hs-navbar .sw-hsl-hs-navbar-menu {
-    display: none;
-  }
-}
-
-/* small polish for very narrow screens */
-@media (max-width: 420px) {
-  .sw-hsl-mobile-menu {
-    padding: 10px;
-    border-radius: 6px;
-  }
-}
-
-
-/* ----------------------------
-   Hamburger + mobile menu styles
-   (Add to end of homeservice.css)
-   ---------------------------- */
-
-.sw-hsl-mobile-menu-icon {
-  display: none;
-  font-size: 1.6rem;
-  cursor: pointer;
-  background: transparent;
-  border: none;
-  padding: 6px;
-  line-height: 1;
-  color: #262626;
-  align-self: center;
-}
-
-/* mobile dropdown list styling */
-.sw-hsl-mobile-menu {
-  width: 100%;
-  background: #fff;
-  list-style: none;
-  padding: 12px 16px;
-  box-shadow: 0 8px 28px rgba(6,21,38,0.08);
-  margin: 8px 0 0 0;
-  box-sizing: border-box;
-  border-radius: 8px;
-  position: relative;
-  z-index: 999;
-}
-
-/* mobile items */
-.sw-hsl-mobile-menu li {
-  padding: 10px 6px;
-  border-bottom: 1px solid rgba(16,24,40,0.04);
-}
-
-.sw-hsl-mobile-menu li:last-child {
-  border-bottom: none;
-}
-
-.sw-hsl-mobile-menu li a {
-  color: #0b2a3a;
-  text-decoration: none;
-  display: block;
-  width: 100%;
-  font-weight: 600;
-}
-
-/* Show hamburger on small screens and place it between logo and menu/button */
-@media (max-width: 768px) {
-  .sw-hsl-mobile-menu-icon {
-    display: block; /* show hamburger */
-  }
-
-  /* ensure header items stack/order so hamburger sits between logo and menu/sign-up */
-  .sw-hsl-hs-navbar {
-    align-items: center;
-    gap: 8px;
-  }
-
-  .sw-hsl-hs-navbar-logo {
-    order: 0;
-    flex: 0 0 auto;
-    width: auto;
-    display: flex;
-    justify-content: center;
-  }
-
-  .sw-hsl-mobile-menu-icon {
-    order: 1;
-    margin-left: 6px;
-    margin-right: 6px;
-    flex: 0 0 auto;
-  }
-
-  .sw-hsl-hs-navbar .sw-hsl-hs-navbar-menu {
-    order: 2;
-    width: 100%;
-  }
-
-  .sw-hsl-hs-contact-btn {
-    order: 3;
-    flex: 0 0 auto;
-  }
-
-  /* ensure mobile dropdown sits below header and doesn't overlap hero */
-  .sw-hsl-mobile-menu {
-    margin-top: 10px;
-  }
-
-  /* hide AntD horizontal menu on small screens (we use our dropdown instead) */
-  .sw-hsl-hs-navbar .sw-hsl-hs-navbar-menu {
-    display: none;
-  }
-}
-
-/* small polish for very narrow screens */
-@media (max-width: 420px) {
-  .sw-hsl-mobile-menu {
-    padding: 10px;
-    border-radius: 6px;
-  }
-}
-/* harish landinghs */
 /* //////////////////vamsi landing///// */
 /* RESET */
 * {
@@ -3540,3 +2643,1277 @@ body,
 }
 
 /* ///////////// Vamsi Packers and Movers ///// */
+
+/* ///// Home rentals Raju */
+:root {
+  --primary-color: #8b5cf6;
+  --primary-dark: #6d28d9;
+  --secondary-color: #1e40af;
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  --text-muted: #9ca3af;
+  --bg-white: #ffffff;
+  --bg-light: #f9fafb;
+  --border-color: #e5e7eb;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --radius: 10px;
+  --radius-lg: 12px;
+}
+
+.sw-hr-app-root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--text-primary);
+  background-color: var(--bg-light);
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.sw-hr-app-root *,
+.sw-hr-app-root *::before,
+.sw-hr-app-root *::after {
+  box-sizing: border-box;
+}
+
+.sw-hr-app-main {
+  flex: 1;
+  background: var(--bg-light);
+}
+
+.sw-hr-muted {
+  color: var(--text-muted);
+}
+
+/* Services Page Styles */
+.sw-hr-services-page {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 24px 60px;
+}
+
+.sw-hr-services-hero {
+  background: linear-gradient(90deg, var(--primary-color), #a78bfa);
+  color: #fff;
+  border-radius: var(--radius-lg);
+  padding: 24px 32px;
+  margin-bottom: 32px;
+  box-shadow: var(--shadow-lg);
+}
+
+.sw-hr-hero-content {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.sw-hr-hero-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+.sw-hr-hero-text h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.sw-hr-hero-text .sw-hr-muted {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.sw-hr-services-grid {
+  margin-top: 0;
+}
+
+/* Service Card Styles */
+.sw-hr-service-card {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s ease;
+  border: 1px solid var(--border-color);
+}
+
+.sw-hr-service-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-4px);
+}
+
+.sw-hr-sc-image-wrap {
+  height: 200px;
+  overflow: hidden;
+  background: var(--bg-light);
+}
+
+.sw-hr-sc-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+}
+
+.sw-hr-service-card:hover .sw-hr-sc-image {
+  transform: scale(1.05);
+}
+
+.sw-hr-sc-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sw-hr-sc-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.sw-hr-sc-sub {
+  color: var(--text-secondary);
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.sw-hr-sc-cta {
+  margin-top: 8px;
+}
+
+.sw-hr-browse-btn {
+  background: var(--secondary-color);
+  border-color: var(--secondary-color);
+  width: 100%;
+  height: 48px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.sw-hr-browse-btn:hover {
+  background: #1e3a8a;
+  border-color: #1e3a8a;
+}
+
+/* Property Type Page Styles */
+.sw-hr-property-type-page {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 24px 60px;
+}
+
+.sw-hr-commercial-property-type-page {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 24px 60px;
+}
+
+.sw-hr-property-type-section,
+.sw-hr-benefits-section {
+  margin-bottom: 60px;
+}
+
+.sw-hr-section-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.sw-hr-section-header h1 {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--secondary-color);
+  margin-bottom: 12px;
+}
+
+.sw-hr-section-subtitle {
+  font-size: 16px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.sw-hr-property-cards {
+  margin-top: 32px;
+}
+
+.sw-hr-property-type-card {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s ease;
+  border: 1px solid var(--border-color);
+  height: 100%;
+}
+
+.sw-hr-property-type-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-4px);
+}
+
+.sw-hr-ptc-image-wrap {
+  position: relative;
+  height: 280px;
+  overflow: hidden;
+  background: var(--bg-light);
+}
+
+.sw-hr-ptc-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.sw-hr-property-type-card:hover .sw-hr-ptc-image {
+  transform: scale(1.1);
+}
+
+.sw-hr-ptc-overlay {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 2;
+}
+
+.sw-hr-ptc-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 18px;
+  box-shadow: var(--shadow-md);
+}
+
+.sw-hr-ptc-view-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 16px;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-primary);
+  z-index: 2;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.sw-hr-ptc-view-btn:hover {
+  background: rgba(255, 255, 255, 1);
+  transform: scale(1.05);
+}
+
+.sw-hr-ptc-content {
+  padding: 20px;
+  text-align: center;
+}
+
+.sw-hr-ptc-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.sw-hr-ptc-subtitle {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.sw-hr-benefits-grid {
+  margin-top: 32px;
+}
+
+.sw-hr-benefit-card {
+  text-align: center;
+  padding: 32px 24px;
+  background: var(--bg-white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
+  border: 1px solid var(--border-color);
+}
+
+.sw-hr-benefit-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-4px);
+}
+
+.sw-hr-benefit-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  margin: 0 auto 20px;
+}
+
+.sw-hr-benefit-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--secondary-color);
+  margin-bottom: 12px;
+}
+
+.sw-hr-benefit-description {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* Modal styles */
+.sw-hr-browse-modal .ant-modal-body {
+  padding: 0;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.sw-hr-browse-modal .sw-hr-property-type-page,
+.sw-hr-browse-modal .sw-hr-commercial-property-type-page {
+  margin: 0;
+  padding: 24px;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 1024px) {
+  .sw-hr-property-type-page,
+  .sw-hr-commercial-property-type-page {
+    padding: 0 20px 40px;
+  }
+
+  .sw-hr-section-header h1 {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sw-hr-services-page {
+    margin: 20px auto;
+    padding: 0 16px 40px;
+  }
+
+  .sw-hr-services-hero {
+    padding: 20px 16px;
+    margin-bottom: 24px;
+  }
+
+  .sw-hr-hero-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .sw-hr-hero-icon {
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .sw-hr-hero-text h2 {
+    font-size: 20px;
+  }
+
+  .sw-hr-hero-text .sw-hr-muted {
+    font-size: 13px;
+  }
+
+  .sw-hr-sc-image-wrap {
+    height: 180px;
+  }
+
+  .sw-hr-sc-title {
+    font-size: 18px;
+  }
+
+  .sw-hr-sc-sub {
+    font-size: 13px;
+  }
+
+  .sw-hr-property-type-page,
+  .sw-hr-commercial-property-type-page {
+    margin: 20px auto;
+    padding: 0 16px 40px;
+  }
+
+  .sw-hr-property-type-section,
+  .sw-hr-benefits-section {
+    margin-bottom: 40px;
+  }
+
+  .sw-hr-section-header {
+    margin-bottom: 24px;
+  }
+
+  .sw-hr-section-header h1 {
+    font-size: 24px;
+    margin-bottom: 8px;
+  }
+
+  .sw-hr-section-subtitle {
+    font-size: 14px;
+  }
+
+  .sw-hr-property-cards {
+    margin-top: 24px;
+  }
+
+  .sw-hr-ptc-image-wrap {
+    height: 220px;
+  }
+
+  .sw-hr-ptc-overlay {
+    top: 12px;
+    left: 12px;
+  }
+
+  .sw-hr-ptc-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+
+  .sw-hr-ptc-view-btn {
+    top: 12px;
+    right: 12px;
+    padding: 4px 10px;
+    font-size: 11px;
+  }
+
+  .sw-hr-ptc-content {
+    padding: 16px;
+  }
+
+  .sw-hr-ptc-title {
+    font-size: 20px;
+  }
+
+  .sw-hr-ptc-subtitle {
+    font-size: 13px;
+  }
+
+  .sw-hr-benefits-grid {
+    margin-top: 24px;
+  }
+
+  .sw-hr-benefit-card {
+    padding: 24px 16px;
+  }
+
+  .sw-hr-benefit-icon {
+    width: 56px;
+    height: 56px;
+    font-size: 24px;
+    margin-bottom: 16px;
+  }
+
+  .sw-hr-benefit-title {
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+
+  .sw-hr-benefit-description {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sw-hr-services-page {
+    padding: 0 12px 32px;
+  }
+
+  .sw-hr-services-hero {
+    padding: 16px 12px;
+  }
+
+  .sw-hr-hero-text h2 {
+    font-size: 18px;
+  }
+
+  .sw-hr-sc-image-wrap {
+    height: 160px;
+  }
+
+  .sw-hr-sc-title {
+    font-size: 16px;
+  }
+
+  .sw-hr-property-type-page,
+  .sw-hr-commercial-property-type-page {
+    padding: 0 12px 32px;
+  }
+
+  .sw-hr-section-header h1 {
+    font-size: 22px;
+  }
+
+  .sw-hr-ptc-image-wrap {
+    height: 200px;
+  }
+
+  .sw-hr-ptc-title {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 400px) {
+  .sw-hr-ptc-view-btn {
+    padding: 4px 8px;
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 320px) {
+  .sw-hr-ptc-view-btn {
+    top: 8px;
+    right: 8px;
+    padding: 3px 8px;
+    font-size: 9px;
+    border-radius: 14px;
+  }
+}
+
+/* Listings Page Styles */
+.sw-hr-listings-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.sw-hr-listings-header {
+  margin-bottom: 32px;
+}
+
+.sw-hr-listings-nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.sw-hr-back-btn {
+  color: var(--text-secondary);
+  padding: 0;
+}
+
+.sw-hr-nav-text {
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.sw-hr-listings-search-bar {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.sw-hr-search-input {
+  flex: 1;
+  min-width: 300px;
+}
+
+.sw-hr-listings-content {
+  margin-top: 24px;
+}
+
+.sw-hr-property-card {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s ease;
+  border: 1px solid var(--border-color);
+  height: 100%;
+}
+
+.sw-hr-property-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-4px);
+}
+
+.sw-hr-pc-image-wrap {
+  position: relative;
+  height: 280px;
+  overflow: hidden;
+  background: var(--bg-light);
+}
+
+.sw-hr-pc-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.sw-hr-property-card:hover .sw-hr-pc-image {
+  transform: scale(1.05);
+}
+
+.sw-hr-pc-furnishing-tag {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  border: none;
+}
+
+.sw-hr-pc-furnishing-tag.fully {
+  background: #e0e7ff;
+  color: var(--secondary-color);
+}
+
+.sw-hr-pc-furnishing-tag.semi {
+  background: var(--primary-color);
+  color: #fff;
+}
+
+.sw-hr-pc-furnishing-tag.unfurnished {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.sw-hr-pc-furnishing-tag.open-plot {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.sw-hr-pc-favorite-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-primary);
+  font-size: 18px;
+  transition: all 0.2s;
+}
+
+.sw-hr-pc-favorite-btn:hover {
+  background: #fff;
+  color: #ff4d4f;
+}
+
+.sw-hr-pc-body {
+  padding: 20px;
+}
+
+.sw-hr-pc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.sw-hr-pc-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+  flex: 1;
+}
+
+.sw-hr-pc-rating {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sw-hr-pc-rating-value {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 14px;
+}
+
+.sw-hr-pc-location {
+  color: var(--text-secondary);
+  font-size: 14px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sw-hr-pc-specs {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 16px;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.sw-hr-pc-specs span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sw-hr-pc-amenities {
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.sw-hr-amenity-tag {
+  border-radius: 16px;
+  padding: 4px 12px;
+  font-size: 12px;
+  background: var(--bg-light);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+}
+
+.sw-hr-amenity-tag.more {
+  background: var(--primary-color);
+  color: #fff;
+  border-color: var(--primary-color);
+}
+
+.sw-hr-pc-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-color);
+}
+
+.sw-hr-pc-price {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--secondary-color);
+}
+
+.sw-hr-pc-view-btn {
+  background: var(--secondary-color);
+  border-color: var(--secondary-color);
+  font-size: 13px;
+  padding: 6px 16px;
+  height: auto;
+}
+
+.sw-hr-pc-view-btn:hover {
+  background: #1e3a8a;
+  border-color: #1e3a8a;
+}
+
+.sw-hr-no-results {
+  text-align: center;
+  padding: 60px 20px;
+  background: var(--bg-white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.sw-hr-no-results p {
+  font-size: 18px;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+}
+
+/* Property Details Page Styles */
+.sw-hr-property-details-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.sw-hr-pd-header {
+  margin-bottom: 24px;
+}
+
+.sw-hr-pd-details-card,
+.sw-hr-pd-booking-card {
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-color);
+}
+
+.sw-hr-pd-image-wrap {
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+  border-radius: var(--radius);
+  margin-bottom: 24px;
+  background: var(--bg-light);
+}
+
+.sw-hr-pd-carousel,
+.sw-hr-pd-carousel .slick-list,
+.sw-hr-pd-carousel .slick-track,
+.sw-hr-pd-slide {
+  height: 100%;
+}
+
+.sw-hr-pd-slide {
+  position: relative;
+}
+
+.sw-hr-pd-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sw-hr-pd-info {
+  padding: 0;
+}
+
+.sw-hr-pd-title-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.sw-hr-pd-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+  flex: 1;
+}
+
+.sw-hr-pd-rating {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sw-hr-pd-rating-value {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 16px;
+}
+
+.sw-hr-pd-location {
+  color: var(--text-secondary);
+  font-size: 16px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sw-hr-pd-specs {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 20px;
+  color: var(--text-secondary);
+  font-size: 15px;
+}
+
+.sw-hr-pd-specs span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sw-hr-pd-furnishing {
+  margin-bottom: 32px;
+}
+
+.sw-hr-furnishing-tag {
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+}
+
+.sw-hr-furnishing-tag.fully {
+  background: #dbeafe;
+  color: var(--secondary-color);
+}
+
+.sw-hr-furnishing-tag.semi {
+  background: var(--primary-color);
+  color: #fff;
+}
+
+.sw-hr-furnishing-tag.unfurnished {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.sw-hr-furnishing-tag.open-plot {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.sw-hr-pd-amenities-section,
+.sw-hr-pd-services-section {
+  margin-bottom: 32px;
+}
+
+.sw-hr-pd-section-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+}
+
+.sw-hr-pd-amenities {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sw-hr-amenity-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-secondary);
+  font-size: 15px;
+}
+
+.sw-hr-amenity-check {
+  color: #10b981;
+  font-size: 18px;
+}
+
+.sw-hr-pd-services {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sw-hr-service-item {
+  display: flex;
+  gap: 12px;
+}
+
+.sw-hr-service-check {
+  color: #10b981;
+  font-size: 20px;
+  margin-top: 2px;
+}
+
+.sw-hr-service-title {
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.sw-hr-service-desc {
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.sw-hr-pd-booking-card {
+  position: sticky;
+  top: 88px;
+}
+
+.sw-hr-pd-price-display {
+  text-align: center;
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.sw-hr-pd-price {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--secondary-color);
+}
+
+.sw-hr-pd-price-unit {
+  font-size: 18px;
+  color: var(--text-secondary);
+  margin-left: 4px;
+}
+
+.sw-hr-booking-form {
+  margin-top: 0;
+}
+
+.sw-hr-submit-btn {
+  background: var(--secondary-color);
+  border-color: var(--secondary-color);
+  height: 40px;
+  font-size: 14px;
+  font-weight: 500;
+  width: 100%;
+}
+
+.sw-hr-submit-btn:hover {
+  background: #1e3a8a;
+  border-color: #1e3a8a;
+}
+
+.sw-hr-form-note {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 13px;
+  margin-top: 16px;
+  margin-bottom: 0;
+}
+
+/* Responsive Styles for Listings and Details Pages */
+@media (max-width: 1024px) {
+  .sw-hr-listings-page {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sw-hr-listings-page {
+    padding: 16px 12px;
+  }
+
+  .sw-hr-listings-header {
+    margin-bottom: 24px;
+  }
+
+  .sw-hr-listings-nav {
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 8px 0;
+  }
+
+  .sw-hr-listings-search-bar {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+  }
+
+  .sw-hr-search-input {
+    min-width: 100%;
+    width: 100%;
+  }
+
+  .sw-hr-pc-image-wrap {
+    height: 240px;
+  }
+
+  .sw-hr-pc-furnishing-tag {
+    top: 12px;
+    left: 12px;
+    padding: 3px 10px;
+    font-size: 11px;
+  }
+
+  .sw-hr-pc-favorite-btn {
+    top: 12px;
+    right: 12px;
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+
+  .sw-hr-pc-body {
+    padding: 16px;
+  }
+
+  .sw-hr-pc-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .sw-hr-pc-title {
+    font-size: 18px;
+  }
+
+  .sw-hr-pc-rating {
+    font-size: 12px;
+  }
+
+  .sw-hr-pc-location {
+    font-size: 13px;
+    margin-bottom: 12px;
+  }
+
+  .sw-hr-pc-specs {
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 12px;
+    font-size: 13px;
+  }
+
+  .sw-hr-pc-amenities {
+    margin-bottom: 16px;
+    gap: 6px;
+  }
+
+  .sw-hr-amenity-tag {
+    font-size: 11px;
+    padding: 3px 10px;
+  }
+
+  .sw-hr-pc-footer {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+    padding-top: 12px;
+  }
+
+  .sw-hr-pc-price {
+    font-size: 20px;
+    text-align: center;
+  }
+
+  .sw-hr-pc-view-btn {
+    width: 100%;
+    font-size: 12px;
+    padding: 5px 12px;
+  }
+
+  .sw-hr-no-results {
+    padding: 40px 16px;
+  }
+
+  .sw-hr-no-results p {
+    font-size: 16px;
+  }
+
+  .sw-hr-property-details-page {
+    padding: 16px 12px;
+  }
+
+  .sw-hr-pd-image-wrap {
+    height: 240px;
+  }
+
+  .sw-hr-pd-slide {
+    height: 240px;
+  }
+
+  .sw-hr-pd-title {
+    font-size: 22px;
+  }
+
+  .sw-hr-pd-specs {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .sw-hr-pd-booking-card {
+    position: static;
+    margin-top: 24px;
+  }
+
+  .sw-hr-pd-title-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .sw-hr-pd-title {
+    font-size: 20px;
+  }
+
+  .sw-hr-pd-price {
+    font-size: 28px;
+  }
+
+  .sw-hr-pd-price-unit {
+    font-size: 16px;
+  }
+
+  .sw-hr-submit-btn {
+    height: 36px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sw-hr-listings-page {
+    padding: 12px 8px;
+  }
+
+  .sw-hr-pc-image-wrap {
+    height: 200px;
+  }
+
+  .sw-hr-pc-title {
+    font-size: 16px;
+  }
+
+  .sw-hr-pc-price {
+    font-size: 18px;
+  }
+
+  .sw-hr-pc-view-btn {
+    font-size: 11px;
+    padding: 4px 10px;
+  }
+
+  .sw-hr-property-details-page {
+    padding: 12px 8px;
+  }
+
+  .sw-hr-pd-image-wrap {
+    height: 200px;
+  }
+
+  .sw-hr-pd-slide {
+    height: 200px;
+  }
+
+  .sw-hr-pd-title {
+    font-size: 18px;
+  }
+
+  .sw-hr-pd-section-title {
+    font-size: 18px;
+  }
+
+  .sw-hr-pd-price {
+    font-size: 24px;
+  }
+
+  .sw-hr-submit-btn {
+    height: 34px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 400px) {
+  .sw-hr-pc-view-btn {
+    font-size: 10px;
+    padding: 4px 8px;
+  }
+
+  .sw-hr-submit-btn {
+    height: 32px;
+    font-size: 11px;
+  }
+}
+/* ///// Home rentals Raju */
