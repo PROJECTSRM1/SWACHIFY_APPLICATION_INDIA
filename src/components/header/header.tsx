@@ -1,85 +1,107 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   HomeOutlined,
   ShoppingCartOutlined,
   LogoutOutlined,
   MenuOutlined,
+  BellOutlined,
+  UserOutlined,
   CloseOutlined,
-  //CloseOutlined,
 } from "@ant-design/icons";
 import { useCart } from "../../../src/context/CartContext";
-
-import { Menu, Drawer, message, Button } from "antd";
+import { Menu, Drawer, message, Button, Dropdown, Badge, Avatar } from "antd";
 import { useNavigate } from "react-router-dom";
 import "./header.css";
 
 const HeaderBar: React.FC = () => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false); // left mobile menu
+  const [cartOpen, setCartOpen] = useState(false); // right cart drawer
   const navigate = useNavigate();
   const { cart, removeFromCart } = useCart();
-  const [cartOpen, setCartOpen] = useState(false);
 
   const handleLogout = () => {
     localStorage.removeItem("user");
-    message.success("logout successful");
+    message.success("Logout successful");
     navigate("/landing");
   };
 
-  const handleCartClick = () => {
-    setCartOpen(true); // open popup instead of navigate
+  const handleNavigate = (key: string) => {
+    if (key === "packers") navigate("/app/dashboard/packers");
+    if (key === "homeservices") navigate("/app/dashboard/homeservices");
+    if (key === "rentals") navigate("/app/dashboard/rentals");
+    if (key === "commercial") navigate("/app/dashboard/commercials");
+    if (key === "construction") navigate("/app/dashboard/constructions");
+    if (key === "bookings") navigate("/app/dashboard/bookings");
+    if (key === "cart") setCartOpen(true);
   };
 
-  const handleNavigate = (key: String) => {
-    if (key == "cleaning") {
-      navigate("/app/dashboard/cleaning");
-    }
-    if (key == "packers") {
-      navigate("/app/dashboard/packers");
-    }
-    if (key == "homeservices") {
-      navigate("/app/dashboard/homeservices");
-    }
-    if (key == "rentals") {
-      navigate("/app/dashboard/rentals");
-    }
-    if (key == "commercial") {
-      navigate("/app/dashboard/commercials");
-    }
-    if (key == "construction") {
-      navigate("/app/dashboard/constructions");
-    }
-  };
-
+  // centerMenu uses stable keys (no spaces) — labels are visible text only
   const centerMenu = [
-    {
-      key: "packers",
-      label: <span className="menu-item">Packers & Movers</span>,
-    },
+    { key: "packers", label: <span className="menu-item">Transport</span> },
     {
       key: "homeservices",
       label: <span className="menu-item">Home & Cleaning Services</span>,
     },
-    { key: "rentals", label: <span className="menu-item">Rentals</span> },
-    {
-      key: "commercial",
-      label: <span className="menu-item">Commercial Plots</span>,
-    },
+    { key: "commercial", label: <span className="menu-item">Buy/Sale/Rentals</span> },
     {
       key: "construction",
-      label: <span className="menu-item">Construction Materials</span>,
+      label: <span className="menu-item">Construction Raw Materials</span>,
     },
     {
-      key: "freelancer",
-      label: <span className="menu-item">Freelancer</span>,
+      key: "swachify_products",
+      label: <span className="menu-item">Swachify Products</span>,
     },
-    {
-      key: "location",
-      label: <span className="menu-item">Location</span>,
-    },
+    { key: "education", label: <span className="menu-item">Education</span> },
+    { key: "todaywork", label: <span className="menu-item">Today Work</span> },
   ];
+
+  // Profile dropdown menu
+  const profileMenu = (
+    <Menu
+      onClick={(info) => {
+        if (info.key === "cart") {
+          setCartOpen(true);
+        } else if (info.key === "bookings") {
+          handleNavigate("bookings");
+        } else if (info.key === "logout") {
+          handleLogout();
+        }
+      }}
+      items={[
+        {
+          key: "bookings",
+          label: <span className="dropdown-item">Recent Booking</span>,
+          icon: <HomeOutlined />,
+        },
+        {
+          key: "cart",
+          label: <span className="dropdown-item">Cart ({cart.length})</span>,
+          icon: <ShoppingCartOutlined />,
+        },
+        {
+          key: "logout",
+          label: <span className="dropdown-item">Logout</span>,
+          icon: <LogoutOutlined />,
+        },
+      ]}
+      className="profile-dropdown-menu"
+    />
+  );
+
+  // Close cart on Escape key for accessibility
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && cartOpen) {
+        setCartOpen(false);
+      }
+    };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [cartOpen]);
 
   return (
     <div className="header-container">
+      {/* LEFT */}
       <div
         className="header-left"
         onClick={() => navigate("/app/dashboard")}
@@ -89,60 +111,66 @@ const HeaderBar: React.FC = () => {
         <span className="logo-text">Home</span>
       </div>
 
-      <div className="header-center">
+      {/* CENTER */}
+      <div className="header-center" role="navigation" aria-label="Main navigation">
+        {/* AntD Menu configured to be inline and centered via CSS overrides */}
         <Menu
           mode="horizontal"
           items={centerMenu}
           className="header-menu"
-          onClick={(info) => handleNavigate(info.key)}
+          onClick={(info: any) => handleNavigate(info.key as string)}
+          triggerSubMenuAction="hover"
+          selectable={false}
         />
       </div>
 
+      {/* RIGHT */}
       <div className="header-right">
-        <span className="header-item-cart" onClick={handleCartClick}>
-          <ShoppingCartOutlined className="header-icon-cart" /> Cart (
-          {cart.length})
-        </span>
-
-        {/* Logout with navigation */}
-        <span className="header-item" onClick={handleLogout}>
-          <LogoutOutlined className="header-icon-large" /> Logout
-        </span>
-      </div>
-
-      <div className="mobile-menu-btn">
-        {/* Toggle icon: hamburger when closed, close when open */}
-        {open ? (
-          <CloseOutlined
-            className="header-icon-large"
-            onClick={() => setOpen(false)}
-          />
-        ) : (
-          <MenuOutlined
-            className="header-icon-large"
-            onClick={() => setOpen(true)}
-          />
-        )}
-      </div>
-
-      <Drawer
-        title="Menu"
-        placement="left"
-        onClose={() => setOpen(false)}
-        open={open}
-        // keep default close button but we'll also render a centered X inside the drawer
-      >
-        {/* Centered X (visually similar to the design you showed).
-            This is additional and purposely placed so it doesn't disturb existing layout. */}
-        <div
-          className="drawer-center-close"
-          onClick={() => {
-            setOpen(false);
-          }}
+        {/* Bell - visible but NON-INTERACTIVE */}
+        <span
+          className="header-item-notif"
+          title="Notifications"
+          aria-hidden="true"
         >
-          <CloseOutlined />
-        </div>
+          <Badge count={cart.length} size="small">
+            <BellOutlined className="header-icon-cart" />
+          </Badge>
+        </span>
 
+        {/* Profile */}
+        <Dropdown
+          overlay={profileMenu}
+          trigger={["click"]}
+          placement="bottomRight"
+          getPopupContainer={() => document.body}
+          overlayClassName="profile-dropdown-wrapper"
+        >
+          <span
+            className="header-item-profile"
+            onClick={(e) => e.preventDefault()}
+            role="button"
+            tabIndex={0}
+            aria-haspopup="true"
+          >
+            <Avatar size="small" icon={<UserOutlined />} />
+            <span className="profile-text">Profile</span>
+          </span>
+        </Dropdown>
+      </div>
+
+      {/* MOBILE BUTTON */}
+      <div className="mobile-menu-btn" aria-hidden="false">
+        <MenuOutlined
+          className="header-icon-large"
+          onClick={() => setOpen(true)}
+          aria-label="Open menu"
+          role="button"
+          tabIndex={0}
+        />
+      </div>
+
+      {/* LEFT DRAWER (MOBILE MENU) */}
+      <Drawer title="Menu" placement="left" onClose={() => setOpen(false)} open={open}>
         <Menu
           mode="vertical"
           items={[
@@ -161,6 +189,19 @@ const HeaderBar: React.FC = () => {
               ),
             },
             {
+              key: "bookings",
+              label: (
+                <span
+                  onClick={() => {
+                    handleNavigate("bookings");
+                    setOpen(false);
+                  }}
+                >
+                  <HomeOutlined /> Recent Booking
+                </span>
+              ),
+            },
+            {
               key: "logout",
               label: (
                 <span
@@ -175,53 +216,63 @@ const HeaderBar: React.FC = () => {
             },
           ]}
           onClick={(info) => {
-            if (info.key !== "cart" && info.key !== "logout") {
-              handleNavigate(info.key);
+            if (!["cart", "logout", "bookings"].includes(info.key)) {
+              handleNavigate(info.key as string);
               setOpen(false);
             }
           }}
         />
       </Drawer>
 
+      {/* RIGHT DRAWER (CART) */}
       <Drawer
-        title="Your Cart"
+        title={null}
         placement="right"
         width={350}
         onClose={() => setCartOpen(false)}
         open={cartOpen}
+        closable={false}
+        bodyStyle={{ padding: 0 }}
       >
-        {cart.length === 0 ? (
-          <p>Your cart is empty</p>
-        ) : (
-          <div className="cart-list">
-            {cart.map((item, index) => (
-              <div key={index} className="cart-item">
-                {/* IMAGE */}
-                <img src={item.image} alt={item.title} />
-
-                {/* DETAILS */}
-                <div className="cart-item-details">
-                  <h4>{item.title}</h4>
-                  <p>Qty: {item.quantity}</p>
-                  <p>Total: ₹{item.totalPrice}</p>
-                </div>
-
-                {/* BUTTONS */}
-                <div className="cart-buttons">
-                  <Button>Buy Now</Button>
-
-                  <Button
-                    danger
-                    type="primary"
-                    onClick={() => removeFromCart(item.id)}
-                  >
-                    Remove
-                  </Button>
-                </div>
-              </div>
-            ))}
+        <div className="cart-drawer-header" role="banner">
+          <div className="cart-drawer-title" aria-live="polite">
+            {cart.length === 0 ? "Your cart is empty" : `Your cart (${cart.length})`}
           </div>
-        )}
+
+          <button
+            className="cart-drawer-close-btn"
+            aria-label="Close cart"
+            onClick={() => setCartOpen(false)}
+            title="Close"
+          >
+            <CloseOutlined />
+          </button>
+        </div>
+
+        <div className="cart-drawer-content">
+          {cart.length === 0 ? (
+            <div className="cart-empty-note">Nothing here yet — add items to your cart.</div>
+          ) : (
+            <div className="cart-list">
+              {cart.map((item: any, index: number) => (
+                <div key={index} className="cart-item">
+                  <img src={item.image} alt={item.title} />
+                  <div className="cart-item-details">
+                    <h4>{item.title}</h4>
+                    <p>Qty: {item.quantity}</p>
+                    <p>Total: ₹{item.totalPrice}</p>
+                  </div>
+                  <div className="cart-buttons">
+                    <Button onClick={() => navigate("/checkout")}>Buy Now</Button>
+                    <Button danger type="primary" onClick={() => removeFromCart(item.id)}>
+                      Remove
+                    </Button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </Drawer>
     </div>
   );
