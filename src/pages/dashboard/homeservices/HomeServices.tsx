@@ -117,6 +117,7 @@ export default function HomeServices() {
             <h2 className="sw-hs-banner-title">Home Services</h2>
             <p className="sw-hs-banner-subtitle">{services.length} services available</p>
           </div>
+        
         </div>
 
   <Button
