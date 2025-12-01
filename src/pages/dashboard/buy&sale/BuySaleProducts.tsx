@@ -36,7 +36,7 @@ import {
   MailOutlined,
 } from '@ant-design/icons';
 
-import './BuySaleProducts.css';
+// import './BuySaleProducts.css';
 import Lakehouse from '../../../assets/buyandsale/Lakehouse.png';
 import Vintagev from '../../../assets/buyandsale/Vintage_house.png';
 import BuySaleImage from '../../../assets/buyandsale/buySale-real-estate.png';
@@ -261,45 +261,45 @@ const PropertyCard: React.FC<{
   return (
     <Card
       hoverable
-      className="service-card-main property-card"
+      className="swc-bs-service-card-main swc-bs-property-card"
       cover={
         <div
-          className="service-card-image"
+          className="swc-bs-service-card-image"
           style={{ backgroundImage: `url(${imagePath})` }}
         />
       }
     >
       <Card.Meta
-        title={<span className="service-card-title">{property.title}</span>}
+        title={<span className="swc-bs-service-card-title">{property.title}</span>}
         description={
           <Space direction="vertical" style={{ width: '100%' }}>
-            <div className="property-card-content-wrapper">
-              <Text type="secondary" className="text-with-icon-align">
+            <div className="swc-bs-property-card-content-wrapper">
+              <Text type="secondary" className="swc-bs-text-with-icon-align">
                 <EnvironmentOutlined /> {property.location}
               </Text>
-              <Title level={4} className="price-title">
+              <Title level={4} className="swc-bs-price-title">
                 {formatINR(property.price)}
               </Title>
               <Text type="secondary">
                 {property.area} sq.ft • Type: {property.propertyType}
               </Text>
-              <Space size={[0, 8]} wrap className="tags-space-top">
+              <Space size={[0, 8]} wrap className="swc-bs-tags-space-top">
                 {property.tags.map((tag) => (
                   <Tag key={tag}>{tag}</Tag>
                 ))}
               </Space>
-              <Text className="roi-text">
+              <Text className="swc-bs-roi-text">
                 <RiseOutlined /> {property.roi}
               </Text>
-              <Text className="property-card-description">
+              <Text className="swc-bs-property-card-description">
                 {property.description}
               </Text>
             </div>
 
-            <Space className="button-group-space-top" wrap>
+            <Space className="swc-bs-button-group-space-top" wrap>
               <Button
                 size="middle"
-                className="buy_sale_view_btn"
+                className="swc-bs-buy_sale_view_btn"
                 onClick={() => onViewDetails(property)}
               >
                 View Details
@@ -474,12 +474,12 @@ const PriceNegotiationContent: React.FC<ContentComponentProps & { currentPrice: 
   };
 
   return (
-    <div className="detail-form-container">
+    <div className="swc-bs-detail-form-container">
       <Form
         layout="vertical"
         form={form}
         onFinish={onSubmit}
-        className="form-content-spacing"
+        className="swc-bs-form-content-spacing"
         initialValues={{
           currentMarketPrice: currentPrice,
           currentAskingPrice: currentPrice,
@@ -489,7 +489,7 @@ const PriceNegotiationContent: React.FC<ContentComponentProps & { currentPrice: 
         }
       >
         {/* contact details */}
-        <Title level={4} className="detail-section-title">
+        <Title level={4} className="swc-bs-detail-section-title">
           <UserOutlined /> Contact Details
         </Title>
         <Row gutter={[16, 16]}>
@@ -528,7 +528,7 @@ const PriceNegotiationContent: React.FC<ContentComponentProps & { currentPrice: 
         <Divider />
 
         {/* price comparison */}
-        <Title level={4} className="detail-section-title">
+        <Title level={4} className="swc-bs-detail-section-title">
           <DollarOutlined /> Price Comparison Tool
         </Title>
         <Row gutter={[16, 16]}>
@@ -574,7 +574,7 @@ const PriceNegotiationContent: React.FC<ContentComponentProps & { currentPrice: 
                 message={
                   <>
                     <div>{priceComparison.message}</div>
-                    <div className="alert-extra-line">
+                    <div className="swc-bs-alert-extra-line">
                       Difference:{' '}
                       <b>
                         {priceComparison.diff >= 0 ? '+' : '-'}
@@ -596,7 +596,7 @@ const PriceNegotiationContent: React.FC<ContentComponentProps & { currentPrice: 
         <Divider />
 
         {/* negotiation offer */}
-        <Title level={4} className="detail-section-title">
+        <Title level={4} className="swc-bs-detail-section-title">
           <RiseOutlined /> Negotiation Offer
         </Title>
         <Row gutter={[16, 16]}>
@@ -636,7 +636,7 @@ const PriceNegotiationContent: React.FC<ContentComponentProps & { currentPrice: 
                 message={
                   <>
                     <div>{offerAnalysis.message}</div>
-                    <div className="alert-extra-line">
+                    <div className="swc-bs-alert-extra-line">
                       Difference:{' '}
                       <b>
                         {offerAnalysis.diff >= 0 ? '+' : '-'}
@@ -719,28 +719,28 @@ const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({
   onOpenDocVerify,
 }) => {
   return (
-    <div className="detail-view-container">
+    <div className="swc-bs-detail-view-container">
       <Row gutter={[24, 24]}>
         <Col xs={24} lg={10}>
           <div
-            className="service-card-image property-detail-image"
+            className="swc-bs-service-card-image swc-bs-property-detail-image"
             style={{ backgroundImage: `url(${property.imagePath})` }}
           />
-          <Title level={4} className="price-title">
+          <Title level={4} className="swc-bs-price-title">
             {formatINR(property.price)}
           </Title>
-          <Text type="secondary" className="text-with-icon-align">
+          <Text type="secondary" className="swc-bs-text-with-icon-align">
             <EnvironmentOutlined /> {property.location}
           </Text>
-          <Text type="secondary" className="detail-meta-line">
+          <Text type="secondary" className="swc-bs-detail-meta-line">
             {property.area} sq.ft • Type: {property.propertyType}
           </Text>
-          <Text className="roi-text">
+          <Text className="swc-bs-roi-text">
             <RiseOutlined /> {property.roi}
           </Text>
 
           <Divider orientation="left">Description</Divider>
-          <Text className="detail-description">
+          <Text className="swc-bs-detail-description">
             {property.description || 'No detailed description provided.'}
           </Text>
 
@@ -822,35 +822,35 @@ const PropertyListingView: React.FC<PropertyListingViewProps> = ({
     setNewPropertyImage(null);
   };
 
-  const handleOpenModal = () => {
-    setIsModalVisible(true);
-    form.setFieldsValue({
-      listingType: defaultListingType,
-      title: '',
-      price: undefined,
-      area: undefined,
-      location: '',
-      tags: '',
-      roi: '',
-      image: [],
-      propertyType: undefined,
-      description: '',
-    });
-    setFileList([]);
-    setNewPropertyImage(null);
-  };
+  // const handleOpenModal = () => {
+  //   setIsModalVisible(true);
+  //   form.setFieldsValue({
+  //     listingType: defaultListingType,
+  //     title: '',
+  //     price: undefined,
+  //     area: undefined,
+  //     location: '',
+  //     tags: '',
+  //     roi: '',
+  //     image: [],
+  //     propertyType: undefined,
+  //     description: '',
+  //   });
+  //   setFileList([]);
+  //   setNewPropertyImage(null);
+  // };
 
   return (
     <>
-      <div className="listing-view-header">
-        <span className="listing-view-header-title">
+      <div className="swc-bs-listing-view-header">
+        <span className="swc-bs-listing-view-header-title">
           {defaultListingType === 'sale'
             ? 'Featured Properties for Sale'
             : 'Buyer Requirements (Purchase)'}
         </span>
-        <Button type="primary" onClick={handleOpenModal}>
+        {/* <Button type="primary" onClick={handleOpenModal}>
           Add Property
-        </Button>
+        </Button> */}
       </div>
 
       <List
@@ -868,7 +868,7 @@ const PropertyListingView: React.FC<PropertyListingViewProps> = ({
             </Text>
           ),
         }}
-        className="form-content-spacing"
+        className="swc-bs-form-content-spacing"
       />
 
       <Modal
@@ -1015,7 +1015,7 @@ const PropertyListingPurchaseContent: React.FC<
 const RetailInStoreContent: React.FC<ContentComponentProps> = () => (
   <Form
     layout="vertical"
-    className="form-content-spacing"
+    className="swc-bs-form-content-spacing"
     onFinish={() => message.success('Sale recorded successfully!')}
   >
     <Form.Item label="Bill Amount (₹)">
@@ -1033,7 +1033,7 @@ const RetailInStoreContent: React.FC<ContentComponentProps> = () => (
 const RetailInventoryContent: React.FC<ContentComponentProps> = () => (
   <Form
     layout="vertical"
-    className="form-content-spacing"
+    className="swc-bs-form-content-spacing"
     onFinish={() => message.success('Inventory updated!')}
   >
     <Form.Item label="Product SKU">
@@ -1045,7 +1045,7 @@ const RetailInventoryContent: React.FC<ContentComponentProps> = () => (
     <Form.Item label="Customer ID (optional)">
       <Input placeholder="If linked to a customer" />
     </Form.Item>
-    <Button type="primary" htmlType="submit" className="button-spacer-right">
+    <Button type="primary" htmlType="submit" className="swc-bs-button-spacer-right">
       Update Stock
     </Button>
     <Button>Fetch Purchase History</Button>
@@ -1053,7 +1053,7 @@ const RetailInventoryContent: React.FC<ContentComponentProps> = () => (
 );
 
 const OnlineCheckoutContent: React.FC<ContentComponentProps> = () => (
-  <Input placeholder="Default shipping rate (₹) – flat fee" className="width-100" />
+  <Input placeholder="Default shipping rate (₹) – flat fee" className="swc-bs-width-100" />
 );
 
 const OnlineCatalogContent: React.FC<ContentComponentProps> = () => (
@@ -1068,7 +1068,7 @@ const OnlinePaymentContent: React.FC<ContentComponentProps> = () => (
 );
 
 const OnlineDeliveryContent: React.FC<ContentComponentProps> = () => (
-  <Select placeholder="Select courier / delivery partner" className="width-100">
+  <Select placeholder="Select courier / delivery partner" className="swc-bs-width-100">
     <Option value="local">Local Express</Option>
     <Option value="national">National Courier</Option>
   </Select>
@@ -1081,7 +1081,7 @@ const OnlineOffersContent: React.FC<ContentComponentProps> = () => (
 const WholesaleBulkContent: React.FC<ContentComponentProps> = () => (
   <Form
     layout="vertical"
-    className="form-content-spacing"
+    className="swc-bs-form-content-spacing"
     onFinish={() => message.success('Bulk order captured!')}
   >
     <Form.Item label="Item / SKU">
@@ -1099,7 +1099,7 @@ const WholesaleBulkContent: React.FC<ContentComponentProps> = () => (
 const WholesaleStockContent: React.FC<ContentComponentProps> = () => (
   <Form
     layout="vertical"
-    className="form-content-spacing"
+    className="swc-bs-form-content-spacing"
     onFinish={() => message.success('Supplier status checked.')}
   >
     <Form.Item label="Supplier Name">
@@ -1131,7 +1131,7 @@ const SERVICES_DATA: Service[] = [
       {
         key: 'propListingPurchase',
         title: 'Property Listing for Purchase',
-        description: 'Click to view buyer requirements and purchase requests.',
+        description: '',
         contentComponent: PropertyListingPurchaseContent as React.FC<any>,
         imagePath: SkyImage,
       },
@@ -1154,7 +1154,7 @@ const SERVICES_DATA: Service[] = [
       {
         key: 'inventory',
         title: 'Inventory & Customer Records',
-        description: 'Click to update stock and view customer history.',
+        description: '',
         contentComponent: RetailInventoryContent,
         imagePath: WholesaleImage,
       },
@@ -1170,21 +1170,21 @@ const SERVICES_DATA: Service[] = [
       {
         key: 'onlineOrder',
         title: 'Online Ordering & Checkout',
-        description: 'Click to configure cart, tax and checkout flow.',
+        description: '',
         contentComponent: OnlineCheckoutContent,
         imagePath: b,
       },
       {
         key: 'digitalCat',
         title: 'Digital Catalog & Product Search',
-        description: 'Click to manage catalogue and search metadata.',
+        description: '',
         contentComponent: OnlineCatalogContent,
         imagePath: a,
       },
       {
         key: 'onlinePay',
         title: 'Online Payments (UPI / Card)',
-        description: 'Click to configure UPI, card and gateway keys.',
+        description: '',
         contentComponent: OnlinePaymentContent,
         imagePath: c,
       },
@@ -1214,14 +1214,14 @@ const SERVICES_DATA: Service[] = [
       {
         key: 'bulkMgmt',
         title: 'Price Comparison & Bulk Orders',
-        description: 'Click to capture high-volume orders and compare prices.',
+        description: '',
         contentComponent: WholesaleBulkContent,
         imagePath: WholesaleImage,
       },
       {
         key: 'supplierCoord',
         title: 'Supplier Coordination & Stock Tracking',
-        description: 'Click to track supplier status and stock inwards.',
+        description: '',
         contentComponent: WholesaleStockContent,
         imagePath: f,
       },
@@ -1294,10 +1294,10 @@ const renderMainServices = () => (
       <Col xs={24} sm={12} lg={6} key={service.key}>
         <Card
           hoverable
-          className="service-card-main"
+          className="swc-bs-service-card-main"
           cover={
             <div
-              className="service-card-image"
+              className="swc-bs-service-card-image"
               style={{ backgroundImage: `url(${service.imagePath})` }}
             />
           }
@@ -1305,21 +1305,21 @@ const renderMainServices = () => (
           <Space
             direction="vertical"
             size={8}
-            className="service-card-content"
+            className="swc-bs-service-card-content"
           >
             <Space size="small">
               {service.icon}
-              <span className="service-card-title">{service.title}</span>
+              <span className="swc-bs-service-card-title">{service.title}</span>
             </Space>
 
-            <Text type="secondary" className="service-card-description">
+            <Text type="secondary" className="swc-bs-service-card-description">
               {service.description}
             </Text>
 
             {/* New button – same idea as Cleaning Services cards */}
             <Button
               block
-              className="service-view-btn"
+              className="swc-bs-service-view-btn"
               onClick={() => handleServiceClick(service)}
             >
               View Details
@@ -1333,60 +1333,60 @@ const renderMainServices = () => (
 
 
   const SubserviceModalTitle = (
-    <Space className="navigation-title-bar card-title-align modal-header-space">
+    <Space className="swc-bs-navigation-title-bar card-title-align swc-bs-modal-header-space">
       <Button
         onClick={handleBackToMain}
         type="text"
-        className="minimal-back-button back-button-style"
+        className="swc-bs-minimal-back-button swc-bs-back-button-style"
         // icon={<ArrowLeftOutlined />}
       />
-      <Title level={3} className="modal-title-no-margin">
+      <Title level={3} className="swc-bs-modal-title-no-margin">
         {currentService?.title} 
       </Title>
     </Space>
   );
 
   const DetailModalTitle = (
-    <Space className="navigation-title-bar card-title-align modal-header-space">
+    <Space className="swc-bs-navigation-title-bar card-title-align swc-bs-modal-header-space">
       <Button
         onClick={handleBackToSubservices}
         type="text"
-        className="minimal-back-button back-button-style"
+        className="swc-bs-minimal-back-button swc-bs-back-button-style"
         // icon={<ArrowLeftOutlined />}
       />
-      <Title level={3} className="modal-title-no-margin">
+      <Title level={3} className="swc-bs-modal-title-no-margin">
         {currentSubservice?.title}
       </Title>
     </Space>
   );
 
   const PropertyDetailModalTitle = (
-    <Space className="navigation-title-bar card-title-align modal-header-space">
+    <Space className="swc-bs-navigation-title-bar card-title-align swc-bs-modal-header-space">
       <Button
         onClick={handleClosePropertyDetail}
         type="text"
-        className="minimal-back-button back-button-style"
+        className="swc-bs-minimal-back-button swc-bs-back-button-style"
         // icon={<ArrowLeftOutlined />}
       />
-      <Title level={3} className="modal-title-no-margin">
+      <Title level={3} className="swc-bs-modal-title-no-margin">
         {selectedProperty?.title || 'Property Details'}
       </Title>
     </Space>
   );
 
 const renderSubservicesModalContent = () => (
-  <div className="subservice-list-container subservice-list-padding">
-    <div className="subservice-list-surface">
+  <div className="swc-bs-subservice-list-container swc-bs-subservice-list-padding">
+    <div className="swc-bs-subservice-list-surface">
       <Row gutter={[24, 24]} justify="center">
         {currentService?.subservices.map((subservice) => (
           <Col xs={24} sm={12} md={8} key={subservice.key}>
             <Card
               hoverable
-              className="subservice-card"
+              className="swc-bs-subservice-card"
               onClick={() => handleSubserviceClick(subservice)}
               cover={
                 <div
-                  className="service-card-image subservice-card-image"
+                  className="swc-bs-service-card-image swc-bs-subservice-card-image"
                   style={{ backgroundImage: `url(${subservice.imagePath})` }}
                 />
               }
@@ -1394,7 +1394,7 @@ const renderSubservicesModalContent = () => (
               <Card.Meta
                 title={subservice.title}
                 description={
-                  <Text type="secondary" className="subservice-card-description">
+                  <Text type="secondary" className="swc-bs-subservice-card-description">
                     {subservice.description}
                   </Text>
                 }
@@ -1409,21 +1409,21 @@ const renderSubservicesModalContent = () => (
 
 
   return (
-    <div className="app-container">
-      <div className="header-banner">
-        <Title level={1} className="banner-title">
+    <div className="swc-bs-app-container">
+      <div className="swc-bs-header-banner">
+        <Title level={1} className="swc-bs-banner-title">
           <HomeOutlined /> Buy/Sale Products Management
         </Title>
-        <Text className="banner-subtitle">
+        <Text className="swc-bs-banner-subtitle">
           Available Services 
         </Text>
       </div>
 
-      <div className="module-section">
-        {/* <Title level={2} className="section-title">
+      <div className="swc-bs-module-section">
+        {/* <Title level={2} className="swc-bs-section-title">
           Select a Service
         </Title> */}
-        <div className="section-title-underline" />
+        <div className="swc-bs-section-title-underline" />
         {renderMainServices()}
       </div>
 
@@ -1435,7 +1435,7 @@ const renderSubservicesModalContent = () => (
   footer={null}
   width={1000}
   centered
-  className="subservice-modal"
+  className="swc-bs-subservice-modal"
 >
   {renderSubservicesModalContent()}
 </Modal>
@@ -1450,10 +1450,10 @@ const renderSubservicesModalContent = () => (
         width={1000}
         centered
         destroyOnClose
-        className="app-detail-modal"
+        className="swc-bs-app-detail-modal"
       >
         {DetailContentComponent && (
-          <div className="detail-view-container">
+          <div className="swc-bs-detail-view-container">
             {currentSubservice?.key === 'propListingSale' ||
             currentSubservice?.key === 'propListingPurchase' ? (
               <DetailContentComponent
@@ -1478,7 +1478,7 @@ const renderSubservicesModalContent = () => (
         width={1200}
         centered
         destroyOnClose
-        className="app-detail-modal"
+        className="swc-bs-app-detail-modal"
       >
         {selectedProperty && (
           <PropertyDetailView
@@ -1498,7 +1498,7 @@ const renderSubservicesModalContent = () => (
         centered
         destroyOnClose
       >
-        <div className="detail-view-container">
+        <div className="swc-bs-detail-view-container">
           <DocumentationContent />
         </div>
       </Modal>

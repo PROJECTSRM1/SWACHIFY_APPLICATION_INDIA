@@ -15,7 +15,7 @@ import {
   HeartOutlined,
   EnvironmentOutlined,
   HomeOutlined,
-  FilterOutlined,
+  // FilterOutlined,
   ArrowLeftOutlined,
 } from "@ant-design/icons";
 import '../../../../index.css';

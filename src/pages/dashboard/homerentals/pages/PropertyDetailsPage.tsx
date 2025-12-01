@@ -10,7 +10,7 @@ import {
   Button,
   Rate,
   Tag,
-   Space,
+  //  Space,
   Carousel,
   message,
 } from 'antd';
