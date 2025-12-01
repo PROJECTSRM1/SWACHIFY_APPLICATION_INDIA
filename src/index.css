@@ -4266,7 +4266,7 @@ body,
 
 .sw-cp-product-body { padding:16px; display:flex; flex-direction:column; gap:12px; flex:1; }
 .sw-cp-product-title { margin:0; font-size:16px; color:#102028; font-weight:700; }
-.sw-cp-product-desc { margin:0; color:#6b7b86; font-size:14px; line-height:1.45; }
+.sw-cp-product-desc { margin:0; color:#6b7b86; font-size:13px; line-height:1.45; }
 
 .sw-cp-product-meta { margin-top:auto; display:flex; align-items:center; justify-content:space-between; gap:12px; padding-top:6px; }
 .sw-cp-product-price { color:#2668ff; font-weight:700; font-size:16px; }
