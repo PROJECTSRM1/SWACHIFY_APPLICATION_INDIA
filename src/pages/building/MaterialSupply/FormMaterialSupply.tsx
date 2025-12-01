@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "../MaterialSupply/ModMaterialSupply.css";
 import { useCart } from "../../../context/CartContext";
 
 
@@ -59,29 +58,28 @@ const EquipmentDetails: React.FC<FormProps> = ({ id, onClose }) => {
   onClose();
 };
 
+return (
+    <div className="sw-br-modal">
+      <div className="sw-br-modal-box">
 
-  return (
-    <div className="details-modal">
-      <div className="details-box">
-
-        <div className="details-header">
+        <div className="sw-br-modal-header">
           <h2>{material.title}</h2>
-          <button className="close-btn" onClick={onClose}>✕</button>
+          <button className="sw-br-close-btn" onClick={onClose}>✕</button>
         </div>
 
-        <div className="top-section">
-
-          <div className="left-side">
-            <div className="image-box">
+        <div className="sw-br-top">
+          <div className="sw-br-left">
+            <div className="sw-br-image-box">
               <img src={material.img} alt={material.title} />
             </div>
-            <div className="service-price-box">
-              <p className="sp-title">Service Price</p>
-              <p className="sp-value">₹{totalPrice}</p>
+
+            <div className="sw-br-price-box">
+              <p className="sw-br-price-title">Service Price</p>
+              <p className="sw-br-price-value">₹{totalPrice}</p>
             </div>
 
-            <h3 className="included-title">What's Included</h3>
-            <ul className="mach-included-list">
+            <h3 className="sw-br-inc-title">What's Included</h3>
+            <ul className="sw-br-inc-list">
               <li>Quality certified materials</li>
               <li>Timely delivery</li>
               <li>Doorstep delivery</li>
@@ -93,18 +91,18 @@ const EquipmentDetails: React.FC<FormProps> = ({ id, onClose }) => {
             </ul>
           </div>
 
-          <div className="form-side">
-            <div className="form-section">
+          <div className="sw-br-form">
+            <div className="sw-br-form-box">
 
-              <h3 className="section-title">Service Details</h3>
+              <h3 className="sw-br-form-title">Service Details</h3>
 
-              <div className="row">
-                <div className="form-item">
+              <div className="sw-br-row">
+                <div className="sw-br-field">
                   <label>Customer Name</label>
                   <input type="text" placeholder="Site manager name" />
                 </div>
 
-                <div className="form-item">
+                <div className="sw-br-field">
                   <label>Delivery Type</label>
                   <select>
                     <option>Select</option>
@@ -114,8 +112,8 @@ const EquipmentDetails: React.FC<FormProps> = ({ id, onClose }) => {
                 </div>
               </div>
 
-              <div className="row">
-                <div className="form-item">
+              <div className="sw-br-row">
+                <div className="sw-br-field">
                   <label>Quantity</label>
                   <input
                     type="number"
@@ -125,48 +123,49 @@ const EquipmentDetails: React.FC<FormProps> = ({ id, onClose }) => {
                   />
                 </div>
 
-                <div className="form-item">
+                <div className="sw-br-field">
                   <label>Delivery Date</label>
                   <input type="date" />
                 </div>
               </div>
 
-              <div className="form-item full-width">
+              <div className="sw-br-field sw-br-full">
                 <label>Contact Number</label>
                 <input type="text" placeholder="Contact number" />
               </div>
 
-              <div className="form-item full-width">
+              <div className="sw-br-field sw-br-full">
                 <label>Delivery Address</label>
                 <textarea placeholder="Construction site address" />
               </div>
 
-              <h3 className="section-title">Additional Services</h3>
+              <h3 className="sw-br-form-title">Additional Services</h3>
 
-              <div className="checkbox-row">
-                <label><input type="checkbox"/> Unloading Service</label>
+              <div className="sw-br-check-grid">
+                <label><input type="checkbox" /> Unloading Service</label>
                 <label><input type="checkbox" /> Quality Certificate</label>
                 <label><input type="checkbox" /> Installation Support</label>
                 <label><input type="checkbox" /> Storage Option</label>
               </div>
 
-              <div className="form-item full-width">
+              <div className="sw-br-field sw-br-full">
                 <label>Special Instructions</label>
                 <textarea placeholder="Any specific requirements..." />
               </div>
 
-              <div className="button-row">
-                <button className="cancel-btn" onClick={onClose}>Cancel</button>
-                <button className="add-btn" onClick={handleAddToCart}>Add to Cart</button>
+              <div className="sw-br-buttons">
+                <button className="sw-br-cancel" onClick={onClose}>Cancel</button>
+                <button className="sw-br-add" onClick={handleAddToCart}>Add to Cart</button>
               </div>
 
             </div>
           </div>
-
         </div>
+
       </div>
     </div>
   );
 };
+
 
 export default EquipmentDetails;
