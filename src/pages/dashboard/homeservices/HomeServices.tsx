@@ -166,10 +166,10 @@ export default function HomeServices() {
     maxHeight: "80vh",
     overflowY: "auto",
   }}
-  wrapClassName="cleaning-embed-wrapper"
+  wrapClassName="sw-hs-cleaning-embed-wrapper"
 >
   {/* NOTE: removed the manual 'Close' button so only the modal's X icon will close it */}
-  <div className="cleaning-embed" style={{ padding: 12 }}>
+  <div className="sw-hs-cleaning-embed" style={{ padding: 12 }}>
     <CleaningService />
   </div>
 </Modal>
