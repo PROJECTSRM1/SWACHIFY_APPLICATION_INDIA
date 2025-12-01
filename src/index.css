@@ -2141,6 +2141,7 @@ html, body {
   flex: 1;
   box-sizing: border-box;
 }
+
 /* title/subtitle clamp to avoid growth and center them */
 .sw-pm-card-title {
   margin: 12px 12px 0;
@@ -2545,6 +2546,54 @@ html, body {
 .ant-picker-dropdown-placement-bottomRight {
   z-index: 16000 !important;
 }
+
+/* //// */
+.sw-lpm-classname-hero-overlay button{
+  background-color: #005cfa !important;
+  color: wheat !important;
+  border: none;
+}
+.sw-lpm-classname-hero-overlay button:hover{
+  background-color: #f39c12 !important;
+  color: white;
+}
+
+.sw-lpm-classname-types-row button{
+  background-color: #63f3c5 !important;
+  color: #0f0e0e !important;
+  border: none;
+}
+
+.sw-lpm-classname-types-row button:hover{
+  background-color: chartreuse !important;
+  color: chocolate !important;
+}
+
+.sw-lpm-classname-quote-form-container button{
+  background-color: rgb(103, 103, 227) !important;
+  color: black !important;
+  border: none;
+}
+ 
+.sw-lpm-classname-quote-form-container button:hover{
+  background-color:greenyellow !important;
+  color: #000 !important;
+
+}
+
+.sw-lcm-classname-rq-card button{
+  background-color: aqua !important;
+  color: black !important;
+  border: none;
+}
+
+.sw-lcm-classname-rq-card button:hover{
+  background-color: #f39c12 !important;
+  color: #000 !important;
+}
+/* //// */
+
+
 /* ---------- responsive ---------- */
 @media (max-width: 1200px) {
   .sw-pm-card {
