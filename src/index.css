@@ -7103,7 +7103,7 @@ body {
    Hero
    ========================== */
 .sw-lc-hero--large {
-  background-image: linear-gradient(90deg, rgba(18,72,160,0.88), rgba(47,128,237,0.72)), url('../../assets/landingimages/landingcleaninghero.jpg');
+  background-image: linear-gradient(90deg, rgba(18,72,160,0.88), rgba(47,128,237,0.72)), url('../src/assets/landingimages/landingcleaninghero.jpg');
   background-size: cover;
   background-position: center;
   height: 520px;
@@ -9006,6 +9006,7 @@ body {
   }
     .sw-hs-services-top-banner {
     padding: 18px 20px;
+    white-space: normal;
   }
 
   .sw-hs-banner-title {
@@ -9021,6 +9022,20 @@ body {
   .sw-hs-services-card-grid {
     grid-template-columns: repeat(2, 1fr); /* 2 per row */
   }
+  .sw-hs-banner-left {
+    width: 100%;
+  }
+
+
+  .sw-hs-header-viewall-btn {
+    margin-left: 0;              
+    margin-top: 6px;
+    width: 100%;                
+    max-width: 100%;
+    text-align: center;
+  }
+
+
 
 }
 
@@ -9029,20 +9044,29 @@ body {
     grid-template-columns: 1fr; /* 1 card per row */
   }
 
+
   .sw-hs-service-image {
     height: 130px;
   }
-    .sw-hs-services-top-banner {
-    padding: 8px 10px;
+ 
+
+
+
+
+   .sw-hs-services-top-banner {
+    padding: 14px 12px;
   }
+
 
   .sw-hs-banner-title {
-    font-size: 16px !important;
+    font-size: 17px !important;
   }
 
+
   .sw-hs-banner-subtitle {
-    font-size: 11px;
+    font-size: 12px;
   }
+
 
   .sw-hs-banner-icon {
     width: 36px;
@@ -9050,6 +9074,7 @@ body {
     font-size: 18px;
   }
 }
+
 @media (max-width: 320px) {
   .sw-hs-header-viewall-btn {
     width: 70px !important;      /* âœ… smaller width */
