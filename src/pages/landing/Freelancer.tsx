@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import React, { useState } from "react";
+import  { useState } from "react";
 
 import {
   // SearchOutlined,
@@ -205,18 +205,19 @@ export default function Freelancer() {
       {/*          HERO SECTION        */}
       {/* --------------------------- */}
 
-      <div className="swf-hero">
-        <div className="swf-hero-overlay"></div>
+      <div className="sw-fr-hero">
+        <div className="sw-fr-hero-overlay"></div>
 
-        <Content className="swf-hero-content">
-          <h1 className="swf-hero-title">
+        <Content className="sw-fr-hero-content">
+          <h1 className="sw-fr-hero-title">
             Find the Right Tasks <br /> That Match Your Skills
           </h1>
 
-          <p className="swf-hero-sub">Verified jobs. Nearby opportunities. Instant earning.</p>
+          <p className="sw-fr-hero-sub">Verified jobs. Nearby opportunities. Instant earning.</p>
 
-          <div className="swf-hero-buttons">
+          <div className="sw-fr-hero-buttons">
             <Button
+              className="sw-fr-bt1"
               type="default"
               size="large"
               shape="round"
@@ -227,6 +228,7 @@ export default function Freelancer() {
             </Button>
 
             <Button
+            className="sw-fr-bt1"
               type="default"
               size="large"
               shape="round"
@@ -236,10 +238,10 @@ export default function Freelancer() {
             </Button>
           </div>
 
-          <Row gutter={16} className="swf-stats">
+          <Row gutter={16} className="sw-fr-stats">
             {stats.map((s, index) => (
               <Col xs={12} md={6} key={index}>
-                <Card bordered={false} className="swf-stat-card">
+                <Card bordered={false} className="sw-fr-stat-card">
                   <Statistic
                     title={s.label}
                     value={s.value}
@@ -254,16 +256,16 @@ export default function Freelancer() {
       </div>
 
       {/* Categories */}
-      <Content className="swf-section">
-        <h2 className="swf-section-title">Browse Categories</h2>
+      <Content className="sw-fr-section">
+        <h2 className="sw-fr-section-title">Browse Categories</h2>
 
         <Row gutter={[20, 20]}>
           {serviceCategories.map((cat, i) => (
             <Col xs={12} sm={8} md={6} lg={4} key={i}>
-              <Card hoverable className="swf-category-card">
-                <div className="swf-category-icon">{cat.icon}</div>
-                <h4 className="swf-category-name">{cat.name}</h4>
-                <p className="swf-category-count">{cat.count} jobs</p>
+              <Card hoverable className="sw-fr-category-card">
+                <div className="sw-fr-category-icon">{cat.icon}</div>
+                <h4 className="sw-fr-category-name">{cat.name}</h4>
+                <p className="sw-fr-category-count">{cat.count} jobs</p>
               </Card>
             </Col>
           ))}
@@ -271,8 +273,8 @@ export default function Freelancer() {
       </Content>
 
       {/* Live Requests */}
-      <Content className="swf-section">
-        <div className="swf-section-header">
+      <Content className="sw-fr-section">
+        <div className="sw-fr-section-header">
           <div>
             <h2>Live Service Requests Near You</h2>
             <p>Accept a task and start earning instantly</p>
@@ -291,7 +293,7 @@ export default function Freelancer() {
         <Row gutter={[20, 20]}>
           {liveRequests.map((req) => (
             <Col xs={24} md={12} lg={8} key={req.id}>
-              <Card hoverable className="swf-request-card">
+              <Card hoverable className="sw-fr-request-card">
                 <Tag
                   color={
                     req.urgency === "high"
@@ -300,15 +302,15 @@ export default function Freelancer() {
                       ? "gold"
                       : "green"
                   }
-                  className="swf-urgency-tag"
+                  className="sw-fr-urgency-tag"
                 >
                   {req.urgency === "high" ? "Urgent" : req.category}
                 </Tag>
 
-                <h3 className="swf-request-title">{req.title}</h3>
-                <p className="swf-request-desc">{req.description}</p>
+                <h3 className="sw-fr-request-title">{req.title}</h3>
+                <p className="sw-fr-request-desc">{req.description}</p>
 
-                <div className="swf-request-info">
+                <div className="sw-fr-request-info">
                   <p>
                     <EnvironmentOutlined /> {req.location}
                   </p>
@@ -317,16 +319,16 @@ export default function Freelancer() {
                   </p>
                 </div>
 
-                <div className="swf-request-bottom">
-                  <span className="swf-price">
+                <div className="sw-fr-request-bottom">
+                  <span className="sw-fr-price">
                     <DollarCircleOutlined /> {req.price}
                   </span>
 
-                  <div className="swf-request-actions">
+                  <div className="sw-fr-request-actions">
                     <Button type="primary" shape="round">
                       Accept
                     </Button>
-                    <Button shape="round">View</Button>
+                    <Button className="sw-fr-bt1" shape="round">View</Button>
                   </div>
                 </div>
               </Card>
@@ -336,9 +338,9 @@ export default function Freelancer() {
       </Content>
 
       {/* Footer */}
-      <footer className="hs-footer">
-        <div className="hs-footer-inner">
-          <div className="hs-footer-col hs-footer-about">
+      <footer className="sw-fr-hs-footer">
+        <div className="sw-fr-hs-footer-inner">
+          <div className="sw-fr-hs-footer-col hs-footer-about">
             <h4>About Us</h4>
             <p>
               Your trusted partner for all home and property-related services.
@@ -346,7 +348,7 @@ export default function Freelancer() {
             </p>
           </div>
 
-          <div className="hs-footer-col hs-footer-services">
+          <div className="sw-fr-hs-footer-col hs-footer-services">
             <h4>Services</h4>
             <ul>
               <li>Cleaning Service</li>
@@ -358,7 +360,7 @@ export default function Freelancer() {
             </ul>
           </div>
 
-          <div className="hs-footer-col hs-footer-links">
+          <div className="sw-fr-hs-footer-col hs-footer-links">
             <h4>Quick Links</h4>
             <ul>
               <li>Home</li>
@@ -368,22 +370,22 @@ export default function Freelancer() {
             </ul>
           </div>
 
-          <div className="hs-footer-col hs-footer-contact">
+          <div className="sw-fr-hs-footer-col hs-footer-contact">
             <h4>Contact Info</h4>
-            <div className="hs-contact-row">
+            <div className="sw-fr-hs-contact-row">
               <PhoneOutlined />
               <span>+1 (555) 123-4567</span>
             </div>
-            <div className="hs-contact-row">
+            <div className="sw-fr-hs-contact-row">
               <MailOutlined />
               <span>info@homeservices.com</span>
             </div>
-            <div className="hs-contact-row">
+            <div className="sw-fr-hs-contact-row">
               <EnvironmentOutlined />
               <span>123 Service Street, City, State</span>
             </div>
 
-            <div className="hs-footer-socials">
+            <div className="sw-fr-hs-footer-socials">
               <a>
                 <FacebookOutlined />
               </a>
@@ -400,9 +402,9 @@ export default function Freelancer() {
           </div>
         </div>
 
-        <div className="hs-footer-bottom">
-          <div className="hs-footer-line" />
-          <div className="hs-footer-copy">
+        <div className="sw-fr-hs-footer-bottom">
+          <div className="sw-fr-hs-footer-line" />
+          <div className="sw-fr-hs-footer-copy">
             © {new Date().getFullYear()} Home Services. All rights reserved.
           </div>
         </div>
@@ -410,3 +412,5 @@ export default function Freelancer() {
     </Layout>
   );
 }
+
+

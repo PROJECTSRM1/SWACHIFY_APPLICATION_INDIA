@@ -1,84 +1,420 @@
-.registration-page {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem;
-    background: #f0f4f8;
-    position: relative;
+.sw-fr-registration-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f9f0ff 0%, #e6f7ff 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  position: relative;
 }
 
-.back-btn {
-    position: absolute;
-    top: 1rem;
-    left: 1rem;
-    background: none;
-    border: none;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 0.3rem;
-    cursor: pointer;
-    color: #4b5563;
+/* Back link (text-style) */
+.sw-fr-back-link {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  z-index: 40; /* high so it stays above other elements */
+  color: #333;
+  text-decoration: none;
+  font-size: 14px;
+  display: inline-block;
+  padding: 6px 8px;
+  border-radius: 6px;
+  transition: color 0.18s, background 0.18s;
+  cursor: pointer;
+  background: transparent;
+  border: none;
 }
 
-.branding-card {
-    background: linear-gradient(135deg, #7c3aed, #2563eb);
-    color: white;
-    border-radius: 16px;
-    padding: 2rem;
+.sw-fr-back-link:hover {
+  color: #722ed1;
+  background: rgba(114, 46, 209, 0.06);
 }
 
-.branding-header {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
+/* Container sizes reduced so cards are smaller */
+.sw-fr-registration-container {
+  max-width: 1000px; /* reduced from 1200 */
+  width: 100%;
+  display: grid;
+  grid-template-columns: 430px 1fr; /* left card fixed narrower + right flexible */
+  gap: 28px;
+  align-items: start;
 }
 
-.steps-list {
-    margin-top: 2rem;
+/* Branding Section (left) */
+.sw-fr-registration-branding {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
 }
 
-.step-item {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1rem;
+/* Smaller left card */
+.sw-fr-branding-card {
+  background: linear-gradient(135deg, #722ed1, #1890ff);
+  border-radius: 20px;
+  padding: 32px; /* reduced padding */
+  color: white;
+  box-shadow: 0 8px 28px rgba(114, 46, 209, 0.22);
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.step-circle {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 600;
+/* Branding header */
+.sw-fr-branding-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
-.step-circle.active {
-    background: white;
-    color: #7c3aed;
+.sw-fr-branding-logo {
+  width: 44px;
+  height: 44px;
+  background: white;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #722ed1;
+  font-size: 26px;
 }
 
-.reg-card {
-    border-radius: 16px;
+.sw-fr-branding-title {
+  font-size: 22px;
+  font-weight: 700;
 }
 
-.form-error {
-    color: #f44336;
-    font-size: 0.85rem;
-    margin-top: 0.25rem;
+.sw-fr-branding-heading {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: white;
 }
 
-.step-container {
-    margin-top: 1rem;
+.sw-fr-branding-text {
+  font-size: 15px;
+  line-height: 1.5;
+  margin-bottom: 28px;
+  opacity: 0.95;
 }
 
-.step-container.step3 {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+/* Steps */
+.sw-fr-steps-container {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.sw-fr-step-item {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  transition: all 0.2s;
+}
+
+.sw-fr-step-item.active {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+.sw-fr-step-item.completed {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.sw-fr-step-number {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.14);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.sw-fr-step-item.active .step-number {
+  background: white;
+  color: #722ed1;
+}
+
+.sw-fr-step-item.completed .step-number {
+  background: #52c41a;
+  color: white;
+}
+
+.sw-fr-step-content h3 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: white;
+}
+
+.sw-fr-step-content p {
+  font-size: 13px;
+  margin: 0;
+  opacity: 0.9;
+}
+
+/* Registration Form Section (right) */
+.sw-fr-registration-form-section {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+/* Slightly smaller form card */
+.sw-fr-registration-card {
+  width: 100%;
+  max-width: 460px; /* reduced from 500 */
+  background: white;
+  border-radius: 18px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
+  padding: 32px; /* reduced padding */
+  box-sizing: border-box;
+}
+
+.sw-frregistration-header {
+  margin-bottom: 18px;
+}
+
+.sw-fr-registration-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: #000;
+}
+
+.sw-fr-registration-subtitle {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+}
+
+/* Progress bar reduced height */
+.sw-fr-progress-bar {
+  width: 100%;
+  height: 6px;
+  background: #f0f0f0;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.sw-fr-progress-fill {
+  height: 100%;
+  background: linear-gradient(135deg, #1890ff, #722ed1);
+  transition: width 0.45s ease;
+}
+
+.sw-fr-registration-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.sw-fr-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sw-fr-form-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #000;
+}
+
+.sw-fr-form-input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.18s;
+}
+
+.sw-fr-form-input:focus {
+  border-color: #722ed1;
+  box-shadow: 0 0 0 2px rgba(114, 46, 209, 0.12);
+}
+
+.sw-fr-form-input-error {
+  border-color: #ff4d4f;
+}
+
+.sw-fr-form-error {
+  color: #ff4d4f;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+/* Buttons */
+.sw-fr-btn {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.18s;
+  outline: none;
+}
+
+.sw-fr-btn-primary {
+  background: #722ed1;
+  color: white;
+}
+
+.sw-fr-btn-primary:hover:not(:disabled) {
+  background: #9254de;
+}
+
+.sw-fr-btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.sw-fr-btn-block {
+  width: 100%;
+  padding: 12px;
+}
+
+.sw-fr-login-link {
+  text-align: center;
+  margin-top: 18px;
+  color: #666;
+  margin-bottom: 0;
+  font-size: 14px;
+}
+
+.sw-fr-login-link a {
+  color: #722ed1;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.sw-fr-login-link a:hover {
+  color: #9254de;
+  text-decoration: underline;
+}
+
+/* User type / skills */
+.sw-fr-user-type-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.sw-fr-user-type-option {
+  padding: 12px;
+  background: white;
+  border: 2px solid #e8e8e8;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.18s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+}
+
+.sw-fr-user-type-option .icon {
+  font-size: 24px;
+}
+
+.sw-fr-user-type-option:hover {
+  border-color: #722ed1;
+}
+
+.sw-fr-user-type-option.active {
+  border-color: #722ed1;
+  background: #f9f0ff;
+}
+
+.sw-fr-skills-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.sw-fr-skill-tag {
+  padding: 10px 12px;
+  background: white;
+  border: 2px solid #e8e8e8;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.18s;
+  font-size: 13px;
+  text-align: center;
+}
+
+.sw-fr-skill-tag:hover {
+  border-color: #722ed1;
+}
+
+.sw-fr-skill-tag.active {
+  border-color: #722ed1;
+  background: #f9f0ff;
+  color: #722ed1;
+}
+
+/* Responsive adjustments */
+/* NOTE: .back-link remains absolute so it stays pinned at top-left on all sizes */
+@media (max-width: 992px) {
+  .sw-fr-registration-container {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    max-width: 720px;
+  }
+
+  .sw-fr-registration-branding {
+    display: none; /* hide left card on smaller screens */
+  }
+
+  .sw-fr-registration-card {
+    padding: 24px;
+    max-width: 100%;
+  }
+
+  .sw-fr-branding-card {
+    padding: 24px;
+  }
+
+  /* keep the back link absolute on small screens but adjust spacing to avoid overlap */
+  .sw-fr-back-link {
+    top: 12px;
+    left: 12px;
+    font-size: 13px;
+    padding: 6px 8px;
+  }
+}
+
+@media (max-width: 576px) {
+  .sw-fr-registration-card {
+    padding: 18px;
+  }
+
+  .sw-fr-registration-title {
+    font-size: 20px;
+  }
+
+  .sw-fr-user-type-group {
+    grid-template-columns: 1fr;
+  }
+
+  .sw-fr-skills-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sw-fr-back-link {
+    top: 10px;
+    left: 10px;
+    font-size: 13px;
+    padding: 5px 6px;
+  }
 }

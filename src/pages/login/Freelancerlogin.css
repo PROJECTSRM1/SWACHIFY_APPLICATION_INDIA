@@ -1,5 +1,5 @@
 /* Full layout wrapper */
-.swf-login-wrapper {
+.sw-fr-login-wrapper {
   min-height: 100vh;
   background: linear-gradient(135deg, #eef5ff 0%, #ffffff 50%, #f6ecff 100%);
   display: flex;
@@ -12,7 +12,7 @@
 }
 
 /* BACK BUTTON */
-.swf-login-back {
+.sw-fr-login-back {
   position: absolute;
   top: 25px;
   left: 25px;
@@ -26,13 +26,13 @@
   cursor: pointer;
   transition: 0.2s ease;
 }
-.swf-login-back:hover {
+.sw-fr-login-back:hover {
   transform: translateX(-4px);
   color: #1677ff;
 }
 
 /* 2 column container */
-.swf-login-container {
+.sw-fr-login-container {
   width: 100%;
   max-width: 1100px;
   display: grid;
@@ -41,23 +41,23 @@
 }
 
 @media (min-width: 992px) {
-  .swf-login-container {
+  .sw-fr-login-container {
     grid-template-columns: 1fr 1fr;
   }
 }
 
 /* BRAND PANEL */
-.swf-login-brand {
+.sw-fr-login-brand {
   display: none;
 }
 @media (min-width: 992px) {
-  .swf-login-brand {
+  .sw-fr-login-brand {
     display: flex;
     align-items: center;
   }
 }
 
-.swf-brand-inner {
+.sw-fr-brand-inner {
   background: linear-gradient(135deg, #1677ff, #722ed1);
   color: white;
   padding: 40px;
@@ -65,7 +65,7 @@
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
 }
 
-.swf-brand-logo {
+.sw-fr-brand-logo {
   font-size: 42px;
   background: white;
   color: #1677ff;
@@ -78,29 +78,29 @@
   font-weight: bold;
 }
 
-.swf-brand-title {
+.sw-fr-brand-title {
   margin-top: 20px;
   font-size: 28px;
   font-weight: 700;
 }
 
-.swf-brand-sub {
+.sw-fr-brand-sub {
   margin-top: 10px;
   opacity: 0.9;
 }
 
-.swf-benefits {
+.sw-fr-benefits {
   margin-top: 25px;
   line-height: 2;
   list-style: none;
   padding: 0;
 }
-.swf-benefits li {
+.sw-fr-benefits li {
   font-size: 16px;
 }
 
 /* LOGIN CARD */
-.swf-login-card {
+.sw-fr-login-card {
   border-radius: 24px !important;
   padding: 32px 32px;
   backdrop-filter: blur(20px);
@@ -114,65 +114,65 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
-.swf-login-title {
+.sw-fr-login-title {
   font-size: 26px;
   font-weight: 700;
   margin-bottom: 4px;
 }
 
-.swf-login-sub {
+.sw-fr-login-sub {
   color: #666;
   margin-bottom: 20px;
 }
 
 /* Inputs */
-.swf-input {
+.sw-fr-input {
   border-radius: 12px !important;
   height: 48px;
   transition: 0.2s ease;
 }
-.swf-input:hover, .swf-input:focus-within {
+.sw-fr-input:hover, .swf-input:focus-within {
   border-color: #1677ff !important;
 }
 
 /* Remember + Forgot */
-.swf-row-between {
+.sw-fr-row-between {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.swf-forgot {
+.sw-fr-forgot {
   color: #1677ff;
   cursor: pointer;
   font-size: 14px;
 }
-.swf-forgot:hover {
+.sw-fr-forgot:hover {
   text-decoration: underline;
 }
 
 /* Submit Button */
-.swf-submit {
+.sw-fr-submit {
   height: 48px !important;
   border-radius: 12px !important;
   font-weight: 600;
 }
 
 /* Social buttons */
-.swf-social {
+.sw-fr-social {
   height: 45px;
   border-radius: 10px !important;
   font-weight: 500;
 }
 
 /* Signup */
-.swf-signup {
+.sw-fr-signup {
   text-align: center;
   margin-top: 20px;
   color: #666;
 }
 
-.swf-signup-link {
+.sw-fr-signup-link {
   background: none;
   border: none;
   margin-left: 4px;
@@ -180,6 +180,6 @@
   font-weight: 600;
   cursor: pointer;
 }
-.swf-signup-link:hover {
+.sw-fr-signup-link:hover {
   text-decoration: underline;
 }
