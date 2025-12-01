@@ -6,30 +6,30 @@
   font-family: "Inter", Arial, sans-serif;
 }
 
-.lr-page {
+.sw-lr-page {
   background: var(--bg);
   color: #102233;
 }
 
 /* HERO */
-.lr-hero {
+.sw-lr-hero {
   height: 70vh;
   background: linear-gradient(90deg, rgba(123,44,255,0.12), rgba(123,44,255,0.18));
   display: flex;
   align-items: center;
   padding: 60px 20px;
 }
-.lr-hero-inner { max-width: var(--container); margin: 0 auto; }
-.lr-hero-sub { display:inline-block; background: rgba(255,255,255,0.12); padding:6px 14px; border-radius:16px; color:white; font-weight:600; margin-bottom:10px; }
-.lr-hero-title { font-size: 3rem; font-weight:700; color: white; margin: 12px 0; }
-.lr-hero-desc { max-width: 640px; color: rgba(255,255,255,0.92); margin-bottom: 20px; font-size:1.1rem; }
+.sw-lr-hero-inner { max-width: var(--container); margin: 0 auto; }
+.sw-lr-hero-sub { display:inline-block; background: rgba(255,255,255,0.12); padding:6px 14px; border-radius:16px; color:white; font-weight:600; margin-bottom:10px; }
+.sw-lr-hero-title { font-size: 3rem; font-weight:700; color: white; margin: 12px 0; }
+.sw-lr-hero-desc { max-width: 640px; color: rgba(255,255,255,0.92); margin-bottom: 20px; font-size:1.1rem; }
 
 /* Search */
-.lr-search { margin-top: 18px; background: rgba(255,255,255,0.06); padding: 12px; border-radius: 14px; }
-.lr-search-field { margin-right: 14px; }
+.sw-lr-search { margin-top: 18px; background: rgba(255,255,255,0.06); padding: 12px; border-radius: 14px; }
+.sw-lr-search-field { margin-right: 14px; }
 
 /* Container */
-.lr-container { max-width: var(--container); margin: 40px auto; padding: 0 20px; }
+.sw-lr-container { max-width: var(--container); margin: 40px auto; padding: 0 20px; }
 /* ---------------------------
    HERO mobile breakpoints
    (320, 375, 425, 768)
@@ -37,7 +37,7 @@
 
 /* 320px - very small phones (e.g. old iPhone SE) */
 @media (max-width: 320px) {
-  .lr-hero {
+  .sw-lr-hero {
     padding: 14px 10px;
     min-height: 46vh;
     align-items: flex-start;
@@ -45,16 +45,16 @@
     background-position: center;
   }
 
-  .lr-hero-inner {
+  .sw-lr-hero-inner {
     padding: 0 8px;
   }
 
-  .lr-hero-sub { padding: 4px 10px; font-size: 12px; border-radius: 12px; }
-  .lr-hero-title { font-size: 20px; line-height: 1.05; margin-top: 8px; }
-  .lr-hero-desc { font-size: 13px; max-width: 100%; margin-bottom: 12px; }
+  .sw-lr-hero-sub { padding: 4px 10px; font-size: 12px; border-radius: 12px; }
+  .sw-lr-hero-title { font-size: 20px; line-height: 1.05; margin-top: 8px; }
+  .sw-lr-hero-desc { font-size: 13px; max-width: 100%; margin-bottom: 12px; }
 
   /* search box stacks; everything full-width */
-  .lr-search-hero {
+  .sw-lr-search-hero {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -63,15 +63,15 @@
     border-radius: 10px;
     background: #fff;
   }
-  .lr-search-field-hero { width: 100% !important; margin-right: 0 !important; }
-  .lr-search-field-hero .ant-input,
-  .lr-search-field-hero .ant-select-selector { height: 42px; padding: 8px 10px; }
-  .lr-search-btn-hero { width: 100%; height: 42px; font-size: 14px; }
+  .sw-lr-search-field-hero { width: 100% !important; margin-right: 0 !important; }
+  .sw-lr-search-field-hero .ant-input,
+  .sw-lr-search-field-hero .ant-select-selector { height: 42px; padding: 8px 10px; }
+  .sw-lr-search-btn-hero { width: 100%; height: 42px; font-size: 14px; }
 }
 
 /* 375px - smaller modern phones (e.g. iPhone 11/12 mini width) */
 @media (min-width: 321px) and (max-width: 375px) {
-  .lr-hero {
+  .sw-lr-hero {
     padding: 18px 12px;
     min-height: 50vh;
     background-size: cover;
@@ -79,12 +79,12 @@
     align-items: flex-start;
   }
 
-  .lr-hero-inner { padding: 0 10px; }
-  .lr-hero-sub { padding: 5px 11px; font-size: 13px; }
-  .lr-hero-title { font-size: 22px; line-height: 1.04; margin-top: 10px; }
-  .lr-hero-desc { font-size: 14px; margin-bottom: 14px; }
+  .sw-lr-hero-inner { padding: 0 10px; }
+  .sw-lr-hero-sub { padding: 5px 11px; font-size: 13px; }
+  .sw-lr-hero-title { font-size: 22px; line-height: 1.04; margin-top: 10px; }
+  .sw-lr-hero-desc { font-size: 14px; margin-bottom: 14px; }
 
-  .lr-search-hero {
+  .sw-lr-search-hero {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
@@ -94,19 +94,19 @@
     background: #fff;
   }
 
-  .lr-search-field-hero {
+  .sw-lr-search-field-hero {
     width: 100% !important;
     margin-right: 0 !important;
     flex-basis: 100% !important;
   }
-  .lr-search-field-hero .ant-input,
-  .lr-search-field-hero .ant-select-selector { height: 44px; padding: 8px 12px; }
-  .lr-search-btn-hero { width: 100%; height: 44px; font-size: 15px; }
+  .sw-lr-search-field-hero .ant-input,
+  .sw-lr-search-field-hero .ant-select-selector { height: 44px; padding: 8px 12px; }
+  .sw-lr-search-btn-hero { width: 100%; height: 44px; font-size: 15px; }
 }
 
 /* 425px - larger phones / small phablets (e.g. Pixel, larger iPhones) */
 @media (min-width: 376px) and (max-width: 425px) {
-  .lr-hero {
+  .sw-lr-hero {
     padding: 22px 14px;
     min-height: 54vh;
     background-size: cover;
@@ -114,13 +114,13 @@
     align-items: flex-start;
   }
 
-  .lr-hero-inner { padding: 0 12px; }
-  .lr-hero-sub { padding: 6px 12px; font-size: 14px; }
-  .lr-hero-title { font-size: 26px; line-height: 1.03; margin-top: 12px; }
-  .lr-hero-desc { font-size: 15px; margin-bottom: 16px; }
+  .sw-lr-hero-inner { padding: 0 12px; }
+  .sw-lr-hero-sub { padding: 6px 12px; font-size: 14px; }
+  .sw-lr-hero-title { font-size: 26px; line-height: 1.03; margin-top: 12px; }
+  .sw-lr-hero-desc { font-size: 15px; margin-bottom: 16px; }
 
   /* allow search to attempt a two-column layout if space permits, otherwise stack */
-  .lr-search-hero {
+  .sw-lr-search-hero {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
@@ -132,24 +132,24 @@
   }
 
   /* try to place input and select side-by-side if enough width, else they'll stack */
-  .lr-search-field-hero {
+  .sw-lr-search-field-hero {
     flex-basis: calc(100% - 120px);
     min-width: 160px;
     margin-right: 6px;
   }
-  .lr-search-btn-hero {
+  .sw-lr-search-btn-hero {
     flex-basis: 110px;
     min-width: 100px;
     height: 44px;
   }
 
-  .lr-search-field-hero .ant-input,
-  .lr-search-field-hero .ant-select-selector { height: 44px; padding: 8px 12px; }
+  .sw-lr-search-field-hero .ant-input,
+  .sw-lr-search-field-hero .ant-select-selector { height: 44px; padding: 8px 12px; }
 }
 
 /* 768px - tablets & small laptops (matches your earlier tablet rules but is explicit) */
 @media (min-width: 426px) and (max-width: 768px) {
-  .lr-hero {
+  .sw-lr-hero {
     padding: 30px 18px;
     min-height: 60vh;
     align-items: flex-start;
@@ -157,13 +157,13 @@
     background-position: center;
   }
 
-  .lr-hero-inner { padding: 0 14px; }
-  .lr-hero-sub { padding: 6px 14px; font-size: 14px; }
-  .lr-hero-title { font-size: 32px; line-height: 1.04; margin-top: 14px; }
-  .lr-hero-desc { font-size: 16px; max-width: 100%; margin-bottom: 18px; }
+  .sw-lr-hero-inner { padding: 0 14px; }
+  .sw-lr-hero-sub { padding: 6px 14px; font-size: 14px; }
+  .sw-lr-hero-title { font-size: 32px; line-height: 1.04; margin-top: 14px; }
+  .sw-lr-hero-desc { font-size: 16px; max-width: 100%; margin-bottom: 18px; }
 
   /* for tablets, show the search bar as one line but allow it to wrap when necessary */
-  .lr-search-hero {
+  .sw-lr-search-hero {
     width: 86%;
     display: flex;
     gap: 12px;
@@ -174,17 +174,17 @@
     justify-content: flex-start;
   }
 
-  .lr-search-field-hero { flex: 1 1 auto; min-width: 140px; margin-right: 6px; }
-  .lr-search-field-hero .ant-input,
-  .lr-search-field-hero .ant-select-selector { height: 46px; padding: 10px 12px; }
-  .lr-search-btn-hero { width: 130px; height: 46px; }
+  .sw-lr-search-field-hero { flex: 1 1 auto; min-width: 140px; margin-right: 6px; }
+  .sw-lr-search-field-hero .ant-input,
+  .sw-lr-search-field-hero .ant-select-selector { height: 46px; padding: 10px 12px; }
+  .sw-lr-search-btn-hero { width: 130px; height: 46px; }
 }
 
 /* small tweak for very wide but not desktop screens to keep hero balanced */
 @media (min-width: 769px) and (max-width: 1024px) {
-  .lr-hero { padding: 40px 24px; min-height: 66vh; }
-  .lr-hero-title { font-size: 36px; }
-  .lr-search { width: 70%; }
+  .sw-lr-hero { padding: 40px 24px; min-height: 66vh; }
+  .sw-lr-hero-title { font-size: 36px; }
+  .sw-lr-search { width: 70%; }
 }
 
 
@@ -194,7 +194,7 @@
    --------- */
 
 /* center the section content and constrain width similar to other sections */
-.lr-types {
+.sw-lr-types {
   text-align: center;           /* center the title & subtitle */
   display: block;
   padding-top: 6px;
@@ -202,19 +202,19 @@
 }
 
 /* ensure the row of type-cards is centered within the page container */
-.lr-types .ant-row {
+.sw-lr-types .ant-row {
   justify-content: center;      /* center the flex row items */
   align-items: stretch;
 }
 
 /* each column (card) is centered and given max width so the whole block centers nicely */
-.lr-types .ant-col {
+.sw-lr-types .ant-col {
   display: flex;
   justify-content: center;      /* center card inside the column */
 }
 
 /* cap the width of the whole types grid so it sits centered like screenshots */
-.lr-types .lr-type-grid {
+.sw-lr-types .sw-lr-type-grid {
   max-width: 1000px;            /* tweak if you want narrower or wider block */
   margin: 0 auto;
   display: flex;
@@ -223,7 +223,7 @@
 }
 
 /* keep cards themselves the same but make sure they don't stretch oddly */
-.lr-types .lr-type-card {
+.sw-lr-types .sw-lr-type-card {
   width: 240px;                 /* fixed card width so centering is consistent */
   margin: 0 auto;
   box-sizing: border-box;
@@ -231,13 +231,12 @@
 
 /* responsive - keep cards centered and stack at smaller widths */
 @media (max-width: 768px) {
-  .lr-types .lr-type-card { width: 100%; max-width: 320px; }
-  .lr-types .lr-type-grid { padding: 0 16px; gap: 16px; }
+  .sw-lr-types .sw-lr-type-card { width: 100%; max-width: 320px; }
+  .sw-lr-types .sw-lr-type-grid { padding: 0 16px; gap: 16px; }
 }
 
 
-/* Featured properties header */
-.lr-featured-head {
+.sw-lr-featured-head {
   display: flex;
   justify-content: center;   /* centers the heading block */
   align-items: center;
@@ -247,23 +246,23 @@
 }
 
 
-.lr-section-title { font-size:1.6rem; margin:0 0 6px 0; }
-.lr-sub { margin: 0; }
+.sw-lr-section-title { font-size:1.6rem; margin:0 0 6px 0; }
+.sw-lr-sub { margin: 0; }
 .muted { color: var(--muted); }
 
 /* card base */
-.lr-prop-card {
+.sw-lr-prop-card {
   border-radius: 12px;
   overflow: hidden;
   position: relative;
   background: white;
   transition: transform .18s ease, box-shadow .18s ease;
 }
-.lr-prop-card:hover { transform: translateY(-6px); box-shadow: 0 12px 30px rgba(16,34,51,0.08); }
+.sw-lr-prop-card:hover { transform: translateY(-6px); box-shadow: 0 12px 30px rgba(16,34,51,0.08); }
 
 /* image sizing */
-.lr-cover-wrap { position: relative; }
-.lr-prop-img {
+.sw-lr-cover-wrap { position: relative; }
+.sw-lr-prop-img {
   width: 100%;
   height: 200px;
   object-fit: cover;
@@ -273,20 +272,20 @@
 }
 
 /* heart, tag */
-.lr-heart { position:absolute; top:12px; right:12px; background: rgba(255,255,255,0.95); width:42px; height:42px; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 6px 18px rgba(16,34,51,0.06); }
-.lr-prop-tag { position:absolute; bottom:12px; left:12px; padding:6px 12px; background: var(--accent-r); color:white; border-radius:14px; font-weight:600; font-size:0.85rem; }
+.sw-lr-heart { position:absolute; top:12px; right:12px; background: rgba(255,255,255,0.95); width:42px; height:42px; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 6px 18px rgba(16,34,51,0.06); }
+.sw-lr-prop-tag { position:absolute; bottom:12px; left:12px; padding:6px 12px; background: var(--accent-r); color:white; border-radius:14px; font-weight:600; font-size:0.85rem; }
 
 /* text */
-.lr-prop-title { margin-top: 12px; font-weight:600; }
-.lr-prop-loc { color: var(--muted); margin-bottom:10px; }
-.lr-prop-price { margin:10px 0; color: var(--accent-r); font-weight:700; font-size:1.4rem; }
-.lr-prop-meta { color: var(--muted); margin-bottom:10px; }
+.sw-lr-prop-title { margin-top: 12px; font-weight:600; }
+.sw-lr-prop-loc { color: var(--muted); margin-bottom:10px; }
+.sw-lr-prop-price { margin:10px 0; color: var(--accent-r); font-weight:700; font-size:1.4rem; }
+.sw-lr-prop-meta { color: var(--muted); margin-bottom:10px; }
 
 /* small tag pills */
-.lr-prop-tags { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px; }
-.lr-badge { background:#f3eaff; padding:6px 10px; color:var(--accent-r); border-radius:10px; font-size:0.8rem; }
+.sw-lr-prop-tags { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px; }
+.sw-lr-badge { background:#f3eaff; padding:6px 10px; color:var(--accent-r); border-radius:10px; font-size:0.8rem; }
 
-.lr-featured-filter-btn {
+.sw-lr-featured-filter-btn {
   position: absolute;
   right: 0;
   top: 0;
@@ -295,13 +294,13 @@
 
 /* ===== REPLACEMENT: PREMIUM AMENITIES (matches screenshot) ===== */
 
-.lr-amenities {
+.sw-lr-amenities {
   background: #fbfdff;
   padding: 72px 20px;            /* generous vertical spacing like image */
   box-sizing: border-box;
 }
 
-.lr-amenities-inner {
+.sw-lr-amenities-inner {
   max-width: 1200px;
   margin: 0 auto;
   text-align: center;
@@ -309,7 +308,7 @@
 }
 
 /* top area: centered button + title */
-.lr-amenities-top {
+.sw-lr-amenities-top {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -317,12 +316,12 @@
   margin-bottom: 26px;
 }
 
-.lr-amenities-top .lr-amenities-top-btn {
+.sw-lr-amenities-top .sw-lr-amenities-top-btn {
   margin-top: 6px;
 }
 
 /* centered "View All Properties" look */
-.lr-view-all-btn {
+.sw-lr-view-all-btn {
   display: inline-block;
   background: #ffffff;
   color: #0b1724;
@@ -334,14 +333,14 @@
 }
 
 /* title + subtitle */
-.lr-amenities .lr-section-title {
+.sw-lr-amenities .sw-lr-section-title {
   font-size: 1.9rem;
   font-weight: 700;
   margin: 0;
   color: #102233;
 }
 
-.lr-amenities .lr-sub {
+.sw-lr-amenities .sw-lr-sub {
   color: var(--muted);
   margin: 0;
   font-size: 1rem;
@@ -349,7 +348,7 @@
 }
 
 /* GRID: 5 equal boxes centered */
-.lr-amenities-grid {
+.sw-lr-amenities-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr); /* 5 columns on desktop */
   gap: 22px 28px;                         /* vertical + horizontal gap */
@@ -361,7 +360,7 @@
 }
 
 /* each amenity box */
-.lr-amenity {
+.sw-lr-amenity {
   width: 100%;
   max-width: 220px;      /* box width to match screenshot */
   min-height: 72px;      /* consistent height like sample */
@@ -378,7 +377,7 @@
 }
 
 /* check icon wrapper (purple) */
-.lr-amenity-check {
+.sw-lr-amenity-check {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -391,11 +390,11 @@
 }
 
 /* check SVG stroke color variant if using inline SVG */
-.lr-amenity-check svg path,
-.lr-amenity-check svg { stroke: #7B2CFF; fill: none; }
+.sw-lr-amenity-check svg path,
+.sw-lr-amenity-check svg { stroke: #7B2CFF; fill: none; }
 
 /* text */
-.lr-amenity-text {
+.sw-lr-amenity-text {
   font-size: 0.98rem;
   color: #102233;
   font-weight: 600;
@@ -404,86 +403,58 @@
 }
 
 /* ensure text wraps cleanly */
-.lr-amenities-grid .lr-amenity { align-items: center; }
+.sw-lr-amenities-grid .sw-lr-amenity { align-items: center; }
 
 /* ===== Responsive breakpoints ===== */
 
 /* wide tablet / small desktop: 3 columns */
 @media (max-width: 1100px) {
-  .lr-amenities-grid { grid-template-columns: repeat(3, 1fr); gap: 18px; }
-  .lr-amenity { max-width: 240px; min-height: 72px; padding: 12px 16px; }
-  .lr-amenity-check { width: 34px; height: 34px; min-width: 34px; }
-  .lr-amenity-text { font-size: 0.98rem; }
+  .sw-lr-amenities-grid { grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .sw-lr-amenity { max-width: 240px; min-height: 72px; padding: 12px 16px; }
+  .sw-lr-amenity-check { width: 34px; height: 34px; min-width: 34px; }
+  .sw-lr-amenity-text { font-size: 0.98rem; }
 }
 
 /* tablet / large mobile: 2 columns */
 @media (max-width: 768px) {
-  .lr-amenities { padding: 48px 14px; }
-  .lr-amenities-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
-  .lr-amenity { max-width: 92%; min-height: 64px; padding: 12px 14px; border-radius: 12px; }
-  .lr-amenity-check { width: 32px; height: 32px; min-width: 32px; }
-  .lr-amenity-text { font-size: 0.96rem; }
+  .sw-lr-amenities { padding: 48px 14px; }
+  .sw-lr-amenities-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .sw-lr-amenity { max-width: 92%; min-height: 64px; padding: 12px 14px; border-radius: 12px; }
+  .sw-lr-amenity-check { width: 32px; height: 32px; min-width: 32px; }
+  .sw-lr-amenity-text { font-size: 0.96rem; }
 }
 
 /* mobile single column */
 @media (max-width: 420px) {
-  .lr-amenities-grid { grid-template-columns: 1fr; gap: 12px; padding: 8px 6px; }
-  .lr-amenity { max-width: 100%; min-height: 56px; padding: 10px 12px; border-radius: 10px; }
-  .lr-amenity-check { width: 28px; height: 28px; min-width: 28px; }
-  .lr-amenity-text { font-size: 0.94rem; }
+  .sw-lr-amenities-grid { grid-template-columns: 1fr; gap: 12px; padding: 8px 6px; }
+  .sw-lr-amenity { max-width: 100%; min-height: 56px; padding: 10px 12px; border-radius: 10px; }
+  .sw-lr-amenity-check { width: 28px; height: 28px; min-width: 28px; }
+  .sw-lr-amenity-text { font-size: 0.94rem; }
 }
 
-/* small visual tweak so the grid sits nicely under the hero */
-.lr-amenities-inner { padding-top: 6px; padding-bottom: 6px; }
+.sw-lr-amenities-inner { padding-top: 6px; padding-bottom: 6px; }
 
 
 
-/* ===== Responsive breakpoints (non-overlapping / clean) ===== */
-
-/* Wide tablet / small desktop: 3 columns */
-@media (max-width: 1100px) {
-  .lr-amenities-grid { grid-template-columns: repeat(3, 1fr); gap: 18px; }
-  .lr-amenity { min-height: 78px; padding: 12px 16px; }
-  .lr-amenity-check { width: 38px; height: 38px; min-width: 38px; }
-  .lr-amenity-text { font-size: 0.98rem; }
-}
-
-/* Tablet / large mobile: 2 columns */
-@media (max-width: 768px) {
-  .lr-amenities { padding: 48px 14px; }
-  .lr-amenities-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
-  .lr-amenity { min-height: 72px; padding: 12px 14px; border-radius: 12px; }
-  .lr-amenity-check { width: 36px; height: 36px; min-width: 36px; }
-  .lr-amenity-text { font-size: 0.96rem; }
-}
-
-/* Mobile single column */
-@media (max-width: 420px) {
-  .lr-amenities-grid { grid-template-columns: 1fr; gap: 12px; }
-  .lr-amenity { min-height: 64px; padding: 10px 12px; }
-  .lr-amenity-check { width: 32px; height: 32px; min-width: 32px; }
-  .lr-amenity-text { font-size: 0.95rem; }
-}
-
-/* -------------------------
+/* ---------
    HOW IT WORKS — exact style
-   ------------------------- */
+   --------- */
 
-.lr-steps {
+.sw-lr-steps {
   /* full-width pale lavender band like screenshot */
   background: rgba(123,44,255,0.06);
   padding: 48px 20px;
   margin-top: 28px;
 }
 
-.lr-steps-inner {
+.sw-lr-steps-inner {
   max-width: var(--container);
   margin: 0 auto;
   text-align: center;
 }
 
 /* title */
-.lr-steps-title {
+.sw-lr-steps-title {
   margin-bottom: 28px;
   font-size: 1.8rem;
   font-weight: 600;
@@ -491,7 +462,7 @@
 }
 
 /* horizontal track containing the step items */
-.lr-steps-track {
+.sw-lr-steps-track {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -501,7 +472,7 @@
 }
 
 /* each step item occupies equal width */
-.lr-step-item {
+.sw-lr-step-item {
   flex: 1 1 0;
   max-width: 25%;
   display: flex;
@@ -512,7 +483,7 @@
 }
 
 /* wrapper so we can draw the connector line using :after */
-.lr-step-circle-wrap {
+.sw-lr-step-circle-wrap {
   position: relative;
   width: 100%;
   display: flex;
@@ -522,7 +493,7 @@
 }
 
 /* connector line between circles: created on the wrapper except last item */
-.lr-step-circle-wrap::after {
+.sw-lr-step-circle-wrap::after {
   content: "";
   position: absolute;
   height: 2px;
@@ -535,10 +506,10 @@
 }
 
 /* prevent connector on last item */
-.lr-step-item:last-child .lr-step-circle-wrap::after { display: none; }
+.sw-lr-step-item:last-child .sw-lr-step-circle-wrap::after { display: none; }
 
 /* the numbered purple circle */
-.lr-step-circle {
+.sw-lr-step-circle {
   background: var(--accent-r);
   color: white;
   width: 56px;
@@ -554,14 +525,14 @@
 }
 
 /* label and description beneath */
-.lr-step-label {
+.sw-lr-step-label {
   margin-top: 8px;
   font-weight: 600;
   font-size: 1rem;
   color: #102233;
 }
 
-.lr-step-desc {
+.sw-lr-step-desc {
   margin-top: 6px;
   color: var(--muted);
   font-size: 0.95rem;
@@ -572,33 +543,33 @@
 
 /* make the connector line shorter on wide screens so it visually matches screenshot */
 @media (min-width: 1400px) {
-  .lr-step-circle-wrap::after { width: calc(100% - 120px); left: calc(50% + 60px); }
+  .sw-lr-step-circle-wrap::after { width: calc(100% - 120px); left: calc(50% + 60px); }
 }
 
 /* RESPONSIVE: collapse to two rows on medium screens */
 @media (max-width: 992px) {
-  .lr-steps-track {
+  .sw-lr-steps-track {
     flex-wrap: wrap;
     gap: 28px;
     padding-top: 20px;
   }
-  .lr-step-item {
+  .sw-lr-step-item {
     max-width: 50%;
     padding-top: 4px;
   }
   /* hide long connector lines on wrapped layout, draw small local connectors */
-  .lr-step-circle-wrap::after { display: none; }
+  .sw-lr-step-circle-wrap::after { display: none; }
 }
 
 /* RESPONSIVE: stack vertically on small screens */
 @media (max-width: 520px) {
-  .lr-step-item { max-width: 100%; }
-  .lr-step-circle {
+  .sw-lr-step-item { max-width: 100%; }
+  .sw-lr-step-circle {
     width: 48px;
     height: 48px;
     font-size: 1rem;
   }
-  .lr-step-desc { max-width: 280px; font-size: 0.92rem; }
+  .sw-lr-step-desc { max-width: 280px; font-size: 0.92rem; }
 }
 
 /* ----- Booking form ----- */
@@ -618,7 +589,7 @@
    DARK FOOTER — EXACT MATCH
    ============================ */
 
-.lr-footer {
+.sw-lr-footer {
   background: #0b1724; /* Deep navy */
   color: #cbd5e1;      /* Light slate */
   padding: 48px 20px 28px;
@@ -627,7 +598,7 @@
 }
 
 /* Main footer grid */
-.lr-footer-inner {
+.sw-lr-footer-inner {
   max-width: 1200px;
   margin: 0 auto;
   display: grid;
@@ -637,7 +608,7 @@
 }
 
 /* Column heading */
-.lr-footer-col h4 {
+.sw-lr-footer-col h4 {
   color: #ffffff;
   font-size: 1.05rem;
   margin-bottom: 12px;
@@ -645,22 +616,22 @@
 }
 
 /* About description */
-.lr-footer-about {
+.sw-lr-footer-about {
   max-width: 320px;
   color: rgba(255, 255, 255, 0.75);
   line-height: 1.6;
 }
 
 /* Lists inside footer */
-.lr-footer-list,
-.lr-contact-list {
+.sw-lr-footer-list,
+.sw-lr-contact-list {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.lr-footer-list li,
-.lr-contact-list li {
+.sw-lr-footer-list li,
+.sw-lr-contact-list li {
   margin: 10px 0;
   color: rgba(255, 255, 255, 0.75);
   line-height: 1.6;
@@ -668,7 +639,7 @@
 }
 
 /* Contact icons (aligning properly) */
-.lr-contact-list li svg {
+.sw-lr-contact-list li svg {
   font-size: 16px;
   margin-right: 6px;
   vertical-align: middle;
@@ -676,14 +647,14 @@
 }
 
 /* Footer Social Icons */
-.lr-footer-socials {
+.sw-lr-footer-socials {
   margin-top: 12px;
   display: flex;
   gap: 12px;
   align-items: center;
 }
 
-.lr-footer-socials .social {
+.sw-lr-footer-socials .social {
   display: inline-flex;
   width: 36px;
   height: 36px;
@@ -696,14 +667,14 @@
   transition: 0.15s ease;
 }
 
-.lr-footer-socials .social:hover {
+.sw-lr-footer-socials .social:hover {
   background: rgba(123, 44, 255, 0.15);
   color: #ffffff;
   transform: translateY(-3px);
 }
 
 /* Bottom area */
-.lr-footer-bottom {
+.sw-lr-footer-bottom {
   max-width: 1200px;
   margin: 22px auto 0;
   padding-top: 16px;
@@ -711,7 +682,7 @@
 }
 
 /* Separator line */
-.lr-footer-sep {
+.sw-lr-footer-sep {
   width: 100%;
   height: 1px;
   background: rgba(255, 255, 255, 0.05);
@@ -719,7 +690,7 @@
 }
 
 /* Copyright */
-.lr-footer-copy {
+.sw-lr-footer-copy {
   color: rgba(255, 255, 255, 0.55);
   font-size: 14px;
 }
@@ -728,19 +699,19 @@
 /* ========= RESPONSIVE ========= */
 
 @media (max-width: 992px) {
-  .lr-footer-inner {
+  .sw-lr-footer-inner {
     grid-template-columns: repeat(2, 1fr);
     gap: 28px;
   }
 }
 
 @media (max-width: 600px) {
-  .lr-footer-inner {
+  .sw-lr-footer-inner {
     grid-template-columns: 1fr;
     text-align: left;
   }
 
-  .lr-footer-socials {
+  .sw-lr-footer-socials {
     justify-content: flex-start;
   }
 }
@@ -752,21 +723,21 @@
 
 /* medium-large screens: reduce left offset and scale search width */
 @media (max-width: 1200px) {
-  .lr-hero { padding: 48px 20px; }
-  .lr-hero-inner { max-width: var(--container); margin: 0 auto; }
-  .lr-hero-title { font-size: 3.2rem; line-height: 1.03; }
-  .lr-search { width: 70%; min-width: unset; }
+  .sw-lr-hero { padding: 48px 20px; }
+  .sw-lr-hero-inner { max-width: var(--container); margin: 0 auto; }
+  .sw-lr-hero-title { font-size: 3.2rem; line-height: 1.03; }
+  .sw-lr-search { width: 70%; min-width: unset; }
 }
 
 /* tablet: make search bar wrap and inputs stack */
 @media (max-width: 900px) {
-  .lr-hero { padding: 36px 16px; height: auto; align-items: flex-start; }
-  .lr-hero-inner { padding: 0 8px; }
-  .lr-hero-title { font-size: 2.4rem; margin-top: 6px; }
-  .lr-hero-desc { max-width: 100%; font-size: 1.02rem; }
+  .sw-lr-hero { padding: 36px 16px; height: auto; align-items: flex-start; }
+  .sw-lr-hero-inner { padding: 0 8px; }
+  .sw-lr-hero-title { font-size: 2.4rem; margin-top: 6px; }
+  .sw-lr-hero-desc { max-width: 100%; font-size: 1.02rem; }
 
   /* allow the white search bar to grow full width and wrap children */
-  .lr-search {
+  .sw-lr-search {
     width: 100%;
     min-width: unset;
     display: flex;
@@ -778,7 +749,7 @@
   }
 
   /* make each field occupy full width on stacking */
-  .lr-search-field {
+  .sw-lr-search-field {
     width: 100% !important;
     margin-right: 0 !important;
     flex-basis: 100% !important;
@@ -786,8 +757,8 @@
   }
 
   /* inputs and select adapt to container */
-  .lr-search-field .ant-input,
-  .lr-search-field .ant-select-selector {
+  .sw-lr-search-field .ant-input,
+  .sw-lr-search-field .ant-select-selector {
     width: 100% !important;
     height: 44px;
   }
@@ -801,21 +772,21 @@
 
 /* small phones: reduce hero height/padding and scale typography */
 @media (max-width: 600px) {
-  .lr-hero {
+  .sw-lr-hero {
     min-height: 56vh;
     padding: 20px 12px;
   }
-  .lr-hero-inner { padding-left: 12px; padding-right: 12px; }
-  .lr-hero-title { font-size: 1.9rem; }
-  .lr-hero-desc { font-size: 0.98rem; }
+  .sw-lr-hero-inner { padding-left: 12px; padding-right: 12px; }
+  .sw-lr-hero-title { font-size: 1.9rem; }
+  .sw-lr-hero-desc { font-size: 0.98rem; }
 
   /* tighten spacing for the search box */
-  .lr-search {
+  .sw-lr-search {
     padding: 8px;
     gap: 8px;
   }
-  .lr-search-field .ant-input,
-  .lr-search-field .ant-select-selector {
+  .sw-lr-search-field .ant-input,
+  .sw-lr-search-field .ant-select-selector {
     padding: 8px 10px !important;
     height: 42px;
   }
@@ -827,29 +798,29 @@
 
 /* very small devices - ensure everything fits and no overflow */
 @media (max-width: 420px) {
-  .lr-hero-title { font-size: 1.6rem; }
-  .lr-hero-desc { font-size: 0.92rem; }
-  .lr-search { gap: 6px; padding: 6px; }
-  .lr-search-field .ant-input,
-  .lr-search-field .ant-select-selector { height: 40px; padding: 8px 8px !important; }
+  .sw-lr-hero-title { font-size: 1.6rem; }
+  .sw-lr-hero-desc { font-size: 0.92rem; }
+  .sw-lr-search { gap: 6px; padding: 6px; }
+  .sw-lr-search-field .ant-input,
+  .sw-lr-search-field .ant-select-selector { height: 40px; padding: 8px 8px !important; }
   .ant-btn-primary { height: 40px; font-size: 14px; padding: 8px; }
 }
 
 /* Responsive */
 /* adjust icon size on medium screens */
 @media (max-width: 992px) {
-  .lr-prop-img { height: 180px; }
-  .lr-type-ico { width: 58px; height: 58px; font-size: 20px; }
+  .sw-lr-prop-img { height: 180px; }
+  .sw-lr-type-ico { width: 58px; height: 58px; font-size: 20px; }
 }
 @media (max-width: 768px) {
-  .lr-hero { height: 48vh; padding:30px 20px; }
-  .lr-hero-title { font-size:2rem; }
-  .lr-search { display:block; }
-  .lr-prop-img { height: 160px; }
+  .sw-lr-hero { height: 48vh; padding:30px 20px; }
+  .sw-lr-hero-title { font-size:2rem; }
+  .sw-lr-search { display:block; }
+  .sw-lr-prop-img { height: 160px; }
 
   /* mobile icon sizing and card padding */
-  .lr-type-ico { width: 52px; height: 52px; font-size: 18px; }
-  .lr-types .lr-type-card { padding: 20px; }
+  .sw-lr-type-ico { width: 52px; height: 52px; font-size: 18px; }
+  .sw-lr-types .sw-lr-type-card { padding: 20px; }
 }
 
 /* ================================
@@ -858,7 +829,7 @@
 ================================ */
 
 /* Card container override (keeps card behavior but updates color) */
-.lr-type-card {
+.sw-lr-type-card {
   padding: 24px;
   border-radius: 16px;
   text-align: center;
@@ -867,13 +838,13 @@
 }
 
 /* Icon circular wrapper */
-.lr-type-ico-wrapper {
+.sw-lr-type-ico-wrapper {
   display: flex;
   justify-content: center;
   margin-bottom: 14px;
 }
 
-.lr-type-ico {
+.sw-lr-type-ico {
   width: 54px;
   height: 54px;
   border-radius: 50%;
@@ -886,7 +857,7 @@
 }
 
 /* Title below icon */
-.lr-type-card h4 {
+.sw-lr-type-card h4 {
   font-size: 1.1rem;
   font-weight: 600;
   margin-top: 8px;
@@ -895,7 +866,7 @@
 }
 
 /* The purple 1,250+ numbers — exactly like pic */
-.lr-type-count {
+.sw-lr-type-count {
   font-size: 1.35rem;
   font-weight: 700;
   color: #7B2CFF;
@@ -903,7 +874,7 @@
 }
 
 /* "Properties" subtitle */
-.lr-type-sub {
+.sw-lr-type-sub {
   color: #6b7280;
   font-size: 0.92rem;
 }
@@ -915,7 +886,7 @@
 /* Ensure hero is a normal flow container on mobile */
 @media (max-width: 900px) {
   /* let hero grow with content instead of forcing 70vh */
-  .lr-hero {
+  .sw-lr-hero {
     height: auto !important;
     padding-top: 28px !important;
     padding-bottom: 56px !important; /* room for card inside hero */
@@ -924,13 +895,13 @@
   }
 
   /* keep hero inner padding tidy */
-  .lr-hero-inner {
+  .sw-lr-hero-inner {
     padding-bottom: 0 !important;
   }
 
   /* Ensure search participates in normal flow (not absolute) and sits below the copy */
-  .lr-search-hero,
-  .lr-search {
+  .sw-lr-search-hero,
+  .sw-lr-search {
     position: static !important;
     transform: none !important;
     margin: 34px auto 8px !important;   /* push it below the heading/desc */
@@ -946,10 +917,10 @@
   }
 
   /* make inputs full width inside the card */
-  .lr-search-hero .ant-input,
-  .lr-search-hero .ant-select-selector,
-  .lr-search .ant-input,
-  .lr-search .ant-select-selector {
+  .sw-lr-search-hero .ant-input,
+  .sw-lr-search-hero .ant-select-selector,
+  .sw-lr-search .ant-input,
+  .sw-lr-search .ant-select-selector {
     width: 100% !important;
     height: 48px;
     border-radius: 10px;
@@ -960,8 +931,8 @@
   }
 
   /* search button full width */
-  .lr-search-btn-hero,
-  .lr-search .ant-btn-primary {
+  .sw-lr-search-btn-hero,
+  .sw-lr-search .ant-btn-primary {
     display: block;
     width: 100%;
     height: 52px;
@@ -975,14 +946,14 @@
   }
 
   /* compact gaps in card */
-  .lr-search-hero .lr-search-field-hero,
-  .lr-search .lr-search-field {
+  .sw-lr-search-hero .sw-lr-search-field-hero,
+  .sw-lr-search .sw-lr-search-field {
     margin-bottom: 8px !important;
     margin-right: 0 !important;
   }
 
   /* ensure next section doesn't jump up under the card */
-  .lr-container {
+  .sw-lr-container {
     margin-top: 6px !important;
   }
 
@@ -999,43 +970,43 @@
 
 /* Fine tuning for 425px (your main test width) */
 @media (max-width: 425px) {
-  .lr-hero {
+  .sw-lr-hero {
     padding-bottom: 72px !important; /* give more breathing room */
   }
-  .lr-search-hero,
-  .lr-search {
+  .sw-lr-search-hero,
+  .sw-lr-search {
     margin: 38px auto 12px !important;
     width: calc(100% - 30px) !important;
     max-width: 480px !important;
     padding: 10px !important;
     box-shadow: 0 12px 28px rgba(16,34,51,0.10);
   }
-  .lr-search-btn-hero,
-  .lr-search .ant-btn-primary { height: 48px; }
+  .sw-lr-search-btn-hero,
+  .sw-lr-search .ant-btn-primary { height: 48px; }
 }
 
 /* Fine tuning for narrower 375px phones */
 @media (max-width: 375px) {
-  .lr-hero {
+  .sw-lr-hero {
     padding-bottom: 84px !important;
   }
-  .lr-search-hero,
-  .lr-search {
+  .sw-lr-search-hero,
+  .sw-lr-search {
     margin: 44px auto 12px !important;
     width: calc(100% - 26px) !important;
     max-width: 420px !important;
     padding: 10px !important;
     box-shadow: 0 10px 22px rgba(16,34,51,0.09);
   }
-  .lr-search-btn-hero,
-  .lr-search .ant-btn-primary { height: 46px; }
+  .sw-lr-search-btn-hero,
+  .sw-lr-search .ant-btn-primary { height: 46px; }
 }
 
 /* Very tiny devices */
 @media (max-width: 340px) {
-  .lr-hero { padding-bottom: 98px !important; }
-  .lr-search-hero,
-  .lr-search { width: calc(100% - 20px) !important; margin: 48px auto 12px !important; }
+  .sw-lr-hero { padding-bottom: 98px !important; }
+  .sw-lr-search-hero,
+  .sw-lr-search { width: calc(100% - 20px) !important; margin: 48px auto 12px !important; }
 }
 /* =========================
    Featured header: centered title + non-overlapping filter
@@ -1043,7 +1014,7 @@
    ========================= */
 
 /* Make the overall header a positioned container and center its content */
-.lr-featured-head {
+.sw-lr-featured-head {
   position: relative;
   display: block;           /* keep simple flow by default */
   text-align: center;       /* center title & subtitle */
@@ -1052,8 +1023,8 @@
 }
 
 /* Constrain the title area so it truly centers in the page */
-.lr-featured-head .lr-section-title,
-.lr-featured-head .lr-sub {
+.sw-lr-featured-head .sw-lr-section-title,
+.sw-lr-featured-head .sw-lr-sub {
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -1062,7 +1033,7 @@
 
 /* Put FILTERS visually to the right, but outside the central text flow.
    We use absolute positioning for the button container so the title stays perfectly centered. */
-.lr-featured-filter-btn {
+.sw-lr-featured-filter-btn {
   position: absolute;
   right: 8px;               /* small gutter from edge */
   top: 50%;
@@ -1075,15 +1046,15 @@
 }
 
 /* keep button styling tidy */
-.lr-featured-filter-btn .ant-btn,
-.lr-featured-filter-btn button {
+.sw-lr-featured-filter-btn .ant-btn,
+.sw-lr-featured-filter-btn button {
   border-radius: 10px;
   padding: 8px 14px;
   font-weight: 600;
 }
 
 /* Safety: the header area grows vertically so the filter never overlaps the cards */
-.lr-featured-head::after {
+.sw-lr-featured-head::after {
   content: "";
   display: block;
   clear: both;
@@ -1091,14 +1062,14 @@
 
 /* MOBILE: switch to stacked flow to avoid overlaps and ensure accessibility */
 @media (max-width: 900px) {
-  .lr-featured-head {
+  .sw-lr-featured-head {
     text-align: center;
     padding-top: 12px;
     padding-bottom: 12px;
   }
 
   /* Put the filter button into normal flow below the subtitle on mobile */
-  .lr-featured-filter-btn {
+  .sw-lr-featured-filter-btn {
     position: static !important;
     transform: none !important;
     margin: 10px auto 0;
@@ -1109,23 +1080,23 @@
 
   /* Optionally make the filter button full-width on very small screens */
   @media (max-width: 420px) {
-    .lr-featured-filter-btn { width: 100%; }
-    .lr-featured-filter-btn .ant-btn { width: 100%; }
+    .sw-lr-featured-filter-btn { width: 100%; }
+    .sw-lr-featured-filter-btn .ant-btn { width: 100%; }
   }
 }
 
 /* Extra nicety: ensure the filter button never hides content beneath it */
-.lr-featured-filter-btn { pointer-events: auto; }
+.sw-lr-featured-filter-btn { pointer-events: auto; }
 
 /* If your Cards are using negative margins or overlapping, add a small top-margin
    to the cards area to make sure the first card is always below the header */
-.lr-featured .ant-row:first-child,
-.lr-featured > .lr-featured-head + .ant-row,
-.lr-featured > .lr-featured-head + * {
+.sw-lr-featured .ant-row:first-child,
+.sw-lr-featured > .sw-lr-featured-head + .ant-row,
+.sw-lr-featured > .sw-lr-featured-head + * {
   margin-top: 12px;
 }
 /* FIX: Center "View All Properties" text perfectly inside the button */
-.lr-view-all-btn {
+.sw-lr-view-all-btn {
   display: flex !important;
   align-items: center !important;   /* vertical center */
   justify-content: center !important; /* horizontal center */
@@ -1135,7 +1106,7 @@
   font-weight: 700;
 }
 /* ===== NAVBAR (append at end only; non-invasive) ===== */
-.lr-header {
+.sw-lr-header {
   background: #ffffff;
   border-bottom: 1px solid rgba(16,24,40,0.06);
   position: relative;
@@ -1143,7 +1114,7 @@
   box-shadow: 0 1px 0 rgba(16,24,40,0.02);
 }
 
-.lr-header-inner {
+.sw-lr-header-inner {
   max-width: var(--container);
   margin: 0 auto;
   padding: 12px 20px;
@@ -1154,21 +1125,21 @@
 }
 
 /* Logo */
-.lr-logo-link {
+.sw-lr-logo-link {
   display: inline-flex;
   align-items: center;
   gap: 10px;
   text-decoration: none;
 }
 
-.lr-brand {
+.sw-lr-brand {
   font-weight: 700;
   color: #0b1724;
   font-size: 1.05rem;
 }
 
 /* Navigation */
-.lr-nav {
+.sw-lr-nav {
   margin-left: 28px;
   display: flex;
   gap: 12px;
@@ -1178,7 +1149,7 @@
 }
 
 /* basic nav link */
-.lr-nav-link {
+.sw-lr-nav-link {
   color: #0b1724;
   text-decoration: none;
   padding: 8px 12px;
@@ -1189,19 +1160,19 @@
 }
 
 /* active pill */
-.lr-nav-link--active {
+.sw-lr-nav-link--active {
   background: linear-gradient(180deg,#7B2CFF,#5d00d6);
   color: #fff !important;
   box-shadow: 0 8px 20px rgba(123,44,255,0.08);
 }
 
 /* hover states */
-.lr-nav-link:hover { background: rgba(15,45,90,0.04); }
+.sw-lr-nav-link:hover { background: rgba(15,45,90,0.04); }
 
 /* CTA on the right */
-.lr-header-cta { margin-left: auto; }
+.sw-lr-header-cta { margin-left: auto; }
 
-.lr-header-btn {
+.sw-lr-header-btn {
   border-radius: 10rem;
   padding: 8px 14px;
   font-weight: 600;
@@ -1211,12 +1182,12 @@
 
 /* Mobile behavior: keep your existing mobile rules untouched; only hide nav on tiny screens */
 @media (max-width: 560px) {
-  .lr-nav { display: none; }
-  .lr-header-cta { display: none; }
+  .sw-lr-nav { display: none; }
+  .sw-lr-header-cta { display: none; }
 }
 
 /* Prevent navbar from overlapping hero visually (small safety) */
-.lr-hero { margin-top: 0; }
+.sw-lr-hero { margin-top: 0; }
 
 :root {
   --accent-r: #7b2cff;
@@ -1226,13 +1197,13 @@
   font-family: "Inter", Arial, sans-serif;
 }
 
-.lr-page {
+.sw-lr-page {
   background: var(--bg);
   color: #102233;
 }
 
 /* HERO */
-.lr-hero {
+.sw-lr-hero {
   height: 70vh;
   background: linear-gradient(90deg, rgba(123,44,255,0.12), rgba(123,44,255,0.18));
   display: flex;
@@ -1241,7 +1212,7 @@
 }
 
 /* NEW: external background image for hero (no inline styles) */
-.lr-hero-with-image {
+.sw-lr-hero-with-image {
   /* path relative to CSS file — adjust if your bundler requires different path */
   background-image: linear-gradient(90deg, rgba(123,44,255,0.78), rgba(123,44,255,0.58)), url('../../assets/landingimages/hero.jpg');
   background-size: cover;
@@ -1249,30 +1220,30 @@
 }
 
 /* spacing for the small icon inside hero subtitle (replaced inline style) */
-.lr-hero-sub-icon {
+.sw-lr-hero-sub-icon {
   margin-right: 8px;
   vertical-align: middle;
   font-size: 16px;
 }
 
 /* Select in hero: moved min-width from inline to CSS (replaced inline style) */
-.lr-hero-type-select .ant-select-selector,
-.lr-hero-type-select {
+.sw-lr-hero-type-select .ant-select-selector,
+.sw-lr-hero-type-select {
   min-width: 180px;
 }
 
 /* DatePicker full width and other adjustments */
-.lr-hero-inner { max-width: var(--container); margin: 0 auto; }
-.lr-hero-sub { display:inline-block; background: rgba(255,255,255,0.12); padding:6px 14px; border-radius:16px; color:white; font-weight:600; margin-bottom:10px; }
-.lr-hero-title { font-size: 3rem; font-weight:700; color: white; margin: 12px 0; }
-.lr-hero-desc { max-width: 640px; color: rgba(255,255,255,0.92); margin-bottom: 20px; font-size:1.1rem; }
+.sw-lr-hero-inner { max-width: var(--container); margin: 0 auto; }
+.sw-lr-hero-sub { display:inline-block; background: rgba(255,255,255,0.12); padding:6px 14px; border-radius:16px; color:white; font-weight:600; margin-bottom:10px; }
+.sw-lr-hero-title { font-size: 3rem; font-weight:700; color: white; margin: 12px 0; }
+.sw-lr-hero-desc { max-width: 640px; color: rgba(255,255,255,0.92); margin-bottom: 20px; font-size:1.1rem; }
 
 /* Search */
-.lr-search { margin-top: 18px; background: rgba(255,255,255,0.06); padding: 12px; border-radius: 14px; }
-.lr-search-field { margin-right: 14px; }
+.sw-lr-search { margin-top: 18px; background: rgba(255,255,255,0.06); padding: 12px; border-radius: 14px; }
+.sw-lr-search-field { margin-right: 14px; }
 
 /* Container */
-.lr-container { max-width: var(--container); margin: 40px auto; padding: 0 20px; }
+.sw-lr-container { max-width: var(--container); margin: 40px auto; padding: 0 20px; }
 /* ---------------------------
    HERO mobile breakpoints
    (320, 375, 425, 768)
@@ -1280,7 +1251,7 @@
 
 /* 320px - very small phones (e.g. old iPhone SE) */
 @media (max-width: 320px) {
-  .lr-hero {
+  .sw-lr-hero {
     padding: 14px 10px;
     min-height: 46vh;
     align-items: flex-start;
@@ -1288,16 +1259,16 @@
     background-position: center;
   }
 
-  .lr-hero-inner {
+  .sw-lr-hero-inner {
     padding: 0 8px;
   }
 
-  .lr-hero-sub { padding: 4px 10px; font-size: 12px; border-radius: 12px; }
-  .lr-hero-title { font-size: 20px; line-height: 1.05; margin-top: 8px; }
-  .lr-hero-desc { font-size: 13px; max-width: 100%; margin-bottom: 12px; }
+  .sw-lr-hero-sub { padding: 4px 10px; font-size: 12px; border-radius: 12px; }
+  .sw-lr-hero-title { font-size: 20px; line-height: 1.05; margin-top: 8px; }
+  .sw-lr-hero-desc { font-size: 13px; max-width: 100%; margin-bottom: 12px; }
 
   /* search box stacks; everything full-width */
-  .lr-search-hero {
+  .sw-lr-search-hero {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -1306,15 +1277,15 @@
     border-radius: 10px;
     background: #fff;
   }
-  .lr-search-field-hero { width: 100% !important; margin-right: 0 !important; }
-  .lr-search-field-hero .ant-input,
-  .lr-search-field-hero .ant-select-selector { height: 42px; padding: 8px 10px; }
-  .lr-search-btn-hero { width: 100%; height: 42px; font-size: 14px; }
+  .sw-lr-search-field-hero { width: 100% !important; margin-right: 0 !important; }
+  .sw-lr-search-field-hero .ant-input,
+  .sw-lr-search-field-hero .ant-select-selector { height: 42px; padding: 8px 10px; }
+  .sw-lr-search-btn-hero { width: 100%; height: 42px; font-size: 14px; }
 }
 
 /* 375px - smaller modern phones (e.g. iPhone 11/12 mini width) */
 @media (min-width: 321px) and (max-width: 375px) {
-  .lr-hero {
+  .sw-lr-hero {
     padding: 18px 12px;
     min-height: 50vh;
     background-size: cover;
@@ -1322,12 +1293,12 @@
     align-items: flex-start;
   }
 
-  .lr-hero-inner { padding: 0 10px; }
-  .lr-hero-sub { padding: 5px 11px; font-size: 13px; }
-  .lr-hero-title { font-size: 22px; line-height: 1.04; margin-top: 10px; }
-  .lr-hero-desc { font-size: 14px; margin-bottom: 14px; }
+  .sw-lr-hero-inner { padding: 0 10px; }
+  .sw-lr-hero-sub { padding: 5px 11px; font-size: 13px; }
+  .sw-lr-hero-title { font-size: 22px; line-height: 1.04; margin-top: 10px; }
+  .sw-lr-hero-desc { font-size: 14px; margin-bottom: 14px; }
 
-  .lr-search-hero {
+  .sw-lr-search-hero {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
@@ -1337,19 +1308,19 @@
     background: #fff;
   }
 
-  .lr-search-field-hero {
+  .sw-lr-search-field-hero {
     width: 100% !important;
     margin-right: 0 !important;
     flex-basis: 100% !important;
   }
-  .lr-search-field-hero .ant-input,
-  .lr-search-field-hero .ant-select-selector { height: 44px; padding: 8px 12px; }
-  .lr-search-btn-hero { width: 100%; height: 44px; font-size: 15px; }
+  .sw-lr-search-field-hero .ant-input,
+  .sw-lr-search-field-hero .ant-select-selector { height: 44px; padding: 8px 12px; }
+  .sw-lr-search-btn-hero { width: 100%; height: 44px; font-size: 15px; }
 }
 
 /* 425px - larger phones / small phablets (e.g. Pixel, larger iPhones) */
 @media (min-width: 376px) and (max-width: 425px) {
-  .lr-hero {
+  .sw-lr-hero {
     padding: 22px 14px;
     min-height: 54vh;
     background-size: cover;
@@ -1357,13 +1328,13 @@
     align-items: flex-start;
   }
 
-  .lr-hero-inner { padding: 0 12px; }
-  .lr-hero-sub { padding: 6px 12px; font-size: 14px; }
-  .lr-hero-title { font-size: 26px; line-height: 1.03; margin-top: 12px; }
-  .lr-hero-desc { font-size: 15px; margin-bottom: 16px; }
+  .sw-lr-hero-inner { padding: 0 12px; }
+  .sw-lr-hero-sub { padding: 6px 12px; font-size: 14px; }
+  .sw-lr-hero-title { font-size: 26px; line-height: 1.03; margin-top: 12px; }
+  .sw-lr-hero-desc { font-size: 15px; margin-bottom: 16px; }
 
   /* allow search to attempt a two-column layout if space permits, otherwise stack */
-  .lr-search-hero {
+  .sw-lr-search-hero {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
@@ -1375,24 +1346,24 @@
   }
 
   /* try to place input and select side-by-side if enough width, else they'll stack */
-  .lr-search-field-hero {
+  .sw-lr-search-field-hero {
     flex-basis: calc(100% - 120px);
     min-width: 160px;
     margin-right: 6px;
   }
-  .lr-search-btn-hero {
+  .sw-lr-search-btn-hero {
     flex-basis: 110px;
     min-width: 100px;
     height: 44px;
   }
 
-  .lr-search-field-hero .ant-input,
-  .lr-search-field-hero .ant-select-selector { height: 44px; padding: 8px 12px; }
+  .sw-lr-search-field-hero .ant-input,
+  .sw-lr-search-field-hero .ant-select-selector { height: 44px; padding: 8px 12px; }
 }
 
 /* 768px - tablets & small laptops (matches your earlier tablet rules but is explicit) */
 @media (min-width: 426px) and (max-width: 768px) {
-  .lr-hero {
+  .sw-lr-hero {
     padding: 30px 18px;
     min-height: 60vh;
     align-items: flex-start;
@@ -1400,13 +1371,13 @@
     background-position: center;
   }
 
-  .lr-hero-inner { padding: 0 14px; }
-  .lr-hero-sub { padding: 6px 14px; font-size: 14px; }
-  .lr-hero-title { font-size: 32px; line-height: 1.04; margin-top: 14px; }
-  .lr-hero-desc { font-size: 16px; max-width: 100%; margin-bottom: 18px; }
+  .sw-lr-hero-inner { padding: 0 14px; }
+  .sw-lr-hero-sub { padding: 6px 14px; font-size: 14px; }
+  .sw-lr-hero-title { font-size: 32px; line-height: 1.04; margin-top: 14px; }
+  .sw-lr-hero-desc { font-size: 16px; max-width: 100%; margin-bottom: 18px; }
 
   /* for tablets, show the search bar as one line but allow it to wrap when necessary */
-  .lr-search-hero {
+  .sw-lr-search-hero {
     width: 86%;
     display: flex;
     gap: 12px;
@@ -1417,19 +1388,18 @@
     justify-content: flex-start;
   }
 
-  .lr-search-field-hero { flex: 1 1 auto; min-width: 140px; margin-right: 6px; }
-  .lr-search-field-hero .ant-input,
-  .lr-search-field-hero .ant-select-selector { height: 46px; padding: 10px 12px; }
-  .lr-search-btn-hero { width: 130px; height: 46px; }
+  .sw-lr-search-field-hero { flex: 1 1 auto; min-width: 140px; margin-right: 6px; }
+  .sw-lr-search-field-hero .ant-input,
+  .sw-lr-search-field-hero .ant-select-selector { height: 46px; padding: 10px 12px; }
+  .sw-lr-search-btn-hero { width: 130px; height: 46px; }
 }
 
 /* small tweak for very wide but not desktop screens to keep hero balanced */
 @media (min-width: 769px) and (max-width: 1024px) {
-  .lr-hero { padding: 40px 24px; min-height: 66vh; }
-  .lr-hero-title { font-size: 36px; }
-  .lr-search { width: 70%; }
+  .sw-lr-hero { padding: 40px 24px; min-height: 66vh; }
+  .sw-lr-hero-title { font-size: 36px; }
+  .sw-lr-search { width: 70%; }
 }
-
 
 /* ---------
    CENTER "Browse by Property Type"
@@ -1437,7 +1407,7 @@
    --------- */
 
 /* center the section content and constrain width similar to other sections */
-.lr-types {
+.sw-lr-types {
   text-align: center;           /* center the title & subtitle */
   display: block;
   padding-top: 6px;
@@ -1445,19 +1415,19 @@
 }
 
 /* ensure the row of type-cards is centered within the page container */
-.lr-types .ant-row {
+.sw-lr-types .ant-row {
   justify-content: center;      /* center the flex row items */
   align-items: stretch;
 }
 
 /* each column (card) is centered and given max width so the whole block centers nicely */
-.lr-types .ant-col {
+.sw-lr-types .ant-col {
   display: flex;
   justify-content: center;      /* center card inside the column */
 }
 
 /* cap the width of the whole types grid so it sits centered like screenshots */
-.lr-types .lr-type-grid {
+.sw-lr-types .sw-lr-type-grid {
   max-width: 1000px;            /* tweak if you want narrower or wider block */
   margin: 0 auto;
   display: flex;
@@ -1466,7 +1436,7 @@
 }
 
 /* keep cards themselves the same but make sure they don't stretch oddly */
-.lr-types .lr-type-card {
+.sw-lr-types .sw-lr-type-card {
   width: 240px;                 /* fixed card width so centering is consistent */
   margin: 0 auto;
   box-sizing: border-box;
@@ -1474,8 +1444,8 @@
 
 /* responsive - keep cards centered and stack at smaller widths */
 @media (max-width: 768px) {
-  .lr-types .lr-type-card { width: 100%; max-width: 320px; }
-  .lr-types .lr-type-grid { padding: 0 16px; gap: 16px; }
+  .sw-lr-types .sw-lr-type-card { width: 100%; max-width: 320px; }
+  .sw-lr-types .sw-lr-type-grid { padding: 0 16px; gap: 16px; }
 }
 
 /* ===========================
@@ -1484,24 +1454,24 @@
    External CSS only — no inline styles used
    =========================== */
 
-.lr-booking {
+.sw-lr-booking {
   margin: 60px 0;
 }
 
-.lr-booking .lr-section-title {
+.sw-lr-booking .sw-lr-section-title {
   text-align: center;
   font-size: 1.9rem;
   font-weight: 700;
   margin-bottom: 8px;
 }
 
-.lr-booking .lr-sub {
+.sw-lr-booking .sw-lr-sub {
   text-align: center;
   color: var(--muted);
   margin-bottom: 24px;
 }
 
-.lr-booking-card {
+.sw-lr-booking-card {
   background: #ffffff;
   padding: 26px;
   border-radius: 14px;
@@ -1512,22 +1482,22 @@
 }
 
 /* Force AntD form controls to be full width inside the card */
-.lr-booking-card .ant-form-item-control-input,
-.lr-booking-card .ant-form-item-control-input-content,
-.lr-booking-card .ant-input,
-.lr-booking-card .ant-input-affix-wrapper,
-.lr-booking-card .ant-select-selector,
-.lr-booking-card .ant-picker,
-.lr-booking-card .ant-input-textarea textarea {
+.sw-lr-booking-card .ant-form-item-control-input,
+.sw-lr-booking-card .ant-form-item-control-input-content,
+.sw-lr-booking-card .ant-input,
+.sw-lr-booking-card .ant-input-affix-wrapper,
+.sw-lr-booking-card .ant-select-selector,
+.sw-lr-booking-card .ant-picker,
+.sw-lr-booking-card .ant-input-textarea textarea {
   width: 100% !important;
   box-sizing: border-box;
 }
 
 /* Inputs & selectors visuals */
-.lr-booking-card .ant-input,
-.lr-booking-card .ant-input-affix-wrapper,
-.lr-booking-card .ant-select-selector,
-.lr-booking-card .ant-picker {
+.sw-lr-booking-card .ant-input,
+.sw-lr-booking-card .ant-input-affix-wrapper,
+.sw-lr-booking-card .ant-select-selector,
+.sw-lr-booking-card .ant-picker {
   height: 44px;
   border-radius: 10px;
   background: #f4f4f6;
@@ -1536,7 +1506,7 @@
 }
 
 /* textarea */
-.lr-booking-card .ant-input-textarea textarea {
+.sw-lr-booking-card .ant-input-textarea textarea {
   min-height: 110px;
   padding: 12px;
   border-radius: 10px;
@@ -1545,7 +1515,7 @@
 }
 
 /* labels */
-.lr-booking-card .ant-form-item-label > label {
+.sw-lr-booking-card .ant-form-item-label > label {
   font-weight: 600;
   display: block;
   margin-bottom: 8px;
@@ -1553,12 +1523,12 @@
 }
 
 /* ensure row/col spacing behaves same as cleaning booking */
-.lr-booking-card .ant-row > .ant-col {
+.sw-lr-booking-card .ant-row > .ant-col {
   display: block;
 }
 
 /* Submit button — black bar styling */
-.lr-submit-btn {
+.sw-lr-submit-btn {
   background: #07061a !important;
   color: #ffffff !important;
   border: none !important;
@@ -1570,34 +1540,34 @@
 }
 
 /* If Ant theme sets .ant-btn-primary override it */
-.lr-booking-card .ant-btn-primary {
+.sw-lr-booking-card .ant-btn-primary {
   background: #07061a !important;
   border-color: #07061a !important;
 }
 
 /* DatePicker full width via class (no inline style) */
-.lr-datepicker {
+.sw-lr-datepicker {
   width: 100% !important;
   box-sizing: border-box;
 }
 
 /* Responsive adjustments to match cleaning form layout */
 @media (max-width: 900px) {
-  .lr-booking-card { padding: 20px; border-radius: 12px; }
-  .lr-submit-btn { height: 52px; border-radius: 10px; }
-  .lr-booking-card .ant-input,
-  .lr-booking-card .ant-select-selector,
-  .lr-booking-card .ant-picker { height: 44px; }
+  .sw-lr-booking-card { padding: 20px; border-radius: 12px; }
+  .sw-lr-submit-btn { height: 52px; border-radius: 10px; }
+  .sw-lr-booking-card .ant-input,
+  .sw-lr-booking-card .ant-select-selector,
+  .sw-lr-booking-card .ant-picker { height: 44px; }
 }
 
 /* Mobile narrow screens: keep spacing comfortable */
 @media (max-width: 600px) {
-  .lr-booking { margin: 36px 0; }
-  .lr-booking-card { padding: 16px; }
-  .lr-booking .lr-section-title { font-size: 1.6rem; }
-  .lr-booking-card .ant-input,
-  .lr-booking-card .ant-select-selector,
-  .lr-booking-card .ant-picker { height: 42px; }
+  .sw-lr-booking { margin: 36px 0; }
+  .sw-lr-booking-card { padding: 16px; }
+  .sw-lr-booking .sw-lr-section-title { font-size: 1.6rem; }
+  .sw-lr-booking-card .ant-input,
+  .sw-lr-booking-card .ant-select-selector,
+  .sw-lr-booking-card .ant-picker { height: 42px; }
 }
 
 /* make native selects look like other booking inputs */
@@ -1660,8 +1630,8 @@
    ============================ */
 
 /* Primary container specificity to override AntD defaults */
-.lr-booking-card .ant-select .ant-select-selector,
-.lr-booking-card .ant-select-selector {
+.sw-lr-booking-card .ant-select .ant-select-selector,
+.sw-lr-booking-card .ant-select-selector {
   height: 44px !important;
   border-radius: 10px !important;
   background: #f4f4f6 !important;
@@ -1673,8 +1643,8 @@
 }
 
 /* Make the selected text / placeholder vertically centered and same color */
-.lr-booking-card .ant-select-selection-item,
-.lr-booking-card .ant-select-selection-placeholder {
+.sw-lr-booking-card .ant-select-selection-item,
+.sw-lr-booking-card .ant-select-selection-placeholder {
   line-height: 44px !important;
   padding: 0 !important;
   color: #6b7280 !important;
@@ -1682,7 +1652,7 @@
 }
 
 /* Move the arrow inward so it doesn't overlap padding */
-.lr-booking-card .ant-select-arrow {
+.sw-lr-booking-card .ant-select-arrow {
   right: 12px !important;
   top: 50% !important;
   transform: translateY(-50%) !important;
@@ -1690,16 +1660,16 @@
 }
 
 /* Focus / open state (matching input focus style) */
-.lr-booking-card .ant-select-focused .ant-select-selector,
-.lr-booking-card .ant-select:hover .ant-select-selector {
+.sw-lr-booking-card .ant-select-focused .ant-select-selector,
+.sw-lr-booking-card .ant-select:hover .ant-select-selector {
   box-shadow: 0 6px 18px rgba(37,99,235,0.06) !important;
   border-color: #2563eb !important;
   background: #fff !important;
 }
 
 /* DatePicker wrapper: make it look identical to inputs */
-.lr-booking-card .ant-picker,
-.lr-booking-card .ant-picker .ant-picker-input {
+.sw-lr-booking-card .ant-picker,
+.sw-lr-booking-card .ant-picker .ant-picker-input {
   height: 44px !important;
   border-radius: 10px !important;
   background: #f4f4f6 !important;
@@ -1711,7 +1681,7 @@
 }
 
 /* Input inside DatePicker */
-.lr-booking-card .ant-picker-input > input {
+.sw-lr-booking-card .ant-picker-input > input {
   height: 44px !important;
   line-height: 44px !important;
   padding: 0 !important;
@@ -1720,7 +1690,7 @@
 }
 
 /* DatePicker icon spacing */
-.lr-booking-card .ant-picker-suffix {
+.sw-lr-booking-card .ant-picker-suffix {
   right: 12px !important;
   top: 50% !important;
   transform: translateY(-50%) !important;
@@ -1728,7 +1698,7 @@
 }
 
 /* Ensure textarea matches background, padding and radius */
-.lr-booking-card .ant-input-textarea textarea {
+.sw-lr-booking-card .ant-input-textarea textarea {
   min-height: 110px !important;
   padding: 12px !important;
   border-radius: 10px !important;
@@ -1738,8 +1708,8 @@
 }
 
 /* Button fallback styling: ensure submit is black bar even if Ant overrides */
-.lr-booking-card .ant-btn,
-.lr-booking-card .ant-btn-primary {
+.sw-lr-booking-card .ant-btn,
+.sw-lr-booking-card .ant-btn-primary {
   background: #07061a !important;
   border-color: #07061a !important;
   color: #fff !important;
@@ -1750,15 +1720,13 @@
 
 /* Small responsive tweaks - keep everything matching on narrow screens */
 @media (max-width: 900px) {
-  .lr-booking-card .ant-select .ant-select-selector,
-  .lr-booking-card .ant-picker,
-  .lr-booking-card .ant-input {
+  .sw-lr-booking-card .ant-select .ant-select-selector,
+  .sw-lr-booking-card .ant-picker,
+  .sw-lr-booking-card .ant-input {
     height: 44px !important;
   }
-  .lr-booking-card .ant-btn { height: 52px !important; }
+  .sw-lr-booking-card .ant-btn { height: 52px !important; }
 }
-
-
 
 /* Responsive header behavior */
 @media (max-width: 768px) {
@@ -1822,15 +1790,15 @@
    Matches Premium Amenities background and stacks vertically on mobile
    ========================= */
 
-.lr-steps {
+.sw-lr-steps {
   /* use same background as Premium Amenities section */
-  background: #fbfdff;             /* matches .lr-amenities */
+  background: #fbfdff;             /* matches .sw-lr-amenities */
   padding: 56px 20px;              /* generous vertical spacing */
   box-sizing: border-box;
   margin-top: 28px;
 }
 
-.lr-steps-inner {
+.sw-lr-steps-inner {
   max-width: var(--container);
   margin: 0 auto;
   text-align: center;
@@ -1838,7 +1806,7 @@
 }
 
 /* Title */
-.lr-steps-title {
+.sw-lr-steps-title {
   margin-bottom: 34px;
   font-size: 1.8rem;
   font-weight: 700;
@@ -1846,7 +1814,7 @@
 }
 
 /* Track: horizontal on desktop, will stack on mobile */
-.lr-steps-track {
+.sw-lr-steps-track {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -1857,7 +1825,7 @@
 }
 
 /* Each step item */
-.lr-step-item {
+.sw-lr-step-item {
   flex: 1 1 0;
   max-width: 25%;
   display: flex;
@@ -1869,7 +1837,7 @@
 }
 
 /* circle wrapper used for connector */
-.lr-step-circle-wrap {
+.sw-lr-step-circle-wrap {
   position: relative;
   width: 100%;
   display: flex;
@@ -1879,7 +1847,7 @@
 }
 
 /* horizontal connector line, drawn from each circle except last */
-.lr-step-circle-wrap::after {
+.sw-lr-step-circle-wrap::after {
   content: "";
   position: absolute;
   height: 2px;
@@ -1892,12 +1860,12 @@
 }
 
 /* prevent connector on last item */
-.lr-step-item:last-child .lr-step-circle-wrap::after {
+.sw-lr-step-item:last-child .sw-lr-step-circle-wrap::after {
   display: none;
 }
 
 /* purple numbered circle */
-.lr-step-circle {
+.sw-lr-step-circle {
   background: var(--accent-r);
   color: white;
   width: 56px;
@@ -1913,14 +1881,14 @@
 }
 
 /* label and description beneath */
-.lr-step-label {
+.sw-lr-step-label {
   margin-top: 8px;
   font-weight: 700;
   font-size: 1rem;
   color: #102233;
 }
 
-.lr-step-desc {
+.sw-lr-step-desc {
   margin-top: 6px;
   color: var(--muted);
   font-size: 0.95rem;
@@ -1931,7 +1899,7 @@
 
 /* Slightly reduce connector line on very wide screens to match screenshot */
 @media (min-width: 1400px) {
-  .lr-step-circle-wrap::after {
+  .sw-lr-step-circle-wrap::after {
     width: calc(100% - 120px);
     left: calc(50% + 60px);
   }
@@ -1941,12 +1909,12 @@
    RESPONSIVE: stack vertically (one-by-one) on small screens
    -------------------------- */
 @media (max-width: 520px) {
-  .lr-steps {
+  .sw-lr-steps {
     padding: 28px 14px;
   }
 
   /* stack the track vertically and center each item */
-  .lr-steps-track {
+  .sw-lr-steps-track {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1954,7 +1922,7 @@
     padding: 12px;
   }
 
-  .lr-step-item {
+  .sw-lr-step-item {
     max-width: 100%;
     width: 100%;
     padding-top: 0;
@@ -1963,24 +1931,24 @@
   }
 
   /* hide horizontal connector lines when stacked */
-  .lr-step-circle-wrap::after {
+  .sw-lr-step-circle-wrap::after {
     display: none;
   }
 
   /* make circle slightly smaller on phones */
-  .lr-step-circle {
+  .sw-lr-step-circle {
     width: 48px;
     height: 48px;
     font-size: 1rem;
   }
 
   /* labels and descriptions stay centered and readable */
-  .lr-step-label {
+  .sw-lr-step-label {
     font-size: 0.98rem;
     margin-top: 10px;
   }
 
-  .lr-step-desc {
+  .sw-lr-step-desc {
     max-width: 320px;
     font-size: 0.95rem;
     margin-top: 8px;
@@ -1990,22 +1958,22 @@
 
 /* tablet breakpoint: collapse to two rows (if preferred), but keep connectors off */
 @media (max-width: 992px) and (min-width: 521px) {
-  .lr-steps-track {
+  .sw-lr-steps-track {
     flex-wrap: wrap;
     gap: 28px;
     padding-top: 20px;
   }
 
-  .lr-step-item {
+  .sw-lr-step-item {
     max-width: 50%;
   }
 
   /* remove the long connectors when wrap occurs */
-  .lr-step-circle-wrap::after { display: none; }
+  .sw-lr-step-circle-wrap::after { display: none; }
 }
 
 /* small visual polish: ensure spacing between amenities and steps is consistent */
-.lr-amenities + .lr-steps { margin-top: 18px; }
+.sw-lr-amenities + .sw-lr-steps { margin-top: 18px; }
 
 
 /* === HAMBURGER ICON === */
@@ -2057,17 +2025,13 @@
   }
 }
 
-
-    
-/* ===== AMENITIES (lavender pills) - replace prior .lr-amenities blocks ===== */
-
-.lr-amenities {
+.sw-lr-amenities {
   background: #fbfdff;
   padding: 72px 20px;
   box-sizing: border-box;
 }
 
-.lr-amenities-inner {
+.sw-lr-amenities-inner {
   max-width: 1200px;
   margin: 0 auto;
   text-align: center;
@@ -2075,7 +2039,7 @@
 }
 
 /* top area: centered button + title */
-.lr-amenities-top {
+.sw-lr-amenities-top {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -2083,7 +2047,7 @@
   margin-bottom: 26px;
 }
 
-.lr-view-all-btn {
+.sw-lr-view-all-btn {
   display: inline-block;
   background: #ffffff;
   color: #0b1724;
@@ -2094,14 +2058,14 @@
   box-shadow: 0 6px 18px rgba(16,34,51,0.04);
 }
 
-.lr-amenities .lr-section-title {
+.sw-lr-amenities .sw-lr-section-title {
   font-size: 1.9rem;
   font-weight: 700;
   margin: 0;
   color: #102233;
 }
 
-.lr-amenities .lr-sub {
+.sw-lr-amenities .sw-lr-sub {
   color: var(--muted);
   margin: 0;
   font-size: 1rem;
@@ -2109,7 +2073,7 @@
 }
 
 /* GRID: responsive centered boxes */
-.lr-amenities-grid {
+.sw-lr-amenities-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 22px 28px;
@@ -2121,7 +2085,7 @@
 }
 
 /* each amenity box - lavender pill like screenshot */
-.lr-amenity {
+.sw-lr-amenity {
   width: 100%;
   max-width: 260px;
   min-height: 68px;
@@ -2138,7 +2102,7 @@
 }
 
 /* check icon wrapper */
-.lr-amenity-check {
+.sw-lr-amenity-check {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -2150,10 +2114,10 @@
   flex-shrink: 0;
 }
 
-.lr-amenity-check svg path,
-.lr-amenity-check svg { stroke: #7B2CFF; fill: none; }
+.sw-lr-amenity-check svg path,
+.sw-lr-amenity-check svg { stroke: #7B2CFF; fill: none; }
 
-.lr-amenity-text {
+.sw-lr-amenity-text {
   font-size: 0.98rem;
   color: #102233;
   font-weight: 600;
@@ -2163,28 +2127,28 @@
 
 /* Responsive breakpoints for amenities */
 @media (max-width: 1100px) {
-  .lr-amenities-grid { grid-template-columns: repeat(3, 1fr); gap: 18px; }
-  .lr-amenity { max-width: 240px; min-height: 72px; padding: 12px 16px; }
-  .lr-amenity-check { width: 34px; height: 34px; min-width: 34px; }
-  .lr-amenity-text { font-size: 0.98rem; }
+  .sw-lr-amenities-grid { grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .sw-lr-amenity { max-width: 240px; min-height: 72px; padding: 12px 16px; }
+  .sw-lr-amenity-check { width: 34px; height: 34px; min-width: 34px; }
+  .sw-lr-amenity-text { font-size: 0.98rem; }
 }
 
 @media (max-width: 768px) {
-  .lr-amenities { padding: 48px 14px; }
-  .lr-amenities-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
-  .lr-amenity { max-width: 92%; min-height: 64px; padding: 12px 14px; border-radius: 12px; }
-  .lr-amenity-check { width: 32px; height: 32px; min-width: 32px; }
-  .lr-amenity-text { font-size: 0.96rem; }
+  .sw-lr-amenities { padding: 48px 14px; }
+  .sw-lr-amenities-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .sw-lr-amenity { max-width: 92%; min-height: 64px; padding: 12px 14px; border-radius: 12px; }
+  .sw-lr-amenity-check { width: 32px; height: 32px; min-width: 32px; }
+  .sw-lr-amenity-text { font-size: 0.96rem; }
 }
 
 @media (max-width: 420px) {
-  .lr-amenities-grid { grid-template-columns: 1fr; gap: 12px; padding: 8px 6px; }
-  .lr-amenity { max-width: 100%; min-height: 56px; padding: 10px 12px; border-radius: 10px; }
-  .lr-amenity-check { width: 28px; height: 28px; min-width: 28px; }
-  .lr-amenity-text { font-size: 0.94rem; }
+  .sw-lr-amenities-grid { grid-template-columns: 1fr; gap: 12px; padding: 8px 6px; }
+  .sw-lr-amenity { max-width: 100%; min-height: 56px; padding: 10px 12px; border-radius: 10px; }
+  .sw-lr-amenity-check { width: 28px; height: 28px; min-width: 28px; }
+  .sw-lr-amenity-text { font-size: 0.94rem; }
 }
 
-.lr-amenities-inner { padding-top: 6px; padding-bottom: 6px; }
-.schedule{
+.sw-lr-amenities-inner { padding-top: 6px; padding-bottom: 6px; }
+.sw-lr-schedule{
   background-color: black !important;
 }
