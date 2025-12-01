@@ -143,6 +143,7 @@ export default function Freelancer() {
           className="hs-navbar-menu"
           items={navItems}
         />
+        
 
         <Button
           type="primary"
