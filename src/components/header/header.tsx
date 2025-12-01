@@ -60,14 +60,14 @@ const HeaderBar: React.FC = () => {
 
 
   const centerMenu = [
-    { key: "cleaning", label: <span className="menu-item">Cleaning</span> },
+    // { key: "cleaning", label: <span className="menu-item">Cleaning</span> },
     {
       key: "packers",
       label: <span className="menu-item">Packers & Movers</span>,
     },
     {
       key: "homeservices",
-      label: <span className="menu-item">Home Services</span>,
+      label: <span className="menu-item">Home & Cleaning Services</span>,
     },
     { key: "rentals", label: <span className="menu-item">Rentals</span> },
     {
@@ -91,7 +91,10 @@ const HeaderBar: React.FC = () => {
   return (
     <div className="header-container">
 
-      <div className="header-left">
+      <div className="header-left"
+      onClick={() => navigate("/app/dashboard")}
+      style={{ cursor: "pointer" }}
+      >
         <HomeOutlined className="logo-icon" />
         <span className="logo-text">Home</span>
       </div>
