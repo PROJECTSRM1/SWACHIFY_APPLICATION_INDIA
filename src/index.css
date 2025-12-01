@@ -7103,7 +7103,7 @@ body {
    Hero
    ========================== */
 .sw-lc-hero--large {
-  background-image: linear-gradient(90deg, rgba(18,72,160,0.88), rgba(47,128,237,0.72)), url('../../assets/landingimages/landingcleaninghero.jpg');
+  background-image: linear-gradient(90deg, rgba(18,72,160,0.88), rgba(47,128,237,0.72)), url('../src/assets/landingimages/landingcleaninghero.jpg');
   background-size: cover;
   background-position: center;
   height: 520px;
