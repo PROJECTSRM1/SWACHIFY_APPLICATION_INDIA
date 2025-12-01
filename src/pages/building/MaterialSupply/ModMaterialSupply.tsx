@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "../MaterialSupply/ModMaterialSupply.css";
 import EquipmentDetails from "./FormMaterialSupply";
 
 import cementimg from "../../../assets/Building/cement.jpg";
@@ -22,34 +21,35 @@ const MaterialSupply: React.FC = () => {
   const [selectedId, setSelectedId] = useState<number | null>(null);
 
   return (
-      <div className="material-wrapper">
-      <div className="rd-imgeader">
+    <div className="sw-br-wrapper">
+      <div className="sw-br-header">
         <h2>Material Supply</h2>
         <p>{materials.length} services available</p>
       </div>
 
-      <div className="material-grid">
+      <div className="sw-br-grid">
         {materials.map((item) => (
-          <div className="material-card" key={item.id}>
-            <div className="card-img">
+          <div className="sw-br-card" key={item.id}>
+            <div className="sw-br-card-img">
               <img src={item.img} alt={item.title} />
             </div>
 
-            <div className="card-content">
+            <div className="sw-br-card-content">
               <h3>{item.title}</h3>
-              <p className="desc">{item.description}</p>
+              <p className="sw-br-desc">{item.description}</p>
 
-              <div className="bottom-row">
-                <p className="price">₹{item.price}</p>
+              <div className="sw-br-bottom-row">
+                <p className="sw-br-price">₹{item.price}</p>
 
                 <button
-                  className="details-btn1"
+                  className="sw-br-btn"
                   onClick={() => setSelectedId(item.id)}
                 >
                   View Details
                 </button>
               </div>
             </div>
+
           </div>
         ))}
       </div>

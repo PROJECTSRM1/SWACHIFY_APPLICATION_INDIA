@@ -30,7 +30,7 @@ import {
 } from "@ant-design/icons";
 
 import { useNavigate } from "react-router-dom";
-import "./landingcleaningpage.css";
+// import "./landingcleaningpage.css";
 
 import s1 from "../../assets/landingimages/landinghomecleaning.jpg";
 import s2 from "../../assets/landingimages/landingofficecleaning.jpg";

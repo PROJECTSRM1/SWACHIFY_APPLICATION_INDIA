@@ -1,7 +1,7 @@
 // src/pages/.../HomeServices.tsx
 import  { useState } from "react";
 import { Card, Button,  Modal } from "antd";
-import "./HomeServices.css";
+// import "../../../index.css";
 import { popupData } from "./popupData"; // existing
 import type { PopupCategory } from "./popupData"; // existing
 import { ToolOutlined } from "@ant-design/icons";
@@ -107,21 +107,21 @@ export default function HomeServices() {
   };
 
   return (
-    <div className="home-services-container">
+    <div className="sw-hs-home-services-container">
       {/* HEADER */}
-      <div className="services-top-banner">
-        <div className="banner-left">
-          <div className="banner-icon"><ToolOutlined /></div>
+      <div className="sw-hs-services-top-banner">
+        <div className="sw-hs-banner-left">
+          <div className="sw-hs-banner-icon"><ToolOutlined /></div>
 
-          <div className="banner-text">
-            <h2 className="banner-title">Home Services</h2>
-            <p className="banner-subtitle">{services.length} services available</p>
+          <div className="sw-hs-banner-text">
+            <h2 className="sw-hs-banner-title">Home Services</h2>
+            <p className="sw-hs-banner-subtitle">{services.length} services available</p>
           </div>
         </div>
 
   <Button
   size="small"
-  className="header-viewall-btn"
+  className="sw-hs-header-viewall-btn"
   onClick={() => setShowAll(!showAll)}
 >
   {showAll ? "Show Less" : "View All Services"}
@@ -130,18 +130,18 @@ export default function HomeServices() {
       </div>
 
       {/* GRID */}
-      <div className="services-card-grid">
+      <div className="sw-hs-services-card-grid">
         {displayedCards.map((service, i) => (
-          <div className="service-card-wrapper" key={i}>
+          <div className="sw-hs-service-card-wrapper" key={i}>
             <Card
               hoverable
-              className="service-card"
-              cover={<img src={service.image} alt="" className="service-image" />}
+              className="sw-hs-service-card"
+              cover={<img src={service.image} alt="" className="sw-hs-service-image" />}
             >
-              <h3 className="service-title">{service.title}</h3>
+              <h3 className="sw-hs-service-title">{service.title}</h3>
 
               <Button
-                className="details-btn"
+                className="sw-hs-details-btn"
                 block
                 onClick={() => openDetailsPopup(service.title)}
               >
@@ -166,10 +166,10 @@ export default function HomeServices() {
     maxHeight: "80vh",
     overflowY: "auto",
   }}
-  wrapClassName="cleaning-embed-wrapper"
+  wrapClassName="sw-hs-cleaning-embed-wrapper"
 >
   {/* NOTE: removed the manual 'Close' button so only the modal's X icon will close it */}
-  <div className="cleaning-embed" style={{ padding: 12 }}>
+  <div className="sw-hs-cleaning-embed" style={{ padding: 12 }}>
     <CleaningService />
   </div>
 </Modal>

@@ -37,7 +37,7 @@ import {
 } from "@ant-design/icons";
 
 import { useNavigate } from "react-router-dom";
-import "./landingrentals.css";
+// import "./landingrentals.css";
 
 const { Option } = Select;
 const { TabPane } = Tabs;
@@ -518,7 +518,7 @@ const Landingrentals: React.FC = () => {
             <h4>Contact Info</h4>
             <ul className="sw-lr-contact-list">
               <li>
-                <Phone className="lc-contact-icon" /> +1 (555) 123-4567
+                <Phone className="sw-lr-contact-icon" /> +1 (555) 123-4567
               </li>
               <li><MailOutlined /> info@homeservices.com</li>
               <li><EnvironmentOutlined /> 123 Street, City</li>

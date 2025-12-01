@@ -573,18 +573,18 @@
 }
 
 /* ----- Booking form ----- */
-.hs-booking-wrap { max-width: 920px; margin: 60px auto; text-align: center; padding: 10px; }
-.hs-booking-head h2 { font-size: 2rem; font-weight: 700; color: #111; }
-.hs-booking-head p { color: #6b7280; font-size: 1.05rem; margin-bottom: 30px; }
-.hs-booking-card { padding: 30px 32px; border-radius: 20px !important; background: #fff; box-shadow: 0 4px 22px rgba(0,0,0,0.06); text-align: left; }
-.hs-booking-label { display: block; font-weight: 600; color: #333; margin-bottom: 6px; }
-.hs-booking-input { width: 100%; padding: 12px 14px; border: 1px solid #e6e9ee; border-radius: 10px; font-size: 0.98rem; background: #f8f9fb; }
-.hs-booking-input:focus, .hs-booking-textarea:focus { outline: none; border-color: #2563eb; background: #fff; }
+.sw-lr-booking-wrap { max-width: 920px; margin: 60px auto; text-align: center; padding: 10px; }
+.sw-lr-booking-head h2 { font-size: 2rem; font-weight: 700; color: #111; }
+.sw-lr-booking-head p { color: #6b7280; font-size: 1.05rem; margin-bottom: 30px; }
+.sw-lr-booking-card { padding: 30px 32px; border-radius: 20px !important; background: #fff; box-shadow: 0 4px 22px rgba(0,0,0,0.06); text-align: left; }
+.sw-lr-booking-label { display: block; font-weight: 600; color: #333; margin-bottom: 6px; }
+.sw-lr-booking-input { width: 100%; padding: 12px 14px; border: 1px solid #e6e9ee; border-radius: 10px; font-size: 0.98rem; background: #f8f9fb; }
+.sw-lr-booking-input:focus, .sw-lr-booking-textarea:focus { outline: none; border-color: #2563eb; background: #fff; }
 .date-input { display: flex; align-items: center; background: #f8f9fb; border: 1px solid #e6e9ee; border-radius: 10px; padding-left: 12px; }
 .date-input input { border: none; padding: 12px; background: transparent; flex: 1; }
-.hs-booking-textarea { width: 100%; height: 120px; padding: 14px; border-radius: 10px; border: 1px solid #e6e9ee; background: #f8f9fb; font-size: 1rem; resize: none; }
-.hs-booking-submit { width: 100%; background: #0f0f1a; color: #fff; padding: 14px; border-radius: 10px; font-weight: 700; font-size: 1rem; margin-top: 10px; border: none; }
-.hs-booking-submit:hover { background: #1a1a2e; }
+.sw-lr-booking-textarea { width: 100%; height: 120px; padding: 14px; border-radius: 10px; border: 1px solid #e6e9ee; background: #f8f9fb; font-size: 1rem; resize: none; }
+.sw-lr-booking-submit { width: 100%; background: #0f0f1a; color: #fff; padding: 14px; border-radius: 10px; font-weight: 700; font-size: 1rem; margin-top: 10px; border: none; }
+.sw-lr-booking-submit:hover { background: #1a1a2e; }
 /* ============================
    DARK FOOTER — EXACT MATCH
    ============================ */
@@ -1571,12 +1571,12 @@
 }
 
 /* make native selects look like other booking inputs */
-.hs-booking-input,
-.hs-booking-input[type="text"],
-.hs-booking-input[type="email"],
-.hs-booking-input[type="tel"],
-.hs-booking-input textarea,
-.hs-booking-input select {
+.sw-lr-booking-input,
+.sw-lr-booking-input[type="text"],
+.sw-lr-booking-input[type="email"],
+.sw-lr-booking-input[type="tel"],
+.sw-lr-booking-input textarea,
+.sw-lr-booking-input select {
   width: 100%;
   padding: 12px 14px;
   height: 44px;
@@ -1592,11 +1592,11 @@
 }
 
 /* add right padding so native arrow doesn't overlap text */
-.hs-booking-input select { padding-right: 40px; }
+.sw-lr-booking-input select { padding-right: 40px; }
 
 /* subtle focus state same as inputs */
-.hs-booking-input:focus,
-.hs-booking-input:active {
+.sw-lr-booking-input:focus,
+.sw-lr-booking-input:active {
   outline: none;
   border-color: #2563eb;
   background: #fff;
@@ -1730,7 +1730,7 @@
 
 /* Responsive header behavior */
 @media (max-width: 768px) {
-  .hs-navbar {
+  .sw-lr-navbar {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1746,14 +1746,14 @@
     box-sizing: border-box;
   }
 
-  .hs-navbar-logo {
+  .sw-lr-navbar-logo {
     width: 100%;
     display: flex;
     justify-content: center;
     order: 1;
   }
 
-  .hs-navbar-menu {
+  .sw-lr-navbar-menu {
     display: flex !important;
     flex-direction: column;
     align-items: center;
@@ -1765,7 +1765,7 @@
     background: transparent;
   }
 
-  .hs-navbar-menu .ant-menu-item {
+  .sw-lr-navbar-menu .ant-menu-item {
     width: 100%;
     display: flex !important;
     justify-content: center;
@@ -1774,9 +1774,9 @@
     box-sizing: border-box;
     background: transparent;
   }
-  .hs-navbar-menu .ant-menu-item:last-child { border-bottom: none; }
+  .sw-lr-navbar-menu .ant-menu-item:last-child { border-bottom: none; }
 
-  .hs-contact-btn {
+  .sw-lr-contact-btn {
     order: 3;
     width: calc(100% - 28px);
     max-width: 420px;
@@ -2020,7 +2020,7 @@
     display: block;
   }
 
-  .hs-navbar .hs-navbar-menu {
+  .sw-lr-navbar .sw-lr-navbar-menu {
     display: none !important;
   }
 }
@@ -2151,4 +2151,5 @@
 .sw-lr-amenities-inner { padding-top: 6px; padding-bottom: 6px; }
 .sw-lr-schedule{
   background-color: black !important;
+  color:white;
 }

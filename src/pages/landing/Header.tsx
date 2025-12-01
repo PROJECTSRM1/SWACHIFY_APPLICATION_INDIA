@@ -60,7 +60,6 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({ selectedKey = "home"
 
   const onLogin = async (values: any) => {
     try {
-      // values.identifier may be email or phone
       const identifier = (values.identifier || "").toString().trim();
       const password = (values.password || "").toString();
 
@@ -77,14 +76,17 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({ selectedKey = "home"
 
       const user: RegisteredUser = JSON.parse(stored);
 
-      // match either email OR phone + password
       const identifierMatches =
         identifier.toLowerCase() === user.email.toLowerCase() ||
         identifier === user.phone;
 
       if (identifierMatches && password === user.password) {
-        // set persisted user details (your helper)
-        setUserDetails("user", { name: user.fullname, email: user.email, phone: user.phone, address: user.address });
+        setUserDetails("user", {
+          name: user.fullname,
+          email: user.email,
+          phone: user.phone,
+          address: user.address,
+        });
         message.success("Login successful");
         closeAuthModal();
         navigate("/app/dashboard");
@@ -110,7 +112,6 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({ selectedKey = "home"
         return;
       }
 
-      // create registered user object (address optional but stored)
       const newUser: RegisteredUser = {
         fullname,
         email,
@@ -119,17 +120,11 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({ selectedKey = "home"
         address,
       };
 
-      // store in localStorage
       localStorage.setItem(STORAGE_KEY, JSON.stringify(newUser));
-
-      // Also set via your helper for app usage
       setUserDetails("user", { name: fullname, email, phone, address });
 
-      // <-- CHANGED: after registering, send user to Login tab instead of dashboard
       message.success("Registration successful. Please login to continue.");
-      // switch to login tab and keep modal open so user can enter credentials
       setActiveAuthTab("login");
-      // ensure modal is visible (in case registration was triggered elsewhere)
       setAuthModalVisible(true);
     } catch (err) {
       console.error("Registration error", err);
@@ -139,13 +134,13 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({ selectedKey = "home"
 
   return (
     <>
-      <header className="hs-navbar">
-        <div className="hs-navbar-logo">
-          <span className="hs-logo-text">SWACHIFY INDIA</span>
+      <header className="sw-hs-navbar">
+        <div className="sw-hs-navbar-logo">
+          <span className="sw-hs-logo-text">SWACHIFY INDIA</span>
         </div>
 
         <button
-          className="mobile-menu-icon"
+          className="sw-mobile-menu-icon"
           type="button"
           aria-label={menuOpen ? "Close menu" : "Open menu"}
           onClick={() => setMenuOpen(!menuOpen)}
@@ -156,14 +151,12 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({ selectedKey = "home"
         <Menu
           mode="horizontal"
           selectedKeys={[selectedKey]}
-          className="hs-navbar-menu"
+          className="sw-hs-navbar-menu"
           items={navItems}
         />
 
-        {/* ONLY CHANGE: added signup-btn class */}
         <Button
-          // type="primary"
-          className="hs-contact-btn signup-btn"
+          className="sw-hs-contact-btn sw-signup-btn"
           onClick={() => openAuthModal("register")}
           htmlType="button"
         >
@@ -172,14 +165,16 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({ selectedKey = "home"
       </header>
 
       {menuOpen && (
-        <ul className="mobile-menu">
+        <ul className="sw-mobile-menu">
           {navItems.map((n) => (
             <li key={n.key} onClick={() => setMenuOpen(false)}>
               {n.label}
             </li>
           ))}
           <li>
-            <Link to="/Cart" onClick={() => setMenuOpen(false)}>Cart</Link>
+            <Link to="/Cart" onClick={() => setMenuOpen(false)}>
+              Cart
+            </Link>
           </li>
           <li>
             <a
@@ -211,13 +206,24 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({ selectedKey = "home"
         >
           <TabPane tab="Login" key="login">
             <Form layout="vertical" onFinish={onLogin} preserve={false}>
-              {/* CORRECTED: name must be "identifier" so onLogin reads values.identifier */}
-              <Form.Item label="Email / Phone" name="identifier" rules={[{ required: true }]}>
-                <Input placeholder="john@example.com or +1 555 123 4567" />
+              <Form.Item
+                label="Email / Phone"
+                name="identifier"
+                rules={[{ required: true }]}
+              >
+                <Input placeholder="john@example.com or +91 98765 43210" />
               </Form.Item>
 
-              <Form.Item label="Password" name="password" rules={[{ required: true }]}>
-                <Input.Password iconRender={(v) => (v ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} />
+              <Form.Item
+                label="Password"
+                name="password"
+                rules={[{ required: true }]}
+              >
+                <Input.Password
+                  iconRender={(v) =>
+                    v ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+                  }
+                />
               </Form.Item>
 
               <Form.Item>
@@ -225,11 +231,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({ selectedKey = "home"
               </Form.Item>
 
               <Form.Item>
-                <Button
-                  // type="primary"
-                  block
-                  htmlType="submit"
-                >
+                <Button block htmlType="submit">
                   Login
                 </Button>
               </Form.Item>
@@ -238,19 +240,36 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({ selectedKey = "home"
 
           <TabPane tab="Register" key="register">
             <Form layout="vertical" onFinish={onRegister} preserve={false}>
-              <Form.Item label="Full name" name="fullname" rules={[{ required: true }]}>
+              <Form.Item
+                label="Full name"
+                name="fullname"
+                rules={[{ required: true }]}
+              >
                 <Input />
               </Form.Item>
 
-              <Form.Item label="Email" name="email" rules={[{ required: true }, { type: "email" }]}>
+              <Form.Item
+                label="Email"
+                name="email"
+                rules={[{ required: true }, { type: "email" }]}
+              >
                 <Input />
               </Form.Item>
 
-              <Form.Item label="Phone" name="phone" rules={[{ required: true }]} >
+              <Form.Item
+                label="Phone"
+                name="phone"
+                rules={[{ required: true }]}
+              >
                 <Input />
               </Form.Item>
 
-              <Form.Item label="Password" name="password" rules={[{ required: true }]} hasFeedback>
+              <Form.Item
+                label="Password"
+                name="password"
+                rules={[{ required: true }]}
+                hasFeedback
+              >
                 <Input.Password />
               </Form.Item>
 
@@ -263,8 +282,11 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({ selectedKey = "home"
                   { required: true },
                   ({ getFieldValue }) => ({
                     validator(_, value) {
-                      if (!value || getFieldValue("password") === value) return Promise.resolve();
-                      return Promise.reject(new Error("Passwords do not match"));
+                      if (!value || getFieldValue("password") === value)
+                        return Promise.resolve();
+                      return Promise.reject(
+                        new Error("Passwords do not match")
+                      );
                     },
                   }),
                 ]}
@@ -272,17 +294,19 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({ selectedKey = "home"
                 <Input.Password />
               </Form.Item>
 
-              {/* NEW: Address field placed under Confirm Password */}
-              <Form.Item label="Address" name="address" rules={[{ required: true }]}>
-                <Input.TextArea rows={3} placeholder="Enter your address (street, city, state, pincode)" />
+              <Form.Item
+                label="Address"
+                name="address"
+                rules={[{ required: true }]}
+              >
+                <Input.TextArea
+                  rows={3}
+                  placeholder="Enter your address (street, city, state, pincode)"
+                />
               </Form.Item>
 
               <Form.Item>
-                <Button
-                  // type="primary"
-                  block
-                  htmlType="submit"
-                >
+                <Button block htmlType="submit">
                   Register
                 </Button>
               </Form.Item>
