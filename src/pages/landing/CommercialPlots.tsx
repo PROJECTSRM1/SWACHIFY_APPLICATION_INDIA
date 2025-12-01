@@ -37,7 +37,7 @@ import {
 } from "@ant-design/icons";
 
 import {  useNavigate } from "react-router-dom";
-import "./commercialplots.css";
+// import "./commercialplots.css";
 
 /* Update this path to your hero/background image file in your repo */
 import heroImg from "../../assets/landingimages/property4.jpg";
