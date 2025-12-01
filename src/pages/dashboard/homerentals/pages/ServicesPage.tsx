@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import { Row, Col, Modal } from 'antd';
-
-import ServiceCard from '../components/ServiceCard';
+import { HomeOutlined } from '@ant-design/icons';
+import ServiceCard from './ServiceCard';
 import PropertyTypePage from './PropertyTypePage';
 import CommercialPropertyTypePage from './CommercialPropertyTypePage';
 import ApartmentListingsPage from './ApartmentListingsPage';
 import CommercialListingsPage from './CommercialListingsPage';
 import PropertyDetailsPage from './PropertyDetailsPage';
-import './ServicesPage.css';
-
+import '../../../../index.css';
 // Import images from assets folder
 import houseImg from '../../../../assets/HomeRental/commercial.jpg';
 import img from "../../../../assets/HomeRental/House.jpg";
@@ -58,18 +57,20 @@ const ServicesPage: React.FC = () => {
   const selectedListingTypeId = listingContext?.typeId;
 
   return (
-    <div className="services-page">
-      <section className="services-hero">
-        <div className="hero-content">
-         
-          <div className="hero-text">
+    <div className="sw-hr-services-page">
+      <section className="sw-hr-services-hero">
+        <div className="sw-hr-hero-content">
+          <div className="sw-hr-hero-icon">
+            <HomeOutlined style={{ fontSize: '24px' }} />
+          </div>
+          <div className="sw-hr-hero-text">
             <h2>Home & Apartments Rental</h2>
-            <p className="muted">2 services available</p>
+            <p className="sw-hr-muted">2 services available</p>
           </div>
         </div>
       </section>
 
-      <section className="services-grid1">
+      <section className="sw-hr-services-grid">
         <Row gutter={[24, 24]}>
           <Col xs={24} sm={12} lg={12}>
             <ServiceCard
@@ -97,7 +98,7 @@ const ServicesPage: React.FC = () => {
         width={1000}
         centered
         destroyOnClose
-        className="browse-modal"
+        className="sw-hr-browse-modal"
       >
         {activeModal === 'residential' && (
           <PropertyTypePage onSelectType={handleResidentialTypeSelect} />
@@ -114,7 +115,7 @@ const ServicesPage: React.FC = () => {
         width={1100}
         centered
         destroyOnClose
-        className="browse-modal"
+        className="sw-hr-browse-modal"
       >
         {listingContext?.category === 'residential' && selectedListingTypeId && (
           <ApartmentListingsPage
@@ -139,7 +140,7 @@ const ServicesPage: React.FC = () => {
         width={1200}
         centered
         destroyOnClose
-        className="browse-modal"
+        className="sw-hr-browse-modal"
       >
         {selectedPropertyId && (
           <PropertyDetailsPage
@@ -153,3 +154,8 @@ const ServicesPage: React.FC = () => {
 };
 
 export default ServicesPage;
+
+
+
+
+

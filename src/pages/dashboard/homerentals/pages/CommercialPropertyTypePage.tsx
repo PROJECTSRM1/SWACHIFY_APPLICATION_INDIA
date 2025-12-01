@@ -1,10 +1,10 @@
 import React from 'react';
-import { Row, Col, Card, Button } from 'antd';
+import { Row, Col, Card } from 'antd';
 import { ShopOutlined, HomeOutlined } from '@ant-design/icons';
-import './CommercialPropertyTypePage.css';
+import '../../../../index.css';
 
 // Import images from assets folder
-import shopImg from '../../../../assets/HomeRental/startup1.jpg';
+import startUpImg from '../../../../assets/HomeRental/startup1.jpg';
 import warehouseImg from '../../../../assets/HomeRental/WareHouse.jpg';
 import plotImg from '../../../../assets/HomeRental/openplot.jpg';
 
@@ -26,7 +26,7 @@ const CommercialPropertyTypePage: React.FC<CommercialPropertyTypePageProps> = ({
       id: 'startups',
       title: 'StartUp',
       subtitle: 'Retail StartUp and Showrooms for your business',
-      image: shopImg,
+      image: startUpImg,
       icon: <ShopOutlined />,
       color: '#3b82f6',
     },
@@ -49,39 +49,40 @@ const CommercialPropertyTypePage: React.FC<CommercialPropertyTypePageProps> = ({
   ];
 
   return (
-    <div className="commercial-property-type-page">
-      <section className="property-type-section">
-        <div className="section-header">
+    <div className="sw-hr-commercial-property-type-page">
+      <section className="sw-hr-property-type-section">
+        <div className="sw-hr-section-header">
           <h1>Select Commercial Property Type</h1>
-          <p className="section-subtitle">Choose the type of commercial property you're looking for</p>
+          <p className="sw-hr-section-subtitle">Choose the type of commercial property you're looking for</p>
         </div>
 
-        <Row gutter={[24, 24]} className="property-cards">
+        <Row gutter={[24, 24]} className="sw-hr-property-cards">
           {commercialPropertyTypes.map((type) => (
             <Col xs={24} sm={12} lg={8} key={type.id}>
               <Card
                 hoverable
-                className="property-type-card"
+                className="sw-hr-property-type-card"
                 cover={
-                  <div className="ptc-image-wrap">
-                    <img src={type.image} alt={type.title} className="ptc-image" />
-                    <div className="ptc-overlay">
-                      <div className="ptc-icon" style={{ backgroundColor: type.color }}>
+                  <div className="sw-hr-ptc-image-wrap">
+                    <img src={type.image} alt={type.title} className="sw-hr-ptc-image" />
+                    <div className="sw-hr-ptc-overlay">
+                      <div className="sw-hr-ptc-icon" style={{ backgroundColor: type.color }}>
                         {type.icon}
                       </div>
                     </div>
-                    <Button
-                      className="ptc-view-btn"
+                    <button
+                      className="sw-hr-ptc-view-btn"
                       onClick={() => handleViewProperties(type.id)}
+                      aria-label={`View ${type.title} properties`}
                     >
                       View Properties
-                    </Button>
+                    </button>
                   </div>
                 }
               >
-                <div className="ptc-content">
-                  <h3 className="ptc-title">{type.title}</h3>
-                  <p className="ptc-subtitle">{type.subtitle}</p>
+                <div className="sw-hr-ptc-content">
+                  <h3 className="sw-hr-ptc-title">{type.title}</h3>
+                  <p className="sw-hr-ptc-subtitle">{type.subtitle}</p>
                 </div>
               </Card>
             </Col>
