@@ -660,899 +660,1987 @@ body,
 /* nithin cleaning dash */
 
 
+/* //////////////////vamsi landing///// */
+/* RESET */
+* {
+  box-sizing: border-box;
+}
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+}
+/* ================= NAVBAR ================= */
+.sw-lp-classname-navbar { 
+  width: 100%;
+  background: #ffffff;
+  padding: 15px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.sw-lp-classname-nav-logo {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: rgb(20, 188, 166);
+}
+.sw-lp-classname-nav-links {
+  display: flex;
+  list-style: none;
+  gap: 28px;
+}
+.sw-lp-classname-nav-links li a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}
+.sw-lp-classname-nav-links li a:hover {
+  color: rgb(20,188,166);
+}
+/* default: hide hamburger on desktop; show on mobile via media query */
+.sw-lp-classname-mobile-menu-icon {
+  display: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 6px;
+  line-height: 1;
+  color: #333;
+}
+/* MOBILE DROPDOWN */
+.sw-lp-classname-mobile-menu {
+  width: 100%;
+  background: #fff;
+  list-style: none;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+}
+.sw-lp-classname-mobile-menu li {
+  padding: 12px 0;
+  border-bottom: 1px solid #ddd;
+}
+.sw-lp-classname-mobile-menu li a {
+  color: #333;
+  text-decoration: none;
+}
+/* HERO SECTION */
+.sw-lp-classname-hero-section {
+  width: 100%;
+  height: 85vh;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+  text-align: center;
+  color: white;
+}
+.sw-lp-classname-hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 900px;
+  gap: 20px;
+}
+.sw-lp-classname-hero-content h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  margin: 0;
+}
+.sw-lp-classname-hero-subtitle {
+  font-size: 1.3rem;
+  max-width: 700px;
+  margin: 0;
+}
+/* SERVICES / CARDS / OTHER RULES - unchanged from your original css but with prefix */
+.sw-lp-classname-packes-services { padding: 60px 40px; text-align: center; }
+.sw-lp-classname-packes-card { padding: 20px; text-align: center; }
+.sw-lp-classname-packes-icon { margin-bottom: 12px; }
+.sw-lp-classname-types-of-services { padding: 60px 40px; text-align: center; }
+.sw-lp-classname-service-card img { height: 200px; object-fit: cover; }
+.sw-lp-classname-request-quote { padding: 60px 40px; }
+.sw-lp-classname-request-quote form { max-width: 600px; margin: auto; }
+.sw-lp-classname-how-it-works { padding: 60px 40px; text-align: center; }
+.sw-lp-classname-step { text-align: center; }
+.sw-lp-classname-why-choose-us { padding: 60px 40px; text-align: center; }
+.sw-lp-classname-choose-us-card { text-align: center; padding: 20px; }
+.sw-lp-classname-footer {
+  background: #06152b;
+  color: white;
+  padding: 60px 80px;
+  margin-top: 60px;
+}
+.sw-lp-classname-footer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 40px;
+}
+.sw-lp-classname-footer-bottom {
+  text-align: center;
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,0.2);
+}
+/* ===========================
+   SERVICES SECTION ALIGNMENT
+   =========================== */
+#services-section { text-align: center; padding: 60px 40px; }
+.sw-lp-classname-services-section .sw-lp-classname-section-title { font-size: 2rem; font-weight: 700; margin-bottom: 8px; }
+.sw-lp-classname-services-section .sw-lp-classname-section-subtitle { font-size: 1.1rem; color: #555; margin-bottom: 40px; }
+/* keep ant-row behaviour but constrain width */
+.sw-lp-classname-services-section .ant-row {
+  max-width: 1150px;
+  margin: 0 auto !important;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: 100%;
+  display: flex !important;
+  justify-content: center !important;
+}
+/* default column sizes â€” note ant-col overrides remain but we keep these for custom sizing */
+.sw-lp-classname-services-section .ant-col { flex: 0 0 33.333% !important; max-width: 33.333% !important; }
+@media (max-width: 992px) {
+  .sw-lp-classname-services-section .ant-col { flex: 0 0 50% !important; max-width: 50% !important; }
+}
+@media (max-width: 600px) {
+  .sw-lp-classname-services-section .ant-col { flex: 0 0 100% !important; max-width: 100% !important; }
+  .sw-lp-classname-services-section .sw-lp-classname-section-title { font-size: 1.6rem; }
+  .sw-lp-classname-services-section .sw-lp-classname-section-subtitle { font-size: 1rem; padding: 0 10px; }
+}
+/* Service card sizing (unchanged except prefix) */
+.sw-lp-classname-services-section .sw-lp-classname-service-card {
+  min-height: 320px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 28px 20px !important;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+  border-radius: 10px;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.sw-lp-classname-services-section .sw-lp-classname-service-icon { margin-bottom: 10px; line-height: 1; }
+.sw-lp-classname-services-section .sw-lp-classname-service-title { margin: 6px 0 10px; font-size: 1.05rem; font-weight: 700; text-align: center; }
+.sw-lp-classname-services-section .sw-lp-classname-service-desc {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 0 6px 12px;
+  line-height: 1.6;
+  color: #555;
+  font-size: 0.95rem;
+  max-width: 88%;
+}
+.sw-lp-classname-services-section .sw-lp-classname-learn-more { margin-top: 12px; flex-shrink: 0; align-self: center; text-decoration: none; font-weight: 600; }
+.sw-lp-classname-services-section .sw-lp-classname-service-card:hover { transform: translateY(-6px); box-shadow: 0 14px 32px rgba(0,0,0,0.07); }
+@media (max-width: 992px) {
+  .sw-lp-classname-services-section .sw-lp-classname-service-card { min-height: 300px; padding: 22px 18px !important; }
+}
+@media (max-width: 600px) {
+  .sw-lp-classname-services-section .sw-lp-classname-service-card { min-height: 260px; padding: 18px 12px !important; }
+  .sw-lp-classname-services-section .sw-lp-classname-service-desc { font-size: 0.94rem; max-width: 94%; }
+}
+/* WHY CHOOSE US (unchanged but prefixed) */
+#why-choose-section, .sw-lp-classname-why-choose-section, .sw-lp-classname-why-choose-us { padding: 60px 40px; text-align: center; background: transparent; }
+.sw-lp-classname-why-choose-section .sw-lp-classname-container, .sw-lp-classname-why-choose-section .sw-lp-classname-container, .sw-lp-classname-why-choose-us .sw-lp-classname-container { max-width: 1100px; margin: 0 auto; }
+.sw-lp-classname-why-choose-section .ant-row, .sw-lp-classname-why-choose-section .ant-row, .sw-lp-classname-why-choose-us .ant-row {
+  max-width: 1200px; margin: 0 auto !important; display: flex !important; justify-content: center !important; gap: 20px;
+}
+.sw-lp-classname-why-choose-section .ant-col, .sw-lp-classname-why-choose-section .ant-col, .sw-lp-classname-why-choose-us .ant-col {
+  flex: 0 0 33.333% !important; max-width: 33.333% !important; display: flex; align-items: stretch;
+}
+.sw-lp-classname-why-card, .sw-lp-classname-choose-us-card {
+  width: 100%; padding: 20px; display: flex; align-items: center; gap: 12px; text-align: left; min-height: 120px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.04); border-radius: 10px;
+}
+.sw-lp-classname-why-card h4, .sw-lp-classname-choose-us-card h4 { margin: 0 0 6px 0; font-size: 1.05rem; }
+.sw-lp-classname-why-card p, .sw-lp-classname-choose-us-card p { margin: 0; font-size: 0.95rem; color: #555; }
+@media (max-width: 992px) {
+  .sw-lp-classname-why-choose-section .ant-col, .sw-lp-classname-why-choose-section .ant-col, .sw-lp-classname-why-choose-us .ant-col {
+    flex: 0 0 50% !important; max-width: 50% !important;
+  }
+}
+@media (max-width: 600px) {
+  .sw-lp-classname-why-choose-section .ant-col, .sw-lp-classname-why-choose-section .ant-col, .sw-lp-classname-why-choose-us .ant-col {
+    flex: 0 0 100% !important; max-width: 100% !important;
+  }
+  .sw-lp-classname-why-card, .sw-lp-classname-choose-us-card { text-align: center; flex-direction: column; align-items: center; gap: 10px; min-height: auto; }
+  .sw-lp-classname-why-card h4, .sw-lp-classname-choose-us-card h4 { font-size: 1rem; }
+  .sw-lp-classname-why-card p, .sw-lp-classname-choose-us-card p { font-size: 0.95rem; }
+}
+/* ===== compact header rules for hs-navbar / hs-navbar-menu (prefixed) ===== */
+.sw-lp-classname-hs-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 24px;
+  box-sizing: border-box;
+}
+/* ordering so items display left-to-right as:
+   [logo] [hamburger icon] [menu (desktop)] [signup button]
+   On mobile the menu will be hidden and hamburger visible */
+.sw-lp-classname-hs-navbar-logo { order: 0; flex: 0 0 auto; margin-right: 8px; }
+.sw-lp-classname-mobile-menu-icon { order: 1; flex: 0 0 auto; margin: 0 12px; }
+.sw-lp-classname-hs-navbar .sw-lp-classname-hs-navbar-menu { order: 2; flex: 1 1 auto; display: flex; justify-content: center; align-items: center; overflow: visible; }
+.sw-lp-classname-hs-contact-btn { order: 3; flex: 0 0 auto; margin-left: 12px; }
+/* AntD horizontal menu - compact (prefixed) */
+.sw-lp-classname-hs-navbar .sw-lp-classname-hs-navbar-menu .ant-menu-horizontal {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  line-height: 1;
+  background: transparent;
+  border-bottom: none;
+}
+.sw-lp-classname-hs-navbar .sw-lp-classname-hs-navbar-menu .ant-menu-item {
+  padding: 0 10px;
+  height: auto;
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  font-size: 0.98rem;
+  white-space: nowrap;
+}
+.sw-lp-classname-hs-navbar .sw-lp-classname-hs-navbar-menu .ant-menu-item a {
+  margin: 0;
+  padding: 8px 4px;
+  display: inline-block;
+}
+/* tighter variants (prefixed) */
+.sw-lp-classname-hs-navbar-menu { margin-left: 10px !important; padding: 0 !important; }
+.sw-lp-classname-hs-navbar-menu .ant-menu-horizontal { gap: 4px !important; padding: 0 !important; margin: 0 !important; border-bottom: none !important; }
+.sw-lp-classname-hs-navbar-menu .ant-menu-item { padding: 0 4px !important; margin: 0 !important; font-size: 0.85rem !important; font-weight: 600 !important; white-space: nowrap !important; flex-shrink: 0 !important; min-width: 0 !important; }
+.sw-lp-classname-hs-navbar-menu .ant-menu-item a { padding: 1px 0px !important; margin: 0 !important; font-size: 0.85rem !important; }
+.sw-lp-classname-hs-navbar-menu .ant-menu-item::after { display: none !important; }
+.sw-lp-classname-hs-navbar-menu { overflow: visible !important; }
+/* MOBILE BEHAVIOR:
+   - hide the full menu on small screens
+   - show the hamburger icon and keep its position between logo and sign-up
+*/
+@media (max-width: 900px) {
+  /* hide the desktop menu */
+  .sw-lp-classname-hs-navbar .sw-lp-classname-hs-navbar-menu { display: none !important; }
+  /* show the hamburger */
+  .sw-lp-classname-mobile-menu-icon { display: block; }
+  /* keep Sign Up visible but compact (you previously had an option to hide it on very small screens) */
+  .sw-lp-classname-hs-contact-btn { display: block; padding: 8px 14px; border-radius: 8px; }
+  /* mobile menu list styling remains (the dropdown) */
+  .sw-lp-classname-mobile-menu { display: block; }
+}
+/* Minor touch target improvements */
+.sw-lp-classname-mobile-menu-icon:focus,
+.sw-lp-classname-mobile-menu-icon:hover {
+  outline: none;
+  transform: scale(1.02);
+}
+
+/* ===== ADDED FOOTER CONTACT ICON + SOCIAL RULES (MERGED) ===== */
+
+/* contact rows in footer */
+.sw-lp-classname-contact-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 10px 0;
+  color: rgba(255,255,255,0.92);
+  font-size: 0.98rem;
+}
+
+/* icon sizing + subtle background circle */
+.sw-lp-classname-contact-icon {
+  font-size: 18px;
+  min-width: 28px;
+  min-height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.04);
+  border-radius: 6px;
+  padding: 4px;
+  color: rgba(255,255,255,0.95);
+}
+
+/* social icon row (keeps inline fallback emojis or replace with real <a><Icon/></a>) */
+.sw-lp-classname-social-icons {
+  margin-top: 14px;
+  display: flex;
+  gap: 10px;
+  font-size: 18px;
+  align-items: center;
+}
+
+/* a11y: make footer links more visible on hover */
+.sw-lp-classname-footer a {
+  color: #bcd6ff;
+  text-decoration: none;
+}
+.sw-lp-classname-footer a:hover {
+  text-decoration: underline;
+}
 
 
-  /* ----- Base / layout ----- harish landinghs*/
-  .sw-hsl-hs-root {
-    font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
-    background: #fafbfc;
-    min-height: 100vh;
-    color: #222;
-  }
+/* //////////////////vamsi landing///// */
 
-  /* navbar */
-  .sw-hsl-hs-navbar {
-    height: 68px;
-    display: flex;
-    align-items: center;
-    padding: 0 28px;
-    background: #fff;
-    border-bottom: 1px solid #f0f0f0;
-    z-index: 50;
-  }
-  .sw-hsl-hs-navbar-logo {
-    display: flex;
-    align-items: center;
-    font-size: 1.32rem;
-    font-weight: 700;
-    color: #262626;
-    margin-right: 38px;
-  }
-  .sw-hsl-hs-logo-text {
-    font-weight: 600;
-    color: #262626;
-    font-size: 1.19rem;
-  }
-  .sw-hsl-hs-navbar-menu {
-    flex: 1;
-    min-width: 0;
-    border-bottom: none !important;
-    padding-left: 70px;
-    font-weight: bold;
-  }
 
-  /* ----- Hero ----- */
-  .sw-hsl-hs-hero {
-    min-height: 430px;
-    display: flex;
-    align-items: center;
-    position: relative;
-    background-size: cover !important;
-    background-position: center center !important;
-    padding: 48px 18px;
-  }
-  .sw-hsl-hs-hero::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.28);
-    z-index: 1;
-  }
-  .sw-hsl-hs-hero-content {
-    width: 100%;
-    z-index: 3;
-  }
-  .sw-hsl-hs-hero-inner {
-    margin-left: 4vw;
-    margin-top: 12px;
-    z-index: 3;
-    color: #fff;
-    max-width: 680px;
-  }
-  .sw-hsl-hs-hero-line {
-    display: flex;
-    align-items: center;
-    font-size: 1.17rem;
-    margin-bottom: 14px;
-    color: #fff;
-    gap: 10px;
-    font-weight: 500;
-  }
-  .sw-hsl-hs-hero-head {
-    color: #fff !important;
-    font-weight: 700;
-    font-size: 3rem;
-    margin-bottom: 0.5rem;
-    line-height: 1.07;
-  }
-  .sw-hsl-hs-hero-desc {
-    color: #ffe7d3;
-    font-size: 1.12rem;
-    margin-bottom: 28px;
-    margin-top: 12px;
-    max-width: 650px;
-  }
-  .sw-hsl-hs-hero-actions {
-    display: flex;
-    gap: 16px;
-    margin-top: 12px;
-  }
-  .sw-hsl-hs-book-btn {
-    font-size: 1.08rem;
-    background: black!important;
-    color: #fff !important;
-    border: none !important;
-    border-radius: 8px !important;
-    font-weight: 600;
-    box-shadow: 1px 1.5px 6px 1px rgba(241, 100, 23, 0.08);
-  }
-  .sw-hsl-hs-emergency-btn {
-    font-size: 1.06rem;
-    margin-left: 7px;
-    background: #d94818 !important;
-    border-color: #d94818 !important;
-    color: #fff !important;
-    border-radius: 8px !important;
-    font-weight: 600;
-    box-shadow: 1px 1.5px 6px 1px rgba(241, 100, 23, 0.08);
-  }
 
-  /* ----- Sections / cards ----- */
-  .sw-hsl-hs-section-root {
-    max-width: 1250px;
-    margin: 0 auto;
-    padding: 38px 12px 24px 12px;
-  }
-  .sw-hsl-hs-section-head {
-    text-align: center;
-    margin-bottom: 22px;
-  }
-  .sw-hsl-hs-section-title {
-    font-size: 2.14rem;
-    font-weight: 700;
-    color: #222;
-    letter-spacing: -1px;
-  }
-  .sw-hsl-hs-section-sub {
-    color: #767676;
-    font-size: 1.18rem;
-    margin-bottom: 20px;
-  }
+/* ///////////// Vamsi Landing Packers ///// */
 
-  /* Service cards */
-  .sw-hsl-hs-cards-row {
-    max-width: 1250px;
-    margin: 0 auto;
-  }
-  .sw-hsl-hs-card {
-    width: 100%;
-    border-radius: 20px !important;
-    min-height: 410px;
-    background: #fff;
-    box-shadow: 0 2px 20px 2px #ececec26;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding-bottom: 16px;
-  }
+/* ================= NAVBAR ================= */
+.sw-lpm-classname-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+.sw-lpm-classname-nav-logo {
+  font-weight: 700;
+  color: rgb(20, 188, 166);
+  font-size: 1.3rem;
+}
+.sw-lpm-classname-nav-links {
+  display: flex;
+  list-style: none;
+  gap: 22px;
+  margin: 0;
+  padding: 0;
+}
+.sw-lpm-classname-nav-links a {
+  color: #222;
+  text-decoration: none;
+  font-weight: 500;
+}
+.sw-lpm-classname-mobile-menu-icon {
+  display: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+.sw-lpm-classname-mobile-menu {
+  display: none;
+  position: absolute;
+  top: 64px;
+  left: 0;
+  right: 0;
+  background: white;
+  padding: 16px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+.sw-lpm-classname-mobile-menu li {
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
 
-  /* Align card body to center for icon + title, keep features left */
-  .sw-hsl-hs-card .ant-card-body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0 18px 18px;
-  }
-  .sw-hsl-hs-card-img {
-    width: 100%;
-    height: 160px;
-    border-radius: 20px 20px 0 0;
-    object-fit: cover;
-  }
-  .sw-hsl-hs-card-icon {
-    margin-top: 18px;
-  }
-  .sw-hsl-hs-card-title-price {
-    margin-top: 8px;
-    text-align: center;
-  }
-  .sw-hsl-hs-card-title {
-    display: block;
-    font-size: 1.08rem;
-    font-weight: 600;
-    color: #222;
-    margin-bottom: 8px;
-  }
-  .sw-hsl-hs-card-price {
-    color: #6b7280;
-    font-size: 0.98rem;
-  }
+/* ================= HERO ================= */
+.sw-lpm-classname-packes-hero {
+  width: 100%;
+  height: 64vh;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+}
+.sw-lpm-classname-hero-overlay {
+  background: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+}
+.sw-lpm-classname-hero-overlay h1 {
+  font-size: 3rem;
+  font-weight: 700;
+}
+.sw-lpm-classname-hero-overlay p {
+  font-size: 1.2rem;
+  margin: 15px 0;
+}
+.sw-lpm-classname-hero-overlay .ant-btn {
+  margin: 10px 20px;
+}
 
-  /* features: left aligned, constrained width */
-  .sw-hsl-hs-card-features {
-    list-style: none;
-    padding: 0;
-    margin: 12px auto;
-    width: 100%;
-    max-width: 340px;
+/* SERVICES SECTION FIXED CENTER */
+.sw-lpm-classname-packes-services {
+  padding: 60px 50px;
+  text-align: center;
+}
+.sw-lpm-classname-packes-services h2 {
+  font-size: 2.4rem;
+  margin-bottom: 10px;
+}
+.sw-lpm-classname-packes-services p {
+  font-size: 1.1rem;
+  color: #555;
+  max-width: 700px;
+  margin: 0 auto 40px auto;
+}
+/* Perfect center grid for cards */
+.sw-lpm-classname-services-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+}
+.sw-lpm-classname-packes-card {
+  width: 250px;
+  min-height: 320px;
+  text-align: center;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  padding: 20px;
+}
+.sw-lpm-classname-service-img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+.sw-lpm-classname-packes-icon {
+  margin: 10px 0;
+}
+.sw-lpm-classname-packes-card h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+.sw-lpm-classname-packes-card p {
+  font-size: 1rem;
+  color: #444;
+}
+@media (max-width: 992px) {
+  .sw-lpm-classname-packes-card { width: 45%; }
+}
+@media (max-width: 576px) {
+  .sw-lpm-classname-packes-card { width: 90%; }
+}
+
+/* TYPES OF SERVICES CENTERED */
+.sw-lpm-classname-types-of-services {
+  padding: 60px 50px;
+  text-align: center;
+}
+.sw-lpm-classname-types-of-services h2 {
+  font-size: 2.2rem;
+  margin-bottom: 15px;
+}
+.sw-lpm-classname-types-of-services p {
+  font-size: 1.1rem;
+  color: #555;
+  max-width: 700px;
+  margin: 0 auto 40px auto;
+}
+.sw-lpm-classname-types-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+}
+.sw-lpm-classname-service-card {
+  width: 250px;
+  text-align: center;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  padding: 20px;
+}
+.sw-lpm-classname-service-card h3 {
+  font-size: 1.3rem;
+  margin: 10px 0;
+}
+.sw-lpm-classname-service-card p {
+  font-size: 1rem;
+  color: #444;
+}
+.sw-lpm-classname-service-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
+}
+.sw-lpm-classname-service-card ul li {
+  margin: 5px 0;
+}
+@media (max-width: 992px) {
+  .sw-lpm-classname-service-card { width: 45%; }
+}
+@media (max-width: 576px) {
+  .sw-lpm-classname-service-card { width: 90%; }
+}
+
+/* ===== REQUEST QUOTE (UPDATED RESPONSIVE FULL-WIDTH) ===== */
+.sw-lpm-classname-request-quote {
+  padding: 40px 16px; /* smaller outer padding so inner container can expand */
+  text-align: center;
+  background: #f7f7f8;
+}
+.sw-lpm-classname-request-quote h2 {
+  font-size: 2.2rem;
+  margin-bottom: 18px;
+}
+
+/* WRAP - this makes the inner container stretch horizontally on large screens */
+.sw-lpm-classname-quote-form-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 0 24px;
+}
+
+/* FORM CONTAINER - expand on large screens, but limit max width so it stays readable */
+.sw-lpm-classname-quote-form-container {
+  width: 100%;
+  max-width: 1200px;       /* allow very wide on desktop but cap at 1200px */
+  background: #ffffff;
+  padding: 28px;
+  border-radius: 10px;
+  box-shadow: 0 8px 30px rgba(9,20,30,0.06);
+  box-sizing: border-box;
+}
+
+/* form internal spacing */
+.sw-lpm-classname-quote-form .ant-row {
+  margin-bottom: 0;
+}
+.sw-lpm-classname-quote-form .ant-form-item {
+  margin-bottom: 12px;
+}
+
+/* submit button styling (full width) */
+.sw-lpm-classname-quote-submit-btn {
+  height: 44px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+/* Make inputs slightly taller for desktop */
+.sw-lpm-classname-quote-form .ant-input,
+.sw-lpm-classname-quote-form .ant-input-affix-wrapper,
+.sw-lpm-classname-quote-form .ant-input-textarea {
+  height: 42px;
+  padding: 6px 12px;
+  border-radius: 6px;
+}
+
+/* textarea adjustment */
+.sw-lpm-classname-quote-form .ant-input-textarea {
+  padding: 10px 12px;
+  min-height: 110px;
+}
+
+/* Responsive rules: on very wide screens we want form to visually take more space */
+@media (min-width: 1280px) {
+  .sw-lpm-classname-quote-form-container {
+    padding: 36px 44px;
+  }
+  .sw-lpm-classname-request-quote {
+    padding: 56px 36px;
+  }
+}
+
+/* On medium screens make the container effectively full width with smaller side padding */
+@media (min-width: 992px) and (max-width: 1279px) {
+  .sw-lpm-classname-quote-form-container {
+    max-width: 1050px;
+    padding: 28px 32px;
+  }
+}
+
+/* Mobile: stack inputs full width with smaller container padding */
+@media (max-width: 767px) {
+  .sw-lpm-classname-quote-form-container {
+    padding: 18px;
+    max-width: 100%;
+    border-radius: 8px;
+  }
+  .sw-lpm-classname-quote-form .ant-col {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  .sw-lpm-classname-quote-form .ant-input,
+  .sw-lpm-classname-quote-form .ant-input-affix-wrapper {
+    height: 40px;
+  }
+}
+
+/* ===== WHY CHOOSE US ===== */
+.sw-lpm-classname-why-choose-us {
+  padding: 60px 50px;
+  text-align: center;
+}
+.sw-lpm-classname-choose-us-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 30px;
+}
+.sw-lpm-classname-choose-us-card {
+  width: 260px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  padding: 25px 15px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.sw-lpm-classname-choose-us-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+.sw-lpm-classname-choose-us-icon {
+  margin-bottom: 10px;
+}
+.sw-lpm-classname-choose-us-card h3 {
+  font-size: 1.25rem;
+  margin-bottom: 10px;
+}
+.sw-lpm-classname-choose-us-card p {
+  font-size: 0.95rem;
+  color: #555;
+}
+@media (max-width: 768px) {
+  .sw-lpm-classname-choose-us-card { width: 80%; }
+}
+@media (max-width: 480px) {
+  .sw-lpm-classname-choose-us-card { width: 95%; }
+}
+
+/* ===== PERFECT FOOTER ===== */
+.sw-lpm-classname-lr-footer {
+  background: #0b1724;
+  color: #cbd5e1;
+  padding: 48px 20px 28px;
+  font-size: 15px;
+}
+.sw-lpm-classname-lr-footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 36px;
+  align-items: start;
+}
+.sw-lpm-classname-lr-footer-col h4 {
+  color: #ffffff;
+  font-size: 1.05rem;
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+.sw-lpm-classname-lr-footer-about {
+  max-width: 320px;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.6;
+}
+.sw-lpm-classname-lr-footer-list,
+.sw-lpm-classname-lr-contact-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.sw-lpm-classname-lr-footer-list li,
+.sw-lpm-classname-lr-contact-list li {
+  margin: 10px 0;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+.sw-lpm-classname-lr-footer-socials {
+  margin-top: 12px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.sw-lpm-classname-lr-footer-socials .sw-lpm-classname-social {
+  display: inline-flex;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.04);
+  color: #cbd5e1;
+  text-decoration: none;
+  transition: 0.15s ease;
+  font-weight: 700;
+}
+.sw-lpm-classname-lr-footer-socials .sw-lpm-classname-social:hover {
+  background: rgba(123,44,255,0.15);
+  color: #ffffff;
+  transform: translateY(-3px);
+}
+.sw-lpm-classname-lr-footer-bottom {
+  max-width: 1200px;
+  margin: 22px auto 0;
+  padding-top: 16px;
+  text-align: center;
+}
+.sw-lpm-classname-lr-footer-sep {
+  width: 100%;
+  height: 1px;
+  background: rgba(255,255,255,0.05);
+  margin-bottom: 12px;
+}
+.sw-lpm-classname-lr-footer-copy {
+  color: rgba(255,255,255,0.55);
+  font-size: 14px;
+}
+@media (max-width: 992px) {
+  .sw-lpm-classname-lr-footer-inner {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+  }
+}
+@media (max-width: 600px) {
+  .sw-lpm-classname-lr-footer-inner {
+    grid-template-columns: 1fr;
     text-align: left;
   }
-  .sw-hsl-hs-card-features li {
-    display: flex;
-    align-items: center;
-    margin: 8px 0;
-    color: #374151;
-  }
-  .sw-hsl-hs-check-icon {
-    color: #14b8a6;
-    margin-right: 8px;
-  }
-
-  /* ----- Emergency Section ----- */
-  .sw-hsl-hs-emergency-wrap {
-    background: #fdeeee;
-    padding: 52px 20px;
-    margin-top: 20px;
-    text-align: center;
-    border-radius: 12px;
-  }
-  .sw-hsl-hs-emergency-head h2 {
-    font-size: 2.2rem;
-    font-weight: 700;
-    color: #222;
-  }
-  .sw-hsl-hs-emergency-head p {
-    color: #555;
-    font-size: 1.05rem;
-    margin-top: 10px;
-    margin-bottom: 32px;
-  }
-  .sw-hsl-hs-em-card {
-    border-radius: 18px !important;
-    padding: 18px 12px;
-    background: #fff;
-    min-height: 200px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 18px rgba(0,0,0,0.06);
-    text-align: center;
-  }
-  .sw-hsl-hs-em-icon {
-    margin-bottom: 12px;
-  }
-  .sw-hsl-hs-em-icon img { width: 48px; height: 48px; display:block; }
-  .sw-hsl-hs-em-title {
-    font-size: 1.05rem;
-    font-weight: 600;
-    margin-bottom: 8px;
-    color: #333;
-  }
-  .sw-hsl-hs-em-response {
-    color: #e53946;
-    font-weight: 600;
-  }
-  .sw-hsl-hs-emergency-btn-wrap { margin-top: 34px; }
-  .sw-hsl-hs-emergency-main-btn {
-    background: #e60000 !important;
-    border-radius: 10px !important;
-    padding: 12px 22px !important;
-    font-size: 1rem !important;
-    font-weight: 600 !important;
-  }
-
-  /* ==================
-    PRICING / PLANS
-    ================== */
-  .sw-hsl-hs-pricing-wrap {
-    padding: 56px 18px;
-    max-width: 1250px;
-    margin: 30px auto;
-    text-align: center;
-  }
-  .sw-hsl-hs-pricing-head h2 {
-    font-size: 2.2rem;
-    font-weight: 700;
-    margin-bottom: 8px;
-    color: #222;
-  }
-  .sw-hsl-hs-pricing-head p {
-    margin-bottom: 34px;
-    color: #6b7280;
-    font-size: 1rem;
-  }
-  .sw-hsl-hs-price-card {
-    border-radius: 18px !important;
-    padding: 28px 22px;
-    min-height: 420px;
-    display: flex;
-    flex-direction: column;
+  .sw-lpm-classname-lr-footer-socials {
     justify-content: flex-start;
-    align-items: stretch;
-    background: #fff;
-    box-shadow: 0 2px 18px rgba(0,0,0,0.06);
   }
-  .sw-hsl-hs-price-popular-wrap { position: relative; margin-top: -6px; }
-  .sw-hsl-hs-price-card-popular { border: 4px solid #ff7a1a !important; box-shadow: 0 10px 30px rgba(255,122,26,0.12); }
-  .sw-hsl-hs-popular-badge {
-    position: absolute;
-    top: -14px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #ff7a1a;
-    color: #fff;
-    padding: 8px 18px;
-    border-radius: 20px;
-    font-weight: 600;
-    font-size: 0.95rem;
-    z-index: 5;
-    box-shadow: 0 6px 18px rgba(255,122,26,0.12);
+}
+
+/* small polish for mobile menu presence */
+@media (max-width: 992px) {
+  .sw-lpm-classname-mobile-menu-icon {
+    display: block;
   }
-  .sw-hsl-hs-price-title { font-size: 1.26rem; font-weight: 600; color: #222; margin-bottom: 20px; text-align: center; }
-  .sw-hsl-hs-price-amount { text-align: center; margin-bottom: 18px; }
-  .sw-hsl-hs-price-dollar { color: #f7702e; font-weight: 700; font-size: 2.3rem; display: inline-block; line-height: 1; }
-  .sw-hsl-hs-price-suffix { color: #6b7280; font-size: 1rem; margin-left: 6px; vertical-align: bottom; }
-  .sw-hsl-hs-price-features {
-    list-style: none;
-    padding: 0;
-    margin: 8px 10px 22px 10px;
+  .sw-lpm-classname-hs-navbar {
+    align-items: center;
+    gap: 8px;
+  }
+  .sw-lpm-classname-hs-navbar-logo {
+    order: 0;
+    flex: 0 0 auto;
+    width: auto;
+    display: flex;
+    justify-content: flex-start;
+  }
+  .sw-lpm-classname-mobile-menu-icon {
+    order: 1;
+    margin-left: 6px;
+    margin-right: 6px;
+    flex: 0 0 auto;
+  }
+  .sw-lpm-classname-hs-navbar .sw-lpm-classname-hs-navbar-menu {
+    order: 2;
+    width: 100%;
+    display: none;
+  }
+}
+
+/* ///////////// Vamsi Landing Packers ///// */
+
+/* ///////////// Vamsi Construction Materials ///// */
+/* ================= NAVBAR ================= */
+.sw-lcm-classname-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+.sw-lcm-classname-nav-logo {
+  font-weight: 700;
+  color: rgb(20, 188, 166);
+  font-size: 1.3rem;
+}
+.sw-lcm-classname-nav-links {
+  display: flex;
+  list-style: none;
+  gap: 22px;
+  margin: 0;
+  padding: 0;
+}
+.sw-lcm-classname-nav-links a {
+  color: #222;
+  text-decoration: none;
+  font-weight: 500;
+}
+.sw-lcm-classname-mobile-menu-icon {
+  display: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+.sw-lcm-classname-mobile-menu {
+  display: none;
+  position: absolute;
+  top: 64px;
+  left: 0;
+  right: 0;
+  background: white;
+  padding: 16px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+.sw-lcm-classname-mobile-menu li {
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+/* ================= HERO ================= */
+.sw-lcm-classname-hero-section {
+  width: 100%;
+  height: 64vh; /* keep your chosen height */
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+}
+.sw-lcm-classname-hero-overlay {
+  background: rgba(0,0,0,0.5);
+  padding: 20px;
+  max-width: 1024px;
+  width: 100%;
+  margin: 0 20px;
+  border-radius: 8px;
+}
+.sw-lcm-classname-hero-overlay h1 {
+  font-size: 2.3rem;
+  margin: 0 0 8px 0;
+}
+.sw-lcm-classname-hero-overlay p {
+  font-size: 1rem;
+  margin-bottom: 16px;
+}
+/* hero buttons wrapper */
+.sw-lcm-classname-hero-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+/* APPLY COLOR TO "Browse Catalog" + WHITE BORDER */
+.sw-lcm-classname-hero-buttons .ant-btn:first-child {
+  background: #3b8fe6 !important;
+  border-color: #ffffff !important;
+  color: #fff !important;
+}
+.sw-lcm-classname-hero-buttons .ant-btn {
+  min-width: 150px;
+  font-size: 14px;
+  padding: 10px 18px;
+  border-radius: 8px;
+}
+@media (min-width: 641px) and (max-width: 992px) {
+  .sw-lcm-classname-hero-buttons .ant-btn {
+    width: 150px !important;
+    padding: 8px 12px !important;
+    font-size: 12px !important;
+    border-radius: 6px !important;
+  }
+  .sw-lcm-classname-hero-buttons {
+    justify-content: center !important;
+    gap: 10px !important;
+  }
+}
+@media (max-width: 425px) {
+  .sw-lcm-classname-hero-section { height: 220px; }
+  .sw-lcm-classname-hero-overlay { padding: 12px !important; }
+  .sw-lcm-classname-hero-overlay h1 { font-size: 0.95rem !important; }
+  .sw-lcm-classname-hero-overlay p { font-size: 0.70rem !important; margin-bottom: 6px; }
+  .sw-lcm-classname-hero-buttons .ant-btn { padding: 5px 8px !important; font-size: 10px !important; min-width: 80px !important; border-radius: 6px !important; }
+  .sw-lcm-classname-hero-buttons { justify-content: center !important; }
+}
+@media (max-width: 375px) {
+  .sw-lcm-classname-hero-section { height: 200px !important; }
+  .sw-lcm-classname-hero-overlay { padding: 10px !important; }
+  .sw-lcm-classname-hero-overlay h1 { font-size: 0.78rem !important; }
+  .sw-lcm-classname-hero-overlay p { font-size: 0.62rem !important; margin-bottom: 5px; }
+  .sw-lcm-classname-hero-buttons { flex-direction: column !important; gap: 6px !important; }
+  .sw-lcm-classname-hero-buttons .ant-btn { width: 92% !important; padding: 5px 6px !important; font-size: 9px !important; border-radius: 5px !important; margin: 0 auto !important; }
+}
+@media (max-width: 320px) {
+  .sw-lcm-classname-hero-section { height: 180px !important; }
+  .sw-lcm-classname-hero-overlay { padding: 8px !important; }
+  .sw-lcm-classname-hero-overlay h1 { font-size: 0.68rem !important; }
+  .sw-lcm-classname-hero-overlay p { font-size: 0.58rem !important; margin-bottom: 4px; }
+  .sw-lcm-classname-hero-buttons { flex-direction: column !important; gap: 5px !important; }
+  .sw-lcm-classname-hero-buttons .ant-btn { width: 95% !important; padding: 4px 6px !important; font-size: 8.5px !important; border-radius: 4px !important; margin: 0 auto !important; }
+}
+
+/* ================= PRODUCT CATEGORIES ================= */
+.sw-lcm-classname-product-categories {
+  padding: 48px 20px;
+  text-align: center;
+  background: #fafafa;
+}
+.sw-lcm-classname-product-categories .sw-lcm-classname-pc-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* grid for the cards */
+.sw-lcm-classname-pc-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+  justify-items: center;
+  align-items: start;
+  width: 100%;
+  margin-top: 20px;
+}
+.sw-lcm-classname-pc-grid-item { display: flex; justify-content: center; width: 100%; }
+
+/* card base */
+.sw-lcm-classname-pc-card {
+  width: 100%;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  background: #fff;
+}
+
+/* image */
+.sw-lcm-classname-pc-card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+/* card inner content */
+.sw-lcm-classname-pc-card-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;            /* center title + list */
+}
+
+/* TITLE */
+.sw-lcm-classname-pc-card-inner h3 {
+  margin: 6px 0 6px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-align: center;
+  color: #222;
+}
+
+/* ===== FIX: remove default bullets and odd left margin =====
+   - remove list-style and margins so bullets are gone
+   - center the list and make list items spaced nicely
+*/
+.sw-lcm-classname-pc-card-inner ul {
+  list-style: none;             /* remove bullets */
+  padding: 0;                   /* remove left padding that caused bullets outside card */
+  margin: 10px 0 14px 0;        /* small vertical spacing */
+  width: 100%;
+  max-width: 260px;             /* keeps list narrow and centered */
+  text-align: center;           /* center list items text */
+  display: inline-block;        /* shrink to content so centering works */
+}
+
+.sw-lcm-classname-pc-card-inner ul li {
+  margin: 8px 0;
+  color: #4b5563;
+  line-height: 1.5;
+  font-size: 0.95rem;
+  position: relative;
+  padding-left: 0;
+}
+
+/* smaller decorative dot if you want a subtle marker (optional)
+   If you prefer no marker at all, you can keep this commented out.
+*/
+.sw-lcm-classname-pc-card-inner ul li::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: #d1d5db; /* subtle gray */
+  border-radius: 50%;
+  margin-right: 10px;
+  vertical-align: middle;
+  transform: translateY(-1px);
+}
+
+/* align the list + make sure it doesn't overflow card at narrow widths */
+@media (max-width: 640px) {
+  .sw-lcm-classname-pc-card-inner ul {
+    max-width: 100%;
+    display: block;
     text-align: left;
-    flex: 1 1 auto;
+    padding-left: 18px; /* fall back to left-aligned list on mobile for readability */
   }
-  .sw-hsl-hs-price-features li { margin: 12px 0; color: #374151; font-size: 0.98rem; display: flex; align-items: center; }
-  .sw-hsl-hs-check { color: #050505; margin-right: 10px; font-size: 18px; }
-  .sw-hsl-hs-choose-btn { border-radius: 10px !important; padding: 12px 18px !important; font-weight: 700 !important; font-size: 0.99rem !important; margin-top: 12px; }
-  .sw-hsl-hs-choose-btn-primary { background: #ff7a1a !important; color: #fff !important; border: none !important; box-shadow: 0 6px 18px rgba(255,122,26,0.14); }
-  .sw-hsl-hs-choose-btn-outline { background: transparent !important; border: 2px solid rgba(0,0,0,0.06) !important; color: #111 !important; }
+  .sw-lcm-classname-pc-card-inner ul li::before { display: inline-block; } 
+}
 
-  /* Booking form */
-  .sw-hsl-hs-booking-wrap { max-width: 920px; margin: 60px auto; text-align: center; padding: 10px; }
-  .sw-hsl-hs-booking-head h2 { font-size: 2rem; font-weight: 700; color: #111; }
-  .sw-hsl-hs-booking-head p { color: #6b7280; font-size: 1.05rem; margin-bottom: 30px; }
-  .sw-hsl-hs-booking-card { padding: 30px 32px; border-radius: 20px !important; background: #fff; box-shadow: 0 4px 22px rgba(0,0,0,0.06); text-align: left; }
-  .sw-hsl-hs-booking-label { display: block; font-weight: 600; color: #333; margin-bottom: 6px; }
+/* button area in card */
+.sw-lcm-classname-pc-card-actions .ant-btn { width: 100%; }
 
-  /* regular text input style (already used) */
-  .sw-hsl-hs-booking-input {
+/* responsive grid breakpoints */
+@media (max-width: 1100px) {
+  .sw-lcm-classname-pc-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .sw-lcm-classname-pc-grid { grid-template-columns: 1fr; }
+  .sw-lcm-classname-pc-card { max-width: 100%; }
+}
+
+/* ================= OUR SERVICES ================= */
+.sw-lcm-classname-our-services {
+  padding: 40px 20px;
+  background: #fafafa;
+  text-align: center;
+}
+.sw-lcm-classname-os-inner { max-width: 1500px; margin: 0 auto; }
+.sw-lcm-classname-services-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-top: 20px;
+}
+.sw-lcm-classname-service-grid-item { display: flex; justify-content: center; }
+.sw-lcm-classname-service-card {
+  max-width: 260px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+@media (max-width:1100px) {
+  .sw-lcm-classname-services-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width:640px) {
+  .sw-lcm-classname-services-grid { grid-template-columns: 1fr; }
+  .sw-lcm-classname-service-card { max-width: 100%; }
+}
+
+/* ================= Featured Products ================= */
+.sw-lcm-classname-featured-products {
+  padding: 40px 20px;
+  text-align: center;
+}
+.sw-lcm-classname-fp-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+.sw-lcm-classname-featured-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+  justify-items: center;
+}
+.sw-lcm-classname-featured-card {
+  max-width: 320px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+.sw-lcm-classname-featured-media img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+.sw-lcm-classname-featured-body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.sw-lcm-classname-featured-body h3 { font-size: 1.05rem; margin: 0; }
+.sw-lcm-classname-fp-price, .sw-lcm-classname-fp-rating { font-size: 0.95rem; color: #444; }
+.sw-lcm-classname-featured-body ul { margin-left: 18px; }
+@media (max-width:1100px) {
+  .sw-lcm-classname-featured-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width:640px) {
+  .sw-lcm-classname-featured-grid { grid-template-columns: 1fr; }
+  .sw-lcm-classname-featured-card { max-width: 100%; }
+}
+
+/* ================= REQUEST QUOTE ================= */
+.sw-lcm-classname-request-quote { padding: 56px 20px; background: #f8fafb; }
+.sw-lcm-classname-rq-inner { max-width: 980px; margin: 0 auto; text-align: center; }
+.sw-lcm-classname-rq-title { font-weight: 700; color: #222a35; font-size: 2rem; margin-bottom: 8px; }
+.sw-lcm-classname-rq-sub { color: #6b7280; margin-bottom: 24px; }
+/* form card */
+.sw-lcm-classname-rq-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 22px;
+  box-shadow: 0 10px 30px rgba(22,31,39,0.06);
+  border: 1px solid #ecf0f3;
+}
+/* AntD form elements */
+.sw-lcm-classname-rq-card .ant-form-item-label > label { font-weight: 600; color:#222a35; }
+.sw-lcm-classname-rq-card .ant-input,
+.sw-lcm-classname-rq-card .ant-select-selector,
+.sw-lcm-classname-rq-card .ant-picker {
+  height: 44px;
+  border-radius: 10px;
+  background: #f5f7fa;
+  border: 1px solid #e8eef3;
+}
+.sw-lcm-classname-rq-card .ant-input-textarea > textarea {
+  min-height: 110px;
+  border-radius: 10px;
+  background: #f5f7fa;
+}
+/* submit */
+.sw-lcm-classname-rq-submit {
+  display: block;
+}
+.sw-lcm-classname-rq-submit .ant-btn {
+  background: #0e1014;
+  border-color: #0e1014;
+  color: white;
+  border-radius: 10px;
+  height: 48px;
+  padding: 10px 26px;
+  font-weight: 600;
+}
+.sw-lcm-classname-rq-submit .ant-btn:hover {
+  background:#0b0c0f;
+  border-color:#0b0c0f;
+}
+
+/* ================= WHY CHOOSE US ================= */
+.sw-lcm-classname-why-choose-us { background:#f7f9fb; padding:48px 20px; }
+.sw-lcm-classname-why-inner { max-width:1300px; margin:0 auto; text-align:center; }
+.sw-lcm-classname-why-title { font-weight:600; color:#2f3b4a; }
+.sw-lcm-classname-why-sub { color:#7d8792; margin-bottom:26px; }
+.sw-lcm-classname-why-features {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+}
+.sw-lcm-classname-why-pill {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  background:#fff;
+  padding:12px 18px;
+  border-radius:10px;
+  box-shadow:0 6px 18px rgba(22,31,39,0.06);
+}
+.sw-lcm-classname-why-check {
+  min-width:28px;
+  height:28px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  border-radius:20px;
+  background:rgba(243,156,18,0.12);
+  color:#f39c12;
+  font-weight:700;
+}
+.sw-lcm-classname-why-text { font-size:0.95rem; color:#314044; }
+
+/* ================= TRUSTED BRANDS ================= */
+.sw-lcm-classname-trusted-brands { padding:36px 20px; }
+.sw-lcm-classname-tb-inner { max-width:1280px; margin:0 auto; text-align:center; }
+.sw-lcm-classname-brand-row {
+  display:flex;
+  gap:16px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+.sw-lcm-classname-brand-pill {
+  background:#f7f8fb;
+  padding:10px 18px;
+  color:#6b7280;
+  border-radius:8px;
+  box-shadow:0 2px 6px rgba(22,31,39,0.04);
+}
+
+/* ================= QUANTITY CTA ================= */
+.sw-lcm-classname-quantity-cta { background:#fff6e6; padding:36px 20px; }
+.sw-lcm-classname-quantity-inner {
+  max-width:1100px;
+  margin:auto;
+  display:flex;
+  justify-content:center;
+  gap:24px;
+  flex-wrap:wrap;
+  text-align:center;
+}
+.sw-lcm-classname-cta-icon {
+  font-size:44px;
+  background:rgba(243,156,18,0.12);
+  padding:16px;
+  border-radius:12px;
+}
+.sw-lcm-classname-cta-body h3 {
+  margin:0;
+  font-size:1.35rem;
+  color:#2f3b4a;
+}
+.sw-lcm-classname-cta-sub {
+  color:#5b6670;
+  margin-top:6px;
+}
+.sw-lcm-classname-hero-overlay h1 {
+    font-size: 1.9rem;
+    margin: 0 0 8px 0;
+}
+
+/* ================= RESPONSIVE NAVBAR ================= */
+@media (max-width: 992px) {
+  .sw-lcm-classname-nav-links { display: none; }
+  .sw-lcm-classname-mobile-menu-icon { display: block; }
+  .sw-lcm-classname-mobile-menu { display: block; }
+}
+
+/* =======================  FOOTER   ======================== */
+.sw-lcm-classname-lr-footer {
+  background: #0b1724;
+  color: #cbd5e1;
+  padding: 48px 20px 28px;
+  font-size: 15px;
+}
+.sw-lcm-classname-lr-footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 36px;
+}
+.sw-lcm-classname-lr-footer-col h4 {
+  color: #fff;
+  font-size: 1.05rem;
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+.sw-lcm-classname-lr-footer-about {
+  color: rgba(255,255,255,0.75);
+  line-height: 1.6;
+}
+.sw-lcm-classname-lr-footer-list,
+.sw-lcm-classname-lr-contact-list {
+  list-style: none;
+  padding: 0;
+}
+.sw-lcm-classname-lr-footer-list li,
+.sw-lcm-classname-lr-contact-list li {
+  margin: 10px 0;
+  color: rgba(255,255,255,0.75);
+  font-size: 0.95rem;
+}
+.sw-lcm-classname-lr-footer-socials {
+  margin-top: 12px;
+  display: flex;
+  gap: 12px;
+}
+.sw-lcm-classname-lr-footer-socials .sw-lcm-classname-social {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255,255,255,0.04);
+  color: #cbd5e1;
+  transition: 0.15s ease;
+}
+.sw-lcm-classname-lr-footer-socials .sw-lcm-classname-social:hover {
+  background: rgba(123,44,255,0.15);
+  color: #fff;
+}
+.sw-lcm-classname-lr-footer-bottom {
+  margin-top: 22px;
+  text-align: center;
+}
+.sw-lcm-classname-lr-footer-sep {
+  width: 100%;
+  height: 1px;
+  background: rgba(255,255,255,0.05);
+  margin-bottom: 12px;
+}
+.sw-lcm-classname-lr-footer-copy {
+  color: rgba(255,255,255,0.55);
+  font-size: 14px;
+}
+@media (max-width: 992px) {
+  .sw-lcm-classname-lr-footer-inner { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .sw-lcm-classname-lr-footer-inner { grid-template-columns: 1fr; }
+  .sw-lcm-classname-lr-footer-socials { justify-content: flex-start; }
+}
+
+/* -------------------------- MOBILE MENU -------------------------- */
+.sw-lcm-classname-mobile-menu-icon {
+  display: none; /* shown by existing media query at max-width:992px */
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  padding: 8px;
+  cursor: pointer;
+  color: #0b1220;
+  line-height: 1;
+}
+.sw-lcm-classname-mobile-menu {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  top: calc(100% + 8px);
+  z-index: 1200;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 18px 40px rgba(2,6,23,0.12);
+  padding: 10px;
+  margin: 0;
+  list-style: none;
+  box-sizing: border-box;
+  max-height: 72vh;
+  overflow: auto;
+  transform-origin: top center;
+  animation: sw-lcm-classname-mobileMenuOpen .14s ease-out;
+}
+@keyframes sw-lcm-classname-mobileMenuOpen {
+  from { transform: scaleY(0.96); opacity: 0; }
+  to   { transform: scaleY(1); opacity: 1; }
+}
+.sw-lcm-classname-mobile-menu li {
+  padding: 8px 12px;
+  border-bottom: 1px solid rgba(6,21,38,0.04);
+}
+.sw-lcm-classname-mobile-menu li:last-child { border-bottom: none; }
+.sw-lcm-classname-mobile-menu a { font-weight: 700; color: #0b3b66; }
+@media (max-width: 992px) {
+  .sw-lcm-classname-mobile-menu-icon { display: block; }
+  .sw-lcm-classname-hs-navbar .sw-lcm-classname-hs-navbar-menu { display: none !important; }
+}
+
+/* small finishing touches (button color overrides used earlier) */
+.sw-lcm-classname-pc-card-inner button{
+  background-color: yellow !important;
+  border: none;
+  color: rgb(25, 4, 19);
+}
+.sw-lcm-classname-pc-card-inner button:hover{
+  background-color: rgb(136, 220, 235) !important;
+  border: none;
+  color: rgb(25, 4, 19);
+}
+.sw-lcm-classname-featured-body button{
+  background-color: pink !important;
+  border: none;
+  color: indigo !important;
+}
+.sw-lcm-classname-featured-body button:hover{
+  background-color: rgb(192, 255, 215) !important;
+  border: none;
+  color: indigo !important;
+}
+
+/* ///////////// Vamsi Packers and Movers ///// */
+
+/* Packersandmovers.css (cleaned single copy) */
+/* Force AntD card body padding to 0 so our layout inside cards is exact */
+:where(.css-dev-only-do-not-override-198drv2).ant-card .ant-card-body {
+  padding: 0 !important;
+}
+/* ---------------- container ---------------- */
+.sw-pm-container {
+  width: 100%;
+  max-width: 1200px; /* compact */
+  margin: 0 auto;
+  padding: 0 14px;
+  box-sizing: border-box;
+}
+/* ---------- hero ---------- */
+.sw-pm-hero {
+  margin-left: 52px;
+  margin-right: 52px;
+}
+.sw-pm-hero-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px;
+  background: #005cfa;
+  border-radius: 6px; /* reduced radius (smaller) */
+  color: #fff;
+}
+.sw-pm-hero-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+.sw-pm-hero-sub {
+  margin: 4px 0 0;
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 13px;
+}
+/* ---------- cards ---------- */
+.sw-pm-main {
+  width: 95%;
+  margin: 18px;
+  margin-left: 30px;
+  margin-right: 20px;
+}
+.sw-pm-cards-wrapper {
+  width: 100%;
+}
+/* Make columns flex so cards stretch to equal height */
+.ant-row > .ant-col[style*="display: flex"] {
+  display: flex;
+}
+/* Fixed card height so all cards equal size */
+.sw-pm-card {
+  border-radius: 4px; /* smaller radius */
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(20, 20, 20, 0.06);
+  border: 1px solid #f0f0f0;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  height: 340px; /* kept */
+  max-width: 260px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+/* image fixed height */
+.sw-pm-card-image {
+  width: 100%;
+  height: 150px; /* keep image height */
+  object-fit: cover;
+  display: block;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+/* body takes remaining space - ZERO padding so we control spacing exactly */
+.sw-pm-card-body {
+  padding: 0 !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+  box-sizing: border-box;
+}
+/* title/subtitle clamp to avoid growth and center them */
+.sw-pm-card-title {
+  margin: 12px 12px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #173648;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+}
+.sw-pm-card-sub {
+  margin: 8px 12px 0;
+  color: #6b7785;
+  font-size: 13px;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+}
+/* footer pinned to bottom of card
+   Center alignment so View Details appears centered.
+*/
+.sw-pm-card-footer {
+  padding: 10px 12px;      /* internal spacing */
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center; /* center contents horizontally */
+  box-sizing: border-box;
+  width: 100%;
+  margin-top: auto;
+  position: relative;      /* allows absolute positioning if needed later */
+}
+/* Price stays to the left if visible; absolute so it doesn't push button */
+.sw-pm-price {
+  color: #2b6cff;
+  font-weight: 600;
+  font-size: 15px;
+  white-space: nowrap;
+  margin-right: 8px;
+  flex: 0 0 auto;
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+/* View Details button: centered, full visual width with small gutters, slightly reduced height (40px) */
+.sw-pm-view-btn {
+  flex: 0 0 auto;
+  width: calc(100% - 28px);  /* leave small in-card gutters */
+  max-width: 100%;
+  height: 40px;              /* requested height */
+  margin: 12px auto 0;       /* top margin effective (12px) */
+  background: #000 !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 4px !important; /* reduced radius */
+  padding: 0 16px !important;    /* horizontal padding only */
+  font-size: 15px;
+  font-weight: 700;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+  cursor: pointer;
+  transition: transform 140ms ease, box-shadow 140ms ease, opacity 140ms ease;
+  box-sizing: border-box;
+}
+.sw-pm-view-btn span,
+.sw-pm-view-btn > * {
+  display: inline-block;
+  line-height: normal;
+}
+.sw-pm-view-btn:hover,
+.sw-pm-view-btn:focus {
+  transform: translateY(-2px);
+  opacity: 0.98;
+  box-shadow: 0 10px 22px rgba(0,0,0,0.14);
+}
+/* ---------- full-screen modal overlay (unchanged except radii) ---------- */
+.sw-pm-fullscreen-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(12, 16, 23, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5000;
+  padding: 30px;
+}
+.sw-pm-fullscreen-inner {
+  width: min(1200px, 98%);
+  max-height: 92vh;
+  background: #fff;
+  border-radius: 4px;
+  overflow: auto;
+  box-shadow: 0 24px 64px rgba(8, 12, 20, 0.4);
+  outline: none;
+  display: flex;
+  flex-direction: column;
+}
+.sw-pm-fullscreen-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 18px;
+  border-bottom: 1px solid #f2f4f7;
+}
+.sw-pm-fullscreen-header h2 {
+  margin: 0;
+  font-size: 20px;
+}
+.sw-pm-fullscreen-close {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: #111;
+}
+/* Modal body and grid */
+.sw-pm-fullscreen-body {
+  padding: 16px 18px 24px;
+}
+.sw-pm-fullscreen-images {
+  width: 100%;
+}
+.sw-pm-fullscreen-card {
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 8px 26px rgba(20, 20, 20, 0.06);
+  border: 1px solid #f0f0f0;
+  background: #fff;
+}
+.sw-pm-fullscreen-card-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+/* fullscreen card body */
+.sw-pm-fullscreen-card-body {
+  padding: 12px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.sw-pm-fullscreen-card-title {
+  font-weight: 600;
+  color: #173648;
+}
+.sw-pm-fullscreen-card-sub {
+  color: #6b7785;
+  font-size: 13px;
+  margin-top: 6px;
+}
+.sw-pm-fullscreen-card-actions {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+}
+/* Book Now button style: default previously green; user requested black/white match */
+.sw-pm-book-btn,
+.sw-pm-book-btn.ant-btn {
+  background: #000 !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 4px !important;
+  padding: 8px 14px !important;
+  font-weight: 700 !important;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.12) !important;
+  transition: transform 120ms ease, box-shadow 120ms ease, opacity 120ms ease;
+}
+.sw-pm-book-btn:hover,
+.sw-pm-book-btn:focus,
+.sw-pm-book-btn:active,
+.sw-pm-book-btn.ant-btn:hover,
+.sw-pm-book-btn.ant-btn:focus,
+.sw-pm-book-btn.ant-btn:active {
+  background: #000 !important;
+  color: #fff !important;
+  border-color: #000 !important;
+  box-shadow: 0 10px 26px rgba(0,0,0,0.14) !important;
+  transform: translateY(-2px) !important;
+  outline: none !important;
+}
+/* ---------- booking form modal ---------- */
+.sw-pm-form-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(12, 16, 23, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 6000;
+  padding: 18px;
+}
+.sw-pm-form-inner {
+  width: min(980px, 98%);
+  max-height: 94vh;
+  overflow: auto; /* keep scrolling behavior */
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.4);
+  position: relative; /* allow banner positioning */
+}
+/* Banner: hidden by default, shown when .visible is applied */
+.sw-pm-confirm-top {
+  position: sticky;        /* sticks to top of the scrolling modal */
+  top: 0;
+  left: 0;
+  right: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: rgba(20, 184, 120, 0.12);
+  border-bottom: 1px solid rgba(20, 184, 120, 0.28);
+  z-index: 40;
+}
+.sw-pm-confirm-top.visible {
+  display: flex;
+}
+.sw-pm-confirm-top-inner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.sw-pm-confirm-top-text {
+  font-weight: 700;
+  color: #0b4f3a;
+  font-size: 15px;
+}
+.sw-pm-form-inner.has-banner .sw-pm-form-body {
+  margin-top: 56px; /* adjust if banner height changes */
+}
+.sw-pm-form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  border-bottom: 1px solid #f2f4f7;
+}
+.sw-pm-form-header h3 {
+  margin: 0;
+  font-size: 18px;
+}
+.sw-pm-form-body {
+  display: flex;
+  gap: 18px;
+  padding: 18px;
+  align-items: flex-start;
+}
+/* left column */
+.sw-pm-form-left {
+  width: 36%;
+  min-width: 220px;
+}
+.sw-pm-form-image {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 4px;
+  display: block;
+}
+.sw-pm-form-desc {
+  color: #6b7785;
+  margin: 10px 0 12px;
+}
+.sw-pm-included h4 {
+  margin: 0 0 8px;
+  font-size: 15px;
+}
+.sw-pm-included ul {
+  padding-left: 16px;
+  margin: 0 0 12px;
+  color: #235;
+}
+.sw-pm-included li {
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+/* price box */
+.sw-pm-price-box {
+  margin-top: 10px;
+  padding: 12px;
+  background: #f6fbff;
+  border-radius: 4px;
+  border: 1px solid #eef6ff;
+}
+.sw-pm-price-label {
+  font-size: 13px;
+  color: #6b7785;
+  margin-bottom: 6px;
+}
+.sw-pm-price-value {
+  font-weight: 700;
+  color: #0d47a1;
+  font-size: 16px;
+}
+/* right column: form */
+.sw-pm-form-right {
+  width: calc(64% - 18px);
+}
+.sw-pm-form-right .ant-form-item {
+  margin-bottom: 10px;
+}
+/* Replace original hover rule that turned button white.
+   Keep form action buttons black & white in all states. */
+.sw-pm-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 12px 0 24px;
+}
+.sw-pm-form-actions button,
+.sw-pm-form-actions .ant-btn {
+  background: #000 !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 4px !important;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.12) !important;
+  padding: 8px 14px !important;
+  font-weight: 600;
+  transition: transform 140ms ease, box-shadow 140ms ease, opacity 140ms ease;
+}
+.sw-pm-form-actions button:hover,
+.sw-pm-form-actions button:focus,
+.sw-pm-form-actions button:active,
+.sw-pm-form-actions .ant-btn:hover,
+.sw-pm-form-actions .ant-btn:focus,
+.sw-pm-form-actions .ant-btn:active {
+  background: #000 !important;
+  color: #fff !important;
+  border-color: #000 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 10px 26px rgba(0,0,0,0.14) !important;
+  outline: none !important;
+}
+.sw-pm-addcart-btn {
+  background: #000 !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 4px !important;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.12) !important;
+  padding: 8px 16px !important;
+  font-weight: 700 !important;
+  transition: transform 140ms ease, box-shadow 140ms ease, opacity 140ms ease;
+}
+.sw-pm-addcart-btn:hover,
+.sw-pm-addcart-btn:focus,
+.sw-pm-addcart-btn:active,
+.sw-pm-addcart-btn.ant-btn:hover,
+.sw-pm-addcart-btn.ant-btn:focus,
+.sw-pm-addcart-btn.ant-btn:active {
+  background: #000 !important;
+  color: #fff !important;
+  border-color: #000 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 10px 26px rgba(0,0,0,0.14) !important;
+  outline: none !important;
+}
+.sw-pm-form-actions .ant-btn:not(.sw-pm-addcart-btn) {
+  background: #000 !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 4px !important;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.08) !important;
+  padding: 8px 14px !important;
+  font-weight: 600;
+  transition: transform 140ms ease, box-shadow 140ms ease, opacity 140ms ease;
+}
+.sw-pm-book-btn:hover,
+.sw-pm-book-btn:focus,
+.sw-pm-book-btn:active,
+.sw-pm-addcart-btn:hover,
+.sw-pm-addcart-btn:focus,
+.sw-pm-addcart-btn:active,
+.sw-pm-form-actions .ant-btn:not(.sw-pm-addcart-btn):hover,
+.sw-pm-form-actions .ant-btn:not(.sw-pm-addcart-btn):focus {
+  transform: translateY(-2px);
+  opacity: 0.96;
+  box-shadow: 0 10px 22px rgba(0,0,0,0.16) !important;
+}
+.sw-pm-book-btn .anticon,
+.sw-pm-addcart-btn .anticon,
+.sw-pm-form-actions .ant-btn:not(.sw-pm-addcart-btn) .anticon,
+.sw-pm-view-btn .anticon {
+  color: inherit !important;
+}
+/* ---------- picker / dropdown z-index fixes (important) ---------- */
+.ant-picker-dropdown,
+.rc-picker-panel,
+.ant-select-dropdown,
+.ant-time-picker-panel,
+.ant-picker-dropdown-placement-bottomLeft,
+.ant-picker-dropdown-placement-bottomRight {
+  z-index: 16000 !important;
+}
+/* ---------- responsive ---------- */
+@media (max-width: 1200px) {
+  .sw-pm-card {
+    height: 340px;
+    max-width: 240px;
+  }
+  .sw-pm-card-image {
+    height: 150px;
+  }
+}
+@media (max-width: 1024px) {
+  .sw-pm-card {
+    height: 340px;
+    max-width: 230px;
+  }
+  .sw-pm-card-image {
+    height: 140px;
+  }
+  .sw-pm-form-body {
+    flex-direction: column;
+  }
+  .sw-pm-form-left,
+  .sw-pm-form-right {
     width: 100%;
-    padding: 12px 14px;
-    border: 1px solid #e6e9ee;
-    border-radius: 10px;
-    font-size: 0.98rem;
-    background: #f8f9fb;
-    box-sizing: border-box;
   }
-
-  /* ensure textarea looks same */
-  .sw-hsl-hs-booking-textarea { width: 100%; height: 120px; padding: 14px; border-radius: 10px; border: 1px solid #e6e9ee; background: #f8f9fb; font-size: 1rem; resize: none; }
-
-  /* ============== ANTD SELECT & PICKER STYLING ==============
-    Make AntD Select & DatePicker match .hs-booking-input appearance
-    This is the key block that makes the form look like your 2nd image.
-    ============================================================== */
-
-  /* Make Select container adopt our booking-input class sizing */
-  .sw-hsl-hs-booking-input.ant-select,
-  .sw-hsl-hs-booking-input.ant-select-focused,
-  .sw-hsl-hs-booking-input .ant-select {
-    width: 100%;
-    box-sizing: border-box;
+  .sw-pm-form-left {
+    min-width: auto;
   }
-
-  /* Style the Select's visible selector to look like the inputs */
-  .sw-hsl-hs-booking-input .ant-select-selector {
-    background: #f8f9fb !important;
-    border: 1px solid #e6e9ee !important;
-    border-radius: 10px !important;
-    height: 44px !important;
-    display: flex !important;
-    align-items: center !important;
-    padding: 0 12px !important;
-    box-sizing: border-box !important;
-  }
-
-  /* Keep placeholder / selected text vertically centered */
-  .sw-hsl-hs-booking-input .ant-select-selection-item,
-  .sw-hsl-hs-booking-input .ant-select-selection-placeholder {
-    line-height: 44px !important;
-    height: 44px !important;
-    display: inline-block !important;
-    padding: 0 !important;
-  }
-
-  /* Make the caret / arrow sit at the right inside the selector */
-  .sw-hsl-hs-booking-input .ant-select-arrow {
-    margin-left: 8px !important;
-    color: rgba(0,0,0,0.45);
-    font-size: 14px;
-  }
-
-  /* DatePicker wrapper (we used class `date-input` in JSX) */
-  .sw-hsl-date-input {
-    width: 100%;
-    box-sizing: border-box;
-    border-radius: 10px;
-    background: #f8f9fb;
-    border: 1px solid #e6e9ee;
-    height: 44px;
-    display: flex;
-    align-items: center;
-    padding: 0 12px;
-  }
-
-  /* Make the internal AntD picker input transparent so the wrapper styles show */
-  .sw-hsl-date-input .ant-picker {
-    width: 100%;
-    border: none;
-    background: transparent;
-    height: 44px;
-    display: flex;
-    align-items: center;
-  }
-
-  /* ensure the textual input area lines up */
-  .sw-hsl-date-input .ant-picker-input > input {
-    height: 44px;
-    line-height: 44px;
-    border: none;
-    background: transparent;
+}
+@media (max-width: 768px) {
+  .sw-pm-fullscreen-inner {
+    width: 98%;
     padding: 0;
-    box-sizing: border-box;
   }
-
-  /* adjust the icon inside the picker to align */
-  .sw-hsl-date-input .ant-picker-suffix {
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: rgba(0,0,0,0.45);
+  .sw-pm-fullscreen-body {
+    padding: 12px;
   }
-
-  /* add subtle focus effect to both select and date */
-  .sw-hsl-hs-booking-input .ant-select-selector:focus,
-  .sw-hsl-hs-booking-input .ant-select-selector:hover,
-  .sw-hsl-date-input .ant-picker:hover {
-    outline: none;
-    border-color: #c6d5ff;
-    box-shadow: 0 2px 8px rgba(38,80,255,0.06);
+  .sw-pm-fullscreen-card-image {
+    height: 140px;
   }
-
-  /* ================================================================= */
-
-  /* ----- Footer ----- */
-  .sw-hsl-hs-footer { background: #0f1724; color: #cbd5e1; padding: 48px 20px 18px; margin-top: 40px; font-family: inherit; }
-  .sw-hsl-hs-footer-inner { max-width: 1250px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 36px; align-items: start; padding: 0 12px; }
-  .sw-hsl-hs-footer-col h4 { color: #ffffff; font-size: 1.1rem; margin-bottom: 12px; font-weight: 700; }
-  .sw-hsl-hs-footer-col p { color: #9aa6b3; line-height: 1.8; max-width: 320px; margin: 0; }
-  .sw-hsl-hs-footer-col ul { list-style: none; padding: 0; margin: 0; }
-  .sw-hsl-hs-footer-col ul li { margin: 12px 0; color: #9aa6b3; font-size: 0.98rem; }
-  .sw-hsl-hs-contact-row { display: flex; align-items: center; gap: 10px; color: #9aa6b3; margin: 12px 0; font-size: 0.98rem; }
-  .sw-hsl-hs-contact-row svg { font-size: 18px; color: #9aa6b3; }
-  .sw-hsl-hs-footer-socials { margin-top: 14px; display: flex; gap: 14px; }
-  .sw-hsl-hs-footer-socials a { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 8px; background: transparent; color: #cbd5e1; font-size: 16px; border: 1px solid rgba(255,255,255,0.04); transition: all .18s ease; }
-  .sw-hsl-hs-footer-socials a:hover { background: rgba(255,255,255,0.04); transform: translateY(-2px); }
-  .sw-hsl-hs-footer-bottom { max-width: 1250px; margin: 22px auto 0; padding: 0 12px; display: flex; flex-direction: column; align-items: center; }
-  .sw-hsl-hs-footer-line { width: 100%; height: 1px; background: rgba(255,255,255,0.04); margin-bottom: 18px; }
-  .sw-hsl-hs-footer-copy { color: #9aa6b3; padding: 14px 0 30px; font-size: 0.95rem; }
-
-  /* ----- Responsive ----- */
-  @media (max-width: 992px) {
-    .sw-hsl-hs-hero-head { font-size: 2.1rem; }
-    .sw-hsl-hs-card-img { height: 120px; }
-    .sw-hsl-hs-card { min-height: 360px; }
-    .sw-hsl-hs-footer-inner { grid-template-columns: repeat(2, 1fr); gap: 26px; }
-
-    /* Pricing cards: stack 2 across */
-    .sw-hsl-hs-pricing-wrap .ant-row,
-    .sw-hsl-hs-pricing-wrap .ant-col {
-      width: 100%;
-    }
-  }
-
-  @media (max-width: 600px) {
-    .sw-hsl-hs-hero-inner { margin-left: 0; max-width: 99vw; }
-    .sw-hsl-hs-hero-head { font-size: 1.5rem; }
-    .sw-hsl-hs-hero { min-height: 220px; padding: 28px 12px; }
-    .sw-hsl-hs-card-img { height: 110px; }
-    .sw-hsl-hs-card { border-radius: 14px !important; min-height: unset; }
-    .sw-hsl-hs-price-card { min-height: unset; padding: 18px; border-radius: 12px !important; }
-    .sw-hsl-hs-pricing-wrap { padding: 36px 12px; }
-    .sw-hsl-hs-booking-card { padding: 22px; }
-    .sw-hsl-hs-footer-inner { grid-template-columns: 1fr; gap: 18px; }
-
-    /* Booking form: full-width stacking */
-    .sw-hsl-hs-booking-card .ant-row > .ant-col {
-      width: 100% !important;
-      max-width: 100% !important;
-    }
-
-    /* Price card layout: have spacing around each card vertically */
-    .sw-hsl-hs-pricing-wrap .ant-col {
-      margin-bottom: 18px;
-    }
-  }
-
-  /* Contact button in header - match Commercial page look */
-  .sw-hsl-hs-contact-btn {
-    background: #111827 !important;
-    border-color: #111827 !important;
-    color: #fff !important;
-    font-weight: 600;
-    border-radius: 8px !important;
-    padding: 8px 12px;
-    margin-left: 16px;
-    box-shadow: 0 6px 16px rgba(17,24,39,0.08);
-  }
-
-  /* On very small screens, shrink the button and ensure spacing */
-  @media (max-width: 768px) {
-    .sw-hsl-hs-contact-btn {
-      padding: 6px 10px;
-      font-size: 13px;
-      margin-left: 8px;
-    }
-
-    /* hide the large horizontal menu on smaller screens (keeps header clean) */
-    .sw-hsl-hs-navbar-menu {
-      display: none;
-    }
-  }
-
-  /* ========== Mobile header: logo -> menu -> Contact (no overlap with hero) ========== */
-  @media (max-width: 768px) {
-    .sw-hsl-hs-navbar {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 12px 16px;
-      background: #fff;
-      border-bottom: 1px solid #f0f0f0;
-      box-shadow: 0 6px 18px rgba(6,21,38,0.06);
-      position: sticky;
-      top: 0;
-      z-index: 900;
-      height: auto;
-      box-sizing: border-box;
-    }
-
-    .sw-hsl-hs-navbar-logo {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 6px 8px;
-      margin-right: 0;
-      text-align: center;
-      order: 1;
-    }
-
-    .sw-hsl-hs-navbar-menu {
-      display: flex !important;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-      padding: 0;
-      margin: 0;
-      order: 2;
-      gap: 4px;
-      background: transparent;
-    }
-
-    .sw-hsl-hs-navbar-menu .ant-menu-item {
-      width: 100%;
-      display: flex !important;
-      justify-content: center;
-      padding: 10px 12px !important;
-      border-bottom: 1px solid rgba(0,0,0,0.04);
-      box-sizing: border-box;
-      background: transparent;
-    }
-    .sw-hsl-hs-navbar-menu .ant-menu-item:last-child { border-bottom: none; }
-
-    .sw-hsl-hs-navbar-menu a {
-      display: inline-block;
-      width: 100%;
-      text-align: center;
-      font-weight: 600;
-      color: #262626 !important;
-      padding: 4px 0;
-    }
-
-    .sw-hsl-hs-contact-btn {
-      order: 3;
-      position: relative !important;
-      width: calc(100% - 28px);
-      max-width: 420px;
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      margin: 6px 0 0;
-      padding: 8px 12px;
-      border-radius: 8px !important;
-      background: #111827 !important;
-      color: #fff !important;
-      font-weight: 700;
-      box-shadow: 0 8px 20px rgba(17,24,39,0.08);
-      z-index: 2;
-    }
-
-    .sw-hsl-hs-navbar .hs-contact-btn,
-    .sw-hsl-hs-navbar .hs-navbar-menu {
-      position: static !important;
-    }
-
-    .sw-hsl-hs-hero { margin-top: 8px; z-index: 1; }
-    .sw-hsl-hs-hero-head { font-size: 1.6rem !important; line-height: 1.06; }
-    .sw-hsl-hs-hero { padding: 24px 12px; min-height: 220px; }
-  }
-
-  /* Extra tiny screens */
-  @media (max-width: 420px) {
-    .sw-hsl-hs-contact-btn { width: calc(100% - 20px); padding: 8px 10px; font-size: 14px; }
-    .sw-hsl-hs-navbar-menu .ant-menu-item { padding: 8px 10px !important; }
-    .sw-hsl-hs-hero-head { font-size: 1.4rem !important; }
-  }
-
-  /* Modal / auth tab tweaks */
-  .sw-hsl-ant-modal-content {
-    border-radius: 12px;
-    overflow: hidden;
-  }
-
-  .sw-hsl-ant-tabs-nav-list {
-    gap: 8px;
-  }
-
-  /* make auth modal inputs feel a little roomier on mobile */
-  @media (max-width: 600px) {
-    .sw-hsl-ant-modal {
-      padding: 0 12px;
-    }
-    .sw-hsl-ant-modal-content {
-      margin: 12px 6px;
-    }
-    .sw-hsl-ant-tabs-tab {
-      font-size: 15px;
-      padding: 8px 6px;
-    }
-  }
-
-
-
-  /* Fix double-rounded Select: make outer wrapper transparent and let the inner selector show the input styling */
-  .sw-hsl-hs-booking-input.ant-select {
-    background: transparent !important;
-    border: none !important;
-    padding: 0 !important;
-    box-shadow: none !important;
-  }
-
-  /* Ensure outer wrapper doesn't influence size — keep width but remove inner spacing */
-  .sw-hsl-hs-booking-input.ant-select .ant-select-selector {
-    /* keep the selector styling we already use */
-    background: #f8f9fb !important;
-    border: 1px solid #e6e9ee !important;
-    border-radius: 10px !important;
-    height: 44px !important;
-    display: flex !important;
-    align-items: center !important;
-    padding: 0 12px !important;
-    box-sizing: border-box !important;
-  }
-
-  /* Remove the default ant-select padding if any (helps the inner selector to line up) */
-  .sw-hsl-hs-booking-input.ant-select .ant-select-selection-placeholder,
-  .sw-hsl-hs-booking-input.ant-select .ant-select-selection-item {
-    line-height: 44px !important;
-    height: 44px !important;
-    padding: 0 !important;
-  }
-
-
-
-  .sw-hsl-hs-booking-submit {
-    width: 100%;
-    background: #000 !important;   /* PURE BLACK */
-    color: #fff !important;
+  .sw-pm-hero-inner {
     padding: 14px;
-    border-radius: 10px;
-    font-weight: 700;
-    font-size: 1rem;
-    margin-top: 10px;
-    border: none;
   }
-
-
-  /* ----------------------------
-   Hamburger + mobile menu styles
-   (Added for Home_Service)
-   ---------------------------- */
-
-.sw-hsl-mobile-menu-icon {
-  display: none;
-  font-size: 1.6rem;
-  cursor: pointer;
-  background: transparent;
-  border: none;
-  padding: 6px;
-  line-height: 1;
-  color: #262626;
-  align-self: center;
-}
-
-/* mobile dropdown list styling */
-.sw-hsl-mobile-menu {
-  width: 100%;
-  background: #fff;
-  list-style: none;
-  padding: 12px 16px;
-  box-shadow: 0 8px 28px rgba(6,21,38,0.08);
-  margin: 8px 0 0 0;
-  box-sizing: border-box;
-  border-radius: 8px;
-  position: relative;
-  z-index: 999;
-}
-
-/* mobile items */
-.sw-hsl-mobile-menu li {
-  padding: 10px 6px;
-  border-bottom: 1px solid rgba(16,24,40,0.04);
-}
-
-.sw-hsl-mobile-menu li:last-child {
-  border-bottom: none;
-}
-
-.sw-hsl-mobile-menu li a {
-  color: #0b2a3a;
-  text-decoration: none;
-  display: block;
-  width: 100%;
-  font-weight: 600;
-}
-
-/* Show hamburger on small screens and place it between logo and menu/button */
-@media (max-width: 768px) {
-  .sw-hsl-mobile-menu-icon {
-    display: block; /* show hamburger */
+  /* keep footer horizontal on tablets; button maintains height */
+  .sw-pm-view-btn {
+    height: 40px;
+    width: calc(100% - 28px);
   }
-
-  /* ensure header items stack/order so hamburger sits between logo and menu/sign-up */
-  .sw-hsl-hs-navbar {
-    align-items: center;
-    gap: 8px;
-  }
-
-  .sw-hsl-hs-navbar-logo {
-    order: 0;
-    flex: 0 0 auto;
-    width: auto;
+}
+@media (max-width: 576px) {
+  /* small screens: card footer stacks vertically for better touch targets */
+  .sw-pm-card {
+    height: auto;
+    max-width: 100%;
     display: flex;
+    flex-direction: column;
+  }
+  .sw-pm-card-image {
+    height: 140px;
+  }
+  .sw-pm-card-body {
+    padding: 0 !important;
+  }
+  .sw-pm-card-footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
     justify-content: center;
+    padding: 12px;
   }
-
-  .sw-hsl-mobile-menu-icon {
-    order: 1;
-    margin-left: 6px;
-    margin-right: 6px;
-    flex: 0 0 auto;
+  .sw-pm-view-btn {
+    width: 100% !important;
+    height: 38px; /* slight reduction on very small screens */
+    margin: 0; /* remove top margin when stacked */
+    border-radius: 4px !important;
   }
-
-  .sw-hsl-hs-navbar .sw-hsl-hs-navbar-menu {
-    order: 2;
-    width: 100%;
+  .sw-pm-price {
+    left: 12px;
+    position: absolute;
+    top: 12px;
+    transform: none;
   }
-
-  .sw-hsl-hs-contact-btn {
-    order: 3;
-    flex: 0 0 auto;
-  }
-
-  /* ensure mobile dropdown sits below header and doesn't overlap hero */
-  .sw-hsl-mobile-menu {
-    margin-top: 10px;
-  }
-
-  /* hide AntD horizontal menu on small screens (we use our dropdown instead) */
-  .sw-hsl-hs-navbar .sw-hsl-hs-navbar-menu {
-    display: none;
+  /* keep form buttons touch-friendly */
+  .sw-pm-book-btn,
+  .sw-pm-addcart-btn,
+  .sw-pm-form-actions .ant-btn:not(.sw-pm-addcart-btn) {
+    width: 100% !important;
+    height: 40px !important;
   }
 }
-
-/* small polish for very narrow screens */
-@media (max-width: 420px) {
-  .sw-hsl-mobile-menu {
-    padding: 10px;
-    border-radius: 6px;
-  }
+/* ensure no horizontal overflow */
+html,
+body,
+#root {
+  overflow-x: hidden;
 }
 
-
-/* ----------------------------
-   Hamburger + mobile menu styles
-   (Add to end of homeservice.css)
-   ---------------------------- */
-
-.sw-hsl-mobile-menu-icon {
-  display: none;
-  font-size: 1.6rem;
-  cursor: pointer;
-  background: transparent;
-  border: none;
-  padding: 6px;
-  line-height: 1;
-  color: #262626;
-  align-self: center;
-}
-
-/* mobile dropdown list styling */
-.sw-hsl-mobile-menu {
-  width: 100%;
-  background: #fff;
-  list-style: none;
-  padding: 12px 16px;
-  box-shadow: 0 8px 28px rgba(6,21,38,0.08);
-  margin: 8px 0 0 0;
-  box-sizing: border-box;
-  border-radius: 8px;
-  position: relative;
-  z-index: 999;
-}
-
-/* mobile items */
-.sw-hsl-mobile-menu li {
-  padding: 10px 6px;
-  border-bottom: 1px solid rgba(16,24,40,0.04);
-}
-
-.sw-hsl-mobile-menu li:last-child {
-  border-bottom: none;
-}
-
-.sw-hsl-mobile-menu li a {
-  color: #0b2a3a;
-  text-decoration: none;
-  display: block;
-  width: 100%;
-  font-weight: 600;
-}
-
-/* Show hamburger on small screens and place it between logo and menu/button */
-@media (max-width: 768px) {
-  .sw-hsl-mobile-menu-icon {
-    display: block; /* show hamburger */
-  }
-
-  /* ensure header items stack/order so hamburger sits between logo and menu/sign-up */
-  .sw-hsl-hs-navbar {
-    align-items: center;
-    gap: 8px;
-  }
-
-  .sw-hsl-hs-navbar-logo {
-    order: 0;
-    flex: 0 0 auto;
-    width: auto;
-    display: flex;
-    justify-content: center;
-  }
-
-  .sw-hsl-mobile-menu-icon {
-    order: 1;
-    margin-left: 6px;
-    margin-right: 6px;
-    flex: 0 0 auto;
-  }
-
-  .sw-hsl-hs-navbar .sw-hsl-hs-navbar-menu {
-    order: 2;
-    width: 100%;
-  }
-
-  .sw-hsl-hs-contact-btn {
-    order: 3;
-    flex: 0 0 auto;
-  }
-
-  /* ensure mobile dropdown sits below header and doesn't overlap hero */
-  .sw-hsl-mobile-menu {
-    margin-top: 10px;
-  }
-
-  /* hide AntD horizontal menu on small screens (we use our dropdown instead) */
-  .sw-hsl-hs-navbar .sw-hsl-hs-navbar-menu {
-    display: none;
-  }
-}
-
-/* small polish for very narrow screens */
-@media (max-width: 420px) {
-  .sw-hsl-mobile-menu {
-    padding: 10px;
-    border-radius: 6px;
-  }
-}
-/* harish landinghs */
+/* ///////////// Vamsi Packers and Movers ///// */
