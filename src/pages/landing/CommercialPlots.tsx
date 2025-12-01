@@ -168,7 +168,7 @@ const CommercialPlots: React.FC = () => {
   };
 
   return (
-    <Layout className="cp-layout">
+    <Layout className="sw-cp-cp-layout">
       <HSHeader
         selectedKey="commercial"
         onSignUp={() => {
@@ -255,46 +255,46 @@ const CommercialPlots: React.FC = () => {
         </div>
       </Modal>
 
-      <Content className="cp-content">
+      <Content className="sw-cp-cp-content">
         {/* =========================
             SEARCH HERO (AntD inputs) with background image
            ========================= */}
         <section
-          className="cp-search-hero"
+          className="sw-cp-cp-search-hero"
           style={{
             backgroundImage: `linear-gradient(135deg, rgba(138,43,226,0.72), rgba(155,89,255,0.72)), url(${heroImg})`,
             backgroundSize: "cover",
             backgroundPosition: "center center",
           }}
         >
-          <div className="cp-search-inner">
-            <div className="cp-search-breadcrumb">
-              <span className="search-crumb-icon">🏠</span>
+          <div className="sw-cp-cp-search-inner">
+            <div className="sw-cp-cp-search-breadcrumb">
+              <span className="sw-cp-search-crumb-icon">🏠</span>
               <span>Buy & Sale Properties</span>
             </div>
 
-            <h1 className="cp-search-title">Find Your Perfect Property</h1>
-            <p className="cp-search-sub">
+            <h1 className="sw-cp-cp-search-title">Find Your Perfect Property</h1>
+            <p className="sw-cp-cp-search-sub">
               Browse thousands of properties. From cozy studios to luxury penthouses, find a place you'll love to call home.
             </p>
 
-            <div className="cp-search-box">
-              <div className="cp-search-field">
+            <div className="sw-cp-cp-search-box">
+              <div className="sw-cp-cp-search-field">
                 <Input
                   placeholder="Enter city or neighborhood"
                   value={searchLocation}
                   onChange={(e) => setSearchLocation(e.target.value)}
-                  className="cp-search-input"
+                  className="sw-cp-cp-search-input"
                   allowClear
                 />
               </div>
 
-              <div className="cp-search-field">
+              <div className="sw-cp-cp-search-field">
                 <Select
                   placeholder="Property Type"
                   value={searchType}
                   onChange={(val) => setSearchType(val)}
-                  className="cp-search-select"
+                  className="sw-cp-cp-search-select"
                   allowClear
                 >
                   <Option value="retail">Retail</Option>
@@ -304,7 +304,7 @@ const CommercialPlots: React.FC = () => {
               </div>
 
               <Button
-                className="cp-search-btn"
+                className="sw-cp-cp-search-btn"
                 type="primary"
                 onClick={() => {
                   // dummy: search handled by state
@@ -318,27 +318,27 @@ const CommercialPlots: React.FC = () => {
         </section>
 
         {/* rest of your sections (unchanged) */}
-        <section className="cp-browse-section">
-          <div className="cp-browse-inner">
-            <Title level={2} className="cp-browse-title">Browse by Property Type</Title>
+        <section className="sw-cp-cp-browse-section">
+          <div className="sw-cp-cp-browse-inner">
+            <Title level={2} className="sw-cp-cp-browse-title">Browse by Property Type</Title>
 
-            <div className="cp-browse-row" role="list">
+            <div className="sw-cp-cp-browse-row" role="list">
               {propertyTypes.map((pt) => (
                 <div
                   key={pt.id}
-                  className="browse-card-wrap"
+                  className="sw-cp-browse-card-wrap"
                   role="listitem"
                   onClick={() => setSelectedType(pt.id === selectedType ? undefined : pt.id)}
                 >
-                  <div className={`browse-card ${selectedType === pt.id ? "browse-card--active" : ""}`}>
-                    <div className="browse-icon">
-                      <div className="browse-icon-circle"><HomeOutlined /></div>
+                  <div className={`sw-cp-browse-card ${selectedType === pt.id ? "sw-cp-browse-card--active" : ""}`}>
+                    <div className="sw-cp-browse-icon">
+                      <div className="sw-cp-browse-icon-circle"><HomeOutlined /></div>
                     </div>
 
-                    <div className="browse-body">
-                      <div className="browse-title">{pt.title}</div>
-                      <div className="browse-count">{pt.count}</div>
-                      <div className="browse-sub">{pt.sub}</div>
+                    <div className="sw-cp-browse-body">
+                      <div className="sw-cp-browse-title">{pt.title}</div>
+                      <div className="sw-cp-browse-count">{pt.count}</div>
+                      <div className="sw-cp-browse-sub">{pt.sub}</div>
                     </div>
                   </div>
                 </div>
@@ -347,33 +347,33 @@ const CommercialPlots: React.FC = () => {
           </div>
         </section>
 
-        <section className="cp-products-section">
-          <div className="cp-products-inner">
+        <section className="sw-cp-cp-products-section">
+          <div className="sw-cp-cp-products-inner">
             <Row justify="center" style={{ marginBottom: 8 }}>
               <Col>
-                <Title level={3} className="cp-products-title">Featured Quick Listings</Title>
+                <Title level={3} className="sw-cp-cp-products-title">Featured Quick Listings</Title>
               </Col>
             </Row>
 
-            <div className="product-grid" aria-live="polite">
+            <div className="sw-cp-product-grid" aria-live="polite">
               {filteredProducts.map((item) => (
                 <Card
                   key={item.id}
-                  className="product-card"
+                  className="sw-cp-product-card"
                   cover={
-                    <div className="product-image-wrap">
-                      <img src={item.img} alt={item.title} className="product-image" />
+                    <div className="sw-cp-product-image-wrap">
+                      <img src={item.img} alt={item.title} className="sw-cp-product-image" />
                     </div>
                   }
                 >
-                  <div className="product-body">
-                    <h4 className="product-title">{item.title}</h4>
-                    <p className="product-desc">{item.desc}</p>
+                  <div className="sw-cp-product-body">
+                    <h4 className="sw-cp-product-title">{item.title}</h4>
+                    <p className="sw-cp-product-desc">{item.desc}</p>
 
-                    <div className="product-meta">
-                      <div className="product-price">{item.price}</div>
+                    <div className="sw-cp-product-meta">
+                      <div className="sw-cp-product-price">{item.price}</div>
                       <Space>
-                        <Button className="product-btn" onClick={() => {/* navigate to details */}}>
+                        <Button className="sw-cp-product-btn" onClick={() => {/* navigate to details */}}>
                           <EyeOutlined /> View Details
                         </Button>
                       </Space>
@@ -385,37 +385,37 @@ const CommercialPlots: React.FC = () => {
           </div>
         </section>
 
-        <section className="cp-process-section">
-          <div className="cp-process-inner">
-            <Title level={2} className="cp-process-title">How It Works</Title>
+        <section className="sw-cp-cp-process-section">
+          <div className="sw-cp-cp-process-inner">
+            <Title level={2} className="sw-cp-cp-process-title">How It Works</Title>
 
-            <div className="process-row">
-              <div className="process-step">
-                <div className="step-circle">1</div>
-                <div className="step-line" />
-                <div className="step-title">Search & Filter</div>
-                <div className="step-desc">Browse properties matching your needs</div>
+            <div className="sw-cp-process-row">
+              <div className="sw-cp-process-step">
+                <div className="sw-cp-step-circle">1</div>
+                <div className="sw-cp-step-line" />
+                <div className="sw-cp-step-title">Search & Filter</div>
+                <div className="sw-cp-step-desc">Browse properties matching your needs</div>
               </div>
 
-              <div className="process-step">
-                <div className="step-circle">2</div>
-                <div className="step-line" />
-                <div className="step-title">Schedule Viewing</div>
-                <div className="step-desc">Visit properties at your convenience</div>
+              <div className="sw-cp-process-step">
+                <div className="sw-cp-step-circle">2</div>
+                <div className="sw-cp-step-line" />
+                <div className="sw-cp-step-title">Schedule Viewing</div>
+                <div className="sw-cp-step-desc">Visit properties at your convenience</div>
               </div>
 
-              <div className="process-step">
-                <div className="step-circle">3</div>
-                <div className="step-line" />
-                <div className="step-title">Submit Application</div>
-                <div className="step-desc">Complete the rental application</div>
+              <div className="sw-cp-process-step">
+                <div className="sw-cp-step-circle">3</div>
+                <div className="sw-cp-step-line" />
+                <div className="sw-cp-step-title">Submit Application</div>
+                <div className="sw-cp-step-desc">Complete the rental application</div>
               </div>
 
-              <div className="process-step">
-                <div className="step-circle">4</div>
-                <div className="step-line" />
-                <div className="step-title">Move In</div>
-                <div className="step-desc">Sign lease and get your keys</div>
+              <div className="sw-cp-process-step">
+                <div className="sw-cp-step-circle">4</div>
+                <div className="sw-cp-step-line" />
+                <div className="sw-cp-step-title">Move In</div>
+                <div className="sw-cp-step-desc">Sign lease and get your keys</div>
               </div>
             </div>
           </div>
@@ -424,13 +424,13 @@ const CommercialPlots: React.FC = () => {
         {/* =========================
             UPDATED: Schedule a Consultation (Home_Service booking form format)
            ========================= */}
-        <div className="hs-booking-wrap">
-          <div className="hs-booking-head">
+        <div className="sw-cp-hs-booking-wrap">
+          <div className="sw-cp-hs-booking-head">
             <h2>Schedule a Consultation</h2>
             <p>Let our experts guide you to the right investment opportunity</p>
           </div>
 
-          <div className="hs-booking-card">
+          <div className="sw-cp-hs-booking-card">
             <Form
               form={bookingForm}
               layout="vertical"
@@ -440,25 +440,25 @@ const CommercialPlots: React.FC = () => {
               <Row gutter={[20, 12]}>
                 <Col xs={24} sm={12}>
                   <Form.Item label="Full Name" name="fullname" rules={[{ required: true, message: "Please enter your name" }]}>
-                    <Input className="hs-booking-input" placeholder="John Doe" />
+                    <Input className="sw-cp-hs-booking-input" placeholder="John Doe" />
                   </Form.Item>
                 </Col>
 
                 <Col xs={24} sm={12}>
                   <Form.Item label="Email" name="email" rules={[{ required: true, message: "Please enter email" }, { type: "email", message: "Invalid email" }]}>
-                    <Input className="hs-booking-input" placeholder="john@example.com" />
+                    <Input className="sw-cp-hs-booking-input" placeholder="john@example.com" />
                   </Form.Item>
                 </Col>
 
                 <Col xs={24} sm={12}>
                   <Form.Item label="Phone Number" name="phone" rules={[{ required: true, message: "Please enter phone" }]}>
-                    <Input className="hs-booking-input" placeholder="+1 (555) 123-4567" />
+                    <Input className="sw-cp-hs-booking-input" placeholder="+1 (555) 123-4567" />
                   </Form.Item>
                 </Col>
 
                 <Col xs={24} sm={12}>
                   <Form.Item label="Service Type" name="serviceType" rules={[{ required: true, message: "Please select service type" }]}>
-                    <Select className="hs-booking-input" placeholder="Select Commercial Services">
+                    <Select className="sw-cp-hs-booking-input" placeholder="Select Commercial Services">
                       <Option value="commercial-plots">Commercial Plots</Option>
                       <Option value="site-visit">Site Visit</Option>
                       <Option value="consultation">Investment Consultation</Option>
@@ -468,19 +468,19 @@ const CommercialPlots: React.FC = () => {
 
                 <Col xs={24}>
                   <Form.Item label="Service Address" name="address" rules={[{ required: true, message: "Please enter address" }]}>
-                    <Input className="hs-booking-input" placeholder="123 Main St, City, State, ZIP" />
+                    <Input className="sw-cp-hs-booking-input" placeholder="123 Main St, City, State, ZIP" />
                   </Form.Item>
                 </Col>
 
                 <Col xs={24} sm={12}>
                   <Form.Item label="Preferred Date" name="date" rules={[{ required: true, message: "Please pick a date" }]}>
-                    <DatePicker className="date-input" />
+                    <DatePicker className="sw-cp-date-input" />
                   </Form.Item>
                 </Col>
 
                 <Col xs={24} sm={12}>
                   <Form.Item label="Preferred Time" name="time" rules={[{ required: true, message: "Please select a time" }]}>
-                    <Select className="hs-booking-input" placeholder="Select time slot">
+                    <Select className="sw-cp-hs-booking-input" placeholder="Select time slot">
                       <Option value="morning">Morning (9am - 12pm)</Option>
                       <Option value="afternoon">Afternoon (12pm - 4pm)</Option>
                       <Option value="evening">Evening (4pm - 8pm)</Option>
@@ -490,13 +490,13 @@ const CommercialPlots: React.FC = () => {
 
                 <Col xs={24}>
                   <Form.Item label="Additional Details" name="details">
-                    <Input.TextArea className="hs-booking-textarea" placeholder="Tell us more about your requirements..." />
+                    <Input.TextArea className="sw-cp-hs-booking-textarea" placeholder="Tell us more about your requirements..." />
                   </Form.Item>
                 </Col>
 
                 <Col xs={24}>
                   <Form.Item>
-                    <Button htmlType="submit" className="hs-booking-submit" block>
+                    <Button htmlType="submit" className="sw-cp-hs-booking-submit" block>
                       Submit Booking Request
                     </Button>
                   </Form.Item>
@@ -509,14 +509,14 @@ const CommercialPlots: React.FC = () => {
 
       </Content>
 
-      <Footer className="cp-footer">
-        <div className="cp-footer-inner">
-          <div className="cp-footer-col">
+      <Footer className="sw-cp-cp-footer">
+        <div className="sw-cp-cp-footer-inner">
+          <div className="sw-cp-cp-footer-col">
             <h4>About Us</h4>
             <p>Your trusted partner for all home and property-related services. Quality, reliability, and customer satisfaction guaranteed.</p>
           </div>
 
-          <div className="cp-footer-col">
+          <div className="sw-cp-cp-footer-col">
             <h4>Services</h4>
             <ul>
               <li>Cleaning Service</li>
@@ -528,7 +528,7 @@ const CommercialPlots: React.FC = () => {
             </ul>
           </div>
 
-          <div className="cp-footer-col">
+          <div className="sw-cp-cp-footer-col">
             <h4>Quick Links</h4>
             <ul>
               <li>Home</li>
@@ -538,26 +538,26 @@ const CommercialPlots: React.FC = () => {
             </ul>
           </div>
 
-          <div className="cp-footer-col">
+          <div className="sw-cp-cp-footer-col">
             <h4>Contact Info</h4>
 
-            <div className="cp-contact-row">
+            <div className="sw-cp-cp-contact-row">
               <PhoneOutlined />
               <span>+1 (555) 123-4567</span>
             </div>
 
-            <div className="cp-contact-row">
+            <div className="sw-cp-cp-contact-row">
               <MailOutlined />
               <span>info@homeservices.com</span>
             </div>
 
-            <div className="cp-contact-row">
+            <div className="sw-cp-cp-contact-row">
               <EnvironmentOutlined />
               <span>123 Service Street, City, State</span>
             </div>
 
             {/* Social icons (styled as dark rounded squares like Home_Service) */}
-            <div className="cp-footer-socials" aria-label="social links">
+            <div className="sw-cp-cp-footer-socials" aria-label="social links">
               <a aria-label="facebook" href="#" role="link">
                 <FacebookOutlined />
               </a>
@@ -574,7 +574,7 @@ const CommercialPlots: React.FC = () => {
           </div>
         </div>
 
-        <div className="cp-footer-bottom">© {new Date().getFullYear()} Home Services. All rights reserved.</div>
+        <div className="sw-cp-cp-footer-bottom">© {new Date().getFullYear()} Home Services. All rights reserved.</div>
       </Footer>
 
     </Layout>
