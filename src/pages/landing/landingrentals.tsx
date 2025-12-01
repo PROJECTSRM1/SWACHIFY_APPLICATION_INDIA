@@ -37,7 +37,7 @@ import {
 } from "@ant-design/icons";
 
 import { useNavigate } from "react-router-dom";
-import "./landingrentals.css";
+// import "./landingrentals.css";
 
 const { Option } = Select;
 const { TabPane } = Tabs;
