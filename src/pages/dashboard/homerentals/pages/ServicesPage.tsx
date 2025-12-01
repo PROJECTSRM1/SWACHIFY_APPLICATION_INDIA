@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Row, Col, Modal } from 'antd';
-import { HomeOutlined } from '@ant-design/icons';
+// import { HomeOutlined } from '@ant-design/icons';
 import ServiceCard from './ServiceCard';
 import PropertyTypePage from './PropertyTypePage';
 import CommercialPropertyTypePage from './CommercialPropertyTypePage';
@@ -58,7 +58,7 @@ const ServicesPage: React.FC = () => {
 
   return (
     <div className="sw-hr-services-page">
-      <section className="sw-hr-services-hero">
+      {/* <section className="sw-hr-services-hero">
         <div className="sw-hr-hero-content">
           <div className="sw-hr-hero-icon">
             <HomeOutlined style={{ fontSize: '24px' }} />
@@ -68,7 +68,7 @@ const ServicesPage: React.FC = () => {
             <p className="sw-hr-muted">2 services available</p>
           </div>
         </div>
-      </section>
+      </section> */}
 
       <section className="sw-hr-services-grid">
         <Row gutter={[24, 24]}>

@@ -2153,3 +2153,193 @@
   background-color: black !important;
   color:white;
 }
+
+
+
+
+
+/* ================================
+   HOW IT WORKS — final step UI CSS
+   Put this at the end of landingrentals.css
+   (It uses the same variables and colors already in your file)
+   ================================ */
+
+.sw-lr-steps {
+  background: rgba(123,44,255,0.06); /* pale lavender band like pic */
+  padding: 56px 20px;
+  box-sizing: border-box;
+  margin-top: 28px;
+}
+
+.sw-lr-steps-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  text-align: center;
+  padding: 6px 12px;
+}
+
+/* Title */
+.sw-lr-steps-title {
+  margin-bottom: 34px;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #102233;
+}
+
+/* Track: horizontal on desktop, will stack on mobile */
+.sw-lr-steps-track {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  position: relative;
+  padding: 26px 12px 8px;
+  flex-wrap: nowrap;
+  width: 100%;
+}
+
+/* Each step item */
+.sw-lr-step-item {
+  flex: 1 1 0;
+  max-width: 25%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  padding-top: 6px;
+  box-sizing: border-box;
+}
+
+/* circle wrapper used for connector */
+.sw-lr-step-circle-wrap {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+/* horizontal connector line, drawn from each circle except last */
+.sw-lr-step-circle-wrap::after {
+  content: "";
+  position: absolute;
+  height: 2px;
+  background: rgba(123,44,255,0.18);
+  width: calc(100% - 60px); /* leave space around circles */
+  left: calc(50% + 32px);   /* start from right edge of this circle */
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 0;
+}
+
+/* prevent connector on last item */
+.sw-lr-step-item:last-child .sw-lr-step-circle-wrap::after {
+  display: none;
+}
+
+/* purple numbered circle */
+.sw-lr-step-circle {
+  background: var(--accent-r);
+  color: white;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  z-index: 2;
+  box-shadow: 0 8px 20px rgba(16,34,51,0.06);
+  font-size: 1.1rem;
+}
+
+/* label and description beneath */
+.sw-lr-step-label {
+  margin-top: 8px;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #102233;
+}
+
+.sw-lr-step-desc {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 0.95rem;
+  max-width: 220px;
+  text-align: center;
+  line-height: 1.3;
+}
+
+/* Slightly reduce connector line on very wide screens to match screenshot */
+@media (min-width: 1400px) {
+  .sw-lr-step-circle-wrap::after {
+    width: calc(100% - 120px);
+    left: calc(50% + 60px);
+  }
+}
+
+/* --------------------------
+   RESPONSIVE: stack vertically (one-by-one) on small screens
+   -------------------------- */
+@media (max-width: 520px) {
+  .sw-lr-steps {
+    padding: 28px 14px;
+  }
+
+  /* stack the items vertically and center them */
+  .sw-lr-steps-track {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 26px;
+    padding: 12px;
+  }
+
+  .sw-lr-step-item {
+    max-width: 100%;
+    width: 100%;
+    padding-top: 0;
+    align-items: center;
+    text-align: center;
+  }
+
+  /* hide horizontal connector lines when stacked */
+  .sw-lr-step-circle-wrap::after {
+    display: none;
+  }
+
+  /* make circle slightly smaller on phones */
+  .sw-lr-step-circle {
+    width: 48px;
+    height: 48px;
+    font-size: 1rem;
+  }
+
+  .sw-lr-step-label { font-size: 0.98rem; margin-top: 8px; }
+  .sw-lr-step-desc { max-width: 320px; font-size: 0.95rem; margin-top: 8px; color: var(--muted); }
+}
+
+/* tablet breakpoint: collapse to two rows (if preferred) and remove long connectors */
+@media (max-width: 992px) and (min-width: 521px) {
+  .sw-lr-steps-track {
+    flex-wrap: wrap;
+    gap: 28px;
+    padding-top: 20px;
+  }
+
+  .sw-lr-step-item {
+    max-width: 50%;
+  }
+
+  /* remove the long connectors when wrap occurs */
+  .sw-lr-step-circle-wrap::after { display: none; }
+}
+
+/* small polish: ensure spacing between amenities and steps is consistent */
+.sw-lr-amenities + .sw-lr-steps { margin-top: 18px; }
+
+/* ensure steps do not visually overlap booking card on narrow screens */
+@media (max-width: 900px) {
+  .sw-lr-steps { padding-bottom: 36px; }
+}
