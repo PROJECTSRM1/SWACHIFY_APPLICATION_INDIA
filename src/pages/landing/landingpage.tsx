@@ -15,10 +15,10 @@ import {
   ShopOutlined,
   ApartmentOutlined,
   BuildOutlined,
-  PhoneOutlined,
-  MailOutlined,
-  EnvironmentOutlined,
-  GlobalOutlined
+  // PhoneOutlined,
+  // MailOutlined,
+  // EnvironmentOutlined,
+  // GlobalOutlined
 } from "@ant-design/icons";
 import heroImage from "../../assets/landingimages/hero.jpg";
 

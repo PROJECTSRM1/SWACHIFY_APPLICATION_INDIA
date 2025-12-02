@@ -19,17 +19,17 @@ import {
   Tabs,
   Checkbox,
 } from "antd";
-import {
-  MailOutlined,
-  PhoneOutlined,
-  EnvironmentOutlined,
-  FacebookOutlined,
-  TwitterOutlined,
-  InstagramOutlined,
-  LinkedinOutlined,
-  // MenuOutlined,
-  // CloseOutlined,
-} from "@ant-design/icons";
+// import {
+//   MailOutlined,
+//   PhoneOutlined,
+//   EnvironmentOutlined,
+//   FacebookOutlined,
+//   TwitterOutlined,
+//   InstagramOutlined,
+//   LinkedinOutlined,
+//   // MenuOutlined,
+//   // CloseOutlined,
+// } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import brickwalss from "../../assets/landingimages/brickwall.jpg";
 import premiumportlandcement from "../../assets/landingimages/PremiumPortlandCement.jpg";

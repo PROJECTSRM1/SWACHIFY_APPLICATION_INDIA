@@ -27,13 +27,13 @@ import {
   HomeOutlined,
   SearchOutlined,
   EyeOutlined,
-  PhoneOutlined,
-  MailOutlined,
-  EnvironmentOutlined,
-  FacebookOutlined,
-  TwitterOutlined,
-  InstagramOutlined,
-  LinkedinOutlined,
+  // PhoneOutlined,
+  // MailOutlined,
+  // EnvironmentOutlined,
+  // FacebookOutlined,
+  // TwitterOutlined,
+  // InstagramOutlined,
+  // LinkedinOutlined,
   // MenuOutlined,
   // CloseOutlined,
 } from "@ant-design/icons";
@@ -50,7 +50,7 @@ import card2 from "../../assets/landingimages/commercial plot.jpg";
 import card3 from "../../assets/landingimages/land.jpg";
 import card4 from "../../assets/landingimages/plot.jpg";
 
-const { Content, Footer } = Layout;
+const { Content } = Layout;
 const { Title } = Typography;
 const { Option } = Select;
 const { TabPane } = Tabs;

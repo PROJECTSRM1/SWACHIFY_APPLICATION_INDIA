@@ -1,7 +1,6 @@
 // src/pages/landing/LandingCleaningPage.tsx
 import React, { useState } from "react";
 import { setUserDetails } from "../../utils/helpers/storage";
-import { Phone } from "lucide-react";
 import CommonHeader from "../../pages/landing/Header";
 import "../../pages/landing/Header.css";
 import FooterSection from '../../pages/landing/FooterSection';
@@ -22,13 +21,13 @@ import {
 } from "antd";
 
 import {
-  FacebookOutlined,
-  TwitterOutlined,
-  InstagramOutlined,
-  LinkedinOutlined,
+  // FacebookOutlined,
+  // TwitterOutlined,
+  // InstagramOutlined,
+  // LinkedinOutlined,
   CheckCircleOutlined,
-  MailOutlined,
-  EnvironmentOutlined,
+  // MailOutlined,
+  // EnvironmentOutlined,
 } from "@ant-design/icons";
 
 import { useNavigate } from "react-router-dom";
