@@ -9442,8 +9442,6 @@ body {
 
  /* Khasim and Vanamanla Bulding Raw Service CSS Updates */
  /* for material supply*/
-
-/* Wrapper */
 .sw-br-wrapper {
   width: 100% !important;
   max-width: 100% !important;
@@ -9452,7 +9450,6 @@ body {
   box-sizing: border-box !important;
 }
 
-/* Header */
 .sw-br-header {
   width: 100%;
   background: #005cfa;
@@ -9474,7 +9471,6 @@ body {
   font-size: 14px;
 }
 
-/* Grid */
 .sw-br-grid {
   width: 100% !important;
   display: grid !important;
@@ -9487,7 +9483,6 @@ body {
   justify-content: center;
 }
 
-/* Cards */
 .sw-br-card {
   background: #ffffff;
   border-radius: 16px;
@@ -9523,7 +9518,6 @@ body {
   min-height: 40px;
 }
 
-/* Price + Button */
 .sw-br-bottom-row {
   display: flex;
   justify-content: space-between;
@@ -9552,8 +9546,6 @@ body {
 .sw-br-btn:hover {
   background: black;
 }
-
-/* ---------- MODAL ---------- */
 
 .sw-br-modal {
   position: fixed;
@@ -9594,7 +9586,7 @@ body {
   width: 10% !important;
 }
 
-/* Layout */
+
 .sw-br-top {
   display: flex;
   gap: 25px;
@@ -9612,7 +9604,7 @@ body {
   width: 60%;
 }
 
-/* Image */
+
 .sw-br-image-box {
   width: 100%;
   height: 170px;
@@ -9627,7 +9619,6 @@ body {
   object-fit: cover;
 }
 
-/* Service price */
 .sw-br-price-box {
   background: #eef4ff;
   padding: 10px;
@@ -9650,10 +9641,9 @@ body {
 .sw-br-inc-list {
   padding-left: 18px;
   font-size: 13px;
-  color: green;
+  color: #3fbf62;
 }
 
-/* Form */
 .sw-br-form-box {
   padding: 15px;
   border: 1px solid #e5e7eb;
@@ -9724,7 +9714,6 @@ textarea {
   height: 16px;
 }
 
-/* Buttons */
 .sw-br-buttons {
   display: flex;
   gap: 10px;
@@ -9748,8 +9737,6 @@ textarea {
   color: white;
 }
 
-/* ---------- RESPONSIVE ---------- */
-
 @media (max-width: 900px) {
   .sw-br-grid {
     grid-template-columns: repeat(2,1fr);
@@ -9767,14 +9754,12 @@ textarea {
 
 @media (max-width: 600px) {
 
-  /* ★ Fix sidebar margin affecting mobile layout */
   .sw-br-wrapper {
     margin: 0 !important;
     padding: 0 !important;
     width: 90% !important;
   }
 
-  /* ★ Single-column layout */
   .sw-br-grid {
     grid-template-columns: 1fr !important;
     padding: 10 10px !important;
@@ -9794,7 +9779,6 @@ textarea {
     margin-top: 10px;
   }
 
-  /* ★ Perfectly centered, full-width modal */
   .sw-br-modal-box {
     width: 100% !important;
     max-width: 100% !important;
@@ -9831,13 +9815,8 @@ textarea {
   }
 }
 
-/* for machinery rental */
+/* for machinery rental module */
 
-/* ================================
-   MACHINERY RENTAL LIST PAGE
-================================ */
-
-/* Wrapper */
 .sw-br-machinery-wrapper {
   width: 100%;
   background: #f8fafc;
@@ -9846,7 +9825,7 @@ textarea {
   margin: 0;
 }
 
-/* Header */
+
 .sw-br-machinery-header {
   width: 100%;
   background: #005cfa;
@@ -9869,7 +9848,6 @@ textarea {
   font-size: 15px;
 }
 
-/* Grid */
 .sw-br-machinery-grid {
   width: 100%;
   padding: 0 20px;
@@ -9878,7 +9856,6 @@ textarea {
   gap: 22px;
 }
 
-/* Card */
 .sw-br-machinery-card {
   background: white;
   border-radius: 16px;
@@ -9893,7 +9870,6 @@ textarea {
   transform: translateY(-4px);
 }
 
-/* Machinery image */
 .sw-br-card-img img {
   width: 100%;
   height: 170px;
@@ -9901,14 +9877,12 @@ textarea {
   object-fit: cover;
 }
 
-/* Title */
 .sw-br-machinery-card h3 {
   font-size: 16px;
   margin: 12px 0 6px;
   font-weight: 650;
 }
 
-/* Description */
 .sw-br-machinery-desc {
   font-size: 14px;
   color: #64748b;
@@ -9916,14 +9890,11 @@ textarea {
   min-height: 45px;
 }
 
-/* Bottom row */
 .sw-br-machinery-bottom {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
   margin-top: auto;
-
-
 }
 
 .sw-br-machinery-price {
@@ -9932,7 +9903,6 @@ textarea {
   font-size: 16px;
 }
 
-/* Button */
 .sw-br-machinery-btn {
   background: black;
   color: white;
@@ -9947,11 +9917,6 @@ textarea {
 .sw-br-machinery-btn:hover {
   background: black;
 }
-
-
-/* ====================================
-   MACHINERY RENTAL — DETAILS POPUP
-==================================== */
 
 .sw-br-mach-details-modal {
   position: fixed;
@@ -9976,7 +9941,6 @@ textarea {
   overflow-y: auto;
 }
 
-/* Header */
 .sw-br-mach-details-header {
   display: flex;
   justify-content: space-between;
@@ -9993,7 +9957,6 @@ textarea {
   width: 10% !important;
 }
 
-/* Layout */
 .sw-br-mach-top-section {
   display: flex;
   gap: 30px;
@@ -10004,7 +9967,6 @@ textarea {
   width: 40%;
 }
 
-/* Image */
 .sw-br-mach-image-box {
   width: 100%;
   height: 200px;
@@ -10019,7 +9981,6 @@ textarea {
   object-fit: cover;
 }
 
-/* Price box */
 .sw-br-mach-service-price-box {
   background: #eef2ff;
   text-align: center;
@@ -10034,7 +9995,6 @@ textarea {
   color: #1e40af;
 }
 
-/* Includes */
 .sw-br-mach-included-title {
   margin-top: 10px;
   font-size: 16px;
@@ -10045,16 +10005,15 @@ textarea {
   list-style: none;
   padding-left: 0;
   margin-top: 10px;
-  color: green;
+  color: #3fbf62;
 }
 
 .sw-br-mach-included-list li::before {
-  content: "✓";
-  color: green;
+  content: "●";
+  color: #3fbf62;
   margin-right: 5px;
 }
 
-/* Right section form */
 .sw-br-mach-form-side {
   width: 60%;
 }
@@ -10071,7 +10030,6 @@ textarea {
   margin-bottom: 12px;
 }
 
-/* Form rows */
 .sw-br-mach-row {
   display: flex;
   gap: 12px;
@@ -10082,7 +10040,7 @@ textarea {
   width: 48%;
   display: flex;
   flex-direction: column;
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 500;
   margin-top: 5px;
 }
@@ -10099,7 +10057,6 @@ textarea {
   border-radius: 10px;
 }
 
-/* Additional services */
 .sw-br-mach-checkbox-row {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -10144,11 +10101,6 @@ textarea {
   background: black;
   color: white;
 }
-
-
-/* =============================
-   RESPONSIVE STYLES
-============================= */
 
 @media (max-width: 900px) {
   .sw-br-machinery-grid {
@@ -10202,7 +10154,6 @@ textarea {
 }
 
 /* for transpotation */
-
 
 .sw-br-transport-wrapper {
   width: 100%;
@@ -10317,10 +10268,6 @@ textarea {
   background: black;
 }
 
-/* ===================== */
-/* FORM / MODAL CLASSES  */
-/* ===================== */
-
 .sw-br-form-wrapper {
   width: 100%;
   padding: 0;
@@ -10359,7 +10306,7 @@ textarea {
 }
 
 .sw-br-form-left {
-  width: 56%;
+  width: 41%;
 }
 
 .sw-br-form-image {
@@ -10413,6 +10360,12 @@ textarea {
   display: flex;
   align-items: center;
   font-size: 13px;
+  margin-top: -7px;
+}
+.sw-br-included-list li::before {
+  content: "●";
+  color: #3fbf62;
+  margin-right: 5px;
 }
 
 .sw-br-form-box1 {
@@ -10472,10 +10425,11 @@ textarea {
 }
 
 .sw-br-field3 label {
-  font-size: 13px;
-  font-weight: 600;
-  margin-bottom: 6px;
+  font-size: 11px;
+  font-weight: 550;
+  margin-bottom: 2px;
   color: #1e293b;
+  margin-top: 2px;
 }
 
 .sw-br-field3 input,
@@ -10550,10 +10504,6 @@ textarea {
   color: #fff;
 }
 
-/* ===================== */
-/* RESPONSIVE */
-/* ===================== */
-
 @media (max-width: 900px) {
   .sw-br-transport-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -10585,10 +10535,8 @@ textarea {
     padding: 18px;
   }
 }
-/* --- FULL MOBILE RESET FIX --- */
 @media (max-width: 600px) {
 
-  /* Remove all unwanted extra spacing from wrapper */
   .sw-br-transport-wrapper {
         margin-left: -15px !important;
         width: 114% !important;
@@ -10596,7 +10544,6 @@ textarea {
         border: 100px;
   }
 
-  /* Fix card container grid */
   .sw-br-transport-grid {
     padding: 0 10px !important;
     grid-template-columns: 1fr !important;
@@ -10604,14 +10551,12 @@ textarea {
     margin: 0 auto !important;
   }
 
-  /* Force card to stay inside screen */
   .sw-br-transport-card {
     width: 100% !important;
     margin: 0 auto !important;
     box-sizing: border-box;
   }
 
-  /* Fix button overflowing the right side */
   .sw-br-transport-btn {
     width: 100% !important;
     text-align: center !important;
@@ -10649,11 +10594,10 @@ textarea {
 }
 
 
-/* HEADER */
 .sw-br-bc-header {
   background: #005cfa;
   color: #fff;
-  padding: 10px 11px;
+  padding: 19px 24px;
   border-radius: 12px;
   margin-bottom: 24px;
   display: flex;
@@ -10663,17 +10607,16 @@ textarea {
 
 
 .sw-br-bc-title {
-  font-size: 18px;
+  font-size: 19px;
+  font-weight: 500;
 }
-
 
 .sw-br-bc-subtitle {
-  font-size: 14px;
+  font-size: 13px;
   opacity: 0.95;
+  margin-top: 5px;
 }
 
-
-/* GRID */
 .sw-br-bc-grid {
   margin-top: 10px;
   display: grid;
@@ -10681,7 +10624,7 @@ textarea {
   gap: 18px;
   border: 10px;
 }
-/* CARD */
+
 .sw-br-bc-card {
   border-radius: 12px !important;
   overflow: hidden;
@@ -10692,6 +10635,14 @@ textarea {
 .sw-br-bc-btn{
   background: black;
   color: white;
+  padding: 8px 12px;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+}
+.sw-br-bc-btn:hover{
+  background: black !important;
+  color: white !important;
 }
 
 .sw-br-bc-card:hover {
@@ -10699,15 +10650,12 @@ textarea {
 }
 
 
-/* IMAGE */
 .sw-br-bc-image {
   height: 160px;
   width: 100%;
   object-fit: cover;
 }
 
-
-/* CARD CONTENT */
 .sw-br-bc-card-title {
   font-weight: 600;
   font-size: 16px;
@@ -10732,8 +10680,6 @@ textarea {
  .sw-br-bc-grid {
     grid-template-columns: 1fr !important;
  }
-
 }
 
-
- /* Khasim and Vanamanla Bulding Raw Service CSS Updates */
+/* Khasim and Vanamanla Bulding Raw Service CSS Updates */
