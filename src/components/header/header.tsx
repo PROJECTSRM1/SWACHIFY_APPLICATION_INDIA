@@ -7,15 +7,34 @@ import {
   BellOutlined,
   UserOutlined,
   CloseOutlined,
+  ExclamationCircleOutlined,
 } from "@ant-design/icons";
 import { useCart } from "../../../src/context/CartContext";
-import { Menu, Drawer, message, Button, Dropdown, Badge, Avatar } from "antd";
+import { Menu, Drawer, message, Button, Dropdown, Badge, Avatar, Modal } from "antd";
 import { useNavigate } from "react-router-dom";
-import "./header.css";
+import "../../index.css";
+// import "./HeaderBar.css";
+
+import RecentBookingPage from "../../pages/RecentBookingPage";
+
+type Booking = {
+  id: string;
+  title: string;
+  date: string;
+  time?: string;
+  status: "Upcoming" | "Completed" | "Cancelled";
+  serviceType?: string;
+  amount?: number;
+  address?: string;
+  notes?: string;
+};
+
+const LS_BOOKINGS_KEY = "bookings";
 
 const HeaderBar: React.FC = () => {
   const [open, setOpen] = useState(false); // left mobile menu
   const [cartOpen, setCartOpen] = useState(false); // right cart drawer
+  const [showBookingPage, setShowBookingPage] = useState(false); // overlay booking page
   const navigate = useNavigate();
   const { cart, removeFromCart } = useCart();
 
@@ -27,42 +46,44 @@ const HeaderBar: React.FC = () => {
 
   const handleNavigate = (key: string) => {
     if (key === "packers") navigate("/app/dashboard/packers");
-    if (key === "homeservices") navigate("/app/dashboard/homeservices");
-    if (key === "rentals") navigate("/app/dashboard/rentals");
-    if (key === "commercial") navigate("/app/dashboard/commercials");
-    if (key === "construction") navigate("/app/dashboard/constructions");
-    if (key === "bookings") navigate("/app/dashboard/bookings");
-    if (key === "cart") setCartOpen(true);
+    else if (key === "homeservices") navigate("/app/dashboard/homeservices");
+    else if (key === "rentals") navigate("/app/dashboard/rentals");
+    else if (key === "commercial") navigate("/app/dashboard/commercials");
+    else if (key === "construction") navigate("/app/dashboard/constructions");
+    else if (key === "swachify_products") navigate("/app/dashboard/swachify_products");
+    else if (key === "education") navigate("/app/dashboard/education");
+    else if (key === "bookings") setShowBookingPage(true);
+    else if (key === "cart") setCartOpen(true);
+    else navigate(`/app/dashboard/${key}`);
   };
 
-  // centerMenu uses stable keys (no spaces) — labels are visible text only
+  // center menu (no "Today Work")
   const centerMenu = [
-    { key: "packers", label: <span className="menu-item">Transport</span> },
+    { key: "packers", label: <span className="sw-menu-item">Transport</span> },
     {
       key: "homeservices",
-      label: <span className="menu-item">Home & Cleaning Services</span>,
+      label: <span className="sw-menu-item">Home & Cleaning Services</span>,
     },
-    { key: "commercial", label: <span className="menu-item">Buy/Sale/Rentals</span> },
+    { key: "commercial", label: <span className="sw-menu-item">Buy/Sale/Rentals</span> },
     {
       key: "construction",
-      label: <span className="menu-item">Construction Raw Materials</span>,
+      label: <span className="sw-menu-item">Construction Raw Materials</span>,
     },
     {
       key: "swachify_products",
-      label: <span className="menu-item">Swachify Products</span>,
+      label: <span className="sw-menu-item">Swachify Products</span>,
     },
-    { key: "education", label: <span className="menu-item">Education</span> },
-    { key: "todaywork", label: <span className="menu-item">Today Work</span> },
+    { key: "education", label: <span className="sw-menu-item">Education</span> },
   ];
 
-  // Profile dropdown menu
+  // profile menu: Recent Booking opens overlay (no route)
   const profileMenu = (
     <Menu
       onClick={(info) => {
         if (info.key === "cart") {
           setCartOpen(true);
         } else if (info.key === "bookings") {
-          handleNavigate("bookings");
+          setShowBookingPage(true);
         } else if (info.key === "logout") {
           handleLogout();
         }
@@ -70,98 +91,150 @@ const HeaderBar: React.FC = () => {
       items={[
         {
           key: "bookings",
-          label: <span className="dropdown-item">Recent Booking</span>,
+          label: <span className="sw-dropdown-item">Recent Booking</span>,
           icon: <HomeOutlined />,
         },
         {
           key: "cart",
-          label: <span className="dropdown-item">Cart ({cart.length})</span>,
+          label: <span className="sw-dropdown-item">Cart ({cart.length})</span>,
           icon: <ShoppingCartOutlined />,
         },
         {
           key: "logout",
-          label: <span className="dropdown-item">Logout</span>,
+          label: <span className="sw-dropdown-item">Logout</span>,
           icon: <LogoutOutlined />,
         },
       ]}
-      className="profile-dropdown-menu"
+      className="sw-profile-dropdown-menu"
     />
   );
 
-  // Close cart on Escape key for accessibility
+  // persist booking into localStorage
+  const addBookingToLocalStorage = (b: Booking) => {
+    try {
+      const raw = localStorage.getItem(LS_BOOKINGS_KEY);
+      const arr = raw ? (JSON.parse(raw) as Booking[]) : [];
+      const next = Array.isArray(arr) ? [...arr, b] : [b];
+      localStorage.setItem(LS_BOOKINGS_KEY, JSON.stringify(next));
+    } catch (err) {
+      console.warn("Failed to persist booking", err);
+    }
+  };
+
+  // Buy Now confirmation -> add to bookings
+  const handleBuyNow = (item: any) => {
+    Modal.confirm({
+      title: "Confirm booking",
+      icon: <ExclamationCircleOutlined />,
+      content: (
+        <div>
+          <p>
+            Confirm booking for <strong>{item.title}</strong>?
+          </p>
+          <p>
+            Amount: <strong>₹{item.totalPrice}</strong>
+          </p>
+        </div>
+      ),
+      okText: "Confirm",
+      cancelText: "Cancel",
+      onOk() {
+        const now = new Date();
+        const booking: Booking = {
+          id: `bkg-${Date.now()}`,
+          title: item.title,
+          date: now.toISOString().split("T")[0],
+          time: now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+          status: "Upcoming",
+          serviceType: item.serviceType ?? "Product / Service",
+          amount: item.totalPrice ?? (item.price ? Number(item.price) : undefined),
+          address: item.address ?? item.customerName ?? "—",
+          notes: item.instructions ?? "",
+        };
+        addBookingToLocalStorage(booking);
+        message.success("Booking confirmed and added to Recent Bookings.");
+        // optionally remove from cart (not removing by default — user asked to add to recent bookings)
+        // removeFromCart(item.id);
+        // open the Recent Booking page so user can see it
+        setShowBookingPage(true);
+        // close cart drawer
+        setCartOpen(false);
+      },
+    });
+  };
+
+  // Close cart on ESC
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && cartOpen) {
-        setCartOpen(false);
+      if (e.key === "Escape") {
+        if (cartOpen) setCartOpen(false);
+        if (showBookingPage) setShowBookingPage(false);
       }
     };
     document.addEventListener("keydown", handler);
     return () => document.removeEventListener("keydown", handler);
-  }, [cartOpen]);
+  }, [cartOpen, showBookingPage]);
 
   return (
-    <div className="header-container">
+    <div className="sw-header-container">
       {/* LEFT */}
       <div
-        className="header-left"
+        className="sw-header-left"
         onClick={() => navigate("/app/dashboard")}
         style={{ cursor: "pointer" }}
+        role="button"
+        tabIndex={0}
+        aria-label="Go to dashboard"
       >
-        <HomeOutlined className="logo-icon" />
-        <span className="logo-text">Home</span>
+        <HomeOutlined className="sw-logo-icon" />
+        <span className="sw-logo-text">Home</span>
       </div>
 
       {/* CENTER */}
-      <div className="header-center" role="navigation" aria-label="Main navigation">
-        {/* AntD Menu configured to be inline and centered via CSS overrides */}
+      <div className="sw-header-center" role="navigation" aria-label="Main navigation">
         <Menu
           mode="horizontal"
           items={centerMenu}
-          className="header-menu"
+          className="sw-header-menu"
           onClick={(info: any) => handleNavigate(info.key as string)}
           triggerSubMenuAction="hover"
           selectable={false}
+          overflowedIndicator={null}
         />
       </div>
 
       {/* RIGHT */}
-      <div className="header-right">
-        {/* Bell - visible but NON-INTERACTIVE */}
-        <span
-          className="header-item-notif"
-          title="Notifications"
-          aria-hidden="true"
-        >
+      <div className="sw-header-right" role="group" aria-label="Header actions">
+        <span className="sw-header-item-notif" title="Notifications" aria-hidden="true">
           <Badge count={cart.length} size="small">
-            <BellOutlined className="header-icon-cart" />
+            <BellOutlined className="sw-header-icon-cart" />
           </Badge>
         </span>
 
-        {/* Profile */}
         <Dropdown
           overlay={profileMenu}
           trigger={["click"]}
           placement="bottomRight"
           getPopupContainer={() => document.body}
-          overlayClassName="profile-dropdown-wrapper"
+          overlayClassName="sw-profile-dropdown-wrapper"
         >
           <span
-            className="header-item-profile"
+            className="sw-header-item-profile"
             onClick={(e) => e.preventDefault()}
             role="button"
             tabIndex={0}
             aria-haspopup="true"
           >
             <Avatar size="small" icon={<UserOutlined />} />
-            <span className="profile-text">Profile</span>
+            <span className="sw-profile-text">Profile</span>
           </span>
         </Dropdown>
       </div>
 
-      {/* MOBILE BUTTON */}
-      <div className="mobile-menu-btn" aria-hidden="false">
+      {/* MOBILE MENU BUTTON */}
+      <div className="sw-mobile-menu-btn" aria-hidden="false">
         <MenuOutlined
-          className="header-icon-large"
+          className="sw-header-icon-large"
           onClick={() => setOpen(true)}
           aria-label="Open menu"
           role="button"
@@ -169,7 +242,7 @@ const HeaderBar: React.FC = () => {
         />
       </div>
 
-      {/* LEFT DRAWER (MOBILE MENU) */}
+      {/* LEFT DRAWER (mobile) */}
       <Drawer title="Menu" placement="left" onClose={() => setOpen(false)} open={open}>
         <Menu
           mode="vertical"
@@ -193,7 +266,7 @@ const HeaderBar: React.FC = () => {
               label: (
                 <span
                   onClick={() => {
-                    handleNavigate("bookings");
+                    setShowBookingPage(true);
                     setOpen(false);
                   }}
                 >
@@ -224,7 +297,7 @@ const HeaderBar: React.FC = () => {
         />
       </Drawer>
 
-      {/* RIGHT DRAWER (CART) */}
+      {/* RIGHT DRAWER - CART */}
       <Drawer
         title={null}
         placement="right"
@@ -234,13 +307,13 @@ const HeaderBar: React.FC = () => {
         closable={false}
         bodyStyle={{ padding: 0 }}
       >
-        <div className="cart-drawer-header" role="banner">
-          <div className="cart-drawer-title" aria-live="polite">
+        <div className="sw-cart-drawer-header" role="banner">
+          <div className="sw-cart-drawer-title" aria-live="polite">
             {cart.length === 0 ? "Your cart is empty" : `Your cart (${cart.length})`}
           </div>
 
           <button
-            className="cart-drawer-close-btn"
+            className="sw-cart-drawer-close-btn"
             aria-label="Close cart"
             onClick={() => setCartOpen(false)}
             title="Close"
@@ -249,21 +322,21 @@ const HeaderBar: React.FC = () => {
           </button>
         </div>
 
-        <div className="cart-drawer-content">
+        <div className="sw-cart-drawer-content">
           {cart.length === 0 ? (
-            <div className="cart-empty-note">Nothing here yet — add items to your cart.</div>
+            <div className="sw-cart-empty-note">Nothing here yet — add items to your cart.</div>
           ) : (
-            <div className="cart-list">
+            <div className="sw-cart-list">
               {cart.map((item: any, index: number) => (
-                <div key={index} className="cart-item">
+                <div key={index} className="sw-cart-item">
                   <img src={item.image} alt={item.title} />
-                  <div className="cart-item-details">
+                  <div className="sw-cart-item-details">
                     <h4>{item.title}</h4>
                     <p>Qty: {item.quantity}</p>
                     <p>Total: ₹{item.totalPrice}</p>
                   </div>
-                  <div className="cart-buttons">
-                    <Button onClick={() => navigate("/checkout")}>Buy Now</Button>
+                  <div className="sw-cart-buttons">
+                    <Button onClick={() => handleBuyNow(item)}>Buy Now</Button>
                     <Button danger type="primary" onClick={() => removeFromCart(item.id)}>
                       Remove
                     </Button>
@@ -274,6 +347,30 @@ const HeaderBar: React.FC = () => {
           )}
         </div>
       </Drawer>
+
+      {/* RECENT BOOKING PAGE OVERLAY (no routing) */}
+      {showBookingPage && (
+        <div
+          className="sw-booking-page-overlay"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Recent booking page"
+          onClick={() => setShowBookingPage(false)}
+        >
+          <div className="sw-booking-page-content" onClick={(e) => e.stopPropagation()}>
+            <button
+              className="sw-booking-page-close"
+              aria-label="Close recent booking page"
+              onClick={() => setShowBookingPage(false)}
+            >
+              <CloseOutlined />
+            </button>
+
+            {/* Recent Booking page shows list of bookings */}
+            <RecentBookingPage />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

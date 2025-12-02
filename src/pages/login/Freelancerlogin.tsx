@@ -20,7 +20,7 @@ import {
 //   Col,
 } from "antd";
 
-import "./Freelancerlogin.css";
+// import "./Freelancerlogin.css";
 
 export default function Freelancerlogin() {
   const navigate = useNavigate();
@@ -38,27 +38,27 @@ export default function Freelancerlogin() {
   };
 
   return (
-    <Layout className="swf-login-wrapper">
+    <Layout className="sw-fr-login-wrapper">
 
       {/* BACK BUTTON */}
-      <button className="swf-login-back" onClick={() => navigate("/freelancer")}>
+      <button className="sw-fr-login-back" onClick={() => navigate("/freelancer")}>
         <ArrowLeftOutlined />
         <span>Back</span>
       </button>
 
-      <div className="swf-login-container">
+      <div className="sw-fr-login-container">
 
         {/* LEFT BRAND PANEL */}
-        <div className="swf-login-brand">
-          <div className="swf-brand-inner">
-            <div className="swf-brand-logo">⚡</div>
-            <h2 className="swf-brand-title">Swachify Freelance</h2>
+        <div className="sw-fr-login-brand">
+          <div className="sw-fr-brand-inner">
+            {/* <div className="swf-brand-logo">⚡</div> */}
+            <h2 className="sw-fr-brand-title">Swachify Freelance</h2>
 
-            <p className="swf-brand-sub">
+            <p className="sw-fr-brand-sub">
               Empowering freelancers with real-time job opportunities nearby.
             </p>
 
-            <ul className="swf-benefits">
+            <ul className="sw-fr-benefits">
               <li>✨ Instant job requests</li>
               <li>💼 Manage your projects</li>
               <li>💰 Track your earnings</li>
@@ -68,9 +68,9 @@ export default function Freelancerlogin() {
         </div>
 
         {/* LOGIN CARD */}
-        <Card className="swf-login-card" bordered={false}>
-          <h1 className="swf-login-title">Welcome Back</h1>
-          <p className="swf-login-sub">
+        <Card className="sw-fr-login-card" bordered={false}>
+          <h1 className="sw-fr-login-title">Welcome Back</h1>
+          <p className="sw-fr-login-sub">
             Login to access your freelancer dashboard
           </p>
 
@@ -92,7 +92,7 @@ export default function Freelancerlogin() {
                 prefix={<MailOutlined />}
                 placeholder="you@example.com"
                 size="large"
-                className="swf-input"
+                className="sw-fr-input"
               />
             </Form.Item>
 
@@ -108,14 +108,14 @@ export default function Freelancerlogin() {
                 prefix={<LockOutlined />}
                 size="large"
                 placeholder="••••••••"
-                className="swf-input"
+                className="sw-fr-input"
                 visibilityToggle={true}
               />
             </Form.Item>
 
-            <div className="swf-row-between">
+            <div className="sw-fr-row-between">
               <Checkbox>Remember me</Checkbox>
-              <a className="swf-forgot">Forgot Password?</a>
+              <a className="sw-fr-forgot">Forgot Password?</a>
             </div>
 
             <Form.Item>
@@ -125,7 +125,7 @@ export default function Freelancerlogin() {
                 block
                 size="large"
                 loading={loading}
-                className="swf-submit"
+                className="sw-fr-submit"
               >
                 {loading ? "Logging in..." : "Login"}
               </Button>
@@ -155,11 +155,11 @@ export default function Freelancerlogin() {
             </Col>
           </Row> */}
 
-          <p className="swf-signup">
+          <p className="sw-fr-signup">
             Don’t have an account?
             <button
-              className="swf-signup-link"
-              onClick={() => navigate("/register")}
+              className="sw-fr-signup-link"
+              onClick={() => navigate("/freelancerregistration")}
             >
               Sign up free
             </button>
