@@ -11,7 +11,7 @@ import {
 import { useCart } from "../../../src/context/CartContext";
 import { Menu, Drawer, message, Button, Dropdown, Badge, Avatar } from "antd";
 import { useNavigate } from "react-router-dom";
-import "./header.css";
+import "../../index.css";
 
 const HeaderBar: React.FC = () => {
   const [open, setOpen] = useState(false); // left mobile menu
@@ -35,27 +35,25 @@ const HeaderBar: React.FC = () => {
     if (key === "cart") setCartOpen(true);
   };
 
-  // centerMenu uses stable keys (no spaces) — labels are visible text only
+  // center menu (Today Work removed)
   const centerMenu = [
-    { key: "packers", label: <span className="menu-item">Transport</span> },
+    { key: "packers", label: <span className="sw-menu-item">Transport</span> },
     {
       key: "homeservices",
-      label: <span className="menu-item">Home & Cleaning Services</span>,
+      label: <span className="sw-menu-item">Home & Cleaning Services</span>,
     },
-    { key: "commercial", label: <span className="menu-item">Buy/Sale/Rentals</span> },
+    { key: "commercial", label: <span className="sw-menu-item">Buy/Sale/Rentals</span> },
     {
       key: "construction",
-      label: <span className="menu-item">Construction Raw Materials</span>,
+      label: <span className="sw-menu-item">Construction Raw Materials</span>,
     },
     {
       key: "swachify_products",
-      label: <span className="menu-item">Swachify Products</span>,
+      label: <span className="sw-menu-item">Swachify Products</span>,
     },
-    { key: "education", label: <span className="menu-item">Education</span> },
-    { key: "todaywork", label: <span className="menu-item">Today Work</span> },
+    { key: "education", label: <span className="sw-menu-item">Education</span> },
   ];
 
-  // Profile dropdown menu
   const profileMenu = (
     <Menu
       onClick={(info) => {
@@ -70,54 +68,54 @@ const HeaderBar: React.FC = () => {
       items={[
         {
           key: "bookings",
-          label: <span className="dropdown-item">Recent Booking</span>,
+          label: <span className="sw-dropdown-item">Recent Booking</span>,
           icon: <HomeOutlined />,
         },
         {
           key: "cart",
-          label: <span className="dropdown-item">Cart ({cart.length})</span>,
+          label: <span className="sw-dropdown-item">Cart ({cart.length})</span>,
           icon: <ShoppingCartOutlined />,
         },
         {
           key: "logout",
-          label: <span className="dropdown-item">Logout</span>,
+          label: <span className="sw-dropdown-item">Logout</span>,
           icon: <LogoutOutlined />,
         },
       ]}
-      className="profile-dropdown-menu"
+      className="sw-profile-dropdown-menu"
     />
   );
 
-  // Close cart on Escape key for accessibility
+  // Close cart on ESC
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && cartOpen) {
-        setCartOpen(false);
-      }
+      if (e.key === "Escape" && cartOpen) setCartOpen(false);
     };
     document.addEventListener("keydown", handler);
     return () => document.removeEventListener("keydown", handler);
   }, [cartOpen]);
 
   return (
-    <div className="header-container">
+    <div className="sw-header-container">
       {/* LEFT */}
       <div
-        className="header-left"
+        className="sw-header-left"
         onClick={() => navigate("/app/dashboard")}
         style={{ cursor: "pointer" }}
+        role="button"
+        tabIndex={0}
+        aria-label="Go to dashboard"
       >
-        <HomeOutlined className="logo-icon" />
-        <span className="logo-text">Home</span>
+        <HomeOutlined className="sw-logo-icon" />
+        <span className="sw-logo-text">Home</span>
       </div>
 
       {/* CENTER */}
-      <div className="header-center" role="navigation" aria-label="Main navigation">
-        {/* AntD Menu configured to be inline and centered via CSS overrides */}
+      <div className="sw-header-center" role="navigation" aria-label="Main navigation">
         <Menu
           mode="horizontal"
           items={centerMenu}
-          className="header-menu"
+          className="sw-header-menu"
           onClick={(info: any) => handleNavigate(info.key as string)}
           triggerSubMenuAction="hover"
           selectable={false}
@@ -125,43 +123,39 @@ const HeaderBar: React.FC = () => {
       </div>
 
       {/* RIGHT */}
-      <div className="header-right">
+      <div className="sw-header-right" role="group" aria-label="Header actions">
         {/* Bell - visible but NON-INTERACTIVE */}
-        <span
-          className="header-item-notif"
-          title="Notifications"
-          aria-hidden="true"
-        >
+        <span className="sw-header-item-notif" title="Notifications" aria-hidden="true">
           <Badge count={cart.length} size="small">
-            <BellOutlined className="header-icon-cart" />
+            <BellOutlined className="sw-header-icon-cart" />
           </Badge>
         </span>
 
-        {/* Profile */}
+        {/* Profile dropdown */}
         <Dropdown
           overlay={profileMenu}
           trigger={["click"]}
           placement="bottomRight"
           getPopupContainer={() => document.body}
-          overlayClassName="profile-dropdown-wrapper"
+          overlayClassName="sw-profile-dropdown-wrapper"
         >
           <span
-            className="header-item-profile"
+            className="sw-header-item-profile"
             onClick={(e) => e.preventDefault()}
             role="button"
             tabIndex={0}
             aria-haspopup="true"
           >
             <Avatar size="small" icon={<UserOutlined />} />
-            <span className="profile-text">Profile</span>
+            <span className="sw-profile-text">Profile</span>
           </span>
         </Dropdown>
       </div>
 
-      {/* MOBILE BUTTON */}
-      <div className="mobile-menu-btn" aria-hidden="false">
+      {/* MOBILE MENU BUTTON */}
+      <div className="sw-mobile-menu-btn" aria-hidden="false">
         <MenuOutlined
-          className="header-icon-large"
+          className="sw-header-icon-large"
           onClick={() => setOpen(true)}
           aria-label="Open menu"
           role="button"
@@ -169,7 +163,7 @@ const HeaderBar: React.FC = () => {
         />
       </div>
 
-      {/* LEFT DRAWER (MOBILE MENU) */}
+      {/* LEFT DRAWER (mobile) */}
       <Drawer title="Menu" placement="left" onClose={() => setOpen(false)} open={open}>
         <Menu
           mode="vertical"
@@ -224,7 +218,7 @@ const HeaderBar: React.FC = () => {
         />
       </Drawer>
 
-      {/* RIGHT DRAWER (CART) */}
+      {/* RIGHT DRAWER - CART */}
       <Drawer
         title={null}
         placement="right"
@@ -234,13 +228,13 @@ const HeaderBar: React.FC = () => {
         closable={false}
         bodyStyle={{ padding: 0 }}
       >
-        <div className="cart-drawer-header" role="banner">
-          <div className="cart-drawer-title" aria-live="polite">
+        <div className="sw-cart-drawer-header" role="banner">
+          <div className="sw-cart-drawer-title" aria-live="polite">
             {cart.length === 0 ? "Your cart is empty" : `Your cart (${cart.length})`}
           </div>
 
           <button
-            className="cart-drawer-close-btn"
+            className="sw-cart-drawer-close-btn"
             aria-label="Close cart"
             onClick={() => setCartOpen(false)}
             title="Close"
@@ -249,20 +243,20 @@ const HeaderBar: React.FC = () => {
           </button>
         </div>
 
-        <div className="cart-drawer-content">
+        <div className="sw-cart-drawer-content">
           {cart.length === 0 ? (
-            <div className="cart-empty-note">Nothing here yet — add items to your cart.</div>
+            <div className="sw-cart-empty-note">Nothing here yet — add items to your cart.</div>
           ) : (
-            <div className="cart-list">
+            <div className="sw-cart-list">
               {cart.map((item: any, index: number) => (
-                <div key={index} className="cart-item">
+                <div key={index} className="sw-cart-item">
                   <img src={item.image} alt={item.title} />
-                  <div className="cart-item-details">
+                  <div className="sw-cart-item-details">
                     <h4>{item.title}</h4>
                     <p>Qty: {item.quantity}</p>
                     <p>Total: ₹{item.totalPrice}</p>
                   </div>
-                  <div className="cart-buttons">
+                  <div className="sw-cart-buttons">
                     <Button onClick={() => navigate("/checkout")}>Buy Now</Button>
                     <Button danger type="primary" onClick={() => removeFromCart(item.id)}>
                       Remove
