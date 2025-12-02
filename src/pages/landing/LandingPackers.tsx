@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import CommonHeader from "../../pages/landing/Header";
 import "../../index.css"
+import FooterSection from '../../pages/landing/FooterSection';
+import "../../pages/landing/FooterSection.css"
 import {
   Card,
   Button,
@@ -320,7 +322,7 @@ const LandingPackers: React.FC = () => {
       </section>
 
       {/* FOOTER */}
-      <footer className="sw-lpm-classname-lr-footer sw-lpm-classname-site-footer" role="contentinfo" aria-label="Footer">
+      {/* <footer className="sw-lpm-classname-lr-footer sw-lpm-classname-site-footer" role="contentinfo" aria-label="Footer">
         <div className="sw-lpm-classname-lr-footer-inner sw-lpm-classname-lr-footer-grid">
           <div className="sw-lpm-classname-lr-footer-col">
             <h4>About Us</h4>
@@ -371,7 +373,9 @@ const LandingPackers: React.FC = () => {
           <div className="sw-lpm-classname-lr-footer-sep" />
           <div className="sw-lpm-classname-lr-footer-copy">© 2025 Home Services. All rights reserved.</div>
         </div>
-      </footer>
+      </footer> */}
+      <FooterSection selectedKey="LandingPackers" />
+      
     </div>
   );
 };
