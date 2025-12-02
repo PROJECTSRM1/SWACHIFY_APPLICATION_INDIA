@@ -10737,3 +10737,399 @@ textarea {
 
 
  /* Khasim and Vanamanla Bulding Raw Service CSS Updates */
+
+
+ /* ///// surya header css////// */
+ /* header.css */
+
+/* Header root */
+.sw-header-container {
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+  width: 100%;
+  background: white;
+  border-bottom: 1px solid #eee;
+  padding: 12px 20px;
+  display: grid;
+  grid-template-columns: auto 1fr auto; /* left | center | right */
+  align-items: center;
+  gap: 12px;
+  box-sizing: border-box;
+  overflow-x: hidden !important;
+}
+
+/* Left */
+.sw-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+.sw-logo-text {
+  font-size: 15px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sw-logo-icon {
+  font-size: 24px;
+  color: #111;
+}
+
+/* Center - menu centered within the middle column */
+.sw-header-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 0;
+  padding: 0 12px;
+  overflow: hidden; /* keep header clean and aligned */
+}
+
+/* AntD Menu override: inline, centered, scrollable but scrollbar hidden */
+.sw-header-menu {
+  border-bottom: none !important;
+  width: auto !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  background: transparent !important;
+  padding: 0 !important;
+
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+/* hide webkit scrollbar (Chrome / Safari / Edge) */
+.sw-header-menu::-webkit-scrollbar {
+  height: 0;
+  background: transparent;
+}
+.sw-header-menu::-webkit-scrollbar-track {
+  background: transparent;
+}
+.sw-header-menu::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+/* ensure ant menu inside is single-row and centered */
+.sw-header-menu .ant-menu {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: transparent !important;
+  border-bottom: none !important;
+
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.sw-header-menu .ant-menu::-webkit-scrollbar {
+  height: 0;
+}
+
+/* style items */
+.sw-header-menu .ant-menu-item {
+  padding: 8px 14px;
+  border-radius: 6px;
+  margin: 0 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* hover/active */
+.sw-header-menu .ant-menu-item:hover,
+.sw-header-menu .ant-menu-item-active,
+.sw-header-menu .ant-menu-item-selected {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+/* remove AntD overflow "more" three-dots */
+.sw-header-menu .ant-menu-overflow-more,
+.sw-header-menu .ant-menu-overflow,
+.sw-header-menu .ant-menu-overflow-more .ant-menu-overflow-more-horizontal {
+  display: none !important;
+}
+
+/* prevent visible overflow track */
+.sw-header-center .ant-menu-root {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.sw-header-center .ant-menu-root::-webkit-scrollbar {
+  height: 0;
+}
+
+/* Menu item text */
+.sw-menu-item {
+  font-size: 16px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Right */
+.sw-header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+/* Bell - non-interactive */
+.sw-header-item-notif {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 16px;
+  margin-right: 2px;
+  color: inherit;
+  cursor: default;
+  opacity: 0.95;
+}
+.sw-header-icon-cart {
+  font-size: 20px;
+}
+
+/* Profile */
+.sw-header-item-profile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  margin-right: 0;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+.sw-profile-text {
+  display: inline-block;
+  font-weight: 500;
+  font-size: 15px;
+  margin-left: 6px;
+}
+
+/* Force dropdown above header */
+.sw-profile-dropdown-wrapper,
+.sw-profile-dropdown-wrapper .ant-dropdown,
+.ant-dropdown {
+  z-index: 200000 !important;
+}
+.sw-profile-dropdown-wrapper .ant-dropdown-menu {
+  margin-top: 8px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Mobile menu button */
+.sw-mobile-menu-btn {
+  display: none;
+}
+
+/* CART DRAWER - custom header area */
+.sw-cart-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid #f0f0f0;
+  background: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 3;
+}
+
+/* Title */
+.sw-cart-drawer-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+}
+
+/* Inline close button */
+.sw-cart-drawer-close-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 18px;
+  color: rgba(0, 0, 0, 0.65);
+  padding: 8px;
+  border-radius: 8px;
+  background: transparent;
+  border: none;
+  line-height: 0;
+  margin-left: 12px;
+}
+.sw-cart-drawer-close-btn svg {
+  font-size: 20px;
+  vertical-align: middle;
+}
+.sw-cart-drawer-close-btn:hover,
+.sw-cart-drawer-close-btn:focus {
+  background: rgba(0, 0, 0, 0.03);
+  color: rgba(0, 0, 0, 0.85);
+  outline: none;
+}
+.sw-cart-drawer-close-btn:focus {
+  box-shadow: 0 0 0 3px rgba(43, 108, 255, 0.12);
+}
+
+/* drawer content */
+.sw-cart-drawer-content {
+  padding: 16px 20px 24px 20px;
+  height: calc(100% - 68px);
+  overflow-y: auto;
+  background: #fff;
+}
+
+/* Empty cart note */
+.sw-cart-empty-note {
+  color: #6b7280;
+  padding: 12px 0;
+}
+
+/* Cart list */
+.sw-cart-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.sw-cart-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  padding: 15px;
+  border-radius: 8px;
+  background: #fafafa;
+  border: 1px solid #eee;
+}
+.sw-cart-item img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+.sw-cart-item-details {
+  flex: 1;
+}
+.sw-cart-item-details h4 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* Cart buttons */
+.sw-cart-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-end;
+  justify-content: flex-start;
+}
+.sw-cart-buttons .ant-btn {
+  width: auto !important;
+  min-width: 84px;
+  padding: 6px 12px;
+  height: 34px;
+  font-size: 13px;
+  border-radius: 8px;
+  box-sizing: border-box;
+  white-space: nowrap;
+}
+.sw-cart-buttons .ant-btn.ant-btn-primary {
+  font-weight: 700;
+  box-shadow: 0 6px 18px rgba(43, 108, 255, 0.12);
+}
+.sw-cart-buttons .ant-btn:not(.ant-btn-primary) {
+  background: rgb(20, 184, 166);
+  border: 1px solid #39f0e1;
+}
+
+/* Responsive tweaks */
+@media (max-width: 1200px) {
+  .sw-header-container {
+    padding: 10px 14px;
+  }
+  .sw-header-menu .ant-menu-item {
+    margin: 0 6px;
+    padding: 8px 10px;
+  }
+}
+
+@media (max-width: 900px) {
+  .sw-header-container {
+    grid-template-columns: auto auto auto; /* left | center-hidden | right */
+    padding: 10px 12px !important;
+    overflow-x: hidden !important;
+  }
+  .sw-header-center {
+    display: none; /* hide large menu in favor of drawer */
+  }
+  .sw-profile-text {
+    display: none;
+  }
+  .sw-mobile-menu-btn {
+    display: block;
+    justify-self: center;
+  }
+  .sw-logo-text {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 500px) {
+  .sw-header-container {
+    padding: 10px 10px !important;
+  }
+  .sw-logo-text {
+    font-size: 16px;
+  }
+  .sw-header-item-notif {
+    margin-right: 6px;
+  }
+  .sw-header-item-profile {
+    margin-right: 6px;
+  }
+  .sw-cart-drawer-header {
+    padding: 12px 14px;
+  }
+  .sw-cart-drawer-content {
+    padding: 12px 14px 20px 14px;
+    height: calc(100% - 56px);
+  }
+  .sw-cart-drawer-close-btn {
+    padding: 10px;
+    border-radius: 10px;
+  }
+}
+
+/* Accessibility / global box sizing */
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  width: 100%;
+  overflow-x: hidden !important;
+}
+
+/* minor tweak */
+.sw-dropdown-item {
+  font-weight: 500;
+}
+
+/* keep AntD horizontal menu neutral */
+.ant-menu-horizontal {
+  border-bottom: none !important;
+  overflow-y: hidden !important;
+}
+ /* ///// surya header css////// */
