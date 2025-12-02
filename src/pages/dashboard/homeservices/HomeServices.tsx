@@ -1,7 +1,7 @@
 // src/pages/.../HomeServices.tsx
 import  { useState } from "react";
 import { Card, Button,  Modal } from "antd";
-import "../../../index.css";
+// import "../../../index.css";
 import { popupData } from "./popupData"; // existing
 import type { PopupCategory } from "./popupData"; // existing
 import { ToolOutlined } from "@ant-design/icons";

@@ -37,7 +37,7 @@ import {
 } from "@ant-design/icons";
 
 import { useNavigate } from "react-router-dom";
-import "./landingrentals.css";
+// import "./landingrentals.css";
 
 const { Option } = Select;
 const { TabPane } = Tabs;
@@ -52,20 +52,13 @@ export const HSHeader: React.FC<HSHeaderProps> = ({
   // selectedKey = "",
   // onSignUp = () => {}
 }) => {
-  // const [menuOpen, setMenuOpen] = useState(false);
-
-
-  // const selectedKeysArray = selectedKey ? [selectedKey] : [];
-
   return (
- <div>
-<CommonHeader selectedKey="rentals" />
-
- </div>
+    <div>
+      <CommonHeader selectedKey="rentals" />
+    </div>
   );
 };
 /* ========================= END HEADER ========================= */
-
 
 /* ========== IMAGE IMPORTS ========== */
 import heroimg from "../../assets/landingimages/landingrenatlshero.jpg";
@@ -76,7 +69,6 @@ import apt4 from "../../assets/landingimages/spaciousfamilyhouse.jpg";
 import apt5 from "../../assets/landingimages/luxuryvillawithpool.jpg";
 import apt6 from "../../assets/landingimages/modern1bhkflat.jpg";
 /* ======================================================= */
-
 
 const Landingrentals: React.FC = () => {
   const [form] = Form.useForm();
@@ -199,7 +191,6 @@ const Landingrentals: React.FC = () => {
 
   return (
     <div className="sw-lr-page">
-
       {/* HEADER */}
       <HSHeader onSignUp={() => setAuthModalVisible(true)} />
 
@@ -365,9 +356,9 @@ const Landingrentals: React.FC = () => {
                   <p>Available: {p.available}</p>
 
                   <Button 
-                  // type="primary" 
-                  className="sw-lr-schedule"
-                   block>Schedule Viewing</Button>
+                    // type="primary" 
+                    className="sw-lr-schedule"
+                    block>Schedule Viewing</Button>
                 </Card>
               </Col>
             ))}
@@ -407,6 +398,50 @@ const Landingrentals: React.FC = () => {
                   <div className="sw-lr-amenity-text">{a}</div>
                 </div>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* =======================
+            HOW IT WORKS (NEW UI)
+            placed between Amenities and Booking
+           ======================= */}
+        <section className="sw-lr-steps" aria-labelledby="how-it-works-title">
+          <div className="sw-lr-steps-inner">
+            <h2 id="how-it-works-title" className="sw-lr-steps-title">How It Works</h2>
+
+            <div className="sw-lr-steps-track" role="list" aria-label="How it works steps">
+              <div className="sw-lr-step-item" role="listitem" aria-label="Step 1: Search & Filter">
+                <div className="sw-lr-step-circle-wrap">
+                  <div className="sw-lr-step-circle" aria-hidden>1</div>
+                </div>
+                <div className="sw-lr-step-label">Search & Filter</div>
+                <div className="sw-lr-step-desc">Browse properties matching your needs</div>
+              </div>
+
+              <div className="sw-lr-step-item" role="listitem" aria-label="Step 2: Schedule Viewing">
+                <div className="sw-lr-step-circle-wrap">
+                  <div className="sw-lr-step-circle" aria-hidden>2</div>
+                </div>
+                <div className="sw-lr-step-label">Schedule Viewing</div>
+                <div className="sw-lr-step-desc">Visit properties at your convenience</div>
+              </div>
+
+              <div className="sw-lr-step-item" role="listitem" aria-label="Step 3: Submit Application">
+                <div className="sw-lr-step-circle-wrap">
+                  <div className="sw-lr-step-circle" aria-hidden>3</div>
+                </div>
+                <div className="sw-lr-step-label">Submit Application</div>
+                <div className="sw-lr-step-desc">Complete the rental application</div>
+              </div>
+
+              <div className="sw-lr-step-item" role="listitem" aria-label="Step 4: Move In">
+                <div className="sw-lr-step-circle-wrap">
+                  <div className="sw-lr-step-circle" aria-hidden>4</div>
+                </div>
+                <div className="sw-lr-step-label">Move In</div>
+                <div className="sw-lr-step-desc">Sign lease and get your keys</div>
+              </div>
             </div>
           </div>
         </section>
@@ -518,7 +553,7 @@ const Landingrentals: React.FC = () => {
             <h4>Contact Info</h4>
             <ul className="sw-lr-contact-list">
               <li>
-                <Phone className="lc-contact-icon" /> +1 (555) 123-4567
+                <Phone className="sw-lr-contact-icon" /> +1 (555) 123-4567
               </li>
               <li><MailOutlined /> info@homeservices.com</li>
               <li><EnvironmentOutlined /> 123 Street, City</li>
