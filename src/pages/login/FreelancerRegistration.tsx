@@ -1,478 +1,322 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
-import {
-  User,
-  Mail,
-  Lock,
-  Eye,
-  EyeOff,
-  ArrowLeft,
-  Phone,
-  MapPin,
-  Check,
-  Loader2,
-} from "lucide-react";
-import "antd/dist/reset.css";
-import {
-  Row,
-  Col,
-  Card,
-  Form,
-  Input,
-  Button,
-  Checkbox,
-  Upload,
-  Tag,
-  Space,
-  Progress,
-  message,
-} from "antd";
-import type { UploadFile } from "antd/es/upload/interface";
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Input, Button } from 'antd';
+import 'antd/dist/reset.css'; // You can move this import to src/index.tsx if you already import antd globally
+// import './FreelancerRegistration.css';
 
-import "./FreelancerRegistration.css";
-
-type UserType = "freelancer" | "client";
-
-interface FormState {
-  fullName: string;
-  email: string;
-  phone: string;
-  password: string;
-  confirmPassword: string;
-  location: string;
-  skills: string[];
-  userType: UserType;
-  summary: string;
-  experienceDoc: File | null;
-  govId: File | null;
-}
-
-const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
-const ALLOWED_DOC_TYPES = ["application/pdf", "image/png", "image/jpeg"];
-
-const SKILLS = [
-  "Plumbing",
-  "Electrical",
-  "Cleaning",
-  "Painting",
-  "Carpentry",
-  "AC Repair",
-  "Moving",
-  "Gardening",
-  "Home Maintenance",
-  "Interior Design",
-];
-
-export default function FreelancerRegistration() {
+export default function Registration() {
   const navigate = useNavigate();
-  const [step, setStep] = useState<number>(1);
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const [formData, setFormData] = useState<FormState>({
-    fullName: "",
-    email: "",
-    phone: "",
-    password: "",
-    confirmPassword: "",
-    location: "",
-    skills: [],
-    userType: "freelancer",
-    summary: "",
-    experienceDoc: null,
-    govId: null,
+  const [currentStep, setCurrentStep] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    phone: '',
+    password: '',
+    confirmPassword: '',
+    location: '',
+    userType: 'freelancer' as 'freelancer' | 'client',
+    skills: [] as string[]
   });
-
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [expFileList, setExpFileList] = useState<UploadFile[]>([]);
-  const [govFileList, setGovFileList] = useState<UploadFile[]>([]);
+
+  const skills = [
+    'Plumbing', 'Electrical', 'Cleaning', 'Painting', 'Carpentry',
+    'AC Repair', 'Moving', 'Gardening', 'Home Maintenance', 'Interior Design'
+  ];
 
   const validateStep1 = () => {
     const newErrors: Record<string, string> = {};
-    if (!formData.fullName) newErrors.fullName = "Full name is required";
-    if (!formData.email) newErrors.email = "Email is required";
-    else if (!/\S+@\S+\.\S+/.test(formData.email))
-      newErrors.email = "Email is invalid";
-    if (!formData.phone) newErrors.phone = "Phone is required";
-    else if (!/^\d{10}$/.test(formData.phone))
-      newErrors.phone = "Phone must be 10 digits";
-
+    if (!formData.fullName) newErrors.fullName = 'Please input your full name!';
+    if (!formData.email) newErrors.email = 'Please input your email!';
+    else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = 'Please enter a valid email!';
+    if (!formData.phone) newErrors.phone = 'Please input your phone!';
+    else if (!/^\d{10}$/.test(formData.phone)) newErrors.phone = 'Phone must be 10 digits!';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const validateStep2 = () => {
     const newErrors: Record<string, string> = {};
-    if (!formData.password) newErrors.password = "Password is required";
-    else if (formData.password.length < 8)
-      newErrors.password = "Password must be at least 8 characters";
-    if (!formData.confirmPassword)
-      newErrors.confirmPassword = "Confirm password is required";
-    else if (formData.password !== formData.confirmPassword)
-      newErrors.confirmPassword = "Passwords do not match";
-    if (!formData.location) newErrors.location = "Location is required";
-
+    if (!formData.password) newErrors.password = 'Please input your password!';
+    else if (formData.password.length < 8) newErrors.password = 'Password must be at least 8 characters!';
+    if (!formData.confirmPassword) newErrors.confirmPassword = 'Please confirm your password!';
+    else if (formData.password !== formData.confirmPassword) newErrors.confirmPassword = 'Passwords do not match!';
+    if (!formData.location) newErrors.location = 'Please input your location!';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const validateStep3 = () => {
     const newErrors: Record<string, string> = {};
-    if (formData.userType === "freelancer" && formData.skills.length === 0) {
-      newErrors.skills = "Please select at least one skill";
+    if (formData.userType === 'freelancer' && formData.skills.length === 0) {
+      newErrors.skills = 'Please select at least one skill!';
     }
-    if (!formData.experienceDoc)
-      newErrors.experienceDoc = "Please upload your experience document";
-    if (!formData.govId) newErrors.govId = "Please upload a government ID";
-
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleNext = () => {
-    if (step === 1 && validateStep1()) setStep(2);
-    else if (step === 2 && validateStep2()) setStep(3);
+  const handleStep1 = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (validateStep1()) setCurrentStep(1);
+  };
+
+  const handleStep2 = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (validateStep2()) setCurrentStep(2);
+  };
+
+  const handleFinalSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!validateStep3()) return;
+    setLoading(true);
+    console.log('Registration data:', formData);
+    setTimeout(() => {
+      setLoading(false);
+      navigate('/');
+    }, 2000);
   };
 
   const toggleSkill = (skill: string) => {
-    setFormData((prev) => ({
+    setFormData(prev => ({
       ...prev,
       skills: prev.skills.includes(skill)
-        ? prev.skills.filter((s) => s !== skill)
-        : [...prev.skills, skill],
+        ? prev.skills.filter(s => s !== skill)
+        : [...prev.skills, skill]
     }));
-    if (errors.skills) setErrors((p) => ({ ...p, skills: "" }));
+    if (errors.skills) setErrors({ ...errors, skills: '' });
   };
-
-  const beforeUpload = (file: File) => {
-    if (!ALLOWED_DOC_TYPES.includes(file.type)) {
-      message.error("Unsupported file type");
-      return Upload.LIST_IGNORE;
-    }
-    if (file.size > MAX_FILE_SIZE) {
-      message.error("File too large (max 5MB)");
-      return Upload.LIST_IGNORE;
-    }
-    return true;
-  };
-
-  const handleExpChange = ({ fileList }: { fileList: UploadFile[] }) => {
-    setExpFileList(fileList.slice(-1));
-    const f = fileList[0]?.originFileObj as File | undefined;
-    setFormData((p) => ({ ...p, experienceDoc: f ?? null }));
-    if (errors.experienceDoc) setErrors((p) => ({ ...p, experienceDoc: "" }));
-  };
-
-  const handleGovChange = ({ fileList }: { fileList: UploadFile[] }) => {
-    setGovFileList(fileList.slice(-1));
-    const f = fileList[0]?.originFileObj as File | undefined;
-    setFormData((p) => ({ ...p, govId: f ?? null }));
-    if (errors.govId) setErrors((p) => ({ ...p, govId: "" }));
-  };
-
-  const handleSubmit = async (e?: React.FormEvent) => {
-    e?.preventDefault();
-    if (!validateStep3()) return;
-    setIsLoading(true);
-
-    try {
-      const payload = new FormData();
-      Object.entries(formData).forEach(([key, value]) => {
-        if (key === "skills") payload.append(key, JSON.stringify(value));
-        else if (value instanceof File) payload.append(key, value);
-        else payload.append(key, value as string);
-      });
-
-      // Fake API call
-      setTimeout(() => {
-        setIsLoading(false);
-        message.success("Account created");
-        navigate("/");
-      }, 1200);
-    } catch {
-      setIsLoading(false);
-      setErrors({ form: "Something went wrong" });
-    }
-  };
-
-  const progressPercent = Math.round((step / 3) * 100);
 
   return (
-    <div className="registration-page">
-      <motion.button
-        initial={{ opacity: 0, x: -20 }}
-        animate={{ opacity: 1, x: 0 }}
-        onClick={() =>
-          step === 1 ? navigate("/freelancer") : setStep(step - 1)
-        }
-        className="back-btn"
+    <div className="sw-fr-registration-page">
+      <a
+        href="#"
+        className="sw-fr-back-link"
+        onClick={() => navigate('/freelancer')}
+        aria-label="Go back"
       >
-        <ArrowLeft /> {step === 1 ? "Back to Home" : "Previous"}
-      </motion.button>
+        ← Back
+      </a>
 
-      <Row gutter={24} justify="center">
-        {/* Left branding */}
-        <Col lg={10} className="branding-col">
-          <Card className="branding-card">
-            <div className="branding-header">
-              <Check className="branding-icon" />
-              <h2>Swachify</h2>
+      <div className="sw-fr-registration-container">
+        {/* Left Side - Progress */}
+        <div className="sw-fr-registration-branding">
+          <div className="sw-fr-branding-card">
+            <div className="sw-fr-branding-header">
+              {/* <div className="branding-logo">⚡</div> */}
+              <span className="sw-fr-branding-title">Swachify</span>
             </div>
-            <h3>Join Our Community</h3>
-            <p>Start your freelancing journey and unlock opportunities.</p>
-            <div className="steps-list">
-              {[
-                "Personal Info",
-                "Account Security",
-                "Skills & Preferences",
-              ].map((label, idx) => (
-                <div key={idx} className="step-item">
-                  <div className={`step-circle ${step > idx ? "active" : ""}`}>
-                    {step > idx ? <Check /> : idx + 1}
-                  </div>
-                  <span>{label}</span>
+
+            <h2 className="sw-fr-branding-heading">Join Our Community</h2>
+            <p className="sw-fr-branding-text">
+              Start your freelancing journey today and unlock endless opportunities.
+            </p>
+
+            <div className="sw-fr-steps-container">
+              <div className={`sw-fr-step-item ${currentStep >= 0 ? 'active' : ''} ${currentStep > 0 ? 'completed' : ''}`}>
+                <div className="sw-fr-step-number">
+                  {currentStep > 0 ? '✓' : '1'}
                 </div>
-              ))}
+                <div className="sw-fr-step-content">
+                  <h3>Personal Information</h3>
+                  <p>Tell us about yourself</p>
+                </div>
+              </div>
+
+              <div className={`sw-fr-step-item ${currentStep >= 1 ? 'active' : ''} ${currentStep > 1 ? 'completed' : ''}`}>
+                <div className="sw-fr-step-number">
+                  {currentStep > 1 ? '✓' : '2'}
+                </div>
+                <div className="sw-fr-step-content">
+                  <h3>Account Security</h3>
+                  <p>Create a secure password</p>
+                </div>
+              </div>
+
+              <div className={`sw-fr-step-item ${currentStep >= 2 ? 'active' : ''}`}>
+                <div className="sw-fr-step-number">3</div>
+                <div className="sw-fr-step-content">
+                  <h3>Skills & Preferences</h3>
+                  <p>Choose your expertise</p>
+                </div>
+              </div>
             </div>
-          </Card>
-        </Col>
+          </div>
+        </div>
 
-        {/* Form */}
-        <Col xs={24} lg={12}>
-          <Card className="reg-card">
-            <h1>Create Account</h1>
-            <Progress percent={progressPercent} showInfo={false} />
+        {/* Right Side - Form */}
+        <div className="sw-fr-registration-form-section">
+          <div className="sw-fr-registration-card">
+            <div className="sw-fr-registration-header">
+              <h1 className="sw-fr-registration-title">Create Your Account</h1>
+              <p className="sw-fr-registration-subtitle">Step {currentStep + 1} of 3</p>
+            </div>
 
-            <Form layout="vertical" onFinish={handleSubmit}>
-              {/* Step 1 */}
-              {step === 1 && (
-                <div className="step-container">
-                  <Form.Item label="Full Name" required>
-                    <Input
-                      prefix={<User />}
-                      value={formData.fullName}
-                      onChange={(e) =>
-                        setFormData((p) => ({ ...p, fullName: e.target.value }))
-                      }
-                    />
-                    {errors.fullName && (
-                      <div className="form-error">{errors.fullName}</div>
-                    )}
-                  </Form.Item>
-                  <Form.Item label="Email" required>
-                    <Input
-                      prefix={<Mail />}
-                      value={formData.email}
-                      onChange={(e) =>
-                        setFormData((p) => ({ ...p, email: e.target.value }))
-                      }
-                    />
-                    {errors.email && (
-                      <div className="form-error">{errors.email}</div>
-                    )}
-                  </Form.Item>
-                  <Form.Item label="Phone" required>
-                    <Input
-                      prefix={<Phone />}
-                      value={formData.phone}
-                      onChange={(e) =>
-                        setFormData((p) => ({ ...p, phone: e.target.value }))
-                      }
-                    />
-                    {errors.phone && (
-                      <div className="form-error">{errors.phone}</div>
-                    )}
-                  </Form.Item>
-                  <Button block type="primary" onClick={handleNext}>
-                    Continue
-                  </Button>
+            <div className="sw-fr-progress-bar">
+              <div className="progress-fill" style={{ width: `${((currentStep + 1) / 3) * 100}%` }}></div>
+            </div>
+
+            {/* Step 1: Personal Info */}
+            {currentStep === 0 && (
+              <form onSubmit={handleStep1} className="sw-fr-registration-form">
+                <div className="sw-fr-form-group">
+                  <label className="sw-fr-form-label">Full Name</label>
+                  <Input
+                    value={formData.fullName}
+                    onChange={(e) => {
+                      setFormData({ ...formData, fullName: e.target.value });
+                      if (errors.fullName) setErrors({ ...errors, fullName: '' });
+                    }}
+                    placeholder="John Doe"
+                    className={`sw-fr-form-input ${errors.fullName ? 'form-input-error' : ''}`}
+                  />
+                  {errors.fullName && <div className="form-error">{errors.fullName}</div>}
                 </div>
-              )}
 
-              {/* Step 2 */}
-              {step === 2 && (
-                <div className="step-container">
-                  <Form.Item label="Password" required>
-                    <Input.Password
-                      prefix={<Lock />}
-                      value={formData.password}
-                      iconRender={() => null}
-                      onChange={(e) =>
-                        setFormData((p) => ({ ...p, password: e.target.value }))
-                      }
-                      addonAfter={
-                        <Button
-                          type="text"
-                          onClick={() => setShowPassword((s) => !s)}
-                        >
-                          {showPassword ? <EyeOff /> : <Eye />}
-                        </Button>
-                      }
-                    />
-                    {errors.password && (
-                      <div className="form-error">{errors.password}</div>
-                    )}
-                  </Form.Item>
-                  <Form.Item label="Confirm Password" required>
-                    <Input.Password
-                      prefix={<Lock />}
-                      value={formData.confirmPassword}
-                      iconRender={() => null}
-                      onChange={(e) =>
-                        setFormData((p) => ({
-                          ...p,
-                          confirmPassword: e.target.value,
-                        }))
-                      }
-                      addonAfter={
-                        <Button
-                          type="text"
-                          onClick={() => setShowConfirmPassword((s) => !s)}
-                        >
-                          {showConfirmPassword ? <EyeOff /> : <Eye />}
-                        </Button>
-                      }
-                    />
-                    {errors.confirmPassword && (
-                      <div className="form-error">{errors.confirmPassword}</div>
-                    )}
-                  </Form.Item>
-                  <Form.Item label="Location" required>
-                    <Input
-                      prefix={<MapPin />}
-                      value={formData.location}
-                      onChange={(e) =>
-                        setFormData((p) => ({ ...p, location: e.target.value }))
-                      }
-                    />
-                    {errors.location && (
-                      <div className="form-error">{errors.location}</div>
-                    )}
-                  </Form.Item>
-                  <Button block type="primary" onClick={handleNext}>
-                    Continue
-                  </Button>
+                <div className="sw-fr-form-group">
+                  <label className="sw-fr-form-label">Email Address</label>
+                  <Input
+                    value={formData.email}
+                    onChange={(e) => {
+                      setFormData({ ...formData, email: e.target.value });
+                      if (errors.email) setErrors({ ...errors, email: '' });
+                    }}
+                    placeholder="you@example.com"
+                    className={`sw-fr-form-input ${errors.email ? 'form-input-error' : ''}`}
+                    type="email"
+                  />
+                  {errors.email && <div className="sw-fr-form-error">{errors.email}</div>}
                 </div>
-              )}
 
-              {/* Step 3 */}
-              {step === 3 && (
-                // <div className=" step-container step3">
-                  <div className="step-container step3">
-                    <Form.Item label="Skills">
-                      <Space wrap>
-                        {SKILLS.map((skill) => (
-                          <Tag
-                            key={skill}
-                            color={
-                              formData.skills.includes(skill)
-                                ? "purple"
-                                : "default"
-                            }
-                            onClick={() => toggleSkill(skill)}
-                          >
-                            {skill}
-                          </Tag>
-                        ))}
-                      </Space>
-                      {errors.skills && (
-                        <div className="form-error">{errors.skills}</div>
-                      )}
-                    </Form.Item>
-                    <Form.Item label="Summary / About You">
-                      <Input.TextArea
-                        value={formData.summary}
-                        onChange={(e) =>
-                          setFormData((p) => ({
-                            ...p,
-                            summary: e.target.value,
-                          }))
-                        }
-                        maxLength={180}
-                        rows={3}
-                      />
-                    </Form.Item>
-                    <Row gutter={16}>
-                      <Col xs={24} md={12}>
-                        <Form.Item label="Experience Doc">
-                          <Upload
-                            accept=".pdf,.jpg,.jpeg,.png"
-                            beforeUpload={beforeUpload}
-                            onChange={handleExpChange}
-                            fileList={expFileList}
-                            onRemove={() => {
-                              setExpFileList([]);
-                              setFormData((p) => ({
-                                ...p,
-                                experienceDoc: null,
-                              }));
-                            }}
-                            customRequest={({ onSuccess }) =>
-                              setTimeout(() => onSuccess && onSuccess("ok"), 0)
-                            }
-                          >
-                            <Button>Choose file</Button>
-                          </Upload>
-                          {errors.experienceDoc && (
-                            <div className="form-error">
-                              {errors.experienceDoc}
-                            </div>
-                          )}
-                        </Form.Item>
-                      </Col>
-                      <Col xs={24} md={12}>
-                        <Form.Item label="Government ID">
-                          <Upload
-                            accept=".pdf,.jpg,.jpeg,.png"
-                            beforeUpload={beforeUpload}
-                            onChange={handleGovChange}
-                            fileList={govFileList}
-                            onRemove={() => {
-                              setGovFileList([]);
-                              setFormData((p) => ({ ...p, govId: null }));
-                            }}
-                            customRequest={({ onSuccess }) =>
-                              setTimeout(() => onSuccess && onSuccess("ok"), 0)
-                            }
-                          >
-                            <Button>Choose file</Button>
-                          </Upload>
-                          {errors.govId && (
-                            <div className="form-error">{errors.govId}</div>
-                          )}
-                        </Form.Item>
-                      </Col>
-                    </Row>
+                <div className="sw-fr-form-group">
+                  <label className="sw-fr-form-label">Phone Number</label>
+                  <Input
+                    value={formData.phone}
+                    onChange={(e) => {
+                      setFormData({ ...formData, phone: e.target.value });
+                      if (errors.phone) setErrors({ ...errors, phone: '' });
+                    }}
+                    placeholder="9876543210"
+                    className={`sw-fr-form-input ${errors.phone ? 'form-input-error' : ''}`}
+                    type="tel"
+                  />
+                  {errors.phone && <div className="sw-fr-form-error">{errors.phone}</div>}
+                </div>
 
-                    <Form.Item>
-                      <Checkbox required>
-                        I agree to <a href="#">Terms</a> and{" "}
-                        <a href="#">Privacy</a>
-                      </Checkbox>
-                    </Form.Item>
-                    <Form.Item>
-                      <Button
-                        block
-                        type="primary"
-                        htmlType="submit"
-                        loading={isLoading}
-                      >
-                        {isLoading ? (
-                          <Loader2 className="animate-spin" />
-                        ) : (
-                          "Create Account"
-                        )}
-                      </Button>
-                    </Form.Item>
+                <Button htmlType="submit" className="sw-fr-btn btn-primary btn-block" type="primary">
+                  Continue
+                </Button>
+              </form>
+            )}
+
+            {/* Step 2: Security */}
+            {currentStep === 1 && (
+              <form onSubmit={handleStep2} className="sw-fr-registration-form">
+                <div className="sw-fr-form-group">
+                  <label className="sw-fr-form-label">Password</label>
+                  <Input.Password
+                    value={formData.password}
+                    onChange={(e) => {
+                      setFormData({ ...formData, password: e.target.value });
+                      if (errors.password) setErrors({ ...errors, password: '' });
+                    }}
+                    placeholder="••••••••"
+                    className={`sw-fr-form-input ${errors.password ? 'form-input-error' : ''}`}
+                  />
+                  {errors.password && <div className="sw-fr-form-error">{errors.password}</div>}
+                </div>
+
+                <div className="sw-fr-form-group">
+                  <label className="sw-fr-form-label">Confirm Password</label>
+                  <Input.Password
+                    value={formData.confirmPassword}
+                    onChange={(e) => {
+                      setFormData({ ...formData, confirmPassword: e.target.value });
+                      if (errors.confirmPassword) setErrors({ ...errors, confirmPassword: '' });
+                    }}
+                    placeholder="••••••••"
+                    className={`sw-fr-form-input ${errors.confirmPassword ? 'form-input-error' : ''}`}
+                  />
+                  {errors.confirmPassword && <div className="sw-fr-form-error">{errors.confirmPassword}</div>}
+                </div>
+
+                <div className="sw-fr-form-group">
+                  <label className="sw-fr-form-label">Location</label>
+                  <Input
+                    value={formData.location}
+                    onChange={(e) => {
+                      setFormData({ ...formData, location: e.target.value });
+                      if (errors.location) setErrors({ ...errors, location: '' });
+                    }}
+                    placeholder="Hyderabad, India"
+                    className={`sw-fr-form-input ${errors.location ? 'sw-fr-form-input-error' : ''}`}
+                  />
+                  {errors.location && <div className="sw-fr-form-error">{errors.location}</div>}
+                </div>
+
+                <Button htmlType="submit" className="sw-fr-btn btn-primary btn-block" type="primary">
+                  Continue
+                </Button>
+              </form>
+            )}
+
+            {/* Step 3: Skills */}
+            {currentStep === 2 && (
+              <form onSubmit={handleFinalSubmit} className="sw-fr-registration-form">
+                {/* <div className="form-group">
+                  <label className="form-label">I want to</label>
+                  <div className="user-type-group">
+                    <Button
+                      type="default"
+                      className={`user-type-option ${formData.userType === 'freelancer' ? 'active' : ''}`}
+                      onClick={() => setFormData({ ...formData, userType: 'freelancer' })}
+                    >
+                      <span className="icon">💼</span>
+                      <span>Work as Freelancer</span>
+                    </Button>
+                    <Button
+                      type="default"
+                      className={`user-type-option ${formData.userType === 'client' ? 'active' : ''}`}
+                      onClick={() => setFormData({ ...formData, userType: 'client' })}
+                    >
+                      <span className="icon">👤</span>
+                      <span>Hire Freelancers</span>
+                    </Button>
                   </div>
-                // </div>
-              )}
-            </Form>
-          </Card>
-        </Col>
-      </Row>
+                </div> */}
+
+                {formData.userType === 'freelancer' && (
+                  <div className="sw-fr-form-group">
+                    <label className="sw-fr-form-label">Select Your Skills</label>
+                    <div className="sw-fr-skills-grid">
+                      {skills.map(skill => (
+                        <Button
+                          key={skill}
+                          type="default"
+                          className={`sw-fr-skill-tag ${formData.skills.includes(skill) ? 'active' : ''}`}
+                          onClick={() => toggleSkill(skill)}
+                        >
+                          {skill}
+                        </Button>
+                      ))}
+                    </div>
+                    {errors.skills && <div className="sw-fr-form-error">{errors.skills}</div>}
+                  </div>
+                )}
+
+                <Button htmlType="submit" className="sw-fr-btn btn-primary btn-block" type="primary" loading={loading} disabled={loading}>
+                  {loading ? 'Creating Account...' : 'Create Account'}
+                </Button>
+              </form>
+            )}
+
+            <p className="sw-fr-login-link">
+              Already have an account?{' '}
+              <a onClick={() => navigate('/freelancerlogin')}>Login here</a>
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
