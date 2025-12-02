@@ -73,14 +73,14 @@ const TransportationForm: React.FC<FormProps> = ({ id, onClose }) => {
 
             <h3 className="sw-br-included-title">What's Included</h3>
             <ul className="sw-br-included-list">
-              <li>✓ Quality certified materials</li>
-              <li>✓ Timely delivery</li>
-              <li>✓ Doorstep delivery</li>
-              <li>✓ Quality assurance</li>
-              <li>✓ Return/exchange policy</li>
-              <li>✓ Technical support</li>
-              <li>✓ Bulk order discounts</li>
-              <li>✓ Invoice and documentation</li>
+              <li>Quality certified materials</li>
+              <li>Timely delivery</li>
+              <li>Doorstep delivery</li>
+              <li>Quality assurance</li>
+              <li>Return/exchange policy</li>
+              <li>Technical support</li>
+              <li>Bulk order discounts</li>
+              <li>Invoice and documentation</li>
             </ul>
           </div>
 
