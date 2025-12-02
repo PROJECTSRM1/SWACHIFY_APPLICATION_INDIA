@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { List, Card, Empty, Tag, Row, Col } from "antd";
-import "./RecentBookingPage.css";
+import "../index.css";
 
 type Booking = {
   id: string;
