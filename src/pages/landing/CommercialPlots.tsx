@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import CommonHeader from "../../pages/landing/Header";
 import "../../pages/landing/Header.css"; // import CSS for header
+import FooterSection from '../../pages/landing/FooterSection';
+import "../../pages/landing/FooterSection.css"
 import {
   Layout,
   // Menu,
@@ -25,13 +27,13 @@ import {
   HomeOutlined,
   SearchOutlined,
   EyeOutlined,
-  PhoneOutlined,
-  MailOutlined,
-  EnvironmentOutlined,
-  FacebookOutlined,
-  TwitterOutlined,
-  InstagramOutlined,
-  LinkedinOutlined,
+  // PhoneOutlined,
+  // MailOutlined,
+  // EnvironmentOutlined,
+  // FacebookOutlined,
+  // TwitterOutlined,
+  // InstagramOutlined,
+  // LinkedinOutlined,
   // MenuOutlined,
   // CloseOutlined,
 } from "@ant-design/icons";
@@ -48,7 +50,7 @@ import card2 from "../../assets/landingimages/commercial plot.jpg";
 import card3 from "../../assets/landingimages/land.jpg";
 import card4 from "../../assets/landingimages/plot.jpg";
 
-const { Content, Footer } = Layout;
+const { Content } = Layout;
 const { Title } = Typography;
 const { Option } = Select;
 const { TabPane } = Tabs;
@@ -509,7 +511,7 @@ const CommercialPlots: React.FC = () => {
 
       </Content>
 
-      <Footer className="sw-cp-cp-footer">
+      {/* <Footer className="sw-cp-cp-footer">
         <div className="sw-cp-cp-footer-inner">
           <div className="sw-cp-cp-footer-col">
             <h4>About Us</h4>
@@ -557,7 +559,7 @@ const CommercialPlots: React.FC = () => {
             </div>
 
             {/* Social icons (styled as dark rounded squares like Home_Service) */}
-            <div className="sw-cp-cp-footer-socials" aria-label="social links">
+            {/* <div className="sw-cp-cp-footer-socials" aria-label="social links">
               <a aria-label="facebook" href="#" role="link">
                 <FacebookOutlined />
               </a>
@@ -575,7 +577,8 @@ const CommercialPlots: React.FC = () => {
         </div>
 
         <div className="sw-cp-cp-footer-bottom">© {new Date().getFullYear()} Home Services. All rights reserved.</div>
-      </Footer>
+      // </Footer> */} */
+      <FooterSection selectedKey="CommercialPlots" />
 
     </Layout>
   );
