@@ -12,19 +12,19 @@ import {
 } from 'antd';
 import {
   SearchOutlined,
-  // HeartOutlined,
+  HeartOutlined,
   EnvironmentOutlined,
   HomeOutlined,
   FilterOutlined,
   ArrowLeftOutlined,
 } from '@ant-design/icons';
-import './ApartmentListingsPage.css';
-
+import '../../../../index.css'
 // Import images from assets folder
 // Apartments
 import apartment1Img from '../../../../assets/HomeRental/img.jpg';
 import apartment2Img from '../../../../assets/HomeRental/apart.jpg';
 import apartment3Img from '../../../../assets/HomeRental/threed.jpg';
+import apartment4Img from '../../../../assets/HomeRental/classicbedroom.jpg'
 // Villas
 import villa1Img from '../../../../assets/HomeRental/villa.jpg';
 import villa2Img from '../../../../assets/HomeRental/threed.jpg';
@@ -118,7 +118,7 @@ const ApartmentListingsPage: React.FC<ApartmentListingsPageProps> = ({
       furnishing: 'Fully Furnished',
       amenities: ['Gym', 'Pool', 'Parking', 'Security', 'Garden', 'Concierge'],
       price: 2500,
-      image: apartment3Img,
+      image: apartment4Img,
     },
   ];
 
@@ -284,9 +284,9 @@ const ApartmentListingsPage: React.FC<ApartmentListingsPageProps> = ({
   };
 
   return (
-    <div className="listings-page">
-      <div className="listings-header">
-        <div className="listings-nav">
+    <div className="sw-hr-listings-page">
+      <div className="sw-hr-listings-header">
+        <div className="sw-hr-listings-nav">
           <Button
             type="text"
             icon={<ArrowLeftOutlined />}
@@ -295,29 +295,29 @@ const ApartmentListingsPage: React.FC<ApartmentListingsPageProps> = ({
                 onBack();
               }
             }}
-            className="back-btn"
+            className="sw-hr-back-btn"
           >
             {propertyTypeName}
           </Button>
-          <span className="nav-text">{propertyTypeName} - {filteredProperties.length} properties available</span>
+          <span className="sw-hr-nav-text">{propertyTypeName} - {filteredProperties.length} properties available</span>
         </div>
-        <div className="listings-search-bar">
+        <div className="sw-hr-listings-search-bar">
           <Search
             placeholder="Search by location or property name..."
             prefix={<SearchOutlined />}
             size="large"
-            className="search-input"
+            className="sw-hr-search-input"
             allowClear
             onSearch={handleSearch}
             onChange={(e) => handleSearch(e.target.value)}
             value={searchQuery}
           />
           <Space>
-            <Button icon={<FilterOutlined />} size="large">Filter</Button>
+            <Button icon={<FilterOutlined />} size="small">Filter</Button>
             <Select 
               value={priceFilter}
               onChange={handlePriceFilterChange}
-              size="large" 
+              size="small" 
               style={{ width: 150 }}
             >
               <Option value="all">All Prices</Option>
@@ -329,11 +329,11 @@ const ApartmentListingsPage: React.FC<ApartmentListingsPageProps> = ({
         </div>
       </div>
 
-      <div className="listings-content">
+      <div className="sw-hr-listings-content">
         {filteredProperties.length === 0 ? (
-          <div className="no-results">
+          <div className="sw-hr-no-results">
             <p>No properties found matching your criteria.</p>
-            <Button onClick={() => { setSearchQuery(''); setPriceFilter('all'); }}>
+            <Button onClick={() => { setSearchQuery(''); setPriceFilter('all'); }} size="small">
               Clear Filters
             </Button>
           </div>
@@ -343,61 +343,62 @@ const ApartmentListingsPage: React.FC<ApartmentListingsPageProps> = ({
             <Col xs={24} sm={12} lg={12} key={property.id}>
               <Card
                 hoverable
-                className="property-card"
+                className="sw-hr-property-card"
                 cover={
-                  <div className="pc-image-wrap">
-                    <img src={property.image} alt={property.title} className="pc-image" />
+                  <div className="sw-hr-pc-image-wrap">
+                    <img src={property.image} alt={property.title} className="sw-hr-pc-image" />
                     <Tag
-                      className={`pc-furnishing-tag ${property.furnishing === 'Fully Furnished' ? 'fully' : 'semi'}`}
+                      className={`sw-hr-pc-furnishing-tag ${property.furnishing === 'Fully Furnished' ? 'fully' : 'semi'}`}
                     >
                       {property.furnishing}
                     </Tag>
-                    {/* <Button
+                    <Button
                       type="text"
                       icon={<HeartOutlined />}
-                      className="pc-favorite-btn"
-                    /> */}
+                      className="sw-hr-pc-favorite-btn"
+                    />
                   </div>
                 }
               >
-                <div className="pc-body">
-                  <div className="pc-header">
-                    <h3 className="pc-title">{property.title}</h3>
-                    <div className="pc-rating">
+                <div className="sw-hr-pc-body">
+                  <div className="sw-hr-pc-header">
+                    <h3 className="sw-hr-pc-title">{property.title}</h3>
+                    <div className="sw-hr-pc-rating">
                       <Rate disabled defaultValue={property.rating} allowHalf style={{ fontSize: 14 }} />
-                      <span className="pc-rating-value">{property.rating}</span>
+                      <span className="sw-hr-pc-rating-value">{property.rating}</span>
                     </div>
                   </div>
 
-                  <div className="pc-location">
+                  <div className="sw-hr-pc-location">
                     <EnvironmentOutlined /> {property.location}
                   </div>
 
-                  <div className="pc-specs">
+                  <div className="sw-hr-pc-specs">
                     <span>🛏️ {property.beds} Beds</span>
                     <span>🚿 {property.baths} Baths</span>
                     <span><HomeOutlined /> {property.sqft} sq.ft</span>
                   </div>
 
-                  <div className="pc-amenities">
+                  <div className="sw-hr-pc-amenities">
                     {property.amenities.slice(0, 4).map((amenity, idx) => (
-                      <Tag key={idx} className="amenity-tag">{amenity}</Tag>
+                      <Tag key={idx} className="sw-hr-amenity-tag">{amenity}</Tag>
                     ))}
                     {property.amenities.length > 4 && (
-                      <Tag className="amenity-tag more">+{property.amenities.length - 4} more</Tag>
+                      <Tag className="sw-hr-amenity-tag more">+{property.amenities.length - 4} more</Tag>
                     )}
                   </div>
 
-                  <div className="pc-footer">
-                    <div className="pc-price">${property.price}/mo</div>
+                  <div className="sw-hr-pc-footer">
+                    <div className="sw-hr-pc-price">${property.price}/mo</div>
                     <Button
                       type="primary"
+                      size="small"
                       onClick={() => {
                         if (onSelectProperty) {
                           onSelectProperty(property.id);
                         }
                       }}
-                      className="pc-view-btn"
+                      className="sw-hr-pc-view-btn"
                     >
                       View Details
                     </Button>

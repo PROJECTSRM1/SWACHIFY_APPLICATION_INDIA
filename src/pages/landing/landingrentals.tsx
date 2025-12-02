@@ -37,7 +37,7 @@ import {
 } from "@ant-design/icons";
 
 import { useNavigate } from "react-router-dom";
-import "./landingrentals.css";
+// import "./landingrentals.css";
 
 const { Option } = Select;
 const { TabPane } = Tabs;
@@ -52,20 +52,13 @@ export const HSHeader: React.FC<HSHeaderProps> = ({
   // selectedKey = "",
   // onSignUp = () => {}
 }) => {
-  // const [menuOpen, setMenuOpen] = useState(false);
-
-
-  // const selectedKeysArray = selectedKey ? [selectedKey] : [];
-
   return (
- <div>
-<CommonHeader selectedKey="rentals" />
-
- </div>
+    <div>
+      <CommonHeader selectedKey="rentals" />
+    </div>
   );
 };
 /* ========================= END HEADER ========================= */
-
 
 /* ========== IMAGE IMPORTS ========== */
 import heroimg from "../../assets/landingimages/landingrenatlshero.jpg";
@@ -76,7 +69,6 @@ import apt4 from "../../assets/landingimages/spaciousfamilyhouse.jpg";
 import apt5 from "../../assets/landingimages/luxuryvillawithpool.jpg";
 import apt6 from "../../assets/landingimages/modern1bhkflat.jpg";
 /* ======================================================= */
-
 
 const Landingrentals: React.FC = () => {
   const [form] = Form.useForm();
@@ -198,8 +190,7 @@ const Landingrentals: React.FC = () => {
   ];
 
   return (
-    <div className="lr-page">
-
+    <div className="sw-lr-page">
       {/* HEADER */}
       <HSHeader onSignUp={() => setAuthModalVisible(true)} />
 
@@ -269,23 +260,23 @@ const Landingrentals: React.FC = () => {
 
       {/* HERO SECTION */}
       <section
-        className="lr-hero lr-hero-with-image"
+        className="sw-lr-hero sw-lr-hero-with-image"
         style={{
           backgroundImage: `linear-gradient(90deg, rgba(18,72,160,0.75), rgba(47,128,237,0.55)), url(${heroimg})`,
           backgroundSize: "cover",
           backgroundPosition: "center"
         }}
       >
-        <div className="lr-hero-inner lr-hero-content">
-          <div className="lr-hero-top">
-            <small className="lr-hero-sub">
+        <div className="sw-lr-hero-inner sw-lr-hero-content">
+          <div className="sw-lr-hero-top">
+            <small className="sw-lr-hero-sub">
               <HomeOutlined /> Home & Apartments Rental
             </small>
           </div>
 
-          <h1 className="lr-hero-title">Find Your Perfect Home</h1>
+          <h1 className="sw-lr-hero-title">Find Your Perfect Home</h1>
 
-          <Form layout="inline" onFinish={onSearch} className="lr-search lr-search-hero">
+          <Form layout="inline" onFinish={onSearch} className="sw-lr-search sw-lr-search-hero">
             <Form.Item name="query"><Input placeholder="Enter city" /></Form.Item>
 
             <Form.Item name="type">
@@ -305,9 +296,9 @@ const Landingrentals: React.FC = () => {
       </section>
 
       {/* PROPERTY TYPES */}
-      <main className="lr-container">
-        <section className="lr-types">
-          <h2 className="lr-section-title">Browse by Property Type</h2>
+      <main className="sw-lr-container">
+        <section className="sw-lr-types">
+          <h2 className="sw-lr-section-title">Browse by Property Type</h2>
 
           <Row gutter={[24, 24]} justify="center">
             {[
@@ -317,13 +308,13 @@ const Landingrentals: React.FC = () => {
               { title: "Studio", count: "600+", icon: <AppstoreOutlined /> }
             ].map((t, i) => (
               <Col xs={24} sm={12} md={6} key={i}>
-                <Card className="lr-type-card" hoverable>
-                  <div className="lr-type-ico-wrapper">
-                    <div className="lr-type-ico">{t.icon}</div>
+                <Card className="sw-lr-type-card" hoverable>
+                  <div className="sw-lr-type-ico-wrapper">
+                    <div className="sw-lr-type-ico">{t.icon}</div>
                   </div>
                   <h4>{t.title}</h4>
-                  <div className="lr-type-count">{t.count}</div>
-                  <div className="lr-type-sub">Properties</div>
+                  <div className="sw-lr-type-count">{t.count}</div>
+                  <div className="sw-lr-type-sub">Properties</div>
                 </Card>
               </Col>
             ))}
@@ -331,10 +322,10 @@ const Landingrentals: React.FC = () => {
         </section>
 
         {/* FEATURED PROPERTIES */}
-        <section className="lr-featured">
-          <div className="lr-featured-head">
-            <h2 className="lr-section-title">Featured Properties</h2>
-            <Button icon={<FilterOutlined />}>Filters</Button>
+        <section className="sw-lr-featured">
+          <div className="sw-lr-featured-head">
+            <h2 className="sw-lr-section-title">Featured Properties</h2>
+            <Button icon={<FilterOutlined />} className="sw-lr-featured-filter-btn">Filters</Button>
           </div>
 
           <Row gutter={[24, 24]}>
@@ -342,32 +333,32 @@ const Landingrentals: React.FC = () => {
               <Col xs={24} sm={12} md={8} key={p.id}>
                 <Card
                   hoverable
-                  className="lr-prop-card"
+                  className="sw-lr-prop-card"
                   cover={
-                    <div className="lr-cover-wrap">
-                      <img src={p.img} className="lr-prop-img" />
-                      <div className="lr-heart"><HeartOutlined /></div>
-                      <div className="lr-prop-tag">{p.tag}</div>
+                    <div className="sw-lr-cover-wrap">
+                      <img src={p.img} className="sw-lr-prop-img" />
+                      <div className="sw-lr-heart"><HeartOutlined /></div>
+                      <div className="sw-lr-prop-tag">{p.tag}</div>
                     </div>
                   }
                 >
                   <h3>{p.title}</h3>
                   <p>📍 {p.location}</p>
-                  <p className="lr-prop-price">{p.price} / month</p>
+                  <p className="sw-lr-prop-price">{p.price} / month</p>
                   <p>🛏 {p.beds} Beds | 🛁 {p.baths} Baths | 📐 {p.sqft}</p>
 
-                  <div className="lr-prop-tags">
+                  <div className="sw-lr-prop-tags">
                     {p.badges.map((b, i) => (
-                      <span key={i} className="lr-badge">{b}</span>
+                      <span key={i} className="sw-lr-badge">{b}</span>
                     ))}
                   </div>
 
                   <p>Available: {p.available}</p>
 
                   <Button 
-                  // type="primary" 
-                  className="schedule"
-                   block>Schedule Viewing</Button>
+                    // type="primary" 
+                    className="sw-lr-schedule"
+                    block>Schedule Viewing</Button>
                 </Card>
               </Col>
             ))}
@@ -375,17 +366,17 @@ const Landingrentals: React.FC = () => {
         </section>
 
         {/* AMENITIES */}
-        <section className="lr-amenities">
-          <div className="lr-amenities-inner">
-            <div className="lr-amenities-top">
-              <button className="lr-view-all-btn">View All Properties</button>
+        <section className="sw-lr-amenities">
+          <div className="sw-lr-amenities-inner">
+            <div className="sw-lr-amenities-top">
+              <button className="sw-lr-view-all-btn">View All Properties</button>
               <div>
-                <h2 className="lr-section-title">Premium Amenities</h2>
-                <p className="lr-sub">Enjoy world-class facilities and amenities in our properties</p>
+                <h2 className="sw-lr-section-title">Premium Amenities</h2>
+                <p className="sw-lr-sub">Enjoy world-class facilities and amenities in our properties</p>
               </div>
             </div>
 
-            <div className="lr-amenities-grid">
+            <div className="sw-lr-amenities-grid">
               {[
                 "24/7 Security",
                 "Swimming Pool",
@@ -398,23 +389,67 @@ const Landingrentals: React.FC = () => {
                 "Club House",
                 "Maintenance Staff"
               ].map((a, i) => (
-                <div key={i} className="lr-amenity">
-                  <span className="lr-amenity-check" aria-hidden>
+                <div key={i} className="sw-lr-amenity">
+                  <span className="sw-lr-amenity-check" aria-hidden>
                     <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
                       <path d="M1.5 6.5L5.5 10.5L14.5 1.5" stroke="#7B2CFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                   </span>
-                  <div className="lr-amenity-text">{a}</div>
+                  <div className="sw-lr-amenity-text">{a}</div>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
+        {/* =======================
+            HOW IT WORKS (NEW UI)
+            placed between Amenities and Booking
+           ======================= */}
+        <section className="sw-lr-steps" aria-labelledby="how-it-works-title">
+          <div className="sw-lr-steps-inner">
+            <h2 id="how-it-works-title" className="sw-lr-steps-title">How It Works</h2>
+
+            <div className="sw-lr-steps-track" role="list" aria-label="How it works steps">
+              <div className="sw-lr-step-item" role="listitem" aria-label="Step 1: Search & Filter">
+                <div className="sw-lr-step-circle-wrap">
+                  <div className="sw-lr-step-circle" aria-hidden>1</div>
+                </div>
+                <div className="sw-lr-step-label">Search & Filter</div>
+                <div className="sw-lr-step-desc">Browse properties matching your needs</div>
+              </div>
+
+              <div className="sw-lr-step-item" role="listitem" aria-label="Step 2: Schedule Viewing">
+                <div className="sw-lr-step-circle-wrap">
+                  <div className="sw-lr-step-circle" aria-hidden>2</div>
+                </div>
+                <div className="sw-lr-step-label">Schedule Viewing</div>
+                <div className="sw-lr-step-desc">Visit properties at your convenience</div>
+              </div>
+
+              <div className="sw-lr-step-item" role="listitem" aria-label="Step 3: Submit Application">
+                <div className="sw-lr-step-circle-wrap">
+                  <div className="sw-lr-step-circle" aria-hidden>3</div>
+                </div>
+                <div className="sw-lr-step-label">Submit Application</div>
+                <div className="sw-lr-step-desc">Complete the rental application</div>
+              </div>
+
+              <div className="sw-lr-step-item" role="listitem" aria-label="Step 4: Move In">
+                <div className="sw-lr-step-circle-wrap">
+                  <div className="sw-lr-step-circle" aria-hidden>4</div>
+                </div>
+                <div className="sw-lr-step-label">Move In</div>
+                <div className="sw-lr-step-desc">Sign lease and get your keys</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* BOOKING */}
-        <section className="lr-booking">
-          <h2 className="lr-section-title">Schedule a Viewing</h2>
-          <div className="lr-booking-card">
+        <section className="sw-lr-booking">
+          <h2 className="sw-lr-section-title">Schedule a Viewing</h2>
+          <div className="sw-lr-booking-card">
             <Form layout="vertical" form={form} onFinish={onSchedule}>
               <Row gutter={16}>
                 <Col xs={24} md={12}>
@@ -454,7 +489,7 @@ const Landingrentals: React.FC = () => {
 
                 <Col xs={24} md={12}>
                   <Form.Item label="Preferred Date" name="date" rules={[{ required: true }]}>
-                    <DatePicker className="lr-datepicker" />
+                    <DatePicker className="sw-lr-datepicker" />
                   </Form.Item>
                 </Col>
 
@@ -475,7 +510,7 @@ const Landingrentals: React.FC = () => {
                   </Form.Item>
                 </Col>
 
-                <Button className="lr-submit-btn" size="large" htmlType="submit" block>
+                <Button className="sw-lr-submit-btn" size="large" htmlType="submit" block>
                   Submit Booking Request
                 </Button>
               </Row>
@@ -485,16 +520,16 @@ const Landingrentals: React.FC = () => {
       </main>
 
       {/* FOOTER */}
-      <footer className="lr-footer">
-        <div className="lr-footer-inner lr-footer-grid">
-          <div className="lr-footer-col">
+      <footer className="sw-lr-footer">
+        <div className="sw-lr-footer-inner sw-lr-footer-grid">
+          <div className="sw-lr-footer-col">
             <h4>About Us</h4>
             <p>Your trusted partner for home and property services.</p>
           </div>
 
-          <div className="lr-footer-col">
+          <div className="sw-lr-footer-col">
             <h4>Services</h4>
-            <ul className="lr-footer-list">
+            <ul className="sw-lr-footer-list">
               <li>Cleaning</li>
               <li>Packers & Movers</li>
               <li>Home Services</li>
@@ -504,9 +539,9 @@ const Landingrentals: React.FC = () => {
             </ul>
           </div>
 
-          <div className="lr-footer-col">
+          <div className="sw-lr-footer-col">
             <h4>Quick Links</h4>
-            <ul className="lr-footer-list">
+            <ul className="sw-lr-footer-list">
               <li>Home</li>
               <li>About</li>
               <li>Contact</li>
@@ -514,17 +549,17 @@ const Landingrentals: React.FC = () => {
             </ul>
           </div>
 
-          <div className="lr-footer-col">
+          <div className="sw-lr-footer-col">
             <h4>Contact Info</h4>
-            <ul className="lr-contact-list">
+            <ul className="sw-lr-contact-list">
               <li>
-                <Phone className="lc-contact-icon" /> +1 (555) 123-4567
+                <Phone className="sw-lr-contact-icon" /> +1 (555) 123-4567
               </li>
               <li><MailOutlined /> info@homeservices.com</li>
               <li><EnvironmentOutlined /> 123 Street, City</li>
             </ul>
 
-            <div className="lr-footer-socials">
+            <div className="sw-lr-footer-socials">
               <FacebookOutlined />
               <TwitterOutlined />
               <InstagramOutlined />
@@ -533,7 +568,7 @@ const Landingrentals: React.FC = () => {
           </div>
         </div>
 
-        <div className="lr-footer-bottom">
+        <div className="sw-lr-footer-bottom">
           © 2025 Home Services. All rights reserved.
         </div>
       </footer>

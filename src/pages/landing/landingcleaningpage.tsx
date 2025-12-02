@@ -30,7 +30,7 @@ import {
 } from "@ant-design/icons";
 
 import { useNavigate } from "react-router-dom";
-import "./landingcleaningpage.css";
+// import "./landingcleaningpage.css";
 
 import s1 from "../../assets/landingimages/landinghomecleaning.jpg";
 import s2 from "../../assets/landingimages/landingofficecleaning.jpg";
@@ -261,50 +261,50 @@ const LandingCleaningPage: React.FC = () => {
   };
 
   return (
-    <div className="lc-page">
+    <div className="sw-lc-page">
       <HSHeader onSignUp={() => setAuthVisible(true)} />
       <AuthModal />
 
       {/* HERO */}
-      <section className="lc-hero lc-hero--large">
-        <div className="lc-hero-inner">
-          <div className="lc-hero-content">
-            <div className="lc-hero-top">
-              <span className="lc-hero-icon" aria-hidden>
-                <svg className="lc-hero-star" viewBox="0 0 24 24" fill="none" role="img" aria-hidden>
-                  <path className="lc-hero-star-path" d="M12 2l1.8 4L18 8l-4 1.8L12 14l-1.8-4L6 8l4.2-2L12 2z" />
+      <section className="sw-lc-hero sw-lc-hero--large">
+        <div className="sw-lc-hero-inner">
+          <div className="sw-lc-hero-content">
+            <div className="sw-lc-hero-top">
+              <span className="sw-lc-hero-icon" aria-hidden>
+                <svg className="sw-lc-hero-star" viewBox="0 0 24 24" fill="none" role="img" aria-hidden>
+                  <path className="sw-lc-hero-star-path" d="M12 2l1.8 4L18 8l-4 1.8L12 14l-1.8-4L6 8l4.2-2L12 2z" />
                 </svg>
               </span>
 
-              <span className="lc-hero-sub">Professional Cleaning Service</span>
+              <span className="sw-lc-hero-sub">Professional Cleaning Service</span>
             </div>
 
-            <h1 className="lc-hero-title">Sparkling Clean Homes &amp; Offices</h1>
+            <h1 className="sw-lc-hero-title">Sparkling Clean Homes &amp; Offices</h1>
 
-            <p className="lc-hero-desc">
+            <p className="sw-lc-hero-desc">
               Experience the difference with our professional cleaning services. We bring cleanliness,
               hygiene, and peace of mind to your space.
             </p>
 
-            <div className="lc-hero-ctas">
-              <button className="lc-cta lc-cta--ghost">Book Now</button>
-              <button className="lc-cta lc-cta--primary">Get Quote</button>
+            <div className="sw-lc-hero-ctas">
+              <button className="sw-lc-cta sw-lc-cta--ghost">Book Now</button>
+              <button className="sw-lc-cta sw-lc-cta--primary">Get Quote</button>
             </div>
           </div>
         </div>
       </section>
 
-      <main className="lc-container">
+      <main className="sw-lc-container">
         {/* SERVICES GRID */}
-        <section className="lc-services">
-          <h2 className="lc-section-title">Our Cleaning Services</h2>
-          <p className="lc-sub muted">Comprehensive solutions for all your home and property needs</p>
+        <section className="sw-lc-services">
+          <h2 className="sw-lc-section-title">Our Cleaning Services</h2>
+          <p className="sw-lc-sub muted">Comprehensive solutions for all your home and property needs</p>
 
           <Row gutter={[24, 24]}>
             {serviceList.map((s, idx) => (
               <Col xs={24} sm={12} md={6} key={idx}>
-                <Card hoverable className="lc-service-card" cover={<img src={s.img} alt={s.title} />}>
-                  <div className="lc-service-body">
+                <Card hoverable className="sw-lc-service-card" cover={<img src={s.img} alt={s.title} />}>
+                  <div className="sw-lc-service-body">
                     <h3>{s.title}</h3>
                     <p className="muted">{s.desc}</p>
                   </div>
@@ -315,11 +315,11 @@ const LandingCleaningPage: React.FC = () => {
         </section>
 
         {/* INCLUDED */}
-        <section className="lc-included" aria-labelledby="included-heading">
-          <div className="lc-included-inner">
-            <h2 id="included-heading" className="lc-section-title">What's Included</h2>
-            <p className="lc-sub muted">Our comprehensive cleaning service covers every corner of your space</p>
-            <div className="lc-included-grid" role="list">
+        <section className="sw-lc-included" aria-labelledby="included-heading">
+          <div className="sw-lc-included-inner">
+            <h2 id="included-heading" className="sw-lc-section-title">What's Included</h2>
+            <p className="sw-lc-sub muted">Our comprehensive cleaning service covers every corner of your space</p>
+            <div className="sw-lc-included-grid" role="list">
               {[
                 "Deep cleaning of all rooms",
                 "Kitchen and bathroom sanitization",
@@ -330,14 +330,14 @@ const LandingCleaningPage: React.FC = () => {
                 "Trained and verified staff",
                 "Flexible scheduling",
               ].map((txt, i) => (
-                <div key={i} className="lc-included-box" role="listitem" aria-label={txt}>
-                  <div className="lc-included-left" aria-hidden>
-                    <svg className="lc-include-check" viewBox="0 0 24 24" fill="none" role="img" aria-hidden>
-                      <path className="lc-include-check-path" d="M20 6L9 17l-5-5" />
+                <div key={i} className="sw-lc-included-box" role="listitem" aria-label={txt}>
+                  <div className="sw-lc-included-left" aria-hidden>
+                    <svg className="sw-lc-include-check" viewBox="0 0 24 24" fill="none" role="img" aria-hidden>
+                      <path className="sw-lc-include-check-path" d="M20 6L9 17l-5-5" />
                     </svg>
                   </div>
 
-                  <div className="lc-included-text">{txt}</div>
+                  <div className="sw-lc-included-text">{txt}</div>
                 </div>
               ))}
             </div>
@@ -345,30 +345,30 @@ const LandingCleaningPage: React.FC = () => {
         </section>
 
         {/* PRICING */}
-        <section className="lc-pricing">
-          <h2 className="lc-section-title">Pricing Packages</h2>
-          <p className="lc-sub muted">Choose the package that best fits your needs</p>
+        <section className="sw-lc-pricing">
+          <h2 className="sw-lc-section-title">Pricing Packages</h2>
+          <p className="sw-lc-sub muted">Choose the package that best fits your needs</p>
 
           <Row gutter={[24, 24]} justify="center">
             {packages.map((p, i) => (
               <Col xs={24} sm={12} md={8} key={i}>
-                <div className={`lc-price-card ${p.popular ? "popular" : ""}`}>
-                  {p.popular && <div className="lc-badge">Most Popular</div>}
+                <div className={`sw-lc-price-card ${p.popular ? "popular" : ""}`}>
+                  {p.popular && <div className="sw-lc-badge">Most Popular</div>}
                   <h3>{p.name}</h3>
-                  <div className="lc-price">
-                    <span className="lc-amount">{p.price}</span>
-                    <span className="lc-suffix"> / service</span>
+                  <div className="sw-lc-price">
+                    <span className="sw-lc-amount">{p.price}</span>
+                    <span className="sw-lc-suffix"> / service</span>
                   </div>
-                  <div className="lc-time">{p.time}</div>
-                  <ul className="lc-bullets">
+                  <div className="sw-lc-time">{p.time}</div>
+                  <ul className="sw-lc-bullets">
                     {p.bullets.map((b, idx) => (
                       <li key={idx}>
-                        <CheckCircleOutlined className="lc-bullet" />
+                        <CheckCircleOutlined className="sw-lc-bullet" />
                         {b}
                       </li>
                     ))}
                   </ul>
-                  <Button type={p.popular ? "primary" : "default"} block className="lc-price-cta">
+                  <Button type={p.popular ? "primary" : "default"} block className="sw-lc-price-cta">
                     Select Package
                   </Button>
                 </div>
@@ -378,11 +378,11 @@ const LandingCleaningPage: React.FC = () => {
         </section>
 
         {/* BOOKING */}
-        <section className="lc-booking">
-          <h2 className="lc-section-title">Book Your Cleaning Service</h2>
-          <p className="lc-sub muted">Fill out the form below and we'll get back to you within 24 hours</p>
+        <section className="sw-lc-booking">
+          <h2 className="sw-lc-section-title">Book Your Cleaning Service</h2>
+          <p className="sw-lc-sub muted">Fill out the form below and we'll get back to you within 24 hours</p>
 
-          <div className="lc-booking-card">
+          <div className="sw-lc-booking-card">
             <Form form={form} layout="vertical" onFinish={onFinish}>
               <Row gutter={16}>
                 <Col xs={24} md={12}>
@@ -422,7 +422,7 @@ const LandingCleaningPage: React.FC = () => {
 
                 <Col xs={24} md={12}>
                   <Form.Item name="date" label="Preferred Date" rules={[{ required: true }]}>
-                    <DatePicker className="lc-datepicker" />
+                    <DatePicker className="sw-lc-datepicker" />
                   </Form.Item>
                 </Col>
 
@@ -446,7 +446,7 @@ const LandingCleaningPage: React.FC = () => {
 
                 <Col xs={24}>
                   <Form.Item>
-                    <Button htmlType="submit" className="lc-submit-btn" size="large" block>
+                    <Button htmlType="submit" className="sw-lc-submit-btn" size="large" block>
                       Submit Booking Request
                     </Button>
                   </Form.Item>
@@ -466,50 +466,50 @@ const LandingCleaningPage: React.FC = () => {
 
 function WhyChooseSection() {
   return (
-    <section className="lc-why pale lc-why-centered" aria-labelledby="why-choose-heading">
-      <div className="lc-why-inner">
-        <h2 id="why-choose-heading" className="lc-section-title">
+    <section className="sw-lc-why pale sw-lc-why-centered" aria-labelledby="why-choose-heading">
+      <div className="sw-lc-why-inner">
+        <h2 id="why-choose-heading" className="sw-lc-section-title">
           Why Choose Our Cleaning Service
         </h2>
 
-        <div className="lc-why-grid" role="list">
-          <div className="lc-why-item" role="listitem">
-            <div className="lc-why-icon-circle" aria-hidden>
-              <svg className="lc-why-svg" viewBox="0 0 24 24" fill="none" role="img" aria-hidden>
-                <path className="lc-why-path" d="M12 2L4 5v6c0 5 4 9 8 9s8-4 8-9V5l-8-3z" />
+        <div className="sw-lc-why-grid" role="list">
+          <div className="sw-lc-why-item" role="listitem">
+            <div className="sw-lc-why-icon-circle" aria-hidden>
+              <svg className="sw-lc-why-svg" viewBox="0 0 24 24" fill="none" role="img" aria-hidden>
+                <path className="sw-lc-why-path" d="M12 2L4 5v6c0 5 4 9 8 9s8-4 8-9V5l-8-3z" />
               </svg>
             </div>
 
-            <div className="lc-why-title">Insured & Bonded</div>
-            <div className="lc-why-desc">
+            <div className="sw-lc-why-title">Insured & Bonded</div>
+            <div className="sw-lc-why-desc">
               All our staff are fully insured and background-checked for your peace of mind
             </div>
           </div>
 
-          <div className="lc-why-item" role="listitem">
-            <div className="lc-why-icon-circle" aria-hidden>
-              <svg className="lc-why-svg" viewBox="0 0 24 24" fill="none" role="img" aria-hidden>
-                <path className="lc-why-path" d="M12 3l1.8 4 4 1.8-4 1.8L12 15l-1.8-4-4-1.8 4-1.8L12 3z" />
+          <div className="sw-lc-why-item" role="listitem">
+            <div className="sw-lc-why-icon-circle" aria-hidden>
+              <svg className="sw-lc-why-svg" viewBox="0 0 24 24" fill="none" role="img" aria-hidden>
+                <path className="sw-lc-why-path" d="M12 3l1.8 4 4 1.8-4 1.8L12 15l-1.8-4-4-1.8 4-1.8L12 3z" />
               </svg>
             </div>
 
-            <div className="lc-why-title">Satisfaction Guarantee</div>
-            <div className="lc-why-desc">
+            <div className="sw-lc-why-title">Satisfaction Guarantee</div>
+            <div className="sw-lc-why-desc">
               Not happy with the results? We'll re-clean for free within 24 hours
             </div>
           </div>
 
-          <div className="lc-why-item" role="listitem">
-            <div className="lc-why-icon-circle lc-why-icon-circle--dollar" aria-hidden>
-              <svg className="lc-why-dollar-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden>
-                <text className="lc-why-dollar-text" x="50%" y="50%" textAnchor="middle" dominantBaseline="middle">
+          <div className="sw-lc-why-item" role="listitem">
+            <div className="sw-lc-why-icon-circle sw-lc-why-icon-circle--dollar" aria-hidden>
+              <svg className="sw-lc-why-dollar-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden>
+                <text className="sw-lc-why-dollar-text" x="50%" y="50%" textAnchor="middle" dominantBaseline="middle">
                   $
                 </text>
               </svg>
             </div>
 
-            <div className="lc-why-title">Transparent Pricing</div>
-            <div className="lc-why-desc">No hidden fees or surprise charges. What you see is what you pay</div>
+            <div className="sw-lc-why-title">Transparent Pricing</div>
+            <div className="sw-lc-why-desc">No hidden fees or surprise charges. What you see is what you pay</div>
           </div>
         </div>
       </div>
@@ -519,19 +519,19 @@ function WhyChooseSection() {
 
 function DarkFooter() {
   return (
-    <footer className="lc-footer">
-      <div className="lc-footer-inner">
-        <div className="lc-footer-col">
-          <h4 className="lc-footer-title">About Us</h4>
-          <p className="lc-footer-about">
+    <footer className="sw-lc-footer">
+      <div className="sw-lc-footer-inner">
+        <div className="sw-lc-footer-col">
+          <h4 className="sw-lc-footer-title">About Us</h4>
+          <p className="sw-lc-footer-about">
             Your trusted partner for all home and property-related services. Quality, reliability,
             and customer satisfaction guaranteed.
           </p>
         </div>
 
-        <div className="lc-footer-col">
-          <h4 className="lc-footer-title">Services</h4>
-          <ul className="lc-footer-links" aria-label="Services">
+        <div className="sw-lc-footer-col">
+          <h4 className="sw-lc-footer-title">Services</h4>
+          <ul className="sw-lc-footer-links" aria-label="Services">
             <li><a href="#cleaning">Cleaning Service</a></li>
             <li><a href="#packers">Packers &amp; Movers</a></li>
             <li><a href="#homes">Home Services</a></li>
@@ -541,9 +541,9 @@ function DarkFooter() {
           </ul>
         </div>
 
-        <div className="lc-footer-col">
-          <h4 className="lc-footer-title">Quick Links</h4>
-          <ul className="lc-footer-links" aria-label="Quick links">
+        <div className="sw-lc-footer-col">
+          <h4 className="sw-lc-footer-title">Quick Links</h4>
+          <ul className="sw-lc-footer-links" aria-label="Quick links">
             <li><a href="/">Home</a></li>
             <li><a href="/about">About</a></li>
             <li><a href="/contact">Contact</a></li>
@@ -551,37 +551,37 @@ function DarkFooter() {
           </ul>
         </div>
 
-        <div className="lc-footer-col">
-          <h4 className="lc-footer-title">Contact Info</h4>
+        <div className="sw-lc-footer-col">
+          <h4 className="sw-lc-footer-title">Contact Info</h4>
 
-          <ul className="lc-contact-list">
-            <div className="lc-contact-row">
-              <Phone className="lc-contact-icon lc-thin-phone" aria-hidden />
-              <span className="lc-contact-text"> +1 (555) 123-4567</span>
+          <ul className="sw-lc-contact-list">
+            <div className="sw-lc-contact-row">
+              <Phone className="sw-lc-contact-icon sw-lc-thin-phone" aria-hidden />
+              <span className="sw-lc-contact-text"> +1 (555) 123-4567</span>
             </div>
 
             <li>
-              <MailOutlined className="lc-contact-icon" />
-              <span className="lc-contact-text">info@homeservices.com</span>
+              <MailOutlined className="sw-lc-contact-icon" />
+              <span className="sw-lc-contact-text">info@homeservices.com</span>
             </li>
 
             <li>
-              <EnvironmentOutlined className="lc-contact-icon" />
-              <span className="lc-contact-text">123 Service Street, City, State</span>
+              <EnvironmentOutlined className="sw-lc-contact-icon" />
+              <span className="sw-lc-contact-text">123 Service Street, City, State</span>
             </li>
           </ul>
 
-          <div className="lc-socials" >
-            <a aria-label="facebook" className="lc-social-link" href="#"><FacebookOutlined /></a>
-            <a aria-label="twitter" className="lc-social-link" href="#"><TwitterOutlined /></a>
-            <a aria-label="instagram" className="lc-social-link" href="#"><InstagramOutlined /></a>
-            <a aria-label="linkedin" className="lc-social-link" href="#"><LinkedinOutlined /></a>
+          <div className="sw-lc-socials" >
+            <a aria-label="facebook" className="sw-lc-social-link" href="#"><FacebookOutlined /></a>
+            <a aria-label="twitter" className="sw-lc-social-link" href="#"><TwitterOutlined /></a>
+            <a aria-label="instagram" className="sw-lc-social-link" href="#"><InstagramOutlined /></a>
+            <a aria-label="linkedin" className="sw-lc-social-link" href="#"><LinkedinOutlined /></a>
           </div>
         </div>
       </div>
 
-      <div className="lc-footer-bottom">
-        <div className="lc-footer-bottom-inner">
+      <div className="sw-lc-footer-bottom">
+        <div className="sw-lc-footer-bottom-inner">
           <span>© 2025 Home Services. All rights reserved.</span>
         </div>
       </div>

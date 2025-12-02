@@ -231,7 +231,7 @@ const CleaningService: React.FC = () => {
     {
       key: "commercial",
       title: "Commercial Cleaning",
-      desc: "Professional cleaning  service for offices, schools, and commercial spaces",
+      desc: "Professional cleaning   for offices, schools, and commercial spaces",
       image: commercialImg,
       count: 11,
     },
