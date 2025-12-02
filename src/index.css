@@ -14312,6 +14312,8 @@ body {
 
 /* Anil and Srihari Home Service CSS Updates */
 
+ /* Khasim and Vanamanla Bulding Raw Service CSS Updates */
+ /* for material supply*/
 /* Khasim and Vanamanla Bulding Raw Service CSS Updates */
 /* for material supply*/
 
@@ -14324,7 +14326,6 @@ body {
   box-sizing: border-box !important;
 }
 
-/* Header */
 .sw-br-header {
   width: 100%;
   background: #005cfa;
@@ -14346,7 +14347,6 @@ body {
   font-size: 14px;
 }
 
-/* Grid */
 .sw-br-grid {
   width: 100% !important;
   display: grid !important;
@@ -14359,7 +14359,6 @@ body {
   justify-content: center;
 }
 
-/* Cards */
 .sw-br-card {
   background: #ffffff;
   border-radius: 16px;
@@ -14395,7 +14394,6 @@ body {
   min-height: 40px;
 }
 
-/* Price + Button */
 .sw-br-bottom-row {
   display: flex;
   justify-content: space-between;
@@ -14424,8 +14422,6 @@ body {
 .sw-br-btn:hover {
   background: black;
 }
-
-/* ---------- MODAL ---------- */
 
 .sw-br-modal {
   position: fixed;
@@ -14466,7 +14462,7 @@ body {
   width: 10% !important;
 }
 
-/* Layout */
+
 .sw-br-top {
   display: flex;
   gap: 25px;
@@ -14484,7 +14480,7 @@ body {
   width: 60%;
 }
 
-/* Image */
+
 .sw-br-image-box {
   width: 100%;
   height: 170px;
@@ -14499,7 +14495,6 @@ body {
   object-fit: cover;
 }
 
-/* Service price */
 .sw-br-price-box {
   background: #eef4ff;
   padding: 10px;
@@ -14522,10 +14517,9 @@ body {
 .sw-br-inc-list {
   padding-left: 18px;
   font-size: 13px;
-  color: green;
+  color: #3fbf62;
 }
 
-/* Form */
 .sw-br-form-box {
   padding: 15px;
   border: 1px solid #e5e7eb;
@@ -14596,7 +14590,6 @@ textarea {
   height: 16px;
 }
 
-/* Buttons */
 .sw-br-buttons {
   display: flex;
   gap: 10px;
@@ -14620,8 +14613,6 @@ textarea {
   color: white;
 }
 
-/* ---------- RESPONSIVE ---------- */
-
 @media (max-width: 900px) {
   .sw-br-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -14639,14 +14630,12 @@ textarea {
 
 @media (max-width: 600px) {
 
-  /* ★ Fix sidebar margin affecting mobile layout */
   .sw-br-wrapper {
     margin: 0 !important;
     padding: 0 !important;
     width: 90% !important;
   }
 
-  /* ★ Single-column layout */
   .sw-br-grid {
     grid-template-columns: 1fr !important;
     padding: 10 10px !important;
@@ -14666,7 +14655,6 @@ textarea {
     margin-top: 10px;
   }
 
-  /* ★ Perfectly centered, full-width modal */
   .sw-br-modal-box {
     width: 100% !important;
     max-width: 100% !important;
@@ -14703,13 +14691,8 @@ textarea {
   }
 }
 
-/* for machinery rental */
+/* for machinery rental module */
 
-/* ================================
-   MACHINERY RENTAL LIST PAGE
-================================ */
-
-/* Wrapper */
 .sw-br-machinery-wrapper {
   width: 100%;
   background: #f8fafc;
@@ -14718,7 +14701,7 @@ textarea {
   margin: 0;
 }
 
-/* Header */
+
 .sw-br-machinery-header {
   width: 100%;
   background: #005cfa;
@@ -14741,7 +14724,6 @@ textarea {
   font-size: 15px;
 }
 
-/* Grid */
 .sw-br-machinery-grid {
   width: 100%;
   padding: 0 20px;
@@ -14750,7 +14732,6 @@ textarea {
   gap: 22px;
 }
 
-/* Card */
 .sw-br-machinery-card {
   background: white;
   border-radius: 16px;
@@ -14765,7 +14746,6 @@ textarea {
   transform: translateY(-4px);
 }
 
-/* Machinery image */
 .sw-br-card-img img {
   width: 100%;
   height: 170px;
@@ -14773,14 +14753,12 @@ textarea {
   object-fit: cover;
 }
 
-/* Title */
 .sw-br-machinery-card h3 {
   font-size: 16px;
   margin: 12px 0 6px;
   font-weight: 650;
 }
 
-/* Description */
 .sw-br-machinery-desc {
   font-size: 14px;
   color: #64748b;
@@ -14788,14 +14766,11 @@ textarea {
   min-height: 45px;
 }
 
-/* Bottom row */
 .sw-br-machinery-bottom {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
   margin-top: auto;
-
-
 }
 
 .sw-br-machinery-price {
@@ -14804,7 +14779,6 @@ textarea {
   font-size: 16px;
 }
 
-/* Button */
 .sw-br-machinery-btn {
   background: black;
   color: white;
@@ -14819,11 +14793,6 @@ textarea {
 .sw-br-machinery-btn:hover {
   background: black;
 }
-
-
-/* ====================================
-   MACHINERY RENTAL — DETAILS POPUP
-==================================== */
 
 .sw-br-mach-details-modal {
   position: fixed;
@@ -14848,7 +14817,6 @@ textarea {
   overflow-y: auto;
 }
 
-/* Header */
 .sw-br-mach-details-header {
   display: flex;
   justify-content: space-between;
@@ -14865,7 +14833,6 @@ textarea {
   width: 10% !important;
 }
 
-/* Layout */
 .sw-br-mach-top-section {
   display: flex;
   gap: 30px;
@@ -14876,7 +14843,6 @@ textarea {
   width: 40%;
 }
 
-/* Image */
 .sw-br-mach-image-box {
   width: 100%;
   height: 200px;
@@ -14891,7 +14857,6 @@ textarea {
   object-fit: cover;
 }
 
-/* Price box */
 .sw-br-mach-service-price-box {
   background: #eef2ff;
   text-align: center;
@@ -14906,7 +14871,6 @@ textarea {
   color: #1e40af;
 }
 
-/* Includes */
 .sw-br-mach-included-title {
   margin-top: 10px;
   font-size: 16px;
@@ -14917,16 +14881,15 @@ textarea {
   list-style: none;
   padding-left: 0;
   margin-top: 10px;
-  color: green;
+  color: #3fbf62;
 }
 
 .sw-br-mach-included-list li::before {
-  content: "✓";
-  color: green;
+  content: "●";
+  color: #3fbf62;
   margin-right: 5px;
 }
 
-/* Right section form */
 .sw-br-mach-form-side {
   width: 60%;
 }
@@ -14943,7 +14906,6 @@ textarea {
   margin-bottom: 12px;
 }
 
-/* Form rows */
 .sw-br-mach-row {
   display: flex;
   gap: 12px;
@@ -14954,7 +14916,7 @@ textarea {
   width: 48%;
   display: flex;
   flex-direction: column;
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 500;
   margin-top: 5px;
 }
@@ -14971,7 +14933,6 @@ textarea {
   border-radius: 10px;
 }
 
-/* Additional services */
 .sw-br-mach-checkbox-row {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -15016,11 +14977,6 @@ textarea {
   background: black;
   color: white;
 }
-
-
-/* =============================
-   RESPONSIVE STYLES
-============================= */
 
 @media (max-width: 900px) {
   .sw-br-machinery-grid {
@@ -15074,7 +15030,6 @@ textarea {
 }
 
 /* for transpotation */
-
 
 .sw-br-transport-wrapper {
   width: 100%;
@@ -15189,10 +15144,6 @@ textarea {
   background: black;
 }
 
-/* ===================== */
-/* FORM / MODAL CLASSES  */
-/* ===================== */
-
 .sw-br-form-wrapper {
   width: 100%;
   padding: 0;
@@ -15231,7 +15182,7 @@ textarea {
 }
 
 .sw-br-form-left {
-  width: 56%;
+  width: 41%;
 }
 
 .sw-br-form-image {
@@ -15285,6 +15236,12 @@ textarea {
   display: flex;
   align-items: center;
   font-size: 13px;
+  margin-top: -7px;
+}
+.sw-br-included-list li::before {
+  content: "●";
+  color: #3fbf62;
+  margin-right: 5px;
 }
 
 .sw-br-form-box1 {
@@ -15344,10 +15301,11 @@ textarea {
 }
 
 .sw-br-field3 label {
-  font-size: 13px;
-  font-weight: 600;
-  margin-bottom: 6px;
+  font-size: 11px;
+  font-weight: 550;
+  margin-bottom: 2px;
   color: #1e293b;
+  margin-top: 2px;
 }
 
 .sw-br-field3 input,
@@ -15424,10 +15382,6 @@ textarea {
   color: #fff;
 }
 
-/* ===================== */
-/* RESPONSIVE */
-/* ===================== */
-
 @media (max-width: 900px) {
   .sw-br-transport-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -15463,7 +15417,6 @@ textarea {
 /* --- FULL MOBILE RESET FIX --- */
 @media (max-width: 600px) {
 
-  /* Remove all unwanted extra spacing from wrapper */
   .sw-br-transport-wrapper {
     margin-left: -15px !important;
     width: 114% !important;
@@ -15471,7 +15424,6 @@ textarea {
     border: 100px;
   }
 
-  /* Fix card container grid */
   .sw-br-transport-grid {
     padding: 0 10px !important;
     grid-template-columns: 1fr !important;
@@ -15479,14 +15431,12 @@ textarea {
     margin: 0 auto !important;
   }
 
-  /* Force card to stay inside screen */
   .sw-br-transport-card {
     width: 100% !important;
     margin: 0 auto !important;
     box-sizing: border-box;
   }
 
-  /* Fix button overflowing the right side */
   .sw-br-transport-btn {
     width: 100% !important;
     text-align: center !important;
@@ -15529,11 +15479,10 @@ textarea {
 }
 
 
-/* HEADER */
 .sw-br-bc-header {
   background: #005cfa;
   color: #fff;
-  padding: 10px 11px;
+  padding: 19px 24px;
   border-radius: 12px;
   margin-bottom: 24px;
   display: flex;
@@ -15543,17 +15492,16 @@ textarea {
 
 
 .sw-br-bc-title {
-  font-size: 18px;
+  font-size: 19px;
+  font-weight: 500;
 }
-
 
 .sw-br-bc-subtitle {
-  font-size: 14px;
+  font-size: 13px;
   opacity: 0.95;
+  margin-top: 5px;
 }
 
-
-/* GRID */
 .sw-br-bc-grid {
   margin-top: 10px;
   display: grid;
@@ -15574,6 +15522,14 @@ textarea {
 .sw-br-bc-btn {
   background: black;
   color: white;
+  padding: 8px 12px;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+}
+.sw-br-bc-btn:hover{
+  background: black !important;
+  color: white !important;
 }
 
 .sw-br-bc-card:hover {
@@ -15581,15 +15537,12 @@ textarea {
 }
 
 
-/* IMAGE */
 .sw-br-bc-image {
   height: 160px;
   width: 100%;
   object-fit: cover;
 }
 
-
-/* CARD CONTENT */
 .sw-br-bc-card-title {
   font-weight: 600;
   font-size: 16px;
@@ -15614,18 +15567,20 @@ textarea {
 @media (max-width: 600px) {
   .sw-br-bc-grid {
     grid-template-columns: 1fr !important;
-  }
-
+ }
 }
+
+/* Khasim and Vanamanla Bulding Raw Service CSS Updates */
+  
+
+
 
 
  /* Khasim and Vanamanla Bulding Raw Service CSS Updates */
 
+/* /////////surya header css////// */
 
- /* ///// surya header css////// */
- /* header.css */
-
-/* Header root */
+/* ----------------------------- Header / Layout ----------------------------- */
 .sw-header-container {
   position: sticky;
   top: 0;
@@ -15635,7 +15590,7 @@ textarea {
   border-bottom: 1px solid #eee;
   padding: 12px 20px;
   display: grid;
-  grid-template-columns: auto 1fr auto; /* left | center | right */
+  grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 12px;
   box-sizing: border-box;
@@ -15648,6 +15603,7 @@ textarea {
   align-items: center;
   gap: 10px;
   min-width: 0;
+  cursor: pointer;
 }
 .sw-logo-text {
   font-size: 15px;
@@ -15661,17 +15617,17 @@ textarea {
   color: #111;
 }
 
-/* Center - menu centered within the middle column */
+/* Center */
 .sw-header-center {
   display: flex;
   justify-content: center;
   align-items: center;
   min-width: 0;
   padding: 0 12px;
-  overflow: hidden; /* keep header clean and aligned */
+  overflow: visible; /* allow wrapping to be visible */
 }
 
-/* AntD Menu override: inline, centered, scrollable but scrollbar hidden */
+/* AntD Menu base */
 .sw-header-menu {
   border-bottom: none !important;
   width: auto !important;
@@ -15680,38 +15636,26 @@ textarea {
   align-items: center !important;
   background: transparent !important;
   padding: 0 !important;
-
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none; /* firefox */
-  -ms-overflow-style: none; /* IE 10+ */
-}
-/* hide webkit scrollbar (Chrome / Safari / Edge) */
-.sw-header-menu::-webkit-scrollbar {
-  height: 0;
-  background: transparent;
-}
-.sw-header-menu::-webkit-scrollbar-track {
-  background: transparent;
-}
-.sw-header-menu::-webkit-scrollbar-thumb {
-  background: transparent;
+  overflow: visible; /* show wrapped lines */
 }
 
-/* ensure ant menu inside is single-row and centered */
+/* Make the internal ant menu flex and allow wrapping so items don't get hidden behind "more" */
 .sw-header-menu .ant-menu {
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
+  flex-wrap: wrap !important;
+  gap: 6px 0 !important;
   background: transparent !important;
   border-bottom: none !important;
-
-  overflow-x: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+  overflow: visible !important;
 }
-.sw-header-menu .ant-menu::-webkit-scrollbar {
-  height: 0;
+
+/* Hide AntD overflow "more" control entirely */
+.sw-header-menu .ant-menu-overflow-more,
+.sw-header-menu .ant-menu-overflow,
+.sw-header-menu .ant-menu-overflow-more .ant-menu-overflow-more-horizontal {
+  display: none !important;
 }
 
 /* style items */
@@ -15732,13 +15676,6 @@ textarea {
 .sw-header-menu .ant-menu-item-active,
 .sw-header-menu .ant-menu-item-selected {
   background: rgba(0, 0, 0, 0.04);
-}
-
-/* remove AntD overflow "more" three-dots */
-.sw-header-menu .ant-menu-overflow-more,
-.sw-header-menu .ant-menu-overflow,
-.sw-header-menu .ant-menu-overflow-more .ant-menu-overflow-more-horizontal {
-  display: none !important;
 }
 
 /* prevent visible overflow track */
@@ -16015,6 +15952,7 @@ body {
   border-bottom: none !important;
   overflow-y: hidden !important;
 }
+<<<<<<< HEAD
  /* ///// surya header css////// */
 
 
@@ -16439,3 +16377,106 @@ body {
 /* ----------------------------------------------------
    Freelancer Profile Specific Styles (sw-fpr)
    ---------------------------------------------------- */
+=======
+
+/* booking overlay styles */
+.sw-booking-page-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 9999999 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+}
+.sw-booking-page-content {
+  width: 100%;
+  max-width: 920px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+  position: relative;
+  padding: 28px;
+  box-sizing: border-box;
+}
+.sw-booking-page-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  font-size: 18px;
+  border-radius: 8px;
+}
+.sw-booking-page-content h1 {
+  margin: 0;
+  font-size: 36px;
+  text-align: center;
+  color: #111827;
+}
+
+/* reduce AntD dropdown z-index so overlay works */
+.sw-profile-dropdown-wrapper,
+.sw-profile-dropdown-wrapper .ant-dropdown,
+.ant-dropdown,
+.ant-popover,
+.ant-tooltip,
+.ant-dropdown-menu {
+  z-index: 200000 !important;
+}
+
+/* /////////surya header css////// */
+
+
+
+/* /////vamsi Recent booking css//// */
+
+.recent-booking-wrapper {
+  width: 100%;
+  min-height: 240px;
+  background: #fff;
+  padding: 20px;
+  box-sizing: border-box;
+}
+.recent-booking-title {
+  margin: 0 0 16px 0;
+  font-size: 22px;
+  text-align: center;
+}
+.recent-booking-card {
+  border-radius: 10px;
+}
+
+/* empty state (vamsi) */
+.recent-booking-wrapper-empty {
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+}
+.recent-booking-wrapper-empty h1 {
+  margin: 0;
+  font-size: 36px;
+  color: #111827;
+}
+@media (max-width: 600px) {
+  .recent-booking-wrapper {
+    padding: 12px;
+  }
+  .recent-booking-title {
+    font-size: 20px;
+  }
+  .recent-booking-wrapper-empty h1 {
+    font-size: 28px;
+  }
+}
+
+
+/* /////vamsi Recent booking css//// */
+
+>>>>>>> main
