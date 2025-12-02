@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import {
   Row,
   Col,
@@ -26,7 +26,7 @@ import {
 import "./ServiceRequests.css";
 
 const { TabPane } = Tabs;
-const { Header } = Layout;
+// const { Header } = Layout;
 
 type Request = {
   id: number;
