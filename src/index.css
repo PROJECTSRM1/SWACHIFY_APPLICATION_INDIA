@@ -916,9 +916,11 @@ with prefix */
 /* ===========================
     SERVICES SECTION ALIGNMENT
     =========================== */
-#services-section {
+.services-section {
   text-align: center;
   padding: 60px 40px;
+  margin-top: 40px;
+  margin-bottom: -44px;
 }
 
 .sw-lp-classname-services-section .sw-lp-classname-section-title {
@@ -2837,6 +2839,7 @@ readability */
   border-radius: 6px;
   /* reduced radius (smaller) */
   color: #fff;
+  margin-top: 70px;
 }
 
 .sw-pm-hero-title {
@@ -3548,6 +3551,7 @@ body,
   color: #ffffff;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
   text-align: left;
+  margin-top: 45px;
 }
 
 .swc-bs-banner-title {
@@ -13697,6 +13701,7 @@ body {
   margin-bottom: 24px;
   gap: 10px;
   white-space: nowrap;
+  margin-top: 70px;
 }
 
 .sw-hs-banner-left {
@@ -15476,13 +15481,14 @@ textarea {
   max-width: 1200px;
   margin: 0 auto;
   box-sizing: border-box;
+  margin-top: 50px
 }
 
 
 .sw-br-bc-header {
   background: #005cfa;
   color: #fff;
-  padding: 19px 24px;
+  padding: 28px 24px;
   border-radius: 12px;
   margin-bottom: 24px;
   display: flex;
@@ -15492,8 +15498,9 @@ textarea {
 
 
 .sw-br-bc-title {
-  font-size: 19px;
-  font-weight: 500;
+  font-size: 22px;
+  font-weight: 600;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 .sw-br-bc-subtitle {
@@ -15584,9 +15591,9 @@ textarea {
 
 /* Header root */
 .sw-header-container {
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 9999;
+  z-index: 1000;
   width: 100%;
   background: white;
   border-bottom: 1px solid #eee;

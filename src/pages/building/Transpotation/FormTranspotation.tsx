@@ -3,6 +3,7 @@ import { useCart } from "../../../context/CartContext";
 
 import materialpickupimg from "../../../assets/Building/material pickup.jpg";
 import deliveryservicesimg from "../../../assets/Building/Delivery services.jpg";
+import { message } from "antd";
 
 const Transportation = [
   { id: 1, title: "Material Supply", price: "800", img: materialpickupimg },
@@ -46,7 +47,7 @@ const TransportationForm: React.FC<FormProps> = ({ id, onClose }) => {
       address,
       instructions
     });
-    alert("Item added to cart!");
+    message.success("item added to cart");    
     onClose();
   };
 

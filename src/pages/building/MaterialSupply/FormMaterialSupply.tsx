@@ -8,6 +8,7 @@ import brickimg from "../../../assets/Building/bricks.jpg";
 import steelimg from "../../../assets/Building/steel.jpeg";
 import pipesimg from "../../../assets/Building/pipes.jpg";
 import tilesimg from "../../../assets/Building/tiles.jpg";
+import message from "antd/es/message";
 
 const materials = [
   { id: 1, title: "Cement", price: "800", img: cementimg,},
@@ -53,8 +54,7 @@ const EquipmentDetails: React.FC<FormProps> = ({ id, onClose }) => {
     address,
     instructions
   });
-
-  alert("Item added to cart!");
+  message.success("item added to cart");
   onClose();
 };
 
