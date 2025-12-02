@@ -4,6 +4,9 @@ import "../../index.css";
 
 import { useNavigate } from "react-router-dom";
 import { Button, Card, Row, Col } from "antd";
+import FooterSection from '../../pages/landing/FooterSection';
+import "../../pages/landing/FooterSection.css"
+
 
 import {
   HomeOutlined,
@@ -146,7 +149,7 @@ const LandingPage = () => {
       </section>
 
       {/* FOOTER */}
-      <footer className="sw-lp-classname-footer">
+      {/* <footer className="sw-lp-classname-footer">
         <div className="sw-lp-classname-footer-grid">
           
           <div>
@@ -201,7 +204,8 @@ const LandingPage = () => {
         <p className="sw-lp-classname-footer-bottom">
           © 2025 Home Services. All rights reserved.
         </p>
-      </footer>
+      </footer> */}
+      <FooterSection selectedKey="LandingPackers" />
 
     </div>
   );

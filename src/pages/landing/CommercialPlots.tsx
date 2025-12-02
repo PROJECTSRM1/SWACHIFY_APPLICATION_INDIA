@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import CommonHeader from "../../pages/landing/Header";
 import "../../pages/landing/Header.css"; // import CSS for header
+import FooterSection from '../../pages/landing/FooterSection';
+import "../../pages/landing/FooterSection.css"
 import {
   Layout,
   // Menu,
@@ -509,7 +511,7 @@ const CommercialPlots: React.FC = () => {
 
       </Content>
 
-      <Footer className="sw-cp-cp-footer">
+      {/* <Footer className="sw-cp-cp-footer">
         <div className="sw-cp-cp-footer-inner">
           <div className="sw-cp-cp-footer-col">
             <h4>About Us</h4>
@@ -557,7 +559,7 @@ const CommercialPlots: React.FC = () => {
             </div>
 
             {/* Social icons (styled as dark rounded squares like Home_Service) */}
-            <div className="sw-cp-cp-footer-socials" aria-label="social links">
+            {/* <div className="sw-cp-cp-footer-socials" aria-label="social links">
               <a aria-label="facebook" href="#" role="link">
                 <FacebookOutlined />
               </a>
@@ -575,7 +577,8 @@ const CommercialPlots: React.FC = () => {
         </div>
 
         <div className="sw-cp-cp-footer-bottom">© {new Date().getFullYear()} Home Services. All rights reserved.</div>
-      </Footer>
+      // </Footer> */} */
+      <FooterSection selectedKey="CommercialPlots" />
 
     </Layout>
   );
