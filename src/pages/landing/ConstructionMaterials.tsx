@@ -19,17 +19,6 @@ import {
   Tabs,
   Checkbox,
 } from "antd";
-// import {
-//   MailOutlined,
-//   PhoneOutlined,
-//   EnvironmentOutlined,
-//   FacebookOutlined,
-//   TwitterOutlined,
-//   InstagramOutlined,
-//   LinkedinOutlined,
-//   // MenuOutlined,
-//   // CloseOutlined,
-// } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import brickwalss from "../../assets/landingimages/brickwall.jpg";
 import premiumportlandcement from "../../assets/landingimages/PremiumPortlandCement.jpg";
@@ -42,15 +31,18 @@ import bricksandblocks from "../../assets/landingimages/Bricks&Blocks.jpg";
 import sandandaggregates from "../../assets/landingimages/Sand&Aggregates.jpg";
 import roofingmaterials from "../../assets/landingimages/RoofingMaterials.jpg";
 import plumbingandelectrical from "../../assets/landingimages/Plumbing&Electrical.jpeg";
+
 const { Title, Text } = Typography;
 const { Option } = Select;
 const { TabPane } = Tabs;
+
 /* ================= NAVBAR SECTION ================= */
 const NavbarSection: React.FC = () => (
   <>
     <CommonHeader selectedKey="ConstructionMaterials" />
   </>
 );
+
 /* ================= DATA ================= */
 const services = [
   { title: "Free Delivery", description: "On orders above $500 within 50 miles" },
@@ -120,7 +112,8 @@ const productCategories = [
     image: plumbingandelectrical,
   },
 ];
-/* ================= AUTH MODAL ================= */
+
+/* ================= AUTH MODAL (kept for local pages if needed) ================= */
 const AuthModal: React.FC<{ visible: boolean; onClose: () => void; onSuccess: () => void }> = ({
   visible,
   onClose,
@@ -193,6 +186,7 @@ const AuthModal: React.FC<{ visible: boolean; onClose: () => void; onSuccess: ()
     </Modal>
   );
 };
+
 /* ================= REQUEST QUOTE ================= */
 const RequestQuote: React.FC = () => {
   const navigate = useNavigate();
@@ -266,87 +260,12 @@ const RequestQuote: React.FC = () => {
     </section>
   );
 };
-/* ================= FOOTER COMPONENT ================= */
-// type FooterProps = {
-//   phone?: string;
-//   email?: string;
-//   address?: string;
-//   copyrightYear?: number;
-//   companyName?: string;
-// };
-// const Footer: React.FC<FooterProps> = ({
-//   phone = "+1 (555) 123-4567",
-//   email = "info@homeservices.com",
-//   address = "123 Service Street, City, State",
-//   copyrightYear = 2025,
-//   companyName = "Home Services",
-// }) => {
-//   return (
-//     // <footer className="sw-lcm-classname-lr-footer sw-lcm-classname-site-footer" role="contentinfo" aria-label="Footer">
-//     //   <div className="sw-lcm-classname-lr-footer-inner sw-lcm-classname-lr-footer-grid">
-//     //     <div className="sw-lcm-classname-lr-footer-col">
-//     //       <h4 style={{ color: "#fff" }}>About Us</h4>
-//     //       <p className="sw-lcm-classname-lr-footer-about" style={{ color: "#fff" }}>
-//     //         Your trusted partner for all home and property-related services. Quality,
-//     //         reliability, and customer satisfaction guaranteed.
-//     //       </p>
-//     //     </div>
-//     //     <div className="sw-lcm-classname-lr-footer-col">
-//     //       <h4 style={{ color: "#fff" }}>Services</h4>
-//     //       <ul className="sw-lcm-classname-lr-footer-list" style={{ color: "#fff" }}>
-//     //         <li style={{ color: "#fff" }}>Cleaning Service</li>
-//     //         <li style={{ color: "#fff" }}>Packers &amp; Movers</li>
-//     //         <li style={{ color: "#fff" }}>Home Services</li>
-//     //         <li style={{ color: "#fff" }}>Rentals</li>
-//     //         <li style={{ color: "#fff" }}>Commercial Plots</li>
-//     //         <li style={{ color: "#fff" }}>Construction Materials</li>
-//     //       </ul>
-//     //     </div>
-//     //     <div className="sw-lcm-classname-lr-footer-col">
-//     //       <h4 style={{ color: "#fff" }}>Quick Links</h4>
-//     //       <ul className="sw-lcm-classname-lr-footer-list">
-//     //         <li style={{ color: "#fff" }}>Home</li>
-//     //         <li style={{ color: "#fff" }}>About</li>
-//     //         <li style={{ color: "#fff" }}>Contact</li>
-//     //         <li style={{ color: "#fff" }}>Careers</li>
-//     //       </ul>
-//     //     </div>
-//     //     <div className="sw-lcm-classname-lr-footer-col">
-//     //       <h4 style={{ color: "#fff" }}>Contact Info</h4>
-//     //       <ul className="sw-lcm-classname-lr-contact-list">
-//     //         <li className="sw-lcm-classname-lr-contact-phone" style={{ color: "#fff" }}>
-//     //           <PhoneOutlined aria-hidden className="sw-lcm-classname-lc-contact-icon" />
-//     //           <span className="sw-lcm-classname-lc-contact-text" style={{ color: "#fff" }}> {phone}</span>
-//     //         </li>
-//     //         <li style={{ color: "#fff" }}>
-//     //           <MailOutlined aria-hidden /> &nbsp;
-//     //           <span style={{ color: "#fff" }}>{email}</span>
-//     //         </li>
-//     //         <li style={{ color: "#fff" }}>
-//     //           <EnvironmentOutlined aria-hidden /> &nbsp; {address}
-//     //         </li>
-//     //       </ul>
-//     //       <div className="sw-lcm-classname-lr-footer-socials" aria-hidden>
-//     //         <a className="sw-lcm-classname-social" href="#" aria-label="facebook"><FacebookOutlined /></a>
-//     //         <a className="sw-lcm-classname-social" href="#" aria-label="twitter"><TwitterOutlined /></a>
-//     //         <a className="sw-lcm-classname-social" href="#" aria-label="instagram"><InstagramOutlined /></a>
-//     //         <a className="sw-lcm-classname-social" href="#" aria-label="linkedin"><LinkedinOutlined /></a>
-//     //       </div>
-//     //     </div>
-//     //   </div>
-//     //   <div className="sw-lcm-classname-lr-footer-bottom">
-//     //     <div className="sw-lcm-classname-lr-footer-sep" />
-//     //     <div className="sw-lcm-classname-lr-footer-copy" style={{ color: "#fff" }}>
-//     //       &copy; {copyrightYear} {companyName}. All rights reserved.
-//     //     </div>
-//     //   </div>
-//     // </footer>
-//   );
-// };
+
 /* ================= MAIN PAGE ================= */
 const ConstructionMaterials: React.FC = () => {
   const [authVisible, setAuthVisible] = useState(false);
   const navigate = useNavigate();
+
   useEffect(() => {
     const btn = document.querySelector(".sw-lcm-classname-hs-contact-btn");
     if (!btn) return;
@@ -354,9 +273,11 @@ const ConstructionMaterials: React.FC = () => {
     btn.addEventListener("click", handler);
     return () => btn.removeEventListener("click", handler);
   }, []);
+
   const handleAuthSuccess = () => {
     navigate("/app/dashboard");
   };
+
   return (
     <div className="sw-lcm-classname-construction-materials-container">
       <NavbarSection />
@@ -378,6 +299,7 @@ const ConstructionMaterials: React.FC = () => {
           </div>
         </div>
       </section>
+
       {/* PRODUCT CATEGORIES */}
       <section className="sw-lcm-classname-product-categories">
         <div className="sw-lcm-classname-pc-inner">
@@ -393,7 +315,20 @@ const ConstructionMaterials: React.FC = () => {
                   <div className="sw-lcm-classname-pc-card-inner">
                     <h3>{category.title}</h3>
                     <ul>{category.items.map((it, j) => <li key={j}>{it}</li>)}</ul>
-                    <Button type="primary" block>Browse</Button>
+                    <Button
+                      type="primary"
+                      block
+                      onClick={() => {
+                        // Open header auth modal (register tab) — header will redirect to dashboard after login
+                        if ((window as any).openAuthModal) {
+                          (window as any).openAuthModal("register");
+                        } else {
+                          console.warn("openAuthModal not available on window. Ensure CommonHeader is mounted.");
+                        }
+                      }}
+                    >
+                      Browse
+                    </Button>
                   </div>
                 </Card>
               </article>
@@ -401,6 +336,7 @@ const ConstructionMaterials: React.FC = () => {
           </div>
         </div>
       </section>
+
       {/* OUR SERVICES */}
       <section className="sw-lcm-classname-our-services">
         <div className="sw-lcm-classname-os-inner">
@@ -417,6 +353,7 @@ const ConstructionMaterials: React.FC = () => {
           </div>
         </div>
       </section>
+
       {/* FEATURED PRODUCTS */}
       <section className="sw-lcm-classname-featured-products">
         <div className="sw-lcm-classname-fp-inner">
@@ -431,7 +368,20 @@ const ConstructionMaterials: React.FC = () => {
                     <p className="sw-lcm-classname-fp-price">Price: {p.price}</p>
                     <p className="sw-lcm-classname-fp-rating">Rating: {p.rating}</p>
                     <ul>{p.details.map((d, j) => <li key={j}>{d}</li>)}</ul>
-                    <Button type="primary" block>Request Quote</Button>
+                    <Button
+                      type="primary"
+                      block
+                      onClick={() => {
+                        // Request Quote here could open auth as well — keep original behavior (if you want auth, uncomment)
+                        if ((window as any).openAuthModal) {
+                          (window as any).openAuthModal("register");
+                        } else {
+                          console.warn("openAuthModal not available on window. Ensure CommonHeader is mounted.");
+                        }
+                      }}
+                    >
+                      Request Quote
+                    </Button>
                   </div>
                 </div>
               </article>
@@ -439,13 +389,15 @@ const ConstructionMaterials: React.FC = () => {
           </div>
         </div>
       </section>
-      {/* REQUEST QUOTE
-      <RequestQuote />
-      {/* AUTH MODAL */}
-      {/* <AuthModal visible={authVisible} onClose={() => setAuthVisible(false)} onSuccess={handleAuthSuccess} />
-      {/* FOOTER (merged) */}
-      {/* <Footer /> */}
-       <FooterSection selectedKey="ConstructionMaterials" />
+
+      {/* REQUEST QUOTE (optional) */}
+      {/* <RequestQuote /> */}
+
+      {/* AUTH MODAL (local) */}
+      {/* <AuthModal visible={authVisible} onClose={() => setAuthVisible(false)} onSuccess={handleAuthSuccess} /> */}
+
+      {/* FOOTER */}
+      <FooterSection selectedKey="ConstructionMaterials" />
     </div>
   );
 };
