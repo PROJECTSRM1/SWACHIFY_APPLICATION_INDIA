@@ -154,28 +154,38 @@ const getPricePerSqft = (moduleTitle: string): number => {
   return 1.8;
 };
 
+// Calculate final price when sqft is provided (this includes base + sqft-part + addons)
+// REPLACE existing calculatePrice with this exact function
+// REPLACE your current calculatePrice with this
 const calculatePrice = (
-  moduleTitle: string,
+  module: Module,
   sqft: number,
   serviceType: string,
   addons: string[]
 ) => {
-  const perSqft = getPricePerSqft(moduleTitle);
+  const perSqft = getPricePerSqft(module.title);
   const multiplier = SERVICE_MULTIPLIERS[serviceType] ?? 1.0;
+
+  // base price numeric from module.price (e.g. '₹49' -> 49)
+  const basePrice = parseInt((module.price || "").toString().replace(/[₹,\s]/g, "")) || 0;
+
   const addonCost = (addons || []).reduce((s, a) => s + (ADDON_PRICES[a] || 0), 0);
-  const total = Math.round(Math.max(0, sqft) * perSqft * multiplier + addonCost);
-  return total;
+
+  // sqft-derived part (apply multiplier to sqft part as well so rates scale the same)
+  const sqftPart = Math.round(Math.max(0, sqft) * perSqft * multiplier);
+
+  // total = (basePrice * multiplier) + sqftPart + addons
+  return Math.round(basePrice * multiplier) + sqftPart + addonCost;
 };
+
 
 const formatINR = (value: number | null) => {
   if (value == null || !isFinite(value) || value <= 0) return "—";
   return `₹ ${value.toLocaleString("en-IN")}`;
 };
 
-/* ------------------ Component ------------------ */
 const CleaningService: React.FC = () => {
   const { addToCart } = useCart();
-
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
   const [isModulesModalOpen, setIsModulesModalOpen] = useState(false);
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
@@ -184,7 +194,11 @@ const CleaningService: React.FC = () => {
   const [selectedSubKey, setSelectedSubKey] = useState<string>("");
   const [selectedModule, setSelectedModule] = useState<Module | null>(null);
 
+  // computedPrice is only set when valid sqft is entered and price calculated
   const [computedPrice, setComputedPrice] = useState<number | null>(null);
+
+  // track current service type selection so UI updates when user changes it (even without sqft)
+  const [serviceTypeKey, setServiceTypeKey] = useState<string>("standard");
 
   const [form] = Form.useForm();
 
@@ -193,6 +207,7 @@ const CleaningService: React.FC = () => {
       form.resetFields();
       form.setFieldsValue({ serviceType: "standard", additional: [] });
       setComputedPrice(null);
+      setServiceTypeKey("standard");
     }
   }, [isDetailsModalOpen, selectedModule, form]);
 
@@ -220,6 +235,7 @@ const CleaningService: React.FC = () => {
     };
   }, []);
 
+  // Categories / modules (unchanged)
   const categories = [
     {
       key: "residential",
@@ -437,24 +453,60 @@ const CleaningService: React.FC = () => {
     setIsDetailsModalOpen(true);
   };
 
-  const computeTotal = (values: any) => {
-    if (!selectedModule) {
-      setComputedPrice(null);
-      return;
-    }
-    const sqftValRaw = values?.propertySize;
-    let sqft = 0;
-    if (typeof sqftValRaw === "number") sqft = sqftValRaw;
-    else if (typeof sqftValRaw === "string") sqft = parseFloat(sqftValRaw || "0") || 0;
-    if (!sqft || sqft <= 0) {
-      setComputedPrice(null);
-      return;
-    }
-    const serviceTypeKey = (values?.serviceType as string) || "standard";
-    const addons: string[] = values?.additional || [];
-    const total = calculatePrice(selectedModule.title, sqft, serviceTypeKey, addons);
+ 
+const computeTotal = (values: any) => {
+  if (!selectedModule) {
+    setComputedPrice(null);
+    return;
+  }
+
+  // service type from form (or fallback)
+  const st = (values?.serviceType as string) || serviceTypeKey || "standard";
+  setServiceTypeKey(st);
+
+  const sqftValRaw = values?.propertySize;
+  let sqft = 0;
+  if (typeof sqftValRaw === "number") sqft = sqftValRaw;
+  else if (typeof sqftValRaw === "string") sqft = parseFloat(sqftValRaw || "0") || 0;
+
+  const addons: string[] = values?.additional || [];
+
+  // When user has entered a valid sqft, compute full total (base + sqftpart + addons)
+  if (sqft && sqft > 0) {
+    const total = calculatePrice(selectedModule, sqft, st, addons);
     setComputedPrice(total);
-  };
+    return;
+  }
+
+  // No valid sqft: clear computedPrice so UI uses the helper (base * multiplier) for display.
+  // (We keep computedPrice null so getDisplayPriceText() shows basePrice * multiplier.)
+  setComputedPrice(null);
+};
+
+
+  // Helper: returns the text to display in the price box.
+  // - If computedPrice exists (sqft provided) -> show computedPrice
+  // - Else show basePrice * current service multiplier
+  // REPLACE existing getDisplayPriceText helper with this
+const getDisplayPriceText = (): string => {
+  // If computedPrice exists (sqft entered and calculated), show it
+  if (computedPrice) return formatINR(computedPrice);
+
+  if (!selectedModule) return "—";
+
+  // Base numeric value
+  const basePriceNum =
+    parseInt((selectedModule.price || "").toString().replace(/[₹,\s]/g, "")) || 0;
+
+  // multiplier (current service type)
+  const mult = SERVICE_MULTIPLIERS[serviceTypeKey] ?? 1;
+
+  const displayNum = Math.round(basePriceNum * mult);
+
+  if (displayNum > 0) return formatINR(displayNum);
+  return selectedModule.price || "—";
+};
+
 
   const onAddToCart = (values: any) => {
     if (!selectedModule) return;
@@ -464,7 +516,7 @@ const CleaningService: React.FC = () => {
       image: selectedModule.image,
       quantity: 1,
       price: selectedModule.price,
-      totalPrice: computedPrice ?? 0,
+      totalPrice: computedPrice ?? Math.round((parseInt((selectedModule.price || "").replace(/[₹,\s]/g, "")) || 0) * (SERVICE_MULTIPLIERS[serviceTypeKey] ?? 1)),
       customerName: "",
       deliveryType: "",
       deliveryDate: "",
@@ -474,7 +526,7 @@ const CleaningService: React.FC = () => {
     };
     addToCart(cartItem);
     message.success(
-      `${selectedModule.title} added to cart — ${formatINR(computedPrice || 0)}`
+      `${selectedModule.title} added to cart — ${formatINR(cartItem.totalPrice)}`
     );
     setIsDetailsModalOpen(false);
   };
@@ -539,14 +591,12 @@ const CleaningService: React.FC = () => {
                   <img src={s.image} alt={s.title} className="sw-cs-subservice-img" />
                   <div className="sw-cs-subservice-card-body">
                     <Title level={5} className="sw-cs-subservice-card-title">{s.title}</Title>
-                    {/* <Paragraph className="sw-cs-subservice-card-desc">Click to view {s.title.toLowerCase()} services</Paragraph> */}
 
-                    {/* visible View Details button (prevents double event) */}
                     <div style={{ marginTop: 12, display: "flex", justifyContent: "center" }}>
                       <Button
                         className="sw-cs-black-btn"
                         onClick={(e) => {
-                          e.stopPropagation(); 
+                          e.stopPropagation();
                           openSubservice(s.key);
                         }}
                       >
@@ -621,7 +671,7 @@ const CleaningService: React.FC = () => {
 
               <div className="sw-cs-price-card">
                 <div className="sw-cs-price-card-label">Service Price</div>
-                <div className="sw-cs-price-card-value">{computedPrice ? formatINR(computedPrice) : (selectedModule?.price || "—")}</div>
+                <div className="sw-cs-price-card-value">{getDisplayPriceText()}</div>
               </div>
             </div>
 
@@ -647,13 +697,13 @@ const CleaningService: React.FC = () => {
                               <>
                                 <Option value="standard">Regular cleaning</Option>
                                 <Option value="deep">Deep Cleaning</Option>
-                                <Option value="mattress">Move-in/Move-out Cleaning</Option>
+                                <Option value="move">Move-in/Move-out Cleaning</Option>
                               </>
                             ) : selectedModule.title.toLowerCase().includes("kitchen") ? (
                               <>
                                 <Option value="standard">Regular Cleaning</Option>
                                 <Option value="deep">Deep  Cleaning</Option>
-                                <Option value="grease">Move-in/Move-out</Option>
+                                <Option value="move">Move-in/Move-out</Option>
                               </>
                             ) : selectedModule.title.toLowerCase().includes("bathroom") ? (
                               <>

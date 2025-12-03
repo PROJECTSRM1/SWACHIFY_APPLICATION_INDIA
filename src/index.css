@@ -925,12 +925,14 @@ with prefix */
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 8px;
+  text-align: center;
 }
 
 .sw-lp-classname-services-section .sw-lp-classname-section-subtitle {
   font-size: 1.1rem;
   color: #555;
   margin-bottom: 40px;
+  text-align: center;
 }
 
 /* keep ant-row behaviour but constrain width */
@@ -1016,11 +1018,11 @@ these for custom sizing */
 
 .sw-lp-classname-services-section .sw-lp-classname-learn-more {
   margin-top: 12px;
-  flex-shrink: 0;
-  align-self: center;
-  text-decoration:
-    none;
+  text-decoration: none;
   font-weight: 600;
+  display: block;
+  text-align: center;   
+  width: 100%;
 }
 
 .sw-lp-classname-services-section .sw-lp-classname-service-card:hover {
