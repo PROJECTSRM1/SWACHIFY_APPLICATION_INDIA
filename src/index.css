@@ -837,12 +837,10 @@ body {
   margin: 0;
 }
 
-/* SERVICES / CARDS / OTHER RULES - unchanged from your original css but
-with prefix */
+/* SERVICES / CARDS / OTHER RULES */
 .sw-lp-classname-packes-services {
   padding: 60px 40px;
-  text-align:
-    center;
+  text-align: center;
 }
 
 .sw-lp-classname-packes-card {
@@ -856,8 +854,7 @@ with prefix */
 
 .sw-lp-classname-types-of-services {
   padding: 60px 40px;
-  text-align:
-    center;
+  text-align: center;
 }
 
 .sw-lp-classname-service-card img {
@@ -915,12 +912,22 @@ with prefix */
 
 /* ===========================
     SERVICES SECTION ALIGNMENT
-    =========================== */
+   =========================== */
+
 .services-section {
   text-align: center;
   padding: 60px 40px;
   margin-top: 40px;
   margin-bottom: -44px;
+}
+
+/* FIXED: Center service heading + subtitle ONLY */
+.sw-lp-classname-services-section .sw-lp-classname-section-title,
+.sw-lp-classname-services-section .sw-lp-classname-section-subtitle {
+  text-align: center !important;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .sw-lp-classname-services-section .sw-lp-classname-section-title {
@@ -935,7 +942,7 @@ with prefix */
   margin-bottom: 40px;
 }
 
-/* keep ant-row behaviour but constrain width */
+/* keep ant-row behavior but constrain width */
 .sw-lp-classname-services-section .ant-row {
   max-width: 1150px;
   margin: 0 auto !important;
@@ -946,8 +953,7 @@ with prefix */
   justify-content: center !important;
 }
 
-/* default column sizes â€” note ant-col overrides remain but we keep
-these for custom sizing */
+/* default column sizes */
 .sw-lp-classname-services-section .ant-col {
   flex: 0 0 33.333% !important;
   max-width: 33.333% !important;
@@ -976,7 +982,7 @@ these for custom sizing */
   }
 }
 
-/* Service card sizing (unchanged except prefix) */
+/* Service card sizing */
 .sw-lp-classname-services-section .sw-lp-classname-service-card {
   min-height: 320px;
   height: 100%;
@@ -999,8 +1005,7 @@ these for custom sizing */
   margin: 6px 0 10px;
   font-size: 1.05rem;
   font-weight: 700;
-  text-align:
-    center;
+  text-align: center;
 }
 
 .sw-lp-classname-services-section .sw-lp-classname-service-desc {
@@ -1020,8 +1025,7 @@ these for custom sizing */
   margin-top: 12px;
   flex-shrink: 0;
   align-self: center;
-  text-decoration:
-    none;
+  text-decoration: none;
   font-weight: 600;
 }
 
@@ -1049,7 +1053,7 @@ these for custom sizing */
   }
 }
 
-/* WHY CHOOSE US (unchanged but prefixed) */
+/* WHY CHOOSE US */
 #why-choose-section,
 .sw-lp-classname-why-choose-section,
 .sw-lp-classname-why-choose-us {
@@ -1059,14 +1063,11 @@ these for custom sizing */
 }
 
 .sw-lp-classname-why-choose-section .sw-lp-classname-container,
-.sw-lp-classname-why-choose-section .sw-lp-classname-container,
 .sw-lp-classname-why-choose-us .sw-lp-classname-container {
-  max-width:
-    1100px;
+  max-width: 1100px;
   margin: 0 auto;
 }
 
-.sw-lp-classname-why-choose-section .ant-row,
 .sw-lp-classname-why-choose-section .ant-row,
 .sw-lp-classname-why-choose-us .ant-row {
   max-width: 1200px;
@@ -1077,12 +1078,10 @@ these for custom sizing */
 }
 
 .sw-lp-classname-why-choose-section .ant-col,
-.sw-lp-classname-why-choose-section .ant-col,
 .sw-lp-classname-why-choose-us .ant-col {
   flex: 0 0 33.333% !important;
   max-width: 33.333% !important;
-  display:
-    flex;
+  display: flex;
   align-items: stretch;
 }
 
@@ -1092,8 +1091,7 @@ these for custom sizing */
   padding: 20px;
   display: flex;
   align-items: center;
-  gap:
-    12px;
+  gap: 12px;
   text-align: left;
   min-height: 120px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
@@ -1108,15 +1106,12 @@ these for custom sizing */
 
 .sw-lp-classname-why-card p,
 .sw-lp-classname-choose-us-card p {
-  margin:
-    0;
+  margin: 0;
   font-size: 0.95rem;
   color: #555;
 }
 
 @media (max-width: 992px) {
-
-  .sw-lp-classname-why-choose-section .ant-col,
   .sw-lp-classname-why-choose-section .ant-col,
   .sw-lp-classname-why-choose-us .ant-col {
     flex: 0 0 50% !important;
@@ -1125,8 +1120,6 @@ these for custom sizing */
 }
 
 @media (max-width: 600px) {
-
-  .sw-lp-classname-why-choose-section .ant-col,
   .sw-lp-classname-why-choose-section .ant-col,
   .sw-lp-classname-why-choose-us .ant-col {
     flex: 0 0 100% !important;
@@ -1138,8 +1131,7 @@ these for custom sizing */
     text-align: center;
     flex-direction: column;
     align-items: center;
-    gap:
-      10px;
+    gap: 10px;
     min-height: auto;
   }
 
@@ -1154,8 +1146,8 @@ these for custom sizing */
   }
 }
 
-/* ===== compact header rules for hs-navbar / hs-navbar-menu (prefixed)
-===== */
+/* ========== HS NAVBAR Rules ========== */
+
 .sw-lp-classname-hs-navbar {
   display: flex;
   align-items: center;
@@ -1165,9 +1157,6 @@ these for custom sizing */
   box-sizing: border-box;
 }
 
-/* ordering so items display left-to-right as:
-    [logo] [hamburger icon] [menu (desktop)] [signup button]
-    On mobile the menu will be hidden and hamburger visible */
 .sw-lp-classname-hs-navbar-logo {
   order: 0;
   flex: 0 0 auto;
@@ -1185,19 +1174,16 @@ these for custom sizing */
   flex: 1 1 auto;
   display: flex;
   justify-content: center;
-  align-items:
-    center;
+  align-items: center;
   overflow: visible;
 }
 
 .sw-lp-classname-hs-contact-btn {
   order: 3;
   flex: 0 0 auto;
-  margin-left:
-    12px;
+  margin-left: 12px;
 }
 
-/* AntD horizontal menu - compact (prefixed) */
 .sw-lp-classname-hs-navbar .sw-lp-classname-hs-navbar-menu .ant-menu-horizontal {
   display: flex;
   gap: 6px;
@@ -1223,19 +1209,16 @@ these for custom sizing */
   display: inline-block;
 }
 
-/* tighter variants (prefixed) */
 .sw-lp-classname-hs-navbar-menu {
   margin-left: 10px !important;
-  padding:
-    0 !important;
+  padding: 0 !important;
 }
 
 .sw-lp-classname-hs-navbar-menu .ant-menu-horizontal {
   gap: 4px !important;
   padding: 0 !important;
   margin: 0 !important;
-  border-bottom:
-    none !important;
+  border-bottom: none !important;
 }
 
 .sw-lp-classname-hs-navbar-menu .ant-menu-item {
@@ -1262,48 +1245,34 @@ these for custom sizing */
   overflow: visible !important;
 }
 
-/* MOBILE BEHAVIOR:
-    - hide the full menu on small screens
-    - show the hamburger icon and keep its position between logo and
-sign-up
-*/
+/* MOBILE BEHAVIOR */
 @media (max-width: 900px) {
-
-  /* hide the desktop menu */
   .sw-lp-classname-hs-navbar .sw-lp-classname-hs-navbar-menu {
-    display:
-      none !important;
+    display: none !important;
   }
 
-  /* show the hamburger */
   .sw-lp-classname-mobile-menu-icon {
     display: block;
   }
 
-  /* keep Sign Up visible but compact (you previously had an option to
-hide it on very small screens) */
   .sw-lp-classname-hs-contact-btn {
     display: block;
     padding: 8px 14px;
     border-radius: 8px;
   }
 
-  /* mobile menu list styling remains (the dropdown) */
   .sw-lp-classname-mobile-menu {
     display: block;
   }
 }
 
-/* Minor touch target improvements */
 .sw-lp-classname-mobile-menu-icon:focus,
 .sw-lp-classname-mobile-menu-icon:hover {
   outline: none;
   transform: scale(1.02);
 }
 
-/* ===== ADDED FOOTER CONTACT ICON + SOCIAL RULES (MERGED) ===== */
-
-/* contact rows in footer */
+/* FOOTER CONTACT */
 .sw-lp-classname-contact-item {
   display: flex;
   align-items: center;
@@ -1313,7 +1282,6 @@ hide it on very small screens) */
   font-size: 0.98rem;
 }
 
-/* icon sizing + subtle background circle */
 .sw-lp-classname-contact-icon {
   font-size: 18px;
   min-width: 28px;
@@ -1327,8 +1295,6 @@ hide it on very small screens) */
   color: rgba(255, 255, 255, 0.95);
 }
 
-/* social icon row (keeps inline fallback emojis or replace with real
-<a><Icon/></a>) */
 .sw-lp-classname-social-icons {
   margin-top: 14px;
   display: flex;
@@ -1337,16 +1303,14 @@ hide it on very small screens) */
   align-items: center;
 }
 
-/* a11y: make footer links more visible on hover */
 .sw-lp-classname-footer a {
   color: #bcd6ff;
   text-decoration: none;
 }
-
+ 
 .sw-lp-classname-footer a:hover {
   text-decoration: underline;
 }
-
 
 /* //////////////////vamsi landing///// */
 
