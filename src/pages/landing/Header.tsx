@@ -48,6 +48,7 @@ const STORAGE_KEY = "swachify_registered_user";
 const CommonHeader: React.FC<{ selectedKey?: string }> = ({ selectedKey = "home" }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [authModalVisible, setAuthModalVisible] = useState(false);
+  const [vendorModalVisible, setVendorModalVisible] = useState(false);
   const [activeAuthTab, setActiveAuthTab] = useState<"login" | "register">("register");
 
   const navigate = useNavigate();
@@ -100,6 +101,20 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({ selectedKey = "home"
       message.error("An error occurred while logging in.");
     }
   };
+  const onVendorLogin = (values: any) => {
+  console.log("Vendor Login:", values);
+
+  // Save vendor login flag
+  localStorage.setItem("isVendorLoggedIn", "true");
+
+  // Navigate to vendor dashboard
+  navigate("/vendor");
+
+  // Close modal
+  setVendorModalVisible(false);
+  message.success("Vendor Login Successful!");
+};
+
 
   const onRegister = async (values: any) => {
     try {
@@ -192,15 +207,20 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({ selectedKey = "home"
         </ul>
       )}
 
-      <Modal
-        open={authModalVisible}
-        onCancel={closeAuthModal}
-        footer={null}
-        centered
-        width={520}
-        bodyStyle={{ padding: 24 }}
-        destroyOnClose
-      >
+     <Modal
+  open={authModalVisible}
+  onCancel={closeAuthModal}
+  footer={null}
+  centered
+  width={520}
+  destroyOnClose
+  bodyStyle={{
+    padding: 24,
+    maxHeight: "70vh",
+    overflowY: "auto",
+  }}
+>
+
         <Tabs
           activeKey={activeAuthTab}
           onChange={(key) => setActiveAuthTab(key as "login" | "register")}
@@ -312,12 +332,112 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({ selectedKey = "home"
                   Register
                 </Button>
               </Form.Item>
+              <Form.Item style={{ marginTop: -10 }}>
+  <a
+    onClick={() => {
+      setAuthModalVisible(false);    
+      setVendorModalVisible(true);   
+    }}
+  >
+    Are you a vendor?
+  </a>
+</Form.Item>
+
             </Form>
           </TabPane>
         </Tabs>
       </Modal>
+      <Modal
+  open={vendorModalVisible}
+  onCancel={() => setVendorModalVisible(false)}
+  footer={null}
+  centered
+  width={550}
+  destroyOnClose
+  title="Vendor Authentication"
+   bodyStyle={{
+    maxHeight: "65vh",
+    overflowY: "auto",
+  }}
+>
+  <Tabs defaultActiveKey="vendor_register" centered>
+    
+    {/* VENDOR LOGIN TAB */}
+    <Tabs.TabPane tab="Login" key="vendor_login">
+      <Form layout="vertical"  onFinish={onVendorLogin}>
+
+        <Form.Item
+          label="Email / Phone"
+          name="identifier"
+          rules={[{ required: true }]}
+        >
+          <Input placeholder="Enter email or phone" />
+        </Form.Item>
+
+        <Form.Item
+          label="Password"
+          name="password"
+          rules={[{ required: true }]}
+        >
+          <Input.Password />
+        </Form.Item>
+
+        <Form.Item>
+          <Button type="primary" block htmlType="submit">
+            Login as Vendor
+          </Button>
+        </Form.Item>
+
+      </Form>
+    </Tabs.TabPane>
+
+    {/* VENDOR REGISTER TAB */}
+    <Tabs.TabPane tab="Register" key="vendor_register">
+      <Form layout="vertical" onFinish={(values) => console.log("Vendor Register:", values)}>
+
+        <Form.Item label="Business Name" name="businessName" rules={[{ required: true }]}>
+          <Input />
+        </Form.Item>
+
+        <Form.Item label="Owner Name" name="ownerName" rules={[{ required: true }]}>
+          <Input />
+        </Form.Item>
+
+        <Form.Item label="Email" name="email" rules={[{ required: true, type: "email" }]}>
+          <Input />
+        </Form.Item>
+
+        <Form.Item label="Phone" name="phone" rules={[{ required: true }]}>
+          <Input />
+        </Form.Item>
+
+        <Form.Item label="Service Category" name="category" rules={[{ required: true }]}>
+          <Input placeholder="Cleaning / Transport / Plumbing..." />
+        </Form.Item>
+
+        <Form.Item label="Business Address" name="address" rules={[{ required: true }]}>
+          <Input.TextArea rows={3} />
+        </Form.Item>
+
+        <Form.Item label="Password" name="password" rules={[{ required: true }]}>
+          <Input.Password />
+        </Form.Item>
+
+        <Form.Item>
+          <Button type="primary" block htmlType="submit">
+            Register as Vendor
+          </Button>
+        </Form.Item>
+
+      </Form>
+    </Tabs.TabPane>
+
+  </Tabs>
+</Modal>
+
     </>
   );
 };
 
 export default CommonHeader;
+  

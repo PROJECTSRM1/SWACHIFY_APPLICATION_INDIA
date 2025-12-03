@@ -15962,6 +15962,174 @@ body {
  /* ///// surya header css////// */
 
 
+<<<<<<< HEAD
+ /* anil & srihari vender page  */
+
+ /* Page Layout */
+.sw-vendor-page {
+  padding: 30px 40px;
+  background: #f5f6f8;
+  min-height: calc(100vh - 65px);
+}
+
+/* Header */
+.sw-vendor-header-container {
+  background: #ffffff;
+  padding: 0 40px;
+  height: 65px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #e6e6e6;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.sw-vendor-header-left {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.sw-brand-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #e60000;
+}
+
+.sw-vendor-portal-text {
+  font-size: 15px;
+  color: #444;
+}
+
+.sw-vendor-header-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.sw-profile-avatar {
+  cursor: pointer;
+  background-color: #007bff;
+}
+
+/* Info Card */
+.sw-vendor-info-card {
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+}
+
+.sw-vendor-info-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.sw-vendor-label {
+  font-size: 13px;
+  color: gray;
+  margin-bottom: 4px;
+}
+
+.sw-vendor-value {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* Section Heading */
+.sw-section-title {
+  font-size: 18px;
+  margin: 18px 0 10px;
+  font-weight: 600;
+}
+
+/* Order Cards */
+.sw-order-card {
+  border-radius: 12px !important;
+  padding: 20px;
+  margin-bottom: 25px;
+  background: #fff;
+}
+
+.sw-accepted-order {
+  border-left: 6px solid #2ecc71;
+}
+
+.sw-pending-order {
+  border-left: 6px solid #f4d03f;
+}
+
+.sw-order-details {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin: 10px 0;
+}
+
+.sw-deliver-btn {
+  margin-top: 12px;
+  height: 40px;
+  font-size: 14px;
+  background: #0066ff;
+}
+
+.sw-request-description {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+/* 📱 RESPONSIVE */
+@media (max-width: 1024px) {
+  .sw-vendor-page {
+    padding: 20px;
+  }
+
+  .sw-vendor-info-row {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 768px) {
+  .sw-vendor-header-container {
+    padding: 0 20px;
+  }
+
+  .sw-brand-title {
+    font-size: 20px;
+  }
+
+  .sw-order-details {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sw-vendor-header-container {
+    height: auto;
+    padding: 10px 15px;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .sw-vendor-page {
+    padding: 15px;
+  }
+
+  .sw-vendor-info-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+/* anil & srihari vender page  */
+
+
+
+
+=======
 
  /* ---  Tejesh  Freelancer Dashboard Styles (sw-frd) --- */
 
@@ -16483,4 +16651,5 @@ body {
 
 
 /* /////vamsi Recent booking css//// */
+>>>>>>> main
 

@@ -29,6 +29,9 @@
   color: #111;
 }
 
+
+
+
 /* =================== MOBILE MENU ICON =================== */
 .sw-mobile-menu-icon {
   display: none;
@@ -141,15 +144,16 @@
 }
 
 
-
+/* changes again */
 /* Prevent AntD menu from collapsing items into "..." */
-.sw-hs-navbar-menu .ant-menu-overflow {
+/* .sw-hs-navbar-menu .ant-menu-overflow {
   overflow: visible !important;
 }
 
 .sw-hs-navbar-menu .ant-menu-submenu {
   display: none !important;
-}
+} */
+ /*changes again */
 
 
 
@@ -161,3 +165,55 @@
   border-bottom: none !important;
   box-shadow: none !important;
 }
+
+
+
+
+
+/* ******changes******** */
+/* Show dropdown items correctly */
+.sw-hs-navbar-menu .ant-menu-submenu {
+  position: relative !important;
+}
+
+.sw-hs-navbar-menu .ant-menu-submenu-title {
+  display: flex !important;
+  align-items: center;
+}
+
+/* Ensure submenu dropdown is visible */
+.ant-menu-submenu-popup {
+  z-index: 1000 !important;
+}
+
+/* Fix hidden dropdown under header */
+.sw-hs-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sw-hs-navbar-menu {
+  flex: 1;
+  justify-content: center;
+}
+
+
+/* Make submenu title styling match normal menu items */
+.sw-hs-navbar-menu .ant-menu-submenu-title a {
+  color: inherit !important;
+  font-weight: 600 !important;
+  text-decoration: none !important;
+  padding: 8px 4px !important;
+  display: block !important;
+}
+
+/* Make submenu hover text same as others */
+.sw-hs-navbar-menu .ant-menu-submenu-title:hover a {
+  color: var(--primary-color) !important;
+}
+
+
+
+
+/* ****changes**** */
