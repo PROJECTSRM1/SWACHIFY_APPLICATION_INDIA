@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import { NonSecureRoutes } from "./nonSecureRoutes/NonSecureRoutes";
 import { ProtectedRoutes } from './ProtectedRoutes'
 import { SecureRoutes } from "./secureRoutes/SecureRoutes";
+import Vendor from "../pages/landing/Vendor";
 
 export const AppRoutes = () => {
     return <Routes>
@@ -14,5 +15,6 @@ export const AppRoutes = () => {
                         </ProtectedRoutes>   
                     }
                 />
+                 <Route path="vendor" element={<Vendor />} />
             </Routes>
 }
