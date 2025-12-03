@@ -10,6 +10,7 @@ import {
   Input,
   Checkbox,
   message,
+  Radio,
 } from "antd";
 import {
   EyeInvisibleOutlined,
@@ -22,11 +23,15 @@ import "./Header.css";
 
 const navItems = [
   { key: "home", label: <Link to="/landing">Home</Link> },
-  { key: "cleaning", label: <Link to="/cleaningservice">Cleaning&Home Services</Link> },
+  {
+    key: "cleaning",
+    label: <Link to="/cleaningservice">Cleaning&Home Services</Link>,
+  },
   { key: "packers", label: <Link to="/LandingPackers">Transport</Link> },
-  // { key: "home_services", label: <Link to="/home_service">Home Services</Link> },
-  // { key: "rentals", label: <Link to="/rentals">Rentals</Link> },
-  { key: "commercial", label: <Link to="/commercial-plots">Buy/Sale/Rentals</Link> },
+  {
+    key: "commercial",
+    label: <Link to="/commercial-plots">Buy/Sale/Rentals</Link>,
+  },
   { key: "materials", label: <Link to="/ConstructionMaterials">Raw Materials</Link> },
   { key: "education", label: <Link to="/">Education</Link> },
   { key: "Swachifyproducts", label: <Link to="/">Swachify Products</Link> },
@@ -36,19 +41,27 @@ const navItems = [
 const { TabPane } = Tabs;
 
 type RegisteredUser = {
-  fullname: string;
+  firstName?: string;
+  lastName?: string;
+  fullname?: string; // backward compatibility
   email: string;
   phone: string;
   password: string;
   address?: string;
+  gender?: string;
+  customerId?: number; // hidden payload to send to DB
 };
 
 const STORAGE_KEY = "swachify_registered_user";
 
-const CommonHeader: React.FC<{ selectedKey?: string }> = ({ selectedKey = "home" }) => {
+const CommonHeader: React.FC<{ selectedKey?: string }> = ({
+  selectedKey = "home",
+}) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [authModalVisible, setAuthModalVisible] = useState(false);
-  const [activeAuthTab, setActiveAuthTab] = useState<"login" | "register">("register");
+  const [activeAuthTab, setActiveAuthTab] = useState<"login" | "register">(
+    "register"
+  );
 
   const navigate = useNavigate();
 
@@ -83,12 +96,22 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({ selectedKey = "home"
         identifier === user.phone;
 
       if (identifierMatches && password === user.password) {
+        const displayName =
+          user.firstName || user.lastName
+            ? `${user.firstName || ""} ${user.lastName || ""}`.trim()
+            : user.fullname || "";
+
         setUserDetails("user", {
-          name: user.fullname,
+          name: displayName,
           email: user.email,
           phone: user.phone,
           address: user.address,
+          gender: user.gender,
+          // customerId is intentionally not exposed in UI,
+          // but you can still store it if needed:
+          // customerId: user.customerId,
         });
+
         message.success("Login successful");
         closeAuthModal();
         navigate("/app/dashboard");
@@ -103,27 +126,46 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({ selectedKey = "home"
 
   const onRegister = async (values: any) => {
     try {
-      const fullname = (values.fullname || "").toString().trim();
+      const firstName = (values.firstName || "").toString().trim();
+      const lastName = (values.lastName || "").toString().trim();
       const email = (values.email || "").toString().trim();
       const phone = (values.phone || "").toString().trim();
       const password = (values.password || "").toString();
       const address = (values.address || "").toString().trim();
+      const gender = (values.gender || "").toString();
 
-      if (!fullname || !email || !phone || !password) {
+      if (!firstName || !lastName || !email || !phone || !password || !gender) {
         message.error("Please fill all required fields");
         return;
       }
 
+      const fullNameCombined = `${firstName} ${lastName}`.trim();
+
       const newUser: RegisteredUser = {
-        fullname,
+        firstName,
+        lastName,
+        fullname: fullNameCombined,
         email,
         phone,
         password,
         address,
+        gender,
+        customerId: 2, // 🔐 Hidden constant value to send to DB
       };
 
+      // Here you can also call your backend API and pass `newUser`
+      // await api.post("/customers", newUser);
+
       localStorage.setItem(STORAGE_KEY, JSON.stringify(newUser));
-      setUserDetails("user", { name: fullname, email, phone, address });
+
+      setUserDetails("user", {
+        name: fullNameCombined,
+        email,
+        phone,
+        address,
+        gender,
+        // customerId: 2, // optional to keep in client storage too
+      });
 
       message.success("Registration successful. Please login to continue.");
       setActiveAuthTab("login");
@@ -242,13 +284,30 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({ selectedKey = "home"
 
           <TabPane tab="Register" key="register">
             <Form layout="vertical" onFinish={onRegister} preserve={false}>
-              <Form.Item
-                label="Full name"
-                name="fullname"
-                rules={[{ required: true }]}
-              >
-                <Input />
-              </Form.Item>
+              {/* First Name & Last Name */}
+              <div style={{ display: "flex", gap: 8 }}>
+                <Form.Item
+                  label="First Name"
+                  name="firstName"
+                  rules={[
+                    { required: true, message: "Please enter your first name" },
+                  ]}
+                  style={{ flex: 1 }}
+                >
+                  <Input />
+                </Form.Item>
+
+                <Form.Item
+                  label="Last Name"
+                  name="lastName"
+                  rules={[
+                    { required: true, message: "Please enter your last name" },
+                  ]}
+                  style={{ flex: 1 }}
+                >
+                  <Input />
+                </Form.Item>
+              </div>
 
               <Form.Item
                 label="Email"
@@ -264,6 +323,21 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({ selectedKey = "home"
                 rules={[{ required: true }]}
               >
                 <Input />
+              </Form.Item>
+
+              {/* Gender - Radio Buttons */}
+              <Form.Item
+                label="Gender"
+                name="gender"
+                rules={[
+                  { required: true, message: "Please select your gender" },
+                ]}
+              >
+                <Radio.Group>
+                  <Radio value="male">Male</Radio>
+                  <Radio value="female">Female</Radio>
+                  <Radio value="other">Other</Radio>
+                </Radio.Group>
               </Form.Item>
 
               <Form.Item
