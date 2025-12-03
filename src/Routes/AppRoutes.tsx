@@ -9,6 +9,9 @@ import Users from "../pages/Admin/Users";
 import Freelancers from "../pages/Admin/Freelancers";
 import Vendors from "../pages/Admin/Vendors";
 import { Navigate } from "react-router-dom";
+import Vendor from "../pages/landing/Vendor";
+import Freelancerlogin from "../pages/login/Freelancerlogin";
+import FreelancerDashboard from "../pages/freelancer/FreelancerDashboard";
 
 export const AppRoutes = () => {
     return <Routes>
@@ -30,5 +33,8 @@ export const AppRoutes = () => {
   <Route path="/admin-dashboard/vendors" element={<Vendors />} />
 </Route>
 
+                 <Route path="vendor" element={<Vendor />} />
+                 <Route path="/freelancerlogin" element={<Freelancerlogin />} />
+        <Route path="/freelancer-dashboard" element={<FreelancerDashboard />} />
             </Routes>
 }
