@@ -1,9 +1,10 @@
 // src/pages/landing/LandingCleaningPage.tsx
 import React, { useState } from "react";
 import { setUserDetails } from "../../utils/helpers/storage";
-import { Phone } from "lucide-react";
 import CommonHeader from "../../pages/landing/Header";
 import "../../pages/landing/Header.css";
+import FooterSection from '../../pages/landing/FooterSection';
+import "../../pages/landing/FooterSection.css"
 
 import {
   Row,
@@ -20,13 +21,13 @@ import {
 } from "antd";
 
 import {
-  FacebookOutlined,
-  TwitterOutlined,
-  InstagramOutlined,
-  LinkedinOutlined,
+  // FacebookOutlined,
+  // TwitterOutlined,
+  // InstagramOutlined,
+  // LinkedinOutlined,
   CheckCircleOutlined,
-  MailOutlined,
-  EnvironmentOutlined,
+  // MailOutlined,
+  // EnvironmentOutlined,
 } from "@ant-design/icons";
 
 import { useNavigate } from "react-router-dom";
@@ -519,73 +520,76 @@ function WhyChooseSection() {
 
 function DarkFooter() {
   return (
-    <footer className="sw-lc-footer">
-      <div className="sw-lc-footer-inner">
-        <div className="sw-lc-footer-col">
-          <h4 className="sw-lc-footer-title">About Us</h4>
-          <p className="sw-lc-footer-about">
-            Your trusted partner for all home and property-related services. Quality, reliability,
-            and customer satisfaction guaranteed.
-          </p>
-        </div>
+    // <footer className="sw-lc-footer">
+    //   <div className="sw-lc-footer-inner">
+    //     <div className="sw-lc-footer-col">
+    //       <h4 className="sw-lc-footer-title">About Us</h4>
+    //       <p className="sw-lc-footer-about">
+    //         Your trusted partner for all home and property-related services. Quality, reliability,
+    //         and customer satisfaction guaranteed.
+    //       </p>
+    //     </div>
 
-        <div className="sw-lc-footer-col">
-          <h4 className="sw-lc-footer-title">Services</h4>
-          <ul className="sw-lc-footer-links" aria-label="Services">
-            <li><a href="#cleaning">Cleaning Service</a></li>
-            <li><a href="#packers">Packers &amp; Movers</a></li>
-            <li><a href="#homes">Home Services</a></li>
-            <li><a href="#rentals">Rentals</a></li>
-            <li><a href="#commercial">Commercial Plots</a></li>
-            <li><a href="#materials">Construction Materials</a></li>
-          </ul>
-        </div>
+    //     <div className="sw-lc-footer-col">
+    //       <h4 className="sw-lc-footer-title">Services</h4>
+    //       <ul className="sw-lc-footer-links" aria-label="Services">
+    //         <li><a href="#cleaning">Cleaning Service</a></li>
+    //         <li><a href="#packers">Packers &amp; Movers</a></li>
+    //         <li><a href="#homes">Home Services</a></li>
+    //         <li><a href="#rentals">Rentals</a></li>
+    //         <li><a href="#commercial">Commercial Plots</a></li>
+    //         <li><a href="#materials">Construction Materials</a></li>
+    //       </ul>
+    //     </div>
 
-        <div className="sw-lc-footer-col">
-          <h4 className="sw-lc-footer-title">Quick Links</h4>
-          <ul className="sw-lc-footer-links" aria-label="Quick links">
-            <li><a href="/">Home</a></li>
-            <li><a href="/about">About</a></li>
-            <li><a href="/contact">Contact</a></li>
-            <li><a href="/careers">Careers</a></li>
-          </ul>
-        </div>
+    //     <div className="sw-lc-footer-col">
+    //       <h4 className="sw-lc-footer-title">Quick Links</h4>
+    //       <ul className="sw-lc-footer-links" aria-label="Quick links">
+    //         <li><a href="/">Home</a></li>
+    //         <li><a href="/about">About</a></li>
+    //         <li><a href="/contact">Contact</a></li>
+    //         <li><a href="/careers">Careers</a></li>
+    //       </ul>
+    //     </div>
 
-        <div className="sw-lc-footer-col">
-          <h4 className="sw-lc-footer-title">Contact Info</h4>
+    //     <div className="sw-lc-footer-col">
+    //       <h4 className="sw-lc-footer-title">Contact Info</h4>
 
-          <ul className="sw-lc-contact-list">
-            <div className="sw-lc-contact-row">
-              <Phone className="sw-lc-contact-icon sw-lc-thin-phone" aria-hidden />
-              <span className="sw-lc-contact-text"> +1 (555) 123-4567</span>
-            </div>
+    //       <ul className="sw-lc-contact-list">
+    //         <div className="sw-lc-contact-row">
+    //           <Phone className="sw-lc-contact-icon sw-lc-thin-phone" aria-hidden />
+    //           <span className="sw-lc-contact-text"> +1 (555) 123-4567</span>
+    //         </div>
 
-            <li>
-              <MailOutlined className="sw-lc-contact-icon" />
-              <span className="sw-lc-contact-text">info@homeservices.com</span>
-            </li>
+    //         <li>
+    //           <MailOutlined className="sw-lc-contact-icon" />
+    //           <span className="sw-lc-contact-text">info@homeservices.com</span>
+    //         </li>
 
-            <li>
-              <EnvironmentOutlined className="sw-lc-contact-icon" />
-              <span className="sw-lc-contact-text">123 Service Street, City, State</span>
-            </li>
-          </ul>
+    //         <li>
+    //           <EnvironmentOutlined className="sw-lc-contact-icon" />
+    //           <span className="sw-lc-contact-text">123 Service Street, City, State</span>
+    //         </li>
+    //       </ul>
 
-          <div className="sw-lc-socials" >
-            <a aria-label="facebook" className="sw-lc-social-link" href="#"><FacebookOutlined /></a>
-            <a aria-label="twitter" className="sw-lc-social-link" href="#"><TwitterOutlined /></a>
-            <a aria-label="instagram" className="sw-lc-social-link" href="#"><InstagramOutlined /></a>
-            <a aria-label="linkedin" className="sw-lc-social-link" href="#"><LinkedinOutlined /></a>
-          </div>
-        </div>
-      </div>
+    //       <div className="sw-lc-socials" >
+    //         <a aria-label="facebook" className="sw-lc-social-link" href="#"><FacebookOutlined /></a>
+    //         <a aria-label="twitter" className="sw-lc-social-link" href="#"><TwitterOutlined /></a>
+    //         <a aria-label="instagram" className="sw-lc-social-link" href="#"><InstagramOutlined /></a>
+    //         <a aria-label="linkedin" className="sw-lc-social-link" href="#"><LinkedinOutlined /></a>
+    //       </div>
+    //     </div>
+    //   </div>
 
-      <div className="sw-lc-footer-bottom">
-        <div className="sw-lc-footer-bottom-inner">
-          <span>© 2025 Home Services. All rights reserved.</span>
-        </div>
-      </div>
-    </footer>
+    //   <div className="sw-lc-footer-bottom">
+    //     <div className="sw-lc-footer-bottom-inner">
+    //       <span>© 2025 Home Services. All rights reserved.</span>
+    //     </div>
+    //   </div>
+    // </footer>
+    <FooterSection selectedKey="landingcleaningpage" />
+      
+    
   );
 }
 
