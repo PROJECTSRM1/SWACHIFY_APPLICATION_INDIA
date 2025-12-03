@@ -1,22 +1,44 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Input, Button } from 'antd';
-import 'antd/dist/reset.css'; // You can move this import to src/index.tsx if you already import antd globally
-// import './FreelancerRegistration.css';
+import { Input, Button, Select, Modal } from 'antd';
+import {
+  CreditCardOutlined,
+  MobileOutlined,
+  BankOutlined,
+  CheckCircleOutlined
+} from '@ant-design/icons';
+import 'antd/dist/reset.css';
+import './Registration.css';
+
+import gpayLogo from "../../assets/Google_Pay_Logo.svg";
+import phonepeLogo from "../../assets/phonepe.webp";
+import paytmLogo from "../../assets/Paytm.svg";
+
+
+
+const { Option } = Select;
 
 export default function Registration() {
-  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false); // for create account
+  const [payLoading, setPayLoading] = useState(false); // for pay button
+  const [paymentCompleted, setPaymentCompleted] = useState(false); // whether pay succeeded
+  const [showPaymentSuccessModal, setShowPaymentSuccessModal] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+
   const [formData, setFormData] = useState({
-    fullName: '',
+    firstName: '',
+    lastName: '',
     email: '',
     phone: '',
     password: '',
     confirmPassword: '',
     location: '',
+    gender: '',
     userType: 'freelancer' as 'freelancer' | 'client',
-    skills: [] as string[]
+    skills: [] as string[],
+    panNumber: '',
+    paymentMethod: '',
+    upiId: ''
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -27,7 +49,9 @@ export default function Registration() {
 
   const validateStep1 = () => {
     const newErrors: Record<string, string> = {};
-    if (!formData.fullName) newErrors.fullName = 'Please input your full name!';
+    if (!formData.firstName) newErrors.firstName = 'Please input your first name!';
+    if (!formData.lastName) newErrors.lastName = 'Please input your last name!';
+    if (!formData.gender) newErrors.gender = 'Please select your gender!';
     if (!formData.email) newErrors.email = 'Please input your email!';
     else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = 'Please enter a valid email!';
     if (!formData.phone) newErrors.phone = 'Please input your phone!';
@@ -52,6 +76,22 @@ export default function Registration() {
     if (formData.userType === 'freelancer' && formData.skills.length === 0) {
       newErrors.skills = 'Please select at least one skill!';
     }
+    if (!formData.panNumber) newErrors.panNumber = 'Please enter your PAN number!';
+    else if (!/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(formData.panNumber)) {
+      newErrors.panNumber = 'Please enter a valid PAN number!';
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const validateStep4 = () => {
+    const newErrors: Record<string, string> = {};
+    if (!formData.paymentMethod) {
+      newErrors.paymentMethod = 'Please select a payment method!';
+    }
+    if (formData.paymentMethod === 'upi' && !formData.upiId) {
+      newErrors.upiId = 'Please enter your UPI ID!';
+    }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -66,15 +106,9 @@ export default function Registration() {
     if (validateStep2()) setCurrentStep(2);
   };
 
-  const handleFinalSubmit = (e: React.FormEvent) => {
+  const handleStep3 = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!validateStep3()) return;
-    setLoading(true);
-    console.log('Registration data:', formData);
-    setTimeout(() => {
-      setLoading(false);
-      navigate('/');
-    }, 2000);
+    if (validateStep3()) setCurrentStep(3);
   };
 
   const toggleSkill = (skill: string) => {
@@ -87,23 +121,83 @@ export default function Registration() {
     if (errors.skills) setErrors({ ...errors, skills: '' });
   };
 
+  // Simulate the payment processing
+  const handlePay = () => {
+    // validate payment method first
+    if (!validateStep4()) {
+      // make sure paymentMethod error is shown
+      return;
+    }
+
+    // Already paid => do nothing
+    if (paymentCompleted) return;
+
+    setPayLoading(true);
+    // Simulate payment network call
+    setTimeout(() => {
+      setPayLoading(false);
+      setPaymentCompleted(true);
+      setShowPaymentSuccessModal(true);
+    }, 1600);
+  };
+
+  // Create account after payment
+    const handleCreateAccount = async (e: React.FormEvent) => {
+      e.preventDefault();
+
+      if (!paymentCompleted) {
+        Modal.warning({
+          title: 'Payment required',
+          content: 'Please complete the payment (Pay ₹499) before creating the account.',
+        });
+        return;
+      }
+
+      // 🔥 Prepare final data to send to backend
+      const payload = {
+        ...formData,
+        employeeId: 4,        // ✅ Always attach employee ID = 4
+      };
+
+      console.log("Sending to backend:", payload);
+
+      // simulate backend request
+      setLoading(true);
+      setTimeout(() => {
+        setLoading(false);
+        setShowSuccessModal(true);
+      }, 1400);
+    };
+
+
+  const closeFinalSuccess = () => {
+    setShowSuccessModal(false);
+    // redirect to freelancer home (same behavior as before)
+    window.location.href = '/Freelancer';
+  };
+
+  const closePaymentSuccess = () => {
+    setShowPaymentSuccessModal(false);
+  };
+
   return (
     <div className="sw-fr-registration-page">
       <a
         href="#"
         className="sw-fr-back-link"
-        onClick={() => navigate('/freelancer')}
+        onClick={(e) => {
+          e.preventDefault();
+          window.history.back();
+        }}
         aria-label="Go back"
       >
         ← Back
       </a>
 
       <div className="sw-fr-registration-container">
-        {/* Left Side - Progress */}
         <div className="sw-fr-registration-branding">
           <div className="sw-fr-branding-card">
             <div className="sw-fr-branding-header">
-              {/* <div className="branding-logo">⚡</div> */}
               <span className="sw-fr-branding-title">Swachify</span>
             </div>
 
@@ -133,44 +227,87 @@ export default function Registration() {
                 </div>
               </div>
 
-              <div className={`sw-fr-step-item ${currentStep >= 2 ? 'active' : ''}`}>
-                <div className="sw-fr-step-number">3</div>
+              <div className={`sw-fr-step-item ${currentStep >= 2 ? 'active' : ''} ${currentStep > 2 ? 'completed' : ''}`}>
+                <div className="sw-fr-step-number">
+                  {currentStep > 2 ? '✓' : '3'}
+                </div>
                 <div className="sw-fr-step-content">
-                  <h3>Skills & Preferences</h3>
+                  <h3>Skills & ID Proof</h3>
                   <p>Choose your expertise</p>
+                </div>
+              </div>
+
+              <div className={`sw-fr-step-item ${currentStep >= 3 ? 'active' : ''}`}>
+                <div className="sw-fr-step-number">4</div>
+                <div className="sw-fr-step-content">
+                  <h3>Payment</h3>
+                  <p>Complete registration fee</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Right Side - Form */}
         <div className="sw-fr-registration-form-section">
           <div className="sw-fr-registration-card">
             <div className="sw-fr-registration-header">
               <h1 className="sw-fr-registration-title">Create Your Account</h1>
-              <p className="sw-fr-registration-subtitle">Step {currentStep + 1} of 3</p>
+              <p className="sw-fr-registration-subtitle">Step {currentStep + 1} of 4</p>
             </div>
 
             <div className="sw-fr-progress-bar">
-              <div className="progress-fill" style={{ width: `${((currentStep + 1) / 3) * 100}%` }}></div>
+              <div className="progress-fill" style={{ width: `${((currentStep + 1) / 4) * 100}%` }}></div>
             </div>
 
-            {/* Step 1: Personal Info */}
             {currentStep === 0 && (
               <form onSubmit={handleStep1} className="sw-fr-registration-form">
+                <div className="sw-fr-form-row">
+                  <div className="sw-fr-form-group sw-fr-form-group-half">
+                    <label className="sw-fr-form-label">First Name</label>
+                    <Input
+                      value={formData.firstName}
+                      onChange={(e) => {
+                        setFormData({ ...formData, firstName: e.target.value });
+                        if (errors.firstName) setErrors({ ...errors, firstName: '' });
+                      }}
+                      placeholder="John"
+                      className={`sw-fr-form-input ${errors.firstName ? 'form-input-error' : ''}`}
+                    />
+                    {errors.firstName && <div className="sw-fr-form-error">{errors.firstName}</div>}
+                  </div>
+
+                  <div className="sw-fr-form-group sw-fr-form-group-half">
+                    <label className="sw-fr-form-label">Last Name</label>
+                    <Input
+                      value={formData.lastName}
+                      onChange={(e) => {
+                        setFormData({ ...formData, lastName: e.target.value });
+                        if (errors.lastName) setErrors({ ...errors, lastName: '' });
+                      }}
+                      placeholder="Doe"
+                      className={`sw-fr-form-input ${errors.lastName ? 'form-input-error' : ''}`}
+                    />
+                    {errors.lastName && <div className="sw-fr-form-error">{errors.lastName}</div>}
+                  </div>
+                </div>
+
                 <div className="sw-fr-form-group">
-                  <label className="sw-fr-form-label">Full Name</label>
-                  <Input
-                    value={formData.fullName}
-                    onChange={(e) => {
-                      setFormData({ ...formData, fullName: e.target.value });
-                      if (errors.fullName) setErrors({ ...errors, fullName: '' });
+                  <label className="sw-fr-form-label">Gender</label>
+                  <Select
+                    value={formData.gender || undefined}
+                    onChange={(value) => {
+                      setFormData({ ...formData, gender: value });
+                      if (errors.gender) setErrors({ ...errors, gender: '' });
                     }}
-                    placeholder="John Doe"
-                    className={`sw-fr-form-input ${errors.fullName ? 'form-input-error' : ''}`}
-                  />
-                  {errors.fullName && <div className="form-error">{errors.fullName}</div>}
+                    placeholder="Select your gender"
+                    className={`sw-fr-form-select ${errors.gender ? 'form-input-error' : ''}`}
+                    style={{ width: '100%' }}
+                  >
+                    <Option value="male">Male</Option>
+                    <Option value="female">Female</Option>
+                    <Option value="other">Other</Option>
+                  </Select>
+                  {errors.gender && <div className="sw-fr-form-error">{errors.gender}</div>}
                 </div>
 
                 <div className="sw-fr-form-group">
@@ -209,9 +346,8 @@ export default function Registration() {
               </form>
             )}
 
-            {/* Step 2: Security */}
             {currentStep === 1 && (
-              <form onSubmit={handleStep2} className="sw-fr-registration-form">
+              <form onSubmit={(e) => { e.preventDefault(); handleStep2(e); }} className="sw-fr-registration-form">
                 <div className="sw-fr-form-group">
                   <label className="sw-fr-form-label">Password</label>
                   <Input.Password
@@ -260,31 +396,8 @@ export default function Registration() {
               </form>
             )}
 
-            {/* Step 3: Skills */}
             {currentStep === 2 && (
-              <form onSubmit={handleFinalSubmit} className="sw-fr-registration-form">
-                {/* <div className="form-group">
-                  <label className="form-label">I want to</label>
-                  <div className="user-type-group">
-                    <Button
-                      type="default"
-                      className={`user-type-option ${formData.userType === 'freelancer' ? 'active' : ''}`}
-                      onClick={() => setFormData({ ...formData, userType: 'freelancer' })}
-                    >
-                      <span className="icon">💼</span>
-                      <span>Work as Freelancer</span>
-                    </Button>
-                    <Button
-                      type="default"
-                      className={`user-type-option ${formData.userType === 'client' ? 'active' : ''}`}
-                      onClick={() => setFormData({ ...formData, userType: 'client' })}
-                    >
-                      <span className="icon">👤</span>
-                      <span>Hire Freelancers</span>
-                    </Button>
-                  </div>
-                </div> */}
-
+              <form onSubmit={(e) => { e.preventDefault(); handleStep3(e); }} className="sw-fr-registration-form">
                 {formData.userType === 'freelancer' && (
                   <div className="sw-fr-form-group">
                     <label className="sw-fr-form-label">Select Your Skills</label>
@@ -292,7 +405,7 @@ export default function Registration() {
                       {skills.map(skill => (
                         <Button
                           key={skill}
-                          type="default"
+                          type={formData.skills.includes(skill) ? 'primary' : 'default'}
                           className={`sw-fr-skill-tag ${formData.skills.includes(skill) ? 'active' : ''}`}
                           onClick={() => toggleSkill(skill)}
                         >
@@ -304,19 +417,220 @@ export default function Registration() {
                   </div>
                 )}
 
-                <Button htmlType="submit" className="sw-fr-btn btn-primary btn-block" type="primary" loading={loading} disabled={loading}>
-                  {loading ? 'Creating Account...' : 'Create Account'}
+                <div className="sw-fr-form-group">
+                  <label className="sw-fr-form-label">Government ID Proof</label>
+                  <Input
+                    value={formData.panNumber}
+                    onChange={(e) => {
+                      setFormData({ ...formData, panNumber: e.target.value.toUpperCase() });
+                      if (errors.panNumber) setErrors({ ...errors, panNumber: '' });
+                    }}
+                    placeholder="Enter your PAN number"
+                    className={`sw-fr-form-input ${errors.panNumber ? 'form-input-error' : ''}`}
+                    maxLength={10}
+                  />
+                  {errors.panNumber && <div className="sw-fr-form-error">{errors.panNumber}</div>}
+                </div>
+
+                <Button htmlType="submit" className="sw-fr-btn btn-primary btn-block" type="primary">
+                  Continue
                 </Button>
+              </form>
+            )}
+
+            {currentStep === 3 && (
+              <form onSubmit={handleCreateAccount} className="sw-fr-registration-form">
+                <div className="sw-fr-payment-header">
+                  <h2 className="sw-fr-payment-title">Payment Category</h2>
+                  <div className="sw-fr-platform-fee">
+                    <span className="sw-fr-fee-label">Platform Fee:</span>
+                    <span className="sw-fr-fee-amount">₹499</span>
+                  </div>
+                </div>
+
+                <div className="sw-fr-form-group">
+                  <label className="sw-fr-form-label">Select Payment Method</label>
+                  <div className="sw-fr-payment-methods">
+                    <div
+                      className={`sw-fr-payment-option ${formData.paymentMethod === 'gpay' ? 'active' : ''} ${paymentCompleted ? 'disabled-option' : ''}`}
+                      onClick={() => {
+                        if (paymentCompleted) return;
+                        setFormData({ ...formData, paymentMethod: 'gpay' });
+                        if (errors.paymentMethod) setErrors({ ...errors, paymentMethod: '' });
+                      }}
+                    >
+                      <div className="sw-fr-payment-icon">
+                        <img src={gpayLogo} alt="Google Pay" />
+                      </div>
+                      <span>Google Pay</span>
+                    </div>
+
+                    <div
+                      className={`sw-fr-payment-option ${formData.paymentMethod === 'phonepe' ? 'active' : ''} ${paymentCompleted ? 'disabled-option' : ''}`}
+                      onClick={() => {
+                        if (paymentCompleted) return;
+                        setFormData({ ...formData, paymentMethod: 'phonepe' });
+                        if (errors.paymentMethod) setErrors({ ...errors, paymentMethod: '' });
+                      }}
+                    >
+                      <div className="sw-fr-payment-icon">
+                        {/* exact PhonePe PNG */}
+                        <img src={phonepeLogo} alt="PhonePe" />
+                      </div>
+                      <span>PhonePe</span>
+                    </div>
+
+                    <div
+                      className={`sw-fr-payment-option ${formData.paymentMethod === 'paytm' ? 'active' : ''} ${paymentCompleted ? 'disabled-option' : ''}`}
+                      onClick={() => {
+                        if (paymentCompleted) return;
+                        setFormData({ ...formData, paymentMethod: 'paytm' });
+                        if (errors.paymentMethod) setErrors({ ...errors, paymentMethod: '' });
+                      }}
+                    >
+                      <div className="sw-fr-payment-icon">
+                        <img src={paytmLogo} alt="Paytm" />
+                      </div>
+                      <span>Paytm</span>
+                    </div>
+
+                    <div
+                      className={`sw-fr-payment-option ${formData.paymentMethod === 'upi' ? 'active' : ''} ${paymentCompleted ? 'disabled-option' : ''}`}
+                      onClick={() => {
+                        if (paymentCompleted) return;
+                        setFormData({ ...formData, paymentMethod: 'upi' });
+                        if (errors.paymentMethod) setErrors({ ...errors, paymentMethod: '' });
+                      }}
+                    >
+                      <div className="sw-fr-payment-icon">
+                        <MobileOutlined style={{ fontSize: '32px', color: '#5f6368' }} />
+                      </div>
+                      <span>UPI ID</span>
+                    </div>
+
+                    <div
+                      className={`sw-fr-payment-option ${formData.paymentMethod === 'netbanking' ? 'active' : ''} ${paymentCompleted ? 'disabled-option' : ''}`}
+                      onClick={() => {
+                        if (paymentCompleted) return;
+                        setFormData({ ...formData, paymentMethod: 'netbanking' });
+                        if (errors.paymentMethod) setErrors({ ...errors, paymentMethod: '' });
+                      }}
+                    >
+                      <div className="sw-fr-payment-icon">
+                        <BankOutlined style={{ fontSize: '32px', color: '#5f6368' }} />
+                      </div>
+                      <span>Net Banking</span>
+                    </div>
+
+                    <div
+                      className={`sw-fr-payment-option ${formData.paymentMethod === 'card' ? 'active' : ''} ${paymentCompleted ? 'disabled-option' : ''}`}
+                      onClick={() => {
+                        if (paymentCompleted) return;
+                        setFormData({ ...formData, paymentMethod: 'card' });
+                        if (errors.paymentMethod) setErrors({ ...errors, paymentMethod: '' });
+                      }}
+                    >
+                      <div className="sw-fr-payment-icon">
+                        <CreditCardOutlined style={{ fontSize: '32px', color: '#5f6368' }} />
+                      </div>
+                      <span>Credit/Debit Card</span>
+                    </div>
+                  </div>
+                  {errors.paymentMethod && <div className="sw-fr-form-error">{errors.paymentMethod}</div>}
+                </div>
+
+                {formData.paymentMethod === 'upi' && (
+                  <div className="sw-fr-form-group">
+                    <label className="sw-fr-form-label">Enter UPI ID</label>
+                    <Input
+                      value={formData.upiId}
+                      onChange={(e) => {
+                        setFormData({ ...formData, upiId: e.target.value });
+                        if (errors.upiId) setErrors({ ...errors, upiId: '' });
+                      }}
+                      placeholder="yourname@upi"
+                      className={`sw-fr-form-input ${errors.upiId ? 'form-input-error' : ''}`}
+                    />
+                    {errors.upiId && <div className="sw-fr-form-error">{errors.upiId}</div>}
+                  </div>
+                )}
+
+                <div className="sw-fr-buttons-row" style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+
+                  <Button
+                    onClick={handlePay}
+                    type="primary"
+                    className="sw-fr-btn btn-primary"
+                    loading={payLoading}
+                    disabled={payLoading || paymentCompleted}
+                    style={{ minWidth: 160 }}
+                  >
+                    {paymentCompleted ? 'Paid ✓' : (payLoading ? 'Processing...' : 'Pay ₹499')}
+                  </Button>
+
+                  <Button
+                    htmlType="button"
+                    onClick={handleCreateAccount}
+                    type="default"
+                    className="sw-fr-btn btn-primary"
+                    disabled={loading}
+                    style={{ minWidth: 200, background: '#fff', color: '#374151', border: '1px solid #e5e7eb' }}
+                  >
+                    {loading ? 'Creating Account...' : 'Create Account'}
+                  </Button>
+                </div>
               </form>
             )}
 
             <p className="sw-fr-login-link">
               Already have an account?{' '}
-              <a onClick={() => navigate('/freelancerlogin')}>Login here</a>
+              <a href="/freelancerlogin">Login here</a>
             </p>
           </div>
         </div>
       </div>
+
+      {/* Payment success modal */}
+      <Modal
+        open={showPaymentSuccessModal}
+        onOk={closePaymentSuccess}
+        onCancel={closePaymentSuccess}
+        okText="Continue"
+        centered
+      >
+        <div style={{ textAlign: 'center', padding: 8 }}>
+          <CheckCircleOutlined style={{ fontSize: 60, color: '#4ade80', marginBottom: 12 }} />
+          <h2 style={{ marginTop: 8 }}>Payment Successful</h2>
+          <p>Your payment of ₹499 has been received. You can now create your account.</p>
+          <div style={{ marginTop: 12 }}>
+          </div>
+        </div>
+      </Modal>
+
+      {/* Final success modal (registration complete) */}
+      <Modal
+        open={showSuccessModal}
+        footer={null}
+        closable={false}
+        centered
+        className="sw-fr-success-modal"
+      >
+        <div className="sw-fr-success-content">
+          <CheckCircleOutlined className="sw-fr-success-icon" />
+          <h2 className="sw-fr-success-title">Thank You for Registering!</h2>
+          <p className="sw-fr-success-message">
+            Your account has been created successfully. You will be redirected to the home page shortly.
+          </p>
+          <Button
+            type="primary"
+            size="large"
+            onClick={closeFinalSuccess}
+            className="sw-fr-success-button"
+          >
+            Go to Home
+          </Button>
+        </div>
+      </Modal>
     </div>
   );
 }

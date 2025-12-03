@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useCart } from "../../../context/CartContext";
 
 import excavatorImg from "../../../assets/Building/excavator.jpg";
@@ -8,10 +8,10 @@ import mixerImg from "../../../assets/Building/concretemixer.jpg";
 import { message } from "antd";
 
 const machinery = [
-  { id: 1, title: "Excavator Rental", price: "150", img: excavatorImg,  },
-  { id: 2, title: "Loader Rental", price: "200", img: loaderImg, },
-  { id: 3, title: "Crane Rental", price: "300", img: craneImg,},
-  { id: 4, title: "Concrete Mixer Rental", price: "120", img: mixerImg,},
+  { id: 1, title: "Excavator Rental", price: "150", img: excavatorImg },
+  { id: 2, title: "Loader Rental", price: "200", img: loaderImg },
+  { id: 3, title: "Crane Rental", price: "300", img: craneImg },
+  { id: 4, title: "Concrete Mixer Rental", price: "120", img: mixerImg },
 ];
 
 interface FormProps {
@@ -20,42 +20,57 @@ interface FormProps {
 }
 
 const MachineryDetails: React.FC<FormProps> = ({ id, onClose }) => {
-
   const machine = machinery.find((item) => item.id === id);
+
   const [quantity, setQuantity] = useState(1);
+
+  const [customerName, setCustomerName] = useState("");
+  const [rentalType, setRentalType] = useState("");
+  const [rentalDate, setRentalDate] = useState("");
+  const [contact, setContact] = useState("");
+  const [address, setAddress] = useState("");
+  const [instructions, setInstructions] = useState("");
+
+  const formRef = useRef<HTMLFormElement>(null); 
+
   const { addToCart } = useCart();
-const [customerName, setCustomerName] = useState("");
-const [rentalType, setRentalType] = useState("");
-const [rentalDate, setRentalDate] = useState("");
-const [contact, setContact] = useState("");
-const [address, setAddress] = useState("");
-const [instructions, setInstructions] = useState("");
-
-
 
   if (!machine) return null;
-  const handleaddtocart = () =>{
-   addToCart({
-    id: machine.id,
-    title: machine.title,
-    image: machine.img,
-    quantity,
-    price: machine.price,
-    totalPrice,
-
-    customerName,
-    deliveryType: rentalType,
-    deliveryDate: rentalDate,
-    contact,
-    address,
-    instructions
-  });
-  message.success("item added to cart");
-
-  onClose();  
-};
 
   const totalPrice = Number(machine.price) * quantity;
+
+  // ★ RESET FORM WITHOUT CLOSING POPUP
+  const handleReset = () => {
+    formRef.current?.reset(); 
+    setQuantity(1); 
+
+    setCustomerName("");
+    setRentalType("");
+    setRentalDate("");
+    setContact("");
+    setAddress("");
+    setInstructions("");
+  };
+
+  const handleAddToCart = () => {
+    addToCart({
+      id: machine.id,
+      title: machine.title,
+      image: machine.img,
+      quantity,
+      price: machine.price,
+      totalPrice,
+      customerName,
+      deliveryType: rentalType,
+      deliveryDate: rentalDate,
+      contact,
+      address,
+      instructions,
+    });
+
+    message.success("Item added to cart");
+    onClose();
+  };
 
   return (
     <div className="sw-br-mach-details-modal">
@@ -88,10 +103,9 @@ const [instructions, setInstructions] = useState("");
               <li>Fuel support (if applicable)</li>
               <li>Invoice & documentation</li>
             </ul>
-
           </div>
 
-          <div className="sw-br-mach-form-side">
+          <form ref={formRef} className="sw-br-mach-form-side">
             <div className="sw-br-mach-form-section">
 
               <h3 className="sw-br-mach-section-title">Rental Details</h3>
@@ -99,14 +113,23 @@ const [instructions, setInstructions] = useState("");
               <div className="sw-br-mach-row">
                 <div className="sw-br-mach-form-item">
                   <label>Customer Name</label>
-                  <input type="text" placeholder="Enter customer name"
-                    value={customerName} onChange={(e)=>setCustomerName(e.target.value)} />
+                  <input
+                    type="text"
+                    name="customerName"
+                    placeholder="Enter customer name"
+                    value={customerName}
+                    onChange={(e) => setCustomerName(e.target.value)}
+                  />
                 </div>
 
                 <div className="sw-br-mach-form-item">
                   <label>Rental Type</label>
-                  <select value={rentalType} onChange={(e)=>setRentalType(e.target.value)}>
-                    <option>Select</option>
+                  <select
+                    name="rentalType"
+                    value={rentalType}
+                    onChange={(e) => setRentalType(e.target.value)}
+                  >
+                    <option value="">Select</option>
                     <option>With Operator</option>
                     <option>Without Operator</option>
                   </select>
@@ -126,22 +149,34 @@ const [instructions, setInstructions] = useState("");
 
                 <div className="sw-br-mach-form-item">
                   <label>Rental Date</label>
-                  <input type="date"
+                  <input
+                    type="date"
+                    name="rentalDate"
                     value={rentalDate}
-                    onChange={(e)=>setRentalDate(e.target.value)} />
+                    onChange={(e) => setRentalDate(e.target.value)}
+                  />
                 </div>
               </div>
 
               <div className="sw-br-mach-form-item full-width">
                 <label>Contact Number</label>
-                <input type="text" placeholder="Enter contact number"
-                  value={contact} onChange={(e)=>setContact(e.target.value)} />
+                <input
+                  type="text"
+                  name="contact"
+                  placeholder="Enter contact number"
+                  value={contact}
+                  onChange={(e) => setContact(e.target.value)}
+                />
               </div>
 
               <div className="sw-br-mach-form-item full-width">
                 <label>Site Address</label>
-                <textarea placeholder="Enter site address"
-                  value={address} onChange={(e)=>setAddress(e.target.value)} />
+                <textarea
+                  name="address"
+                  placeholder="Enter site address"
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                />
               </div>
 
               <h3 className="sw-br-mach-section-title">Additional Services</h3>
@@ -155,23 +190,39 @@ const [instructions, setInstructions] = useState("");
 
               <div className="sw-br-mach-form-item full-width">
                 <label>Special Instructions</label>
-                <textarea placeholder="Any specific requirements..."
-                  value={instructions} onChange={(e)=>setInstructions(e.target.value)} />
+                <textarea
+                  name="instructions"
+                  placeholder="Any specific requirements..."
+                  value={instructions}
+                  onChange={(e) => setInstructions(e.target.value)}
+                />
               </div>
 
               <div className="sw-br-mach-button-row">
-                <button className="sw-br-mach-cancel-btn" onClick={onClose}>Cancel</button>
-                <button className="sw-br-mach-add-btn" onClick={handleaddtocart}>Add to Cart</button>
+                <button
+                  type="button"
+                  className="sw-br-mach-cancel-btn"
+                  onClick={handleReset}
+                >
+                  Cancel
+                </button>
+
+                <button
+                  type="button"
+                  className="sw-br-mach-add-btn"
+                  onClick={handleAddToCart}
+                >
+                  Add to Cart
+                </button>
               </div>
 
             </div>
-          </div>
+          </form>
 
         </div>
       </div>
     </div>
   );
 };
-
 
 export default MachineryDetails;
