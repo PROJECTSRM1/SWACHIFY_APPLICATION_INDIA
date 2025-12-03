@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+// src/pages/landing/Header.tsx
+import React, { useState, useEffect } from "react";
 import { setUserDetails } from "../../utils/helpers/storage";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -24,8 +25,6 @@ const navItems = [
   { key: "home", label: <Link to="/landing">Home</Link> },
   { key: "cleaning", label: <Link to="/cleaningservice">Cleaning&Home Services</Link> },
   { key: "packers", label: <Link to="/LandingPackers">Transport</Link> },
-  // { key: "home_services", label: <Link to="/home_service">Home Services</Link> },
-  // { key: "rentals", label: <Link to="/rentals">Rentals</Link> },
   { key: "commercial", label: <Link to="/commercial-plots">Buy/Sale/Rentals</Link> },
   { key: "materials", label: <Link to="/ConstructionMaterials">Raw Materials</Link> },
   { key: "education", label: <Link to="/">Education</Link> },
@@ -59,6 +58,26 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({ selectedKey = "home"
   };
 
   const closeAuthModal = () => setAuthModalVisible(false);
+
+  // Expose openAuthModal/closeAuthModal on window so pages (like CommercialPlots) can call it
+  useEffect(() => {
+    (window as any).openAuthModal = (tab: "login" | "register" = "login") => {
+      openAuthModal(tab);
+    };
+    (window as any).closeAuthModal = () => {
+      closeAuthModal();
+    };
+
+    return () => {
+      try {
+        delete (window as any).openAuthModal;
+        delete (window as any).closeAuthModal;
+      } catch (e) {
+        // ignore deletion errors
+      }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // run once on mount
 
   const onLogin = async (values: any) => {
     try {
@@ -101,6 +120,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({ selectedKey = "home"
     }
   };
 
+  // After register, save user and switch to login tab (do NOT auto-login)
   const onRegister = async (values: any) => {
     try {
       const fullname = (values.fullname || "").toString().trim();
@@ -122,12 +142,13 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({ selectedKey = "home"
         address,
       };
 
+      // persist registered user
       localStorage.setItem(STORAGE_KEY, JSON.stringify(newUser));
-      setUserDetails("user", { name: fullname, email, phone, address });
 
-      message.success("Registration successful. Please login to continue.");
+      // Keep modal open but switch to login tab so user can enter credentials
+      message.success("Registration successful. Please log in to continue.");
       setActiveAuthTab("login");
-      setAuthModalVisible(true);
+      // leave authModalVisible as true so login form is visible
     } catch (err) {
       console.error("Registration error", err);
       message.error("An error occurred while registering.");
