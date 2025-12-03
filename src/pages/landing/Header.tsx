@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+// src/pages/landing/Header.tsx
+import React, { useState, useEffect } from "react";
 import { setUserDetails } from "../../utils/helpers/storage";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -75,6 +76,26 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
 
   const closeAuthModal = () => setAuthModalVisible(false);
 
+  // Expose openAuthModal/closeAuthModal on window so pages (like CommercialPlots) can call it
+  useEffect(() => {
+    (window as any).openAuthModal = (tab: "login" | "register" = "login") => {
+      openAuthModal(tab);
+    };
+    (window as any).closeAuthModal = () => {
+      closeAuthModal();
+    };
+
+    return () => {
+      try {
+        delete (window as any).openAuthModal;
+        delete (window as any).closeAuthModal;
+      } catch (e) {
+        // ignore deletion errors
+      }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // run once on mount
+
   const onLogin = async (values: any) => {
   try {
     const identifier = (values.identifier || "").toString().trim();
@@ -144,6 +165,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
 };
 
 
+  // After register, save user and switch to login tab (do NOT auto-login)
   const onRegister = async (values: any) => {
     try {
       const firstName = (values.firstName || "").toString().trim();
@@ -187,9 +209,10 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
         // customerId: 2, // optional to keep in client storage too
       });
 
-      message.success("Registration successful. Please login to continue.");
+      // Keep modal open but switch to login tab so user can enter credentials
+      message.success("Registration successful. Please log in to continue.");
       setActiveAuthTab("login");
-      setAuthModalVisible(true);
+      // leave authModalVisible as true so login form is visible
     } catch (err) {
       console.error("Registration error", err);
       message.error("An error occurred while registering.");

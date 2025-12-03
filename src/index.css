@@ -16825,4 +16825,179 @@ body {
         font-size: 15px;
     }
 }
+
+.sw-frd-section {
+  /* Base card style for the profile details block */
+  margin-bottom: 30px;
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  border: 1px solid #f0f0f0;
+}
+
+/* Style for the main profile card title area */
+.sw-frd-section .ant-card-head {
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+/* Enhancing typography for readability */
+.sw-frd-section .ant-typography-strong {
+  color: #1f2937;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+/* Color for icons inside text labels */
+.sw-frd-section .anticon {
+  color: #4b5563;
+}
+
+/* Style for the skill tags */
+.sw-frd-section .ant-tag {
+  font-size: 14px;
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-weight: 500;
+  border-color: rgba(59, 130, 246, 0.2);
+}
+
+/* Separator style for detail sections */
+.sw-frd-section .ant-typography h4 {
+  font-size: 18px;
+  color: #102030;
+  font-weight: 600;
+  margin-top: 10px !important;
+}
+
+/* Logout button style in the profile card header */
+.sw-frd-section .ant-btn-dangerous {
+  background-color: #dc3545 !important;
+  border-color: #dc3545 !important;
+  color: #ffffff !important;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+/* Responsive Grid Adjustments */
+@media (max-width: 767px) {
+  .sw-frd-content-main {
+    padding: 16px 12px 40px;
+  }
+  
+  .sw-frd-section {
+    padding: 18px;
+  }
+
+  .sw-frd-section .ant-card-head {
+    padding-bottom: 12px;
+  }
+}
+
+/* ----------------------------------------------------
+   Freelancer Profile Specific Styles (sw-fpr)
+   ---------------------------------------------------- */
+
+/* booking overlay styles */
+.sw-booking-page-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 9999999 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+}
+.sw-booking-page-content {
+  width: 100%;
+  max-width: 920px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+  position: relative;
+  padding: 28px;
+  box-sizing: border-box;
+}
+.sw-booking-page-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  font-size: 18px;
+  border-radius: 8px;
+}
+.sw-booking-page-content h1 {
+  margin: 0;
+  font-size: 36px;
+  text-align: center;
+  color: #111827;
+}
+
+/* reduce AntD dropdown z-index so overlay works */
+.sw-profile-dropdown-wrapper,
+.sw-profile-dropdown-wrapper .ant-dropdown,
+.ant-dropdown,
+.ant-popover,
+.ant-tooltip,
+.ant-dropdown-menu {
+  z-index: 200000 !important;
+}
+
+/* /////////surya header css////// */
+
+
+
+/* /////vamsi Recent booking css//// */
+
+.recent-booking-wrapper {
+  width: 100%;
+  min-height: 240px;
+  background: #fff;
+  padding: 20px;
+  box-sizing: border-box;
+}
+.recent-booking-title {
+  margin: 0 0 16px 0;
+  font-size: 22px;
+  text-align: center;
+}
+.recent-booking-card {
+  border-radius: 10px;
+}
+
+/* empty state (vamsi) */
+.recent-booking-wrapper-empty {
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+}
+.recent-booking-wrapper-empty h1 {
+  margin: 0;
+  font-size: 36px;
+  color: #111827;
+}
+@media (max-width: 600px) {
+  .recent-booking-wrapper {
+    padding: 12px;
+  }
+  .recent-booking-title {
+    font-size: 20px;
+  }
+  .recent-booking-wrapper-empty h1 {
+    font-size: 28px;
+  }
+}
+
+
+/* /////vamsi Recent booking css//// */
     }}
