@@ -251,9 +251,7 @@ const HeaderBar: React.FC = () => {
       {/* RIGHT */}
       <div className="sw-header-right" role="group" aria-label="Header actions">
         <span className="sw-header-item-notif" title="Notifications" aria-hidden="true">
-          <Badge count={cart.length} size="small">
-            <BellOutlined className="sw-header-icon-cart" />
-          </Badge>
+         
         </span>
 
         <Dropdown

@@ -146,11 +146,7 @@
 
 /* changes again */
 /* Prevent AntD menu from collapsing items into "..." */
-<<<<<<< HEAD
-.swl-hs-navbar-menu .ant-menu-overflow {
-=======
 /* .sw-hs-navbar-menu .ant-menu-overflow {
->>>>>>> main
   overflow: visible !important;
 }
 
@@ -167,7 +163,6 @@
   box-shadow: none !important;
 }
 
-<<<<<<< HEAD
 .swl-forgot-modal-title {
   text-align: center;
   margin-bottom: 20px;
@@ -193,7 +188,6 @@
 .swl-forgot-password-text:hover {
   text-decoration: underline;
 }
-=======
 
 
 
@@ -245,4 +239,3 @@
 
 
 /* ****changes**** */
->>>>>>> main

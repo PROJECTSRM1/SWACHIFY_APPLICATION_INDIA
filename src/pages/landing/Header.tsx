@@ -46,11 +46,11 @@ const STORAGE_KEY = "swachify_registered_user";
 const CommonHeader: React.FC<{ selectedKey?: string }> = ({ selectedKey = "home" }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [authModalVisible, setAuthModalVisible] = useState(false);
-<<<<<<< HEAD
+
   const [forgotModalVisible, setForgotModalVisible] = useState(false);
-=======
+
   const [vendorModalVisible, setVendorModalVisible] = useState(false);
->>>>>>> main
+
   const [activeAuthTab, setActiveAuthTab] = useState<"login" | "register">("register");
 
   const navigate = useNavigate();
@@ -208,18 +208,10 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({ selectedKey = "home"
           </li>
         </ul>
       )}
+      
 
-<<<<<<< HEAD
       {/* AUTH MODAL */}
-      <Modal
-        open={authModalVisible}
-        onCancel={closeAuthModal}
-        footer={null}
-        centered
-        width={520}
-        destroyOnClose
-      >
-=======
+     
      <Modal
   open={authModalVisible}
   onCancel={closeAuthModal}
@@ -234,7 +226,6 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({ selectedKey = "home"
   }}
 >
 
->>>>>>> main
         <Tabs
           activeKey={activeAuthTab}
           onChange={(key) => setActiveAuthTab(key as "login" | "register")}
@@ -345,7 +336,6 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({ selectedKey = "home"
           </TabPane>
         </Tabs>
       </Modal>
-<<<<<<< HEAD
 
      
       <Modal
@@ -410,7 +400,6 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({ selectedKey = "home"
           </Form.Item>
         </Form>
       </Modal>
-=======
       <Modal
   open={vendorModalVisible}
   onCancel={() => setVendorModalVisible(false)}
@@ -499,7 +488,6 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({ selectedKey = "home"
   </Tabs>
 </Modal>
 
->>>>>>> main
     </>
   );
 };
