@@ -186,7 +186,7 @@ const navigate = useNavigate();
       <a
         href="#"
         className="sw-fr-back-link"
-        onClick={() => navigate('/login')}
+        onClick={() => navigate('/freelancer')}
         aria-label="Go back"
       >
         ← Back
