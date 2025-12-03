@@ -12,6 +12,7 @@ import './Registration.css';
 import gpayLogo from "../../assets/Google_Pay_Logo.svg";
 import phonepeLogo from "../../assets/phonepe.webp";
 import paytmLogo from "../../assets/Paytm.svg";
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -169,7 +170,7 @@ export default function Registration() {
       }, 1400);
     };
 
-
+const navigate = useNavigate();
   const closeFinalSuccess = () => {
     setShowSuccessModal(false);
     // redirect to freelancer home (same behavior as before)
@@ -185,10 +186,7 @@ export default function Registration() {
       <a
         href="#"
         className="sw-fr-back-link"
-        onClick={(e) => {
-          e.preventDefault();
-          window.history.back();
-        }}
+        onClick={() => navigate('/login')}
         aria-label="Go back"
       >
         ← Back
