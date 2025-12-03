@@ -22,6 +22,8 @@ import {
 } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import '../../../../index.css';
+import { useCart } from '../../../../context/CartContext';
+//import type { FormProps } from 'antd';
 
 // Import images from assets folder (reuse the same ones as listings)
 import apartment1Img from '../../../../assets/HomeRental/img.jpg';
@@ -59,7 +61,6 @@ import warehouseImg2 from "../../../../assets/HomeRental/warehouse3.jpg";
 import warehouseImg3 from "../../../../assets/HomeRental/WareHouse.jpg";
 import warehouseImg4 from "../../../../assets/HomeRental/openplot3.jpg";
 
-
 const { TextArea } = Input;
 const { Option } = Select;
 
@@ -85,6 +86,7 @@ interface PropertyDetailsPageProps {
 
 const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, onClose }) => {
   const [form] = Form.useForm();
+  const { addToCart } = useCart();
 
   // Details for each property (ids match ApartmentListingsPage)
   const propertiesById: Record<string, PropertyDetails> = {
@@ -443,11 +445,43 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
     },
   ];
 
-  const onFinish = (values: any) => {
-    console.log('Form values:', values);
-    message.success('Your inquiry has been submitted! Our team will contact you within 24 hours.');
-    form.resetFields();
+  // const onFinish = (values: any) => {
+  //   console.log('Form values:', values);
+  //   message.success('Your inquiry has been submitted! Our team will contact you within 24 hours.');
+  //   form.resetFields();
+  // };
+  const onFinish = (values: {
+  fullName?: string;
+  phone?: string;
+  moveInDate?: string | Date;
+  message?: string;
+}) => {
+  const cartItem = {
+    id: Date.now(),
+    title: property.title,
+    image: property.images?.[0] || '',
+    quantity: 1,
+    price: property.price,
+    totalPrice: Number(property.price),
+
+    customerName: values.fullName || '',
+    deliveryType: '',
+    deliveryDate: values.moveInDate ? String(values.moveInDate) : '',
+    contact: values.phone || '',
+    address: '',
+    instructions: values.message || '',
   };
+
+  try {
+    addToCart(cartItem);
+    message.success('Property added to cart. Our team will contact you within 24 hours.');
+    form.resetFields();
+  } catch (err) {
+    console.error('Add to cart error:', err);
+    message.error('Could not add to cart. Try again.');
+  }
+};
+
   return (
     <div className="sw-hr-property-details-page">
       <div className="sw-hr-pd-header">
@@ -590,7 +624,7 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
                 rules={[
                   { required: true, message: 'Please enter your phone number' },
                   {
-                    pattern: /^[\+]?[(]?[0-9]{1,4}[)]?[-\s\.]?[(]?[0-9]{1,4}[)]?[-\s\.]?[0-9]{1,9}$/,
+                    pattern: /^[+]?[(]?[0-9]{1,4}[)]?[-\s.]?[(]?[0-9]{1,4}[)]?[-\s.]?[0-9]{1,9}$/,
                     message: 'Please enter a valid phone number',
                   },
                 ]}
