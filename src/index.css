@@ -916,9 +916,11 @@ with prefix */
 /* ===========================
     SERVICES SECTION ALIGNMENT
     =========================== */
-#services-section {
+.services-section {
   text-align: center;
   padding: 60px 40px;
+  margin-top: 40px;
+  margin-bottom: -44px;
 }
 
 .sw-lp-classname-services-section .sw-lp-classname-section-title {
@@ -2837,6 +2839,7 @@ readability */
   border-radius: 6px;
   /* reduced radius (smaller) */
   color: #fff;
+  margin-top: 70px;
 }
 
 .sw-pm-hero-title {
@@ -3548,6 +3551,7 @@ body,
   color: #ffffff;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
   text-align: left;
+  margin-top: 45px;
 }
 
 .swc-bs-banner-title {
@@ -13697,6 +13701,7 @@ body {
   margin-bottom: 24px;
   gap: 10px;
   white-space: nowrap;
+  margin-top: 70px;
 }
 
 .sw-hs-banner-left {
@@ -15476,13 +15481,14 @@ textarea {
   max-width: 1200px;
   margin: 0 auto;
   box-sizing: border-box;
+  margin-top: 50px
 }
 
 
 .sw-br-bc-header {
   background: #005cfa;
   color: #fff;
-  padding: 19px 24px;
+  padding: 28px 24px;
   border-radius: 12px;
   margin-bottom: 24px;
   display: flex;
@@ -15492,8 +15498,9 @@ textarea {
 
 
 .sw-br-bc-title {
-  font-size: 19px;
-  font-weight: 500;
+  font-size: 22px;
+  font-weight: 600;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 .sw-br-bc-subtitle {
@@ -15582,9 +15589,9 @@ textarea {
 
 /* ----------------------------- Header / Layout ----------------------------- */
 .sw-header-container {
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 9999;
+  z-index: 1000;
   width: 100%;
   background: white;
   border-bottom: 1px solid #eee;
@@ -15952,6 +15959,598 @@ body {
   border-bottom: none !important;
   overflow-y: hidden !important;
 }
+ /* ///// surya header css////// */
+
+
+
+ /* anil & srihari vender page  */
+
+ /* Page Layout */
+.sw-vendor-page {
+  padding: 30px 40px;
+  background: #f5f6f8;
+  min-height: calc(100vh - 65px);
+}
+
+/* Header */
+.sw-vendor-header-container {
+  background: #ffffff;
+  padding: 0 40px;
+  height: 65px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #e6e6e6;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.sw-vendor-header-left {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.sw-brand-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #e60000;
+}
+
+.sw-vendor-portal-text {
+  font-size: 15px;
+  color: #444;
+}
+
+.sw-vendor-header-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.sw-profile-avatar {
+  cursor: pointer;
+  background-color: #007bff;
+}
+
+/* Info Card */
+.sw-vendor-info-card {
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+}
+
+.sw-vendor-info-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.sw-vendor-label {
+  font-size: 13px;
+  color: gray;
+  margin-bottom: 4px;
+}
+
+.sw-vendor-value {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* Section Heading */
+.sw-section-title {
+  font-size: 18px;
+  margin: 18px 0 10px;
+  font-weight: 600;
+}
+
+/* Order Cards */
+.sw-order-card {
+  border-radius: 12px !important;
+  padding: 20px;
+  margin-bottom: 25px;
+  background: #fff;
+}
+
+.sw-accepted-order {
+  border-left: 6px solid #2ecc71;
+}
+
+.sw-pending-order {
+  border-left: 6px solid #f4d03f;
+}
+
+.sw-order-details {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin: 10px 0;
+}
+
+.sw-deliver-btn {
+  margin-top: 12px;
+  height: 40px;
+  font-size: 14px;
+  background: #0066ff;
+}
+
+.sw-request-description {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+/* 📱 RESPONSIVE */
+@media (max-width: 1024px) {
+  .sw-vendor-page {
+    padding: 20px;
+  }
+
+  .sw-vendor-info-row {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 768px) {
+  .sw-vendor-header-container {
+    padding: 0 20px;
+  }
+
+  .sw-brand-title {
+    font-size: 20px;
+  }
+
+  .sw-order-details {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sw-vendor-header-container {
+    height: auto;
+    padding: 10px 15px;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .sw-vendor-page {
+    padding: 15px;
+  }
+
+  .sw-vendor-info-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+/* anil & srihari vender page  */
+
+
+
+
+
+
+ /* ---  Tejesh  Freelancer Dashboard Styles (sw-frd) --- */
+
+.sw-frd-layout-container {
+  min-height: 100vh;
+  background: #f8fafc;
+}
+
+/* --- Header --- */
+.sw-frd-header {
+  background: #ffffff;
+  padding: 0 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #f0f0f0;
+  height: 64px;
+  line-height: 64px;
+}
+
+.sw-frd-logo-area {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sw-frd-logo-text {
+  font-size: 16px;
+  font-weight: 700;
+  color: #102030;
+}
+
+.sw-frd-portal-text {
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.sw-frd-user-area {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.sw-frd-welcome-text {
+  font-size: 15px;
+  color: #343a40;
+}
+
+.sw-frd-logout-btn {
+  border-radius: 8px;
+  background: #f8f9fa !important;
+  color: #dc3545 !important;
+  border-color: #dc3545 !important;
+  font-weight: 500;
+}
+
+/* --- Main Content --- */
+.sw-frd-content-main {
+  padding: 24px 24px 60px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.sw-frd-section {
+  margin-bottom: 30px;
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  border: 1px solid #f0f0f0;
+}
+
+.sw-frd-section-title {
+  font-size: 20px !important;
+  margin-bottom: 16px !important;
+  color: #111;
+  font-weight: 600 !important;
+}
+
+/* --- Skills Section --- */
+.sw-frd-skills-container {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.sw-frd-skill-tag {
+  background: #e9ecef;
+  border: 1px solid #ced4da;
+  color: #495057;
+  padding: 6px 14px;
+  font-size: 14px;
+  border-radius: 20px;
+  font-weight: 600;
+  transition: 0.2s;
+}
+.sw-frd-skill-tag:hover {
+    background: #e2e6ea;
+}
+
+/* --- Active Jobs --- */
+.sw-frd-active-jobs-container {
+    max-width: 7200px;
+}
+
+.sw-frd-job-card {
+  border: 1px solid #f5f5f5 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border-radius: 10px !important;
+  padding: 16px !important;
+}
+
+.sw-frd-job-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.sw-frd-job-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #102030;
+}
+
+.sw-frd-price {
+  font-size: 16px;
+  font-weight: 700;
+  color: #16a34a;
+  margin-left: auto;
+  white-space: nowrap;       /* prevent wrap */
+  display: inline-flex;      /* keep symbol and number together */
+  align-items: center;
+}
+
+
+.sw-frd-status-tag {
+    font-weight: 600;
+    border-radius: 4px;
+}
+
+.sw-frd-ticket-id {
+  display: block;
+  font-size: 13px;
+  color: #6c757d;
+  margin-bottom: 12px;
+}
+
+.sw-frd-details-row {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 16px;
+}
+
+.sw-frd-detail-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #495057;
+}
+
+.sw-frd-icon-sm {
+    color: #495057;
+}
+
+.sw-frd-complete-btn {
+  background: #198754 !important;
+  border-color: #198754 !important;
+  color: #fff !important;
+  border-radius: 6px;
+  font-weight: 600;
+  padding: 6px 12px;
+  height: auto;
+  transition: transform 0.2s;
+}
+.sw-frd-complete-btn:hover {
+    transform: translateY(-1px);
+}
+
+/* --- Available Requests --- */
+.sw-frd-available-header {
+    margin-bottom: 20px;
+}
+
+.sw-frd-requests-title {
+    margin-bottom: 0 !important;
+}
+
+.sw-frd-filter-select {
+    width: 200px;
+    border-radius: 8px;
+}
+
+.sw-frd-requests-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.sw-frd-request-card {
+    border: 1px solid #f5f5f5 !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border-radius: 10px !important;
+    padding: 16px !important;
+    position: relative; /* For absolute positioning of accept button on larger screens */
+}
+
+.sw-frd-request-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.sw-frd-request-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #102030;
+}
+
+.sw-frd-request-price {
+    font-size: 16px;
+    font-weight: 700;
+    color: #16a34a; /* Green for estimated price */
+    margin-left: auto;
+}
+
+.sw-frd-customer {
+    display: block;
+    font-size: 13px;
+    color: #6c757d;
+    margin-bottom: 4px;
+}
+
+.sw-frd-request-desc-text {
+    display: block;
+    font-size: 14px;
+    color: #343a40;
+    margin-bottom: 12px;
+}
+
+.sw-frd-estimated {
+    color: #0d6efd;
+    font-weight: 500;
+}
+
+.sw-frd-accept-btn {
+    background: #dc3545 !important;
+    border-color: #dc3545 !important;
+    color: #fff !important;
+    border-radius: 6px;
+    font-weight: 600;
+    padding: 8px 16px;
+    height: auto;
+    width: 100%;
+    margin-top: 12px;
+    transition: transform 0.2s;
+}
+.sw-frd-accept-btn:hover {
+    transform: translateY(-1px);
+}
+
+
+/* Responsive Adjustments */
+@media (min-width: 768px) {
+    .sw-frd-request-card .ant-card-body {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .sw-frd-accept-btn {
+        width: auto;
+        min-width: 180px;
+        margin-top: 0;
+        margin-left: 20px;
+    }
+    .sw-frd-job-card .ant-card-body {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .sw-frd-complete-btn {
+        margin-top: 0;
+    }
+}
+
+@media (max-width: 767px) {
+    .sw-frd-header {
+        flex-direction: column;
+        height: auto;
+        line-height: normal;
+        padding: 12px;
+        gap: 8px;
+    }
+    .sw-frd-logo-area {
+        width: 100%;
+        justify-content: center;
+    }
+    .sw-frd-user-area {
+        width: 100%;
+        justify-content: right;
+    }
+    .sw-frd-welcome-text {
+        font-size: 14px;
+    }
+    .sw-frd-content-main {
+        padding: 16px 12px 40px;
+    }
+    .sw-frd-details-row {
+        flex-direction: column;
+        gap: 8px;
+    }
+    .sw-frd-available-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    .sw-frd-filter-select {
+        width: 100%;
+    }
+}
+
+
+
+
+ /* ---  Tejesh  Freelancer Dashboard Styles (sw-frd) --- */
+
+
+
+
+
+
+/* ----------------------------------------------------
+   Freelancer Profile Specific Styles (sw-fpr)
+   These styles should be added to your global index.css
+   ---------------------------------------------------- */
+
+.sw-frd-content-main {
+  /* Inherited from Dashboard, ensures content centering and padding */
+  padding: 24px 24px 60px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.sw-frd-section {
+  /* Base card style for the profile details block */
+  margin-bottom: 30px;
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  border: 1px solid #f0f0f0;
+}
+
+/* Style for the main profile card title area */
+.sw-frd-section .ant-card-head {
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+/* Enhancing typography for readability */
+.sw-frd-section .ant-typography-strong {
+  color: #1f2937;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+/* Color for icons inside text labels */
+.sw-frd-section .anticon {
+  color: #4b5563;
+}
+
+/* Style for the skill tags */
+.sw-frd-section .ant-tag {
+  font-size: 14px;
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-weight: 500;
+  border-color: rgba(59, 130, 246, 0.2);
+}
+
+/* Separator style for detail sections */
+.sw-frd-section .ant-typography h4 {
+  font-size: 18px;
+  color: #102030;
+  font-weight: 600;
+  margin-top: 10px !important;
+}
+
+/* Logout button style in the profile card header */
+.sw-frd-section .ant-btn-dangerous {
+  background-color: #dc3545 !important;
+  border-color: #dc3545 !important;
+  color: #ffffff !important;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+/* Responsive Grid Adjustments */
+@media (max-width: 767px) {
+  .sw-frd-content-main {
+    padding: 16px 12px 40px;
+  }
+  
+  .sw-frd-section {
+    padding: 18px;
+  }
+
+  .sw-frd-section .ant-card-head {
+    padding-bottom: 12px;
+  }
+}
+
+/* ----------------------------------------------------
+   Freelancer Profile Specific Styles (sw-fpr)
+   ---------------------------------------------------- */
 
 /* booking overlay styles */
 .sw-booking-page-overlay {
@@ -16052,4 +16651,5 @@ body {
 
 
 /* /////vamsi Recent booking css//// */
+
 
