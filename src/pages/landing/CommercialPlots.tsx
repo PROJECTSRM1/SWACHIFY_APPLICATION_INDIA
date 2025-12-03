@@ -2,9 +2,10 @@
 import React, { useState } from "react";
 import CommonHeader from "../../pages/landing/Header";
 import "../../pages/landing/Header.css"; // import CSS for header
+import FooterSection from '../../pages/landing/FooterSection';
+import "../../pages/landing/FooterSection.css"
 import {
   Layout,
-  // Menu,
   Row,
   Col,
   Button,
@@ -14,8 +15,6 @@ import {
   DatePicker,
   Card,
   Space,
-  Modal,
-  Tabs,
   Form,
   Checkbox,
   message,
@@ -25,19 +24,9 @@ import {
   HomeOutlined,
   SearchOutlined,
   EyeOutlined,
-  PhoneOutlined,
-  MailOutlined,
-  EnvironmentOutlined,
-  FacebookOutlined,
-  TwitterOutlined,
-  InstagramOutlined,
-  LinkedinOutlined,
-  // MenuOutlined,
-  // CloseOutlined,
 } from "@ant-design/icons";
 
-import {  useNavigate } from "react-router-dom";
-// import "./commercialplots.css";
+import { useNavigate } from "react-router-dom";
 
 /* Update this path to your hero/background image file in your repo */
 import heroImg from "../../assets/landingimages/property4.jpg";
@@ -48,45 +37,10 @@ import card2 from "../../assets/landingimages/commercial plot.jpg";
 import card3 from "../../assets/landingimages/land.jpg";
 import card4 from "../../assets/landingimages/plot.jpg";
 
-const { Content, Footer } = Layout;
+const { Content } = Layout;
 const { Title } = Typography;
 const { Option } = Select;
-const { TabPane } = Tabs;
 
-/* -------------------------
-   HSHeader (inlined — same as Cleaning page)
-   ------------------------- */
-type HSHeaderProps = {
-  selectedKey?: string;
-  onSignUp?: () => void;
-  menuOpen?: boolean;
-  setMenuOpen?: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
-const HSHeader: React.FC<HSHeaderProps> = ({
-  // selectedKey = "",
-  // // onSignUp = () => {},
-  // // menuOpen,
-  // // setMenuOpen,
-}) => {
- 
-
-  // const selectedKeysArray = selectedKey ? [selectedKey] : [];
-
-  return (
-    <>
-<CommonHeader selectedKey="commercial-plots" />
-    
-    </>
-  );
-};
-/* -------------------------
-   End HSHeader
-   ------------------------- */
-
-/* ... rest of your code unchanged ... (kept exact as you provided) */
-
-/* Product type, data, propertyTypes, etc. */
 type Product = {
   id: number;
   img: string;
@@ -111,26 +65,14 @@ const propertyTypes = [
 ];
 
 const CommercialPlots: React.FC = () => {
-  // --- NEW: menu state for hamburger (added, used only for header mobile) ---
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // search/filter state
   const [searchLocation, setSearchLocation] = useState("");
   const [searchType, setSearchType] = useState<string | undefined>(undefined);
   const [selectedType, setSelectedType] = useState<string | undefined>(undefined);
 
-  // booking form state (simple, local)
   const [bookingForm] = Form.useForm();
 
-  // auth modal state
-  const [authModalVisible, setAuthModalVisible] = useState(false);
-  const [activeAuthTab, setActiveAuthTab] = useState<"login" | "register">("login");
-
-  // login/register forms
-  const [loginForm] = Form.useForm();
-  const [registerForm] = Form.useForm();
-
-  // router
   const navigate = useNavigate();
 
   const filteredProducts = React.useMemo(() => {
@@ -142,118 +84,16 @@ const CommercialPlots: React.FC = () => {
     });
   }, [searchLocation, searchType]);
 
-  // Demo handlers (replace with real API)
-  const onLoginFinish = (values: any) => {
-    console.log("Login:", values);
-    message.success("Logged in (demo)");
-    setAuthModalVisible(false);
-    loginForm.resetFields();
-    setTimeout(() => navigate("/app/dashboard"), 150);
-  };
-
-  const onRegisterFinish = (values: any) => {
-    console.log("Register:", values);
-    message.success("");
-    setAuthModalVisible(false);
-    registerForm.resetFields();
-    setTimeout(() => navigate("/app/dashboard"), 10);
-  };
-
-  // Booking submission - now using AntD Form for validation
   const handleBookingSubmit = (values: any) => {
     console.log("Consultation booking values:", values);
     message.success("Booking request submitted");
-    // keep behavior consistent: optionally navigate
     setTimeout(() => navigate("/app/dashboard"), 150);
   };
 
   return (
     <Layout className="sw-cp-cp-layout">
-      <HSHeader
-        selectedKey="commercial"
-        onSignUp={() => {
-          setActiveAuthTab("login");
-          setAuthModalVisible(true);
-        }}
-        menuOpen={menuOpen}
-        setMenuOpen={setMenuOpen}
-      />
-
-      <Modal
-        title={null}
-        centered
-        open={authModalVisible}
-        onCancel={() => setAuthModalVisible(false)}
-        footer={null}
-        width={420}
-        destroyOnClose
-        bodyStyle={{ padding: 0 }}
-      >
-        <div style={{ padding: 20 }}>
-          <Tabs
-            activeKey={activeAuthTab}
-            onChange={(k) => setActiveAuthTab(k as "login" | "register")}
-            centered
-            size="large"
-          >
-            <TabPane tab="Login" key="login">
-              <Form form={loginForm} layout="vertical" onFinish={onLoginFinish} initialValues={{ remember: true }}>
-                <Form.Item
-                  label="Email / Phone"
-                  name="identifier"
-                  rules={[{ required: true, message: "Please enter email / phone" }]}
-                >
-                  <Input placeholder="john@example.com or +1 555 123 4567" />
-                </Form.Item>
-
-                <Form.Item label="Password" name="password" rules={[{ required: true, message: "Please enter password" }]}>
-                  <Input.Password placeholder="Password" />
-                </Form.Item>
-
-                <Form.Item name="remember" valuePropName="checked" style={{ marginBottom: 8 }}>
-                  <Checkbox>Remember me</Checkbox>
-                </Form.Item>
-
-                <Form.Item style={{ marginBottom: 0 }}>
-                  <Button type="primary" htmlType="submit" block>
-                    Login
-                  </Button>
-                </Form.Item>
-              </Form>
-            </TabPane>
-
-            <TabPane tab="Register" key="register">
-              <Form form={registerForm} layout="vertical" onFinish={onRegisterFinish}>
-                <Form.Item label="Full Name" name="name" rules={[{ required: true, message: "Enter your name" }]}>
-                  <Input placeholder="John Doe" />
-                </Form.Item>
-
-                <Form.Item
-                  label="Email"
-                  name="email"
-                  rules={[{ required: true, message: "Enter email" }, { type: "email", message: "Enter valid email" }]}
-                >
-                  <Input placeholder="john@example.com" />
-                </Form.Item>
-
-                <Form.Item label="Phone" name="phone" rules={[{ required: true, message: "Enter phone" }]}>
-                  <Input placeholder="+1 555 123 4567" />
-                </Form.Item>
-
-                <Form.Item label="Password" name="password" rules={[{ required: true, message: "Choose password" }]}>
-                  <Input.Password placeholder="Password" />
-                </Form.Item>
-
-                <Form.Item style={{ marginBottom: 0 }}>
-                  <Button type="primary" htmlType="submit" block>
-                    Register
-                  </Button>
-                </Form.Item>
-              </Form>
-            </TabPane>
-          </Tabs>
-        </div>
-      </Modal>
+      {/* Header must be mounted so it can open the modal via window.openAuthModal */}
+      <CommonHeader selectedKey="commercial-plots" />
 
       <Content className="sw-cp-cp-content">
         {/* =========================
@@ -317,7 +157,7 @@ const CommercialPlots: React.FC = () => {
           </div>
         </section>
 
-        {/* rest of your sections (unchanged) */}
+        {/* Browse by property type */}
         <section className="sw-cp-cp-browse-section">
           <div className="sw-cp-cp-browse-inner">
             <Title level={2} className="sw-cp-cp-browse-title">Browse by Property Type</Title>
@@ -347,6 +187,7 @@ const CommercialPlots: React.FC = () => {
           </div>
         </section>
 
+        {/* Products grid */}
         <section className="sw-cp-cp-products-section">
           <div className="sw-cp-cp-products-inner">
             <Row justify="center" style={{ marginBottom: 8 }}>
@@ -373,7 +214,18 @@ const CommercialPlots: React.FC = () => {
                     <div className="sw-cp-product-meta">
                       <div className="sw-cp-product-price">{item.price}</div>
                       <Space>
-                        <Button className="sw-cp-product-btn" onClick={() => {/* navigate to details */}}>
+                        <Button
+                          className="sw-cp-product-btn"
+                          onClick={() => {
+                            // IMPORTANT: do NOT navigate here.
+                            // Always open header modal (register tab). Header will navigate to dashboard after auth.
+                            if ((window as any).openAuthModal) {
+                              (window as any).openAuthModal("register");
+                            } else {
+                              console.warn("openAuthModal not available on window. Ensure CommonHeader is mounted.");
+                            }
+                          }}
+                        >
                           <EyeOutlined /> View Details
                         </Button>
                       </Space>
@@ -385,6 +237,7 @@ const CommercialPlots: React.FC = () => {
           </div>
         </section>
 
+        {/* Process section */}
         <section className="sw-cp-cp-process-section">
           <div className="sw-cp-cp-process-inner">
             <Title level={2} className="sw-cp-cp-process-title">How It Works</Title>
@@ -421,9 +274,7 @@ const CommercialPlots: React.FC = () => {
           </div>
         </section>
 
-        {/* =========================
-            UPDATED: Schedule a Consultation (Home_Service booking form format)
-           ========================= */}
+        {/* Booking form */}
         <div className="sw-cp-hs-booking-wrap">
           <div className="sw-cp-hs-booking-head">
             <h2>Schedule a Consultation</h2>
@@ -505,77 +356,10 @@ const CommercialPlots: React.FC = () => {
             </Form>
           </div>
         </div>
-        {/* ========================= END booking section ========================= */}
 
       </Content>
 
-      <Footer className="sw-cp-cp-footer">
-        <div className="sw-cp-cp-footer-inner">
-          <div className="sw-cp-cp-footer-col">
-            <h4>About Us</h4>
-            <p>Your trusted partner for all home and property-related services. Quality, reliability, and customer satisfaction guaranteed.</p>
-          </div>
-
-          <div className="sw-cp-cp-footer-col">
-            <h4>Services</h4>
-            <ul>
-              <li>Cleaning Service</li>
-              <li>Packers & Movers</li>
-              <li>Home Services</li>
-              <li>Rentals</li>
-              <li>Commercial Plots</li>
-              <li>Construction Materials</li>
-            </ul>
-          </div>
-
-          <div className="sw-cp-cp-footer-col">
-            <h4>Quick Links</h4>
-            <ul>
-              <li>Home</li>
-              <li>About</li>
-              <li>Contact</li>
-              <li>Careers</li>
-            </ul>
-          </div>
-
-          <div className="sw-cp-cp-footer-col">
-            <h4>Contact Info</h4>
-
-            <div className="sw-cp-cp-contact-row">
-              <PhoneOutlined />
-              <span>+1 (555) 123-4567</span>
-            </div>
-
-            <div className="sw-cp-cp-contact-row">
-              <MailOutlined />
-              <span>info@homeservices.com</span>
-            </div>
-
-            <div className="sw-cp-cp-contact-row">
-              <EnvironmentOutlined />
-              <span>123 Service Street, City, State</span>
-            </div>
-
-            {/* Social icons (styled as dark rounded squares like Home_Service) */}
-            <div className="sw-cp-cp-footer-socials" aria-label="social links">
-              <a aria-label="facebook" href="#" role="link">
-                <FacebookOutlined />
-              </a>
-              <a aria-label="twitter" href="#" role="link">
-                <TwitterOutlined />
-              </a>
-              <a aria-label="instagram" href="#" role="link">
-                <InstagramOutlined />
-              </a>
-              <a aria-label="linkedin" href="#" role="link">
-                <LinkedinOutlined />
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <div className="sw-cp-cp-footer-bottom">© {new Date().getFullYear()} Home Services. All rights reserved.</div>
-      </Footer>
+      <FooterSection selectedKey="CommercialPlots" />
 
     </Layout>
   );

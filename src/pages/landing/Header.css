@@ -1,12 +1,12 @@
 /* Header.css - EXACT COPY OF YOUR FILE + signup override */
 
 /* =================== BASE NAV =================== */
-.hs-navbar {
+.swl-hs-navbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding: 12px 24px;
+  padding: 8px 8px;
   box-sizing: border-box;
   background: #fff;
   position: sticky;
@@ -15,7 +15,7 @@
   box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
 
-.hs-navbar-logo {
+.swl-hs-navbar-logo {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -23,14 +23,17 @@
   flex: 0 0 auto;
 }
 
-.hs-logo-text {
+.swl-hs-logo-text {
   font-weight: 700;
   font-size: 1.1rem;
   color: #111;
 }
 
+
+
+
 /* =================== MOBILE MENU ICON =================== */
-.mobile-menu-icon {
+.swl-mobile-menu-icon {
   display: none;
   font-size: 1.6rem;
   cursor: pointer;
@@ -42,7 +45,7 @@
 }
 
 /* =================== MENU =================== */
-.hs-navbar .hs-navbar-menu {
+.swl-hs-navbar .swl-hs-navbar-menu {
   order: 2;
   flex: 1 1 auto;
   display: flex;
@@ -52,7 +55,7 @@
   padding: 0 !important;
 }
 
-.hs-navbar .hs-navbar-menu .ant-menu-horizontal {
+.swl-hs-navbar .swl-hs-navbar-menu .ant-menu-horizontal {
   display: flex;
   gap: 6px;
   align-items: center;
@@ -60,27 +63,27 @@
   border-bottom: none;
 }
 
-.hs-navbar .hs-navbar-menu .ant-menu-item {
+.swl-hs-navbar .swl-hs-navbar-menu .ant-menu-item {
   padding: 0 10px;
   height: auto;
   font-weight: 600;
-  font-size: 0.98rem;
+  font-size: 0.95rem;
   white-space: nowrap;
 }
 
-.hs-navbar .hs-navbar-menu .ant-menu-item a {
+.swl-hs-navbar .swl-hs-navbar-menu .ant-menu-item a {
   padding: 8px 4px;
 }
 
 /* =================== SIGN UP BUTTON =================== */
-.hs-contact-btn {
+.swl-hs-contact-btn {
   order: 3;
   flex: 0 0 auto;
   margin-left: 12px;
 }
 
 /* =================== MOBILE MENU =================== */
-.mobile-menu {
+.swl-mobile-menu {
   width: 100%;
   background: #fff;
   list-style: none;
@@ -88,29 +91,29 @@
   box-shadow: 0 4px 6px rgba(0,0,0,0.12);
 }
 
-.mobile-menu li {
+.swl-mobile-menu li {
   padding: 10px 0;
   border-bottom: 1px solid #eee;
 }
 
-.mobile-menu li a {
+.swl-mobile-menu li a {
   color: #333;
 }
 
 /* =================== RESPONSIVE =================== */
 @media (max-width: 900px) {
-  .hs-navbar .hs-navbar-menu { display: none !important; }
-  .mobile-menu-icon { display: block; }
-  .hs-contact-btn { display: block; }
+  .swl-hs-navbar .swl-hs-navbar-menu { display: none !important; }
+  .swl-mobile-menu-icon { display: block; }
+  .swl-hs-contact-btn { display: block; }
 }
 
 /* =========================================================
    💙 SIGN UP BUTTON — LIGHT BLUE OVERRIDE (100% WORKING)
    ========================================================= */
-.signup-btn.ant-btn,
-.signup-btn .ant-btn,
-.hs-contact-btn.signup-btn,
-.hs-contact-btn.signup-btn .ant-btn.ant-btn-primary {
+.swl-signup-btn.ant-btn,
+.swl-signup-btn .ant-btn,
+.swl-hs-contact-btn.swl-signup-btn,
+.swl-hs-contact-btn.swl-signup-btn .ant-btn.ant-btn-primary {
   background-color: #4da6ff !important;
   border-color: #4da6ff !important;
   color: #fff !important;
@@ -119,8 +122,120 @@
   padding: 6px 14px !important;
 }
 
-.signup-btn.ant-btn:hover,
-.signup-btn .ant-btn:hover {
+.swl-signup-btn.ant-btn:hover,
+.swl-signup-btn .ant-btn:hover {
   background-color: #3b8fe6 !important;
   border-color: #3b8fe6 !important;
 }
+
+
+
+
+/* Remove underline from all links in menu + mobile menu */
+.swl-hs-navbar a,
+.swl-mobile-menu a {
+  text-decoration: none !important;
+}
+
+/* Optional: keep color consistent */
+.swl-hs-navbar a,
+.swl-mobile-menu a {
+  color: #111 !important;
+}
+
+
+/* changes again */
+/* Prevent AntD menu from collapsing items into "..." */
+/* .sw-hs-navbar-menu .ant-menu-overflow {
+  overflow: visible !important;
+}
+
+.swl-hs-navbar-menu .ant-menu-submenu {
+  display: none !important;
+} */
+ /*changes again */
+
+
+.swl-hs-navbar-menu .ant-menu-item-selected,
+.swl-hs-navbar-menu .ant-menu-item-selected::after {
+  color: inherit !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+}
+
+.swl-forgot-modal-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+
+.swl-login-options-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+
+.swl-forgot-password-text {
+  color: #1677ff;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.swl-forgot-password-text:hover {
+  text-decoration: underline;
+}
+
+
+
+
+/* ******changes******** */
+/* Show dropdown items correctly */
+.sw-hs-navbar-menu .ant-menu-submenu {
+  position: relative !important;
+}
+
+.sw-hs-navbar-menu .ant-menu-submenu-title {
+  display: flex !important;
+  align-items: center;
+}
+
+/* Ensure submenu dropdown is visible */
+.ant-menu-submenu-popup {
+  z-index: 1000 !important;
+}
+
+/* Fix hidden dropdown under header */
+.sw-hs-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sw-hs-navbar-menu {
+  flex: 1;
+  justify-content: center;
+}
+
+
+/* Make submenu title styling match normal menu items */
+.sw-hs-navbar-menu .ant-menu-submenu-title a {
+  color: inherit !important;
+  font-weight: 600 !important;
+  text-decoration: none !important;
+  padding: 8px 4px !important;
+  display: block !important;
+}
+
+/* Make submenu hover text same as others */
+.sw-hs-navbar-menu .ant-menu-submenu-title:hover a {
+  color: var(--primary-color) !important;
+}
+
+
+
+
+/* ****changes**** */

@@ -227,7 +227,7 @@ const cardsData: CardItem[] = [
         formSchema: [
           { name: "pickup", label: "Pickup Address", type: "text", required: true },
           { name: "delivery", label: "Delivery Address", type: "text", required: true },
-          { name: "temperature", label: "Required Temperature (Â°C)", type: "number", required: true },
+          { name: "temperature", label: "Required Temperature (°C)", type: "number", required: true },
           { name: "weight", label: "Weight (kg)", type: "number" },
           { name: "date", label: "Preferred Date", type: "date" },
         ],
@@ -283,7 +283,7 @@ const Packersandmovers: React.FC = () => {
   };
   const closeGroupModal = () => {
     setGroupIndex(null);
-    // restore body scroll â€” if bookingOpen is also open we should keep locked,
+    // restore body scroll — if bookingOpen is also open we should keep locked,
     // but group modal is only visible when bookingOpen is false, so it's safe to unlock.
     if (!bookingOpen) unlockBodyScroll();
     previouslyFocused.current?.focus();
@@ -610,7 +610,7 @@ const Packersandmovers: React.FC = () => {
                   <h4>What's Included</h4>
                   <ul>
                     {(selectedImage.included || []).map((inc, i) => (
-                      <li key={i}>â€¢ {inc}</li>
+                      <li key={i}>{inc}</li>
                     ))}
                   </ul>
                 </div>

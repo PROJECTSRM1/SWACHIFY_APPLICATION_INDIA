@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 import {
-  // SearchOutlined,
   EnvironmentOutlined,
   ClockCircleOutlined,
   DollarCircleOutlined,
@@ -28,32 +27,17 @@ import {
   Card,
   Tag,
   Statistic,
-  Menu,
   Modal,
   Tabs,
   Form,
-  // Checkbox,
   message,
 } from "antd";
 
-import "./Freelancer.css";
+// import "./Freelancer.css";
 
-const {  Content } = Layout;
+const { Content } = Layout;
 const { TabPane } = Tabs;
 
-// Navigation items from Home Service
-const navItems = [
-  { key: "home", label: <a href="/landing">Home</a> },
-  { key: "cleaning", label: <a href="/cleaningservice">Cleaning</a> },
-  { key: "packers", label: <a href="/LandingPackers">Packers & Movers</a> },
-  { key: "home_services", label: <a href="/home_service">Home Services</a> },
-  { key: "rentals", label: <a href="/rentals">Rentals</a> },
-  { key: "commercial", label: <a href="/commercial-plots">Buy&Sale Properties</a> },
-  { key: "materials", label: <a href="/ConstructionMaterials">Construction Materials</a> },
-  { key: "freelancer", label: <a href="/Freelancer">Freelancer</a> },
-];
-
-// Categories
 const serviceCategories = [
   { icon: "🏠", name: "Home Services", count: 156 },
   { icon: "🔧", name: "Repair & Fix", count: 89 },
@@ -63,7 +47,6 @@ const serviceCategories = [
   { icon: "🧹", name: "Cleaning Services", count: 145 },
 ];
 
-// Live Requests
 const liveRequests = [
   {
     id: 1,
@@ -107,9 +90,6 @@ const stats = [
 export default function Freelancer() {
   const navigate = useNavigate();
 
-  // -----------------------------
-  // Sign Up / Login Modal (copied)
-  // -----------------------------
   const [authModalVisible, setAuthModalVisible] = useState(false);
   const [activeTab, setActiveTab] = useState("login");
 
@@ -127,34 +107,33 @@ export default function Freelancer() {
   };
 
   return (
-    <Layout className="swf-layout">
+    <Layout className="sw-fr-layout">
+      <header className="sw-fr-fix-header">
+        <div className="sw-fr-fix-header-left">Swachify Freelancer</div>
 
-      {/* --------------------------- */}
-      {/*   HOME-SERVICE HEADER HERE   */}
-      {/* --------------------------- */}
-      <header className="hs-navbar">
-        <div className="hs-navbar-logo">
-          <span className="hs-logo-text">SWACHIFY INDIA</span>
+        <div className="sw-fr-header-actions">
+          <Button
+            type="primary"
+            className="sw-fr-fix-header-btn"
+            onClick={() => navigate("/landing")}
+          >
+            Back
+          </Button>
+
+          <Button
+            type="primary"
+            className="sw-fr-fix-header-btn"
+            onClick={() => navigate("/freelancerregistration")}
+          >
+            Login / Register
+          </Button>
+
+
         </div>
 
-        <Menu
-          mode="horizontal"
-          selectedKeys={["freelancer"]}
-          className="hs-navbar-menu"
-          items={navItems}
-        />
-
-        <Button
-          type="primary"
-          className="hs-contact-btn"
-          onClick={() => {
-            setActiveTab("login");
-            setAuthModalVisible(true);
-          }}
-        >
-          Sign Up
-        </Button>
       </header>
+
+
 
       {/* Modal */}
       <Modal
@@ -201,21 +180,18 @@ export default function Freelancer() {
         </Tabs>
       </Modal>
 
-      {/* --------------------------- */}
-      {/*          HERO SECTION        */}
-      {/* --------------------------- */}
+      {/* Hero */}
+      <div className="sw-fr-hero">
+        <div className="sw-fr-hero-overlay"></div>
 
-      <div className="swf-hero">
-        <div className="swf-hero-overlay"></div>
-
-        <Content className="swf-hero-content">
-          <h1 className="swf-hero-title">
+        <Content className="sw-fr-hero-content">
+          <h1 className="sw-fr-hero-title">
             Find the Right Tasks <br /> That Match Your Skills
           </h1>
 
-          <p className="swf-hero-sub">Verified jobs. Nearby opportunities. Instant earning.</p>
+          <p className="sw-fr-hero-sub">Verified jobs. Nearby opportunities. Instant earning.</p>
 
-          <div className="swf-hero-buttons">
+          <div className="sw-fr-hero-buttons">
             <Button
               type="default"
               size="large"
@@ -236,10 +212,10 @@ export default function Freelancer() {
             </Button>
           </div>
 
-          <Row gutter={16} className="swf-stats">
+          <Row gutter={16} className="sw-fr-stats">
             {stats.map((s, index) => (
               <Col xs={12} md={6} key={index}>
-                <Card bordered={false} className="swf-stat-card">
+                <Card bordered={false} className="sw-fr-stat-card">
                   <Statistic
                     title={s.label}
                     value={s.value}
@@ -254,16 +230,16 @@ export default function Freelancer() {
       </div>
 
       {/* Categories */}
-      <Content className="swf-section">
-        <h2 className="swf-section-title">Browse Categories</h2>
+      <Content className="sw-fr-section">
+        <h2 className="sw-fr-section-title">Browse Categories</h2>
 
         <Row gutter={[20, 20]}>
           {serviceCategories.map((cat, i) => (
             <Col xs={12} sm={8} md={6} lg={4} key={i}>
-              <Card hoverable className="swf-category-card">
-                <div className="swf-category-icon">{cat.icon}</div>
-                <h4 className="swf-category-name">{cat.name}</h4>
-                <p className="swf-category-count">{cat.count} jobs</p>
+              <Card hoverable className="sw-fr-category-card">
+                <div className="sw-fr-category-icon">{cat.icon}</div>
+                <h4 className="sw-fr-category-name">{cat.name}</h4>
+                <p className="sw-fr-category-count">{cat.count} jobs</p>
               </Card>
             </Col>
           ))}
@@ -271,8 +247,8 @@ export default function Freelancer() {
       </Content>
 
       {/* Live Requests */}
-      <Content className="swf-section">
-        <div className="swf-section-header">
+      <Content className="sw-fr-section">
+        <div className="sw-fr-section-header">
           <div>
             <h2>Live Service Requests Near You</h2>
             <p>Accept a task and start earning instantly</p>
@@ -291,24 +267,24 @@ export default function Freelancer() {
         <Row gutter={[20, 20]}>
           {liveRequests.map((req) => (
             <Col xs={24} md={12} lg={8} key={req.id}>
-              <Card hoverable className="swf-request-card">
+              <Card hoverable className="sw-fr-request-card">
                 <Tag
                   color={
                     req.urgency === "high"
                       ? "red"
                       : req.urgency === "medium"
-                      ? "gold"
-                      : "green"
+                        ? "gold"
+                        : "green"
                   }
-                  className="swf-urgency-tag"
+                  className="sw-fr-urgency-tag"
                 >
                   {req.urgency === "high" ? "Urgent" : req.category}
                 </Tag>
 
-                <h3 className="swf-request-title">{req.title}</h3>
-                <p className="swf-request-desc">{req.description}</p>
+                <h3 className="sw-fr-request-title">{req.title}</h3>
+                <p className="sw-fr-request-desc">{req.description}</p>
 
-                <div className="swf-request-info">
+                <div className="sw-fr-request-info">
                   <p>
                     <EnvironmentOutlined /> {req.location}
                   </p>
@@ -317,16 +293,16 @@ export default function Freelancer() {
                   </p>
                 </div>
 
-                <div className="swf-request-bottom">
-                  <span className="swf-price">
+                <div className="sw-fr-request-bottom">
+                  <span className="sw-fr-price">
                     <DollarCircleOutlined /> {req.price}
                   </span>
 
-                  <div className="swf-request-actions">
-                    <Button type="primary" shape="round">
+                  <div className="sw-fr-request-actions">
+                    <Button onClick={() => navigate("/freelancerregistration")} type="primary" shape="round">
                       Accept
                     </Button>
-                    <Button shape="round">View</Button>
+                    {/* <Button shape="round">View</Button> */}
                   </div>
                 </div>
               </Card>

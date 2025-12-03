@@ -5,7 +5,7 @@ import ConstructionServices from "../building/building";
 import Packersandmovers from "./PackersAndMovers/Packersandmovers";
 import BuySaleProducts from "./buy&sale/BuySaleProducts";
 import HomeServices from "./homeservices/HomeServices";
-import ServicesPage from "./homerentals/pages/ServicesPage";
+// import ServicesPage from "./homerentals/pages/ServicesPage";
 
 const Dashboard: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -15,7 +15,7 @@ const Dashboard: React.FC = () => {
     
     { name: "Packers and Movers / Transport", component: <Packersandmovers /> },
     { name: "Home Services", component: <HomeServices /> },
-    { name: "Home & Apartments Rental", component: <ServicesPage /> },
+    // { name: "Home & Apartments Rental", component: <ServicesPage /> },
     { name: "Building & Construction Raw Materials", component: <ConstructionServices /> },
     { name: "Buy & Sale Products", component: <BuySaleProducts /> },
   ];

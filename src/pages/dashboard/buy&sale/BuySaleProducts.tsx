@@ -53,6 +53,7 @@ import c from '../../../assets/buyandsale/C.png';
 import d from '../../../assets/buyandsale/D.png';
 import e from '../../../assets/buyandsale/E.png';
 import f from '../../../assets/buyandsale/suppliercordination.png';
+import ServicesPage from '../homerentals/pages/ServicesPage';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -1328,6 +1329,7 @@ const renderMainServices = () => (
         </Card>
       </Col>
     ))}
+    <ServicesPage/>
   </Row>
 );
 
@@ -1412,7 +1414,7 @@ const renderSubservicesModalContent = () => (
     <div className="swc-bs-app-container">
       <div className="swc-bs-header-banner">
         <Title level={1} className="swc-bs-banner-title">
-          <HomeOutlined /> Buy/Sale Products Management
+          <HomeOutlined /> Buy/Sale/Rentals 
         </Title>
         <Text className="swc-bs-banner-subtitle">
           Available Services 
