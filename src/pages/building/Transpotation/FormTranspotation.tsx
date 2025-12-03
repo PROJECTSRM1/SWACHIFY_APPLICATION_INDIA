@@ -18,29 +18,39 @@ interface FormProps {
 const TransportationForm: React.FC<FormProps> = ({ id, onClose }) => {
   const material = Transportation.find((item) => item.id === id);
 
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(0);
+  const [unit, setUnit] = useState("kg"); 
+
   const [customerName, setCustomerName] = useState("");
-  const [rentalType, setRentalType] = useState("");
-  const [rentalDate, setRentalDate] = useState("");
+  const [deliveryType, setDeliveryType] = useState("");
+  const [deliveryDate, setDeliveryDate] = useState("");
   const [contact, setContact] = useState("");
   const [address, setAddress] = useState("");
   const [instructions, setInstructions] = useState("");
 
-  const formRef = useRef<HTMLFormElement>(null); 
+  const [unloading, setUnloading] = useState(false);
 
+  const formRef = useRef<HTMLFormElement>(null);
   const { addToCart } = useCart();
 
   if (!material) return <p>Material not found</p>;
 
-  const totalPrice = Number(material.price) * quantity;
+  const finalQuantity = unit === "ton" ? quantity * 1000 : quantity;
+
+  const basePrice = Number(material.price) * finalQuantity;
+  const deliveryCharge = deliveryType === "Door Delivery" ? 150 : 0;
+  const unloadingCharge = unloading ? 200 : 0;
+
+  const totalPrice = basePrice + deliveryCharge + unloadingCharge;
 
   const handleReset = () => {
-    formRef.current?.reset(); 
-    setQuantity(1);
-
+    formRef.current?.reset();
+    setQuantity(0);
+    setUnit("kg");
+    setDeliveryType("");
+    setUnloading(false);
     setCustomerName("");
-    setRentalType("");
-    setRentalDate("");
+    setDeliveryDate("");
     setContact("");
     setAddress("");
     setInstructions("");
@@ -51,18 +61,22 @@ const TransportationForm: React.FC<FormProps> = ({ id, onClose }) => {
       id: material.id,
       title: material.title,
       image: material.img,
-      quantity,
+      quantity: finalQuantity, 
+      unit,
       price: material.price,
+      basePrice,
+      deliveryCharge,
+      unloadingCharge,
       totalPrice,
       customerName,
-      deliveryType: rentalType,
-      deliveryDate: rentalDate,
+      deliveryType,
+      deliveryDate,
       contact,
       address,
       instructions,
     });
 
-    message.success("item added to cart");
+    message.success("Item added to cart");
     onClose();
   };
 
@@ -110,7 +124,6 @@ const TransportationForm: React.FC<FormProps> = ({ id, onClose }) => {
                 <input
                   type="text"
                   name="customerName"
-                  placeholder="Site manager name"
                   value={customerName}
                   onChange={(e) => setCustomerName(e.target.value)}
                 />
@@ -120,12 +133,12 @@ const TransportationForm: React.FC<FormProps> = ({ id, onClose }) => {
                 <label>Delivery Type</label>
                 <select
                   name="deliveryType"
-                  value={rentalType}
-                  onChange={(e) => setRentalType(e.target.value)}
+                  value={deliveryType}
+                  onChange={(e) => setDeliveryType(e.target.value)}
                 >
                   <option value="">Select</option>
-                  <option>Door Delivery</option>
-                  <option>Pick-up</option>
+                  <option value="Door Delivery">Door Delivery (+₹150)</option>
+                  <option value="Pick-up">Pick-up (Free)</option>
                 </select>
               </div>
             </div>
@@ -133,12 +146,20 @@ const TransportationForm: React.FC<FormProps> = ({ id, onClose }) => {
             <div className="sw-br-grid3">
               <div className="sw-br-field3">
                 <label>Quantity</label>
-                <input
-                  type="number"
-                  min={1}
-                  value={quantity}
-                  onChange={(e) => setQuantity(Number(e.target.value))}
-                />
+
+                <div style={{ display: "flex", gap: "8px" }}>
+                  <input
+                    type="number"
+                    min={1}
+                    value={quantity}
+                    onChange={(e) => setQuantity(Number(e.target.value))}
+                  />
+
+                  <select value={unit} onChange={(e) => setUnit(e.target.value)}>
+                    <option value="kg">Kg</option>
+                    <option value="ton">Tons</option>
+                  </select>
+                </div>
               </div>
 
               <div className="sw-br-field3">
@@ -146,8 +167,8 @@ const TransportationForm: React.FC<FormProps> = ({ id, onClose }) => {
                 <input
                   type="date"
                   name="deliveryDate"
-                  value={rentalDate}
-                  onChange={(e) => setRentalDate(e.target.value)}
+                  value={deliveryDate}
+                  onChange={(e) => setDeliveryDate(e.target.value)}
                 />
               </div>
             </div>
@@ -174,10 +195,14 @@ const TransportationForm: React.FC<FormProps> = ({ id, onClose }) => {
             <h3 className="sw-br-form-title">Additional Services</h3>
 
             <div className="sw-br-checkbox-group">
-              <label><input type="checkbox" /> Unloading Service</label>
-              <label><input type="checkbox" /> Quality Certificate</label>
-              <label><input type="checkbox" /> Installation Support</label>
-              <label><input type="checkbox" /> Storage Option</label>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={unloading}
+                  onChange={(e) => setUnloading(e.target.checked)}
+                />
+                Unloading Service (+₹200)
+              </label>
             </div>
 
             <div className="sw-br-field3">
@@ -190,19 +215,11 @@ const TransportationForm: React.FC<FormProps> = ({ id, onClose }) => {
             </div>
 
             <div className="sw-br-buttons3">
-              <button
-                type="button"
-                className="sw-br-btn-cancel"
-                onClick={handleReset}
-              >
+              <button type="button" className="sw-br-btn-cancel" onClick={handleReset}>
                 Cancel
               </button>
 
-              <button
-                type="button"
-                className="sw-br-btn-add"
-                onClick={handleAddToCart}
-              >
+              <button type="button" className="sw-br-btn-add" onClick={handleAddToCart}>
                 Add to Cart
               </button>
             </div>
