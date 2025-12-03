@@ -20,8 +20,7 @@ import {
 //   Col,
 } from "antd";
 
-import "./Freelancerlogin.css";
-
+// import "./Freelancerlogin.css";
 export default function Freelancerlogin() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -33,7 +32,7 @@ export default function Freelancerlogin() {
 
     setTimeout(() => {
       setLoading(false);
-      navigate("/");
+       navigate("/freelancer-dashboard");
     }, 1300);
   };
 
