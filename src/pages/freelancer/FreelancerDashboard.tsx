@@ -373,7 +373,7 @@ const FreelancerDashboard: React.FC = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('freelancerLoggedIn');
-    navigate('/freelancerlogin');
+    navigate('/freelancer');
   };
 
   useEffect(() => {
