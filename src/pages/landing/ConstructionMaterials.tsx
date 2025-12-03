@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from "react";
 import CommonHeader from "../../pages/landing/Header";
 import "../../index.css"
+import FooterSection from '../../pages/landing/FooterSection';
+import "../../pages/landing/FooterSection.css"
 import {
   Row,
   Col,
@@ -17,17 +19,17 @@ import {
   Tabs,
   Checkbox,
 } from "antd";
-import {
-  MailOutlined,
-  PhoneOutlined,
-  EnvironmentOutlined,
-  FacebookOutlined,
-  TwitterOutlined,
-  InstagramOutlined,
-  LinkedinOutlined,
-  // MenuOutlined,
-  // CloseOutlined,
-} from "@ant-design/icons";
+// import {
+//   MailOutlined,
+//   PhoneOutlined,
+//   EnvironmentOutlined,
+//   FacebookOutlined,
+//   TwitterOutlined,
+//   InstagramOutlined,
+//   LinkedinOutlined,
+//   // MenuOutlined,
+//   // CloseOutlined,
+// } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import brickwalss from "../../assets/landingimages/brickwall.jpg";
 import premiumportlandcement from "../../assets/landingimages/PremiumPortlandCement.jpg";
@@ -265,82 +267,82 @@ const RequestQuote: React.FC = () => {
   );
 };
 /* ================= FOOTER COMPONENT ================= */
-type FooterProps = {
-  phone?: string;
-  email?: string;
-  address?: string;
-  copyrightYear?: number;
-  companyName?: string;
-};
-const Footer: React.FC<FooterProps> = ({
-  phone = "+1 (555) 123-4567",
-  email = "info@homeservices.com",
-  address = "123 Service Street, City, State",
-  copyrightYear = 2025,
-  companyName = "Home Services",
-}) => {
-  return (
-    <footer className="sw-lcm-classname-lr-footer sw-lcm-classname-site-footer" role="contentinfo" aria-label="Footer">
-      <div className="sw-lcm-classname-lr-footer-inner sw-lcm-classname-lr-footer-grid">
-        <div className="sw-lcm-classname-lr-footer-col">
-          <h4 style={{ color: "#fff" }}>About Us</h4>
-          <p className="sw-lcm-classname-lr-footer-about" style={{ color: "#fff" }}>
-            Your trusted partner for all home and property-related services. Quality,
-            reliability, and customer satisfaction guaranteed.
-          </p>
-        </div>
-        <div className="sw-lcm-classname-lr-footer-col">
-          <h4 style={{ color: "#fff" }}>Services</h4>
-          <ul className="sw-lcm-classname-lr-footer-list" style={{ color: "#fff" }}>
-            <li style={{ color: "#fff" }}>Cleaning Service</li>
-            <li style={{ color: "#fff" }}>Packers &amp; Movers</li>
-            <li style={{ color: "#fff" }}>Home Services</li>
-            <li style={{ color: "#fff" }}>Rentals</li>
-            <li style={{ color: "#fff" }}>Commercial Plots</li>
-            <li style={{ color: "#fff" }}>Construction Materials</li>
-          </ul>
-        </div>
-        <div className="sw-lcm-classname-lr-footer-col">
-          <h4 style={{ color: "#fff" }}>Quick Links</h4>
-          <ul className="sw-lcm-classname-lr-footer-list">
-            <li style={{ color: "#fff" }}>Home</li>
-            <li style={{ color: "#fff" }}>About</li>
-            <li style={{ color: "#fff" }}>Contact</li>
-            <li style={{ color: "#fff" }}>Careers</li>
-          </ul>
-        </div>
-        <div className="sw-lcm-classname-lr-footer-col">
-          <h4 style={{ color: "#fff" }}>Contact Info</h4>
-          <ul className="sw-lcm-classname-lr-contact-list">
-            <li className="sw-lcm-classname-lr-contact-phone" style={{ color: "#fff" }}>
-              <PhoneOutlined aria-hidden className="sw-lcm-classname-lc-contact-icon" />
-              <span className="sw-lcm-classname-lc-contact-text" style={{ color: "#fff" }}> {phone}</span>
-            </li>
-            <li style={{ color: "#fff" }}>
-              <MailOutlined aria-hidden /> &nbsp;
-              <span style={{ color: "#fff" }}>{email}</span>
-            </li>
-            <li style={{ color: "#fff" }}>
-              <EnvironmentOutlined aria-hidden /> &nbsp; {address}
-            </li>
-          </ul>
-          <div className="sw-lcm-classname-lr-footer-socials" aria-hidden>
-            <a className="sw-lcm-classname-social" href="#" aria-label="facebook"><FacebookOutlined /></a>
-            <a className="sw-lcm-classname-social" href="#" aria-label="twitter"><TwitterOutlined /></a>
-            <a className="sw-lcm-classname-social" href="#" aria-label="instagram"><InstagramOutlined /></a>
-            <a className="sw-lcm-classname-social" href="#" aria-label="linkedin"><LinkedinOutlined /></a>
-          </div>
-        </div>
-      </div>
-      <div className="sw-lcm-classname-lr-footer-bottom">
-        <div className="sw-lcm-classname-lr-footer-sep" />
-        <div className="sw-lcm-classname-lr-footer-copy" style={{ color: "#fff" }}>
-          &copy; {copyrightYear} {companyName}. All rights reserved.
-        </div>
-      </div>
-    </footer>
-  );
-};
+// type FooterProps = {
+//   phone?: string;
+//   email?: string;
+//   address?: string;
+//   copyrightYear?: number;
+//   companyName?: string;
+// };
+// const Footer: React.FC<FooterProps> = ({
+//   phone = "+1 (555) 123-4567",
+//   email = "info@homeservices.com",
+//   address = "123 Service Street, City, State",
+//   copyrightYear = 2025,
+//   companyName = "Home Services",
+// }) => {
+//   return (
+//     // <footer className="sw-lcm-classname-lr-footer sw-lcm-classname-site-footer" role="contentinfo" aria-label="Footer">
+//     //   <div className="sw-lcm-classname-lr-footer-inner sw-lcm-classname-lr-footer-grid">
+//     //     <div className="sw-lcm-classname-lr-footer-col">
+//     //       <h4 style={{ color: "#fff" }}>About Us</h4>
+//     //       <p className="sw-lcm-classname-lr-footer-about" style={{ color: "#fff" }}>
+//     //         Your trusted partner for all home and property-related services. Quality,
+//     //         reliability, and customer satisfaction guaranteed.
+//     //       </p>
+//     //     </div>
+//     //     <div className="sw-lcm-classname-lr-footer-col">
+//     //       <h4 style={{ color: "#fff" }}>Services</h4>
+//     //       <ul className="sw-lcm-classname-lr-footer-list" style={{ color: "#fff" }}>
+//     //         <li style={{ color: "#fff" }}>Cleaning Service</li>
+//     //         <li style={{ color: "#fff" }}>Packers &amp; Movers</li>
+//     //         <li style={{ color: "#fff" }}>Home Services</li>
+//     //         <li style={{ color: "#fff" }}>Rentals</li>
+//     //         <li style={{ color: "#fff" }}>Commercial Plots</li>
+//     //         <li style={{ color: "#fff" }}>Construction Materials</li>
+//     //       </ul>
+//     //     </div>
+//     //     <div className="sw-lcm-classname-lr-footer-col">
+//     //       <h4 style={{ color: "#fff" }}>Quick Links</h4>
+//     //       <ul className="sw-lcm-classname-lr-footer-list">
+//     //         <li style={{ color: "#fff" }}>Home</li>
+//     //         <li style={{ color: "#fff" }}>About</li>
+//     //         <li style={{ color: "#fff" }}>Contact</li>
+//     //         <li style={{ color: "#fff" }}>Careers</li>
+//     //       </ul>
+//     //     </div>
+//     //     <div className="sw-lcm-classname-lr-footer-col">
+//     //       <h4 style={{ color: "#fff" }}>Contact Info</h4>
+//     //       <ul className="sw-lcm-classname-lr-contact-list">
+//     //         <li className="sw-lcm-classname-lr-contact-phone" style={{ color: "#fff" }}>
+//     //           <PhoneOutlined aria-hidden className="sw-lcm-classname-lc-contact-icon" />
+//     //           <span className="sw-lcm-classname-lc-contact-text" style={{ color: "#fff" }}> {phone}</span>
+//     //         </li>
+//     //         <li style={{ color: "#fff" }}>
+//     //           <MailOutlined aria-hidden /> &nbsp;
+//     //           <span style={{ color: "#fff" }}>{email}</span>
+//     //         </li>
+//     //         <li style={{ color: "#fff" }}>
+//     //           <EnvironmentOutlined aria-hidden /> &nbsp; {address}
+//     //         </li>
+//     //       </ul>
+//     //       <div className="sw-lcm-classname-lr-footer-socials" aria-hidden>
+//     //         <a className="sw-lcm-classname-social" href="#" aria-label="facebook"><FacebookOutlined /></a>
+//     //         <a className="sw-lcm-classname-social" href="#" aria-label="twitter"><TwitterOutlined /></a>
+//     //         <a className="sw-lcm-classname-social" href="#" aria-label="instagram"><InstagramOutlined /></a>
+//     //         <a className="sw-lcm-classname-social" href="#" aria-label="linkedin"><LinkedinOutlined /></a>
+//     //       </div>
+//     //     </div>
+//     //   </div>
+//     //   <div className="sw-lcm-classname-lr-footer-bottom">
+//     //     <div className="sw-lcm-classname-lr-footer-sep" />
+//     //     <div className="sw-lcm-classname-lr-footer-copy" style={{ color: "#fff" }}>
+//     //       &copy; {copyrightYear} {companyName}. All rights reserved.
+//     //     </div>
+//     //   </div>
+//     // </footer>
+//   );
+// };
 /* ================= MAIN PAGE ================= */
 const ConstructionMaterials: React.FC = () => {
   const [authVisible, setAuthVisible] = useState(false);
@@ -437,12 +439,13 @@ const ConstructionMaterials: React.FC = () => {
           </div>
         </div>
       </section>
-      {/* REQUEST QUOTE */}
+      {/* REQUEST QUOTE
       <RequestQuote />
       {/* AUTH MODAL */}
-      <AuthModal visible={authVisible} onClose={() => setAuthVisible(false)} onSuccess={handleAuthSuccess} />
+      {/* <AuthModal visible={authVisible} onClose={() => setAuthVisible(false)} onSuccess={handleAuthSuccess} />
       {/* FOOTER (merged) */}
-      <Footer />
+      {/* <Footer /> */}
+       <FooterSection selectedKey="ConstructionMaterials" />
     </div>
   );
 };

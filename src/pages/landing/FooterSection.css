@@ -1,0 +1,174 @@
+/* FooterSection.css - updated to match screenshot */
+
+/* Root footer */
+.sw-lp-classname-footer {
+  background: #0b1724; /* deep navy similar to screenshot */
+  color: #cbd5e1;
+  padding: 26px 14px 10px;
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+/* Inner container centers content and constrains width */
+.sw-lp-classname-footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 0.9fr 1fr;
+  gap: 36px;
+  align-items: start;
+  padding: 0 12px;
+}
+
+/* Column base */
+.sw-lp-col h4,
+.sw-lp-col h5 {
+  color: #ffffff;
+  margin: 0 0 14px 0;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+/* Slightly larger heading for About column */
+.sw-lp-col.about h4 {
+  font-size: 1.05rem;
+}
+
+.sw-lp-col h5 {
+  font-size: 1rem;
+}
+
+/* About text left block */
+.about-text {
+  color: rgba(255,255,255,0.75);
+  line-height: 1.8;
+  max-width: 360px;
+  margin: 0;
+  font-size: 0.98rem;
+}
+
+/* Links list for Services / Quick Links */
+.sw-lp-links-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sw-lp-links-list li {
+  margin: 10px 0;
+  color: rgba(255,255,255,0.75);
+  font-size: 0.98rem;
+  line-height: 1.9;
+}
+
+/* Contact column specifics */
+.contact-col .contact-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin: 12px 0;
+  color: rgba(255,255,255,0.78);
+  font-size: 0.98rem;
+}
+
+.contact-icon {
+  font-size: 16px;
+  color: rgba(255,255,255,0.92);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  min-height: 28px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 6px;
+  padding: 4px;
+
+  
+}
+
+/* Social icons row (small pills) */
+.sw-lp-socials {
+  margin-top: 12px;
+  display: flex;
+  gap: 10px;
+}
+
+.sw-lp-social-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.03);
+  color: rgba(255,255,255,0.92);
+  text-decoration: none;
+  transition: transform 120ms ease, background 120ms ease;
+  border: 1px solid rgba(255,255,255,0.04);
+}
+
+.sw-lp-social-btn:hover {
+  background: rgba(34,197,94,0.08);
+  color: #22c55e;
+  transform: translateY(-3px);
+}
+
+/* the thin divider above copyright */
+.sw-lp-footer-sep {
+  max-width: 1200px;
+  margin: 26px auto 10px;
+  height: 1px;
+  background: rgba(255,255,255,0.04);
+  box-sizing: border-box;
+  padding: 0 12px;
+}
+
+/* copyright centered and muted */
+.sw-lp-footer-copy {
+  color: rgba(255,255,255,0.6);
+  text-align: center;
+  font-size: 0.95rem;
+  padding-bottom: 6px;
+}
+
+/* Responsive: collapse to single column on small screens */
+@media (max-width: 992px) {
+  .sw-lp-classname-footer-inner {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+  }
+  .about-text {
+    max-width: 100%;
+  }
+  .sw-lp-footer-sep,
+  .sw-lp-footer-copy {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  .sw-lp-classname-footer {
+    padding: 36px 18px 18px;
+  }
+
+  .sw-lp-classname-footer-inner {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .sw-lp-footer-sep {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .sw-lp-footer-copy {
+    text-align: left;
+    padding-left: 6px;
+  }
+
+  .sw-lp-social-btn {
+    width: 32px;
+    height: 32px;
+  }
+}

@@ -21,7 +21,6 @@ import {
 } from "antd";
 
 // import "./Freelancerlogin.css";
-
 export default function Freelancerlogin() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
