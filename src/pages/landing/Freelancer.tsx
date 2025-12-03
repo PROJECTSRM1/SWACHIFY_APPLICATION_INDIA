@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import  { useState } from "react";
+import { useState } from "react";
 
 import {
   EnvironmentOutlined,
@@ -111,13 +111,26 @@ export default function Freelancer() {
       <header className="sw-fr-fix-header">
         <div className="sw-fr-fix-header-left">Swachify Freelancer</div>
 
-        <Button
-          type="primary"
-          className="sw-fr-fix-header-btn"
-          onClick={() => navigate("/freelancerregistration")}
-        >
-          Login / Register
-        </Button>
+        <div className="sw-fr-header-actions">
+          <Button
+            type="primary"
+            className="sw-fr-fix-header-btn"
+            onClick={() => navigate("/landing")}
+          >
+            Back
+          </Button>
+
+          <Button
+            type="primary"
+            className="sw-fr-fix-header-btn"
+            onClick={() => navigate("/freelancerregistration")}
+          >
+            Login / Register
+          </Button>
+
+
+        </div>
+
       </header>
 
 

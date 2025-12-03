@@ -11,6 +11,7 @@ import {
   LinkedinOutlined,
 } from "@ant-design/icons";
 import "./FooterSection.css";
+// import { Link } from "react-router-dom";
 
 
 
@@ -37,18 +38,54 @@ const FooterSection: React.FC<FooterSectionProps> = ({ selectedKey }) => {
         </div>
 
         {/* Services */}
-        <div className="sw-lp-col">
-          <h5>Services</h5>
-          <ul className="sw-lp-links-list">
-            <li>Cleaning&Home Services</li>
-            <li>Transport</li>
-            <li>Buy/Sale/Rentals</li>
-            <li>Raw Materials</li>
-            <li>Education</li>
-            <li>Swachify Products</li>
-            <li>Freelancer</li>
-          </ul>
-        </div>
+      <div className="sw-lp-col">
+  <h5>Services</h5>
+  <ul className="sw-lp-links-list">
+    <li>
+      <a href="/cleaningservice" onClick={() => window.scrollTo(0, 0)}>
+        Cleaning & Home Services
+      </a>
+    </li>
+
+    <li>
+      <a href="/LandingPackers" onClick={() => window.scrollTo(0, 0)}>
+        Transport
+      </a>
+    </li>
+
+    <li>
+      <a href="/commercial-plots" onClick={() => window.scrollTo(0, 0)}>
+        Buy / Sale / Rentals
+      </a>
+    </li>
+
+    <li>
+      <a href="/ConstructionMaterials" onClick={() => window.scrollTo(0, 0)}>
+        Raw Materials
+      </a>
+    </li>
+
+    <li>
+      <a href="/" onClick={() => window.scrollTo(0, 0)}>
+        Education
+      </a>
+    </li>
+
+    <li>
+      <a href="/" onClick={() => window.scrollTo(0, 0)}>
+        Swachify Products
+      </a>
+    </li>
+
+    <li>
+      <a href="/Freelancer" onClick={() => window.scrollTo(0, 0)}>
+        Freelancer
+      </a>
+    </li>
+  </ul>
+</div>
+
+
 
         {/* Quick Links */}
         <div className="sw-lp-col">
@@ -86,10 +123,10 @@ const FooterSection: React.FC<FooterSectionProps> = ({ selectedKey }) => {
           </div>
 
           <div className="sw-lp-socials" aria-hidden>
-            <a className="sw-lp-social-btn" href="#" aria-label="facebook"><FacebookOutlined /></a>
-            <a className="sw-lp-social-btn" href="#" aria-label="twitter"><TwitterOutlined /></a>
-            <a className="sw-lp-social-btn" href="#" aria-label="instagram"><InstagramOutlined /></a>
-            <a className="sw-lp-social-btn" href="#" aria-label="linkedin"><LinkedinOutlined /></a>
+            <a className="sw-lp-social-btn" href="https://www.facebook.com" aria-label="facebook"><FacebookOutlined /></a>
+            <a className="sw-lp-social-btn" href="https://www.twitter.com" aria-label="twitter"><TwitterOutlined /></a>
+            <a className="sw-lp-social-btn" href="https://www.instagram.com" aria-label="instagram"><InstagramOutlined /></a>
+            <a className="sw-lp-social-btn" href="https://www.linkedin.com" aria-label="linkedin"><LinkedinOutlined /></a>
           </div>
         </div>
       </div>
