@@ -1,0 +1,374 @@
+/* Header root */
+.header-container {
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+  width: 100%;
+  background: white;
+  border-bottom: 1px solid #eee;
+  padding: 12px 20px;
+  display: grid;
+  grid-template-columns: auto 1fr auto; /* left | center | right */
+  align-items: center;
+  gap: 12px;
+  box-sizing: border-box;
+  overflow-x: hidden !important;
+}
+
+/* Left */
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+.logo-text {
+  font-size: 15px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.logo-icon {
+  font-size: 24px;
+  color: #111;
+}
+
+/* Center - make the menu centered within the middle column */
+.header-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 0;
+  padding: 0 12px; /* small gutters to avoid touching left/right */
+}
+
+/* AntD Menu override: make menu items display inline and centered */
+.header-menu {
+  border-bottom: none !important;
+  width: auto !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  background: transparent !important;
+  padding: 0 !important;
+}
+
+/* Ensure the internal .ant-menu stays a single row and centers items */
+.header-menu .ant-menu {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: transparent !important;
+  border-bottom: none !important;
+}
+
+/* Style individual items for comfortable spacing */
+.header-menu .ant-menu-item {
+  padding: 8px 14px;
+  border-radius: 6px;
+  margin: 0 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* Hover state */
+.header-menu .ant-menu-item:hover,
+.header-menu .ant-menu-item-active,
+.header-menu .ant-menu-item-selected {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+/* Prevent overflow — allow horizontal scrolling inside center if very narrow */
+.header-center .ant-menu-root {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Menu item text */
+.menu-item {
+  font-size: 16px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Right */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+}
+
+/* Bell - non-interactive look */
+.header-item-notif {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 16px;
+  margin-right: 8px;
+  color: inherit;
+  cursor: default;
+  opacity: 0.95;
+}
+.header-icon-cart {
+  font-size: 20px;
+}
+
+/* Profile */
+.header-item-profile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  margin-right: 6px;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+.profile-text {
+  display: inline-block;
+  font-weight: 500;
+  font-size: 15px;
+  margin-left: 4px;
+}
+
+/* Force dropdown above header */
+.profile-dropdown-wrapper,
+.profile-dropdown-wrapper .ant-dropdown,
+.ant-dropdown {
+  z-index: 200000 !important;
+}
+.profile-dropdown-wrapper .ant-dropdown-menu {
+  margin-top: 8px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Mobile menu button */
+.mobile-menu-btn {
+  display: none;
+}
+
+/* CART DRAWER - custom header area */
+.cart-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid #f0f0f0;
+  background: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 3;
+}
+
+/* Title */
+.cart-drawer-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+}
+
+/* Inline accessible close button (visible, focusable) */
+.cart-drawer-close-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 18px;
+  color: rgba(0, 0, 0, 0.65);
+  padding: 8px;
+  border-radius: 8px;
+  background: transparent;
+  border: none;
+  line-height: 0;
+  margin-left: 12px;
+}
+
+/* Make sure close button is touch-friendly and visible (esp mobile) */
+.cart-drawer-close-btn svg {
+  font-size: 20px;
+  vertical-align: middle;
+}
+
+/* Hover/focus states */
+.cart-drawer-close-btn:hover,
+.cart-drawer-close-btn:focus {
+  background: rgba(0, 0, 0, 0.03);
+  color: rgba(0, 0, 0, 0.85);
+  outline: none;
+}
+.cart-drawer-close-btn:focus {
+  box-shadow: 0 0 0 3px rgba(43, 108, 255, 0.12);
+}
+
+/* body/content of drawer */
+.cart-drawer-content {
+  padding: 16px 20px 24px 20px;
+  height: calc(100% - 68px);
+  overflow-y: auto;
+  background: #fff;
+}
+
+/* Empty cart note */
+.cart-empty-note {
+  color: #6b7280;
+  padding: 12px 0;
+}
+
+/* Cart list */
+.cart-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.cart-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  padding: 15px;
+  border-radius: 8px;
+  background: #fafafa;
+  border: 1px solid #eee;
+}
+.cart-item img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+.cart-item-details {
+  flex: 1;
+}
+.cart-item-details h4 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* Cart buttons */
+.cart-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-end;
+  justify-content: flex-start;
+}
+.cart-buttons .ant-btn {
+  width: auto !important;
+  min-width: 84px;
+  padding: 6px 12px;
+  height: 34px;
+  font-size: 13px;
+  border-radius: 8px;
+  box-sizing: border-box;
+  white-space: nowrap;
+}
+.cart-buttons .ant-btn.ant-btn-primary {
+  font-weight: 700;
+  box-shadow: 0 6px 18px rgba(43, 108, 255, 0.12);
+}
+.cart-buttons .ant-btn:not(.ant-btn-primary) {
+  background: rgb(20, 184, 166);
+  border: 1px solid #39f0e1;
+}
+
+/* Responsive tweaks */
+/* At tablet sizes, keep the menu but allow horizontal scroll if needed */
+@media (max-width: 1200px) {
+  .header-container {
+    padding: 10px 14px;
+  }
+  .header-menu .ant-menu-item {
+    margin: 0 6px;
+    padding: 8px 10px;
+  }
+}
+
+/* At narrower widths hide center menu and show mobile menu button */
+@media (max-width: 900px) {
+  .header-container {
+    grid-template-columns: auto auto auto; /* equally spaced so center hides cleanly */
+    padding: 10px 12px !important;
+    overflow-x: hidden !important;
+  }
+  .header-center {
+    display: none; /* hide large menu in favor of drawer */
+  }
+  .profile-text {
+    display: none;
+  }
+  .mobile-menu-btn {
+    display: block;
+    justify-self: center;
+  }
+  .logo-text {
+    font-size: 18px;
+  }
+}
+
+/* very small screens - slightly reduce paddings */
+@media (max-width: 500px) {
+  .header-container {
+    padding: 10px 10px !important;
+  }
+  .logo-text {
+    font-size: 16px;
+  }
+  .header-item-notif {
+    margin-right: 6px;
+  }
+  .header-item-profile {
+    margin-right: 6px;
+  }
+  .cart-drawer-header {
+    padding: 12px 14px;
+  }
+  .cart-drawer-content {
+    padding: 12px 14px 20px 14px;
+    height: calc(100% - 56px);
+  }
+  .cart-drawer-close-btn {
+    padding: 10px;
+    border-radius: 10px;
+  }
+}
+
+/* Accessibility / global box sizing */
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  width: 100%;
+  overflow-x: hidden !important;
+}
+
+/* minor tweak */
+.dropdown-item {
+  font-weight: 500;
+}
+
+.header-menu {
+  height: 60px !important;
+  line-height: 60px !important;
+  overflow-y: hidden !important;
+  overflow-x: visible !important;
+}
+
+
+.header-menu .ant-menu-overflow {
+  overflow: visible !important;
+}
+
+
+.ant-menu-horizontal {
+  border-bottom: none !important;
+  overflow-y: hidden !important;
+}
