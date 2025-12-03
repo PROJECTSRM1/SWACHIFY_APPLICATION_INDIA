@@ -925,12 +925,14 @@ with prefix */
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 8px;
+  text-align: center;
 }
 
 .sw-lp-classname-services-section .sw-lp-classname-section-subtitle {
   font-size: 1.1rem;
   color: #555;
   margin-bottom: 40px;
+  text-align: center;
 }
 
 /* keep ant-row behaviour but constrain width */
@@ -1016,11 +1018,11 @@ these for custom sizing */
 
 .sw-lp-classname-services-section .sw-lp-classname-learn-more {
   margin-top: 12px;
-  flex-shrink: 0;
-  align-self: center;
-  text-decoration:
-    none;
+  text-decoration: none;
   font-weight: 600;
+  display: block;
+  text-align: center;   
+  width: 100%;
 }
 
 .sw-lp-classname-services-section .sw-lp-classname-service-card:hover {
@@ -6261,7 +6263,7 @@ body {
 .sw-cp-product-desc {
   margin: 0;
   color: #6b7b86;
-  font-size: 14px;
+  font-size: 13px;
   line-height: 1.45;
 }
 
@@ -16566,21 +16568,6 @@ body {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* booking overlay styles */
 .sw-booking-page-overlay {
   position: fixed;
@@ -16680,4 +16667,299 @@ body {
 
 
 /* /////vamsi Recent booking css//// */
+
+
+
+
+ /* anil & srihari vender page  */
+ 
+.sw-vendor-page {
+  padding: 30px 40px;
+  background: #f5f6f8;
+  min-height: calc(100vh - 65px);
+}
+
+/* Header */
+.sw-vendor-header-container {
+  background: #ffffff;
+  padding: 0 40px;
+  height: 65px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #e6e6e6;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.sw-vendor-header-left {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.sw-brand-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #e60000;
+}
+
+.sw-vendor-portal-text {
+  font-size: 15px;
+  color: #444;
+}
+
+.sw-vendor-header-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.sw-profile-avatar {
+  cursor: pointer;
+  background-color: #007bff;
+}
+
+/* Info Card */
+.sw-vendor-info-card {
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+}
+
+.sw-vendor-info-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.sw-vendor-label {
+  font-size: 13px;
+  color: gray;
+  margin-bottom: 4px;
+}
+
+.sw-vendor-value {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* Section Heading */
+.sw-section-title {
+  font-size: 18px;
+  margin: 18px 0 10px;
+  font-weight: 600;
+}
+
+/* Order Cards */
+.sw-order-card {
+  border-radius: 12px !important;
+  padding: 20px;
+  margin-bottom: 25px;
+  background: #fff;
+}
+
+.sw-accepted-order {
+  border-left: 6px solid #2ecc71;
+}
+
+.sw-pending-order {
+  border-left: 6px solid #f4d03f;
+}
+
+/* Card header (title + ID) */
+.sw-order-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.sw-order-id {
+  font-size: 13px;
+  color: #777;
+}
+
+/* Details row (icons) */
+
+.sw-order-details {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-top: 6px;
+  flex-wrap: wrap;
+}
+
+.sw-order-details p {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: #333;
+}
+
+.sw-order-details .anticon {
+  font-size: 16px;
+  color: #005cfa;
+  display: inline-flex;
+}
+
+.sw-deliver-btn {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  background: #005cfa !important;
+  color: #fff !important;
+  border: none !important;
+  outline: none !important;
+  /* border-radius: 10px !important; */
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 12px 0 0 0 !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+.sw-deliver-btn span { 
+  padding: 0 22px !important;  /* ✅ this pads the text properly inside */
+}
+.sw-deliver-btn:hover {
+  box-shadow: 0 4px 12px rgba(0, 92, 250, 0.3);
+   background: #005cfa !important;
+  border: none !important;
+}
+
+
+
+/* Request description text */
+.sw-request-description {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+/* Accept / Reject buttons area */
+.sw-request-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+
+.sw-accept-btn, .sw-accept-btn:hover {
+ 
+  width: 100%;
+  height: 45px;
+  background: #06A826 !important;
+  color: #fff !important;
+  border: none !important;
+  outline: none !important;
+  /* border-radius: 12px !important; */
+  box-shadow: none !important;  /* Remove outer glow bleed */
+  padding: 0 !important;        /* Prevent inner crop */
+  margin: 0 !important;         /* Avoid spacing issues */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.sw-reject-btn, .sw-reject-btn:hover {
+  width: 100%;
+  height: 45px;
+  background: #d92121 !important;
+  color: #fff !important;
+  border: none !important;
+  outline: none !important;
+  /* border-radius: 12px !important; */
+  box-shadow: none !important;  /* Remove outer glow bleed */
+  padding: 0 !important;        /* Prevent inner crop */
+  margin: 0 !important;         /* Avoid spacing issues */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Empty state text */
+.sw-empty-text {
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 20px;
+}
+
+/* 📱 RESPONSIVE BREAKPOINTS */
+
+/* Tablets and small laptops */
+@media (max-width: 1024px) {
+  .sw-vendor-page {
+    padding: 20px;
+  }
+
+  .sw-vendor-info-row {
+    flex-wrap: wrap;
+  }
+
+  .sw-order-details {
+    gap: 16px;
+  }
+}
+
+/* Tablets / large phones */
+@media (max-width: 768px) {
+  .sw-vendor-header-container {
+    padding: 0 20px;
+  }
+
+  .sw-brand-title {
+    font-size: 20px;
+  }
+
+  .sw-order-details {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .sw-request-actions {
+    flex-direction: column;
+  }
+
+  .sw-accept-btn,
+  .sw-reject-btn {
+    width: 100%;
+  }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+  .sw-vendor-header-container {
+    height: auto;
+    padding: 10px 15px;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .sw-vendor-page {
+    padding: 15px;
+  }
+
+  .sw-vendor-info-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .sw-order-card {
+    padding: 16px;
+  }
+
+  .sw-section-title {
+    font-size: 16px;
+  }
+}
+
+/* anil & srihari vender page  */
 

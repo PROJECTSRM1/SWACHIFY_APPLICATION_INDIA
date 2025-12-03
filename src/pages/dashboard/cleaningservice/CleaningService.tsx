@@ -7,7 +7,7 @@ import {
   Form,
   Select,
   Input,
-  InputNumber,
+  // InputNumber,
   message,
 } from "antd";
 // import "./CleaningService.css";
@@ -154,28 +154,36 @@ const getPricePerSqft = (moduleTitle: string): number => {
   return 1.8;
 };
 
+
 const calculatePrice = (
-  moduleTitle: string,
+  module: Module,
   sqft: number,
   serviceType: string,
   addons: string[]
 ) => {
-  const perSqft = getPricePerSqft(moduleTitle);
+  const perSqft = getPricePerSqft(module.title);
   const multiplier = SERVICE_MULTIPLIERS[serviceType] ?? 1.0;
+
+  
+  const basePrice = parseInt((module.price || "").toString().replace(/[₹,\s]/g, "")) || 0;
+
   const addonCost = (addons || []).reduce((s, a) => s + (ADDON_PRICES[a] || 0), 0);
-  const total = Math.round(Math.max(0, sqft) * perSqft * multiplier + addonCost);
-  return total;
+
+  
+  const sqftPart = Math.round(Math.max(0, sqft) * perSqft * multiplier);
+
+ 
+  return Math.round(basePrice * multiplier) + sqftPart + addonCost;
 };
+
 
 const formatINR = (value: number | null) => {
   if (value == null || !isFinite(value) || value <= 0) return "—";
   return `₹ ${value.toLocaleString("en-IN")}`;
 };
 
-/* ------------------ Component ------------------ */
 const CleaningService: React.FC = () => {
   const { addToCart } = useCart();
-
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
   const [isModulesModalOpen, setIsModulesModalOpen] = useState(false);
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
@@ -186,6 +194,9 @@ const CleaningService: React.FC = () => {
 
   const [computedPrice, setComputedPrice] = useState<number | null>(null);
 
+
+  const [serviceTypeKey, setServiceTypeKey] = useState<string>("standard");
+
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -193,6 +204,7 @@ const CleaningService: React.FC = () => {
       form.resetFields();
       form.setFieldsValue({ serviceType: "standard", additional: [] });
       setComputedPrice(null);
+      setServiceTypeKey("standard");
     }
   }, [isDetailsModalOpen, selectedModule, form]);
 
@@ -220,6 +232,7 @@ const CleaningService: React.FC = () => {
     };
   }, []);
 
+
   const categories = [
     {
       key: "residential",
@@ -231,7 +244,7 @@ const CleaningService: React.FC = () => {
     {
       key: "commercial",
       title: "Commercial Cleaning",
-      desc: "Professional cleaning   for offices, schools, and commercial spaces",
+      desc: "Professional cleaning service for offices, schools, and commercial spaces",
       image: commercialImg,
       count: 11,
     },
@@ -437,24 +450,54 @@ const CleaningService: React.FC = () => {
     setIsDetailsModalOpen(true);
   };
 
-  const computeTotal = (values: any) => {
-    if (!selectedModule) {
-      setComputedPrice(null);
-      return;
-    }
-    const sqftValRaw = values?.propertySize;
-    let sqft = 0;
-    if (typeof sqftValRaw === "number") sqft = sqftValRaw;
-    else if (typeof sqftValRaw === "string") sqft = parseFloat(sqftValRaw || "0") || 0;
-    if (!sqft || sqft <= 0) {
-      setComputedPrice(null);
-      return;
-    }
-    const serviceTypeKey = (values?.serviceType as string) || "standard";
-    const addons: string[] = values?.additional || [];
-    const total = calculatePrice(selectedModule.title, sqft, serviceTypeKey, addons);
+ 
+const computeTotal = (values: any) => {
+  if (!selectedModule) {
+    setComputedPrice(null);
+    return;
+  }
+
+  // service type from form (or fallback)
+  const st = (values?.serviceType as string) || serviceTypeKey || "standard";
+  setServiceTypeKey(st);
+
+  const sqftValRaw = values?.propertySize;
+  let sqft = 0;
+  if (typeof sqftValRaw === "number") sqft = sqftValRaw;
+  else if (typeof sqftValRaw === "string") sqft = parseFloat(sqftValRaw || "0") || 0;
+
+  const addons: string[] = values?.additional || [];
+
+  // When user has entered a valid sqft, compute full total (base + sqftpart + addons)
+  if (sqft && sqft > 0) {
+    const total = calculatePrice(selectedModule, sqft, st, addons);
     setComputedPrice(total);
-  };
+    return;
+  }
+
+  setComputedPrice(null);
+};
+
+
+ 
+const getDisplayPriceText = (): string => {
+  if (computedPrice) return formatINR(computedPrice);
+
+  if (!selectedModule) return "—";
+
+ 
+  const basePriceNum =
+    parseInt((selectedModule.price || "").toString().replace(/[₹,\s]/g, "")) || 0;
+
+  
+  const mult = SERVICE_MULTIPLIERS[serviceTypeKey] ?? 1;
+
+  const displayNum = Math.round(basePriceNum * mult);
+
+  if (displayNum > 0) return formatINR(displayNum);
+  return selectedModule.price || "—";
+};
+
 
   const onAddToCart = (values: any) => {
     if (!selectedModule) return;
@@ -464,7 +507,7 @@ const CleaningService: React.FC = () => {
       image: selectedModule.image,
       quantity: 1,
       price: selectedModule.price,
-      totalPrice: computedPrice ?? 0,
+      totalPrice: computedPrice ?? Math.round((parseInt((selectedModule.price || "").replace(/[₹,\s]/g, "")) || 0) * (SERVICE_MULTIPLIERS[serviceTypeKey] ?? 1)),
       customerName: "",
       deliveryType: "",
       deliveryDate: "",
@@ -474,7 +517,7 @@ const CleaningService: React.FC = () => {
     };
     addToCart(cartItem);
     message.success(
-      `${selectedModule.title} added to cart — ${formatINR(computedPrice || 0)}`
+      `${selectedModule.title} added to cart — ${formatINR(cartItem.totalPrice)}`
     );
     setIsDetailsModalOpen(false);
   };
@@ -539,14 +582,12 @@ const CleaningService: React.FC = () => {
                   <img src={s.image} alt={s.title} className="sw-cs-subservice-img" />
                   <div className="sw-cs-subservice-card-body">
                     <Title level={5} className="sw-cs-subservice-card-title">{s.title}</Title>
-                    {/* <Paragraph className="sw-cs-subservice-card-desc">Click to view {s.title.toLowerCase()} services</Paragraph> */}
 
-                    {/* visible View Details button (prevents double event) */}
                     <div style={{ marginTop: 12, display: "flex", justifyContent: "center" }}>
                       <Button
                         className="sw-cs-black-btn"
                         onClick={(e) => {
-                          e.stopPropagation(); 
+                          e.stopPropagation();
                           openSubservice(s.key);
                         }}
                       >
@@ -621,123 +662,216 @@ const CleaningService: React.FC = () => {
 
               <div className="sw-cs-price-card">
                 <div className="sw-cs-price-card-label">Service Price</div>
-                <div className="sw-cs-price-card-value">{computedPrice ? formatINR(computedPrice) : (selectedModule?.price || "—")}</div>
+                <div className="sw-cs-price-card-value">{getDisplayPriceText()}</div>
               </div>
             </div>
 
             <div className="sw-cs-details-right">
               <div className="sw-cs-details-section-title">Service Details</div>
 
-              <Form
-                form={form}
-                layout="vertical"
-                onFinish={onAddToCart}
-                initialValues={{ additional: [], serviceType: "standard" }}
-                onValuesChange={(_changed, allValues) => computeTotal(allValues)}
+            <Form
+  form={form}
+  layout="vertical"
+  onFinish={onAddToCart}
+  initialValues={{ additional: [], serviceType: "standard" }}
+  onValuesChange={(_changed, allValues) => computeTotal(allValues)}
+>
+  <div className="sw-cs-form-row">
+    <Form.Item
+      name="fullName"
+      label="Full Name"
+      rules={[{ required: true, message: "Enter full name" }]}
+      className="sw-cs-half-width"
+    >
+      <Input placeholder="Enter full name" />
+    </Form.Item>
+
+    <Form.Item
+      name="email"
+      label="Email"
+      rules={[
+        { required: true, message: "Enter email" },
+        { type: "email", message: "Enter valid email" }
+      ]}
+      className="sw-cs-half-width"
+    >
+      <Input placeholder="example@email.com" />
+    </Form.Item>
+  </div>
+
+ 
+  <div className="sw-cs-form-row">
+    <Form.Item
+      name="mobile"
+      label="Mobile Number"
+      rules={[
+        { required: true, message: "Enter mobile number" },
+        { pattern: /^[0-9]{10}$/, message: "Enter valid 10-digit number" }
+      ]}
+      className="sw-cs-half-width"
+    >
+      <Input maxLength={10} placeholder="9876543210" />
+    </Form.Item>
+
+    <Form.Item
+      name="address"
+      label="Address"
+      rules={[{ required: true, message: "Enter address" }]}
+      className="sw-cs-half-width"
+    >
+      <Input placeholder="House No, Street, City" />
+    </Form.Item>
+  </div>
+
+  
+
+  {selectedModule && (() => {
+    const cfg = getFieldConfig(selectedModule.title);
+
+    return (
+      <>
+        {/* SERVICE TYPE */}
+        {cfg.serviceType && (
+          <Form.Item
+            name="serviceType"
+            label="Service Type"
+            rules={[{ required: true, message: "Choose service type" }]}
+          >
+            <Select
+              placeholder="Select service type"
+              className="sw-cs-full-width-select"
+              onChange={() => computeTotal(form.getFieldsValue())}
+            >
+              {selectedModule.title.toLowerCase().includes("room") ||
+              selectedModule.title.toLowerCase().includes("bedroom") ? (
+                <>
+                  <Option value="standard">Regular Cleaning</Option>
+                  <Option value="deep">Deep Cleaning</Option>
+                  <Option value="move">Move-in / Move-out Cleaning</Option>
+                </>
+              ) : selectedModule.title.toLowerCase().includes("kitchen") ? (
+                <>
+                  <Option value="standard">Regular Cleaning</Option>
+                  <Option value="deep">Deep Cleaning</Option>
+                  <Option value="grease">Grease Removal</Option>
+                </>
+              ) : selectedModule.title.toLowerCase().includes("bathroom") ? (
+                <>
+                  <Option value="sanitization">Sanitization</Option>
+                  <Option value="deep">Deep Bathroom Clean</Option>
+                </>
+              ) : (
+                <>
+                  <Option value="standard">Regular Cleaning</Option>
+                  <Option value="deep">Deep Cleaning</Option>
+                  <Option value="move">Move-in / Move-out Cleaning</Option>
+                </>
+              )}
+            </Select>
+          </Form.Item>
+        )}
+
+     
+        {cfg.sqft && (
+          <Form.Item
+            name="propertySize"
+            label="Property Size (sq ft)"
+            rules={[{ required: true, message: "Enter size" }]}
+          >
+            <Input
+              placeholder="e.g., 1200"
+              onChange={() => computeTotal(form.getFieldsValue())}
+            />
+          </Form.Item>
+        )}
+
+    
+        {(cfg.bedrooms || cfg.bathrooms) && (
+          <div className="sw-cs-form-row">
+            {cfg.bedrooms && (
+              <Form.Item
+                name="bedrooms"
+                label="Bedrooms"
+                rules={[{ required: true }]}
+                className="sw-cs-half-width"
               >
-                {selectedModule && (() => {
-                  const cfg = getFieldConfig(selectedModule.title);
+                <Select placeholder="Select">
+                  <Option value={0}>0</Option>
+                  <Option value={1}>1</Option>
+                  <Option value={2}>2</Option>
+                  <Option value={3}>3</Option>
+                  <Option value={4}>4+</Option>
+                </Select>
+              </Form.Item>
+            )}
 
-                  return (
-                    <>
-                      {cfg.serviceType && (
-                        <Form.Item name="serviceType" label="Service Type" rules={[{ required: true, message: "Choose service type" }]}>
-                          <Select placeholder="Select service type" className="sw-cs-full-width-select">
-                            {selectedModule.title.toLowerCase().includes("room") || selectedModule.title.toLowerCase().includes("bedroom") ? (
-                              <>
-                                <Option value="standard">Regular cleaning</Option>
-                                <Option value="deep">Deep Cleaning</Option>
-                                <Option value="mattress">Move-in/Move-out Cleaning</Option>
-                              </>
-                            ) : selectedModule.title.toLowerCase().includes("kitchen") ? (
-                              <>
-                                <Option value="standard">Regular Cleaning</Option>
-                                <Option value="deep">Deep  Cleaning</Option>
-                                <Option value="grease">Move-in/Move-out</Option>
-                              </>
-                            ) : selectedModule.title.toLowerCase().includes("bathroom") ? (
-                              <>
-                                <Option value="sanitization">Sanitization</Option>
-                                <Option value="deep">Deep Bathroom Clean</Option>
-                              </>
-                            ) : (
-                              <>
-                                <Option value="standard">Regular Cleaning</Option>
-                                <Option value="deep">Deep Cleaning</Option>
-                                <Option value="move">Move-in / Move-out Cleaning</Option>
-                              </>
-                            )}
-                          </Select>
-                        </Form.Item>
-                      )}
+            {cfg.bathrooms && (
+              <Form.Item
+                name="bathrooms"
+                label="Bathrooms"
+                rules={[{ required: true }]}
+                className="sw-cs-half-width"
+              >
+                <Select placeholder="Select">
+                  <Option value={1}>1</Option>
+                  <Option value={2}>2</Option>
+                  <Option value={3}>3+</Option>
+                </Select>
+              </Form.Item>
+            )}
+          </div>
+        )}
 
-                      {cfg.sqft && (
-                        <Form.Item name="propertySize" label="Property Size (sq ft)" rules={[{ required: true, message: "Enter size" }]}>
-                          <Input placeholder="e.g., 1200" />
-                        </Form.Item>
-                      )}
+        
+        <div className="sw-cs-form-row">
+          {/* DATE */}
+          {cfg.preferredDate && (
+            <Form.Item
+              name="preferredDate"
+              label="Preferred Date"
+              rules={[{ required: true, message: "Select a date" }]}
+              className="sw-cs-half-width"
+            >
+              <input type="date" className="sw-cs-custom-date-input" />
+            </Form.Item>
+          )}
 
-                      {(cfg.bedrooms || cfg.bathrooms) && (
-                        <div className="sw-cs-form-row">
-                          {cfg.bedrooms && (
-                            <Form.Item name="bedrooms" label="Number of Bedrooms" rules={[{ required: true }]}>
-                              <Select placeholder="Select">
-                                <Option value={0}>0</Option>
-                                <Option value={1}>1</Option>
-                                <Option value={2}>2</Option>
-                                <Option value={3}>3</Option>
-                                <Option value={4}>4+</Option>
-                              </Select>
-                            </Form.Item>
-                          )}
+         
+          <Form.Item
+            name="timeSlot"
+            label="Preferred Time Slot"
+            rules={[{ required: true, message: "Select a time slot" }]}
+            className="sw-cs-half-width"
+          >
+            <Select placeholder="Select time slot">
+              <Option value="9am-11am">9:00 AM – 11:00 AM</Option>
+              <Option value="11am-1pm">11:00 AM – 1:00 PM</Option>
+              <Option value="1pm-3pm">1:00 PM – 3:00 PM</Option>
+              <Option value="3pm-5pm">3:00 PM – 5:00 PM</Option>
+              <Option value="5pm-7pm">5:00 PM – 7:00 PM</Option>
+            </Select>
+          </Form.Item>
+        </div>
 
-                          {cfg.bathrooms && (
-                            <Form.Item name="bathrooms" label="Number of Bathrooms" rules={[{ required: true }]}>
-                              <Select placeholder="Select">
-                                <Option value={1}>1</Option>
-                                <Option value={2}>2</Option>
-                                <Option value={3}>3+</Option>
-                              </Select>
-                            </Form.Item>
-                          )}
-                        </div>
-                      )}
+       
+        {cfg.instructions && (
+          <Form.Item name="instructions" label="Special Instructions">
+            <TextArea rows={3} placeholder="Any specific requirements..." />
+          </Form.Item>
+        )}
+      </>
+    );
+  })()}
 
-                      <div className="sw-cs-form-row">
-                        {cfg.preferredDate && (
-                          <Form.Item
-                            name="preferredDate"
-                            label="Preferred Date"
-                            rules={[{ required: true, message: "Select a date" }]}
-                            className="sw-cs-full-width-datepicker"
-                          >
-                            <div className="sw-cs-tf-field">
-                              <input type="date" className="sw-cs-custom-date-input" />
-                            </div>
-                          </Form.Item>
-                        )}
 
-                        <Form.Item name="hours" label="Estimated Hours (optional)">
-                          <InputNumber min={1} className="sw-cs-full-width-inputnumber" />
-                        </Form.Item>
-                      </div>
+  <div className="sw-cs-details-actions">
+    <Button onClick={handleDetailsCancel}>Cancel</Button>
+    <Button type="primary" htmlType="submit" className="sw-cs-black-btn">
+      Add to Cart
+    </Button>
+  </div>
 
-                      {cfg.instructions && (
-                        <Form.Item name="instructions" label="Special Instructions">
-                          <TextArea rows={3} placeholder="Any specific requirements..." />
-                        </Form.Item>
-                      )}
-                    </>
-                  );
-                })()}
-
-                <div className="sw-cs-details-actions">
-                  <Button onClick={handleDetailsCancel}>Cancel</Button>
-                  <Button type="primary" htmlType="submit" className="sw-cs-black-btn">
-                    Add to Cart
-                  </Button>
-                </div>
-              </Form>
+</Form>
             </div>
           </div>
         </Modal>
