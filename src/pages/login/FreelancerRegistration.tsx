@@ -92,7 +92,7 @@ export default function Registration() {
       <a
         href="#"
         className="sw-fr-back-link"
-        onClick={() => navigate('/freelancer')}
+        onClick={() => navigate('/login')}
         aria-label="Go back"
       >
         ← Back

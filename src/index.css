@@ -15952,432 +15952,618 @@ body {
   border-bottom: none !important;
   overflow-y: hidden !important;
 }
-<<<<<<< HEAD
- /* ///// surya header css////// */
+ /* ///// surya header css////// */ 
 
 
 
  /* ---  Tejesh  Freelancer Dashboard Styles (sw-frd) --- */
 
-.sw-frd-layout-container {
-  min-height: 100vh;
-  background: #f8fafc;
+/* SWACHIFY FREELANCER PLATFORM STYLES 
+  - Uses a modern, clean design with a professional color palette.
+  - Focus on responsive design and clear visual hierarchy.
+*/
+
+:root {
+  --primary: #1087e0; /* Blue for primary actions/branding */
+  --primary-light: #e6f7ff;
+  --secondary: #00bcd4;
+  --dark-text: #1f2937;
+  --light-text: #6b7280;
+  --bg-light: #f9fafb;
+  --card-bg: #ffffff;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
-/* --- Header --- */
+* {
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  background-color: var(--bg-light);
+}
+
+/* --- Global Utilities & Overrides --- */
+.ant-btn-primary {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  transition: all 0.3s ease;
+}
+.ant-btn-primary:hover, .ant-btn-primary:focus {
+  background-color: #0b70c4 !important;
+  border-color: #0b70c4 !important;
+}
+
+.ant-card {
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
+}
+
+/* --- Registration & Login Pages (sw-fr-login-wrapper, sw-fr-registration-page) --- */
+
+/* Login/Registration Wrapper */
+.sw-auth-wrapper {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  padding: 20px;
+}
+
+/* Back Button */
+.sw-fr-back-link, .sw-fr-login-back {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 8px 16px;
+  border-radius: 9999px;
+  color: var(--dark-text);
+  font-weight: 600;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: var(--shadow-sm);
+  z-index: 10;
+  border: none;
+  cursor: pointer;
+}
+
+/* --- Login Specific Styles --- */
+.sw-fr-login-container {
+  display: flex;
+  max-width: 1100px;
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.sw-fr-login-brand {
+  flex: 1;
+  background: var(--primary);
+  padding: 40px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.sw-fr-brand-title {
+  color: white !important;
+  font-size: 2rem !important;
+  margin-bottom: 8px;
+}
+.sw-fr-brand-sub {
+  color: #e0f2ff;
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+}
+.sw-fr-benefits {
+  list-style: none;
+  padding: 0;
+}
+.sw-fr-benefits li {
+  margin-bottom: 12px;
+  font-size: 1rem;
+}
+
+.sw-fr-login-card {
+  flex: 1;
+  padding: 40px;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.sw-fr-login-title {
+  color: var(--dark-text) !important;
+  font-size: 2rem !important;
+  margin-bottom: 0 !important;
+}
+
+/* --- Registration Specific Styles (Multi-Step) --- */
+
+.sw-fr-registration-container {
+  display: flex;
+  max-width: 1100px;
+  width: 100%;
+  background-color: var(--card-bg);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.sw-fr-registration-branding {
+  flex: 1;
+  background: var(--primary);
+  padding: 40px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.sw-fr-branding-heading {
+  color: white !important;
+  font-size: 1.8rem !important;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+.sw-fr-branding-text {
+  color: #e0f2ff;
+  font-size: 1rem;
+  margin-bottom: 30px;
+}
+
+.sw-fr-steps-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.sw-fr-step-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+}
+.sw-fr-step-item.active {
+  opacity: 1;
+}
+.sw-fr-step-item.completed h3 {
+  color: #c8e6f9;
+}
+
+.sw-fr-step-number {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+.sw-fr-step-item.completed .sw-fr-step-number {
+  background-color: white;
+  color: var(--primary);
+  border-color: white;
+}
+.sw-fr-step-item h3 {
+  color: white !important;
+  margin: 0 !important;
+  font-size: 1.1rem;
+}
+.sw-fr-step-item p {
+  color: #c8e6f9;
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+.sw-fr-registration-form-section {
+  flex: 1;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.sw-fr-registration-card {
+  width: 100%;
+}
+.sw-fr-registration-title {
+  margin-bottom: 0 !important;
+  color: var(--dark-text) !important;
+}
+.sw-fr-registration-subtitle {
+  color: var(--light-text);
+  margin-top: 4px;
+}
+
+.sw-fr-progress-bar {
+  height: 6px;
+  background-color: var(--bg-light);
+  border-radius: 3px;
+  margin-bottom: 30px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+  transition: width 0.4s ease-in-out;
+}
+
+.sw-fr-form-group {
+  margin-bottom: 20px;
+}
+.sw-fr-form-label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--dark-text);
+}
+.sw-fr-form-input.ant-input, .sw-fr-form-input.ant-input-affix-wrapper {
+  border-radius: 8px;
+  height: 44px;
+  border-color: #d1d5db;
+}
+.sw-fr-form-input-error {
+  border-color: #e54848 !important;
+}
+.sw-fr-form-error {
+  color: #e54848;
+  font-size: 0.8rem;
+  margin-top: 4px;
+}
+
+.sw-fr-skills-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.sw-fr-skill-tag {
+  border-radius: 9999px;
+  padding: 8px 16px;
+  height: auto;
+  font-weight: 500;
+  color: var(--light-text);
+  border-color: #d1d5db;
+  transition: all 0.2s ease;
+}
+.sw-fr-skill-tag.active {
+  background-color: var(--primary-light);
+  color: var(--primary);
+  border-color: var(--primary);
+  box-shadow: var(--shadow-sm);
+}
+.sw-fr-btn.btn-primary {
+  height: 48px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+/* --- Dashboard Styles --- */
+.sw-frd-layout-container {
+  min-height: 100vh;
+  background-color: var(--bg-light);
+}
+
+/* Header */
 .sw-frd-header {
-  background: #ffffff;
-  padding: 0 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #f0f0f0;
+  background-color: var(--card-bg);
+  padding: 0 30px;
   height: 64px;
-  line-height: 64px;
+  border-bottom: 1px solid #f0f0f0;
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: 0;
+  z-index: 5;
 }
-
 .sw-frd-logo-area {
   display: flex;
-  align-items: center;
-  gap: 12px;
+  align-items: baseline;
+  gap: 10px;
 }
-
 .sw-frd-logo-text {
-  font-size: 16px;
-  font-weight: 700;
-  color: #102030;
+  font-size: 1.2rem;
+  color: var(--primary) !important;
 }
-
 .sw-frd-portal-text {
-  font-size: 14px;
-  color: #6c757d;
+  color: var(--light-text) !important;
+  font-size: 0.9rem;
 }
-
-.sw-frd-user-area {
+.sw-frd-profile-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
   display: flex;
+  justify-content: center;
   align-items: center;
-  gap: 16px;
+  border: 2px solid var(--primary);
+  color: var(--primary);
 }
 
-.sw-frd-welcome-text {
-  font-size: 15px;
-  color: #343a40;
+/* Header Dropdown Menu - Specific */
+.sw-frd-profile-menu .ant-menu-item-disabled {
+  background-color: var(--primary-light) !important;
+  cursor: default !important;
+  padding: 10px 16px !important;
+  border-bottom: 1px solid #e0f2ff;
 }
 
-.sw-frd-logout-btn {
-  border-radius: 8px;
-  background: #f8f9fa !important;
-  color: #dc3545 !important;
-  border-color: #dc3545 !important;
-  font-weight: 500;
-}
-
-/* --- Main Content --- */
+/* Content */
 .sw-frd-content-main {
-  padding: 24px 24px 60px;
+  padding: 30px;
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
 }
 
 .sw-frd-section {
-  margin-bottom: 30px;
-  background: #ffffff;
-  padding: 24px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
-  border: 1px solid #f0f0f0;
+  margin-bottom: 40px;
 }
-
+.sw-frd-section-header {
+  margin-bottom: 20px;
+}
 .sw-frd-section-title {
-  font-size: 20px !important;
-  margin-bottom: 16px !important;
-  color: #111;
-  font-weight: 600 !important;
+  color: var(--dark-text) !important;
+  margin-bottom: 0 !important;
+}
+.sw-frd-section-subtitle {
+  color: var(--light-text);
+  font-size: 0.9rem;
 }
 
-/* --- Skills Section --- */
+/* Overview Cards */
+.sw-frd-overview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+.sw-frd-overview-card {
+  padding: 10px; /* Internal padding adjust */
+  background: var(--card-bg);
+  border-left: 5px solid var(--primary);
+  border-radius: 12px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.sw-frd-overview-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+.sw-frd-overview-label {
+  color: var(--light-text);
+  font-size: 0.85rem;
+  display: block;
+  margin-bottom: 5px;
+}
+.sw-frd-overview-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--dark-text);
+}
+.sw-frd-overview-subtext {
+  font-size: 0.8rem;
+  color: var(--light-text);
+  margin-top: 5px;
+  display: block;
+}
+.sw-frd-rating-star {
+  color: #ffc107;
+  font-size: 1.5rem;
+}
+
+/* Skills Section */
 .sw-frd-skills-container {
   display: flex;
-  gap: 10px;
   flex-wrap: wrap;
+  gap: 10px;
 }
-
 .sw-frd-skill-tag {
-  background: #e9ecef;
-  border: 1px solid #ced4da;
-  color: #495057;
-  padding: 6px 14px;
   font-size: 14px;
+  padding: 6px 14px;
   border-radius: 20px;
+  background-color: var(--primary-light);
+  color: var(--primary);
+  border-color: var(--primary);
   font-weight: 600;
-  transition: 0.2s;
-}
-.sw-frd-skill-tag:hover {
-    background: #e2e6ea;
 }
 
-/* --- Active Jobs --- */
-.sw-frd-active-jobs-container {
-    max-width: 7200px;
+/* Job Cards (Active & Completed) */
+.sw-frd-job-card, .sw-frd-request-card {
+  padding: 20px;
 }
-
 .sw-frd-job-card {
-  border: 1px solid #f5f5f5 !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  border-radius: 10px !important;
-  padding: 16px !important;
+  border-left: 5px solid var(--primary);
+}
+.sw-frd-request-card {
+  border-left: 5px solid #28a745;
+  margin-bottom: 20px;
 }
 
-.sw-frd-job-meta {
+.sw-frd-job-meta, .sw-frd-request-header {
   display: flex;
   align-items: center;
-  gap: 12px;
   margin-bottom: 8px;
 }
-
-.sw-frd-job-title {
-  font-size: 16px;
+.sw-frd-job-title, .sw-frd-request-title {
+  font-size: 1.1rem;
   font-weight: 600;
-  color: #102030;
+  color: var(--dark-text) !important;
+  margin-right: 15px;
 }
-
-.sw-frd-price {
-  font-size: 16px;
+.sw-frd-price, .sw-frd-request-price {
+  font-size: 1.2rem;
   font-weight: 700;
-  color: #16a34a;
+  color: #28a745 !important;
   margin-left: auto;
-  white-space: nowrap;       /* prevent wrap */
-  display: inline-flex;      /* keep symbol and number together */
-  align-items: center;
 }
-
-
-.sw-frd-status-tag {
-    font-weight: 600;
-    border-radius: 4px;
-}
-
 .sw-frd-ticket-id {
   display: block;
-  font-size: 13px;
-  color: #6c757d;
-  margin-bottom: 12px;
+  color: var(--light-text);
+  font-size: 0.8rem;
+  margin-bottom: 15px;
 }
 
 .sw-frd-details-row {
   display: flex;
-  gap: 24px;
-  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 10px;
 }
-
 .sw-frd-detail-item {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 13px;
-  color: #495057;
+  color: var(--light-text);
+  font-size: 0.9rem;
 }
-
 .sw-frd-icon-sm {
-    color: #495057;
+  margin-right: 5px;
+  color: var(--primary);
 }
 
 .sw-frd-complete-btn {
-  background: #198754 !important;
-  border-color: #198754 !important;
-  color: #fff !important;
-  border-radius: 6px;
+  margin-top: 15px;
+  border-radius: 8px;
   font-weight: 600;
-  padding: 6px 12px;
-  height: auto;
-  transition: transform 0.2s;
 }
-.sw-frd-complete-btn:hover {
-    transform: translateY(-1px);
-}
-
-/* --- Available Requests --- */
-.sw-frd-available-header {
-    margin-bottom: 20px;
-}
-
-.sw-frd-requests-title {
-    margin-bottom: 0 !important;
-}
-
-.sw-frd-filter-select {
-    width: 200px;
-    border-radius: 8px;
-}
-
-.sw-frd-requests-list {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-.sw-frd-request-card {
-    border: 1px solid #f5f5f5 !important;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    border-radius: 10px !important;
-    padding: 16px !important;
-    position: relative; /* For absolute positioning of accept button on larger screens */
-}
-
-.sw-frd-request-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 8px;
-}
-
-.sw-frd-request-title {
-    font-size: 16px;
-    font-weight: 600;
-    color: #102030;
-}
-
-.sw-frd-request-price {
-    font-size: 16px;
-    font-weight: 700;
-    color: #16a34a; /* Green for estimated price */
-    margin-left: auto;
-}
-
-.sw-frd-customer {
-    display: block;
-    font-size: 13px;
-    color: #6c757d;
-    margin-bottom: 4px;
-}
-
 .sw-frd-request-desc-text {
     display: block;
-    font-size: 14px;
-    color: #343a40;
-    margin-bottom: 12px;
+    color: var(--dark-text);
+    margin: 10px 0;
+    font-size: 0.9rem;
+    padding-left: 20px;
+    border-left: 3px solid var(--primary-light);
 }
-
-.sw-frd-estimated {
-    color: #0d6efd;
+.sw-frd-customer {
+    display: block;
+    color: var(--dark-text);
     font-weight: 500;
+    margin-bottom: 5px;
 }
 
 .sw-frd-accept-btn {
-    background: #dc3545 !important;
-    border-color: #dc3545 !important;
-    color: #fff !important;
-    border-radius: 6px;
-    font-weight: 600;
-    padding: 8px 16px;
-    height: auto;
-    width: 100%;
-    margin-top: 12px;
-    transition: transform 0.2s;
+  margin-top: 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  background-color: #28a745 !important;
+  border-color: #28a745 !important;
 }
 .sw-frd-accept-btn:hover {
-    transform: translateY(-1px);
+    background-color: #1e7e34 !important;
+    border-color: #1e7e34 !important;
 }
 
+/* Filters */
+.sw-frd-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.sw-frd-filter-select, .sw-frd-sort-select {
+  width: 200px;
+  border-radius: 8px !important;
+}
+
+/* Profile Page */
+.sw-frp-card {
+    max-width: 800px; 
+    margin: 0 auto; 
+    padding: 30px;
+    box-shadow: var(--shadow-md);
+}
+.sw-frp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+}
+.sw-frp-back-btn {
+    border-radius: 8px;
+    font-weight: 500;
+}
+.sw-frp-detail-item {
+    padding: 10px 0;
+    border-bottom: 1px dashed #f0f0f0;
+}
+.sw-frp-detail-label {
+    font-weight: 600;
+    color: var(--light-text);
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+}
+.sw-frp-detail-value {
+    font-size: 1.1rem;
+    color: var(--dark-text);
+}
+.sw-frp-section-title {
+    color: var(--primary) !important;
+    font-size: 1.4rem !important;
+    margin-bottom: 15px !important;
+    padding-bottom: 5px;
+    border-bottom: 2px solid var(--primary-light);
+}
 
 /* Responsive Adjustments */
-@media (min-width: 768px) {
-    .sw-frd-request-card .ant-card-body {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    .sw-frd-accept-btn {
-        width: auto;
-        min-width: 180px;
-        margin-top: 0;
-        margin-left: 20px;
-    }
-    .sw-frd-job-card .ant-card-body {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    .sw-frd-complete-btn {
-        margin-top: 0;
-    }
-}
-
-@media (max-width: 767px) {
-    .sw-frd-header {
-        flex-direction: column;
-        height: auto;
-        line-height: normal;
-        padding: 12px;
-        gap: 8px;
-    }
-    .sw-frd-logo-area {
-        width: 100%;
-        justify-content: center;
-    }
-    .sw-frd-user-area {
-        width: 100%;
-        justify-content: right;
-    }
-    .sw-frd-welcome-text {
-        font-size: 14px;
-    }
-    .sw-frd-content-main {
-        padding: 16px 12px 40px;
-    }
-    .sw-frd-details-row {
-        flex-direction: column;
-        gap: 8px;
-    }
-    .sw-frd-available-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-    }
-    .sw-frd-filter-select {
-        width: 100%;
-    }
-}
-
-
-
-
- /* ---  Tejesh  Freelancer Dashboard Styles (sw-frd) --- */
-
-
-
-
-
-
-/* ----------------------------------------------------
-   Freelancer Profile Specific Styles (sw-fpr)
-   These styles should be added to your global index.css
-   ---------------------------------------------------- */
-
-.sw-frd-content-main {
-  /* Inherited from Dashboard, ensures content centering and padding */
-  padding: 24px 24px 60px;
-  max-width: 1200px;
-  margin: 0 auto;
-  width: 100%;
-}
-
-.sw-frd-section {
-  /* Base card style for the profile details block */
-  margin-bottom: 30px;
-  background: #ffffff;
-  padding: 24px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
-  border: 1px solid #f0f0f0;
-}
-
-/* Style for the main profile card title area */
-.sw-frd-section .ant-card-head {
-  padding-bottom: 16px;
-  border-bottom: 1px solid #f0f0f0;
-}
-
-/* Enhancing typography for readability */
-.sw-frd-section .ant-typography-strong {
-  color: #1f2937;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  margin-bottom: 4px;
-}
-
-/* Color for icons inside text labels */
-.sw-frd-section .anticon {
-  color: #4b5563;
-}
-
-/* Style for the skill tags */
-.sw-frd-section .ant-tag {
-  font-size: 14px;
-  padding: 6px 12px;
-  border-radius: 16px;
-  font-weight: 500;
-  border-color: rgba(59, 130, 246, 0.2);
-}
-
-/* Separator style for detail sections */
-.sw-frd-section .ant-typography h4 {
-  font-size: 18px;
-  color: #102030;
-  font-weight: 600;
-  margin-top: 10px !important;
-}
-
-/* Logout button style in the profile card header */
-.sw-frd-section .ant-btn-dangerous {
-  background-color: #dc3545 !important;
-  border-color: #dc3545 !important;
-  color: #ffffff !important;
-  border-radius: 8px;
-  font-weight: 500;
-}
-
-/* Responsive Grid Adjustments */
-@media (max-width: 767px) {
+@media (max-width: 992px) {
+  .sw-fr-login-brand, .sw-fr-registration-branding {
+    display: none;
+  }
+  .sw-fr-login-container, .sw-fr-registration-container {
+    max-width: 450px;
+  }
+  .sw-fr-login-card, .sw-fr-registration-form-section {
+    flex: 100%;
+    padding: 30px;
+  }
   .sw-frd-content-main {
-    padding: 16px 12px 40px;
+    padding: 15px;
   }
-  
-  .sw-frd-section {
-    padding: 18px;
+  .sw-frd-header {
+    padding: 0 15px;
   }
-
-  .sw-frd-section .ant-card-head {
-    padding-bottom: 12px;
+  .sw-frd-overview-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .sw-frd-available-header {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 15px;
   }
 }
+@media (max-width: 576px) {
+    .sw-frd-overview-grid {
+        grid-template-columns: 1fr;
+    }
+}
 
-/* ----------------------------------------------------
-   Freelancer Profile Specific Styles (sw-fpr)
-   ---------------------------------------------------- */
-=======
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* booking overlay styles */
 .sw-booking-page-overlay {
@@ -16479,4 +16665,3 @@ body {
 
 /* /////vamsi Recent booking css//// */
 
->>>>>>> main
