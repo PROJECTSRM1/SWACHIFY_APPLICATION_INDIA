@@ -10737,3 +10737,431 @@ textarea {
 
 
  /* Khasim and Vanamanla Bulding Raw Service CSS Updates */
+
+ /*raju bai admin dashboard updated*/
+ @import 'antd/dist/reset.css';
+
+:root {
+  --primary-color: #1890ff;
+  /* Corporate Blue */
+  --bg-color: #f0f2f5;
+  --header-bg: #ffffff;
+  --text-color: #262626;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  background-color: var(--bg-color);
+}
+
+.sw-ad-ant-layout {
+  background: var(--bg-color);
+}
+
+/* Custom scrollbar for tables if needed */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.sw-ad-custom-table .ant-table-thead>tr>th {
+  background: #fafafa;
+  font-weight: 600;
+}
+
+.sw-ad-custom-table {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Ensure tables don't overflow their container on mobile */
+
+
+/* Dashboard Styles */
+.sw-ad-dashboard-container {
+  width: 100%;
+}
+
+.sw-ad-stat-card {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+  cursor: default;
+  /* Remove pointer cursor */
+}
+
+/* Remove hover effect to prevent cursor change */
+.sw-ad-stat-card .ant-card-body {
+  cursor: default;
+}
+
+.sw-ad-stat-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sw-ad-stat-title {
+  color: #8c8c8c;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.sw-ad-stat-value {
+  color: #000000;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.sw-ad-stat-icon {
+  font-size: 24px;
+  opacity: 0.8;
+}
+
+.sw-ad-recent-tickets-section {
+  margin-top: 40px;
+}
+
+@media (max-width: 768px) {
+  .sw-ad-stat-card {
+    margin-bottom: 16px;
+  }
+
+  .sw-ad-stat-card .ant-card-body {
+    padding: 20px;
+    /* Increased from default */
+  }
+
+  .sw-ad-stat-value {
+    font-size: 28px;
+    /* Larger on mobile */
+  }
+
+  .sw-ad-stat-icon {
+    font-size: 28px;
+    /* Larger on mobile */
+  }
+}
+
+
+
+
+/*Main*/
+/* ----------------------------------------------
+   THEME COLORS
+---------------------------------------------- */
+:root {
+    --primary-color: #89CFF0;
+    --primary-hover: #6EC2EB;
+    --header-bg: #1890ff;
+    --text-color: #000000;
+}
+
+
+/* ----------------------------------------------
+   MAIN LAYOUT
+---------------------------------------------- */
+.sw-ad-main-layout {
+    min-height: 100vh;
+}
+
+
+/* ----------------------------------------------
+   HEADER - MOBILE FIRST
+---------------------------------------------- */
+.sw-ad-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    width: 100%;
+    background: var(--header-bg);
+     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); 
+    padding: 12px 16px;
+    height: auto;
+}
+
+/* Mobile: Stack everything vertically */
+.sw-ad-header-left {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.sw-ad-logo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.sw-ad-logo h5 {
+    color: #ffffff !important;
+    font-size: 14px !important;
+    margin: 0 !important;
+    font-weight: 600 !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 180px;
+}
+
+/* Mobile Menu Toggle Button */
+.sw-ad-menu-toggle {
+    background: transparent;
+    border: 1px solid #ffffff;
+    color: #ffffff;
+    font-size: 18px;
+    padding: 4px 8px;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sw-ad-menu-toggle:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: #ffffff;
+    color: #ffffff;
+}
+
+/* Hide desktop menu on mobile */
+.sw-ad-desktop-menu {
+    display: none !important;
+}
+
+.sw-ad-header-right {
+    display: none;
+    /* Hide on mobile */
+}
+
+.sw-ad-admin-name {
+    color: #ffffff;
+    font-weight: 500;
+    font-size: 12px;
+}
+
+.sw-ad-logout-btn {
+    background: #ffffff;
+    color: #1890ff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+.sw-ad-logout-btn:hover {
+    background: #f0f0f0;
+}
+
+
+/* ----------------------------------------------
+   MOBILE DRAWER STYLES
+---------------------------------------------- */
+.sw-ad-mobile-drawer .ant-drawer-header {
+    background: var(--header-bg);
+    color: #ffffff;
+}
+
+.sw-ad-mobile-drawer .ant-drawer-title {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.sw-ad-mobile-drawer .ant-drawer-close {
+    color: #ffffff;
+}
+
+.sw-ad-drawer-menu {
+    border-right: none;
+}
+
+.sw-ad-drawer-menu .ant-menu-item {
+    font-size: 15px;
+    padding: 12px 16px;
+    height: auto;
+    line-height: 1.5;
+}
+
+.sw-ad-drawer-menu .ant-menu-item-selected {
+    background-color: #e6f7ff;
+}
+
+.sw-ad-drawer-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 16px;
+    border-top: 1px solid #f0f0f0;
+    background: #fafafa;
+}
+
+.sw-ad-drawer-admin {
+    margin-bottom: 12px;
+    font-weight: 500;
+    color: #333;
+}
+
+
+/* ----------------------------------------------
+   CONTENT AREA - MOBILE FIRST
+---------------------------------------------- */
+.sw-ad-ant-layout-content {
+    padding: 0 12px !important;
+    margin-top: 60px !important;
+}
+
+.sw-ad-site-layout-content {
+    padding: 12px 0;
+    min-height: 380px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+
+/* ----------------------------------------------
+   TABLET (min-width: 481px)
+---------------------------------------------- */
+@media (min-width: 481px) {
+    .sw-ad-header {
+        padding: 12px 20px;
+    }
+
+    .sw-ad-logo h5 {
+        font-size: 15px !important;
+        max-width: 220px;
+    }
+
+    .sw-ad-ant-layout-content {
+        padding: 0 16px !important;
+        margin-top: 65px !important;
+    }
+}
+
+
+/* ----------------------------------------------
+   DESKTOP (min-width: 769px)
+---------------------------------------------- */
+@media (min-width: 769px) {
+    .sw-ad-header {
+        padding: 0 24px;
+        height: 56px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .sw-ad-header-left {
+        flex-direction: row;
+        align-items: center;
+        gap: 24px;
+        flex: 1;
+    }
+
+    .sw-ad-logo {
+        width: auto;
+    }
+
+    .sw-ad-logo h5 {
+        font-size: 16px !important;
+        max-width: none;
+    }
+
+    /* Hide mobile toggle on desktop */
+    .sw-ad-menu-toggle {
+        display: none !important;
+    }
+
+    /* Show desktop menu */
+    .sw-ad-desktop-menu {
+        display: flex !important;
+        line-height: 56px;
+        border-bottom: none !important;
+        min-width: 0;
+    }
+
+    .sw-ad-desktop-menu .ant-menu-item {
+        color: #ffffff;
+        font-weight: 500;
+        margin: 0 4px !important;
+        padding: 0 16px !important;
+        border-radius: 6px;
+        transition: all 0.3s;
+        font-size: 14px;
+    }
+
+    .sw-ad-desktop-menu .ant-menu-item:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    .sw-ad-desktop-menu .ant-menu-item-selected {
+        background: rgba(255, 255, 255, 0.3);
+        font-weight: 600;
+    }
+
+    .sw-ad-desktop-menu .ant-menu-item::after {
+        border-bottom: none !important;
+    }
+
+    /* Show header right on desktop */
+    .sw-ad-header-right {
+        display: flex !important;
+        align-items: center;
+        gap: 14px;
+    }
+
+    .sw-ad-admin-name {
+        font-size: 14px;
+    }
+
+    .sw-ad-logout-btn {
+        padding: 6px 14px;
+        font-size: 13px;
+    }
+
+    .sw-ad-ant-layout-content {
+        padding: 0 24px !important;
+        margin-top: 56px !important;
+    }
+
+    .sw-ad-site-layout-content {
+        padding: 16px 0;
+    }
+}
+
+
+/* ----------------------------------------------
+   LARGE DESKTOP (min-width: 1200px)
+---------------------------------------------- */
+@media (min-width: 1200px) {
+    .sw-ad-logo h5 {
+        font-size: 18px !important;
+    }
+
+    .sw-ad-desktop-menu .ant-menu-item {
+        font-size: 15px;
+    }
+}

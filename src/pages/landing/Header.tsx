@@ -48,6 +48,7 @@ const STORAGE_KEY = "swachify_registered_user";
 const CommonHeader: React.FC<{ selectedKey?: string }> = ({ selectedKey = "home" }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [authModalVisible, setAuthModalVisible] = useState(false);
+  const [vendorModalVisible, setVendorModalVisible] = useState(false);
   const [activeAuthTab, setActiveAuthTab] = useState<"login" | "register">("register");
 
   const navigate = useNavigate();
@@ -61,45 +62,59 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({ selectedKey = "home"
   const closeAuthModal = () => setAuthModalVisible(false);
 
   const onLogin = async (values: any) => {
-    try {
-      const identifier = (values.identifier || "").toString().trim();
-      const password = (values.password || "").toString();
+  try {
+    const identifier = (values.identifier || "").toString().trim();
+    const password = (values.password || "").toString();
 
-      if (!identifier || !password) {
-        message.error("Please enter identifier and password");
-        return;
-      }
-
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (!stored) {
-        message.error("No registered user found. Please register first.");
-        return;
-      }
-
-      const user: RegisteredUser = JSON.parse(stored);
-
-      const identifierMatches =
-        identifier.toLowerCase() === user.email.toLowerCase() ||
-        identifier === user.phone;
-
-      if (identifierMatches && password === user.password) {
-        setUserDetails("user", {
-          name: user.fullname,
-          email: user.email,
-          phone: user.phone,
-          address: user.address,
-        });
-        message.success("Login successful");
-        closeAuthModal();
-        navigate("/app/dashboard");
-      } else {
-        message.error("Invalid credentials. Please check email/phone and password.");
-      }
-    } catch (err) {
-      console.error("Login error", err);
-      message.error("An error occurred while logging in.");
+    if (!identifier || !password) {
+      message.error("Please enter identifier and password");
+      return;
     }
-  };
+
+    // ---------------------------------------
+    // 🔥 ADMIN LOGIN CHECK (hardcoded)
+    // ---------------------------------------
+    if (identifier === "admin@gmail.com" && password === "1234") {
+      message.success("Admin login successful");
+      closeAuthModal();
+      navigate("/admin-dashboard"); // <-- your admin route
+      return;
+    }
+    // ---------------------------------------
+
+    // Normal user login
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (!stored) {
+      message.error("No registered user found. Please register first.");
+      return;
+    }
+
+    const user: RegisteredUser = JSON.parse(stored);
+
+    const identifierMatches =
+      identifier.toLowerCase() === user.email.toLowerCase() ||
+      identifier === user.phone;
+
+    if (identifierMatches && password === user.password) {
+      setUserDetails("user", {
+        name: user.fullname,
+        email: user.email,
+        phone: user.phone,
+        address: user.address,
+      });
+
+      message.success("Login successful");
+      closeAuthModal();
+      navigate("/app/dashboard");
+    } else {
+      message.error("Invalid credentials. Please check email/phone and password.");
+    }
+  } catch (err) {
+    console.error("Login error", err);
+    message.error("An error occurred while logging in.");
+  }
+};
+
 
   const onRegister = async (values: any) => {
     try {
@@ -192,15 +207,20 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({ selectedKey = "home"
         </ul>
       )}
 
-      <Modal
-        open={authModalVisible}
-        onCancel={closeAuthModal}
-        footer={null}
-        centered
-        width={520}
-        bodyStyle={{ padding: 24 }}
-        destroyOnClose
-      >
+     <Modal
+  open={authModalVisible}
+  onCancel={closeAuthModal}
+  footer={null}
+  centered
+  width={520}
+  destroyOnClose
+  bodyStyle={{
+    padding: 24,
+    maxHeight: "70vh",
+    overflowY: "auto",
+  }}
+>
+
         <Tabs
           activeKey={activeAuthTab}
           onChange={(key) => setActiveAuthTab(key as "login" | "register")}
@@ -312,10 +332,109 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({ selectedKey = "home"
                   Register
                 </Button>
               </Form.Item>
+              <Form.Item style={{ marginTop: -10 }}>
+  <a
+    onClick={() => {
+      setAuthModalVisible(false);    
+      setVendorModalVisible(true);   
+    }}
+  >
+    Are you a vendor?
+  </a>
+</Form.Item>
+
             </Form>
           </TabPane>
         </Tabs>
       </Modal>
+      <Modal
+  open={vendorModalVisible}
+  onCancel={() => setVendorModalVisible(false)}
+  footer={null}
+  centered
+  width={550}
+  destroyOnClose
+  title="Vendor Authentication"
+   bodyStyle={{
+    maxHeight: "65vh",
+    overflowY: "auto",
+  }}
+>
+  <Tabs defaultActiveKey="vendor_register" centered>
+    
+    {/* VENDOR LOGIN TAB */}
+    <Tabs.TabPane tab="Login" key="vendor_login">
+      <Form layout="vertical" onFinish={(values) => console.log("Vendor Login:", values)}>
+
+        <Form.Item
+          label="Email / Phone"
+          name="identifier"
+          rules={[{ required: true }]}
+        >
+          <Input placeholder="Enter email or phone" />
+        </Form.Item>
+
+        <Form.Item
+          label="Password"
+          name="password"
+          rules={[{ required: true }]}
+        >
+          <Input.Password />
+        </Form.Item>
+
+        <Form.Item>
+          <Button type="primary" block htmlType="submit">
+            Login as Vendor
+          </Button>
+        </Form.Item>
+
+      </Form>
+    </Tabs.TabPane>
+
+    {/* VENDOR REGISTER TAB */}
+    <Tabs.TabPane tab="Register" key="vendor_register">
+      <Form layout="vertical" onFinish={(values) => console.log("Vendor Register:", values)}>
+
+        <Form.Item label="Business Name" name="businessName" rules={[{ required: true }]}>
+          <Input />
+        </Form.Item>
+
+        <Form.Item label="Owner Name" name="ownerName" rules={[{ required: true }]}>
+          <Input />
+        </Form.Item>
+
+        <Form.Item label="Email" name="email" rules={[{ required: true, type: "email" }]}>
+          <Input />
+        </Form.Item>
+
+        <Form.Item label="Phone" name="phone" rules={[{ required: true }]}>
+          <Input />
+        </Form.Item>
+
+        <Form.Item label="Service Category" name="category" rules={[{ required: true }]}>
+          <Input placeholder="Cleaning / Transport / Plumbing..." />
+        </Form.Item>
+
+        <Form.Item label="Business Address" name="address" rules={[{ required: true }]}>
+          <Input.TextArea rows={3} />
+        </Form.Item>
+
+        <Form.Item label="Password" name="password" rules={[{ required: true }]}>
+          <Input.Password />
+        </Form.Item>
+
+        <Form.Item>
+          <Button type="primary" block htmlType="submit">
+            Register as Vendor
+          </Button>
+        </Form.Item>
+
+      </Form>
+    </Tabs.TabPane>
+
+  </Tabs>
+</Modal>
+
     </>
   );
 };
