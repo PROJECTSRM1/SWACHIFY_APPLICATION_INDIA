@@ -797,7 +797,13 @@ center; }
 /* ===========================
     SERVICES SECTION ALIGNMENT
     =========================== */
-#services-section { text-align: center; padding: 60px 40px; }
+.services-section {
+  text-align: center;
+  padding: 60px 40px;
+  margin-top: 40px;
+  margin-bottom: -44px;
+}
+
 .sw-lp-classname-services-section .sw-lp-classname-section-title {
 font-size: 2rem; font-weight: 700; margin-bottom: 8px; }
 .sw-lp-classname-services-section .sw-lp-classname-section-subtitle {
@@ -2202,6 +2208,7 @@ display: none !important; }
   background: #005cfa;
   border-radius: 6px; /* reduced radius (smaller) */
   color: #fff;
+  margin-top: 70px;
 }
 .sw-pm-hero-title {
   margin: 0;
@@ -2815,6 +2822,7 @@ body,
   color: #ffffff;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
   text-align: left;
+  margin-top: 45px;
 }
 
 .swc-bs-banner-title {
@@ -8840,6 +8848,7 @@ body {
   margin-bottom: 24px;
   gap: 10px;
   white-space: nowrap;
+  margin-top: 70px;
 }
 
 .sw-hs-banner-left {
@@ -10646,6 +10655,7 @@ textarea {
   max-width: 1200px;
   margin: 0 auto;
   box-sizing: border-box;
+  margin-top: 50px
 }
 
 
@@ -10653,7 +10663,7 @@ textarea {
 .sw-br-bc-header {
   background: #005cfa;
   color: #fff;
-  padding: 10px 11px;
+  padding: 28px 24px;
   border-radius: 12px;
   margin-bottom: 24px;
   display: flex;
@@ -10663,7 +10673,9 @@ textarea {
 
 
 .sw-br-bc-title {
-  font-size: 18px;
+  font-size: 22px;
+  font-weight: 600;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 
@@ -10743,9 +10755,9 @@ textarea {
 
 /* ----------------------------- Header / Layout ----------------------------- */
 .sw-header-container {
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 9999;
+  z-index: 1000;
   width: 100%;
   background: white;
   border-bottom: 1px solid #eee;
@@ -11113,7 +11125,6 @@ body {
   border-bottom: none !important;
   overflow-y: hidden !important;
 }
-
  /* ///// surya header css////// */
 
 
@@ -11539,7 +11550,6 @@ body {
    Freelancer Profile Specific Styles (sw-fpr)
    ---------------------------------------------------- */
 
-
 /* booking overlay styles */
 .sw-booking-page-overlay {
   position: fixed;
@@ -11639,5 +11649,4 @@ body {
 
 
 /* /////vamsi Recent booking css//// */
-
 

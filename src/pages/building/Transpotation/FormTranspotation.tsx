@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useCart } from "../../../context/CartContext";
 
 import materialpickupimg from "../../../assets/Building/material pickup.jpg";
 import deliveryservicesimg from "../../../assets/Building/Delivery services.jpg";
+import { message } from "antd";
 
 const Transportation = [
   { id: 1, title: "Material Supply", price: "800", img: materialpickupimg },
@@ -16,9 +17,8 @@ interface FormProps {
 
 const TransportationForm: React.FC<FormProps> = ({ id, onClose }) => {
   const material = Transportation.find((item) => item.id === id);
-  const [quantity, setQuantity] = useState(1);
-  const { addToCart } = useCart();
 
+  const [quantity, setQuantity] = useState(1);
   const [customerName, setCustomerName] = useState("");
   const [rentalType, setRentalType] = useState("");
   const [rentalDate, setRentalDate] = useState("");
@@ -26,12 +26,27 @@ const TransportationForm: React.FC<FormProps> = ({ id, onClose }) => {
   const [address, setAddress] = useState("");
   const [instructions, setInstructions] = useState("");
 
+  const formRef = useRef<HTMLFormElement>(null); 
+
+  const { addToCart } = useCart();
+
   if (!material) return <p>Material not found</p>;
 
-  const unitPrice = Number(material.price);
-  const totalPrice = unitPrice * quantity;
+  const totalPrice = Number(material.price) * quantity;
 
-  const handleaddtocart = () => {
+  const handleReset = () => {
+    formRef.current?.reset(); 
+    setQuantity(1);
+
+    setCustomerName("");
+    setRentalType("");
+    setRentalDate("");
+    setContact("");
+    setAddress("");
+    setInstructions("");
+  };
+
+  const handleAddToCart = () => {
     addToCart({
       id: material.id,
       title: material.title,
@@ -44,9 +59,10 @@ const TransportationForm: React.FC<FormProps> = ({ id, onClose }) => {
       deliveryDate: rentalDate,
       contact,
       address,
-      instructions
+      instructions,
     });
-    alert("Item added to cart!");
+
+    message.success("item added to cart");
     onClose();
   };
 
@@ -84,7 +100,8 @@ const TransportationForm: React.FC<FormProps> = ({ id, onClose }) => {
             </ul>
           </div>
 
-          <div className="sw-br-form-box">
+          <form ref={formRef} className="sw-br-form-box">
+
             <h3 className="sw-br-form-title">Service Details</h3>
 
             <div className="sw-br-grid3">
@@ -92,6 +109,7 @@ const TransportationForm: React.FC<FormProps> = ({ id, onClose }) => {
                 <label>Customer Name</label>
                 <input
                   type="text"
+                  name="customerName"
                   placeholder="Site manager name"
                   value={customerName}
                   onChange={(e) => setCustomerName(e.target.value)}
@@ -100,8 +118,12 @@ const TransportationForm: React.FC<FormProps> = ({ id, onClose }) => {
 
               <div className="sw-br-field3">
                 <label>Delivery Type</label>
-                <select value={rentalType} onChange={(e)=>setRentalType(e.target.value)}>
-                  <option>Select</option>
+                <select
+                  name="deliveryType"
+                  value={rentalType}
+                  onChange={(e) => setRentalType(e.target.value)}
+                >
+                  <option value="">Select</option>
                   <option>Door Delivery</option>
                   <option>Pick-up</option>
                 </select>
@@ -121,18 +143,32 @@ const TransportationForm: React.FC<FormProps> = ({ id, onClose }) => {
 
               <div className="sw-br-field3">
                 <label>Delivery Date</label>
-                <input type="date" value={rentalDate} onChange={(e) => setRentalDate(e.target.value)} />
+                <input
+                  type="date"
+                  name="deliveryDate"
+                  value={rentalDate}
+                  onChange={(e) => setRentalDate(e.target.value)}
+                />
               </div>
             </div>
 
             <div className="sw-br-field3">
               <label>Contact Number</label>
-              <input type="text" value={contact} onChange={(e)=>setContact(e.target.value)} />
+              <input
+                type="text"
+                name="contact"
+                value={contact}
+                onChange={(e) => setContact(e.target.value)}
+              />
             </div>
 
             <div className="sw-br-field3">
               <label>Delivery Address</label>
-              <textarea value={address} onChange={(e)=>setAddress(e.target.value)}></textarea>
+              <textarea
+                name="address"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+              ></textarea>
             </div>
 
             <h3 className="sw-br-form-title">Additional Services</h3>
@@ -146,15 +182,33 @@ const TransportationForm: React.FC<FormProps> = ({ id, onClose }) => {
 
             <div className="sw-br-field3">
               <label>Special Instructions</label>
-              <textarea value={instructions} onChange={(e)=>setInstructions(e.target.value)}></textarea>
+              <textarea
+                name="instructions"
+                value={instructions}
+                onChange={(e) => setInstructions(e.target.value)}
+              ></textarea>
             </div>
 
             <div className="sw-br-buttons3">
-              <button className="sw-br-btn-cancel" onClick={onClose}>Cancel</button>
-              <button className="sw-br-btn-add" onClick={handleaddtocart}>Add to Cart</button>
+              <button
+                type="button"
+                className="sw-br-btn-cancel"
+                onClick={handleReset}
+              >
+                Cancel
+              </button>
+
+              <button
+                type="button"
+                className="sw-br-btn-add"
+                onClick={handleAddToCart}
+              >
+                Add to Cart
+              </button>
             </div>
 
-          </div>
+          </form>
+
         </div>
       </div>
     </div>
