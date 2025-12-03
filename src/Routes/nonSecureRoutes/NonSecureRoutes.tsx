@@ -18,6 +18,7 @@ import Freelancer from '../../pages/landing/Freelancer';
 import Freelancerlogin from '../../pages/login/Freelancerlogin';
 import FreelancerRegistration from '../../pages/login/FreelancerRegistration';
 import ServiceRequests from '../../pages/landing/ServiceRequests';
+import Vendor from '../../pages/landing/Vendor';
 
 export const NonSecureRoutes = () => {
   const navigate = useNavigate();
@@ -54,6 +55,7 @@ export const NonSecureRoutes = () => {
       <Route path="/freelancerlogin" element={<Freelancerlogin />} />
       <Route path="/freelancerregistration" element={<FreelancerRegistration />} />
       <Route path="/servicerequests" element={<ServiceRequests />} />
+      <Route path="/Vendor" element={<Vendor/>}/>
 
       
     </Routes>
