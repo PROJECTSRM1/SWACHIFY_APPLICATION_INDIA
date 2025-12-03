@@ -4418,6 +4418,8 @@ body,
   align-items: center !important;
   box-shadow: none !important;
   transition: transform .2s ease, box-shadow .2s ease !important;
+  /* new added */
+  cursor: pointer;
 }
 
 /* center icon and content */
@@ -4448,6 +4450,13 @@ body,
   transform: translateY(-4px) !important;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08) !important;
 }
+
+/*.................. added for filerting .................*/
+.sw-fr-category-card-active {
+  border: 2px solid #1890ff;
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+}
+
 
 /* ensure category grid items center internal content on larger screens too */
 @media (min-width: 1024px) {
