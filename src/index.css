@@ -4171,6 +4171,12 @@ body,
   color-scheme: light;
 }
 
+.sw-fr-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;  /* Adjust space here */
+}
+
 /* ========== HEADER (fixed) ========== */
 /* SAME HEADER UI from 320px to 768px */
 /* -----------------------------------------
@@ -4197,7 +4203,8 @@ body,
     white-space: nowrap !important;
   }
 
-  .sw-fr-fix-header-btn {
+ /* Wrapper that controls spacing */
+ .sw-fr-fix-header-btn {
     background: #0d1b2a !important;
     width: 150px !important;
     height: 34px !important;
