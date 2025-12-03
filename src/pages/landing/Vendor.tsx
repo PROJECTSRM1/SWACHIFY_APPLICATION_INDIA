@@ -1,4 +1,4 @@
-
+import { useState } from "react";
 import { Card, Button, Tag, Layout, Menu, Dropdown, Avatar } from "antd";
 import {
   EnvironmentOutlined,
@@ -6,14 +6,89 @@ import {
   InboxOutlined,
   UserOutlined,
   LogoutOutlined,
+  CheckOutlined,
+  CloseOutlined,
 } from "@ant-design/icons";
-// import { Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+ // make sure this path is correct
 
 const { Header } = Layout;
 
+// ---- Types ----
+type RequestStatus = "Pending" | "Accepted" | "Rejected" | "Delivered";
+
+interface MaterialRequest {
+  id: string;
+  material: string;
+  customerName: string;
+  description: string;
+  quantityLabel: string;
+  location: string;
+  requiredBy: string;
+  status: RequestStatus;
+}
+
+// ---- Mock Initial Data ----
+const initialAcceptedOrders: MaterialRequest[] = [
+  {
+    id: "TKT009",
+    material: "Bricks",
+    customerName: "Kiran Kumar",
+    description: "Standard red bricks for compound wall construction",
+    quantityLabel: "1000 pieces",
+    location: "BTM Layout, Bangalore",
+    requiredBy: "2025-11-28",
+    status: "Accepted",
+  },
+];
+
+const initialNewRequests: MaterialRequest[] = [
+  {
+    id: "TKT002",
+    material: "Cement",
+    customerName: "Rahul Verma",
+    description: "Need 1 ton of cement for home construction",
+    quantityLabel: "1 Ton",
+    location: "Jayanagar, Bangalore",
+    requiredBy: "2025-11-28",
+    status: "Pending",
+  },
+  {
+    id: "TKT007",
+    material: "Steel",
+    customerName: "Suresh Babu",
+    description: "TMT steel bars for building foundation",
+    quantityLabel: "500 kg",
+    location: "Malleswaram, Bangalore",
+    requiredBy: "2025-11-29",
+    status: "Pending",
+  },
+];
+
+// ---- Helper: Tag color by status ----
+const getStatusColor = (status: RequestStatus) => {
+  switch (status) {
+    case "Pending":
+      return "gold";
+    case "Accepted":
+      return "green";
+    case "Rejected":
+      return "red";
+    case "Delivered":
+      return "blue";
+    default:
+      return "default";
+  }
+};
+
 const Vendor = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+
+  const [acceptedOrders, setAcceptedOrders] =
+    useState<MaterialRequest[]>(initialAcceptedOrders);
+  const [newRequests, setNewRequests] =
+    useState<MaterialRequest[]>(initialNewRequests);
+
   const profileMenu = (
     <Menu>
       <Menu.Item key="1">Profile</Menu.Item>
@@ -23,7 +98,38 @@ const Vendor = () => {
 
   const handleLogout = () => {
     console.log("Logged out!");
-    navigate('/landing');
+    navigate("/landing");
+  };
+
+  // ---- Actions ----
+  const handleAccept = (id: string) => {
+    setNewRequests((prev) => {
+      const req = prev.find((r) => r.id === id);
+      if (!req) return prev;
+
+      const updatedReq: MaterialRequest = { ...req, status: "Accepted" };
+      setAcceptedOrders((prevAccepted) => [...prevAccepted, updatedReq]);
+
+      return prev.filter((r) => r.id !== id);
+    });
+  };
+
+  const handleReject = (id: string) => {
+    setNewRequests((prev) =>
+      prev.map((r) =>
+        r.id === id ? { ...r, status: "Rejected" } : r
+      )
+    );
+    // or remove from list completely:
+    // setNewRequests(prev => prev.filter(r => r.id !== id));
+  };
+
+  const handleMarkDelivered = (id: string) => {
+    setAcceptedOrders((prev) =>
+      prev.map((order) =>
+        order.id === id ? { ...order, status: "Delivered" } : order
+      )
+    );
   };
 
   return (
@@ -37,10 +143,18 @@ const Vendor = () => {
 
         <div className="sw-vendor-header-right">
           <Dropdown overlay={profileMenu} placement="bottomRight">
-            <Avatar size="large" icon={<UserOutlined />} className="sw-profile-avatar" />
+            <Avatar
+              size="large"
+              icon={<UserOutlined />}
+              className="sw-profile-avatar"
+            />
           </Dropdown>
 
-          <Button type="default" icon={<LogoutOutlined />} onClick={handleLogout}>
+          <Button
+            type="default"
+            icon={<LogoutOutlined />}
+            onClick={handleLogout}
+          >
             Logout
           </Button>
         </div>
@@ -66,42 +180,130 @@ const Vendor = () => {
           </div>
         </Card>
 
-        {/* Accepted Orders */}
+        {/* My Accepted Orders */}
         <h3 className="sw-section-title">My Accepted Orders</h3>
-        <Card className="sw-order-card sw-accepted-order">
-          <h4>
-            Bricks <Tag color="green">Accepted</Tag>
-          </h4>
-          <p><strong>Order ID:</strong> TKT009</p>
-          <p><strong>Customer:</strong> Kiran Kumar</p>
-
-          <div className="sw-order-details">
-            <p><InboxOutlined /> Quantity: 1000 pieces</p>
-            <p><EnvironmentOutlined /> BTM Layout, Bangalore</p>
-            <p><ClockCircleOutlined /> Delivery: 2025-11-28</p>
-          </div>
-
-          <Button type="primary" className="sw-deliver-btn">
-            Mark as Delivered
-          </Button>
-        </Card>
-
-        {/* New Requests */}
-        <h3 className="sw-section-title">New Customer Requests</h3>
-        <Card className="sw-order-card sw-pending-order">
-          <h4>
-            Cement <Tag color="gold">Pending</Tag>
-          </h4>
-          <p><strong>Request ID:</strong> TKT002</p>
-          <p><strong>Customer:</strong> Rahul Verma</p>
-
-          <p className="sw-request-description">
-            Need 1 ton of cement for home construction
+        {acceptedOrders.length === 0 ? (
+          <p className="sw-empty-text">
+            You don&apos;t have any accepted orders yet.
           </p>
-        </Card>
+        ) : (
+          acceptedOrders.map((order) => (
+            <Card
+              key={order.id}
+              className="sw-order-card sw-accepted-order"
+            >
+              <div className="sw-order-header-row">
+                <h4>
+                  {order.material}{" "}
+                  <Tag color={getStatusColor(order.status)}>
+                    {order.status}
+                  </Tag>
+                </h4>
+                <span className="sw-order-id">Order ID: {order.id}</span>
+              </div>
+
+              <p>
+                <strong>Customer:</strong> {order.customerName}
+              </p>
+
+              <p className="sw-request-description">{order.description}</p>
+
+              {/* <div className="sw-order-details">
+                <p>
+                  <InboxOutlined /> Quantity: {order.quantityLabel}
+                </p>
+                <p>
+                  <EnvironmentOutlined /> {order.location}
+                </p>
+                <p>
+                  <ClockCircleOutlined /> Delivery: {order.requiredBy}
+                </p>
+              </div> */}
+
+              <div className="sw-order-details">
+  <p><InboxOutlined /> Quantity: {order.quantityLabel}</p>
+  <p><EnvironmentOutlined /> {order.location}</p>
+  <p><ClockCircleOutlined /> {order.requiredBy}</p>
+</div>
+
+
+              <Button
+                type="primary"
+                className="sw-deliver-btn"
+                onClick={() => handleMarkDelivered(order.id)}
+                disabled={order.status === "Delivered"}
+              >
+                {order.status === "Delivered"
+                  ? "Marked as Delivered"
+                  : "Mark as Delivered"}
+              </Button>
+            </Card>
+          ))
+        )}
+
+        {/* New Customer Requests */}
+        <h3 className="sw-section-title">New Customer Requests</h3>
+        {newRequests.length === 0 ? (
+          <p className="sw-empty-text">No new requests at the moment.</p>
+        ) : (
+          newRequests.map((req) => (
+            <Card
+              key={req.id}
+              className="sw-order-card sw-pending-order"
+            >
+              <div className="sw-order-header-row">
+                <h4>
+                  {req.material}{" "}
+                  <Tag color={getStatusColor(req.status)}>
+                    {req.status}
+                  </Tag>
+                </h4>
+                <span className="sw-order-id">Request ID: {req.id}</span>
+              </div>
+
+              <p>
+                <strong>Customer:</strong> {req.customerName}
+              </p>
+
+              <p className="sw-request-description">{req.description}</p>
+
+              <div className="sw-order-details">
+                <p className="sw-icon-text"><InboxOutlined /> <span>Quantity: {req.quantityLabel}</span></p>
+
+              
+                <p>
+                  <EnvironmentOutlined /> {req.location}
+                </p>
+                <p>
+                  <ClockCircleOutlined /> Required by: {req.requiredBy}
+                </p>
+              </div>
+
+              <div className="sw-request-actions">
+                <Button
+                  type="primary"
+                  className="sw-accept-btn"
+                  onClick={() => handleAccept(req.id)}
+                  icon={<CheckOutlined />}
+                >
+                  Accept Request
+                </Button>
+                <Button
+                  danger
+                  className="sw-reject-btn"
+                  onClick={() => handleReject(req.id)}
+                  icon={<CloseOutlined />} 
+                >
+                  Reject
+                </Button>
+              </div>
+            </Card>
+          ))
+        )}
       </div>
     </Layout>
   );
 };
 
 export default Vendor;
+

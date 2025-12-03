@@ -15,49 +15,57 @@ import {
   ShopOutlined,
   ApartmentOutlined,
   BuildOutlined,
+  BookOutlined,
+  ShoppingCartOutlined,
+  UserOutlined
   // PhoneOutlined,
   // MailOutlined,
   // EnvironmentOutlined,
   // GlobalOutlined
 } from "@ant-design/icons";
 import heroImage from "../../assets/landingimages/hero.jpg";
-
 const services = [
   {
     icon: <HomeOutlined style={{ fontSize: 28, color: "#1677ff" }} />,
-    title: "Cleaning Service",
-    desc: "Professional cleaning solutions for your home and office.",
+    title: "Cleaning & Home Services",
+    desc: "Deep cleaning, regular housekeeping and specialized home maintenance services.",
     route: "/cleaningservice",
   },
   {
     icon: <TruckOutlined style={{ fontSize: 28, color: "#00aa33" }} />,
-    title: "Packers & Movers",
-    desc: "Safe and reliable relocation services with complete packing solutions.",
+    title: "Transport",
+    desc: "Secure packing and door-to-door relocation with insured transportation options.",
     route: "/LandingPackers",
   },
   {
-    icon: <ToolOutlined style={{ fontSize: 28, color: "#ff7a00" }} />,
-    title: "Home Services",
-    desc: "Expert plumbing, electrical, carpentry and home maintenance.",
-    route: "/home_service",
-  },
-  {
-    icon: <ApartmentOutlined style={{ fontSize: 28, color: "#8b00ff" }} />,
-    title: "Home & Apartments Rental",
-    desc: "Find your perfect home with our vast rental listings.",
-    route: "/rentals",
-  },
-  {
-    icon: <ShopOutlined style={{ fontSize: 28, color: "#ff3333" }} />,
-    title: "Commercial Plots",
-    desc: "Premium commercial plots with excellent investment potential.",
+    icon: <ShopOutlined style={{ fontSize: 28, color: "#ff7a00" }} />,
+    title: "Buy / Sale / Rentals",
+    desc: "Browse commercial & residential listings buy, sell or rent with expert support.",
     route: "/commercial-plots",
   },
   {
-    icon: <BuildOutlined style={{ fontSize: 28, color: "#ffaa00" }} />,
-    title: "Construction Raw Materials",
-    desc: "Quality cement, bricks, and materials at best prices.",
+    icon: <BuildOutlined style={{ fontSize: 28, color: "#8b00ff" }} />,
+    title: "Raw Materials",
+    desc: "Cement, steel, sand and other building materials sourced from trusted suppliers.",
     route: "/ConstructionMaterials",
+  },
+  {
+    icon: <BookOutlined style={{ fontSize: 28, color: "#ff3333" }} />,
+    title: "Education",
+    desc: "Courses, training programs and learning resources for construction & trades.",
+    route: "/education",
+  },
+  {
+    icon: <ShoppingCartOutlined style={{ fontSize: 28, color: "#ffaa00" }} />,
+    title: "Swachify Products",
+    desc: "Shop quality construction products and tools with transparent pricing.",
+    route: "/ConstructionMaterials",
+  },
+  {
+    icon: <UserOutlined style={{ fontSize: 28, color: "#ffaa00" }} />,
+    title: "Freelancer",
+    desc: "Hire vetted freelancers: masons, electricians, plumbers and skilled tradespeople.",
+    route: "/Freelancer",
   },
 ];
 

@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import  { useState } from "react";
+import { useState } from "react";
 
 import {
   // SearchOutlined,
@@ -145,16 +145,26 @@ export default function Freelancer() {
         />
         
 
-        <Button
-          type="primary"
-          className="hs-contact-btn"
-          onClick={() => {
-            setActiveTab("login");
-            setAuthModalVisible(true);
-          }}
-        >
-          Sign Up
-        </Button>
+        <div className="sw-fr-header-actions">
+          <Button
+            type="primary"
+            className="sw-fr-fix-header-btn"
+            onClick={() => navigate("/landing")}
+          >
+            Back
+          </Button>
+
+          <Button
+            type="primary"
+            className="sw-fr-fix-header-btn"
+            onClick={() => navigate("/freelancerregistration")}
+          >
+            Login / Register
+          </Button>
+
+
+        </div>
+
       </header>
 
       {/* Modal */}
