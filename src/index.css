@@ -15963,8 +15963,7 @@ body {
 
 
  /* anil & srihari vender page  */
-
- /* Page Layout */
+ 
 .sw-vendor-page {
   padding: 30px 40px;
   background: #f5f6f8;
@@ -16060,26 +16059,133 @@ body {
   border-left: 6px solid #f4d03f;
 }
 
+/* Card header (title + ID) */
+.sw-order-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.sw-order-id {
+  font-size: 13px;
+  color: #777;
+}
+
+/* Details row (icons) */
+
 .sw-order-details {
   display: flex;
-  gap: 30px;
+  align-items: center;
+  gap: 24px;
+  margin-top: 6px;
   flex-wrap: wrap;
-  margin: 10px 0;
+}
+
+.sw-order-details p {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: #333;
+}
+
+.sw-order-details .anticon {
+  font-size: 16px;
+  color: #005cfa;
+  display: inline-flex;
 }
 
 .sw-deliver-btn {
-  margin-top: 12px;
-  height: 40px;
-  font-size: 14px;
-  background: #0066ff;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  background: #005cfa !important;
+  color: #fff !important;
+  border: none !important;
+  outline: none !important;
+  /* border-radius: 10px !important; */
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 12px 0 0 0 !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
 }
 
+.sw-deliver-btn span { 
+  padding: 0 22px !important;  /* ✅ this pads the text properly inside */
+}
+.sw-deliver-btn:hover {
+  box-shadow: 0 4px 12px rgba(0, 92, 250, 0.3);
+   background: #005cfa !important;
+  border: none !important;
+}
+
+
+
+/* Request description text */
 .sw-request-description {
   margin-top: 10px;
   font-size: 14px;
 }
 
-/* 📱 RESPONSIVE */
+/* Accept / Reject buttons area */
+.sw-request-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+
+.sw-accept-btn, .sw-accept-btn:hover {
+ 
+  width: 100%;
+  height: 45px;
+  background: #06A826 !important;
+  color: #fff !important;
+  border: none !important;
+  outline: none !important;
+  /* border-radius: 12px !important; */
+  box-shadow: none !important;  /* Remove outer glow bleed */
+  padding: 0 !important;        /* Prevent inner crop */
+  margin: 0 !important;         /* Avoid spacing issues */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.sw-reject-btn, .sw-reject-btn:hover {
+  width: 100%;
+  height: 45px;
+  background: #d92121 !important;
+  color: #fff !important;
+  border: none !important;
+  outline: none !important;
+  /* border-radius: 12px !important; */
+  box-shadow: none !important;  /* Remove outer glow bleed */
+  padding: 0 !important;        /* Prevent inner crop */
+  margin: 0 !important;         /* Avoid spacing issues */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Empty state text */
+.sw-empty-text {
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 20px;
+}
+
+/* 📱 RESPONSIVE BREAKPOINTS */
+
+/* Tablets and small laptops */
 @media (max-width: 1024px) {
   .sw-vendor-page {
     padding: 20px;
@@ -16088,8 +16194,13 @@ body {
   .sw-vendor-info-row {
     flex-wrap: wrap;
   }
+
+  .sw-order-details {
+    gap: 16px;
+  }
 }
 
+/* Tablets / large phones */
 @media (max-width: 768px) {
   .sw-vendor-header-container {
     padding: 0 20px;
@@ -16103,8 +16214,18 @@ body {
     flex-direction: column;
     gap: 8px;
   }
+
+  .sw-request-actions {
+    flex-direction: column;
+  }
+
+  .sw-accept-btn,
+  .sw-reject-btn {
+    width: 100%;
+  }
 }
 
+/* Small phones */
 @media (max-width: 480px) {
   .sw-vendor-header-container {
     height: auto;
@@ -16120,6 +16241,14 @@ body {
   .sw-vendor-info-row {
     flex-direction: column;
     gap: 10px;
+  }
+
+  .sw-order-card {
+    padding: 16px;
+  }
+
+  .sw-section-title {
+    font-size: 16px;
   }
 }
 

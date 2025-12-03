@@ -411,6 +411,14 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({ selectedKey = "home"
           <Input />
         </Form.Item>
 
+        <Form.Item label="PAN" name="pan" rules={[{ required: true }]}>
+          <Input />
+        </Form.Item>
+
+        <Form.Item label="TAN/GSTIN" name="tan/gstin" rules={[{ required: true }]}>
+          <Input />
+        </Form.Item>
+
         <Form.Item label="Service Category" name="category" rules={[{ required: true }]}>
           <Input placeholder="Cleaning / Transport / Plumbing..." />
         </Form.Item>
