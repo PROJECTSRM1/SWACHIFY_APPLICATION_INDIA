@@ -14588,10 +14588,11 @@ textarea {
   white-space: nowrap;
   font-size: 12px;
   cursor: pointer;
+  margin-top: -11px;
 }
 
 .sw-br-check-grid input[type="checkbox"] {
-  width: 16px;
+  width: 13px;
   height: 16px;
 }
 
@@ -14651,7 +14652,9 @@ textarea {
   .sw-br-header {
     border-radius: 1 !important;
     margin: 0 !important;
-    width: 189px;
+    width: 198px;
+    margin: 24px -5px 5px !important;
+
   }
 
   .sw-br-card {
@@ -14708,7 +14711,7 @@ textarea {
 
 
 .sw-br-machinery-header {
-  width: 100%;
+  width: 99%;
   background: #005cfa;
   padding: 15px 20px;
   color: white;
@@ -14910,6 +14913,7 @@ textarea {
 .sw-br-mach-section-title {
   font-size: 16px;
   font-weight: 600;
+  margin-top: 5px;
   margin-bottom: 12px;
 }
 
@@ -14932,6 +14936,7 @@ textarea {
   width: 100%;
 }
 
+
 .sw-br-mach-form-item.full-width textarea {
   width: 100%;
   height: 100px !important;
@@ -14953,6 +14958,7 @@ textarea {
   align-items: center;
   gap: 8px;
   font-size: 12px;
+  margin-top: -10px;
   cursor: pointer;
 }
 
@@ -15057,6 +15063,7 @@ textarea {
   margin-bottom: 20px;
   border-radius: 14px;
   margin-top: 25px;
+  margin-left: 1px;
 }
 
 .sw-br-transport-header h2 {
@@ -15188,7 +15195,7 @@ textarea {
 }
 
 .sw-br-form-left {
-  width: 41%;
+  width: 68%;
 }
 
 .sw-br-form-image {
@@ -15278,7 +15285,7 @@ textarea {
 }
 
 .sw-br-modal-content {
-  width: 90%;
+  width: 60%;
   max-width: 850px;
   background: white;
   border-radius: 16px;
@@ -15317,7 +15324,7 @@ textarea {
 .sw-br-field3 input,
 .sw-br-field3 select,
 .sw-br-field3 textarea {
-  padding: 10px 14px;
+  padding: 5px 14px;
   border: 1px solid #cbd5e1;
   border-radius: 10px;
   font-size: 10px;
@@ -15354,10 +15361,11 @@ textarea {
   white-space: nowrap;
   font-size: 12px;
   cursor: pointer;
+  margin-top: -12px;
 }
 
 .sw-br-checkbox-group input[type="checkbox"] {
-  width: 16px;
+  width: 13px;
   height: 16px;
 }
 
