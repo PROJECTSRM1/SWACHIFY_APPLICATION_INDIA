@@ -14,6 +14,10 @@ import { useNavigate } from "react-router-dom";
 import "./header.css";
 
 const HeaderBar: React.FC = () => {
+  
+
+  const [notificationOpen, setNotificationOpen] = useState(false);
+
   const [open, setOpen] = useState(false); // left mobile menu
   const [cartOpen, setCartOpen] = useState(false); // right cart drawer
   const navigate = useNavigate();
@@ -55,7 +59,31 @@ const HeaderBar: React.FC = () => {
     { key: "todaywork", label: <span className="menu-item">Today Work</span> },
   ];
 
-  // Profile dropdown menu
+  const notificationMenu = (
+    <Menu
+      className="sw-notification-dropdown-menu"
+      items={
+        cart.length === 0
+          ? [
+              {
+                key: "empty",
+                label: <span>No new notifications</span>,
+              },
+            ]
+          : cart.map((item: any, index: number) => ({
+              key: index,
+              label: (
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  <strong>New Service Added</strong>
+                  <span>{item.title} added to cart</span>
+                </div>
+              ),
+            }))
+      }
+    />
+  );
+
+  // profile menu: Recent Booking opens overlay (no route)
   const profileMenu = (
     <Menu
       onClick={(info) => {
@@ -106,14 +134,15 @@ const HeaderBar: React.FC = () => {
         className="header-left"
         onClick={() => navigate("/app/dashboard")}
         style={{ cursor: "pointer" }}
+        role="button"
+        tabIndex={0}
       >
         <HomeOutlined className="logo-icon" />
         <span className="logo-text">Home</span>
       </div>
 
       {/* CENTER */}
-      <div className="header-center" role="navigation" aria-label="Main navigation">
-        {/* AntD Menu configured to be inline and centered via CSS overrides */}
+      <div className="sw-header-center">
         <Menu
           mode="horizontal"
           items={centerMenu}
@@ -124,17 +153,28 @@ const HeaderBar: React.FC = () => {
         />
       </div>
 
-      {/* RIGHT */}
-      <div className="header-right">
-        {/* Bell - visible but NON-INTERACTIVE */}
-        <span
-          className="header-item-notif"
-          title="Notifications"
-          aria-hidden="true"
+      <div className="sw-header-right">
+        <Dropdown
+          overlay={notificationMenu}
+          trigger={["click"]}
+          placement="bottomRight"
+          overlayClassName="sw-notification-dropdown-wrapper"
         >
-          <Badge count={cart.length} size="small">
-            <BellOutlined className="header-icon-cart" />
-          </Badge>
+          <span
+            className="sw-header-item-notif"
+            role="button"
+            tabIndex={0}
+            onClick={() => setNotificationOpen(!notificationOpen)}
+          >
+            <Badge count={cart.length} size="small">
+              <BellOutlined className="sw-header-icon-cart" />
+            </Badge>
+          </span>
+        </Dropdown>
+      {/* RIGHT */}
+      <div className="sw-header-right" role="group" aria-label="Header actions">
+        <span className="sw-header-item-notif" title="Notifications" aria-hidden="true">
+         
         </span>
 
         {/* Profile */}
@@ -142,15 +182,12 @@ const HeaderBar: React.FC = () => {
           overlay={profileMenu}
           trigger={["click"]}
           placement="bottomRight"
-          getPopupContainer={() => document.body}
-          overlayClassName="profile-dropdown-wrapper"
         >
           <span
             className="header-item-profile"
             onClick={(e) => e.preventDefault()}
             role="button"
             tabIndex={0}
-            aria-haspopup="true"
           >
             <Avatar size="small" icon={<UserOutlined />} />
             <span className="profile-text">Profile</span>
@@ -158,18 +195,13 @@ const HeaderBar: React.FC = () => {
         </Dropdown>
       </div>
 
-      {/* MOBILE BUTTON */}
-      <div className="mobile-menu-btn" aria-hidden="false">
+      <div className="sw-mobile-menu-btn">
         <MenuOutlined
           className="header-icon-large"
           onClick={() => setOpen(true)}
-          aria-label="Open menu"
-          role="button"
-          tabIndex={0}
         />
       </div>
 
-      {/* LEFT DRAWER (MOBILE MENU) */}
       <Drawer title="Menu" placement="left" onClose={() => setOpen(false)} open={open}>
         <Menu
           mode="vertical"
@@ -217,34 +249,28 @@ const HeaderBar: React.FC = () => {
           ]}
           onClick={(info) => {
             if (!["cart", "logout", "bookings"].includes(info.key)) {
-              handleNavigate(info.key as string);
+               handleNavigate(info.key);
               setOpen(false);
             }
           }}
         />
       </Drawer>
 
-      {/* RIGHT DRAWER (CART) */}
       <Drawer
         title={null}
         placement="right"
         width={350}
         onClose={() => setCartOpen(false)}
         open={cartOpen}
-        closable={false}
+        closable={true}
         bodyStyle={{ padding: 0 }}
       >
-        <div className="cart-drawer-header" role="banner">
-          <div className="cart-drawer-title" aria-live="polite">
+        <div className="sw-cart-drawer-header">
+          <div className="sw-cart-drawer-title">
             {cart.length === 0 ? "Your cart is empty" : `Your cart (${cart.length})`}
           </div>
 
-          <button
-            className="cart-drawer-close-btn"
-            aria-label="Close cart"
-            onClick={() => setCartOpen(false)}
-            title="Close"
-          >
+          <button className="sw-cart-drawer-close-btn" onClick={() => setCartOpen(false)}>
             <CloseOutlined />
           </button>
         </div>
@@ -274,6 +300,7 @@ const HeaderBar: React.FC = () => {
           )}
         </div>
       </Drawer>
+    </div>
     </div>
   );
 };

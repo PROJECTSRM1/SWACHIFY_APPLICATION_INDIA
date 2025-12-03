@@ -112,7 +112,7 @@ export default function ServiceRequestForm({
           onFinish={handleFinish}
           className="sw-hs-sdform-ant-form"
         >
-          {title.toLowerCase().includes("cleaning") && (
+          {/* {title.toLowerCase().includes("cleaning") && (
             <Form.Item
               label="Cleaning Type"
               name="cleaningType"
@@ -129,7 +129,7 @@ export default function ServiceRequestForm({
                 size="middle"
               />
             </Form.Item>
-          )}
+          )} */}
 
           <div className="sw-hs-sdform-ant-two-col">
             <Form.Item
