@@ -32,7 +32,7 @@ export default function Freelancerlogin() {
 
     setTimeout(() => {
       setLoading(false);
-      navigate("/Freelancer");
+      navigate("/freelancer-dashboard");
     }, 1300);
   };
 
