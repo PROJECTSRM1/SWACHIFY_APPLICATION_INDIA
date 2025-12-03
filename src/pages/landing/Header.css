@@ -1,7 +1,7 @@
 /* Header.css - EXACT COPY OF YOUR FILE + signup override */
 
 /* =================== BASE NAV =================== */
-.sw-hs-navbar {
+.swl-hs-navbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -15,7 +15,7 @@
   box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
 
-.sw-hs-navbar-logo {
+.swl-hs-navbar-logo {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -23,14 +23,14 @@
   flex: 0 0 auto;
 }
 
-.sw-hs-logo-text {
+.swl-hs-logo-text {
   font-weight: 700;
   font-size: 1.1rem;
   color: #111;
 }
 
 /* =================== MOBILE MENU ICON =================== */
-.sw-mobile-menu-icon {
+.swl-mobile-menu-icon {
   display: none;
   font-size: 1.6rem;
   cursor: pointer;
@@ -42,7 +42,7 @@
 }
 
 /* =================== MENU =================== */
-.sw-hs-navbar .sw-hs-navbar-menu {
+.swl-hs-navbar .swl-hs-navbar-menu {
   order: 2;
   flex: 1 1 auto;
   display: flex;
@@ -52,7 +52,7 @@
   padding: 0 !important;
 }
 
-.sw-hs-navbar .sw-hs-navbar-menu .ant-menu-horizontal {
+.swl-hs-navbar .swl-hs-navbar-menu .ant-menu-horizontal {
   display: flex;
   gap: 6px;
   align-items: center;
@@ -60,7 +60,7 @@
   border-bottom: none;
 }
 
-.sw-hs-navbar .sw-hs-navbar-menu .ant-menu-item {
+.swl-hs-navbar .swl-hs-navbar-menu .ant-menu-item {
   padding: 0 10px;
   height: auto;
   font-weight: 600;
@@ -68,19 +68,19 @@
   white-space: nowrap;
 }
 
-.sw-hs-navbar .sw-hs-navbar-menu .ant-menu-item a {
+.swl-hs-navbar .swl-hs-navbar-menu .ant-menu-item a {
   padding: 8px 4px;
 }
 
 /* =================== SIGN UP BUTTON =================== */
-.sw-hs-contact-btn {
+.swl-hs-contact-btn {
   order: 3;
   flex: 0 0 auto;
   margin-left: 12px;
 }
 
 /* =================== MOBILE MENU =================== */
-.sw-mobile-menu {
+.swl-mobile-menu {
   width: 100%;
   background: #fff;
   list-style: none;
@@ -88,29 +88,29 @@
   box-shadow: 0 4px 6px rgba(0,0,0,0.12);
 }
 
-.sw-mobile-menu li {
+.swl-mobile-menu li {
   padding: 10px 0;
   border-bottom: 1px solid #eee;
 }
 
-.sw-mobile-menu li a {
+.swl-mobile-menu li a {
   color: #333;
 }
 
 /* =================== RESPONSIVE =================== */
 @media (max-width: 900px) {
-  .sw-hs-navbar .sw-hs-navbar-menu { display: none !important; }
-  .sw-mobile-menu-icon { display: block; }
-  .sw-hs-contact-btn { display: block; }
+  .swl-hs-navbar .swl-hs-navbar-menu { display: none !important; }
+  .swl-mobile-menu-icon { display: block; }
+  .swl-hs-contact-btn { display: block; }
 }
 
 /* =========================================================
    💙 SIGN UP BUTTON — LIGHT BLUE OVERRIDE (100% WORKING)
    ========================================================= */
-.sw-signup-btn.ant-btn,
-.sw-signup-btn .ant-btn,
-.sw-hs-contact-btn.sw-signup-btn,
-.sw-hs-contact-btn.sw-signup-btn .ant-btn.ant-btn-primary {
+.swl-signup-btn.ant-btn,
+.swl-signup-btn .ant-btn,
+.swl-hs-contact-btn.swl-signup-btn,
+.swl-hs-contact-btn.swl-signup-btn .ant-btn.ant-btn-primary {
   background-color: #4da6ff !important;
   border-color: #4da6ff !important;
   color: #fff !important;
@@ -119,8 +119,8 @@
   padding: 6px 14px !important;
 }
 
-.sw-signup-btn.ant-btn:hover,
-.sw-signup-btn .ant-btn:hover {
+.swl-signup-btn.ant-btn:hover,
+.swl-signup-btn .ant-btn:hover {
   background-color: #3b8fe6 !important;
   border-color: #3b8fe6 !important;
 }
@@ -129,35 +129,58 @@
 
 
 /* Remove underline from all links in menu + mobile menu */
-.sw-hs-navbar a,
-.sw-mobile-menu a {
+.swl-hs-navbar a,
+.swl-mobile-menu a {
   text-decoration: none !important;
 }
 
 /* Optional: keep color consistent */
-.sw-hs-navbar a,
-.sw-mobile-menu a {
+.swl-hs-navbar a,
+.swl-mobile-menu a {
   color: #111 !important;
 }
 
 
 
 /* Prevent AntD menu from collapsing items into "..." */
-.sw-hs-navbar-menu .ant-menu-overflow {
+.swl-hs-navbar-menu .ant-menu-overflow {
   overflow: visible !important;
 }
 
-.sw-hs-navbar-menu .ant-menu-submenu {
+.swl-hs-navbar-menu .ant-menu-submenu {
   display: none !important;
 }
 
 
-
-
-/* Remove AntD blue underline and active highlight */
-.sw-hs-navbar-menu .ant-menu-item-selected,
-.sw-hs-navbar-menu .ant-menu-item-selected::after {
+.swl-hs-navbar-menu .ant-menu-item-selected,
+.swl-hs-navbar-menu .ant-menu-item-selected::after {
   color: inherit !important;
   border-bottom: none !important;
   box-shadow: none !important;
+}
+
+.swl-forgot-modal-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+
+.swl-login-options-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+
+.swl-forgot-password-text {
+  color: #1677ff;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.swl-forgot-password-text:hover {
+  text-decoration: underline;
 }
