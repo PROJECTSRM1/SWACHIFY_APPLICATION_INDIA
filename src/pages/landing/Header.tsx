@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+// src/pages/landing/Header.tsx
+import React, { useState, useEffect } from "react";
 import { setUserDetails } from "../../utils/helpers/storage";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -75,56 +76,80 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
 
   const closeAuthModal = () => setAuthModalVisible(false);
 
+  // Expose openAuthModal/closeAuthModal on window so pages (like CommercialPlots) can call it
+  useEffect(() => {
+    (window as any).openAuthModal = (tab: "login" | "register" = "login") => {
+      openAuthModal(tab);
+    };
+    (window as any).closeAuthModal = () => {
+      closeAuthModal();
+    };
+
+    return () => {
+      try {
+        delete (window as any).openAuthModal;
+        delete (window as any).closeAuthModal;
+      } catch (e) {
+        // ignore deletion errors
+      }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // run once on mount
+
   const onLogin = async (values: any) => {
-    try {
-      const identifier = (values.identifier || "").toString().trim();
-      const password = (values.password || "").toString();
+  try {
+    const identifier = (values.identifier || "").toString().trim();
+    const password = (values.password || "").toString();
 
-      if (!identifier || !password) {
-        message.error("Please enter identifier and password");
-        return;
-      }
-
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (!stored) {
-        message.error("No registered user found. Please register first.");
-        return;
-      }
-
-      const user: RegisteredUser = JSON.parse(stored);
-
-      const identifierMatches =
-        identifier.toLowerCase() === user.email.toLowerCase() ||
-        identifier === user.phone;
-
-      if (identifierMatches && password === user.password) {
-        const displayName =
-          user.firstName || user.lastName
-            ? `${user.firstName || ""} ${user.lastName || ""}`.trim()
-            : user.fullname || "";
-
-        setUserDetails("user", {
-          name: displayName,
-          email: user.email,
-          phone: user.phone,
-          address: user.address,
-          gender: user.gender,
-          // customerId is intentionally not exposed in UI,
-          // but you can still store it if needed:
-          // customerId: user.customerId,
-        });
-
-        message.success("Login successful");
-        closeAuthModal();
-        navigate("/app/dashboard");
-      } else {
-        message.error("Invalid credentials. Please check email/phone and password.");
-      }
-    } catch (err) {
-      console.error("Login error", err);
-      message.error("An error occurred while logging in.");
+    if (!identifier || !password) {
+      message.error("Please enter identifier and password");
+      return;
     }
-  };
+
+    // ---------------------------------------
+    // 🔥 ADMIN LOGIN CHECK (hardcoded)
+    // ---------------------------------------
+    if (identifier === "admin@gmail.com" && password === "1234") {
+      message.success("Admin login successful");
+      closeAuthModal();
+      navigate("/admin-dashboard"); // <-- your admin route
+      return;
+    }
+    // ---------------------------------------
+
+    // Normal user login
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (!stored) {
+      message.error("No registered user found. Please register first.");
+      return;
+    }
+
+    const user: RegisteredUser = JSON.parse(stored);
+
+    const identifierMatches =
+      identifier.toLowerCase() === user.email.toLowerCase() ||
+      identifier === user.phone;
+
+    if (identifierMatches && password === user.password) {
+      setUserDetails("user", {
+        name: user.fullname,
+        email: user.email,
+        phone: user.phone,
+        address: user.address,
+      });
+
+      message.success("Login successful");
+      closeAuthModal();
+      navigate("/app/dashboard");
+    } else {
+      message.error("Invalid credentials. Please check email/phone and password.");
+    }
+  } catch (err) {
+    console.error("Login error", err);
+    message.error("An error occurred while logging in.");
+  }
+};
+
   const onVendorLogin = (values: any) => {
   console.log("Vendor Login:", values);
 
@@ -140,6 +165,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
 };
 
 
+  // After register, save user and switch to login tab (do NOT auto-login)
   const onRegister = async (values: any) => {
     try {
       const firstName = (values.firstName || "").toString().trim();
@@ -183,9 +209,10 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
         // customerId: 2, // optional to keep in client storage too
       });
 
-      message.success("Registration successful. Please login to continue.");
+      // Keep modal open but switch to login tab so user can enter credentials
+      message.success("Registration successful. Please log in to continue.");
       setActiveAuthTab("login");
-      setAuthModalVisible(true);
+      // leave authModalVisible as true so login form is visible
     } catch (err) {
       console.error("Registration error", err);
       message.error("An error occurred while registering.");

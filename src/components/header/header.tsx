@@ -332,6 +332,7 @@ const HeaderBar: React.FC = () => {
         />
       </Drawer>
 
+      {/* RIGHT DRAWER (CART) */}
       <Drawer
         title={null}
         placement="right"
