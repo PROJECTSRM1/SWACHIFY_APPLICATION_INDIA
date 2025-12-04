@@ -15967,6 +15967,8 @@ body {
 
  /* ---  Tejesh  Freelancer Dashboard Styles (sw-frd) --- */
 
+/* ---  Tejesh  Freelancer Dashboard Styles (sw-frd) --- */
+
 /* SWACHIFY FREELANCER PLATFORM STYLES
   - Uses a modern, clean design with a professional color palette.
   - Focus on responsive design and clear visual hierarchy.
@@ -15999,7 +16001,8 @@ body {
   border-color: var(--primary);
   transition: all 0.3s ease;
 }
-.ant-btn-primary:hover, .ant-btn-primary:focus {
+.ant-btn-primary:hover,
+.ant-btn-primary:focus {
   background-color: #0b70c4 !important;
   border-color: #0b70c4 !important;
 }
@@ -16022,7 +16025,8 @@ body {
 }
 
 /* Back Button */
-.sw-fr-back-link, .sw-fr-login-back {
+.sw-fr-back-link,
+.sw-fr-login-back {
   position: absolute;
   top: 20px;
   left: 20px;
@@ -16213,7 +16217,8 @@ body {
   margin-bottom: 6px;
   color: var(--dark-text);
 }
-.sw-fr-form-input.ant-input, .sw-fr-form-input.ant-input-affix-wrapper {
+.sw-fr-form-input.ant-input,
+.sw-fr-form-input.ant-input-affix-wrapper {
   border-radius: 8px;
   height: 44px;
   border-color: #d1d5db;
@@ -16255,10 +16260,25 @@ body {
   margin-top: 10px;
 }
 
+/* --- Global Variables (Based on previous context) --- */
+:root {
+  --primary: #1087e0; /* Blue for primary actions/branding */
+  --primary-light: #e6f7ff;
+  --secondary: #00bcd4;
+  --dark-text: #1f2937;
+  --light-text: #6b7280;
+  --bg-light: #f9fafb;
+  --card-bg: #ffffff;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 25px rgba(15, 23, 42, 0.1);
+  --accent-orange: #ffc107; /* For pending status */
+}
+
 /* --- Dashboard Styles --- */
 .sw-frd-layout-container {
   min-height: 100vh;
-  background-color: var(--bg-light);
+  background-color: #ffffff;
 }
 
 /* Header */
@@ -16275,6 +16295,7 @@ body {
   top: 0;
   z-index: 5;
 }
+/* ... (Logo, User Area styles remain the same) ... */
 .sw-frd-logo-area {
   display: flex;
   align-items: baseline;
@@ -16283,10 +16304,16 @@ body {
 .sw-frd-logo-text {
   font-size: 1.2rem;
   color: var(--primary) !important;
+  font-weight: 700;
 }
 .sw-frd-portal-text {
   color: var(--light-text) !important;
   font-size: 0.9rem;
+}
+.sw-frd-user-area {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 .sw-frd-profile-btn {
   width: 40px;
@@ -16298,8 +16325,6 @@ body {
   border: 2px solid var(--primary);
   color: var(--primary);
 }
-
-/* Header Dropdown Menu - Specific */
 .sw-frd-profile-menu .ant-menu-item-disabled {
   background-color: var(--primary-light) !important;
   cursor: default !important;
@@ -16324,6 +16349,7 @@ body {
 .sw-frd-section-title {
   color: var(--dark-text) !important;
   margin-bottom: 0 !important;
+  font-weight: 700;
 }
 .sw-frd-section-subtitle {
   color: var(--light-text);
@@ -16333,25 +16359,32 @@ body {
 /* Overview Cards */
 .sw-frd-overview-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
 }
 .sw-frd-overview-card {
-  padding: 10px; /* Internal padding adjust */
+  padding: 16px 20px;
   background: var(--card-bg);
   border-left: 5px solid var(--primary);
   border-radius: 12px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: var(--shadow-md);
 }
 .sw-frd-overview-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
 }
 .sw-frd-overview-label {
   color: var(--light-text);
   font-size: 0.85rem;
   display: block;
   margin-bottom: 5px;
+  font-weight: 600;
+}
+.sw-frd-overview-value-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 .sw-frd-overview-value {
   font-size: 1.8rem;
@@ -16368,6 +16401,11 @@ body {
   color: #ffc107;
   font-size: 1.5rem;
 }
+/* Pending metric specific style */
+.sw-frd-overview-card.sw-frd-pending-metric {
+  border-left-color: var(--accent-orange);
+}
+
 
 /* Skills Section */
 .sw-frd-skills-container {
@@ -16385,47 +16423,88 @@ body {
   font-weight: 600;
 }
 
-/* Job Cards (Active & Completed) */
-.sw-frd-job-card, .sw-frd-request-card {
-  padding: 20px;
+/* Job & Request Cards - Unified Styling */
+.sw-frd-job-card,
+.sw-frd-request-card {
+  padding: 24px;
+  border-radius: 14px !important;
+  background-color: var(--card-bg) !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
+  transition: all 0.2s ease;
+}
+.sw-frd-job-card:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
 }
 .sw-frd-job-card {
   border-left: 5px solid var(--primary);
 }
+.sw-frd-job-card--active {
+  box-shadow: var(--shadow-lg) !important;
+  border-color: var(--primary) !important;
+}
+.sw-frd-job-card--with-flow {
+  padding: 22px 24px !important;
+}
 .sw-frd-request-card {
   border-left: 5px solid #28a745;
-  margin-bottom: 20px;
 }
 
-.sw-frd-job-meta, .sw-frd-request-header {
+.sw-frd-job-col {
   display: flex;
-  align-items: center;
-  margin-bottom: 8px;
+  flex-direction: column;
+  justify-content: flex-start; /* Align content to the top */
 }
-.sw-frd-job-title, .sw-frd-request-title {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--dark-text) !important;
-  margin-right: 15px;
+
+/* Job header */
+.sw-frd-job-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 6px;
 }
-.sw-frd-price, .sw-frd-request-price {
+.sw-frd-job-title,
+.sw-frd-request-title {
   font-size: 1.2rem;
   font-weight: 700;
+  color: var(--dark-text) !important;
+  margin-right: 8px;
+}
+.sw-frd-status-tag {
+  border-radius: 999px;
+  font-size: 0.75rem;
+  margin-left: 4px;
+}
+.sw-frd-job-price-wrap {
+  text-align: right;
+  flex-shrink: 0;
+}
+.sw-frd-price-label {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--light-text);
+}
+.sw-frd-price,
+.sw-frd-request-price {
+  font-size: 1.3rem;
+  font-weight: 700;
   color: #28a745 !important;
-  margin-left: auto;
 }
 .sw-frd-ticket-id {
   display: block;
   color: var(--light-text);
   font-size: 0.8rem;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
+/* Detail row */
 .sw-frd-details-row {
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
-  margin-top: 10px;
+  margin-top: 6px;
+  margin-bottom: 10px;
 }
 .sw-frd-detail-item {
   display: flex;
@@ -16438,24 +16517,108 @@ body {
   color: var(--primary);
 }
 
+/* Customer details block */
+.sw-frd-customer-block {
+  margin-top: 18px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background-color: var(--bg-light);
+  border: 1px solid #e5e7eb;
+}
+.sw-frd-customer-block-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.sw-frd-customer-block-title {
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--light-text);
+}
+.sw-frd-customer-line {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.9rem;
+  color: var(--dark-text);
+  margin-top: 6px;
+}
+.sw-frd-customer-icon {
+  margin-top: 2px;
+  font-size: 1rem;
+  color: var(--primary);
+  flex-shrink: 0;
+}
+.sw-frd-customer-text {
+  line-height: 1.4;
+}
+.sw-frd-customer-link {
+  color: var(--primary);
+  text-decoration: none;
+}
+.sw-frd-customer-address .sw-frd-customer-text {
+  max-width: 280px;
+}
+.sw-frd-help-btn {
+  margin-top: 14px;
+  border-radius: 9999px !important;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-color: #e5e7eb !important;
+  color: var(--primary) !important;
+  background-color: #f9fafb !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+}
+.sw-frd-help-btn:hover {
+  border-color: var(--primary) !important;
+  background-color: #eff6ff !important;
+}
+
+
+/* Next step chip */
+.sw-frd-next-step-chip {
+  margin-top: 16px;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--primary-light);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04);
+}
+.sw-frd-next-step-label {
+  font-size: 0.75rem;
+  color: var(--light-text);
+}
+.sw-frd-next-step-value {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
 .sw-frd-complete-btn {
   margin-top: 15px;
   border-radius: 8px;
   font-weight: 600;
 }
+
+/* Request description */
 .sw-frd-request-desc-text {
-    display: block;
-    color: var(--dark-text);
-    margin: 10px 0;
-    font-size: 0.9rem;
-    padding-left: 20px;
-    border-left: 3px solid var(--primary-light);
+  display: block;
+  color: var(--dark-text);
+  margin: 10px 0;
+  font-size: 0.9rem;
+  padding-left: 20px;
+  border-left: 3px solid var(--primary-light);
 }
 .sw-frd-customer {
-    display: block;
-    color: var(--dark-text);
-    font-weight: 500;
-    margin-bottom: 5px;
+  display: block;
+  color: var(--dark-text);
+  font-weight: 600;
+  margin-bottom: 5px;
 }
 
 .sw-frd-accept-btn {
@@ -16466,61 +16629,71 @@ body {
   border-color: #28a745 !important;
 }
 .sw-frd-accept-btn:hover {
-    background-color: #1e7e34 !important;
-    border-color: #1e7e34 !important;
+  background-color: #1e7e34 !important;
+  border-color: #1e7e34 !important;
 }
 
-/* Filters */
-.sw-frd-filter-bar {
+/* ACTIVE JOB CONTAINER */
+.sw-frd-active-jobs-container {
+width: 100%;
+}
+
+/* SERVICE FLOW PANEL */
+.sw-frd-flow-col {
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  align-items: stretch;
 }
-.sw-frd-filter-select, .sw-frd-sort-select {
-  width: 200px;
-  border-radius: 8px !important;
+.sw-frd-flow-container {
+  margin-top: 0px; /* Aligns flow panel with top of job card */
+  padding: 20px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #0b1220 0%, #20355f 100%); /* Darker gradient for contrast */
+  color: #ffffff;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  height: 100%; /* Important for stretching */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.sw-frd-flow-header {
+  margin-bottom: 12px;
+}
+.sw-frd-flow-pill {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.15);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #c0d8f7;
+}
+.sw-frd-flow-title {
+  font-weight: 700;
+  font-size: 1.1rem;
+  display: block;
+  margin-top: 8px;
+  color: white;
+}
+.sw-frd-flow-subtitle {
+  font-size: 0.8rem;
+  margin-top: 4px;
+  color: #b0c7e8;
 }
 
-/* Profile Page */
-.sw-frp-card {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 30px;
-    box-shadow: var(--shadow-md);
+.sw-frd-flow-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 14px;
+  flex-grow: 1;
 }
-.sw-frp-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #e0e0e0;
-    padding-bottom: 15px;
-    margin-bottom: 25px;
-}
-.sw-frp-back-btn {
-    border-radius: 8px;
-    font-weight: 500;
-}
-.sw-frp-detail-item {
-    padding: 10px 0;
-    border-bottom: 1px dashed #f0f0f0;
-}
-.sw-frp-detail-label {
-    font-weight: 600;
-    color: var(--light-text);
-    display: flex;
-    align-items: center;
-    margin-bottom: 4px;
-}
-.sw-frp-detail-value {
-    font-size: 1.1rem;
-    color: var(--dark-text);
-}
-.sw-frp-section-title {
-    color: var(--primary) !important;
-    font-size: 1.4rem !important;
-    margin-bottom: 15px !important;
-    padding-bottom: 5px;
-    border-bottom: 2px solid var(--primary-light);
+
+.sw-frd-flow-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  opacity: 0.55;
+  transition: opacity 0.3s ease, transform 0.15s ease;
 }
 
 /* Responsive Adjustments */
@@ -16567,29 +16740,54 @@ body {
   z-index: 9999999 !important;
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 18px;
+  gap: 10px;
 }
-.sw-booking-page-content {
+.sw-frd-flow-upload-btn {
+  border-radius: 9999px !important;
+  font-size: 0.8rem !important;
+  font-weight: 600 !important;
+  padding: 6px 14px !important;
+  height: auto !important;
+  background-color: #ffc107 !important;
+  border-color: #ffc107 !important;
+  color: #111 !important;
+}
+.sw-frd-flow-upload-success {
+  font-size: 0.8rem;
+  color: #bbf7d0;
+  font-weight: 600;
+}
+
+/* Flow footer button */
+.sw-frd-flow-next-btn {
+  margin-top: 20px;
   width: 100%;
-  max-width: 920px;
-  background: #fff;
   border-radius: 12px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
-  position: relative;
-  padding: 28px;
-  box-sizing: border-box;
+  font-weight: 700;
+  height: 44px;
+  background-color: #ffc107 !important;
+  border-color: #ffc107 !important;
+  color: #111 !important;
+  box-shadow: 0 6px 18px rgba(255, 193, 7, 0.25);
 }
-.sw-booking-page-close {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  background: transparent;
-  border: none;
-  padding: 8px;
-  cursor: pointer;
-  font-size: 18px;
-  border-radius: 8px;
+.sw-frd-flow-next-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  background-color: #f7f7f7 !important;
+  color: #888 !important;
+}
+
+/* APPROVAL PENDING - IMPROVED STYLING */
+.sw-frd-pending-list {
+  width: 100%;
+}
+.sw-frd-pending-card {
+  padding: 20px !important;
+  border-radius: 14px !important;
+  background: #fffbe9 !important; /* Light yellow background */
+  border: 1px solid #ffd700 !important; /* Gold border */
+  margin-bottom: 18px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
 }
 .sw-booking-page-content h1 {
   margin: 0;
