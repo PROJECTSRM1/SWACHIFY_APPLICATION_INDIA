@@ -1,0 +1,287 @@
+.sw-ad-app-shell {
+  background: #f5f6fa;
+  min-height: 100vh;
+  padding: 32px;
+  max-width: 1360px;
+  margin: 0 auto;
+}
+
+.sw-ad-top-bar {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+  align-items: flex-start;
+}
+
+.sw-ad-brand {
+  color: #e2001a !important;
+  margin-bottom: 8px !important;
+}
+
+.sw-ad-tab-nav {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  overflow-x: auto;
+  padding: 8px 0;
+  margin-bottom: 16px;
+}
+
+.sw-ad-tab-nav::-webkit-scrollbar {
+  height: 6px;
+}
+
+.sw-ad-tab-nav::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 999px;
+}
+
+.sw-ad-tab-btn {
+  background: transparent;
+  border: none;
+  padding: 10px 14px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  border-radius: 999px;
+  transition: color 0.2s ease, border-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sw-ad-tab-btn--active {
+  color: #e2001a;
+  border-color: transparent;
+  background: #fff;
+  box-shadow: 0 8px 18px rgba(226, 0, 26, 0.12);
+}
+
+.sw-ad-tab-icon {
+  display: flex;
+  align-items: center;
+}
+
+.sw-ad-content {
+  min-height: 60vh;
+  min-width: 0;
+}
+
+.sw-ad-page-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 15px 35px rgba(15, 23, 42, 0.08);
+  width: 100%;
+}
+.sw-ad-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+.sw-ad-stat-card {
+  border-radius: 16px;
+  box-shadow: none;
+  border: 1px solid #f2f2f2;
+}
+.sw-ad-stat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: #fff1f0;
+  color: #e2001a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+.sw-ad-stat-label {
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 12px;
+}
+.sw-ad-stat-value {
+  margin: 0 !important;
+}
+
+.sw-ad-chart-row {
+  margin-top: 24px;
+}
+
+.sw-ad-chart-card {
+  border-radius: 16px !important;
+  border: 1px solid #f2f2f2;
+}
+
+.sw-ad-legend {
+  font-size: 14px;
+}
+
+.sw-ad-legend-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #64748b;
+}
+.sw-ad-legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.sw-ad-legend-dot--red {
+  background: #ff4d4f;
+}
+
+.sw-ad-legend-dot--green {
+  background: #52c41a;
+}
+.sw-ad-recent-card {
+  margin-top: 24px;
+  border-radius: 16px;
+}
+
+.sw-ad-pending-card {
+  border-radius: 16px;
+  margin-bottom: 24px;
+}
+.sw-ad-filters-bar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+  width: 100%;
+}
+
+.sw-ad-freelancer-card {
+  border-radius: 16px;
+  border: 1px solid blue;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 100%;
+  padding: 12px;
+}
+
+.sw-ad-freelancer-meta {
+  display: flex;
+  gap: 24px;
+  margin: 8px 0 16px;
+  flex-wrap: wrap;
+}
+
+.sw-ad-freelancer-tag-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.sw-ad-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+.sw-ad-table-wrapper .ant-table {
+  min-width: 560px;
+}
+
+.sw-ad-profile-block {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.sw-ad-admin-badge {
+  background: #fff;
+  border-radius: 999px;
+  padding: 6px 16px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+}
+
+.sw-ad-tab-btn:focus-visible {
+  outline: none;
+  border-color: #111;
+}
+
+.sw-ad-subtitle {
+  color: #94a3b8;
+  display: block;
+  margin-top: -4px;
+}
+
+.sw-ad-chart-scroll {
+  width: 100%;
+  overflow-x: auto;
+  padding-bottom: 12px;
+}
+
+@media (max-width: 1024px) {
+  .sw-ad-app-shell {
+    padding: 24px;
+  }
+
+  .sw-ad-chart-row {
+    margin-top: 16px;
+  }
+}
+@media (max-width: 768px) {
+  .sw-ad-app-shell {
+    padding: 16px;
+  }
+
+  .sw-ad-top-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .sw-ad-tab-nav {
+    justify-content: flex-start;
+  }
+
+  .sw-ad-page-card {
+    padding: 16px;
+  }
+
+}
+
+@media (max-width: 576px) {
+  .sw-ad-filters-bar {
+    grid-template-columns: 1fr;
+  }
+
+  .sw-ad-stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sw-ad-freelancer-meta {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .sw-ad-tab-btn {
+    font-size: 14px;
+  }
+}
+
+.sw-ad-chart-row {
+  min-width: 640px;
+}
+
+@media (max-width: 768px) {
+  .sw-ad-chart-row {
+    min-width: 560px;
+  }
+}
+
+
