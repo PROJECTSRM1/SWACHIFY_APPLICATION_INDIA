@@ -11,7 +11,7 @@ import message from "antd/es/message";
 
 const materials = [
   { id: 1, title: "Cement", price: "800", img: cementimg },
-  { id: 2, title: "Sand", price: "450", img: sandimg },
+  { id: 2, title: "Sand", price: "700", img: sandimg },
   { id: 3, title: "Bricks", price: "200", img: brickimg },
   { id: 4, title: "Steel & TMT Bars", price: "650", img: steelimg },
   { id: 5, title: "Pipes", price: "250", img: pipesimg },
@@ -26,22 +26,38 @@ interface FormProps {
 const EquipmentDetails: React.FC<FormProps> = ({ id, onClose }) => {
   const material = materials.find((item) => item.id === id);
 
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(0);
+  const [unit, setUnit] = useState("kg"); 
+
+  const [deliveryType, setDeliveryType] = useState("");
+  const [unloading, setUnloading] = useState(false);
+
   const formRef = useRef<HTMLFormElement>(null);
 
   if (!material) return null;
 
-  const totalPrice = Number(material.price) * quantity;
+  const finalQuantity =
+    unit === "ton" ? quantity * 1000 : quantity; 
+
+  const basePrice = Number(material.price) * finalQuantity;
+
+  const deliveryCharge = deliveryType === "Door Delivery" ? 150 : 0;
+  const unloadingCharge = unloading ? 200 : 0;
+
+  const totalPrice = basePrice + deliveryCharge + unloadingCharge;
+
   const { addToCart } = useCart();
 
   const handleReset = () => {
     formRef.current?.reset();
-    setQuantity(1); 
+    setQuantity(0);
+    setUnit("kg");
+    setDeliveryType("");
+    setUnloading(false);
   };
 
   const handleAddToCart = () => {
     const customerName = (formRef.current?.elements.namedItem("customerName") as HTMLInputElement)?.value;
-    const deliveryType = (formRef.current?.elements.namedItem("deliveryType") as HTMLSelectElement)?.value;
     const deliveryDate = (formRef.current?.elements.namedItem("deliveryDate") as HTMLInputElement)?.value;
     const contact = (formRef.current?.elements.namedItem("contact") as HTMLInputElement)?.value;
     const address = (formRef.current?.elements.namedItem("address") as HTMLTextAreaElement)?.value;
@@ -51,9 +67,13 @@ const EquipmentDetails: React.FC<FormProps> = ({ id, onClose }) => {
       id: material.id,
       title: material.title,
       image: material.img,
-      quantity,
+      quantity: finalQuantity, 
       price: material.price,
+      basePrice,
+      deliveryCharge,
+      unloadingCharge,
       totalPrice,
+      unit, 
       customerName,
       deliveryType,
       deliveryDate,
@@ -69,7 +89,7 @@ const EquipmentDetails: React.FC<FormProps> = ({ id, onClose }) => {
   return (
     <div className="sw-br-modal">
       <div className="sw-br-modal-box">
-
+        
         <div className="sw-br-modal-header">
           <h2>{material.title}</h2>
           <button className="sw-br-close-btn" onClick={onClose}>✕</button>
@@ -83,7 +103,7 @@ const EquipmentDetails: React.FC<FormProps> = ({ id, onClose }) => {
             </div>
 
             <div className="sw-br-price-box">
-              <p className="sw-br-price-title">Service Price</p>
+              <p className="sw-br-price-title">Total Price</p>
               <p className="sw-br-price-value">₹{totalPrice}</p>
             </div>
 
@@ -100,6 +120,7 @@ const EquipmentDetails: React.FC<FormProps> = ({ id, onClose }) => {
             </ul>
           </div>
 
+          
           <form className="sw-br-form" ref={formRef}>
             <div className="sw-br-form-box">
 
@@ -113,10 +134,14 @@ const EquipmentDetails: React.FC<FormProps> = ({ id, onClose }) => {
 
                 <div className="sw-br-field">
                   <label>Delivery Type</label>
-                  <select name="deliveryType">
+                  <select
+                    name="deliveryType"
+                    value={deliveryType}
+                    onChange={(e) => setDeliveryType(e.target.value)}
+                  >
                     <option value="">Select</option>
-                    <option>Door Delivery</option>
-                    <option>Pick-up</option>
+                    <option value="Door Delivery">Door Delivery (+₹150)</option>
+                    <option value="Pick-up">Pick-up</option>
                   </select>
                 </div>
               </div>
@@ -124,12 +149,19 @@ const EquipmentDetails: React.FC<FormProps> = ({ id, onClose }) => {
               <div className="sw-br-row">
                 <div className="sw-br-field">
                   <label>Quantity</label>
-                  <input
-                    type="number"
-                    min={1}
-                    value={quantity}
-                    onChange={(e) => setQuantity(Number(e.target.value))}
-                  />
+                  <div style={{ display: "flex", gap: "8px" }}>
+                    <input
+                      type="number"
+                      min={0}
+                      value={quantity}
+                      onChange={(e) => setQuantity(Number(e.target.value))}
+                    />
+
+                    <select value={unit} onChange={(e) => setUnit(e.target.value)}>
+                      <option value="kg">Kg</option>
+                      <option value="ton">Ton</option>
+                    </select>
+                  </div>
                 </div>
 
                 <div className="sw-br-field">
@@ -143,6 +175,7 @@ const EquipmentDetails: React.FC<FormProps> = ({ id, onClose }) => {
                 <input type="text" name="contact" placeholder="Contact number" />
               </div>
 
+              
               <div className="sw-br-field sw-br-full">
                 <label>Delivery Address</label>
                 <textarea name="address" placeholder="Construction site address" />
@@ -151,16 +184,21 @@ const EquipmentDetails: React.FC<FormProps> = ({ id, onClose }) => {
               <h3 className="sw-br-form-title">Additional Services</h3>
 
               <div className="sw-br-check-grid">
-                <label><input type="checkbox" /> Unloading Service</label>
-                <label><input type="checkbox" /> Quality Certificate</label>
-                <label><input type="checkbox" /> Installation Support</label>
-                <label><input type="checkbox" /> Storage Option</label>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={unloading}
+                    onChange={(e) => setUnloading(e.target.checked)}
+                  />
+                  Unloading Service (+₹200)
+                </label>
               </div>
 
               <div className="sw-br-field sw-br-full">
                 <label>Special Instructions</label>
                 <textarea name="instructions" placeholder="Any specific requirements..." />
               </div>
+
             </div>
 
             <div className="sw-br-buttons">

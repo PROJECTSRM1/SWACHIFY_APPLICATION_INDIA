@@ -1,76 +1,105 @@
-import React from 'react';
-import { Table, Tag, Typography } from 'antd';
-import type { ColumnsType } from 'antd/es/table';
+import { Button, Descriptions, Input, Modal, Select, Space, Table, Tag } from 'antd'
+import { SearchOutlined } from '@ant-design/icons'
+import { useMemo, useState } from 'react'
+import type { User } from './types'
+import { userStatusColors } from './data'
 
-const { Title } = Typography;
 
-interface User {
-    key: string;
-    name: string;
-    email: string;
-    joinDate: string;
-    status: 'Active' | 'Inactive';
+type Props = {
+  users: User[]
+  onStatusToggle: (userId: string) => void
 }
 
-const Users: React.FC = () => {
-    const columns: ColumnsType<User> = [
-        {
-            title: 'Name',
-            dataIndex: 'name',
-            key: 'name',
-        },
-        {
-            title: 'Email',
-            dataIndex: 'email',
-            key: 'email',
-        },
-        {
-            title: 'Join Date',
-            dataIndex: 'joinDate',
-            key: 'joinDate',
-        },
-        {
-            title: 'Status',
-            dataIndex: 'status',
-            key: 'status',
-            render: (status) => (
-                <Tag color={status === 'Active' ? 'green' : 'red'} key={status} style={{ borderRadius: '10px', padding: '0 10px' }}>
-                    {status}
-                </Tag>
-            ),
-        },
-    ];
+const UsersPage = ({ users, onStatusToggle }: Props) => {
+  const [search, setSearch] = useState('')
+  const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'blocked'>('all')
+  const [selectedUser, setSelectedUser] = useState<User | null>(null)
 
-    const data: User[] = [
-        {
-            key: '1',
-            name: 'Rajesh Kumar',
-            email: 'rajesh@email.com',
-            joinDate: '2025-01-15',
-            status: 'Active',
-        },
-        {
-            key: '2',
-            name: 'Priya Sharma',
-            email: 'priya@email.com',
-            joinDate: '2025-02-20',
-            status: 'Active',
-        },
-        {
-            key: '3',
-            name: 'Amit Patel',
-            email: 'amit@email.com',
-            joinDate: '2025-03-10',
-            status: 'Active',
-        },
-    ];
+  const filteredUsers = useMemo(
+    () =>
+      users.filter((user) => {
+        const matches =
+          user.name.toLowerCase().includes(search.toLowerCase()) ||
+          user.email.toLowerCase().includes(search.toLowerCase())
+        const matchesStatus = statusFilter === 'all' || user.status === statusFilter
+        return matches && matchesStatus
+      }),
+    [users, search, statusFilter],
+  )
 
-    return (
-        <div className="sw-ad-view-container">
-            <Title level={5} style={{ marginBottom: '20px', color: '#333' }}>All Users</Title>
-            <Table columns={columns} dataSource={data} className="custom-table" scroll={{ x: 600 }} />
-        </div>
-    );
-};
+  return (
+    <div className="sw-ad-page-card">
+      <div className="sw-ad-filters-bar">
+        <Input
+          prefix={<SearchOutlined />}
+          placeholder="Search users by name or email"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        <Select
+          value={statusFilter}
+          onChange={(value) => setStatusFilter(value)}
+          options={[
+            { value: 'all', label: 'All Status' },
+            { value: 'active', label: 'Active' },
+            { value: 'blocked', label: 'Blocked' },
+          ]}
+        />
+      </div>
+      <div className="sw-ad-table-wrapper">
+        <Table
+          rowKey="id"
+          dataSource={filteredUsers}
+          pagination={{ pageSize: 5, responsive: true }}
+          columns={[
+            { title: 'Name', dataIndex: 'name' },
+            { title: 'Email', dataIndex: 'email' },
+            { title: 'Join Date', dataIndex: 'joinDate' },
+            { title: 'Plan', dataIndex: 'plan' },
+            {
+              title: 'Status',
+              render: (_, record) => <Tag color={userStatusColors[record.status]}>{record.status}</Tag>,
+            },
+            {
+              title: 'Actions',
+              render: (_, record) => (
+                <Space>
+                  <Button onClick={() => setSelectedUser(record)}>View</Button>
+                  <Button
+                    danger={record.status === 'active'}
+                    type={record.status === 'active' ? 'default' : 'primary'}
+                    onClick={() => onStatusToggle(record.id)}
+                  >
+                    {record.status === 'active' ? 'Block' : 'Unblock'}
+                  </Button>
+                </Space>
+              ),
+            },
+          ]}
+        />
+      </div>
 
-export default Users;
+      <Modal
+        open={!!selectedUser}
+        title="User Details"
+        onCancel={() => setSelectedUser(null)}
+        footer={<Button onClick={() => setSelectedUser(null)}>Close</Button>}
+      >
+        {selectedUser && (
+          <Descriptions column={1} bordered size="small">
+            <Descriptions.Item label="Name">{selectedUser.name}</Descriptions.Item>
+            <Descriptions.Item label="Email">{selectedUser.email}</Descriptions.Item>
+            <Descriptions.Item label="Status">
+              <Tag color={userStatusColors[selectedUser.status]}>{selectedUser.status}</Tag>
+            </Descriptions.Item>
+            <Descriptions.Item label="Plan">{selectedUser.plan}</Descriptions.Item>
+            <Descriptions.Item label="Location">{selectedUser.location}</Descriptions.Item>
+          </Descriptions>
+        )}
+      </Modal>
+    </div>
+  )
+}
+
+export default UsersPage
+
