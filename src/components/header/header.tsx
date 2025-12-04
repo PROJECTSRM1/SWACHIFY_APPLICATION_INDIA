@@ -35,6 +35,7 @@ const Header: React.FC = () => {
   const [notificationOpen] = useState(false); // kept for parity; not used visibly
   const [cartOpen, setCartOpen] = useState(false); // cart drawer
   const [showBookingPage, setShowBookingPage] = useState(false);
+  console.log(notificationOpen)
 
   const navigate = useNavigate();
   const { cart, removeFromCart } = useCart();
