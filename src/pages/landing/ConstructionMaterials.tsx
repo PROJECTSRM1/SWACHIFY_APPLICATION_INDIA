@@ -275,7 +275,8 @@ const RequestQuote: React.FC = () => {
 
 /* ================= MAIN PAGE ================= */
 const ConstructionMaterials: React.FC = () => {
-  const [, setAuthVisible] = useState(false);
+  const [authVisible, setAuthVisible] = useState<boolean>(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
