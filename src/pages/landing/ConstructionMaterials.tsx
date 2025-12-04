@@ -139,6 +139,7 @@ const AuthModal: React.FC<{ visible: boolean; onClose: () => void; onSuccess: ()
     onSuccess();
     onClose();
   };
+  console.log(AuthModal,RequestQuote);
   return (
     <Modal open={visible} onCancel={onClose} footer={null} centered width={520} className="sw-lcm-classname-auth-modal">
       <Tabs activeKey={activeKey} onChange={(k) => setActiveKey(k)} className="sw-lcm-classname-auth-tabs">
@@ -274,7 +275,7 @@ const RequestQuote: React.FC = () => {
 
 /* ================= MAIN PAGE ================= */
 const ConstructionMaterials: React.FC = () => {
-  const [authVisible, setAuthVisible] = useState(false);
+  const [, setAuthVisible] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -288,7 +289,7 @@ const ConstructionMaterials: React.FC = () => {
   const handleAuthSuccess = () => {
     navigate("/app/dashboard");
   };
-
+  console.log(handleAuthSuccess);
   return (
     <div className="sw-lcm-classname-construction-materials-container">
       <NavbarSection />
