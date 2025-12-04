@@ -21,17 +21,10 @@ import {
 } from "antd";
 
 import {
-  // FacebookOutlined,
-  // TwitterOutlined,
-  // InstagramOutlined,
-  // LinkedinOutlined,
   CheckCircleOutlined,
-  // MailOutlined,
-  // EnvironmentOutlined,
 } from "@ant-design/icons";
 
 import { useNavigate } from "react-router-dom";
-// import "./landingcleaningpage.css";
 
 import s1 from "../../assets/landingimages/landinghomecleaning.jpg";
 import s2 from "../../assets/landingimages/landingofficecleaning.jpg";
@@ -44,6 +37,17 @@ import s8 from "../../assets/landingimages/postconstruction.jpg";
 
 const { TextArea } = Input;
 const { TabPane } = Tabs;
+
+/**
+ * Allow calling the header modal helper added by CommonHeader
+ * (CommonHeader sets window.openAuthModal in its useEffect)
+ */
+declare global {
+  interface Window {
+    openAuthModal?: (tab?: "login" | "register") => void;
+    closeAuthModal?: () => void;
+  }
+}
 
 /* ================================
    HSHeader component (no inline styles)
@@ -123,9 +127,21 @@ const LandingCleaningPage: React.FC = () => {
   const [registerForm] = Form.useForm();
   const navigate = useNavigate();
 
+  // ---------- CHANGED: onFinish now opens header signup (register) modal ----------
   const onFinish = (values: any) => {
-    console.log("Booking request:", values);
+    // If CommonHeader helper is available, open the header modal on "register" tab.
+    if (typeof window !== "undefined" && (window as any).openAuthModal) {
+      (window as any).openAuthModal("register");
+    } else {
+      // fallback: show the local auth modal (keeps behavior safe if helper isn't mounted)
+      setAuthVisible(true);
+      console.warn("openAuthModal not available on window. Showing local auth modal as fallback.");
+    }
+
+    // keep a minimal console log for debugging (no other side-effects).
+    console.log("Booking request submitted (redirecting to signup):", values);
   };
+  // -------------------------------------------------------------------------------
 
   const onLogin = (values: any) => {
     console.log("Login values:", values);
@@ -288,8 +304,37 @@ const LandingCleaningPage: React.FC = () => {
             </p>
 
             <div className="sw-lc-hero-ctas">
-              <button className="sw-lc-cta sw-lc-cta--ghost">Book Now</button>
-              <button className="sw-lc-cta sw-lc-cta--primary">Get Quote</button>
+              <button
+                className="sw-lc-cta sw-lc-cta--ghost"
+                type="button"
+                onClick={() => {
+                  // open header auth modal on "register" tab (CommonHeader exposes this)
+                  if (typeof window !== "undefined" && (window as any).openAuthModal) {
+                    (window as any).openAuthModal("register");
+                  } else {
+                    // fallback: if header helper not available, log
+                    console.warn("Auth modal opener not available on window.");
+                    setAuthVisible(true);
+                  }
+                }}
+              >
+                Book Now
+              </button>
+
+              <button
+                className="sw-lc-cta sw-lc-cta--primary"
+                type="button"
+                onClick={() => {
+                  // Also open register modal for Get Quote to keep behavior consistent
+                  if (typeof window !== "undefined" && (window as any).openAuthModal) {
+                    (window as any).openAuthModal("register");
+                  } else {
+                    setAuthVisible(true);
+                  }
+                }}
+              >
+                Get Quote
+              </button>
             </div>
           </div>
         </div>
@@ -321,7 +366,7 @@ const LandingCleaningPage: React.FC = () => {
             <h2 id="included-heading" className="sw-lc-section-title">What's Included</h2>
             <p className="sw-lc-sub muted">Our comprehensive cleaning service covers every corner of your space</p>
             <div className="sw-lc-included-grid" role="list">
-              {[
+              {[ 
                 "Deep cleaning of all rooms",
                 "Kitchen and bathroom sanitization",
                 "Window and glass cleaning",
@@ -369,7 +414,21 @@ const LandingCleaningPage: React.FC = () => {
                       </li>
                     ))}
                   </ul>
-                  <Button type={p.popular ? "primary" : "default"} block className="sw-lc-price-cta">
+                  {/* Select Package now opens header signup (register) modal */}
+                  <Button
+                    type={p.popular ? "primary" : "default"}
+                    block
+                    className="sw-lc-price-cta"
+                    onClick={() => {
+                      // Open the header auth modal on Register tab
+                      if (typeof window !== "undefined" && (window as any).openAuthModal) {
+                        (window as any).openAuthModal("register");
+                      } else {
+                        console.warn("Auth modal opener not available on window.");
+                        setAuthVisible(true);
+                      }
+                    }}
+                  >
                     Select Package
                   </Button>
                 </div>
@@ -520,76 +579,7 @@ function WhyChooseSection() {
 
 function DarkFooter() {
   return (
-    // <footer className="sw-lc-footer">
-    //   <div className="sw-lc-footer-inner">
-    //     <div className="sw-lc-footer-col">
-    //       <h4 className="sw-lc-footer-title">About Us</h4>
-    //       <p className="sw-lc-footer-about">
-    //         Your trusted partner for all home and property-related services. Quality, reliability,
-    //         and customer satisfaction guaranteed.
-    //       </p>
-    //     </div>
-
-    //     <div className="sw-lc-footer-col">
-    //       <h4 className="sw-lc-footer-title">Services</h4>
-    //       <ul className="sw-lc-footer-links" aria-label="Services">
-    //         <li><a href="#cleaning">Cleaning Service</a></li>
-    //         <li><a href="#packers">Packers &amp; Movers</a></li>
-    //         <li><a href="#homes">Home Services</a></li>
-    //         <li><a href="#rentals">Rentals</a></li>
-    //         <li><a href="#commercial">Commercial Plots</a></li>
-    //         <li><a href="#materials">Construction Materials</a></li>
-    //       </ul>
-    //     </div>
-
-    //     <div className="sw-lc-footer-col">
-    //       <h4 className="sw-lc-footer-title">Quick Links</h4>
-    //       <ul className="sw-lc-footer-links" aria-label="Quick links">
-    //         <li><a href="/">Home</a></li>
-    //         <li><a href="/about">About</a></li>
-    //         <li><a href="/contact">Contact</a></li>
-    //         <li><a href="/careers">Careers</a></li>
-    //       </ul>
-    //     </div>
-
-    //     <div className="sw-lc-footer-col">
-    //       <h4 className="sw-lc-footer-title">Contact Info</h4>
-
-    //       <ul className="sw-lc-contact-list">
-    //         <div className="sw-lc-contact-row">
-    //           <Phone className="sw-lc-contact-icon sw-lc-thin-phone" aria-hidden />
-    //           <span className="sw-lc-contact-text"> +1 (555) 123-4567</span>
-    //         </div>
-
-    //         <li>
-    //           <MailOutlined className="sw-lc-contact-icon" />
-    //           <span className="sw-lc-contact-text">info@homeservices.com</span>
-    //         </li>
-
-    //         <li>
-    //           <EnvironmentOutlined className="sw-lc-contact-icon" />
-    //           <span className="sw-lc-contact-text">123 Service Street, City, State</span>
-    //         </li>
-    //       </ul>
-
-    //       <div className="sw-lc-socials" >
-    //         <a aria-label="facebook" className="sw-lc-social-link" href="#"><FacebookOutlined /></a>
-    //         <a aria-label="twitter" className="sw-lc-social-link" href="#"><TwitterOutlined /></a>
-    //         <a aria-label="instagram" className="sw-lc-social-link" href="#"><InstagramOutlined /></a>
-    //         <a aria-label="linkedin" className="sw-lc-social-link" href="#"><LinkedinOutlined /></a>
-    //       </div>
-    //     </div>
-    //   </div>
-
-    //   <div className="sw-lc-footer-bottom">
-    //     <div className="sw-lc-footer-bottom-inner">
-    //       <span>© 2025 Home Services. All rights reserved.</span>
-    //     </div>
-    //   </div>
-    // </footer>
     <FooterSection selectedKey="landingcleaningpage" />
-      
-    
   );
 }
 

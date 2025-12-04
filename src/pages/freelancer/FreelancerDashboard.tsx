@@ -1,4 +1,4 @@
-// src/pages/FreelancerDashboard.tsx
+// src/pages/freelancer/FreelancerDashboard.tsx
 import React, { useState, useMemo, useEffect } from 'react';
 import {
   Layout,
@@ -14,6 +14,8 @@ import {
   Dropdown,
   Menu,
   Space,
+  Upload,
+  Modal, // Modal is used in handleApprovePending
 } from 'antd';
 import {
   EnvironmentOutlined,
@@ -23,10 +25,14 @@ import {
   ArrowRightOutlined,
   LogoutOutlined,
   StarFilled,
+  UploadOutlined,
+  HourglassOutlined,
+  PhoneOutlined,
+  MailOutlined,
+  QuestionCircleOutlined,
+  CheckCircleOutlined,
 } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
-// import '../../../index.css'; // keep this if needed
-// import './FreelancerDashboard.css';
 
 const { Header, Content } = Layout;
 const { Title, Text } = Typography;
@@ -37,37 +43,43 @@ interface Job {
   ticketId: string;
   title: string;
   category: string;
-  status: 'In Progress' | 'Completed';
+  status: 'Approval Pending' | 'In Progress' | 'Completed';
   location: string;
   date: string;
   price: number;
+
   customer?: string;
   description?: string;
   estimatedPrice?: number;
+
+  // NEW customer details for active card
+  customerName?: string;
+  customerPhone?: string;
+  customerEmail?: string;
+  customerAddress?: string;
 }
 
-// --- MOCK DATA ---
-const INITIAL_JOBS: Job[] = [
-  {
-    ticketId: 'TKT003',
-    title: 'Home Services - Plumbing',
-    category: 'Plumbing',
-    status: 'In Progress',
-    location: 'HSR Layout, Bangalore',
-    date: '2025-11-27',
-    price: 800,
-  },
-  {
-    ticketId: 'TKT001',
-    title: 'Cleaning - Deep Cleaning',
-    category: 'Cleaning',
-    status: 'Completed',
-    location: 'MG Road, Bangalore',
-    date: '2025-11-20',
-    price: 3000,
-  },
+type ServiceStepIndex = 0 | 1 | 2 | 3;
+
+// --- SERVICE FLOW STEPS ---
+const SERVICE_FLOW_STEPS = [
+  'On the way',
+  'Reached location',
+  'Job Started',
+  'Job Completed',
+] as const;
+
+const SERVICE_FLOW_DESCRIPTIONS: string[] = [
+  'You are travelling to the customer location.',
+  'You have reached the customer address.',
+  'Mandatory multiple image proof required.',
+  'Mandatory multiple image proof required to confirm completion.',
 ];
 
+// UPDATED: Removed index 1 ('Reached location'). Only indices 2 and 3 require images.
+const IMAGE_REQUIRED_STEPS: ServiceStepIndex[] = [2, 3];
+
+// --- MOCK DATA (ONLY AVAILABLE REQUESTS TO START) ---
 const INITIAL_AVAILABLE_REQUESTS: Job[] = [
   {
     ticketId: 'TKT001',
@@ -77,6 +89,10 @@ const INITIAL_AVAILABLE_REQUESTS: Job[] = [
     location: 'MG Road, Bangalore',
     date: '2025-11-28 at 10:00 AM',
     customer: 'Rajesh Kumar',
+    customerName: 'Rajesh Kumar',
+    customerPhone: '+91 98765 00001',
+    customerEmail: 'rajesh.kumar@example.com',
+    customerAddress: 'Flat 304, Sunrise Apartments, MG Road, Bangalore',
     description: '3BHK apartment deep cleaning required',
     estimatedPrice: 3000,
     price: 3000,
@@ -89,6 +105,10 @@ const INITIAL_AVAILABLE_REQUESTS: Job[] = [
     location: 'Koramangala, Bangalore',
     date: '2025-11-29 at 2:00 PM',
     customer: 'Priya Sharma',
+    customerName: 'Priya Sharma',
+    customerPhone: '+91 98765 00002',
+    customerEmail: 'priya.sharma@example.com',
+    customerAddress: 'Flat 102, Green Meadows, Koramangala, Bangalore',
     description: 'Bathroom tap leaking issue',
     estimatedPrice: 500,
     price: 500,
@@ -101,9 +121,29 @@ const INITIAL_AVAILABLE_REQUESTS: Job[] = [
     location: 'Whitefield, Bangalore',
     date: '2025-11-29 at 4:00 PM',
     customer: 'Amit Singh',
+    customerName: 'Amit Singh',
+    customerPhone: '+91 98765 00003',
+    customerEmail: 'amit.singh@example.com',
+    customerAddress: 'Flat 501, Oakwood Residency, Whitefield, Bangalore',
     description: 'Install new ceiling fan in living room.',
     estimatedPrice: 1200,
     price: 1200,
+  },
+  {
+    ticketId: 'TKT006',
+    title: 'Home Services - Repairs',
+    category: 'House Repairs',
+    status: 'In Progress',
+    location: 'Whitefield, Bangalore',
+    date: '2025-11-29 at 4:00 PM',
+    customer: 'Sarkaar Singh',
+    customerName: 'Sarkaar Singh',
+    customerPhone: '+91 98765 00003',
+    customerEmail: 'sarkaar.singh@example.com',
+    customerAddress: 'Flat 501, Oakwood Residency, Whitefield, Bangalore',
+    description: 'Install new AC in living room.',
+    estimatedPrice: 12000,
+    price: 12000,
   },
 ];
 
@@ -126,23 +166,30 @@ const MOCK_USER = {
   skills: ['Cleaning', 'Home Services', 'Plumbing', 'Electrical'],
 };
 
-// --- HEADER WITH PROFILE DROPDOWN ---
-const HeaderComponent: React.FC<{ userName: string; onLogout: () => void }> = ({
-  userName,
-  onLogout,
-}) => {
+// --- HEADER WITH PROFILE DROPDOWN (UPDATED) ---
+const HeaderComponent: React.FC<{
+  userName: string;
+  onLogout: () => void;
+  isDashboardVisible: boolean; // NEW: state prop
+  onToggleDashboard: () => void; // NEW: handler prop
+}> = ({ userName, onLogout, isDashboardVisible, onToggleDashboard }) => {
   const menu = (
     <Menu
+      className="sw-frd-profile-menu"
       onClick={(e) => {
         if (e.key === 'logout') onLogout();
       }}
-      style={{ borderRadius: '8px', overflow: 'hidden', minWidth: 180 }}
+      style={{ borderRadius: 8, overflow: 'hidden', minWidth: 180 }}
     >
       <Menu.Item key="name" disabled style={{ fontWeight: 600, color: '#102030' }}>
         {userName}
       </Menu.Item>
       <Menu.Divider />
-      <Menu.Item key="logout" icon={<LogoutOutlined />} style={{ color: '#dc3545', fontWeight: 500 }}>
+      <Menu.Item
+        key="logout"
+        icon={<LogoutOutlined />}
+        style={{ color: '#dc3545', fontWeight: 500 }}
+      >
         Logout
       </Menu.Item>
     </Menu>
@@ -158,28 +205,39 @@ const HeaderComponent: React.FC<{ userName: string; onLogout: () => void }> = ({
       </div>
 
       <div className="sw-frd-user-area">
+        {/* NEW: View My Dashboard button, visible only when dashboard is hidden */}
+        {!isDashboardVisible && (
+          <Button
+            type="primary"
+            className="sw-frd-view-dashboard-btn"
+            onClick={onToggleDashboard}
+            icon={<ArrowRightOutlined />}
+          >
+            View My Dashboard
+          </Button>
+        )}
         <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
           <Button
             type="default"
             className="sw-frd-profile-btn"
             icon={<UserOutlined style={{ fontSize: 18 }} />}
-          >
-            {/* <DownOutlined style={{ fontSize: 10, marginLeft: 0 }} /> */}
-          </Button>
+          />
         </Dropdown>
       </div>
     </Header>
   );
 };
 
-// --- SMALL COMPONENTS ---
+// --- SMALL COMPONENTS (Unchanged) ---
 const UserSkills: React.FC<{ skills: string[] }> = ({ skills }) => (
-  <div className="sw-frd-section">
+  <section className="sw-frd-section">
     <div className="sw-frd-section-header">
       <Title level={4} className="sw-frd-section-title">
         My Skills
       </Title>
-      <Text className="sw-frd-section-subtitle">Used to match you with the right jobs</Text>
+      <Text className="sw-frd-section-subtitle">
+        Used to match you with the right jobs
+      </Text>
     </div>
     <div className="sw-frd-skills-container">
       {skills.map((skill) => (
@@ -188,28 +246,89 @@ const UserSkills: React.FC<{ skills: string[] }> = ({ skills }) => (
         </Tag>
       ))}
     </div>
-  </div>
+  </section>
 );
 
-const JobCard: React.FC<{ job: Job; isActive: boolean; onMarkComplete?: (id: string) => void }> = ({
+interface JobCardProps {
+  job: Job;
+  isActive: boolean;
+  onMarkComplete?: (id: string) => void;
+  showFlow?: boolean;
+  currentStep?: ServiceStepIndex;
+  onStepChange?: (step: ServiceStepIndex) => void;
+  stepImages?: Record<ServiceStepIndex, string[]>;
+  onStepImageUpload?: (step: ServiceStepIndex, files: File[]) => void;
+}
+
+/**
+ * Job card + flow
+ */
+const JobCard: React.FC<JobCardProps> = ({
   job,
   isActive,
   onMarkComplete,
-}) => (
-  <Card className="sw-frd-job-card" bordered={false}>
-    <Row justify="space-between" align="top">
-      <Col xs={24} sm={18}>
-        <div className="sw-frd-job-meta">
-          <Text strong className="sw-frd-job-title">
-            {job.title}
-          </Text>
-          <Tag color={isActive ? 'blue' : 'green'} className="sw-frd-status-tag">
-            {job.status === 'In Progress' ? 'In Progress' : 'Completed'}
-          </Tag>
-          <Text className="sw-frd-price">₹{job.price.toLocaleString()}</Text>
-        </div>
-        <Text className="sw-frd-ticket-id">Ticket ID: {job.ticketId}</Text>
+  showFlow = false,
+  currentStep = 0,
+  onStepChange,
+  stepImages = { 0: [], 1: [], 2: [], 3: [] },
+  onStepImageUpload,
+}) => {
+  const isLastStep = currentStep === (SERVICE_FLOW_STEPS.length - 1 as ServiceStepIndex);
 
+  const requiresImage = (idx: ServiceStepIndex) =>
+    IMAGE_REQUIRED_STEPS.includes(idx);
+
+  const canProceedFromCurrent =
+    !requiresImage(currentStep) || stepImages[currentStep].length > 0;
+
+  const handleStepAction = () => {
+    if (!canProceedFromCurrent) {
+      message.error(`Please upload image proof for the '${SERVICE_FLOW_STEPS[currentStep]}' stage before proceeding.`);
+      return;
+    }
+
+    if (isLastStep) {
+      if (onMarkComplete) onMarkComplete(job.ticketId);
+      return;
+    }
+
+    const next = ((currentStep + 1) as unknown) as ServiceStepIndex;
+    if (onStepChange) onStepChange(next);
+  };
+
+  const cardClass = `sw-frd-job-card ${isActive ? 'sw-frd-job-card--active' : ''} ${
+    showFlow ? 'sw-frd-job-card--with-flow' : ''
+  }`;
+
+  return (
+    <Card className={cardClass} bordered={false}>
+      <Row gutter={24} align="top" wrap>
+        {/* LEFT: JOB META */}
+        <Col xs={24} md={showFlow ? 14 : 24} className="sw-frd-job-col">
+          <div className="sw-frd-job-header-row">
+            <div>
+              <Text strong className="sw-frd-job-title">
+                {job.title}
+              </Text>
+
+              {job.status === 'In Progress' && (
+                <Tag color="blue" className="sw-frd-status-tag">
+                  In Progress
+                </Tag>
+              )}
+              {job.status === 'Completed' && (
+                <Tag color="green" className="sw-frd-status-tag">
+                  Completed
+                </Tag>
+              )}
+            </div>
+            <div className="sw-frd-job-price-wrap">
+              <Text className="sw-frd-price-label">Payout</Text>
+              <Text className="sw-frd-price">₹{job.price.toLocaleString()}</Text>
+            </div>
+          </div>
+
+          <Text className="sw-frd-ticket-id">Ticket ID: {job.ticketId}</Text>
         <div className="sw-frd-details-row">
           <Text className="sw-frd-detail-item">
             <EnvironmentOutlined className="sw-frd-icon-sm" /> {job.location}
@@ -219,19 +338,168 @@ const JobCard: React.FC<{ job: Job; isActive: boolean; onMarkComplete?: (id: str
           </Text>
         </div>
 
-        {isActive && onMarkComplete && (
-          <Button
-            type="primary"
-            className="sw-frd-complete-btn"
-            onClick={() => onMarkComplete(job.ticketId)}
-          >
-            Mark as Completed
-          </Button>
+        {/* NEW: Customer details block */}
+        {(job.customerName || job.customerPhone || job.customerEmail || job.customerAddress) && (
+          <div className="sw-frd-customer-block">
+            <div className="sw-frd-customer-block-header">
+              <span className="sw-frd-customer-block-title">Customer details</span>
+            </div>
+
+            {job.customerName && (
+              <div className="sw-frd-customer-line">
+                <UserOutlined className="sw-frd-customer-icon" />
+                <span className="sw-frd-customer-text">{job.customerName}</span>
+              </div>
+            )}
+
+            {job.customerPhone && (
+              <div className="sw-frd-customer-line">
+                <PhoneOutlined className="sw-frd-customer-icon" />
+                <a href={`tel:${job.customerPhone}`} className="sw-frd-customer-link">
+                  {job.customerPhone}
+                </a>
+              </div>
+            )}
+
+            {job.customerEmail && (
+              <div className="sw-frd-customer-line">
+                <MailOutlined className="sw-frd-customer-icon" />
+                <a href={`mailto:${job.customerEmail}`} className="sw-frd-customer-link">
+                  {job.customerEmail}
+                </a>
+              </div>
+            )}
+
+            {job.customerAddress && (
+              <div className="sw-frd-customer-line sw-frd-customer-address">
+                <EnvironmentOutlined className="sw-frd-customer-icon" />
+                <span className="sw-frd-customer-text">{job.customerAddress}</span>
+              </div>
+            )}
+          </div>
         )}
-      </Col>
-    </Row>
-  </Card>
-);
+
+        {isActive && showFlow && (
+          <div className="sw-frd-next-step-chip">
+            <span className="sw-frd-next-step-label">Current stage</span>
+            <span className="sw-frd-next-step-value">
+              {SERVICE_FLOW_STEPS[currentStep]}
+            </span>
+          </div>
+        )}
+        {isActive && (
+            <Button
+              type="default"
+              className="sw-frd-help-btn"
+              icon={<QuestionCircleOutlined />}
+            >
+              Get help with this job
+            </Button>
+          )}
+
+          {/* Fallback for completed / non-flow cards */}
+          {isActive && onMarkComplete && !showFlow && (
+            <Button
+              type="primary"
+              className="sw-frd-complete-btn"
+              onClick={() => onMarkComplete(job.ticketId)}
+            >
+              Mark as Completed
+            </Button>
+          )}
+        </Col>
+
+        {/* RIGHT: SERVICE FLOW STEPPER */}
+        {isActive && showFlow && (
+          <Col xs={24} md={10} className="sw-frd-flow-col">
+            <div className="sw-frd-flow-container">
+              <div className="sw-frd-flow-header">
+                <span className="sw-frd-flow-pill">Live job status</span>
+              </div>
+
+              <div className="sw-frd-flow-steps">
+                {SERVICE_FLOW_STEPS.map((label, idx) => {
+                  const stepIndex = idx as ServiceStepIndex;
+                  const isActiveStep = stepIndex === currentStep;
+                  const isCompletedStep = stepIndex < currentStep;
+                  // UPDATED: Checks array length
+                  const imageCount = stepImages[stepIndex].length;
+                  const needsImage = requiresImage(stepIndex);
+
+                  return (
+                    <div
+                      key={label}
+                      className={
+                        'sw-frd-flow-step' +
+                        (isActiveStep ? ' active' : '') +
+                        (isCompletedStep ? ' completed' : '')
+                      }
+                    >
+                      <div className="sw-frd-flow-step-circle-wrap">
+                        <div className="sw-frd-flow-step-circle">
+                          {isCompletedStep ? <CheckCircleOutlined /> : idx + 1}
+                        </div>
+                        {idx < SERVICE_FLOW_STEPS.length - 1 && (
+                          <div className="sw-frd-flow-step-line" />
+                        )}
+                      </div>
+
+                      <div className="sw-frd-flow-step-text">
+                        <p className="sw-frd-flow-step-title">{label}</p>
+                        <p className="sw-frd-flow-step-desc">
+                          {SERVICE_FLOW_DESCRIPTIONS[idx]}
+                        </p>
+
+                        {/* UPDATED: Only show upload on steps that require it and are active */}
+                        {needsImage && isActiveStep && (
+                          <div className="sw-frd-flow-upload">
+                            <Upload
+                              showUploadList={false}
+                              accept="image/*"
+                              multiple // Allow multiple files
+                              beforeUpload={(file, fileList) => {
+                                if (onStepImageUpload) {
+                                  // Pass all files to handler
+                                  onStepImageUpload(stepIndex, fileList as File[]);
+                                }
+                                return false; // prevent auto upload
+                              }}
+                            >
+                              <Button
+                                size="small"
+                                icon={<UploadOutlined />}
+                                className="sw-frd-flow-upload-btn"
+                              >
+                                {imageCount > 0 ? 'Add / Replace images' : 'Capture / Upload proof'}
+                              </Button>
+                            </Upload>
+                            {imageCount > 0 && (
+                              <span className="sw-frd-flow-upload-success">
+                                {imageCount} image(s) added
+                              </span>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              <Button
+                className="sw-frd-flow-next-btn"
+                onClick={handleStepAction}
+                disabled={!canProceedFromCurrent}
+              >
+                {isLastStep ? 'Complete job' : 'Move to next stage'}
+              </Button>
+            </div>
+          </Col>
+        )}
+      </Row>
+    </Card>
+  );
+};
 
 const RequestCard: React.FC<{ request: Job; onAccept: (req: Job) => void }> = ({
   request,
@@ -278,19 +546,89 @@ const RequestCard: React.FC<{ request: Job; onAccept: (req: Job) => void }> = ({
   </Card>
 );
 
+const PendingApprovalCard: React.FC<{
+  job: Job;
+  onApprove: (id: string) => void;
+}> = ({ job, onApprove }) => (
+  <Card className="sw-frd-pending-card" bordered={false}>
+    <div className="sw-frd-pending-header">
+      <div>
+        <Text strong className="sw-frd-job-title">
+          {job.title}
+        </Text>
+        <Tag color="orange" className="sw-frd-status-tag">
+          Waiting for admin approval
+        </Tag>
+      </div>
+      <div className="sw-frd-job-price-wrap">
+        <Text className="sw-frd-price-label">Payout</Text>
+        <Text className="sw-frd-price">₹{job.price.toLocaleString()}</Text>
+      </div>
+    </div>
+
+    <Text className="sw-frd-ticket-id">Ticket ID: {job.ticketId}</Text>
+
+    <div className="sw-frd-details-row">
+      <Text className="sw-frd-detail-item">
+        <EnvironmentOutlined className="sw-frd-icon-sm" /> {job.location}
+      </Text>
+      <Text className="sw-frd-detail-item">
+        <ClockCircleOutlined className="sw-frd-icon-sm" /> {job.date}
+      </Text>
+    </div>
+
+    <div className="sw-frd-pending-footer">
+      <div className="sw-frd-pending-note">
+        <HourglassOutlined className="sw-frd-pending-icon" />
+        <span>
+          Admin review in progress. You’ll be able to start only after approval.
+        </span>
+      </div>
+      {/* Mock button to simulate admin approval */}
+      <Button
+        size="small"
+        type="primary"
+        className="sw-frd-pending-approve-btn"
+        onClick={() => onApprove(job.ticketId)}
+      >
+        Mark approved & start job 
+      </Button>
+    </div>
+  </Card>
+);
+
 // --- MAIN DASHBOARD ---
 const FreelancerDashboard: React.FC = () => {
   const navigate = useNavigate();
-  const [activeJobs, setActiveJobs] = useState<Job[]>(INITIAL_JOBS);
+
+  const [activeJobs, setActiveJobs] = useState<Job[]>([]);
+  const [pendingJobs, setPendingJobs] = useState<Job[]>([]);
   const [availableRequests, setAvailableRequests] =
     useState<Job[]>(INITIAL_AVAILABLE_REQUESTS);
 
   const [requestFilter, setRequestFilter] = useState<
     'All Requests' | 'Matched to My Skills'
   >('All Requests');
-  const [requestSort, setRequestSort] = useState<
-    'Newest First' | 'Highest Price'
-  >('Newest First');
+  const [requestSort, setRequestSort] = useState<'Newest First' | 'Highest Price'>(
+    'Newest First',
+  );
+  
+  // NEW STATE: Control visibility of non-request dashboard sections
+  const [isDashboardVisible, setIsDashboardVisible] = useState(false); 
+  
+  const handleToggleDashboard = () => {
+    setIsDashboardVisible((prev) => !prev);
+  };
+
+  const [activeFlowStep, setActiveFlowStep] = useState<ServiceStepIndex>(0);
+  const [stepImages, setStepImages] = useState<
+    Record<ServiceStepIndex, string[]>
+  >({
+    0: [],
+    1: [],
+    2: [],
+    3: [],
+  });
 
   const { skills } = MOCK_USER;
 
@@ -310,15 +648,16 @@ const FreelancerDashboard: React.FC = () => {
     [completedJobs],
   );
 
-  // const completionRate = useMemo(() => {
-  //   const total = activeJobs.length;
-  //   if (!total) return 0;
-  //   return Math.round((completedJobs.length / total) * 100);
-  // }, [activeJobs.length, completedJobs.length]);
-
-  // Mock rating for UI – in a real app this would come from API
   const averageRating = 4.8;
-  const upcomingJob = activeJobsInProgress[0];
+  const activeJob = activeJobsInProgress[0] || null;
+  const upcomingJob = activeJob;
+  const pendingCount = pendingJobs.length;
+
+  // Reset service flow when active job changes
+  useEffect(() => {
+    setActiveFlowStep(0);
+    setStepImages({ 0: [], 1: [], 2: [], 3: [] });
+  }, [activeJob?.ticketId]);
 
   // --- FILTER & SORT AVAILABLE REQUESTS ---
   const filteredRequests = useMemo(() => {
@@ -331,9 +670,6 @@ const FreelancerDashboard: React.FC = () => {
 
     if (requestSort === 'Highest Price') {
       list.sort((a, b) => (b.estimatedPrice || b.price) - (a.estimatedPrice || a.price));
-    } else {
-      // Newest First - we just keep original order here; in real app use a date field
-      list = list;
     }
 
     return list;
@@ -354,21 +690,55 @@ const FreelancerDashboard: React.FC = () => {
       prev.filter((req) => req.ticketId !== request.ticketId),
     );
 
-    const newActiveJob: Job = {
+    const pendingJob: Job = {
       ...request,
-      status: 'In Progress',
+      status: 'Approval Pending',
       date: new Date().toISOString().slice(0, 10),
       price: request.estimatedPrice || request.price,
     };
 
-    setActiveJobs((prev) => [
-      ...prev.filter((j) => j.ticketId !== request.ticketId),
-      newActiveJob,
-    ]);
+    setPendingJobs((prev) => [...prev, pendingJob]);
 
     message.success(
-      `Request ${request.ticketId} accepted! It is now in your active jobs.`,
+      `Request ${request.ticketId} accepted! Waiting for admin approval.`,
     );
+  };
+
+  const handleApprovePending = (ticketId: string) => {
+    const alreadyActive = activeJobs.some((j) => j.status === 'In Progress');
+
+    if (alreadyActive) {
+      Modal.warning({
+        title: 'Complete the current active job',
+        content:
+          'You already have an active booking in progress. Please complete or close the current job before starting a new one.',
+        centered: true,
+        okText: 'OK',
+      });
+      return;
+    }
+
+    const job = pendingJobs.find((j) => j.ticketId === ticketId);
+    if (!job) return;
+
+    // move from Approval Pending → Active Job
+    setPendingJobs((prev) => prev.filter((j) => j.ticketId !== ticketId));
+
+    const activeJob: Job = {
+      ...job,
+      status: 'In Progress',
+    };
+
+    setActiveJobs((prev) => [...prev, activeJob]);
+
+    message.success(`Job ${ticketId} approved and moved to Active Job.`);
+  };
+
+  // UPDATED: Accepts File[] (fileList) and maps them to URLs
+  const handleStepImageUpload = (step: ServiceStepIndex, files: File[]) => {
+    const newUrls = files.map(file => URL.createObjectURL(file));
+    setStepImages((prev) => ({ ...prev, [step]: newUrls })); // Replace existing files
+    message.success(`${newUrls.length} image(s) uploaded/captured.`);
   };
 
   const handleLogout = () => {
@@ -385,152 +755,192 @@ const FreelancerDashboard: React.FC = () => {
 
   return (
     <Layout className="sw-frd-layout-container">
-      <HeaderComponent userName={MOCK_USER.name} onLogout={handleLogout} />
+      {/* UPDATED: Pass new props to HeaderComponent */}
+      <HeaderComponent
+        userName={MOCK_USER.name}
+        onLogout={handleLogout}
+        isDashboardVisible={isDashboardVisible}
+        onToggleDashboard={handleToggleDashboard}
+      />
 
       <Content className="sw-frd-content-main">
-        {/* OVERVIEW METRICS */}
-        <section className="sw-frd-section sw-frd-overview-section">
-          <div className="sw-frd-section-header">
-            <Title level={4} className="sw-frd-section-title">
-              Dashboard Overview
-            </Title>
-            <Text className="sw-frd-section-subtitle">
-              Track your performance at a glance
-            </Text>
-          </div>
-
-          <div className="sw-frd-overview-grid">
-            <Card className="sw-frd-overview-card" bordered={false}>
-              <Text className="sw-frd-overview-label">Total Earnings</Text>
-              <div className="sw-frd-overview-value-row">
-                <Text className="sw-frd-overview-value">
-                  ₹{totalEarnings.toLocaleString()}
+        
+        {/* NEW: Conditional rendering for all non-request sections */}
+        {isDashboardVisible && (
+          <>
+            {/* OVERVIEW METRICS */}
+            <section className="sw-frd-section sw-frd-overview-section">
+              <div className="sw-frd-section-header">
+                <Title level={4} className="sw-frd-section-title">
+                  Dashboard Overview
+                </Title>
+                <Text className="sw-frd-section-subtitle">
+                  Track your performance at a glance
                 </Text>
               </div>
-              <Text className="sw-frd-overview-subtext">
-                From {completedJobs.length} completed jobs
-              </Text>
-            </Card>
 
-            <Card className="sw-frd-overview-card" bordered={false}>
-              <Text className="sw-frd-overview-label">Total Completed Jobs</Text>
-              <div className="sw-frd-overview-value-row">
-                <Text className="sw-frd-overview-value">
-                  {activeJobsInProgress.length}
-                </Text>
-              </div>
-              <Text className="sw-frd-overview-subtext">
-                Next job:{' '}
-                {upcomingJob
-                  ? `${upcomingJob.title} • ${upcomingJob.date}`
-                  : 'No upcoming jobs'}
-              </Text>
-            </Card>
-
-            <Card className="sw-frd-overview-card" bordered={false}>
-              <Text className="sw-frd-overview-label">Available Jobs</Text>
-              <div className="sw-frd-overview-progress">
-                {/* <Progress
-                  percent={completionRate}
-                  size="small"
-                  strokeWidth={10}
-                  showInfo={false}
-                /> */}
-              </div>
-              <div className="sw-frd-overview-value-row">
-                <Text className="sw-frd-overview-value">
-                  {/* {completionRate}% */}
-                  {availableRequests.length}
-                </Text>
-              
-              </div>
-              <Text className="sw-frd-overview-subtext">
-                Available jobs to accept {}
-              </Text>
-            </Card>
-
-            <Card className="sw-frd-overview-card" bordered={false}>
-              <Text className="sw-frd-overview-label">Client Rating</Text>
-              <div className="sw-frd-overview-value-row">
-                <Space align="center">
-                  <StarFilled className="sw-frd-rating-star" />
-                  <Text className="sw-frd-overview-value">
-                    {averageRating.toFixed(1)}
+              <div className="sw-frd-overview-grid">
+                <Card className="sw-frd-overview-card" bordered={false}>
+                  <Text className="sw-frd-overview-label">Total Earnings</Text>
+                  <div className="sw-frd-overview-value-row">
+                    <Text className="sw-frd-overview-value">
+                      ₹{totalEarnings.toLocaleString()}
+                    </Text>
+                  </div>
+                  <Text className="sw-frd-overview-subtext">
+                    From {completedJobs.length} completed jobs
                   </Text>
-                </Space>
+                </Card>
+
+                <Card className="sw-frd-overview-card" bordered={false}>
+                  <Text className="sw-frd-overview-label">Active Jobs</Text>
+                  <div className="sw-frd-overview-value-row">
+                    <Text className="sw-frd-overview-value">
+                      {activeJobsInProgress.length}
+                    </Text>
+                  </div>
+                  <Text className="sw-frd-overview-subtext">
+                    {activeJob
+                      ? `Current: ${activeJob.title}`
+                      : 'No jobs currently active'}
+                  </Text>
+                </Card>
+
+                <Card className="sw-frd-overview-card sw-frd-pending-metric" bordered={false}>
+                  <Text className="sw-frd-overview-label">Approval Pending</Text>
+                  <div className="sw-frd-overview-value-row">
+                    <Text className="sw-frd-overview-value">{pendingCount}</Text>
+                  </div>
+                  <Text className="sw-frd-overview-subtext">
+                    Jobs waiting for admin review
+                  </Text>
+                </Card>
+
+                <Card className="sw-frd-overview-card" bordered={false}>
+                  <Text className="sw-frd-overview-label">Available Jobs</Text>
+                  <div className="sw-frd-overview-value-row">
+                    <Text className="sw-frd-overview-value">
+                      {availableRequests.length}
+                    </Text>
+                  </div>
+                  <Text className="sw-frd-overview-subtext">
+                    Start from Available Requests below
+                  </Text>
+                </Card>
+
+                <Card className="sw-frd-overview-card" bordered={false}>
+                  <Text className="sw-frd-overview-label">Client Rating</Text>
+                  <div className="sw-frd-overview-value-row">
+                    <Space align="center">
+                      <StarFilled className="sw-frd-rating-star" />
+                      <Text className="sw-frd-overview-value">
+                        {averageRating.toFixed(1)}
+                      </Text>
+                    </Space>
+                  </div>
+                  <Text className="sw-frd-overview-subtext">
+                    Based on recent jobs 
+                  </Text>
+                </Card>
               </div>
-              <Text className="sw-frd-overview-subtext">
-                Based on recent jobs (mock data)
-              </Text>
-            </Card>
-          </div>
-        </section>
+            </section>
 
-        {/* SKILLS */}
-        <UserSkills skills={skills} />
+            {/* SKILLS */}
+            <UserSkills skills={skills} />
 
-        {/* ACTIVE JOBS */}
-        <section className="sw-frd-section">
-          <div className="sw-frd-section-header">
-            <Title level={4} className="sw-frd-section-title">
-              My Active Jobs
-            </Title>
-            <Text className="sw-frd-section-subtitle">
-              Jobs you are currently working on
-            </Text>
-          </div>
+            {/* APPROVAL PENDING */}
+            <section className="sw-frd-section">
+              <div className="sw-frd-section-header">
+                <Title level={4} className="sw-frd-section-title">
+                  Approval Pending
+                </Title>
+                <Text className="sw-frd-section-subtitle">
+                  Jobs you have accepted and are waiting for admin approval
+                </Text>
+              </div>
 
-          <div className="sw-frd-active-jobs-container">
-            {activeJobsInProgress.length > 0 ? (
-              <Space direction="vertical" size={16} style={{ width: '100%' }}>
-                {activeJobsInProgress.map((job) => (
+              <div className="sw-frd-pending-list">
+                {pendingJobs.length > 0 ? (
+                  pendingJobs.map((job) => (
+                    <PendingApprovalCard
+                      key={job.ticketId}
+                      job={job}
+                      onApprove={handleApprovePending}
+                    />
+                  ))
+                ) : (
+                  <Empty
+                    description="No jobs are waiting for approval."
+                    image={Empty.PRESENTED_IMAGE_SIMPLE}
+                  />
+                )}
+              </div>
+            </section>
+
+            {/* ACTIVE JOB – SINGLE CARD WITH FLOW */}
+            <section className="sw-frd-section">
+              <div className="sw-frd-section-header">
+                <Title level={4} className="sw-frd-section-title">
+                  My Active Job
+                </Title>
+                <Text className="sw-frd-section-subtitle">
+                  Live status of your current service
+                </Text>
+              </div>
+
+              <div className="sw-frd-active-jobs-container">
+                {activeJob ? (
                   <JobCard
-                    key={job.ticketId}
-                    job={job}
+                    job={activeJob}
                     isActive={true}
                     onMarkComplete={handleMarkComplete}
+                    showFlow
+                    currentStep={activeFlowStep}
+                    onStepChange={setActiveFlowStep}
+                    stepImages={stepImages}
+                    onStepImageUpload={handleStepImageUpload}
                   />
-                ))}
-              </Space>
-            ) : (
-              <Empty
-                description="No jobs currently in progress."
-                image={Empty.PRESENTED_IMAGE_SIMPLE}
-              />
-            )}
-          </div>
-        </section>
+                ) : (
+                  <Empty
+                    description="No jobs currently in progress. Accept a request to get started."
+                    image={Empty.PRESENTED_IMAGE_SIMPLE}
+                  />
+                )}
+              </div>
+            </section>
 
-        {/* RECENTLY COMPLETED */}
-        <section className="sw-frd-section">
-          <div className="sw-frd-section-header">
-            <Title level={4} className="sw-frd-section-title">
-              Recently Completed
-            </Title>
-            <Text className="sw-frd-section-subtitle">
-              Last few jobs you finished
-            </Text>
-          </div>
+            {/* RECENTLY COMPLETED */}
+            <section className="sw-frd-section">
+              <div className="sw-frd-section-header">
+                <Title level={4} className="sw-frd-section-title">
+                  Recently Completed
+                </Title>
+                <Text className="sw-frd-section-subtitle">
+                  Jobs you have completed through the flow
+                </Text>
+              </div>
 
-          {completedJobs.length > 0 ? (
-            <Space direction="vertical" size={16} style={{ width: '100%' }}>
-              {completedJobs
-                .slice()
-                .reverse()
-                .slice(0, 3)
-                .map((job) => (
-                  <JobCard key={job.ticketId} job={job} isActive={false} />
-                ))}
-            </Space>
-          ) : (
-            <Empty
-              description="You haven't completed any jobs yet."
-              image={Empty.PRESENTED_IMAGE_SIMPLE}
-            />
-          )}
-        </section>
+              {completedJobs.length > 0 ? (
+                <Space direction="vertical" size={16} style={{ width: '100%' }}>
+                  {completedJobs
+                    .slice()
+                    .reverse()
+                    .slice(0, 3)
+                    .map((job) => (
+                      <JobCard key={job.ticketId} job={job} isActive={false} />
+                    ))}
+                </Space>
+              ) : (
+                <Empty
+                  description="You haven't completed any jobs yet."
+                  image={Empty.PRESENTED_IMAGE_SIMPLE}
+                />
+              )}
+            </section>
+          </>
+        )}
 
-        {/* AVAILABLE REQUESTS */}
+        {/* AVAILABLE REQUESTS (ALWAYS VISIBLE) */}
         <section className="sw-frd-section">
           <Row
             justify="space-between"
@@ -545,7 +955,7 @@ const FreelancerDashboard: React.FC = () => {
                 Available Requests
               </Title>
               <Text className="sw-frd-section-subtitle">
-                Accept a request to move it into your active jobs
+                Start your flow by accepting a request
               </Text>
             </div>
 
