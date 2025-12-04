@@ -36,6 +36,17 @@ const { Title, Text } = Typography;
 const { Option } = Select;
 const { TabPane } = Tabs;
 
+/**
+ * Allow calling the header modal helper added by CommonHeader
+ * (CommonHeader sets window.openAuthModal in its useEffect)
+ */
+declare global {
+  interface Window {
+    openAuthModal?: (tab?: "login" | "register") => void;
+    closeAuthModal?: () => void;
+  }
+}
+
 /* ================= NAVBAR SECTION ================= */
 const NavbarSection: React.FC = () => (
   <>
@@ -264,7 +275,8 @@ const RequestQuote: React.FC = () => {
 
 /* ================= MAIN PAGE ================= */
 const ConstructionMaterials: React.FC = () => {
-  const [, setAuthVisible] = useState(false);
+  const [authVisible, setAuthVisible] = useState<boolean>(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -295,8 +307,34 @@ const ConstructionMaterials: React.FC = () => {
           <h1>Quality Building Materials at Best Prices</h1>
           <p>Browse our comprehensive range of construction materials.</p>
           <div className="sw-lcm-classname-hero-buttons">
-            <Button type="primary" size="large">Browse Catalog</Button>
-            <Button size="large">Get Bulk Quote</Button>
+            <Button
+              type="primary"
+              size="large"
+              onClick={() => {
+                if (typeof window !== "undefined" && (window as any).openAuthModal) {
+                  (window as any).openAuthModal("register");
+                } else {
+                  // fallback: show local auth modal (keeps behavior safe if header helper isn't mounted)
+                  setAuthVisible(true);
+                  console.warn("openAuthModal not available on window. Showing local auth modal as fallback.");
+                }
+              }}
+            >
+              Browse Catalog
+            </Button>
+            <Button
+              size="large"
+              onClick={() => {
+                if (typeof window !== "undefined" && (window as any).openAuthModal) {
+                  (window as any).openAuthModal("register");
+                } else {
+                  setAuthVisible(true);
+                  console.warn("openAuthModal not available on window. Showing local auth modal as fallback.");
+                }
+              }}
+            >
+              Get Bulk Quote
+            </Button>
           </div>
         </div>
       </section>
@@ -395,7 +433,11 @@ const ConstructionMaterials: React.FC = () => {
       {/* <RequestQuote /> */}
 
       {/* AUTH MODAL (local) */}
-      {/* <AuthModal visible={authVisible} onClose={() => setAuthVisible(false)} onSuccess={handleAuthSuccess} /> */}
+      {/*
+        Local modal fallback — used only if CommonHeader's window.openAuthModal isn't available.
+        Kept commented out in main render earlier; we'll render it here when needed.
+      */}
+      <AuthModal visible={authVisible} onClose={() => setAuthVisible(false)} onSuccess={handleAuthSuccess} />
 
       {/* FOOTER */}
       <FooterSection selectedKey="ConstructionMaterials" />
