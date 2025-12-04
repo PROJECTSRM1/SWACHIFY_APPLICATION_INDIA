@@ -1,9 +1,9 @@
 
-import cleaning from "../../../assets/HomeServices/cleaningservicessubmodules/home cleaning.jpg"
-import mattress from "../../../assets/HomeServices/cleaningservicessubmodules/mattress cleaning.jpg"
-import kitchen from "../../../assets/HomeServices/cleaningservicessubmodules/kitchen cleaning.jpg"
-import bathroom from "../../../assets/HomeServices/cleaningservicessubmodules/bathroom cleaning.jpg"
-import pestcontroll from "../../../assets/HomeServices/cleaningservicessubmodules/Pest Control & Disinfection.jpg"
+// import cleaning from "../../../assets/HomeServices/cleaningservicessubmodules/home cleaning.jpg"
+// import mattress from "../../../assets/HomeServices/cleaningservicessubmodules/mattress cleaning.jpg"
+// import kitchen from "../../../assets/HomeServices/cleaningservicessubmodules/kitchen cleaning.jpg"
+// import bathroom from "../../../assets/HomeServices/cleaningservicessubmodules/bathroom cleaning.jpg"
+// import pestcontroll from "../../../assets/HomeServices/cleaningservicessubmodules/Pest Control & Disinfection.jpg"
 import wiringlighting from "../../../assets/HomeServices/Electrical Services/wiring and lightning.jpg" 
 import fanappliances from "../../../assets/HomeServices/Electrical Services/Fan and Appliance-repair.jpg" 
 import circuitbreaker from "../../../assets/HomeServices/Electrical Services/CB and switchboard fixing.jpg" 
@@ -56,13 +56,19 @@ import smartsecuritydevicesetup from "../../../assets/HomeServices/HomeSecurityS
 
 
 // ⭐ Reusable type for each sub-service
+// Add this new type
+export type IssueOption = {
+  label: string;
+  price: number;
+};
+
 export type SubService = {
   title: string;
   description: string;
   image: string;
   totalprice: string;
   includedList: string[];
-  issues: string[];
+  issues: IssueOption[];   // ⬅ changed from string[] to IssueOption[]
 };
 
 // ⭐ Category type (Cleaning Services, Electrical Services, etc.)
@@ -74,121 +80,121 @@ export type PopupCategory = {
 // ⭐ Main type for all popup data
 export type PopupDataType = Record<string, PopupCategory>;
 
+
 // ⭐ Your popup data — now cleanly typed and error-free
 export const popupData: PopupDataType =
  
 {
 
-  "Cleaning Services": {
-  mainTitle: "Cleaning Services",
-  subServices: [
-    {
-      title: "Home Cleaning",
-      description: "Complete home cleaning with sanitation",
-      image: cleaning,
-      totalprice: "₹799",
-      includedList: [
-        "Professional staff",
-        "Eco-friendly products",
-        "Floor & surface cleaning",
-        "Kitchen & bathroom touch-up",
-        "Post-service inspection"
-      ],
-      issues: [
-        "Dust build-up",
-        "Dirty floors",
-        "Unclean surfaces",
-        "Mild stains",
-        "General cleaning needs"
-      ]
-    },
+//   "Cleaning Services": {
+//   mainTitle: "Cleaning Services",
+//   subServices: [
+//     {
+//       title: "Home Cleaning",
+//       description: "Complete home cleaning with sanitation",
+//       image: cleaning,
+//       totalprice: "₹799",
+//       includedList: [
+//         "Professional staff",
+//         "Eco-friendly products",
+//         "Floor & surface cleaning",
+//         "Kitchen & bathroom touch-up",
+//         "Post-service inspection"
+//       ],
+//       issues: [
+//         "Dust build-up",
+//         "Dirty floors",
+//         "Unclean surfaces",
+//         "Mild stains",
+//         "General cleaning needs"
+//       ]
+//     },
 
-    {
-      title: "Mattress Cleaning",
-      description: "Deep mattress cleaning and sanitizing",
-      image: mattress,
-      totalprice: "₹499",
-      includedList: [
-        "Deep vacuuming",
-        "Dust mite removal",
-        "Anti-bacterial treatment",
-        "Spot stain cleaning",
-        "Deep sanitization"
-      ],
-      issues: [
-        "Bad odor",
-        "Dust mites",
-        "Sweat stains",
-        "Allergy issues",
-        "General dirt"
-      ]
-    },
+//     {
+//       title: "Mattress Cleaning",
+//       description: "Deep mattress cleaning and sanitizing",
+//       image: mattress,
+//       totalprice: "₹499",
+//       includedList: [
+//         "Deep vacuuming",
+//         "Dust mite removal",
+//         "Anti-bacterial treatment",
+//         "Spot stain cleaning",
+//         "Deep sanitization"
+//       ],
+//       issues: [
+//         "Bad odor",
+//         "Dust mites",
+//         "Sweat stains",
+//         "Allergy issues",
+//         "General dirt"
+//       ]
+//     },
 
-    {
-      title: "Kitchen Cleaning",
-      description: "Deep kitchen cleaning and degreasing",
-      image: kitchen,
-      totalprice: "₹649",
-      includedList: [
-        "Grease removal",
-        "Cabinet exterior cleaning",
-        "Appliance wipe-down",
-        "Sink sanitation",
-        "Floor scrubbing"
-      ],
-      issues: [
-        "Grease build-up",
-        "Dirty tiles",
-        "Stove stains",
-        "Unclean sink",
-        "General kitchen dirt"
-      ]
-    },
+//     {
+//       title: "Kitchen Cleaning",
+//       description: "Deep kitchen cleaning and degreasing",
+//       image: kitchen,
+//       totalprice: "₹649",
+//       includedList: [
+//         "Grease removal",
+//         "Cabinet exterior cleaning",
+//         "Appliance wipe-down",
+//         "Sink sanitation",
+//         "Floor scrubbing"
+//       ],
+//       issues: [
+//         "Grease build-up",
+//         "Dirty tiles",
+//         "Stove stains",
+//         "Unclean sink",
+//         "General kitchen dirt"
+//       ]
+//     },
 
-    {
-      title: "Bathroom Cleaning",
-      description: "Deep bathroom cleaning and sanitizing",
-      image: bathroom,
-      totalprice: "₹549",
-      includedList: [
-        "Tile scrubbing",
-        "Hard water stain removal",
-        "Toilet deep cleaning",
-        "Glass cleaning",
-        "Germicidal sanitization"
-      ],
-      issues: [
-        "Hard water stains",
-        "Dirty tiles",
-        "Bad odor",
-        "Soap scum",
-        "General bathroom dirt"
-      ]
-    },
+//     {
+//       title: "Bathroom Cleaning",
+//       description: "Deep bathroom cleaning and sanitizing",
+//       image: bathroom,
+//       totalprice: "₹549",
+//       includedList: [
+//         "Tile scrubbing",
+//         "Hard water stain removal",
+//         "Toilet deep cleaning",
+//         "Glass cleaning",
+//         "Germicidal sanitization"
+//       ],
+//       issues: [
+//         "Hard water stains",
+//         "Dirty tiles",
+//         "Bad odor",
+//         "Soap scum",
+//         "General bathroom dirt"
+//       ]
+//     },
 
-    {
-      title: "Pest Control & Disinfection",
-      description: "Pest removal with complete disinfection",
-      image: pestcontroll,
-      totalprice: "₹899",
-      includedList: [
-        "Odorless chemicals",
-        "Cockroach/ant control",
-        "Gel & spray treatment",
-        "Home disinfection",
-        "Safety-compliant process"
-      ],
-      issues: [
-        "Cockroach infestation",
-        "Ants/insects",
-        "Mosquito breeding",
-        "Germs & bacteria",
-        "General pest issues"
-      ]
-    }
-  ]
-},
-
+//     {
+//       title: "Pest Control & Disinfection",
+//       description: "Pest removal with complete disinfection",
+//       image: pestcontroll,
+//       totalprice: "₹899",
+//       includedList: [
+//         "Odorless chemicals",
+//         "Cockroach/ant control",
+//         "Gel & spray treatment",
+//         "Home disinfection",
+//         "Safety-compliant process"
+//       ],
+//       issues: [
+//         "Cockroach infestation",
+//         "Ants/insects",
+//         "Mosquito breeding",
+//         "Germs & bacteria",
+//         "General pest issues"
+//       ]
+//     }
+//   ]
+// },
 
 
 "Electrical Services": {
@@ -207,11 +213,11 @@ export const popupData: PopupDataType =
         "Quick installation"
       ],
       issues: [
-        "Wiring issue",
-        "Bulb not working",
-        "Short circuit",
-        "Switch issue",
-        "Loose connections"
+        { label: "Wiring issue", price: 50 },
+        { label: "Bulb not working", price: 30 },
+        { label: "Short circuit", price: 80 },
+        { label: "Switch issue", price: 40 },
+        { label: "Loose connections", price: 20 }
       ]
     },
 
@@ -228,11 +234,11 @@ export const popupData: PopupDataType =
         "Quality repair work"
       ],
       issues: [
-        "Fan not rotating",
-        "Fan making noise",
-        "Fan not starting",
-        "Regulator issue",
-        "Low fan speed"
+        { label: "Fan not rotating", price: 50 },
+        { label: "Fan making noise", price: 80 },
+        { label: "Fan not starting", price: 90 },
+        { label: "Regulator issue", price: 30 },
+        { label: "Low fan speed", price: 40 }
       ]
     },
 
@@ -249,11 +255,11 @@ export const popupData: PopupDataType =
         "Fast restoration"
       ],
       issues: [
-        "Breaker tripping",
-        "Overload issues",
-        "Loose switches",
-        "Socket not working",
-        "Sparking problem"
+        { label: "Breaker tripping", price: 30 },
+        { label: "Overload issues", price: 20 },
+        { label: "Loose switches", price: 10 },
+        { label: "Socket not working", price: 50 },
+        { label: "Sparking problem", price: 60 }
       ]
     },
 
@@ -270,18 +276,17 @@ export const popupData: PopupDataType =
         "Testing & verification"
       ],
       issues: [
-        "Device not pairing",
-        "Connectivity issues",
-        "Incorrect setup",
-        "App integration problems",
-        "Power supply issues"
+        { label: "Device not pairing", price: 30 },
+        { label: "Connectivity issues", price: 40 },
+        { label: "Incorrect setup", price: 50 },
+        { label: "App integration problems", price: 70 },
+        { label: "Power supply issues", price: 90 }
       ]
     }
   ]
 },
 
-
- "Plumbing Service": {
+"Plumbing Service": {
   mainTitle: "Plumbing Service",
   subServices: [
     {
@@ -297,11 +302,11 @@ export const popupData: PopupDataType =
         "Post-service cleanup"
       ],
       issues: [
-        "Tap leakage",
-        "Pipe leakage",
-        "Water dripping",
-        "Joint loose",
-        "Moisture patches"
+        { label: "Tap leakage", price: 50 },
+        { label: "Pipe leakage", price: 80 },
+        { label: "Water dripping", price: 70 },
+        { label: "Joint loose", price: 20 },
+        { label: "Moisture patches", price: 90 }
       ]
     },
 
@@ -318,11 +323,11 @@ export const popupData: PopupDataType =
         "Post-installation testing"
       ],
       issues: [
-        "Loose pipe joints",
-        "Pipe replacement needed",
-        "Low water flow",
-        "Pipe cracks",
-        "Improper fitting"
+        { label: "Loose pipe joints", price: 30 },
+        { label: "Pipe replacement needed", price: 50 },
+        { label: "Low water flow", price: 80 },
+        { label: "Pipe cracks", price: 90 },
+        { label: "Improper fitting", price: 50 }
       ]
     },
 
@@ -339,11 +344,11 @@ export const popupData: PopupDataType =
         "Installation warranty"
       ],
       issues: [
-        "Geyser not heating",
-        "Water leakage",
-        "Incorrect installation",
-        "Pipe fitting issue",
-        "Pressure problems"
+        { label: "Geyser not heating", price: 40 },
+        { label: "Water leakage", price: 50 },
+        { label: "Incorrect installation", price: 80 },
+        { label: "Pipe fitting issue", price: 20 },
+        { label: "Pressure problems", price: 60 }
       ]
     },
 
@@ -360,11 +365,11 @@ export const popupData: PopupDataType =
         "Quality hardware used"
       ],
       issues: [
-        "Tap loose",
-        "Shower leakage",
-        "Broken fittings",
-        "Low water pressure",
-        "Improper installation"
+        { label: "Tap loose", price: 80 },
+        { label: "Shower leakage", price: 50 },
+        { label: "Broken fittings", price: 40 },
+        { label: "Low water pressure", price: 70 },
+        { label: "Improper installation", price: 20 }
       ]
     },
 
@@ -381,11 +386,11 @@ export const popupData: PopupDataType =
         "Complete drying"
       ],
       issues: [
-        "Dirty water",
-        "Foul smell",
-        "Algae build-up",
-        "Sediment accumulation",
-        "Overflow issues"
+        { label: "Dirty water", price: 50 },
+        { label: "Foul smell", price: 50 },
+        { label: "Algae build-up", price: 50 },
+        { label: "Sediment accumulation", price: 50 },
+        { label: "Overflow issues", price: 50 }
       ]
     },
 
@@ -402,18 +407,17 @@ export const popupData: PopupDataType =
         "Flow testing"
       ],
       issues: [
-        "Drain blockage",
-        "Slow water flow",
-        "Bad drain smell",
-        "Grease buildup",
-        "Hair clogging"
+        { label: "Drain blockage", price: 221 },
+        { label: "Slow water flow", price: 30},
+        { label: "Bad drain smell", price: 70 },
+        { label: "Grease buildup", price: 115 },
+        { label: "Hair clogging", price: 20 }
       ]
     }
   ]
 },
 
-
- "Appliances Repair": {
+"Appliances Repair": {
   mainTitle: "Appliances Repair",
   subServices: [
     {
@@ -429,11 +433,11 @@ export const popupData: PopupDataType =
         "Post-service cleanup"
       ],
       issues: [
-        "AC not cooling",
-        "Water leakage",
-        "Bad smell",
-        "Low airflow",
-        "Compressor issue"
+        { label: "AC not cooling", price: 110 },
+        { label: "Water leakage", price: 210 },
+        { label: "Bad smell", price: 70 },
+        { label: "Low airflow", price: 60 },
+        { label: "Compressor issue", price: 50 }
       ]
     },
 
@@ -450,11 +454,11 @@ export const popupData: PopupDataType =
         "Post-repair testing"
       ],
       issues: [
-        "Not cooling",
-        "Water leakage",
-        "Freezer over-icing",
-        "Noise from compressor",
-        "Door not sealing"
+        { label: "Not cooling", price: 70 },
+        { label: "Water leakage", price: 80 },
+        { label: "Freezer over-icing", price: 20 },
+        { label: "Noise from compressor", price: 110 },
+        { label: "Door not sealing", price: 130 }
       ]
     },
 
@@ -471,11 +475,11 @@ export const popupData: PopupDataType =
         "Service warranty"
       ],
       issues: [
-        "Machine not spinning",
-        "Water not draining",
-        "Motor noise",
-        "Vibration issues",
-        "Door not locking"
+        { label: "Machine not spinning", price: 205 },
+        { label: "Water not draining", price: 115 },
+        { label: "Motor noise", price: 50 },
+        { label: "Vibration issues", price: 70 },
+        { label: "Door not locking", price: 50 }
       ]
     },
 
@@ -492,11 +496,11 @@ export const popupData: PopupDataType =
         "Service warranty"
       ],
       issues: [
-        "Not heating",
-        "Plate not rotating",
-        "Sparking inside",
-        "Burning smell",
-        "Button malfunction"
+        { label: "Not heating", price: 7 },
+        { label: "Plate not rotating", price: 50 },
+        { label: "Sparking inside", price: 80 },
+        { label: "Burning smell", price: 50 },
+        { label: "Button malfunction", price: 220 }
       ]
     },
 
@@ -513,11 +517,11 @@ export const popupData: PopupDataType =
         "Service warranty"
       ],
       issues: [
-        "No display",
-        "No sound",
-        "Lines on screen",
-        "Port not working",
-        "Remote not responding"
+        { label: "No display", price: 80 },
+        { label: "No sound", price: 90 },
+        { label: "Lines on screen", price: 70 },
+        { label: "Port not working", price: 80 },
+        { label: "Remote not responding", price: 50 }
       ]
     },
 
@@ -534,11 +538,11 @@ export const popupData: PopupDataType =
         "Maintenance report"
       ],
       issues: [
-        "Low performance",
-        "Overheating issues",
-        "Noise from appliance",
-        "Irregular functioning",
-        "Wear and tear"
+        { label: "Low performance", price: 50 },
+        { label: "Overheating issues", price: 45 },
+        { label: "Noise from appliance", price: 110 },
+        { label: "Irregular functioning", price: 50 },
+        { label: "Wear and tear", price: 250 }
       ]
     },
 
@@ -555,19 +559,17 @@ export const popupData: PopupDataType =
         "Post-installation check"
       ],
       issues: [
-        "Broken components",
-        "Damaged wiring",
-        "Worn-out parts",
-        "Non-functional buttons",
-        "Motor or compressor faults"
+        { label: "Broken components", price: 120 },
+        { label: "Damaged wiring", price: 50 },
+        { label: "Worn-out parts", price: 80 },
+        { label: "Non-functional buttons", price: 50 },
+        { label: "Motor or compressor faults", price: 70}
       ]
     }
   ]
 },
 
-
-  
-   "Carpentry & Furniture": {
+"Carpentry & Furniture": {
   mainTitle: "Carpentry & Furniture",
   subServices: [
     {
@@ -583,11 +585,11 @@ export const popupData: PopupDataType =
         "Smooth finishing"
       ],
       issues: [
-        "New furniture requirement",
-        "Custom size needed",
-        "Design modification",
-        "Material selection help",
-        "Loose structure concerns"
+        { label: "New furniture requirement", price: 50 },
+        { label: "Custom size needed", price: 50 },
+        { label: "Design modification", price: 50 },
+        { label: "Material selection help", price: 50 },
+        { label: "Loose structure concerns", price: 50 }
       ]
     },
 
@@ -604,11 +606,11 @@ export const popupData: PopupDataType =
         "Service warranty"
       ],
       issues: [
-        "Broken furniture",
-        "Loose joints",
-        "Scratches & dents",
-        "Damaged hinges",
-        "Cracked wood"
+        { label: "Broken furniture", price: 50 },
+        { label: "Loose joints", price: 50 },
+        { label: "Scratches & dents", price: 50 },
+        { label: "Damaged hinges", price: 50 },
+        { label: "Cracked wood", price: 50 }
       ]
     },
 
@@ -625,11 +627,11 @@ export const popupData: PopupDataType =
         "Noise reduction"
       ],
       issues: [
-        "Door not closing",
-        "Window jammed",
-        "Loose hinges",
-        "Lock not working",
-        "Frame misalignment"
+        { label: "Door not closing", price: 50 },
+        { label: "Window jammed", price: 50 },
+        { label: "Loose hinges", price: 50 },
+        { label: "Lock not working", price: 50 },
+        { label: "Frame misalignment", price: 50 }
       ]
     },
 
@@ -646,17 +648,17 @@ export const popupData: PopupDataType =
         "Post-installation testing"
       ],
       issues: [
-        "Cabinet misalignment",
-        "Broken hinges",
-        "Loose shelves",
-        "Sliding not smooth",
-        "New installation required"
+        { label: "Cabinet misalignment", price: 50 },
+        { label: "Broken hinges", price: 50 },
+        { label: "Loose shelves", price: 50 },
+        { label: "Sliding not smooth", price: 50 },
+        { label: "New installation required", price: 50 }
       ]
     }
   ]
 },
 
-  "Painting & Renovation": {
+"Painting & Renovation": {
   mainTitle: "Painting & Renovation",
   subServices: [
     {
@@ -672,11 +674,11 @@ export const popupData: PopupDataType =
         "Post-paint cleanup"
       ],
       issues: [
-        "Wall discoloration",
-        "Peeling paint",
-        "Cracks on wall",
-        "Faded colors",
-        "Moisture patches"
+        { label: "Wall discoloration", price: 50 },
+        { label: "Peeling paint", price: 50 },
+        { label: "Cracks on wall", price: 50 },
+        { label: "Faded colors", price: 50 },
+        { label: "Moisture patches", price: 50 }
       ]
     },
 
@@ -693,11 +695,11 @@ export const popupData: PopupDataType =
         "Professional painters"
       ],
       issues: [
-        "Paint fading",
-        "Exterior cracks",
-        "Water damage marks",
-        "Wall roughness",
-        "Peeling layers"
+        { label: "Paint fading", price: 50 },
+        { label: "Exterior cracks", price: 50 },
+        { label: "Water damage marks", price: 50 },
+        { label: "Wall roughness", price: 50 },
+        { label: "Peeling layers", price: 50 }
       ]
     },
 
@@ -714,11 +716,11 @@ export const popupData: PopupDataType =
         "Minor paint touchups"
       ],
       issues: [
-        "Wallpaper peeling",
-        "Wall bubbles",
-        "Misalignment issues",
-        "Minor cracks",
-        "Paint scratches"
+        { label: "Wallpaper peeling", price: 50 },
+        { label: "Wall bubbles", price: 50 },
+        { label: "Misalignment issues", price: 50 },
+        { label: "Minor cracks", price: 50 },
+        { label: "Paint scratches", price: 50 }
       ]
     },
 
@@ -735,11 +737,11 @@ export const popupData: PopupDataType =
         "Moisture inspection"
       ],
       issues: [
-        "Wall seepage",
-        "Water leakage",
-        "Damp patches",
-        "Ceiling moisture",
-        "Crack water flow"
+        { label: "Wall seepage", price: 50 },
+        { label: "Water leakage", price: 50 },
+        { label: "Damp patches", price: 50 },
+        { label: "Ceiling moisture", price: 50 },
+        { label: "Crack water flow", price: 50 }
       ]
     },
 
@@ -756,16 +758,17 @@ export const popupData: PopupDataType =
         "Finish sanding"
       ],
       issues: [
-        "Wall cracks",
-        "Holes in wall",
-        "Uneven surface",
-        "Chipped plaster",
-        "Damaged corners"
+        { label: "Wall cracks", price: 50 },
+        { label: "Holes in wall", price: 50 },
+        { label: "Uneven surface", price: 50 },
+        { label: "Chipped plaster", price: 50 },
+        { label: "Damaged corners", price: 50 }
       ]
     }
   ]
 },
- "HVAC & Cooling": {
+
+"HVAC & Cooling": {
   mainTitle: "HVAC & Cooling",
   subServices: [
     {
@@ -781,11 +784,11 @@ export const popupData: PopupDataType =
         "Post-install testing"
       ],
       issues: [
-        "Water leakage",
-        "Improper cooling",
-        "Vibration issues",
-        "Loose mounting",
-        "High noise"
+        { label: "Water leakage", price: 50 },
+        { label: "Improper cooling", price: 50 },
+        { label: "Vibration issues", price: 50 },
+        { label: "Loose mounting", price: 50 },
+        { label: "High noise", price: 50 }
       ]
     },
 
@@ -802,11 +805,11 @@ export const popupData: PopupDataType =
         "Outer panel cleaning"
       ],
       issues: [
-        "Low cooling",
-        "Bad smell",
-        "Water dripping",
-        "Dirty filters",
-        "High power usage"
+        { label: "Low cooling", price: 50 },
+        { label: "Bad smell", price: 50 },
+        { label: "Water dripping", price: 50 },
+        { label: "Dirty filters", price: 50 },
+        { label: "High power usage", price: 50 }
       ]
     },
 
@@ -823,11 +826,11 @@ export const popupData: PopupDataType =
         "Airflow improvement"
       ],
       issues: [
-        "Dust in vents",
-        "Low airflow",
-        "Bad odor",
-        "Allergy triggers",
-        "Clogged ducts"
+        { label: "Dust in vents", price: 50 },
+        { label: "Low airflow", price: 50 },
+        { label: "Bad odor", price: 50 },
+        { label: "Allergy triggers", price: 50 },
+        { label: "Clogged ducts", price: 50 }
       ]
     },
 
@@ -844,11 +847,11 @@ export const popupData: PopupDataType =
         "Cooling test"
       ],
       issues: [
-        "Dirty filters",
-        "Weak cooling",
-        "Bad airflow",
-        "High noise",
-        "Odor issues"
+        { label: "Dirty filters", price: 50 },
+        { label: "Weak cooling", price: 50 },
+        { label: "Bad airflow", price: 50 },
+        { label: "High noise", price: 50 },
+        { label: "Odor issues", price: 50 }
       ]
     },
 
@@ -865,18 +868,16 @@ export const popupData: PopupDataType =
         "Electrical connection check"
       ],
       issues: [
-        "Frequent breakdowns",
-        "Cooling delay",
-        "Thermostat issues",
-        "Gas leakage",
-        "Overheating"
+        { label: "Frequent breakdowns", price: 50 },
+        { label: "Cooling delay", price: 50 },
+        { label: "Thermostat issues", price: 50 },
+        { label: "Gas leakage", price: 50 },
+        { label: "Overheating", price: 50 }
       ]
     }
   ]
 },
 
-
-    
 "Gardening & Outdoor Care": {
   mainTitle: "Gardening & Outdoor Care",
   subServices: [
@@ -893,11 +894,11 @@ export const popupData: PopupDataType =
         "Waste disposal"
       ],
       issues: [
-        "Overgrown grass",
-        "Weed spread",
-        "Uneven edges",
-        "Dry patches",
-        "Insect damage"
+        { label: "Overgrown grass", price: 50 },
+        { label: "Weed spread", price: 50 },
+        { label: "Uneven edges", price: 50 },
+        { label: "Dry patches", price: 50 },
+        { label: "Insect damage", price: 50 }
       ]
     },
 
@@ -914,11 +915,11 @@ export const popupData: PopupDataType =
         "Finishing touches"
       ],
       issues: [
-        "Poor layout",
-        "Unhealthy plants",
-        "Soil imbalance",
-        "Patchy design",
-        "Water drainage issue"
+        { label: "Poor layout", price: 50 },
+        { label: "Unhealthy plants", price: 50 },
+        { label: "Soil imbalance", price: 50 },
+        { label: "Patchy design", price: 50 },
+        { label: "Water drainage issue", price: 50 }
       ]
     },
 
@@ -935,11 +936,11 @@ export const popupData: PopupDataType =
         "Walkway clearing"
       ],
       issues: [
-        "Dirty pathways",
-        "Excess leaves",
-        "Moss buildup",
-        "Outdoor stains",
-        "Garbage accumulation"
+        { label: "Dirty pathways", price: 50 },
+        { label: "Excess leaves", price: 50 },
+        { label: "Moss buildup", price: 50 },
+        { label: "Outdoor stains", price: 50 },
+        { label: "Garbage accumulation", price: 50 }
       ]
     },
 
@@ -956,19 +957,16 @@ export const popupData: PopupDataType =
         "Aftercare tips"
       ],
       issues: [
-        "Plant pests",
-        "Leaf damage",
-        "Soil insects",
-        "Fungal infection",
-        "Plant wilting"
+        { label: "Plant pests", price: 50 },
+        { label: "Leaf damage", price: 50 },
+        { label: "Soil insects", price: 50 },
+        { label: "Fungal infection", price: 50 },
+        { label: "Plant wilting", price: 50 }
       ]
     }
   ]
 },
 
-
-
-  
 "Handyman / General Repair": {
   mainTitle: "Handyman / General Repair",
   subServices: [
@@ -985,11 +983,11 @@ export const popupData: PopupDataType =
         "Quick installation"
       ],
       issues: [
-        "Loose TV mount",
-        "Tilt not working",
-        "Wall alignment issue",
-        "Bracket replacement needed",
-        "Drilling support required"
+        { label: "Loose TV mount", price: 50 },
+        { label: "Tilt not working", price: 50 },
+        { label: "Wall alignment issue", price: 50 },
+        { label: "Bracket replacement needed", price: 50 },
+        { label: "Drilling support required", price: 50 }
       ]
     },
 
@@ -1006,11 +1004,11 @@ export const popupData: PopupDataType =
         "Cleanup after work"
       ],
       issues: [
-        "Shelf not level",
-        "Loose screws",
-        "Wall cracks",
-        "Incorrect placement",
-        "Heavy load concerns"
+        { label: "Shelf not level", price: 50 },
+        { label: "Loose screws", price: 50 },
+        { label: "Wall cracks", price: 50 },
+        { label: "Incorrect placement", price: 50 },
+        { label: "Heavy load concerns", price: 50 }
       ]
     },
 
@@ -1027,11 +1025,11 @@ export const popupData: PopupDataType =
         "Functionality testing"
       ],
       issues: [
-        "Loose handles",
-        "Broken hinges",
-        "Damaged fixtures",
-        "Misalignment",
-        "Wear and tear"
+        { label: "Loose handles", price: 50 },
+        { label: "Broken hinges", price: 50 },
+        { label: "Damaged fixtures", price: 50 },
+        { label: "Misalignment", price: 50 },
+        { label: "Wear and tear", price: 50 }
       ]
     },
 
@@ -1048,11 +1046,11 @@ export const popupData: PopupDataType =
         "Finishing touches"
       ],
       issues: [
-        "Loose joints",
-        "Wobbling chair",
-        "Broken drawer",
-        "Cracked wood",
-        "Damaged hinges"
+        { label: "Loose joints", price: 50 },
+        { label: "Wobbling chair", price: 50 },
+        { label: "Broken drawer", price: 50 },
+        { label: "Cracked wood", price: 50 },
+        { label: "Damaged hinges", price: 50 }
       ]
     },
 
@@ -1069,16 +1067,15 @@ export const popupData: PopupDataType =
         "Quick handyman support"
       ],
       issues: [
-        "Loose fittings",
-        "Wall damage",
-        "Small cracks",
-        "Stuck doors",
-        "Minor wear issues"
+        { label: "Loose fittings", price: 50 },
+        { label: "Wall damage", price: 50 },
+        { label: "Small cracks", price: 50 },
+        { label: "Stuck doors", price: 50 },
+        { label: "Minor wear issues", price: 50 }
       ]
     }
   ]
 },
-
 
 "Home Security Services": {
   mainTitle: "Home Security Services",
@@ -1096,11 +1093,11 @@ export const popupData: PopupDataType =
         "System testing"
       ],
       issues: [
-        "Camera not recording",
-        "Blurry video feed",
-        "App not connecting",
-        "Cable damage",
-        "DVR storage issues"
+        { label: "Camera not recording", price: 50 },
+        { label: "Blurry video feed", price: 50 },
+        { label: "App not connecting", price: 50 },
+        { label: "Cable damage", price: 50 },
+        { label: "DVR storage issues", price: 50 }
       ]
     },
 
@@ -1117,11 +1114,11 @@ export const popupData: PopupDataType =
         "Secure fitting"
       ],
       issues: [
-        "Loose lock",
-        "Key not turning",
-        "Broken latch",
-        "Door misalignment",
-        "Lock replacement needed"
+        { label: "Loose lock", price: 50 },
+        { label: "Key not turning", price: 50 },
+        { label: "Broken latch", price: 50 },
+        { label: "Door misalignment", price: 50 },
+        { label: "Lock replacement needed", price: 50 }
       ]
     },
 
@@ -1138,11 +1135,11 @@ export const popupData: PopupDataType =
         "Safety configuration"
       ],
       issues: [
-        "No alarm sound",
-        "Sensor not detecting",
-        "Mobile alerts not working",
-        "Wiring fault",
-        "Low battery issue"
+        { label: "No alarm sound", price: 50 },
+        { label: "Sensor not detecting", price: 50 },
+        { label: "Mobile alerts not working", price: 50 },
+        { label: "Wiring fault", price: 50 },
+        { label: "Low battery issue", price: 50 }
       ]
     },
 
@@ -1159,11 +1156,11 @@ export const popupData: PopupDataType =
         "Testing & verification"
       ],
       issues: [
-        "Sensor not triggering",
-        "False alerts",
-        "Low range",
-        "Connectivity issues",
-        "Power supply fault"
+        { label: "Sensor not triggering", price: 50 },
+        { label: "False alerts", price: 50 },
+        { label: "Low range", price: 50 },
+        { label: "Connectivity issues", price: 50 },
+        { label: "Power supply fault", price: 50 }
       ]
     },
 
@@ -1180,11 +1177,11 @@ export const popupData: PopupDataType =
         "Functionality testing"
       ],
       issues: [
-        "Device not pairing",
-        "App-sync issues",
-        "Smart hub offline",
-        "Voice assistant errors",
-        "Battery or power issue"
+        { label: "Device not pairing", price: 40 },
+        { label: "App-sync issues", price: 90 },
+        { label: "Smart hub offline", price: 100 },
+        { label: "Voice assistant errors", price: 70 },
+        { label: "Battery or power issue", price: 60 }
       ]
     }
   ]
