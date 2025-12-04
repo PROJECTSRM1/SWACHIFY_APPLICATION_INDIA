@@ -457,13 +457,13 @@ const JobCard: React.FC<JobCardProps> = ({
                               showUploadList={false}
                               accept="image/*"
                               multiple // Allow multiple files
-                              beforeUpload={(file, fileList) => {
-                                if (onStepImageUpload) {
-                                  // Pass all files to handler
-                                  onStepImageUpload(stepIndex, fileList as File[]);
-                                }
-                                return false; // prevent auto upload
-                              }}
+                             beforeUpload={(_, fileList) => {
+  if (onStepImageUpload) {
+    onStepImageUpload(stepIndex, fileList as File[]);
+  }
+  return false;
+}}
+
                             >
                               <Button
                                 size="small"
@@ -650,7 +650,7 @@ const FreelancerDashboard: React.FC = () => {
 
   const averageRating = 4.8;
   const activeJob = activeJobsInProgress[0] || null;
-  const upcomingJob = activeJob;
+ // const upcomingJob = activeJob;
   const pendingCount = pendingJobs.length;
 
   // Reset service flow when active job changes
