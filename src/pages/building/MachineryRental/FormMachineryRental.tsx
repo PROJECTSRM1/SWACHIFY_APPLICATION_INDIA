@@ -21,51 +21,45 @@ interface FormProps {
 
 const MachineryDetails: React.FC<FormProps> = ({ id, onClose }) => {
   const machine = machinery.find((item) => item.id === id);
-
-  const [quantity, setQuantity] = useState(1);
-
-  const [customerName, setCustomerName] = useState("");
-  const [rentalType, setRentalType] = useState("");
-  const [rentalDate, setRentalDate] = useState("");
-  const [contact, setContact] = useState("");
-  const [address, setAddress] = useState("");
-  const [instructions, setInstructions] = useState("");
-
-  const formRef = useRef<HTMLFormElement>(null); 
-
   const { addToCart } = useCart();
+  const formRef = useRef<HTMLFormElement>(null);
 
   if (!machine) return null;
 
-  const totalPrice = Number(machine.price) * quantity;
+  const [quantity, setQuantity] = useState(0);
+  const [rentalType, setRentalType] = useState("");
+  const [fuelSupply, setFuelSupply] = useState(false);
 
-  // ★ RESET FORM WITHOUT CLOSING POPUP
+  const basePrice = Number(machine.price) * quantity;
+  const operatorCharge = rentalType === "With Operator" ? 150 : 0;
+  const fuelCharge = fuelSupply ? 200 : 0;
+  const totalPrice = basePrice + operatorCharge + fuelCharge;
+
   const handleReset = () => {
-    formRef.current?.reset(); 
-    setQuantity(1); 
-
-    setCustomerName("");
+    formRef.current?.reset();
+    setQuantity(1);
     setRentalType("");
-    setRentalDate("");
-    setContact("");
-    setAddress("");
-    setInstructions("");
+    setFuelSupply(false);
   };
 
   const handleAddToCart = () => {
+    const form = formRef.current!;
     addToCart({
       id: machine.id,
       title: machine.title,
       image: machine.img,
       quantity,
-      price: machine.price,
+      basePrice,
+      operatorCharge,
+      fuelCharge,
       totalPrice,
-      customerName,
+      price: machine.price,
+      customerName: form.customerName.value,
       deliveryType: rentalType,
-      deliveryDate: rentalDate,
-      contact,
-      address,
-      instructions,
+      deliveryDate: form.rentalDate.value,
+      contact: form.contact.value,
+      address: form.address.value,
+      instructions: form.instructions.value,
     });
 
     message.success("Item added to cart");
@@ -94,13 +88,12 @@ const MachineryDetails: React.FC<FormProps> = ({ id, onClose }) => {
             </div>
 
             <h3 className="sw-br-mach-included-title">What's Included</h3>
-
             <ul className="sw-br-mach-included-list">
               <li>On-time delivery</li>
               <li>Equipment safety check</li>
               <li>Breakdown support</li>
               <li>Operator support (optional)</li>
-              <li>Fuel support (if applicable)</li>
+              <li>Fuel support (optional)</li>
               <li>Invoice & documentation</li>
             </ul>
           </div>
@@ -113,25 +106,18 @@ const MachineryDetails: React.FC<FormProps> = ({ id, onClose }) => {
               <div className="sw-br-mach-row">
                 <div className="sw-br-mach-form-item">
                   <label>Customer Name</label>
-                  <input
-                    type="text"
-                    name="customerName"
-                    placeholder="Enter customer name"
-                    value={customerName}
-                    onChange={(e) => setCustomerName(e.target.value)}
-                  />
+                  <input type="text" name="customerName" placeholder="Enter customer name" />
                 </div>
 
                 <div className="sw-br-mach-form-item">
                   <label>Rental Type</label>
                   <select
-                    name="rentalType"
                     value={rentalType}
                     onChange={(e) => setRentalType(e.target.value)}
                   >
                     <option value="">Select</option>
-                    <option>With Operator</option>
-                    <option>Without Operator</option>
+                    <option value="With Operator">With Operator (+₹150)</option>
+                    <option value="Without Operator">Without Operator</option>
                   </select>
                 </div>
               </div>
@@ -149,69 +135,44 @@ const MachineryDetails: React.FC<FormProps> = ({ id, onClose }) => {
 
                 <div className="sw-br-mach-form-item">
                   <label>Rental Date</label>
-                  <input
-                    type="date"
-                    name="rentalDate"
-                    value={rentalDate}
-                    onChange={(e) => setRentalDate(e.target.value)}
-                  />
+                  <input type="date" name="rentalDate" />
                 </div>
               </div>
 
               <div className="sw-br-mach-form-item full-width">
                 <label>Contact Number</label>
-                <input
-                  type="text"
-                  name="contact"
-                  placeholder="Enter contact number"
-                  value={contact}
-                  onChange={(e) => setContact(e.target.value)}
-                />
+                <input type="text" name="contact" />
               </div>
 
               <div className="sw-br-mach-form-item full-width">
                 <label>Site Address</label>
-                <textarea
-                  name="address"
-                  placeholder="Enter site address"
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
-                />
+                <textarea name="address"></textarea>
               </div>
 
               <h3 className="sw-br-mach-section-title">Additional Services</h3>
 
               <div className="sw-br-mach-checkbox-row">
-                <label><input type="checkbox" /> Fuel Supply</label>
-                <label><input type="checkbox" /> Operator Required</label>
-                <label><input type="checkbox" /> Extra Attachments</label>
-                <label><input type="checkbox" /> Maintenance Support</label>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={fuelSupply}
+                    onChange={(e) => setFuelSupply(e.target.checked)}
+                  />
+                  Fuel Supply (+₹200)
+                </label>
               </div>
 
               <div className="sw-br-mach-form-item full-width">
                 <label>Special Instructions</label>
-                <textarea
-                  name="instructions"
-                  placeholder="Any specific requirements..."
-                  value={instructions}
-                  onChange={(e) => setInstructions(e.target.value)}
-                />
+                <textarea name="instructions"></textarea>
               </div>
 
               <div className="sw-br-mach-button-row">
-                <button
-                  type="button"
-                  className="sw-br-mach-cancel-btn"
-                  onClick={handleReset}
-                >
+                <button type="button" className="sw-br-mach-cancel-btn" onClick={handleReset}>
                   Cancel
                 </button>
 
-                <button
-                  type="button"
-                  className="sw-br-mach-add-btn"
-                  onClick={handleAddToCart}
-                >
+                <button type="button" className="sw-br-mach-add-btn" onClick={handleAddToCart}>
                   Add to Cart
                 </button>
               </div>
