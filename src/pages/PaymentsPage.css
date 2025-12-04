@@ -1,0 +1,134 @@
+/* PAYMENT OVERLAY BACKDROP */
+.payment-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(6, 10, 20, 0.55);
+  z-index: 1500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+}
+
+/* PAYMENT CARD CONTAINER */
+.payment-card {
+  width: 100%;
+  max-width: 760px;
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 25px 40px rgba(2, 6, 23, 0.35);
+  position: relative;
+  animation: fadeUp 0.28s ease-out;
+}
+
+/* CLOSE BUTTON */
+.payment-close-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  border: none;
+  background: transparent;
+  font-size: 18px;
+  cursor: pointer;
+  color: #333;
+  padding: 6px;
+  transition: 0.2s;
+}
+
+.payment-close-btn:hover {
+  color: #000;
+  transform: scale(1.1);
+}
+
+/* TITLE & SUBTITLE */
+.payment-title {
+  font-weight: 700;
+  font-size: 22px;
+  margin-bottom: 4px;
+}
+
+.payment-subtitle {
+  color: #6b7280;
+  margin-bottom: 12px;
+  display: block;
+  font-size: 14px;
+}
+
+/* BOOKING DETAILS CARD */
+.payment-details-box {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 16px;
+  border: 1px solid #e5e7eb;
+  margin-bottom: 14px;
+}
+
+.payment-details-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.payment-service-title {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.payment-service-address {
+  margin-top: 6px;
+  color: #6b7280;
+}
+
+.payment-amount {
+  font-size: 22px;
+  font-weight: 800;
+  color: #111827;
+  text-align: right;
+}
+
+.payment-date-time {
+  color: #6b7280;
+  margin-top: 4px;
+  font-size: 13px;
+  text-align: right;
+}
+
+/* BUTTON ROW */
+.payment-btn-row {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+/* ANIMATION */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* RESPONSIVE */
+@media (max-width: 480px) {
+  .payment-card {
+    padding: 16px;
+  }
+
+  .payment-amount {
+    font-size: 20px;
+  }
+
+  .payment-btn-row button {
+    width: 100%;
+  }
+
+  .payment-btn-row {
+    flex-direction: column;
+  }
+}
