@@ -916,9 +916,11 @@ with prefix */
 /* ===========================
     SERVICES SECTION ALIGNMENT
     =========================== */
-#services-section {
+.services-section {
   text-align: center;
   padding: 60px 40px;
+  margin-top: 50px;
+  margin-bottom: -44px;
 }
 
 .sw-lp-classname-services-section .sw-lp-classname-section-title {
@@ -2839,6 +2841,7 @@ readability */
   border-radius: 6px;
   /* reduced radius (smaller) */
   color: #fff;
+  margin-top: 70px;
 }
 
 .sw-pm-hero-title {
@@ -3550,6 +3553,7 @@ body,
   color: #ffffff;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
   text-align: left;
+  margin-top: 40px;
 }
 
 .swc-bs-banner-title {
@@ -13706,6 +13710,7 @@ body {
   margin-bottom: 24px;
   gap: 10px;
   white-space: nowrap;
+  margin-top: 65px;
 }
 
 .sw-hs-banner-left {
@@ -15495,6 +15500,7 @@ textarea {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  margin-top: 40px;
 }
 
 
@@ -15589,9 +15595,9 @@ textarea {
 
 /* ----------------------------- Header / Layout ----------------------------- */
 .sw-header-container {
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 9999;
+  z-index: 1000;
   width: 100%;
   background: white;
   border-bottom: 1px solid #eee;
@@ -15698,7 +15704,7 @@ textarea {
 /* Menu item text */
 .sw-menu-item {
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 600;
   white-space: nowrap;
 }
 
