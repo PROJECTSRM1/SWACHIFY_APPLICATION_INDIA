@@ -112,7 +112,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
     if (identifier === "admin@gmail.com" && password === "1234") {
       message.success("Admin login successful");
       closeAuthModal();
-      navigate("/admin-dashboard"); // <-- your admin route
+      navigate("/adminshell/dashboard"); // <-- your admin route
       return;
     }
     // ---------------------------------------

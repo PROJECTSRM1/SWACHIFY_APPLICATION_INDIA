@@ -16,7 +16,7 @@ import {
   Card,
   Space,
   Form,
-  Checkbox,
+
   message,
 } from "antd";
 // near top of file — replace or extend existing icon imports
@@ -65,7 +65,7 @@ const propertyTypes = [
 ];
 
 const CommercialPlots: React.FC = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [] = useState(false);
 
   const [searchLocation, setSearchLocation] = useState("");
   const [searchType, setSearchType] = useState<string | undefined>(undefined);

@@ -14553,7 +14553,7 @@ body {
   flex-direction: column;
   gap: 4px;
   font-size: 11px;
-  font-weight: 500;
+  font-weight: 600;
   margin-top: 5px;
 }
 
@@ -14926,7 +14926,7 @@ textarea {
   display: flex;
   flex-direction: column;
   font-size: 11px;
-  font-weight: 500;
+  font-weight: 600;
   margin-top: 5px;
 }
 
