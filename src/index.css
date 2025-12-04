@@ -13962,6 +13962,17 @@ body {
 /* next  */
 
 /* ROOT WRAPPER - Fully isolated */
+
+/* Modal internal scroll only */
+.sw-hs-sdform-ant-modal .ant-modal-body {
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+/* Prevent background scroll when modal opens */
+body.sw-hs-scrolling-disable {
+  overflow: hidden !important;
+}
 .sw-hs-sdp-modal .ant-modal-content {
   border-radius: 16px;
   padding: 0 !important;
@@ -14116,10 +14127,6 @@ body {
 }
 
 /* next two */
-/* ============================
-   MODAL CONTAINER
-============================ */
-
 
 
 .sw-hs-sdform-ant-container {
@@ -14128,6 +14135,17 @@ body {
   overflow: hidden;
   position: relative;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+}
+
+/* Make Ant Modal body & content match old inline styles */
+.sw-hs-sdform-ant-modal .ant-modal-content {
+  padding: 0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.sw-hs-sdform-ant-modal .ant-modal-body {
+  padding: 0;
 }
 
 /* custom close button */
@@ -14142,10 +14160,7 @@ body {
   line-height: 1;
 }
 
-/* ============================
-   TITLE
-============================ */
-
+/* TITLE */
 .sw-hs-sdform-ant-title {
   font-size: 16px;
   font-weight: 600;
@@ -14153,10 +14168,7 @@ body {
   margin: 0;
 }
 
-/* ============================
-   HEADER SECTION
-============================ */
-
+/* HEADER SECTION */
 .sw-hs-sdform-ant-header {
   display: grid;
   grid-template-columns: 48% 52%;
@@ -14165,7 +14177,6 @@ body {
 }
 
 /* LEFT SIDE */
-
 .sw-hs-sdform-ant-image {
   width: 100%;
   border-radius: 6px;
@@ -14177,7 +14188,6 @@ body {
 }
 
 /* PRICE BOX */
-
 .sw-hs-sdform-price-wrapper {
   background: #eef5ff;
   padding: 10px;
@@ -14195,7 +14205,6 @@ body {
 }
 
 /* RIGHT SIDE */
-
 .sw-hs-sdform-ant-header-info {
   padding-left: 6px;
 }
@@ -14216,38 +14225,35 @@ body {
   margin-bottom: 4px;
 }
 
-/* ============================
-   FORM
-============================ */
-
+/* FORM */
 .sw-hs-sdform-ant-form {
   padding: 10px 14px 16px 14px;
 }
 
-/* these are added via className on each Form.Item */
+/* shared margin for all form items */
 .sw-hs-sdform-ant-form-item {
   margin-bottom: 10px;
 }
 
 /* 2 column layout */
-
 .sw-hs-sdform-ant-two-col {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
 }
 
-/* Textarea inside this form (we don't target ant classes, just the element) */
+/* DatePicker full width via class */
+.sw-hs-sdform-ant-date-picker {
+  width: 100%;
+}
 
+/* Textarea */
 .sw-hs-sdform-ant-form textarea {
   min-height: 55px;
   font-size: 12px;
 }
 
-/* ============================
-   BUTTONS
-============================ */
-
+/* BUTTONS */
 .sw-hs-sdform-ant-buttons {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -14271,14 +14277,7 @@ body {
   border: none !important;
 }
 
-/* ============================
-   RESPONSIVE DESIGN
-============================ */
-
-@media (max-width: 900px) {
-  /* Modal width behavior handled by Ant; inner content is already fluid */
-}
-
+/* RESPONSIVE */
 @media (max-width: 700px) {
   .sw-hs-sdform-ant-header {
     grid-template-columns: 1fr;
@@ -14316,7 +14315,6 @@ body {
     padding: 8px;
   }
 }
-
 
 
 /* Anil and Srihari Home Service CSS Updates */
