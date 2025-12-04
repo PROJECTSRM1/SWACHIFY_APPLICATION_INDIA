@@ -62,7 +62,7 @@ const RecentBookingPage: React.FC = () => {
       if (raw) setBookings(JSON.parse(raw));
     } catch {}
   }, []);
-
+console.log(bookings);
   useEffect(() => {
     try {
       const raw = localStorage.getItem(LS_STATUS_MAP_KEY);
