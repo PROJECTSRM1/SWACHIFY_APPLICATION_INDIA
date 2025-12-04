@@ -51,8 +51,8 @@ const RecentBookingPage: React.FC = () => {
   }
 
   return (
-    <div className="recent-booking-wrapper">
-      <h2 className="recent-booking-title">Recent Bookings</h2>
+    <div className="rb-container">
+      <h2 className="rb-heading">Recent Bookings</h2>
 
       <div className="recent-booking-content">
         <List
@@ -89,7 +89,6 @@ const RecentBookingPage: React.FC = () => {
                         </div>
                       )}
                     </Col>
-
                     <Col xs={24} sm={12}>
                       <div>
                         <strong>Amount:</strong> {item.amount ? `₹${item.amount}` : "—"}
