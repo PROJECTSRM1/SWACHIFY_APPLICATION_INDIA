@@ -3687,6 +3687,8 @@ body,
   align-items: center !important;
   box-shadow: none !important;
   transition: transform .2s ease, box-shadow .2s ease !important;
+  /* new added */
+  cursor: pointer;
 }
 
 /* center icon and content */
@@ -3717,6 +3719,13 @@ body,
   transform: translateY(-4px) !important;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08) !important;
 }
+
+/*.................. added for filerting .................*/
+.sw-fr-category-card-active {
+  border: 2px solid #1890ff;
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+}
+
 
 /* ensure category grid items center internal content on larger screens too */
 @media (min-width: 1024px) {
@@ -5290,8 +5299,64 @@ body {
 .sw-cp-product-meta { margin-top:auto; display:flex; align-items:center; justify-content:space-between; gap:12px; padding-top:6px; }
 .sw-cp-product-price { color:#2668ff; font-weight:700; font-size:16px; }
 
-.sw-cp-product-btn { background:#0b1220; color:#fff; border:none; border-radius:8px; padding:10px 18px; font-weight:600; cursor:pointer; box-shadow: 0 8px 20px rgba(11,18,32,0.12); }
-.sw-cp-product-btn:hover { transform: translateY(-2px); }
+.sw-cp-product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.sw-cp-product-body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.sw-cp-product-title {
+  margin: 0;
+  font-size: 16px;
+  color: #102028;
+  font-weight: 700;
+}
+
+.sw-cp-product-desc {
+  margin: 0;
+  color: #6b7b86;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.sw-cp-product-meta {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 6px;
+}
+
+.sw-cp-product-price {
+  color: #2668ff;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.sw-cp-product-btn {
+  background: #0b1220;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(11, 18, 32, 0.12);
+}
+
+.sw-cp-product-btn:hover {
+  transform: translateY(-2px);
+}
 
 /* =========================
    HOW IT WORKS / PROCESS
@@ -11511,10 +11576,11 @@ textarea {
   white-space: nowrap;
   font-size: 12px;
   cursor: pointer;
+  margin-top: -11px;
 }
 
 .sw-br-check-grid input[type="checkbox"] {
-  width: 16px;
+  width: 13px;
   height: 16px;
 }
 
@@ -11579,7 +11645,9 @@ textarea {
   .sw-br-header {
     border-radius: 1 !important;
     margin: 0 !important;
-    width: 189px;
+    width: 198px;
+    margin: 24px -5px 5px !important;
+
   }
 
   .sw-br-card {
@@ -11642,7 +11710,7 @@ textarea {
 
 /* Header */
 .sw-br-machinery-header {
-  width: 100%;
+  width: 99%;
   background: #005cfa;
   padding: 15px 20px;
   color: white;
@@ -11862,6 +11930,7 @@ textarea {
 .sw-br-mach-section-title {
   font-size: 16px;
   font-weight: 600;
+  margin-top: 5px;
   margin-bottom: 12px;
 }
 
@@ -11885,6 +11954,7 @@ textarea {
   width: 100%;
 }
 
+
 .sw-br-mach-form-item.full-width textarea {
   width: 100%;
   height: 100px !important;
@@ -11907,6 +11977,7 @@ textarea {
   align-items: center;
   gap: 8px;
   font-size: 12px;
+  margin-top: -10px;
   cursor: pointer;
 }
 
@@ -12017,6 +12088,7 @@ textarea {
   margin-bottom: 20px;
   border-radius: 14px;
   margin-top: 25px;
+  margin-left: 1px;
 }
 
 .sw-br-transport-header h2 {
@@ -12153,7 +12225,7 @@ textarea {
 }
 
 .sw-br-form-left {
-  width: 56%;
+  width: 68%;
 }
 
 .sw-br-form-image {
@@ -12237,7 +12309,7 @@ textarea {
 }
 
 .sw-br-modal-content {
-  width: 90%;
+  width: 60%;
   max-width: 850px;
   background: white;
   border-radius: 16px;
@@ -12275,7 +12347,7 @@ textarea {
 .sw-br-field3 input,
 .sw-br-field3 select,
 .sw-br-field3 textarea {
-  padding: 10px 14px;
+  padding: 5px 14px;
   border: 1px solid #cbd5e1;
   border-radius: 10px;
   font-size: 10px;
@@ -12310,10 +12382,11 @@ textarea {
   white-space: nowrap;
   font-size: 12px;
   cursor: pointer;
+  margin-top: -12px;
 }
 
 .sw-br-checkbox-group input[type="checkbox"] {
-  width: 16px;
+  width: 13px;
   height: 16px;
 }
 
@@ -13506,21 +13579,6 @@ body {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* booking overlay styles */
 .sw-booking-page-overlay {
   position: fixed;
@@ -13576,48 +13634,458 @@ body {
 
 /* /////vamsi Recent booking css//// */
 
+/* ===========================
+   RecentBookingPage - Clean X
+   =========================== */
+
 .recent-booking-wrapper {
   width: 100%;
-  min-height: 240px;
-  background: #fff;
-  padding: 20px;
-  box-sizing: border-box;
-}
-.recent-booking-title {
-  margin: 0 0 16px 0;
-  font-size: 22px;
-  text-align: center;
-}
-.recent-booking-card {
-  border-radius: 10px;
-}
-
-/* empty state (vamsi) */
-.recent-booking-wrapper-empty {
-  min-height: 220px;
+  max-height: 80vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 28px;
+
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 14px;
+
+  padding: 28px 36px 28px 28px;
+  box-sizing: border-box;
+  box-shadow: 0 12px 28px rgba(12, 18, 30, 0.10);
+  position: relative;
 }
-.recent-booking-wrapper-empty h1 {
-  margin: 0;
-  font-size: 36px;
-  color: #111827;
+
+/* Title */
+.recent-booking-title {
+  font-size: 26px;
+  font-weight: 800;
+  color: #071227;
+  margin: 4px 0 18px 0;
 }
-@media (max-width: 600px) {
-  .recent-booking-wrapper {
-    padding: 12px;
-  }
-  .recent-booking-title {
-    font-size: 20px;
-  }
-  .recent-booking-wrapper-empty h1 {
-    font-size: 28px;
-  }
+
+/* ---- CLEAN, CRISP CLOSE BUTTON ----
+   Using inline SVG so the stroke looks sharp on any device.
+   Positioned absolutely with high z-index so it never gets clipped.
+*/
+.recent-booking-close-btn-clean {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 10px;
+
+  display: inline-grid;
+  place-items: center;
+  cursor: pointer;
+
+  /* subtle frosted background so it reads on any content */
+  background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(247,247,249,0.98));
+  border: 1px solid rgba(14,20,40,0.06);
+  box-shadow: 0 8px 18px rgba(8, 18, 30, 0.06);
+  color: #0f172a;
+
+  z-index: 120; /* keep above everything */
+  transition: transform 140ms ease, box-shadow 140ms ease, background 140ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* SVG uses currentColor — tweak color here */
+.recent-booking-close-btn-clean svg {
+  color: #0b1220;
+  width: 16px;
+  height: 16px;
+  display: block;
+}
+
+/* hover / active / focus */
+.recent-booking-close-btn-clean:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 32px rgba(8, 18, 30, 0.09);
+  background: linear-gradient(180deg, #fff, #fbfbfd);
+}
+
+.recent-booking-close-btn-clean:active {
+  transform: translateY(-1px) scale(0.995);
+}
+
+.recent-booking-close-btn-clean:focus {
+  outline: 3px solid rgba(59,130,246,0.12);
+  outline-offset: 2px;
+}
+
+/* Better contrast alternative when needed:
+   .recent-booking-close-btn-clean.dark { background: #0b1220; color: #fff; } */
+
+/* scroll area */
+.recent-booking-content {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding-right: 10px;
+  -webkit-overflow-scrolling: touch;
+  margin-top: 6px;
+}
+
+/* grid layout for list items */
+.recent-booking-content .ant-list-items {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* Cards */
+.recent-booking-card {
+  border-radius: 12px !important;
+  padding: 6px;
+  background: #fff !important;
+  border: 1px solid #eef2f7 !important;
+  box-shadow: 0 6px 18px rgba(12, 18, 30, 0.04);
+}
+
+/* head adjustments */
+.recent-booking-card .ant-card-head-wrapper {
+  padding: 12px 14px;
+}
+.recent-booking-card .ant-card-head-title {
+  font-weight: 700;
+  font-size: 15px;
+  color: #071227;
+}
+.recent-booking-card .ant-card-extra {
+  margin-left: 8px;
+}
+
+/* card-delete button (small trash) */
+.card-delete-btn {
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  border: 1px solid rgba(226,232,240,0.95);
+  background: linear-gradient(180deg, rgba(255,255,255,0.95), #ffffff);
+  color: #ef4444;
+  cursor: pointer;
+  transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease;
+  padding: 0;
+}
+.card-delete-btn svg { font-size: 15px; }
+
+/* hover */
+.card-delete-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(239,68,68,0.08); }
+
+/* tag style */
+.ant-tag { padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 700; }
+
+/* scrollbar */
+.recent-booking-content::-webkit-scrollbar { width: 10px; }
+.recent-booking-content::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #94a3b8, #64748b); border-radius: 12px; }
+.recent-booking-content::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 12px; }
+
+/* responsive */
+@media (max-width: 880px) {
+  .recent-booking-wrapper { padding: 20px; border-radius: 12px; }
+  .recent-booking-close-btn-clean { top: 10px; right: 10px; width: 40px; height: 40px; }
+  .recent-booking-content .ant-list-items { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
 }
 
 
 /* /////vamsi Recent booking css//// */
+
+
+
+
+ /* anil & srihari vender page  */
+ 
+.sw-vendor-page {
+  padding: 30px 40px;
+  background: #f5f6f8;
+  min-height: calc(100vh - 65px);
+}
+
+/* Header */
+.sw-vendor-header-container {
+  background: #ffffff;
+  padding: 0 40px;
+  height: 65px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #e6e6e6;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.sw-vendor-header-left {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.sw-brand-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #e60000;
+}
+
+.sw-vendor-portal-text {
+  font-size: 15px;
+  color: #444;
+}
+
+.sw-vendor-header-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.sw-profile-avatar {
+  cursor: pointer;
+  background-color: #007bff;
+}
+
+/* Info Card */
+.sw-vendor-info-card {
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+}
+
+.sw-vendor-info-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.sw-vendor-label {
+  font-size: 13px;
+  color: gray;
+  margin-bottom: 4px;
+}
+
+.sw-vendor-value {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* Section Heading */
+.sw-section-title {
+  font-size: 18px;
+  margin: 18px 0 10px;
+  font-weight: 600;
+}
+
+/* Order Cards */
+.sw-order-card {
+  border-radius: 12px !important;
+  padding: 20px;
+  margin-bottom: 25px;
+  background: #fff;
+}
+
+.sw-accepted-order {
+  border-left: 6px solid #2ecc71;
+}
+
+.sw-pending-order {
+  border-left: 6px solid #f4d03f;
+}
+
+/* Card header (title + ID) */
+.sw-order-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.sw-order-id {
+  font-size: 13px;
+  color: #777;
+}
+
+/* Details row (icons) */
+
+.sw-order-details {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-top: 6px;
+  flex-wrap: wrap;
+}
+
+.sw-order-details p {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: #333;
+}
+
+.sw-order-details .anticon {
+  font-size: 16px;
+  color: #005cfa;
+  display: inline-flex;
+}
+
+.sw-deliver-btn {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  background: #005cfa !important;
+  color: #fff !important;
+  border: none !important;
+  outline: none !important;
+  /* border-radius: 10px !important; */
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 12px 0 0 0 !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+.sw-deliver-btn span { 
+  padding: 0 22px !important;  /* ✅ this pads the text properly inside */
+}
+.sw-deliver-btn:hover {
+  box-shadow: 0 4px 12px rgba(0, 92, 250, 0.3);
+   background: #005cfa !important;
+  border: none !important;
+}
+
+
+
+/* Request description text */
+.sw-request-description {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+/* Accept / Reject buttons area */
+.sw-request-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+
+.sw-accept-btn, .sw-accept-btn:hover {
+ 
+  width: 100%;
+  height: 45px;
+  background: #06A826 !important;
+  color: #fff !important;
+  border: none !important;
+  outline: none !important;
+  /* border-radius: 12px !important; */
+  box-shadow: none !important;  /* Remove outer glow bleed */
+  padding: 0 !important;        /* Prevent inner crop */
+  margin: 0 !important;         /* Avoid spacing issues */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.sw-reject-btn, .sw-reject-btn:hover {
+  width: 100%;
+  height: 45px;
+  background: #d92121 !important;
+  color: #fff !important;
+  border: none !important;
+  outline: none !important;
+  /* border-radius: 12px !important; */
+  box-shadow: none !important;  /* Remove outer glow bleed */
+  padding: 0 !important;        /* Prevent inner crop */
+  margin: 0 !important;         /* Avoid spacing issues */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Empty state text */
+.sw-empty-text {
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 20px;
+}
+
+/* 📱 RESPONSIVE BREAKPOINTS */
+
+/* Tablets and small laptops */
+@media (max-width: 1024px) {
+  .sw-vendor-page {
+    padding: 20px;
+  }
+
+  .sw-vendor-info-row {
+    flex-wrap: wrap;
+  }
+
+  .sw-order-details {
+    gap: 16px;
+  }
+}
+
+/* Tablets / large phones */
+@media (max-width: 768px) {
+  .sw-vendor-header-container {
+    padding: 0 20px;
+  }
+
+  .sw-brand-title {
+    font-size: 20px;
+  }
+
+  .sw-order-details {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .sw-request-actions {
+    flex-direction: column;
+  }
+
+  .sw-accept-btn,
+  .sw-reject-btn {
+    width: 100%;
+  }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+  .sw-vendor-header-container {
+    height: auto;
+    padding: 10px 15px;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .sw-vendor-page {
+    padding: 15px;
+  }
+
+  .sw-vendor-info-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .sw-order-card {
+    padding: 16px;
+  }
+
+  .sw-section-title {
+    font-size: 16px;
+  }
+}
+
+/* anil & srihari vender page  */
 

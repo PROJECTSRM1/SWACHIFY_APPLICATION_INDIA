@@ -9,6 +9,13 @@ export interface CartItem {
   price: string|number;
   totalPrice: number;
 
+  basePrice?: number;
+  operatorCharge?: number;
+  fuelCharge?: number;
+  deliveryCharge?: number;
+  unloadingCharge?: number;
+  unit?: string;
+
 
   customerName: string;
   deliveryType: string;
