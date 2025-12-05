@@ -35,6 +35,18 @@ import vehicleTransportImg from '../../assets/landingimages/vehicle-transport.jp
 import Loadingtransport from '../../assets/landingimages/Loadingtransport.jpg';
 import insurance from '../../assets/landingimages/insurance.jpeg';
 // =====================
+
+/**
+ * Allow calling the header modal helper added by CommonHeader
+ * (CommonHeader sets window.openAuthModal in its useEffect)
+ */
+declare global {
+  interface Window {
+    openAuthModal?: (tab?: "login" | "register") => void;
+    closeAuthModal?: () => void;
+  }
+}
+
 const { TabPane } = Tabs;
 const services = [
   {
@@ -198,6 +210,18 @@ const LandingPackers: React.FC = () => {
     </Modal>
   );
 
+  // --- NEW: handler used by the Request Quote form submit (only added logic) ---
+  const handleRequestQuoteSubmit = (values: any) => {
+    // open the header signup (register) modal if available, else fallback to local modal
+    if (typeof window !== "undefined" && (window as any).openAuthModal) {
+      (window as any).openAuthModal("register");
+    } else {
+      setAuthVisible(true);
+    }
+    console.log("Request Quote submitted (redirecting to signup):", values);
+  };
+  // ---------------------------------------------------------------------------
+
   return (
     <div className="sw-lpm-classname-packers-container">
       <CommonHeader selectedKey="LandingPackers" />
@@ -209,7 +233,39 @@ const LandingPackers: React.FC = () => {
         <div className="sw-lpm-classname-hero-overlay">
           <h1>Stress-Free Relocation Services</h1>
           <p>From packing to delivery, we make your move effortless.</p>
-          <Button type="primary" size="large">Book Now</Button>
+
+          {/* Book Now -> open header signup (register) modal
+              Get Quote -> open header signup (register) modal
+              (Using window.openAuthModal which CommonHeader exposes) */}
+          <div style={{ display: 'flex', gap: 12, marginTop: 12 }}>
+            <Button
+              type="primary"
+              size="large"
+              onClick={() => {
+                if (typeof window !== "undefined" && (window as any).openAuthModal) {
+                  (window as any).openAuthModal("register");
+                } else {
+                  // fallback: open local modal as a safe fallback
+                  setAuthVisible(true);
+                }
+              }}
+            >
+              Book Now
+            </Button>
+
+            <Button
+              size="large"
+              onClick={() => {
+                if (typeof window !== "undefined" && (window as any).openAuthModal) {
+                  (window as any).openAuthModal("register");
+                } else {
+                  setAuthVisible(true);
+                }
+              }}
+            >
+              Get Quote
+            </Button>
+          </div>
         </div>
       </section>
 
@@ -239,7 +295,19 @@ const LandingPackers: React.FC = () => {
               <ul>
                 {t.features.map((f, idx) => <li key={idx}>{f}</li>)}
               </ul>
-              <Button type="primary">Get Quote</Button>
+              <Button
+                type="primary"
+                onClick={() => {
+                  // keep existing behavior for in-card Get Quote — open header register
+                  if (typeof window !== "undefined" && (window as any).openAuthModal) {
+                    (window as any).openAuthModal("register");
+                  } else {
+                    setAuthVisible(true);
+                  }
+                }}
+              >
+                Get Quote
+              </Button>
             </Card>
           ))}
         </div>
@@ -252,7 +320,8 @@ const LandingPackers: React.FC = () => {
         {/* container that expands full width on large screens but keeps readable max-width */}
         <div className="sw-lpm-classname-quote-form-wrap">
           <div className="sw-lpm-classname-quote-form-container">
-            <Form layout="vertical" className="sw-lpm-classname-quote-form">
+            {/* ADDED onFinish prop and changed button to htmlType="submit" (no other logic altered) */}
+            <Form layout="vertical" className="sw-lpm-classname-quote-form" onFinish={handleRequestQuoteSubmit}>
               <Row gutter={[16, 12]}>
                 <Col xs={24} md={12}>
                   <Form.Item label="Full Name" name="fullName" rules={[{ required: true }]}>
@@ -298,7 +367,7 @@ const LandingPackers: React.FC = () => {
 
                 <Col xs={24}>
                   <Form.Item>
-                    <Button type="primary" block className="sw-lpm-classname-quote-submit-btn">Submit</Button>
+                    <Button type="primary" htmlType="submit" block className="sw-lpm-classname-quote-submit-btn">Submit</Button>
                   </Form.Item>
                 </Col>
               </Row>
@@ -321,59 +390,6 @@ const LandingPackers: React.FC = () => {
         </div>
       </section>
 
-      {/* FOOTER */}
-      {/* <footer className="sw-lpm-classname-lr-footer sw-lpm-classname-site-footer" role="contentinfo" aria-label="Footer">
-        <div className="sw-lpm-classname-lr-footer-inner sw-lpm-classname-lr-footer-grid">
-          <div className="sw-lpm-classname-lr-footer-col">
-            <h4>About Us</h4>
-            <p className="sw-lpm-classname-lr-footer-about">
-              Your trusted partner for all home and property-related services. Quality,
-              reliability, and customer satisfaction guaranteed.
-            </p>
-          </div>
-          <div className="sw-lpm-classname-lr-footer-col">
-            <h4>Services</h4>
-            <ul className="sw-lpm-classname-lr-footer-list">
-              <li>Cleaning Service</li>
-              <li>Packers & Movers</li>
-              <li>Home Services</li>
-              <li>Rentals</li>
-              <li>Commercial Plots</li>
-              <li>Construction Materials</li>
-            </ul>
-          </div>
-          <div className="sw-lpm-classname-lr-footer-col">
-            <h4>Quick Links</h4>
-            <ul className="sw-lpm-classname-lr-footer-list">
-              <li>Home</li>
-              <li>About</li>
-              <li>Contact</li>
-              <li>Careers</li>
-            </ul>
-          </div>
-          <div className="sw-lpm-classname-lr-footer-col">
-            <h4>Contact Info</h4>
-            <ul className="sw-lpm-classname-lr-contact-list">
-              <li className="sw-lpm-classname-lr-contact-phone">
-                <span aria-hidden className="sw-lpm-classname-lc-contact-icon">📞</span>
-                <span className="sw-lpm-classname-lc-contact-text"> +1 (555) 123-4567</span>
-              </li>
-              <li>✉️ &nbsp; info@homeservices.com</li>
-              <li>📍 &nbsp; 123 Service Street, City, State</li>
-            </ul>
-            <div className="sw-lpm-classname-lr-footer-socials" aria-hidden>
-              <a className="sw-lpm-classname-social" href="#" aria-label="facebook">f</a>
-              <a className="sw-lpm-classname-social" href="#" aria-label="twitter">t</a>
-              <a className="sw-lpm-classname-social" href="#" aria-label="instagram">ig</a>
-              <a className="sw-lpm-classname-social" href="#" aria-label="linkedin">in</a>
-            </div>
-          </div>
-        </div>
-        <div className="sw-lpm-classname-lr-footer-bottom">
-          <div className="sw-lpm-classname-lr-footer-sep" />
-          <div className="sw-lpm-classname-lr-footer-copy">© 2025 Home Services. All rights reserved.</div>
-        </div>
-      </footer> */}
       <FooterSection selectedKey="LandingPackers" />
       
     </div>
