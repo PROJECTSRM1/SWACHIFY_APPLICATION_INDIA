@@ -17,7 +17,7 @@ import {
   Space,
   Form,
 
-  message,
+
 } from "antd";
 // near top of file — replace or extend existing icon imports
 import {
@@ -84,11 +84,14 @@ const CommercialPlots: React.FC = () => {
     });
   }, [searchLocation, searchType]);
 
-  const handleBookingSubmit = (values: any) => {
-    console.log("Consultation booking values:", values);
-    message.success("Booking request submitted");
-    setTimeout(() => navigate("/app/dashboard"), 150);
-  };
+  const handleBookingSubmit = () => {
+  if ((window as any).openAuthModal) {
+    (window as any).openAuthModal("register"); // Opens Sign-Up page/modal
+  } else {
+    navigate("/signup"); // fallback direct route if modal not available
+  }
+};
+
 
   return (
     <Layout className="sw-cp-cp-layout">
