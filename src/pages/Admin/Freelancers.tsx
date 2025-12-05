@@ -1,4 +1,5 @@
 
+
 import { Badge, Button, Descriptions, Modal, Space, Table, Tag } from 'antd'
 import { CheckOutlined, CloseOutlined, EyeOutlined, StarFilled } from '@ant-design/icons'
 import { useMemo, useState } from 'react'
@@ -36,6 +37,7 @@ const FreelancersPage = ({
           rowKey="id"
           dataSource={allFreelancers}
           pagination={{ pageSize: 10, responsive: true }}
+          scroll={{ x: 'max-content' }}
           columns={[
             { title: 'ID', dataIndex: 'id', width: 100 },
             { title: 'Name', dataIndex: 'name' },
@@ -148,7 +150,7 @@ const FreelancersPage = ({
         width={700}
       >
         {viewFreelancer && (
-          <Descriptions bordered column={2} size="small">
+          <Descriptions bordered column={{ xs: 1, sm: 1, md: 2 }} size="small">
             <Descriptions.Item label="ID" span={2}>
               {viewFreelancer.id}
             </Descriptions.Item>
