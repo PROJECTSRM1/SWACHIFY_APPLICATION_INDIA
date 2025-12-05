@@ -1,5 +1,4 @@
 
-
 import { Badge, Button, Descriptions, Input, Modal, Select, Space, Table, Tag, message } from 'antd'
 import { EyeOutlined, FilterOutlined, SearchOutlined } from '@ant-design/icons'
 import { useMemo, useState } from 'react'
@@ -14,7 +13,7 @@ type Props = {
 }
 
 
-const TicketsPage = ({ tickets, onAssign }: Props) => {
+const TicketsPage = ({ tickets,  onAssign }: Props) => {
   const [filters, setFilters] = useState({ search: '', status: 'all', sort: 'recent' })
   const [viewTicket, setViewTicket] = useState<Ticket | null>(null)
   const [assignState, setAssignState] = useState<{ ticket: Ticket | null; assignee: string; location: string; selectedEmployee: Freelancer | null; services: string[] }>({
@@ -130,7 +129,7 @@ const TicketsPage = ({ tickets, onAssign }: Props) => {
                   >
                     Assign
                   </Button>
-          
+                 
                 </Space>
               ),
             },
@@ -248,7 +247,7 @@ const TicketsPage = ({ tickets, onAssign }: Props) => {
                 )}
                 pagination={false}
                 size="small"
-                scroll={{ y: 300 }}
+                scroll={{ y: 300, x: 'max-content' }}
                 rowClassName={(record) =>
                   assignState.selectedEmployee?.id === record.id ? 'ant-table-row-selected' : ''
                 }
@@ -277,7 +276,7 @@ const TicketsPage = ({ tickets, onAssign }: Props) => {
                     title: 'Skills',
                     dataIndex: 'skills',
                     render: (skills: string[], record: Freelancer) => {
-                      const maxVisible = 2
+                      const maxVisible = 1
                       const visibleSkills = skills.slice(0, maxVisible)
                       const hasMore = skills.length > maxVisible
 
