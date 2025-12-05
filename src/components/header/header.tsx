@@ -16,7 +16,7 @@ import { customerLogout } from "../../api/customerAuth";
 import "../../index.css";
 import { useCart } from "../../context/CartContext";
 import RecentBookingPage from "../../pages/RecentBookingPage";
-import PaymentPage from "../../pages/PaymentPage";
+//import PaymentPage from "../../pages/PaymentPage";
 import ConfirmBookingModal from "../ConfirmAddressModal";
 
 type Booking = {
@@ -47,8 +47,7 @@ const Header: React.FC = () => {
   const [selectedCartItem, setSelectedCartItem] = useState<any | null>(null);
 
   // payment overlay
-  const [showPaymentOverlay, setShowPaymentOverlay] = useState(false);
-  const [selectedBookingForPayment, setSelectedBookingForPayment] = useState<Booking | null>(null);
+  
 
 
 const handleLogout = async () => {
@@ -143,23 +142,15 @@ const handleLogout = async () => {
 
   const handleBookingConfirmed = (booking: Booking) => {
     addBookingToLocalStorage(booking);
-    message.success("Opening payment...");
+    
 
     setCartOpen(false);
     setConfirmModalOpen(false);
 
-    setSelectedBookingForPayment(booking);
-    setShowPaymentOverlay(true);
+    
   };
 
-  const handlePaymentClose = () => {
-    setShowPaymentOverlay(false);
-    setSelectedBookingForPayment(null);
-  };
-
-  const handlePaymentSuccess = () => {
-    message.success("Payment completed");
-  };
+ 
 
   // Escape Key Close
   useEffect(() => {
@@ -168,7 +159,7 @@ const handleLogout = async () => {
         setCartOpen(false);
         setShowBookingPage(false);
         setConfirmModalOpen(false);
-        setShowPaymentOverlay(false);
+       
       }
     };
     document.addEventListener("keydown", handler);
@@ -294,13 +285,7 @@ const handleLogout = async () => {
         )}
 
         {/* PAYMENT OVERLAY */}
-        {showPaymentOverlay && selectedBookingForPayment && (
-          <PaymentPage
-            booking={selectedBookingForPayment}
-            onClose={handlePaymentClose}
-            onPaid={() => handlePaymentSuccess()}
-          />
-        )}
+       
       </div>
     </div>
   );
