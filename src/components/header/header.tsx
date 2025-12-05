@@ -11,6 +11,8 @@ import {
 import { Menu, Drawer, message, Button, Dropdown, Badge, Avatar } from "antd";
 import { useNavigate } from "react-router-dom";
 
+import { customerLogout } from "../../api/customerAuth";
+
 import "../../index.css";
 import { useCart } from "../../context/CartContext";
 import RecentBookingPage from "../../pages/RecentBookingPage";
@@ -48,11 +50,24 @@ const Header: React.FC = () => {
   const [showPaymentOverlay, setShowPaymentOverlay] = useState(false);
   const [selectedBookingForPayment, setSelectedBookingForPayment] = useState<Booking | null>(null);
 
-  const handleLogout = () => {
-    localStorage.removeItem("user");
-    message.success("Logout successful");
-    navigate("/landing");
-  };
+
+const handleLogout = async () => {
+  try {
+    await customerLogout();     // wait but safe even if user invalid
+  } catch (err) {
+    console.warn("Logout API failed but continuing", err);
+  }
+
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("refreshToken");
+  localStorage.removeItem("user");
+
+  message.success("Logout successful");
+  navigate("/landing", { replace: true });
+};
+
+
+
 
   const handleNavigate = (key: string) => {
     if (key === "packers") navigate("/app/dashboard/packers");

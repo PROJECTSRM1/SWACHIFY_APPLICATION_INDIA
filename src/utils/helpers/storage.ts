@@ -1,8 +1,19 @@
-export function getUserDetails(type:any): any | null {
-  const user = localStorage.getItem(type);
-  return user ? JSON.parse(user) : null;
+export function getUserDetails(type: any): any | null {
+  try {
+    const raw = localStorage.getItem(type);
+
+    if (!raw || raw === "undefined" || raw === "null") return null;
+
+    return JSON.parse(raw);
+  } catch {
+    return null;
+  }
 }
 
-export function setUserDetails(type:any,data:any): any | null {
-  return localStorage.setItem(type,JSON.stringify(data));
+export function setUserDetails(type: any, data: any): void {
+  if (!data) {
+    localStorage.removeItem(type);
+    return;
+  }
+  localStorage.setItem(type, JSON.stringify(data));
 }

@@ -8,6 +8,10 @@ import {
 //   GithubOutlined,
 } from "@ant-design/icons";
 
+import { freelancerLogin } from "../../api/freelancerAuth";
+import { message } from "antd";
+
+
 import {
   Layout,
   Card,
@@ -27,14 +31,30 @@ export default function Freelancerlogin() {
 //   const [showPassword, setShowPassword] = useState(false);
   const [form] = Form.useForm();
 
-  const onFinish = () => {
+ const onFinish = async (values: any) => {
+  try {
     setLoading(true);
 
-    setTimeout(() => {
-      setLoading(false);
-      navigate("/freelancer-dashboard");
-    }, 1300);
-  };
+    const payload = {
+      email_or_phone: values.email,
+      password: values.password,
+    };
+
+    const res = await freelancerLogin(payload);
+
+    message.success("Login successful");
+    navigate("/freelancer-dashboard");
+
+  } catch (err: any) {
+    console.error("Freelancer Login Error", err);
+    message.error(
+      err?.response?.data?.message || "Invalid credentials"
+    );
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <Layout className="sw-fr-login-wrapper">
