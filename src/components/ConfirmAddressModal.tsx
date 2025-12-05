@@ -1,6 +1,5 @@
-// src/components/header/ConfirmAddressModal.tsx
 import { useEffect } from "react";
-import { Modal, Button, Form, Input } from "antd";
+import { Modal, Button, Form, Input, message } from "antd";
 
 type CartItemLike = {
   id?: number | string;
@@ -24,6 +23,7 @@ export type Booking = {
   amount?: number;
   address?: string;
   notes?: string;
+   customerName?: string; 
 };
 
 type Props = {
@@ -48,13 +48,76 @@ export default function ConfirmAddressModal({ open, item, onClose, onConfirm }: 
 
   if (!item) return null;
 
+  // 🎯 MAIN PAYMENT FUNCTION
+  const handlePayment = async (booking: Booking) => {
+    try {
+      // 1️⃣ Create order from backend
+      const res = await fetch("http://127.0.0.1:8000/api/payments/create-order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          bookingId: booking.id,
+          amount: (booking.amount ?? 0) * 100, // convert to paise
+        }),
+      });
+
+      const order = await res.json();
+
+      // 2️⃣ Razorpay checkout config
+      const options = {
+       key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+
+        amount: order.amount,
+        currency: "INR",
+        name: "Swachify Services",
+        description: booking.title,
+        order_id: order.id,
+
+        handler: async function (response: any) {
+          console.log("Payment success:", response);
+
+          
+          await fetch("http://127.0.0.1:8000/api/payments/verify-payment", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              order_id: order.id,
+              payment_id: response.razorpay_payment_id,
+              signature: response.razorpay_signature,
+            }),
+          });
+
+          message.success("Payment successful!");
+
+         
+          onConfirm(booking);
+          onClose();
+        },
+
+        prefill: {
+          name: booking.customerName ?? "Customer",
+        },
+      };
+
+    
+      //@ts-ignore
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+    } catch (error) {
+      console.error(error);
+      message.error("Payment failed. Try again.");
+    }
+  };
+
+  
   const handleOk = async () => {
     try {
       const values = await form.validateFields();
+
       const now = new Date();
       const booking: Booking = {
         id: `bkg-${Date.now()}`,
-        title: item.title ?? "Untitled",
+        title: item.title ?? "Service",
         date: now.toISOString().split("T")[0],
         time: now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
         status: "Upcoming",
@@ -63,9 +126,11 @@ export default function ConfirmAddressModal({ open, item, onClose, onConfirm }: 
         address: values.address,
         notes: item.instructions ?? "",
       };
-      onConfirm(booking);
+
+      
+      handlePayment(booking);
     } catch (err) {
-      // validation errors handled by antd
+
     }
   };
 
@@ -85,7 +150,7 @@ export default function ConfirmAddressModal({ open, item, onClose, onConfirm }: 
           <h3 style={{ marginTop: 0 }}>{item.title}</h3>
           <p style={{ color: "#6b7280", marginBottom: 12 }}>Qty: {item.quantity ?? 1}</p>
 
-          <Form form={form} layout="vertical" initialValues={{ address: item.address ?? "" }}>
+          <Form form={form} layout="vertical">
             <Form.Item
               name="address"
               label="Delivery address"
