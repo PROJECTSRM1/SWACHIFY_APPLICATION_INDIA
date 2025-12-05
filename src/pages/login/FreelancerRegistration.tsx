@@ -13,6 +13,9 @@ import gpayLogo from "../../assets/Google_Pay_Logo.svg";
 import phonepeLogo from "../../assets/phonepe.webp";
 import paytmLogo from "../../assets/Paytm.svg";
 import { useNavigate } from 'react-router-dom';
+import { freelancerRegister } from "../../api/freelancerAuth";
+import { message } from "antd";
+
 
 
 
@@ -144,31 +147,56 @@ export default function Registration() {
 
   // Create account after payment
     const handleCreateAccount = async (e: React.FormEvent) => {
-      e.preventDefault();
+  e.preventDefault();
 
-      if (!paymentCompleted) {
-        Modal.warning({
-          title: 'Payment required',
-          content: 'Please complete the payment (Pay ₹499) before creating the account.',
-        });
-        return;
-      }
+  if (!paymentCompleted) {
+    Modal.warning({
+      title: "Payment required",
+      content: "Please complete payment before account creation."
+    });
+    return;
+  }
 
-      // 🔥 Prepare final data to send to backend
-      const payload = {
-        ...formData,
-        employeeId: 4,        // ✅ Always attach employee ID = 4
-      };
+  const payload = {
+    first_name: formData.firstName,
+    last_name: formData.lastName,
+    email: formData.email,
+    mobile: formData.phone,
+    password: formData.password,
+    confirm_password: formData.confirmPassword,
+    gender_id: formData.gender === "male" ? 1 : formData.gender === "female" ? 2 : 3,
+    state_id: 1, // or dynamic dropdown later
+    district_id: 1, // or actual value later
+    skill_id: formData.skills.length > 0 ? 1 : 2, // backend expects single skill id
+    government_id_type: "PAN",
+    government_id_number: formData.panNumber,
+    address: formData.location
+  };
 
-      console.log("Sending to backend:", payload);
+  console.log("Payload going to API:", payload);
 
-      // simulate backend request
-      setLoading(true);
-      setTimeout(() => {
-        setLoading(false);
-        setShowSuccessModal(true);
-      }, 1400);
-    };
+  try {
+    setLoading(true);
+
+    const res = await freelancerRegister(payload);
+
+    if (res?.data?.data) {
+      localStorage.setItem("freelancerToken", res.data?.data?.token);
+      localStorage.setItem("freelancer", JSON.stringify(res.data?.data));
+    }
+
+    message.success("Freelancer registration successful!");
+    setShowSuccessModal(true);
+
+  } catch (error: any) {
+    console.error("Freelancer Registration Error", error);
+    message.error(error?.response?.data?.detail || "Registration failed");
+  } finally {
+    setLoading(false);
+  }
+};
+
+
 
 const navigate = useNavigate();
   const closeFinalSuccess = () => {
