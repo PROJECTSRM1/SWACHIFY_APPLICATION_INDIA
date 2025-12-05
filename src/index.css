@@ -17537,3 +17537,97 @@ width: 100%;
   .sw-booking-page-content { width: 100%; height: 100%; max-width: none; border-radius: 0; }
   .sw-booking-page-overlay { align-items: flex-end; justify-content: center; }
 }
+
+
+/* FIX CLOSE BUTTON POSITION */
+.sw-booking-page-content {
+  position: relative;
+}
+
+.sw-booking-page-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 9999;
+
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 6px 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* ========================================
+   PERFECT MOBILE LAYOUT — COMPACT VERSION
+   ======================================== */
+@media (max-width: 480px) {
+
+  /* Stack vertically + reduce gap */
+  .recent-booking-wrapper .ant-row.ant-row-middle {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 6px !important;   /* reduced gap */
+  }
+
+  /* IMAGE smaller + centered */
+  .recent-booking-wrapper .booking-image {
+    display: flex !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    margin-bottom: 4px !important;
+  }
+
+  .recent-booking-wrapper .booking-image img {
+    width: 70px !important;   /* reduced image size */
+    height: 70px !important;
+    border-radius: 8px !important;
+  }
+
+  /* TEXT centered + reduced spacing */
+  .recent-booking-wrapper .booking-text {
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    text-align: center !important;
+  }
+
+  /* Date & Time stacked */
+  .recent-booking-wrapper .booking-text > div:nth-child(2) {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2px !important;   /* reduce space between date & time */
+    align-items: center !important;
+  }
+
+  /* STATUS badge centered + reduced spacing */
+  .recent-booking-wrapper .booking-status {
+    width: 100% !important;
+    padding: 0 !important;
+    margin-top: 2px !important;
+    display: flex !important;
+    justify-content: center !important;
+  }
+
+  .recent-booking-wrapper .booking-status .ant-tag {
+    font-size: 11px !important;  /* smaller badge */
+    padding: 4px 10px !important;
+  }
+
+  /* CARD: shrink padding (THIS REDUCES MOST WHITE SPACE) */
+  .recent-booking-wrapper .ant-card-body {
+    padding: 8px 10px !important;  /* reduced from 16px */
+  }
+
+  .recent-booking-wrapper .ant-card {
+    padding: 0 !important; /* remove outer padding */
+    border-radius: 8px !important;
+  }
+
+  /* Reduce gap between cards */
+  .recent-booking-wrapper .ant-list-item {
+    margin-bottom: 8px !important;
+  }
+}

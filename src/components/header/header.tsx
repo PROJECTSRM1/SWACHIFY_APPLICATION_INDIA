@@ -11,10 +11,12 @@ import {
 import { Menu, Drawer, message, Button, Dropdown, Badge, Avatar } from "antd";
 import { useNavigate } from "react-router-dom";
 
+import { customerLogout } from "../../api/customerAuth";
+
 import "../../index.css";
 import { useCart } from "../../context/CartContext";
 import RecentBookingPage from "../../pages/RecentBookingPage";
-import PaymentPage from "../../pages/PaymentPage";
+//import PaymentPage from "../../pages/PaymentPage";
 import ConfirmBookingModal from "../ConfirmAddressModal";
 
 type Booking = {
@@ -45,14 +47,26 @@ const Header: React.FC = () => {
   const [selectedCartItem, setSelectedCartItem] = useState<any | null>(null);
 
   // payment overlay
-  const [showPaymentOverlay, setShowPaymentOverlay] = useState(false);
-  const [selectedBookingForPayment, setSelectedBookingForPayment] = useState<Booking | null>(null);
+  
 
-  const handleLogout = () => {
-    localStorage.removeItem("user");
-    message.success("Logout successful");
-    navigate("/landing");
-  };
+
+const handleLogout = async () => {
+  try {
+    await customerLogout();     // wait but safe even if user invalid
+  } catch (err) {
+    console.warn("Logout API failed but continuing", err);
+  }
+
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("refreshToken");
+  localStorage.removeItem("user");
+
+  message.success("Logout successful");
+  navigate("/landing", { replace: true });
+};
+
+
+
 
   const handleNavigate = (key: string) => {
     if (key === "packers") navigate("/app/dashboard/packers");
@@ -119,6 +133,7 @@ const Header: React.FC = () => {
     } catch {}
   };
 
+
   const handleBuyNowClick = (item: any) => {
     // open confirm address modal (asks "is this address ok?" and allows edit)
     setSelectedCartItem(item);
@@ -127,23 +142,15 @@ const Header: React.FC = () => {
 
   const handleBookingConfirmed = (booking: Booking) => {
     addBookingToLocalStorage(booking);
-    message.success("Opening payment...");
+    
 
     setCartOpen(false);
     setConfirmModalOpen(false);
 
-    setSelectedBookingForPayment(booking);
-    setShowPaymentOverlay(true);
+    
   };
 
-  const handlePaymentClose = () => {
-    setShowPaymentOverlay(false);
-    setSelectedBookingForPayment(null);
-  };
-
-  const handlePaymentSuccess = () => {
-    message.success("Payment completed");
-  };
+ 
 
   // Escape Key Close
   useEffect(() => {
@@ -152,7 +159,7 @@ const Header: React.FC = () => {
         setCartOpen(false);
         setShowBookingPage(false);
         setConfirmModalOpen(false);
-        setShowPaymentOverlay(false);
+       
       }
     };
     document.addEventListener("keydown", handler);
@@ -201,7 +208,7 @@ const Header: React.FC = () => {
         </Dropdown>
 
         {/* CART DRAWER */}
-        <Drawer placement="right" width={350} open={cartOpen} onClose={() => setCartOpen(false)}>
+        <Drawer placement="right" width={350} open={cartOpen} onClose={() => setCartOpen(false)} closable={false}>
           <div className="sw-cart-drawer-header">
             <div className="sw-cart-drawer-title">
               {cart.length === 0 ? "Your cart is empty" : `Your cart (${cart.length})`}
@@ -278,13 +285,7 @@ const Header: React.FC = () => {
         )}
 
         {/* PAYMENT OVERLAY */}
-        {showPaymentOverlay && selectedBookingForPayment && (
-          <PaymentPage
-            booking={selectedBookingForPayment}
-            onClose={handlePaymentClose}
-            onPaid={() => handlePaymentSuccess()}
-          />
-        )}
+       
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 // src/pages/landing/Header.tsx
 import React, { useState, useEffect } from "react";
-import { setUserDetails } from "../../utils/helpers/storage";
+//import { setUserDetails } from "../../utils/helpers/storage";
 import { Link, useNavigate } from "react-router-dom";
 import {
   Button,
@@ -20,6 +20,8 @@ import {
   CloseOutlined,
 } from "@ant-design/icons";
 
+import { customerRegister, customerLogin } from "../../api/customerAuth"; // ✅ NEW
+
 import "./Header.css";
 
 const navItems = [
@@ -29,8 +31,11 @@ const navItems = [
     label: <Link to="/cleaningservice">Cleaning&Home Services</Link>,
   },
   { key: "packers", label: <Link to="/LandingPackers">Transport</Link> },
- 
-  { key: "commercial", label: <Link to="/commercial-plots">Buy/Sale/Rentals</Link> },
+
+  {
+    key: "commercial",
+    label: <Link to="/commercial-plots">Buy/Sale/Rentals</Link>,
+  },
   { key: "materials", label: <Link to="/ConstructionMaterials">Raw Materials</Link> },
   { key: "education", label: <Link to="/">Education</Link> },
   { key: "Swachifyproducts", label: <Link to="/">Swachify Products</Link> },
@@ -39,33 +44,20 @@ const navItems = [
 
 const { TabPane } = Tabs;
 
-type RegisteredUser = {
-  firstName?: string;
-  lastName?: string;
-  fullname?: string; // backward compatibility
-  email: string;
-  phone: string;
-  password: string;
-  address?: string;
-  gender?: string;
-  customerId?: number; // hidden payload to send to DB
-};
-
-const STORAGE_KEY = "swachify_registered_user";
-
 const CommonHeader: React.FC<{ selectedKey?: string }> = ({
   selectedKey = "home",
 }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [authModalVisible, setAuthModalVisible] = useState(false);
-  
 
   const [forgotModalVisible, setForgotModalVisible] = useState(false);
-
   const [vendorModalVisible, setVendorModalVisible] = useState(false);
 
-  const [activeAuthTab, setActiveAuthTab] = useState<"login" | "register">("register");
+  const [activeAuthTab, setActiveAuthTab] = useState<"login" | "register">(
+    "register"
+  );
 
+  const [authLoading, setAuthLoading] = useState(false); // ✅ NEW
   const navigate = useNavigate();
 
   const openAuthModal = (tab: "login" | "register" = "register") => {
@@ -96,128 +88,121 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // run once on mount
 
+  // ==========================
+  // CUSTOMER LOGIN (BACKEND)
+  // ==========================
   const onLogin = async (values: any) => {
   try {
-    const identifier = (values.identifier || "").toString().trim();
-    const password = (values.password || "").toString();
+    const identifier = values.identifier?.toString().trim();
+    const password = values.password;
 
-    if (!identifier || !password) {
-      message.error("Please enter identifier and password");
-      return;
-    }
-
-    // ---------------------------------------
-    // 🔥 ADMIN LOGIN CHECK (hardcoded)
-    // ---------------------------------------
+    // Admin (local) – keep
     if (identifier === "admin@gmail.com" && password === "1234") {
       message.success("Admin login successful");
       closeAuthModal();
-      navigate("/adminshell/dashboard"); // <-- your admin route
-      return;
-    }
-    // ---------------------------------------
-
-    // Normal user login
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (!stored) {
-      message.error("No registered user found. Please register first.");
+      navigate("/adminshell/dashboard");
       return;
     }
 
-    const user: RegisteredUser = JSON.parse(stored);
+    const loginPayload = {
+      email_or_phone: identifier,
+      password,
+    };
 
-    const identifierMatches =
-      identifier.toLowerCase() === user.email.toLowerCase() ||
-      identifier === user.phone;
+    setAuthLoading(true);
 
-    if (identifierMatches && password === user.password) {
-      setUserDetails("user", {
-        name: user.fullname,
-        email: user.email,
-        phone: user.phone,
-        address: user.address,
-      });
+    const res: any = await customerLogin(loginPayload);
 
-      message.success("Login successful");
-      closeAuthModal();
-      navigate("/app/dashboard");
-    } else {
-      message.error("Invalid credentials. Please check email/phone and password.");
+    if (res?.access_token) {
+      localStorage.setItem("accessToken", res.access_token);
     }
-  } catch (err) {
+
+    if (res?.user) {
+      localStorage.setItem("user", JSON.stringify(res.user));
+    }
+
+    message.success("Login successful");
+    closeAuthModal();
+    navigate("/app/dashboard");
+  } catch (err: any) {
     console.error("Login error", err);
-    message.error("An error occurred while logging in.");
+    message.error(
+      err?.response?.data?.detail ||
+        err?.response?.data?.message ||
+        "Invalid login credentials"
+    );
+  } finally {
+    setAuthLoading(false);
   }
 };
 
+
+  // ==========================
+  // VENDOR LOGIN (still local)
+  // ==========================
   const onVendorLogin = (values: any) => {
-  console.log("Vendor Login:", values);
+    console.log("Vendor Login:", values);
 
-  // Save vendor login flag
-  localStorage.setItem("isVendorLoggedIn", "true");
+    localStorage.setItem("isVendorLoggedIn", "true");
+    navigate("/vendor");
+    setVendorModalVisible(false);
+    message.success("Vendor Login Successful!");
+  };
 
-  // Navigate to vendor dashboard
-  navigate("/vendor");
+  // ==========================
+  // CUSTOMER REGISTER (BACKEND)
+  // ==========================
+  const onRegister = async (values: any) => {
+  try {
+    const {
+      firstName,
+      lastName,
+      email,
+      phone,
+      password,
+      confirm,
+      address,
+      gender,
+    } = values;
 
-  // Close modal
-  setVendorModalVisible(false);
-  message.success("Vendor Login Successful!");
+    const genderMap: any = {
+      male: 1,
+      female: 2,
+      other: 3,
+    };
+
+    const payload = {
+      first_name: firstName,
+      last_name: lastName,
+      email,
+      mobile: phone,
+      password,
+      confirm_password: confirm,
+      gender_id: genderMap[gender], // backend expects number
+      address,
+    };
+
+    setAuthLoading(true);
+
+    const res: any = await customerRegister(payload);
+
+    message.success(
+      res?.message || "Registration successful. Check your email."
+    );
+
+    setActiveAuthTab("login");
+  } catch (err: any) {
+    console.error("Registration error", err);
+    message.error(
+      err?.response?.data?.detail ||
+        err?.response?.data?.message ||
+        "Registration failed"
+    );
+  } finally {
+    setAuthLoading(false);
+  }
 };
 
-
-  // After register, save user and switch to login tab (do NOT auto-login)
-  const onRegister = async (values: any) => {
-    try {
-      const firstName = (values.firstName || "").toString().trim();
-      const lastName = (values.lastName || "").toString().trim();
-      const email = (values.email || "").toString().trim();
-      const phone = (values.phone || "").toString().trim();
-      const password = (values.password || "").toString();
-      const address = (values.address || "").toString().trim();
-      const gender = (values.gender || "").toString();
-
-      if (!firstName || !lastName || !email || !phone || !password || !gender) {
-        message.error("Please fill all required fields");
-        return;
-      }
-
-      const fullNameCombined = `${firstName} ${lastName}`.trim();
-
-      const newUser: RegisteredUser = {
-        firstName,
-        lastName,
-        fullname: fullNameCombined,
-        email,
-        phone,
-        password,
-        address,
-        gender,
-        customerId: 2, // 🔐 Hidden constant value to send to DB
-      };
-
-      // Here you can also call your backend API and pass `newUser`
-      // await api.post("/customers", newUser);
-
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(newUser));
-
-      setUserDetails("user", {
-        name: fullNameCombined,
-        email,
-        phone,
-        address,
-        gender,
-        // customerId: 2, // optional to keep in client storage too
-      });
-
-      // Keep modal open but switch to login tab so user can enter credentials
-      message.success("Registration successful. Please log in to continue.");
-      setActiveAuthTab("login");
-      // leave authModalVisible as true so login form is visible
-    } catch (err) {
-      console.error("Registration error", err);
-      message.error("An error occurred while registering.");
-    }
-  };
 
   return (
     <>
@@ -276,29 +261,27 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
           </li>
         </ul>
       )}
-      
 
       {/* AUTH MODAL */}
-     
-     <Modal
-  open={authModalVisible}
-  onCancel={closeAuthModal}
-  footer={null}
-  centered
-  width={520}
-  destroyOnClose
-  bodyStyle={{
-    padding: 24,
-    maxHeight: "70vh",
-    overflowY: "auto",
-  }}
->
-
+      <Modal
+        open={authModalVisible}
+        onCancel={closeAuthModal}
+        footer={null}
+        centered
+        width={520}
+        destroyOnClose
+        bodyStyle={{
+          padding: 24,
+          maxHeight: "70vh",
+          overflowY: "auto",
+        }}
+      >
         <Tabs
           activeKey={activeAuthTab}
           onChange={(key) => setActiveAuthTab(key as "login" | "register")}
           centered
         >
+          {/* LOGIN TAB */}
           <TabPane tab="Login" key="login">
             <Form layout="vertical" onFinish={onLogin} preserve={false}>
               <Form.Item
@@ -336,13 +319,14 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
               </div>
 
               <Form.Item>
-                <Button block htmlType="submit">
+                <Button block htmlType="submit" loading={authLoading}>
                   Login
                 </Button>
               </Form.Item>
             </Form>
           </TabPane>
 
+          {/* REGISTER TAB */}
           <TabPane tab="Register" key="register">
             <Form layout="vertical" onFinish={onRegister} preserve={false}>
               {/* First Name & Last Name */}
@@ -369,12 +353,20 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
                   <Input />
                 </Form.Item>
               </div>
-             
-              <Form.Item label="Email" name="email" rules={[{ required: true }, { type: "email" }]}>
+
+              <Form.Item
+                label="Email"
+                name="email"
+                rules={[{ required: true }, { type: "email" }]}
+              >
                 <Input />
               </Form.Item>
 
-              <Form.Item label="Phone" name="phone" rules={[{ required: true }]}>
+              <Form.Item
+                label="Phone"
+                name="phone"
+                rules={[{ required: true }]}
+              >
                 <Input />
               </Form.Item>
 
@@ -399,7 +391,6 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
                 rules={[{ required: true }]}
                 hasFeedback
               >
-              
                 <Input.Password />
               </Form.Item>
 
@@ -422,40 +413,43 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
                 <Input.Password />
               </Form.Item>
 
-              <Form.Item label="Address" name="address" rules={[{ required: true }]}>
+              <Form.Item
+                label="Address"
+                name="address"
+                rules={[{ required: true }]}
+              >
                 <Input.TextArea rows={3} placeholder="Enter your address" />
               </Form.Item>
 
               <Form.Item>
-                <Button block htmlType="submit">
+                <Button block htmlType="submit" loading={authLoading}>
                   Register
                 </Button>
               </Form.Item>
-              <Form.Item style={{ marginTop: -10 }}>
-  <a
-    onClick={() => {
-      setAuthModalVisible(false);    
-      setVendorModalVisible(true);   
-    }}
-  >
-    Are you a vendor?
-  </a>
-</Form.Item>
 
+              <Form.Item style={{ marginTop: -10 }}>
+                <a
+                  onClick={() => {
+                    setAuthModalVisible(false);
+                    setVendorModalVisible(true);
+                  }}
+                >
+                  Are you a vendor?
+                </a>
+              </Form.Item>
             </Form>
           </TabPane>
         </Tabs>
       </Modal>
 
-     
+      {/* FORGOT PASSWORD MODAL – placeholder for now */}
       <Modal
         open={forgotModalVisible}
-       onCancel={() => {
-  setForgotModalVisible(false);
-  setActiveAuthTab("login");   
-  setAuthModalVisible(true);   
-}}
-
+        onCancel={() => {
+          setForgotModalVisible(false);
+          setActiveAuthTab("login");
+          setAuthModalVisible(true);
+        }}
         footer={null}
         centered
         width={450}
@@ -465,32 +459,22 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
 
         <Form
           layout="vertical"
-         onFinish={(values) => {
-  const email = (values.email || "").trim();
-  const stored = localStorage.getItem(STORAGE_KEY);
+          onFinish={(values) => {
+            const email = (values.email || "").trim();
+            if (!email) {
+              message.error("Please enter email");
+              return;
+            }
 
-  if (!stored) {
-    message.error("No registered user found.");
-    return;
-  }
+            // TODO: integrate with backend forgot-password endpoint if available
+            message.success(
+              "If this email is registered, a reset link will be sent."
+            );
 
-  const user = JSON.parse(stored);
-
-  if (email.toLowerCase() !== user.email.toLowerCase()) {
-    message.error("Email is not registered.");
-    return;
-  }
-
-  message.success("Password reset link has been sent to your email.");
-
- 
-  setForgotModalVisible(false);
-
- 
-  setActiveAuthTab("login");
-  setAuthModalVisible(true);
-}}
-
+            setForgotModalVisible(false);
+            setActiveAuthTab("login");
+            setAuthModalVisible(true);
+          }}
         >
           <Form.Item
             label="Enter Registered Email"
@@ -510,105 +494,140 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
           </Form.Item>
         </Form>
       </Modal>
+
+      {/* VENDOR MODAL (unchanged, still local) */}
       <Modal
-  open={vendorModalVisible}
-  onCancel={() => setVendorModalVisible(false)}
-  footer={null}
-  centered
-  width={550}
-  destroyOnClose
-  title="Vendor Authentication"
-   bodyStyle={{
-    maxHeight: "65vh",
-    overflowY: "auto",
-  }}
->
-  <Tabs defaultActiveKey="vendor_register" centered>
-    
-    {/* VENDOR LOGIN TAB */}
-    <Tabs.TabPane tab="Login" key="vendor_login">
-      <Form layout="vertical"  onFinish={onVendorLogin}>
+        open={vendorModalVisible}
+        onCancel={() => setVendorModalVisible(false)}
+        footer={null}
+        centered
+        width={550}
+        destroyOnClose
+        title="Vendor Authentication"
+        bodyStyle={{
+          maxHeight: "65vh",
+          overflowY: "auto",
+        }}
+      >
+        <Tabs defaultActiveKey="vendor_register" centered>
+          {/* VENDOR LOGIN TAB */}
+          <Tabs.TabPane tab="Login" key="vendor_login">
+            <Form layout="vertical" onFinish={onVendorLogin}>
+              <Form.Item
+                label="Email / Phone"
+                name="identifier"
+                rules={[{ required: true }]}
+              >
+                <Input placeholder="Enter email or phone" />
+              </Form.Item>
 
-        <Form.Item
-          label="Email / Phone"
-          name="identifier"
-          rules={[{ required: true }]}
-        >
-          <Input placeholder="Enter email or phone" />
-        </Form.Item>
+              <Form.Item
+                label="Password"
+                name="password"
+                rules={[{ required: true }]}
+              >
+                <Input.Password />
+              </Form.Item>
 
-        <Form.Item
-          label="Password"
-          name="password"
-          rules={[{ required: true }]}
-        >
-          <Input.Password />
-        </Form.Item>
+              <Form.Item>
+                <Button type="primary" block htmlType="submit">
+                  Login as Vendor
+                </Button>
+              </Form.Item>
+            </Form>
+          </Tabs.TabPane>
 
-        <Form.Item>
-          <Button type="primary" block htmlType="submit">
-            Login as Vendor
-          </Button>
-        </Form.Item>
+          {/* VENDOR REGISTER TAB */}
+          <Tabs.TabPane tab="Register" key="vendor_register">
+            <Form
+              layout="vertical"
+              onFinish={(values) =>
+                console.log("Vendor Register:", values)
+              }
+            >
+              <Form.Item
+                label="Business Name"
+                name="businessName"
+                rules={[{ required: true }]}
+              >
+                <Input />
+              </Form.Item>
 
-      </Form>
-    </Tabs.TabPane>
+              <Form.Item
+                label="Owner Name"
+                name="ownerName"
+                rules={[{ required: true }]}
+              >
+                <Input />
+              </Form.Item>
 
-    {/* VENDOR REGISTER TAB */}
-    <Tabs.TabPane tab="Register" key="vendor_register">
-      <Form layout="vertical" onFinish={(values) => console.log("Vendor Register:", values)}>
+              <Form.Item
+                label="Email"
+                name="email"
+                rules={[{ required: true, type: "email" }]}
+              >
+                <Input />
+              </Form.Item>
 
-        <Form.Item label="Business Name" name="businessName" rules={[{ required: true }]}>
-          <Input />
-        </Form.Item>
+              <Form.Item
+                label="Phone"
+                name="phone"
+                rules={[{ required: true }]}
+              >
+                <Input />
+              </Form.Item>
 
-        <Form.Item label="Owner Name" name="ownerName" rules={[{ required: true }]}>
-          <Input />
-        </Form.Item>
+              <Form.Item
+                label="PAN"
+                name="pan"
+                rules={[{ required: true }]}
+              >
+                <Input />
+              </Form.Item>
 
-        <Form.Item label="Email" name="email" rules={[{ required: true, type: "email" }]}>
-          <Input />
-        </Form.Item>
+              <Form.Item
+                label="TAN/GSTIN"
+                name="tan/gstin"
+                rules={[{ required: true }]}
+              >
+                <Input />
+              </Form.Item>
 
-        <Form.Item label="Phone" name="phone" rules={[{ required: true }]}>
-          <Input />
-        </Form.Item>
+              <Form.Item
+                label="Service Category"
+                name="category"
+                rules={[{ required: true }]}
+              >
+                <Input placeholder="Cleaning / Transport / Plumbing..." />
+              </Form.Item>
 
-        <Form.Item label="PAN" name="pan" rules={[{ required: true }]}>
-          <Input />
-        </Form.Item>
+              <Form.Item
+                label="Business Address"
+                name="address"
+                rules={[{ required: true }]}
+              >
+                <Input.TextArea rows={3} />
+              </Form.Item>
 
-        <Form.Item label="TAN/GSTIN" name="tan/gstin" rules={[{ required: true }]}>
-          <Input />
-        </Form.Item>
+              <Form.Item
+                label="Password"
+                name="password"
+                rules={[{ required: true }]}
+              >
+                <Input.Password />
+              </Form.Item>
 
-        <Form.Item label="Service Category" name="category" rules={[{ required: true }]}>
-          <Input placeholder="Cleaning / Transport / Plumbing..." />
-        </Form.Item>
-
-        <Form.Item label="Business Address" name="address" rules={[{ required: true }]}>
-          <Input.TextArea rows={3} />
-        </Form.Item>
-
-        <Form.Item label="Password" name="password" rules={[{ required: true }]}>
-          <Input.Password />
-        </Form.Item>
-
-        <Form.Item>
-          <Button type="primary" block htmlType="submit">
-            Register as Vendor
-          </Button>
-        </Form.Item>
-
-      </Form>
-    </Tabs.TabPane>
-
-  </Tabs>
-</Modal>
-
+              <Form.Item>
+                <Button type="primary" block htmlType="submit">
+                  Register as Vendor
+                </Button>
+              </Form.Item>
+            </Form>
+          </Tabs.TabPane>
+        </Tabs>
+      </Modal>
     </>
   );
 };
 
 export default CommonHeader;
-  
