@@ -134,6 +134,7 @@ const handleLogout = async () => {
     } catch {}
   };
 
+
   const handleBuyNowClick = (item: any) => {
     // open confirm address modal (asks "is this address ok?" and allows edit)
     setSelectedCartItem(item);
@@ -216,7 +217,7 @@ const handleLogout = async () => {
         </Dropdown>
 
         {/* CART DRAWER */}
-        <Drawer placement="right" width={350} open={cartOpen} onClose={() => setCartOpen(false)}>
+        <Drawer placement="right" width={350} open={cartOpen} onClose={() => setCartOpen(false)} closable={false}>
           <div className="sw-cart-drawer-header">
             <div className="sw-cart-drawer-title">
               {cart.length === 0 ? "Your cart is empty" : `Your cart (${cart.length})`}
