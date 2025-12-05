@@ -16,11 +16,11 @@ export const ProtectedRoutes = ({ children }: any) => {
       const rawUser = res?.data?.user || res?.data?.data;
 
       if (!rawUser) {
+        localStorage.clear();
         setValidUser(false);
         return;
       }
 
-      // 🔥 Normalize (VERY IMPORTANT)
       const normalizedUser = {
         id: rawUser?.id || rawUser?.sub,
         email: rawUser?.email,
@@ -43,6 +43,7 @@ export const ProtectedRoutes = ({ children }: any) => {
 
   useEffect(() => {
     if (!token) {
+      localStorage.clear();
       setLoading(false);
       return;
     }
@@ -55,6 +56,7 @@ export const ProtectedRoutes = ({ children }: any) => {
   if (loading) return null;
 
   if (!token || !validUser) {
+    localStorage.clear();
     return <Navigate to="/landing" replace />;
   }
 

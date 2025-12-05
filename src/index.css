@@ -16286,6 +16286,7 @@ body {
 }
 
 /* Header */
+
 .sw-frd-header {
   display: flex;
   justify-content: space-between;
@@ -16335,6 +16336,9 @@ body {
   padding: 10px 16px !important;
   border-bottom: 1px solid #e0f2ff;
 }
+
+
+
 
 /* Content */
 .sw-frd-content-main {
@@ -16700,7 +16704,82 @@ width: 100%;
   transition: opacity 0.3s ease, transform 0.15s ease;
 }
 
+
+/*freelancer dasboard rows changes *************/
+/* =========================
+   Requests grid — responsive
+   ========================= */
+.sw-frd-back-btn {
+  margin-right: 12px;
+  border-radius: 8px;
+}
+.sw-frd-requests-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);  /* wider cards */
+  gap: 20px;
+  margin-top: 20px;
+  max-width: 95%;       /* increases width of entire row */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Card wider + same height */
+.sw-frd-request-card {
+  width: 100%;
+  min-height: 150px;     /* balanced height */
+  padding: 16px 18px;
+  border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Title */
+.sw-frd-request-title {
+  font-size: 16px;
+  font-weight: 600;
+  white-space: normal;       /* ❗ allow full title to show */
+  overflow: visible;         /* ❗ show text */
+}
+
+/* Description fully visible */
+.sw-frd-request-desc-text {
+  font-size: 14px;
+  line-height: 1.3;
+  white-space: normal;       /* ❗ show complete text */
+  overflow: visible;         /* ❗ no clipping */
+}
+
+/* Details visible */
+.sw-frd-detail-item {
+  font-size: 13px;
+  white-space: normal;
+}
+
+/* Responsive breakpoints */
+@media (max-width: 1024px) {
+  .sw-frd-requests-list {
+    grid-template-columns: repeat(2, 1fr); /* 2 per row */
+  }
+}
+
+@media (max-width: 600px) {
+  .sw-frd-requests-list {
+    grid-template-columns: 1fr; /* 1 per row */
+  }
+
+  .sw-frd-request-card {
+    min-height: auto;
+    padding: 14px;
+  }
+}
+
+/*freelancer dashboard rows changes**********/
+
+
 /* Responsive Adjustments */
+
 @media (max-width: 992px) {
   .sw-fr-login-brand, .sw-fr-registration-branding {
     display: none;
@@ -16727,13 +16806,69 @@ width: 100%;
     gap: 15px;
   }
 }
-@media (max-width: 576px) {
+/* @media (max-width: 576px) {
     .sw-frd-overview-grid {
         grid-template-columns: 1fr;
     }
+} */
+
+@media (max-width: 576px) {
+  .sw-frd-overview-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Auth containers: full width with inner padding */
+  .sw-fr-login-container,
+  .sw-fr-registration-container {
+    max-width: 100%;
+    padding: 0 16px;
+  }
+
+  .sw-fr-login-card,
+  .sw-fr-registration-form-section {
+    padding: 20px;
+  }
+
+  .sw-frd-content-main {
+    padding: 12px;
+  }
+
+  .sw-frd-header {
+    padding: 0 12px;
+    height: 54px;
+  }
+
+  /* Hide the portal subtext on very small screens to avoid wrapping */
+  .sw-frd-portal-text {
+    display: none;
+  }
 }
 
+/* Extra small: edge-case phones */
+@media (max-width: 480px) {
+  .sw-frd-header {
+    padding: 0 10px;
+    height: 52px;
+  }
 
+  .sw-frd-logo-area {
+    gap: 6px;
+  }
+
+  .sw-frd-logo-text {
+    font-size: 0.9rem;
+  }
+
+  .sw-frd-profile-btn {
+    width: 32px;
+    height: 32px;
+  }
+
+  .sw-fr-login-card,
+  .sw-fr-registration-form-section {
+    padding: 16px;
+  }
+}
 
 
 /* booking overlay styles */
@@ -17401,4 +17536,98 @@ width: 100%;
   .sw-cart-drawer-content { padding: 8px; }
   .sw-booking-page-content { width: 100%; height: 100%; max-width: none; border-radius: 0; }
   .sw-booking-page-overlay { align-items: flex-end; justify-content: center; }
+}
+
+
+/* FIX CLOSE BUTTON POSITION */
+.sw-booking-page-content {
+  position: relative;
+}
+
+.sw-booking-page-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 9999;
+
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 6px 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* ========================================
+   PERFECT MOBILE LAYOUT — COMPACT VERSION
+   ======================================== */
+@media (max-width: 480px) {
+
+  /* Stack vertically + reduce gap */
+  .recent-booking-wrapper .ant-row.ant-row-middle {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 6px !important;   /* reduced gap */
+  }
+
+  /* IMAGE smaller + centered */
+  .recent-booking-wrapper .booking-image {
+    display: flex !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    margin-bottom: 4px !important;
+  }
+
+  .recent-booking-wrapper .booking-image img {
+    width: 70px !important;   /* reduced image size */
+    height: 70px !important;
+    border-radius: 8px !important;
+  }
+
+  /* TEXT centered + reduced spacing */
+  .recent-booking-wrapper .booking-text {
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    text-align: center !important;
+  }
+
+  /* Date & Time stacked */
+  .recent-booking-wrapper .booking-text > div:nth-child(2) {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2px !important;   /* reduce space between date & time */
+    align-items: center !important;
+  }
+
+  /* STATUS badge centered + reduced spacing */
+  .recent-booking-wrapper .booking-status {
+    width: 100% !important;
+    padding: 0 !important;
+    margin-top: 2px !important;
+    display: flex !important;
+    justify-content: center !important;
+  }
+
+  .recent-booking-wrapper .booking-status .ant-tag {
+    font-size: 11px !important;  /* smaller badge */
+    padding: 4px 10px !important;
+  }
+
+  /* CARD: shrink padding (THIS REDUCES MOST WHITE SPACE) */
+  .recent-booking-wrapper .ant-card-body {
+    padding: 8px 10px !important;  /* reduced from 16px */
+  }
+
+  .recent-booking-wrapper .ant-card {
+    padding: 0 !important; /* remove outer padding */
+    border-radius: 8px !important;
+  }
+
+  /* Reduce gap between cards */
+  .recent-booking-wrapper .ant-list-item {
+    margin-bottom: 8px !important;
+  }
 }

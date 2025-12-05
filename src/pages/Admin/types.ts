@@ -1,17 +1,21 @@
+
+
 export type TabKey = 'dashboard' | 'tickets' | 'users' | 'freelancers' | 'vendors'
 
 export type TicketStatus = 'pending' | 'accepted' | 'in-progress' | 'completed' | 'cancelled'
 export type TicketPriority = 'low' | 'medium' | 'high'
+export type PaymentStatus = 'paid' | 'pending' | 'failed'
 
 export type Ticket = {
   id: string
   customer: string
   service: string
   date: string
-  status: TicketStatus
+  serviceStatus: TicketStatus
   assignedTo: string
   priority: TicketPriority
-  channel: 'app' | 'phone' | 'field'
+  paymentStatus: PaymentStatus
+  location: string
 }
 
 export type UserStatus = 'active' | 'blocked'

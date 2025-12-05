@@ -25,8 +25,10 @@ import type { FreelancerStatus, TabKey, TicketStatus } from './types'
 
 function App() {
     return (
-       
+     
+         
             <AdminShell />
+          
         
     )
 }
@@ -62,7 +64,7 @@ const AdminShell = () => {
     const handleTicketStatusUpdate = (ticketId: string, status: TicketStatus) => {
         setTickets((prev) =>
             prev.map((ticket) =>
-                ticket.id === ticketId ? { ...ticket, status } : ticket
+                ticket.id === ticketId ? { ...ticket, serviceStatus: status } : ticket
             ),
         )
         message.success(`Ticket ${ticketId} marked as ${status}`)
@@ -73,10 +75,10 @@ const AdminShell = () => {
             prev.map((ticket) =>
                 ticket.id === ticketId
                     ? {
-                          ...ticket,
-                          assignedTo: assignee,
-                          status: ticket.status === 'pending' ? 'accepted' : ticket.status,
-                      }
+                        ...ticket,
+                        assignedTo: assignee,
+                        serviceStatus: ticket.serviceStatus === 'pending' ? 'accepted' : ticket.serviceStatus,
+                    }
                     : ticket,
             ),
         )
@@ -140,7 +142,7 @@ const AdminShell = () => {
     // ✅ TypeScript-safe Logout
     const handleLogout = () => {
         notification.success({
-            message: "Logout Successful",
+             message: "Logout Successful",
             description: "You have been logged out."
         })
         navigate("/landing", { replace: true }) // Redirect to landing page
@@ -179,9 +181,8 @@ const AdminShell = () => {
                     {tabItems.map((tab) => (
                         <button
                             key={tab.key}
-                            className={`sw-ad-tab-btn ${
-                                activeTab === tab.key ? 'sw-ad-tab-btn--active' : ''
-                            }`}
+                            className={`sw-ad-tab-btn ${activeTab === tab.key ? 'sw-ad-tab-btn--active' : ''
+                                }`}
                             onClick={() => navigate(tabPaths[tab.key])}
                         >
                             <span className="sw-ad-tab-icon">{tab.icon}</span>
@@ -192,48 +193,48 @@ const AdminShell = () => {
 
                 <main className="sw-ad-content">
                     <Routes>
-    <Route path="/" element={<Navigate to="dashboard" replace />} />
+                        <Route path="/" element={<Navigate to="dashboard" replace />} />
 
-    <Route path="dashboard" element={<DashboardPage tickets={tickets} />} />
+                        <Route path="dashboard" element={<DashboardPage tickets={tickets} />} />
 
-    <Route
-        path="tickets"
-        element={
-            <TicketsPage
-                tickets={tickets}
-                onStatusChange={handleTicketStatusUpdate}
-                onAssign={handleTicketAssignment}
-            />
-        }
-    />
+                        <Route
+                            path="tickets"
+                            element={
+                                <TicketsPage
+                                    tickets={tickets}
+                                    onStatusChange={handleTicketStatusUpdate}
+                                    onAssign={handleTicketAssignment}
+                                />
+                            }
+                        />
 
-    <Route
-        path="users"
-        element={<UsersPage users={users} onStatusToggle={handleUserStatusToggle} />}
-    />
+                        <Route
+                            path="users"
+                            element={<UsersPage users={users} onStatusToggle={handleUserStatusToggle} />}
+                        />
 
-    <Route
-        path="freelancers"
-        element={
-            <FreelancersPage
-                freelancers={freelancers}
-                pendingFreelancers={pendingFreelancers}
-                onStatusChange={handleFreelancerStatus}
-                onApproveRequest={handleApprovePendingFreelancer}
-                onRejectRequest={handleRejectPendingFreelancer}
-            />
-        }
-    />
+                        <Route
+                            path="freelancers"
+                            element={
+                                <FreelancersPage
+                                    freelancers={freelancers}
+                                    pendingFreelancers={pendingFreelancers}
+                                    onStatusChange={handleFreelancerStatus}
+                                    onApproveRequest={handleApprovePendingFreelancer}
+                                    onRejectRequest={handleRejectPendingFreelancer}
+                                />
+                            }
+                        />
 
-    <Route
-        path="vendors"
-        element={
-            <VendorsPage vendors={vendors} onStatusToggle={handleVendorStatusToggle} />
-        }
-    />
+                        <Route
+                            path="vendors"
+                            element={
+                                <VendorsPage vendors={vendors} onStatusToggle={handleVendorStatusToggle} />
+                            }
+                        />
 
-    <Route path="*" element={<Navigate to="dashboard" replace />} />
-</Routes>
+                        <Route path="*" element={<Navigate to="dashboard" replace />} />
+                    </Routes>
 
                 </main>
             </div>
@@ -258,3 +259,9 @@ const BellIcon = () => (
 )
 
 export default App
+
+
+
+
+
+

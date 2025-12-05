@@ -177,12 +177,14 @@ console.log(bookings);
                     <div style={{ fontSize: 18, fontWeight: 700 }}>
                       {item.title}
                     </div>
-                    <div style={{ color: "#6b7280", fontSize: 14 }}>
-                      Date: {item.date} &nbsp;&nbsp; Time: {item.time}
-                    </div>
+                    <div style={{ color: "#6b7280", fontSize: 14, display: "flex", flexDirection: "column" }}>
+  <span>Date: {item.date}</span>
+  <span>Time: {item.time}</span>
+</div>
+
                   </Col>
 
-                  <Col className="booking-status" flex="160px">
+                  <Col className="booking-status" flex="70px">
                     <Tag
                       color={meta.color}
                       style={{ padding: "6px 12px", fontWeight: 600 }}
