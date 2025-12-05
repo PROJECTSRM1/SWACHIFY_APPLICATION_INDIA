@@ -1,11 +1,5 @@
-<<<<<<< HEAD
 import { useEffect } from "react";
 import { Modal, Button, Form, Input, message } from "antd";
-=======
-// src/components/header/ConfirmAddressModal.tsx
-import { useEffect } from "react";
-import { Modal, Button, Form, Input } from "antd";
->>>>>>> c0f2ac1ff8f9b297e6c026efd516281e1d0cc8e2
 
 type CartItemLike = {
   id?: number | string;
