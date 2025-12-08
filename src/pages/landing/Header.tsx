@@ -37,7 +37,7 @@ const navItems = [
     label: <Link to="/commercial-plots">Buy/Sale/Rentals</Link>,
   },
   { key: "materials", label: <Link to="/ConstructionMaterials">Raw Materials</Link> },
-  { key: "education", label: <Link to="/">Education</Link> },
+  { key: "education", label: <Link to="/Education">Education</Link> },
   { key: "Swachifyproducts", label: <Link to="/">Swachify Products</Link> },
   { key: "freelancer", label: <Link to="/Freelancer">Freelancer</Link> },
 ];
