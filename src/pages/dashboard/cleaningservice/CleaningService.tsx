@@ -687,51 +687,89 @@ const getDisplayPriceText = (): string => {
   initialValues={{ additional: [] }}
   onValuesChange={(_changed, allValues) => computeTotal(allValues)}
 >
-  <div className="sw-cs-form-row">
-    <Form.Item
-      name="fullName"
-      label="Full Name"
-      rules={[{ required: true, message: "Enter full name" }]}
-      className="sw-cs-half-width"
-    >
-      <Input placeholder="Enter full name" />
-    </Form.Item>
+<div className="sw-cs-form-row">
+ 
+  <Form.Item
+    name="fullName"
+    label="Full Name"
+    rules={[
+      { required: true, message: "Enter full name" },
+      {
+        pattern: /^[A-Z][a-z]+ [A-Z][a-z]+$/,
+        message:
+          "Enter valid full name"
+      }
+    ]}
+    className="sw-cs-half-width"
+  >
+    <Input placeholder="John Doe" />
+  </Form.Item>
 
-    <Form.Item
-      name="email"
-      label="Email"
-      rules={[
-        { required: true, message: "Enter email" },
-        { type: "email", message: "Enter valid email" }
-      ]}
-      className="sw-cs-half-width"
-    >
-      <Input placeholder="example@email.com" />
-    </Form.Item>
-  </div>
+  
+  <Form.Item
+    name="email"
+    label="Email"
+    rules={[
+      { required: true, message: "Enter email" },
+      { type: "email", message: "Enter valid email" },
+      {
+        validator: (_, value) => {
+          if (!value) return Promise.resolve();
 
-  <div className="sw-cs-form-row">
-    <Form.Item
-      name="mobile"
-      label="Mobile Number"
-      rules={[
-        { required: true, message: "Enter mobile number" },
-        { pattern: /^[0-9]{10}$/, message: "Enter valid 10-digit number" }
-      ]}
-      className="sw-cs-half-width"
-    >
-      <Input maxLength={10} placeholder="9876543210" />
-    </Form.Item>
+          const allowedDomains = [
+            "gmail.com",
+            "yahoo.com",
+            "outlook.com",
+            "hotmail.com",
+            "rediffmail.com",
+            "protonmail.com",
+            "icloud.com"
+          ];
 
-    <Form.Item
-      name="address"
-      label="Address"
-      rules={[{ required: true, message: "Enter address" }]}
-      className="sw-cs-half-width"
-    >
-      <Input placeholder="House No, Street, City" />
-    </Form.Item>
-  </div>
+          const domain = value.split("@")[1];
+          if (allowedDomains.includes(domain)) {
+            return Promise.resolve();
+          }
+          return Promise.reject(
+            "Email must be Gmail, Yahoo, Outlook "
+          );
+        }
+      }
+    ]}
+    className="sw-cs-half-width"
+  >
+    <Input placeholder="example@gmail.com" />
+  </Form.Item>
+</div>
+
+<div className="sw-cs-form-row">
+  
+  <Form.Item
+    name="mobile"
+    label="Mobile Number"
+    rules={[
+      { required: true, message: "Enter mobile number" },
+      {
+        pattern: /^[0-9]{10}$/,
+        message: "Enter valid 10-digit Indian mobile number"
+      }
+    ]}
+    className="sw-cs-half-width"
+  >
+    <Input maxLength={10} placeholder="+91 9876543210" />
+  </Form.Item>
+
+  
+  <Form.Item
+    name="address"
+    label="Address"
+    rules={[{ required: true, message: "Enter address" }]}
+    className="sw-cs-half-width"
+  >
+    <Input placeholder="House No, Street, City" />
+  </Form.Item>
+</div>
+
 
   {selectedModule && (() => {
     const cfg = getFieldConfig(selectedModule.title);
