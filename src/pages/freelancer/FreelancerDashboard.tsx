@@ -36,8 +36,8 @@ import {
 } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 
-import { freelancerLogout } from "../../api/freelancerAuth";
-import { getUserDetails } from "../../utils/helpers/storage";
+// import { freelancerLogout } from "../../api/freelancerAuth";
+// import { getUserDetails } from "../../utils/helpers/storage";
 
 
 
