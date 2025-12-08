@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Modal, Button, Form, Input, message } from "antd";
 import { PaymentsAPI } from "../api/customerAuth";
+import { useCart } from "../context/CartContext";
 
 type CartItemLike = {
   id?: number | string;
@@ -36,6 +37,8 @@ type Props = {
 
 export default function ConfirmAddressModal({ open, item, onClose, onConfirm }: Props) {
   const [form] = Form.useForm();
+  const { removeFromCart } = useCart(); 
+
 
   useEffect(() => {
     if (item) {
@@ -52,13 +55,13 @@ export default function ConfirmAddressModal({ open, item, onClose, onConfirm }: 
   // 🎯 MAIN PAYMENT FUNCTION
   const handlePayment = async (booking: Booking) => {
   try {
-    // 1️⃣ Create order through PaymentsAPI
+   
     const order = await PaymentsAPI.createOrder(
       booking.id,
       (booking.amount ?? 0) * 100
     );
 
-    // 2️⃣ Razorpay widget
+    
     const options = {
       key: import.meta.env.VITE_RAZORPAY_KEY_ID,
       amount: order.amount,
@@ -70,7 +73,7 @@ export default function ConfirmAddressModal({ open, item, onClose, onConfirm }: 
       handler: async function (response: any) {
         console.log("Payment success:", response);
 
-        // 3️⃣ Verify signature through PaymentsAPI
+       
         await PaymentsAPI.verifyPayment(
           order.id,
           response.razorpay_payment_id,
@@ -78,6 +81,9 @@ export default function ConfirmAddressModal({ open, item, onClose, onConfirm }: 
         );
 
         message.success("Payment successful!");
+        if (item.id) {
+          removeFromCart(Number(item.id));
+        }
 
         onConfirm(booking);
         onClose();

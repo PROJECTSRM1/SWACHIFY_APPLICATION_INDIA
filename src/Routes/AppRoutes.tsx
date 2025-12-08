@@ -9,6 +9,7 @@ import FreelancerDashboard from "../pages/freelancer/FreelancerDashboard";
 import SwachifyProducts from "../pages/landing/Swachifyproducts";
 
 
+
 export const AppRoutes = () => {
     return <Routes>
                 <Route path="/*" element={<NonSecureRoutes />} />

@@ -30,6 +30,7 @@ interface CartContextType {
   cart: CartItem[];
   addToCart: (item: CartItem) => void;
   removeFromCart: (id: number) => void;
+  clearCart: () => void; 
 }
 
 
@@ -43,21 +44,19 @@ export const CartProvider = ({ children }: any) => {
   const addToCart = (item: CartItem) => {
     setCart((prev) => [...prev, item]);
   };
-
-
   const removeFromCart = (id: number) => {
     setCart((prev) => prev.filter((item) => item.id !== id));
   };
-
+  const clearCart = () => {
+    setCart([]);  
+  };
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart,clearCart }}>
       {children}
     </CartContext.Provider>
   );
 };
-
-
 export const useCart = () => {
   const ctx = useContext(CartContext);
   if (!ctx) throw new Error("useCart must be used inside CartProvider");

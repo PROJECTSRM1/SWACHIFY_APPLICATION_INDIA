@@ -26,8 +26,8 @@ export const freelancerRegister = async (data: FreelancerRegisterPayload) => {
   return res.data;
 };
 
-export const freelancerLogin = async (data: any) => {
-  const res = await api.post("/freelancer/login", data);
+export const freelancerLogin = async (data: string) => {
+  const res = await api.post("api/freelancer/login", data);
 
   // Save correctly based on backend response
   localStorage.setItem(
@@ -47,6 +47,6 @@ export const freelancerLogin = async (data: any) => {
 
 
 export const freelancerLogout = async (user_id: number) => {
-  return api.post("/freelancer/logout", { user_id });
+  return api.post("api/freelancer/logout", { user_id });
 };
 

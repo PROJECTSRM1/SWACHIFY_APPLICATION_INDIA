@@ -38,6 +38,11 @@
   top: 80px;
 }
 
+.swc-fr-registration-branding {
+  min-width: 280px;
+  flex-shrink: 0; /* stops collapsing */
+}
+
 .swc-fr-branding-card {
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
@@ -696,3 +701,12 @@ flex-wrap: wrap;
     min-width: unset !important;
   }
 }
+
+.swc-fr-step-item {
+  cursor: pointer; /* default for inactive */
+}
+
+.swc-fr-step-item.clickable {
+  cursor: pointer; /* show pointer only if allowed */
+}
+
