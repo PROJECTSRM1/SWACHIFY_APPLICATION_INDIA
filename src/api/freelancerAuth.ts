@@ -22,11 +22,11 @@ export interface FreelancerLoginPayload {
 }
 
 export const freelancerRegister = async (data: FreelancerRegisterPayload) => {
-  const res = await api.post("/freelancer/register", data);
+  const res = await api.post("api/freelancer/register", data);
   return res.data;
 };
 
-export const freelancerLogin = async (data: any) => {
+export const freelancerLogin = async (data: string) => {
   const res = await api.post("/freelancer/login", data);
 
   // Save correctly based on backend response
