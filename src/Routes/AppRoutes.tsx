@@ -8,6 +8,7 @@ import Freelancerlogin from "../pages/login/Freelancerlogin";
 import FreelancerDashboard from "../pages/freelancer/FreelancerDashboard";
 
 
+
 export const AppRoutes = () => {
     return <Routes>
                 <Route path="/*" element={<NonSecureRoutes />} />
@@ -25,6 +26,5 @@ export const AppRoutes = () => {
                  <Route path="/freelancerlogin" element={<Freelancerlogin />} />
         <Route path="/freelancer-dashboard" element={<FreelancerDashboard />} />
         <Route path="/adminshell/*" element={<App />} />
-         
-            </Routes>
+              </Routes>
 }
