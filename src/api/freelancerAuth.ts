@@ -22,12 +22,12 @@ export interface FreelancerLoginPayload {
 }
 
 export const freelancerRegister = async (data: FreelancerRegisterPayload) => {
-  const res = await api.post("/freelancer/register", data);
+  const res = await api.post("api/freelancer/register", data);
   return res.data;
 };
 
 export const freelancerLogin = async (data: any) => {
-  const res = await api.post("/freelancer/login", data);
+  const res = await api.post("api/freelancer/login", data);
 
   // Save correctly based on backend response
   localStorage.setItem(
@@ -47,6 +47,6 @@ export const freelancerLogin = async (data: any) => {
 
 
 export const freelancerLogout = async (user_id: number) => {
-  return api.post("/freelancer/logout", { user_id });
+  return api.post("api/freelancer/logout", { user_id });
 };
 
