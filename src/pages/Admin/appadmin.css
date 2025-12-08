@@ -298,3 +298,59 @@
     min-width: 560px;
   }
 }
+
+/* Skills Display Styles */
+.sw-ad-skills-cell {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.sw-ad-skill-tag {
+  margin: 0;
+}
+
+.sw-ad-skills-ellipsis {
+  color: #94a3b8;
+  font-weight: 500;
+  margin: 0 2px;
+}
+
+.sw-ad-view-more-btn {
+  padding: 0 4px;
+  height: auto;
+  font-size: 13px;
+  color: #e2001a;
+}
+
+.sw-ad-view-more-btn:hover {
+  color: #ff4d4f;
+}
+
+.sw-ad-skills-modal .ant-modal-body {
+  padding: 20px;
+}
+
+.sw-ad-skills-list {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+}
+
+.sw-ad-skill-tag-modal {
+  margin: 0;
+  font-size: 14px;
+  padding: 4px 12px;
+}
+
+@media (max-width: 576px) {
+  .sw-ad-skills-modal {
+    max-width: calc(100vw - 32px);
+  }
+
+  .sw-ad-skill-tag-modal {
+    font-size: 13px;
+    padding: 3px 10px;
+  }
+}
