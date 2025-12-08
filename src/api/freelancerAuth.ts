@@ -26,13 +26,8 @@ export const freelancerRegister = async (data: FreelancerRegisterPayload) => {
   return res.data;
 };
 
-<<<<<<< HEAD
 export const freelancerLogin = async (data: any) => {
   const res = await api.post("api/freelancer/login", data);
-=======
-export const freelancerLogin = async (data: string) => {
-  const res = await api.post("/freelancer/login", data);
->>>>>>> main
 
   // Save correctly based on backend response
   localStorage.setItem(
