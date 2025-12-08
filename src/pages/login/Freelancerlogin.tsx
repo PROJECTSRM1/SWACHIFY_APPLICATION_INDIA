@@ -42,9 +42,9 @@ export default function Freelancerlogin() {
 
     await freelancerLogin(payload);
 
-  
 
-    message.success("Login successful");
+
+     message.success("Login successful");
     navigate("/freelancer-dashboard");
 
   } catch (err: any) {
@@ -56,8 +56,6 @@ export default function Freelancerlogin() {
     setLoading(false);
   }
 };
-
-
 
   return (
     <Layout className="sw-fr-login-wrapper">
