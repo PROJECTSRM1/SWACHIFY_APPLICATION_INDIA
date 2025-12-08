@@ -6,6 +6,7 @@ import App from "../pages/Admin/Appadmin";
 import Vendor from "../pages/landing/Vendor";
 import Freelancerlogin from "../pages/login/Freelancerlogin";
 import FreelancerDashboard from "../pages/freelancer/FreelancerDashboard";
+import SwachifyProducts from "../pages/landing/Swachifyproducts";
 
 
 export const AppRoutes = () => {
@@ -25,6 +26,8 @@ export const AppRoutes = () => {
                  <Route path="/freelancerlogin" element={<Freelancerlogin />} />
         <Route path="/freelancer-dashboard" element={<FreelancerDashboard />} />
         <Route path="/adminshell/*" element={<App />} />
+        <Route path="/swachify-products" element={<SwachifyProducts />} />
+
          
             </Routes>
 }
