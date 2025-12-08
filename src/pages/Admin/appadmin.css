@@ -78,16 +78,25 @@
   box-shadow: 0 15px 35px rgba(15, 23, 42, 0.08);
   width: 100%;
 }
+
 .sw-ad-stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 16px;
 }
+
 .sw-ad-stat-card {
   border-radius: 16px;
   box-shadow: none;
   border: 1px solid #f2f2f2;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
+.sw-ad-clickable-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(226, 0, 26, 0.15);
+}
+
 .sw-ad-stat-icon {
   width: 48px;
   height: 48px;
@@ -99,12 +108,14 @@
   justify-content: center;
   font-size: 22px;
 }
+
 .sw-ad-stat-label {
   color: #94a3b8;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   font-size: 12px;
 }
+
 .sw-ad-stat-value {
   margin: 0 !important;
 }
@@ -128,6 +139,7 @@
   gap: 8px;
   color: #64748b;
 }
+
 .sw-ad-legend-dot {
   width: 12px;
   height: 12px;
@@ -142,6 +154,7 @@
 .sw-ad-legend-dot--green {
   background: #52c41a;
 }
+
 .sw-ad-recent-card {
   margin-top: 24px;
   border-radius: 16px;
@@ -151,6 +164,7 @@
   border-radius: 16px;
   margin-bottom: 24px;
 }
+
 .sw-ad-filters-bar {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -235,6 +249,7 @@
     margin-top: 16px;
   }
 }
+
 @media (max-width: 768px) {
   .sw-ad-app-shell {
     padding: 16px;
@@ -283,5 +298,3 @@
     min-width: 560px;
   }
 }
-
-
