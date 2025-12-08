@@ -93,22 +93,22 @@ export const customerLogout = async () => {
 };
 
 export const PaymentsAPI = {
-  // Create Razorpay order
+  
   createOrder: async (bookingId: string, amount: number) => {
-    const res = await api.post("/api/payments/create-order", {
+    const res = await api.post("/payments/create-order", {
       bookingId,
       amount,
     });
     return res.data;
   },
 
-  // Verify Razorpay signature
+  
   verifyPayment: async (
     orderId: string,
     paymentId: string,
     signature: string
   ) => {
-    const res = await api.post("/api/payments/verify-payment", {
+    const res = await api.post("/payments/verify-payment", {
       order_id: orderId,
       payment_id: paymentId,
       signature,
