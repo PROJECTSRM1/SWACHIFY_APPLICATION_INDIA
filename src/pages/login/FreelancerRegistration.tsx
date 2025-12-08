@@ -12,7 +12,7 @@ import './Registration.css';
 import gpayLogo from "../../assets/Google_Pay_Logo.svg";
 import phonepeLogo from "../../assets/phonepe.webp";
 import paytmLogo from "../../assets/Paytm.svg";
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { freelancerRegister } from "../../api/freelancerAuth";
 
 const { Option } = Select;
@@ -864,7 +864,9 @@ export default function Registration() {
 
             <p className="swc-fr-login-link">
               Already have an account?{' '}
-              <a href="/freelancerlogin">Login here</a>
+              
+              <NavLink to="/freelancerlogin">Login here</NavLink>
+
             </p>
           </div>
         </div>
