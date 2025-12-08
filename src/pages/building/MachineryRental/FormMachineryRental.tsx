@@ -135,7 +135,8 @@ const MachineryDetails: React.FC<FormProps> = ({ id, onClose }) => {
 
                 <div className="sw-br-mach-form-item">
                   <label>Rental Date</label>
-                  <input type="date" name="rentalDate" />
+                  <input type="date" name="rentalDate"
+                  min={new Date().toISOString().split("T")[0]} />
                 </div>
               </div>
 

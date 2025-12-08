@@ -15131,6 +15131,7 @@ textarea {
   justify-content: space-between;
   align-items: baseline;
   margin-top: auto;
+  gap: 15px;
 
 }
 
@@ -15194,7 +15195,7 @@ textarea {
 }
 
 .sw-br-form-left {
-  width: 41%;
+  width: 79%;
 }
 
 .sw-br-form-image {
@@ -15284,7 +15285,7 @@ textarea {
 }
 
 .sw-br-modal-content {
-  width: 90%;
+  width: 60%;
   max-width: 850px;
   background: white;
   border-radius: 16px;
@@ -15323,7 +15324,7 @@ textarea {
 .sw-br-field3 input,
 .sw-br-field3 select,
 .sw-br-field3 textarea {
-  padding: 10px 14px;
+  padding: 5px 14px;
   border: 1px solid #cbd5e1;
   border-radius: 10px;
   font-size: 10px;
@@ -15360,6 +15361,7 @@ textarea {
   white-space: nowrap;
   font-size: 12px;
   cursor: pointer;
+  margin-top: -11px;
 }
 
 .sw-br-checkbox-group input[type="checkbox"] {
@@ -15583,13 +15585,10 @@ textarea {
  }
 }
 
+
+
 /* Khasim and Vanamanla Bulding Raw Service CSS Updates */
 
-
-
-
-
- /* Khasim and Vanamanla Bulding Raw Service CSS Updates */
 
 /* /////////surya header css////// */
 
