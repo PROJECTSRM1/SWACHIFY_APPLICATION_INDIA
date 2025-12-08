@@ -37,15 +37,15 @@ import {
 
 const { Content } = Layout;
 const { TabPane } = Tabs;
-
 const serviceCategories = [
-  { icon: "🏠", name: "Home Services", count: 156 },
-  { icon: "🔧", name: "Repair & Fix", count: 89 },
-  { icon: "🎨", name: "Creative Work", count: 234 },
-  { icon: "💼", name: "Business Help", count: 178 },
-  { icon: "🚚", name: "Moving & Shifting", count: 67 },
-  { icon: "🧹", name: "Cleaning Services", count: 145 },
+  { icon: "🏠", name: "Cleaning & Home Services", count: 10 },
+  { icon: "🚚", name: "Transport", count: 15 },
+  { icon: "🏢", name: "Buy/Sale/Rentals", count: 23 },     
+  { icon: "🧱", name: "Raw Materials", count: 14 },       
+  { icon: "📚", name: "Education", count: 17 },            
+  { icon: "🛍️", name: "Swachify Products", count: 27 },     
 ];
+
 
 const liveRequests = [
   {
