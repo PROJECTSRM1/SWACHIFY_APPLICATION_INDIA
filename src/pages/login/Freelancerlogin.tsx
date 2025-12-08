@@ -35,12 +35,15 @@ export default function Freelancerlogin() {
   try {
     setLoading(true);
 
-    const payload = {
+    const payload : any = {
       email_or_phone: values.email,
       password: values.password,
     };
 
     const res = await freelancerLogin(payload);
+
+    
+    console.log(res)
 
     message.success("Login successful");
     navigate("/freelancer-dashboard");
@@ -54,6 +57,7 @@ export default function Freelancerlogin() {
     setLoading(false);
   }
 };
+
 
 
   return (
