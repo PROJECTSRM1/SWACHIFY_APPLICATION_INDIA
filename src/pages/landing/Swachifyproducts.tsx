@@ -13,7 +13,7 @@ import {
 } from "@ant-design/icons";
 
 import "../../index.css";
-import "./SwachifyProducts.css";
+import "./Swachifyproducts.css";
 
 type ProductCategory = {
   id: string;
