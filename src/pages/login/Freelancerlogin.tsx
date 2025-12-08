@@ -151,29 +151,6 @@ export default function Freelancerlogin() {
             </Form.Item>
           </Form>
 
-          {/* <Divider plain>or login with</Divider>
-
-          <Row gutter={12}>
-            <Col span={12}>
-              <Button
-                block
-                icon={<GoogleOutlined />}
-                className="swf-social"
-              >
-                Google
-              </Button>
-            </Col>
-            <Col span={12}>
-              <Button
-                block
-                icon={<GithubOutlined />}
-                className="swf-social"
-              >
-                Github
-              </Button>
-            </Col>
-          </Row> */}
-
           <p className="sw-fr-signup">
             Don’t have an account?
             <button
