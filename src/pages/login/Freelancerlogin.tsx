@@ -40,10 +40,9 @@ export default function Freelancerlogin() {
       password: values.password,
     };
 
-    const res = await freelancerLogin(payload);
+    await freelancerLogin(payload);
 
-    
-    console.log(res)
+  
 
     message.success("Login successful");
     navigate("/freelancer-dashboard");
@@ -154,29 +153,6 @@ export default function Freelancerlogin() {
               </Button>
             </Form.Item>
           </Form>
-
-          {/* <Divider plain>or login with</Divider>
-
-          <Row gutter={12}>
-            <Col span={12}>
-              <Button
-                block
-                icon={<GoogleOutlined />}
-                className="swf-social"
-              >
-                Google
-              </Button>
-            </Col>
-            <Col span={12}>
-              <Button
-                block
-                icon={<GithubOutlined />}
-                className="swf-social"
-              >
-                Github
-              </Button>
-            </Col>
-          </Row> */}
 
           <p className="sw-fr-signup">
             Don’t have an account?
