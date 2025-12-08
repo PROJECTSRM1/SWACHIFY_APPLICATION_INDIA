@@ -42,7 +42,6 @@ function getTabFromPath(pathname: string): TabKey {
     return 'dashboard';
 }
 
-
 const AdminShell = () => {
     const location = useLocation()
     const navigate = useNavigate()

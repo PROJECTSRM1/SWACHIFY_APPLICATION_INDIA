@@ -26,21 +26,18 @@ import "./Header.css";
 
 const navItems = [
   { key: "home", label: <Link to="/landing">Home</Link> },
-  {
-    key: "cleaning",
-    label: <Link to="/cleaningservice">Cleaning&Home Services</Link>,
-  },
+  { key: "cleaning", label: <Link to="/cleaningservice">Cleaning&Home Services</Link> },
   { key: "packers", label: <Link to="/LandingPackers">Transport</Link> },
-
-  {
-    key: "commercial",
-    label: <Link to="/commercial-plots">Buy/Sale/Rentals</Link>,
-  },
+  { key: "commercial", label: <Link to="/commercial-plots">Buy/Sale/Rentals</Link> },
   { key: "materials", label: <Link to="/ConstructionMaterials">Raw Materials</Link> },
-  { key: "education", label: <Link to="/Education">Education</Link> },
-  { key: "Swachifyproducts", label: <Link to="/">Swachify Products</Link> },
+  { key: "education", label: <Link to="/education">Education</Link> },
+  {
+    key: "Swachifyproducts",
+    label: <Link to="/swachify-products">Swachify Products</Link>,
+  },
   { key: "freelancer", label: <Link to="/Freelancer">Freelancer</Link> },
 ];
+
 
 const { TabPane } = Tabs;
 
@@ -85,7 +82,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
         // ignore deletion errors
       }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+   
   }, []); // run once on mount
 
   // ==========================
@@ -326,121 +323,123 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
             </Form>
           </TabPane>
 
+          
           {/* REGISTER TAB */}
           <TabPane tab="Register" key="register">
             <Form layout="vertical" onFinish={onRegister} preserve={false}>
-              {/* First Name & Last Name */}
               <div style={{ display: "flex", gap: 8 }}>
-                <Form.Item
-                  label="First Name"
-                  name="firstName"
-                  rules={[
-                    { required: true, message: "Please enter your first name" },
-                  ]}
-                  style={{ flex: 1 }}
-                >
-                  <Input />
-                </Form.Item>
+                <Form.Item label="First Name" name="firstName" rules={[
+          { required: true, message: "Please enter your first name" },
+          { min: 2, message: "First name must be at least 2 characters" },
+          {
+            pattern: /^[A-Za-z]+$/,
+            message: "First name must contain only letters",
+          },
+        ]}
+        style={{ flex: 1 }}  >
+          <Input />
+          </Form.Item>
+          <Form.Item label="Last Name" name="lastName" rules={[
+          { required: true, message: "Please enter your last name" },
+          { min: 2, message: "Last name must be at least 2 characters" },
+          {
+            pattern: /^[A-Za-z]+$/,
+            message: "Last name must contain only letters",
+          },
+          ]}
+          style={{ flex: 1 }} >
+            <Input />
+            </Form.Item>
+      </div>
+      <Form.Item label="Email" name="email" rules={[
+        { required: true, message: "Please enter your email" },
+        { type: "email", message: "Enter a valid email (Ex: abcd@gmail.com)" },
+      ]} >
+        <Input />
+        </Form.Item> 
+        <Form.Item label="Phone" name="phone" rules={[
+        { required: true, message: "Please enter phone number" },
+        {
+          pattern: /^[0-9]{10}$/,
+          message: "Phone number must be exactly 10 digits",
+        },
+      ]} >
+      <Input maxLength={10} />
+      </Form.Item> 
+      <Form.Item label="Gender" name="gender" rules={[{ required: true, message: "Please select your gender" }]} >
+      <Radio.Group>
+        <Radio value="male">Male</Radio>
+        <Radio value="female">Female</Radio>
+        <Radio value="other">Other</Radio>
+      </Radio.Group>
+      </Form.Item>
 
-                <Form.Item
-                  label="Last Name"
-                  name="lastName"
-                  rules={[
-                    { required: true, message: "Please enter your last name" },
-                  ]}
-                  style={{ flex: 1 }}
-                >
-                  <Input />
-                </Form.Item>
-              </div>
+    <Form.Item
+      label="Password"
+      name="password"
+      rules={[
+        { required: true, message: "Please enter password" },
+        {
+          pattern:
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
+          message:
+            "Password must have 1 uppercase, 1 lowercase, 1 digit & 1 special symbol (Ex: Abcd123@)",
+        },
+      ]}
+      hasFeedback
+    >
+      <Input.Password />
+    </Form.Item>
+      <Form.Item
+      label="Confirm Password"
+      name="confirm"
+      dependencies={["password"]}
+      hasFeedback
+      rules={[
+        { required: true, message: "Please confirm your password" },
+        ({ getFieldValue }) => ({
+          validator(_, value) {
+            return !value || getFieldValue("password") === value
+              ? Promise.resolve()
+              : Promise.reject(new Error("Passwords do not match"));
+          },
+        }),
+      ]}
+    >
+      <Input.Password />
+    </Form.Item>
 
-              <Form.Item
-                label="Email"
-                name="email"
-                rules={[{ required: true }, { type: "email" }]}
-              >
-                <Input />
-              </Form.Item>
+    {/* ADDRESS */}
+    <Form.Item
+      label="Address"
+      name="address"
+      rules={[
+        { required: true, message: "Please enter your address" },
+        { min: 5, message: "Address must be at least 8 characters" },
+      ]}
+    >
+      <Input.TextArea rows={3} placeholder="Enter your address" />
+    </Form.Item>
 
-              <Form.Item
-                label="Phone"
-                name="phone"
-                rules={[{ required: true }]}
-              >
-                <Input />
-              </Form.Item>
+    <Form.Item>
+      <Button block htmlType="submit" loading={authLoading}>
+        Register
+      </Button>
+    </Form.Item>
 
-              {/* Gender - Radio Buttons */}
-              <Form.Item
-                label="Gender"
-                name="gender"
-                rules={[
-                  { required: true, message: "Please select your gender" },
-                ]}
-              >
-                <Radio.Group>
-                  <Radio value="male">Male</Radio>
-                  <Radio value="female">Female</Radio>
-                  <Radio value="other">Other</Radio>
-                </Radio.Group>
-              </Form.Item>
-
-              <Form.Item
-                label="Password"
-                name="password"
-                rules={[{ required: true }]}
-                hasFeedback
-              >
-                <Input.Password />
-              </Form.Item>
-
-              <Form.Item
-                label="Confirm Password"
-                name="confirm"
-                dependencies={["password"]}
-                hasFeedback
-                rules={[
-                  { required: true },
-                  ({ getFieldValue }) => ({
-                    validator(_, value) {
-                      return !value || getFieldValue("password") === value
-                        ? Promise.resolve()
-                        : Promise.reject(new Error("Passwords do not match"));
-                    },
-                  }),
-                ]}
-              >
-                <Input.Password />
-              </Form.Item>
-
-              <Form.Item
-                label="Address"
-                name="address"
-                rules={[{ required: true }]}
-              >
-                <Input.TextArea rows={3} placeholder="Enter your address" />
-              </Form.Item>
-
-              <Form.Item>
-                <Button block htmlType="submit" loading={authLoading}>
-                  Register
-                </Button>
-              </Form.Item>
-
-              <Form.Item style={{ marginTop: -10 }}>
-                <a
-                  onClick={() => {
-                    setAuthModalVisible(false);
-                    setVendorModalVisible(true);
-                  }}
-                >
-                  Are you a vendor?
-                </a>
-              </Form.Item>
-            </Form>
+    <Form.Item style={{ marginTop: -10 }}>
+      <a
+        onClick={() => {
+          setAuthModalVisible(false);
+          setVendorModalVisible(true);
+        }} >
+          Are you a vendor?
+          </a>
+          </Form.Item>
+          </Form>
           </TabPane>
         </Tabs>
-      </Modal>
+        </Modal>
 
       {/* FORGOT PASSWORD MODAL – placeholder for now */}
       <Modal
