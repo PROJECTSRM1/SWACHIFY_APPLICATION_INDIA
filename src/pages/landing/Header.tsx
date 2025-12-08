@@ -26,21 +26,18 @@ import "./Header.css";
 
 const navItems = [
   { key: "home", label: <Link to="/landing">Home</Link> },
-  {
-    key: "cleaning",
-    label: <Link to="/cleaningservice">Cleaning&Home Services</Link>,
-  },
+  { key: "cleaning", label: <Link to="/cleaningservice">Cleaning&Home Services</Link> },
   { key: "packers", label: <Link to="/LandingPackers">Transport</Link> },
-
-  {
-    key: "commercial",
-    label: <Link to="/commercial-plots">Buy/Sale/Rentals</Link>,
-  },
+  { key: "commercial", label: <Link to="/commercial-plots">Buy/Sale/Rentals</Link> },
   { key: "materials", label: <Link to="/ConstructionMaterials">Raw Materials</Link> },
-  { key: "education", label: <Link to="/">Education</Link> },
-  { key: "Swachifyproducts", label: <Link to="/">Swachify Products</Link> },
+  { key: "education", label: <Link to="/education">Education</Link> },
+  {
+    key: "Swachifyproducts",
+    label: <Link to="/swachify-products">Swachify Products</Link>,
+  },
   { key: "freelancer", label: <Link to="/Freelancer">Freelancer</Link> },
 ];
+
 
 const { TabPane } = Tabs;
 
@@ -85,7 +82,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
         // ignore deletion errors
       }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+   
   }, []); // run once on mount
 
   // ==========================
