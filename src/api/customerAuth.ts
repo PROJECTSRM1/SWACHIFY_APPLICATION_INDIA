@@ -92,5 +92,30 @@ export const customerLogout = async () => {
   localStorage.removeItem("user");
 };
 
+export const PaymentsAPI = {
+  // Create Razorpay order
+  createOrder: async (bookingId: string, amount: number) => {
+    const res = await api.post("/api/payments/create-order", {
+      bookingId,
+      amount,
+    });
+    return res.data;
+  },
+
+  // Verify Razorpay signature
+  verifyPayment: async (
+    orderId: string,
+    paymentId: string,
+    signature: string
+  ) => {
+    const res = await api.post("/api/payments/verify-payment", {
+      order_id: orderId,
+      payment_id: paymentId,
+      signature,
+    });
+    return res.data;
+  },
+};
+
 
 

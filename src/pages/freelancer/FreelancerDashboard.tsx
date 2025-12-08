@@ -36,8 +36,8 @@ import {
 } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 
-import { freelancerLogout } from "../../api/freelancerAuth";
-//import { getUserDetails } from "../../utils/helpers/storage";
+// import { freelancerLogout } from "../../api/freelancerAuth";
+// import { getUserDetails } from "../../utils/helpers/storage";
 
 
 
@@ -1108,33 +1108,11 @@ useEffect(() => {
     message.success(`${newUrls.length} image(s) uploaded/captured.`);
   };
 
-  const handleLogout = async () => {
-  try {
-    const freelancer = JSON.parse(localStorage.getItem("freelancer") || "{}");
-
-    if (freelancer?.user_id) {
-      await freelancerLogout(freelancer.user_id);
-      console.log("Logout API HIT ✔️");
-    } else {
-      console.warn("No valid user_id found in storage");
-    }
-
-    // Clear storage
-    localStorage.removeItem("freelancer");
-    localStorage.removeItem("freelancerAccessToken");
-    localStorage.removeItem("freelancerRefreshToken");
-
-    message.success("Logged out successfully");
-    navigate("/freelancerlogin", { replace: true });
-
-  } catch (err) {
-    console.error("Logout error:", err);
-    message.error("Logout failed, please try again.");
-  }
-};
-
-
-
+  const handleLogout = () => {
+    localStorage.removeItem('freelancerLoggedIn');
+    //  setIsDashboardVisible(false); 
+    navigate('/freelancer');
+  };
 
   useEffect(() => {
     const isLoggedIn = localStorage.getItem('freelancerLoggedIn');
