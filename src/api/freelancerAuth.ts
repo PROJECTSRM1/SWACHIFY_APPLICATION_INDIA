@@ -26,7 +26,7 @@ export const freelancerRegister = async (data: FreelancerRegisterPayload) => {
   return res.data;
 };
 
-export const freelancerLogin = async (data: any) => {
+export const freelancerLogin = async (data: string) => {
   const res = await api.post("api/freelancer/login", data);
 
   // Save correctly based on backend response
