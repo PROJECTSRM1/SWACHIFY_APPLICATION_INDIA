@@ -1,116 +1,127 @@
-import React from 'react';
-import { Card, Col, Row, Table, Tag, Typography } from 'antd';
-import {
-    UsergroupAddOutlined,
-    SolutionOutlined,
-    ShopOutlined,
-    ClockCircleOutlined,
-    CheckCircleOutlined,
-    ArrowUpOutlined,
-} from '@ant-design/icons';
-import type { ColumnsType } from 'antd/es/table';
-//import '../index.css';
 
-const { Title } = Typography;
+import { Card, Col, Divider, Row, Space, Statistic, Table, Tag, Typography } from 'antd'
+import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+import { dashboardStats, statusColors, ticketChartData } from './data'
+import type { Ticket } from './types'
 
-interface Ticket {
-    key: string;
-    ticketId: string;
-    service: string;
-    status: 'pending' | 'accepted' | 'completed' | 'in-progress';
-    assignedTo: string;
+
+type Props = {
+  tickets: Ticket[]
 }
 
-const Dashboard: React.FC = () => {
-    const stats = [
-        { title: 'Total Users', value: 1247, icon: <UsergroupAddOutlined />, color: '#1890ff' },
-        { title: 'Total Freelancers', value: 342, icon: <SolutionOutlined />, color: '#722ed1' },
-        { title: 'Total Vendors', value: 89, icon: <ShopOutlined />, color: '#fa8c16' },
-        { title: 'Active Tickets', value: 156, icon: <ClockCircleOutlined />, color: '#1890ff' },
-        { title: 'Completed Tickets', value: 2341, icon: <CheckCircleOutlined style={{ color: '#52c41a' }} />, color: '#52c41a' },
-        { title: 'Pending Tickets', value: 67, icon: <ArrowUpOutlined style={{ color: '#f5222d' }} />, color: '#f5222d' },
-    ];
+const DashboardPage = ({ tickets }: Props) => {
+  const recentTickets = tickets.slice(0, 4)
 
-    const columns: ColumnsType<Ticket> = [
-        {
-            title: 'Ticket ID',
-            dataIndex: 'ticketId',
-            key: 'ticketId',
-        },
-        {
-            title: 'Service',
-            dataIndex: 'service',
-            key: 'service',
-        },
-        {
-            title: 'Status',
-            dataIndex: 'status',
-            key: 'status',
-            render: (status) => {
-                let color = 'default';
-                if (status === 'pending') color = 'gold';
-                if (status === 'accepted') color = 'blue';
-                if (status === 'completed') color = 'green';
-                if (status === 'in-progress') color = 'purple';
-                return (
-                    <Tag color={color} key={status} style={{ borderRadius: '10px', padding: '0 10px' }}>
-                        {status}
-                    </Tag>
-                );
-            },
-        },
-        {
-            title: 'Assigned To',
-            dataIndex: 'assignedTo',
-            key: 'assignedTo',
-        },
-    ];
+  return (
+    <div className="sw-ad-page-card">
+      <section className="sw-ad-stats-grid">
+        {dashboardStats.map((stat) => (
+          <Card key={stat.key} className="sw-ad-stat-card" bordered={false}>
+            <Space size="large" align="center">
+              <div className="sw-ad-stat-icon">{stat.icon}</div>
+              <div>
+                <Typography.Text className="sw-ad-stat-label">{stat.label}</Typography.Text>
+                <Typography.Title level={3} className="sw-ad-stat-value">
+                  {stat.value.toLocaleString()}
+                </Typography.Title>
+              </div>
+            </Space>
+          </Card>
+        ))}
+      </section>
 
-    const data: Ticket[] = [
-        {
-            key: '1',
-            ticketId: 'TKT001',
-            service: 'Cleaning',
-            status: 'pending',
-            assignedTo: '-',
-        },
-        {
-            key: '2',
-            ticketId: 'TKT002',
-            service: 'Construction Materials',
-            status: 'accepted',
-            assignedTo: 'ABC Suppliers (Vendor)',
-        },
-    ];
+      <div className="sw-ad-chart-scroll">
+        <Row gutter={24} className="sw-ad-chart-row">
+          <Col xs={24} lg={12}>
+            <Card title="Ticket Volume Trend" className="sw-ad-chart-card" extra={<Tag color="green">Live</Tag>}>
+              <ResponsiveContainer width="100%" height={260}>
+                <AreaChart data={ticketChartData}>
+                  <defs>
+                    <linearGradient id="colorActive" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#ff4d4f" stopOpacity={0.8} />
+                      <stop offset="95%" stopColor="#ff4d4f" stopOpacity={0} />
+                    </linearGradient>
+                    <linearGradient id="colorCompleted" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#52c41a" stopOpacity={0.8} />
+                      <stop offset="95%" stopColor="#52c41a" stopOpacity={0} />
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="month" />
+                  <YAxis />
+                  <Tooltip />
+                  <Area type="monotone" dataKey="active" stroke="#ff4d4f" fillOpacity={1} fill="url(#colorActive)" />
+                  <Area
+                    type="monotone"
+                    dataKey="completed"
+                    stroke="#52c41a"
+                    fillOpacity={1}
+                    fill="url(#colorCompleted)"
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
+            </Card>
+          </Col>
+          <Col xs={24} lg={12}>
+            <Card title="Operational Snapshot" className="sw-ad-chart-card">
+              <Row gutter={[16, 16]}>
+                <Col span={12}>
+                  <Statistic title="Avg. Resolution" value="6h 18m" />
+                </Col>
+                <Col span={12}>
+                  <Statistic title="SLA Compliance" value="92%" />
+                </Col>
+                <Col span={12}>
+                  <Statistic title="Escalations" value={4} suffix="/ week" />
+                </Col>
+                <Col span={12}>
+                  <Statistic title="Pending Approvals" value={12} />
+                </Col>
+              </Row>
+              <Divider />
+              <Space direction="vertical" className="sw-ad-legend">
+                <div className="sw-ad-legend-row">
+                  <span className="sw-ad-legend-dot sw-ad-legend-dot--red" />
+                  Active tickets are trending upward this week
+                </div>
+                <div className="sw-ad-legend-row">
+                  <span className="sw-ad-legend-dot sw-ad-legend-dot--green" />
+                  Completion rate is stable across categories
+                </div>
+              </Space>
+            </Card>
+          </Col>
+        </Row>
+      </div>
 
-    return (
-        <div className="sw-ad-dashboard-container">
-            <Title level={5} style={{ marginBottom: '20px', color: '#333' }}>Dashboard Overview</Title>
-
-            <Row gutter={[24, 24]}>
-                {stats.map((stat, index) => (
-                    <Col xs={24} sm={12} md={8} key={index}>
-                        <Card bordered={false} className="stat-card">
-                            <div className="stat-content">
-                                <div>
-                                    <div className="stat-title">{stat.title}</div>
-                                    <div className="stat-value">{stat.value}</div>
-                                </div>
-                                <div className="stat-icon" style={{ color: stat.color }}>
-                                    {stat.icon}
-                                </div>
-                            </div>
-                        </Card>
-                    </Col>
-                ))}
-            </Row>
-
-            <div className="sw-ad-recent-tickets-section">
-                <Title level={5} style={{ marginBottom: '20px', marginTop: '40px', color: '#333' }}>Recent Tickets</Title>
-                <Table columns={columns} dataSource={data} pagination={false} className="custom-table" />
-            </div>
+      <Card title="Recent Tickets" className="sw-ad-recent-card">
+        <div className="sw-ad-table-wrapper">
+          <Table
+            dataSource={recentTickets}
+            pagination={false}
+            rowKey="id"
+            size="small"
+            columns={[
+              { title: 'Ticket ID', dataIndex: 'id' },
+              { title: 'Service', dataIndex: 'service' },
+              { title: 'Customer', dataIndex: 'customer' },
+              { title: 'Date', dataIndex: 'date' },
+              {
+                title: 'Status',
+                render: (_, record) => <Tag color={statusColors[record.serviceStatus]}>{record.serviceStatus}</Tag>,
+              },
+              {
+                title: 'Assigned To',
+                dataIndex: 'assignedTo',
+                render: (text: string) => (text ? text : '-'),
+              },
+            ]}
+          />
         </div>
-    );
-};
+      </Card>
+    </div>
+  )
+}
 
-export default Dashboard;
+export default DashboardPage
+

@@ -33,17 +33,18 @@ import {
   message,
 } from "antd";
 
-// import "./Freelancer.css";
 
 const { Content } = Layout;
 const { TabPane } = Tabs;
+
+
 const serviceCategories = [
-  { icon: "🏠", name: "Cleaning & Home Services", count: 10 },
-  { icon: "🚚", name: "Transport", count: 15 },
-  { icon: "🏢", name: "Buy/Sale/Rentals", count: 23 },     
-  { icon: "🧱", name: "Raw Materials", count: 14 },       
-  { icon: "📚", name: "Education", count: 17 },            
-  { icon: "🛍️", name: "Swachify Products", count: 27 },     
+  { icon: "🏠", name: "Cleaning & Home Services", count: 10, codes: ["Cleaning", "Home", "Moving"] },
+  { icon: "🚚", name: "Transport", count: 15, codes: ["Transport"] },
+  { icon: "🏢", name: "Buy/Sale/Rentals", count: 23, codes: ["Property"] },
+  { icon: "🧱", name: "Raw Materials", count: 14, codes: ["Materials"] },
+  { icon: "📚", name: "Education", count: 17, codes: ["Education"] },
+  { icon: "🛍️", name: "Swachify Products", count: 27, codes: ["Products"] },
 ];
 
 
@@ -70,13 +71,13 @@ const liveRequests = [
   },
   {
     id: 3,
-    title: "Plumbing Repair",
-    location: "Madhapur, Hyderabad",
-    price: "₹800",
+    title: "Truck Needed",
+    location: "Miyapur",
+    price: "₹1500",
     timeAgo: "1 hour ago",
     urgency: "high",
-    category: "Repair",
-    description: "Fix leaking kitchen sink and bathroom tap.",
+    category: "Transport",
+    description: "Transport furniture from Ameerpet to Kukatpally",
   },
 ];
 
@@ -96,6 +97,9 @@ export default function Freelancer() {
   const [loginForm] = Form.useForm();
   const [registerForm] = Form.useForm();
 
+ 
+  const [selectedCodes, setSelectedCodes] = useState<string[] | null>(null);
+
   const onLoginFinish = () => {
     message.success("Logged in (demo)");
     setAuthModalVisible(false);
@@ -105,6 +109,23 @@ export default function Freelancer() {
     message.success("Registered (demo)");
     setAuthModalVisible(false);
   };
+
+
+  const filteredRequests = !selectedCodes
+    ? liveRequests
+    : liveRequests.filter((req) => selectedCodes.includes(req.category));
+
+
+  
+  const handleCategoryClick = (codes: string[]) => {
+    if (selectedCodes && selectedCodes.join(",") === codes.join(",")) {
+      setSelectedCodes(null); 
+    } else {
+      setSelectedCodes(codes); 
+    }
+  };
+
+
 
   return (
     <Layout className="sw-fr-layout">
@@ -236,11 +257,22 @@ export default function Freelancer() {
         <Row gutter={[20, 20]}>
           {serviceCategories.map((cat, i) => (
             <Col xs={12} sm={8} md={6} lg={4} key={i}>
-              <Card hoverable className="sw-fr-category-card">
+
+              <Card
+                hoverable
+                className={`sw-fr-category-card ${selectedCodes &&
+                    selectedCodes.join(",") === cat.codes.join(",")
+                    ? "sw-fr-category-card-active"
+                    : ""
+                  }`}
+                onClick={() => handleCategoryClick(cat.codes)}
+              >
                 <div className="sw-fr-category-icon">{cat.icon}</div>
                 <h4 className="sw-fr-category-name">{cat.name}</h4>
                 <p className="sw-fr-category-count">{cat.count} jobs</p>
               </Card>
+
+
             </Col>
           ))}
         </Row>
@@ -265,7 +297,7 @@ export default function Freelancer() {
         </div>
 
         <Row gutter={[20, 20]}>
-          {liveRequests.map((req) => (
+          {filteredRequests.map((req) => (
             <Col xs={24} md={12} lg={8} key={req.id}>
               <Card hoverable className="sw-fr-request-card">
                 <Tag
@@ -302,7 +334,7 @@ export default function Freelancer() {
                     <Button onClick={() => navigate("/freelancerregistration")} type="primary" shape="round">
                       Accept
                     </Button>
-                    {/* <Button shape="round">View</Button> */}
+                   
                   </div>
                 </div>
               </Card>

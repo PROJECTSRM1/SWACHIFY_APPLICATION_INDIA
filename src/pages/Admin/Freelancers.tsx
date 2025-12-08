@@ -1,169 +1,190 @@
-import React from 'react';
-import { Table, Typography, Tag, Button, Space, message } from 'antd';
-import type { ColumnsType } from 'antd/es/table';
 
-const { Title } = Typography;
 
-interface Freelancer {
-    key: string;
-    name: string;
-    email: string;
-    skills: string;
-    completedJobs: number;
-    rating: number;
-    status: 'active' | 'offline' | 'busy' | 'new';
-    action?: 'approve' | 'reject';
+import { Badge, Button, Descriptions, Modal, Space, Table, Tag } from 'antd'
+import { CheckOutlined, CloseOutlined, EyeOutlined, StarFilled } from '@ant-design/icons'
+import { useMemo, useState } from 'react'
+import type { Freelancer, FreelancerStatus } from './types'
+import { freelancerStatusColors } from './data'
+
+
+type Props = {
+  freelancers: Freelancer[]
+  pendingFreelancers: Freelancer[]
+  onStatusChange: (freelancerId: string, status: FreelancerStatus) => void
+  onApproveRequest: (freelancerId: string) => void
+  onRejectRequest: (freelancerId: string) => void
 }
 
-const Freelancers: React.FC = () => {
+const FreelancersPage = ({
+  freelancers,
+  pendingFreelancers,
+  onStatusChange,
+  onApproveRequest,
+  onRejectRequest,
+}: Props) => {
+  const [viewFreelancer, setViewFreelancer] = useState<Freelancer | null>(null)
 
-    const handleApprove = (name: string) => {
-        message.success(`${name} approved`);
-    };
+  // Combine all freelancers (pending and active)
+  const allFreelancers = useMemo(
+    () => [...pendingFreelancers, ...freelancers.filter((fr) => fr.status !== 'rejected')],
+    [freelancers, pendingFreelancers],
+  )
 
-    const handleReject = (name: string) => {
-        message.error(`${name} rejected`);
-    };
-
-    const columns: ColumnsType<Freelancer> = [
-        {
-            title: 'Name',
-            dataIndex: 'name',
-            key: 'name',
-        },
-        {
-            title: 'Email',
-            dataIndex: 'email',
-            key: 'email',
-        },
-        {
-            title: 'Skills',
-            dataIndex: 'skills',
-            key: 'skills',
-        },
-        {
-            title: 'Completed Jobs',
-            dataIndex: 'completedJobs',
-            key: 'completedJobs',
-        },
-        {
-            title: 'Rating',
-            dataIndex: 'rating',
-            key: 'rating',
-            render: (rating) => (
-                <span>
-                    <span style={{ color: '#faad14', marginRight: 4 }}>★</span>
-                    {rating}
-                </span>
-            ),
-        },
-        {
-            title: 'Status',
-            dataIndex: 'status',
-            key: 'status',
-            render: (status) => {
-                let color = 'default';
-                if (status === 'active') color = 'green';
-                if (status === 'offline') color = 'red';
-                if (status === 'busy') color = 'orange';
-                if (status === 'new') color = 'blue';
-
-                return (
-                    <Tag
-                        color={color}
-                        style={{ borderRadius: '10px', padding: '0 10px', textTransform: 'capitalize' }}
-                    >
-                        {status}
-                    </Tag>
-                );
+  return (
+    <div className="sw-ad-page-card">
+      <div className="sw-ad-table-wrapper">
+        <Table
+          rowKey="id"
+          dataSource={allFreelancers}
+          pagination={{ pageSize: 10, responsive: true }}
+          scroll={{ x: 'max-content' }}
+          columns={[
+            { title: 'ID', dataIndex: 'id', width: 100 },
+            { title: 'Name', dataIndex: 'name' },
+            { title: 'Email', dataIndex: 'email' },
+            {
+              title: 'City',
+              dataIndex: 'city',
             },
-        },
-
-    //     // ⭐ ACTION COLUMN
-{
-    title: 'Action',
-    key: 'action',
-    render: (_, record) => {
-        const showApprove = record.completedJobs < 45; // ✅ Condition
-
-        return (
-            <Space>
-                {showApprove && (
-                    <Button
-                        type="primary"
-                        size="small"
-                        style={{ backgroundColor: 'green', borderColor: 'green' }}
-                        onClick={() => handleApprove(record.name)}
-                    >
+            {
+              title: 'Skills',
+              dataIndex: 'skills',
+              render: (skills: string[]) => (
+                <>
+                  {skills.map((skill) => (
+                    <Tag key={skill}>{skill}</Tag>
+                  ))}
+                </>
+              ),
+            },
+            {
+              title: 'Status',
+              render: (_, record) => (
+                <Tag color={freelancerStatusColors[record.status]}>{record.status}</Tag>
+              ),
+            },
+            {
+              title: 'Rating',
+              dataIndex: 'rating',
+              render: (rating: number) =>
+                rating > 0 ? (
+                  <Badge count={rating} showZero color="gold" />
+                ) : (
+                  <span style={{ color: '#999' }}>N/A</span>
+                ),
+            },
+            {
+              title: 'Completed Jobs',
+              dataIndex: 'completed',
+            },
+            {
+              title: 'Age',
+              dataIndex: 'age',
+              render: (age: number) => `${age} yrs`,
+            },
+            {
+              title: 'Actions',
+              render: (_, record) => (
+                <Space wrap>
+                  <Button icon={<EyeOutlined />} onClick={() => setViewFreelancer(record)}>
+                    View
+                  </Button>
+                  {record.status === 'pending' && pendingFreelancers.includes(record) ? (
+                    <>
+                      <Button icon={<CheckOutlined />} onClick={() => onApproveRequest(record.id)}>
                         Approve
-                    </Button>
-                )}
+                      </Button>
+                      <Button danger icon={<CloseOutlined />} onClick={() => onRejectRequest(record.id)}>
+                        Reject
+                      </Button>
+                    </>
+                  ) : record.status === 'pending' ? (
+                    <>
+                      <Button
+                        icon={<CheckOutlined />}
+                        onClick={() => onStatusChange(record.id, 'approved')}
+                      >
+                        Approve
+                      </Button>
+                      <Button
+                        danger
+                        icon={<CloseOutlined />}
+                        onClick={() => onStatusChange(record.id, 'rejected')}
+                      >
+                        Reject
+                      </Button>
+                    </>
+                  ) : (
+                    <>
+                      {record.age <= 45 && (
+                        <Button
+                          icon={<CheckOutlined />}
+                          disabled={record.status === 'approved'}
+                          onClick={() => onStatusChange(record.id, 'approved')}
+                        >
+                          Approve
+                        </Button>
+                      )}
+                      <Button
+                        danger
+                        icon={<CloseOutlined />}
+                        disabled={record.status === 'rejected'}
+                        onClick={() => onStatusChange(record.id, 'rejected')}
+                      >
+                        Reject
+                      </Button>
+                    </>
+                  )}
+                </Space>
+              ),
+            },
+          ]}
+        />
+      </div>
 
-                <Button
-                    danger
-                    size="small"
-                    onClick={() => handleReject(record.name)}
-                >
-                    Reject
-                </Button>
-            </Space>
-        );
-    },
-},
-    ]
-    const data: Freelancer[] = [
-        {
-            key: '1',
-            name: 'John Doe',
-            email: 'john@email.com',
-            skills: 'Plumbing, Electrical',
-            completedJobs: 45,
-            rating: 4.8,
-            status: 'active',
-        },
-        {
-            key: '2',
-            name: 'Suresh Kumar',
-            email: 'suresh@email.com',
-            skills: 'Cleaning, Home Services',
-            completedJobs: 67,
-            rating: 4.9,
-            status: 'busy',
-        },
-        {
-            key: '3',
-            name: 'Ravi Singh',
-            email: 'ravi@email.com',
-            skills: 'Carpentry, Painting',
-            completedJobs: 0,
-            rating: 4.6,
-            status: 'offline',
-        },
-        {
-            key: '4',
-            name: 'Arun Verma',
-            email: 'arun@email.com',
-            skills: 'Painting, Carpentry',
-            completedJobs: 0,
-            rating: 4.2,
-            status: 'new',
-        },
-    ];
+      <Modal
+        open={!!viewFreelancer}
+        title={`Freelancer Details - ${viewFreelancer?.name}`}
+        onCancel={() => setViewFreelancer(null)}
+        footer={<Button onClick={() => setViewFreelancer(null)}>Close</Button>}
+        width={700}
+      >
+        {viewFreelancer && (
+          <Descriptions bordered column={{ xs: 1, sm: 1, md: 2 }} size="small">
+            <Descriptions.Item label="ID" span={2}>
+              {viewFreelancer.id}
+            </Descriptions.Item>
+            <Descriptions.Item label="Name">{viewFreelancer.name}</Descriptions.Item>
+            <Descriptions.Item label="Email">{viewFreelancer.email}</Descriptions.Item>
+            <Descriptions.Item label="City">{viewFreelancer.city}</Descriptions.Item>
+            <Descriptions.Item label="Age">{viewFreelancer.age} years</Descriptions.Item>
+            <Descriptions.Item label="Status" span={2}>
+              <Tag color={freelancerStatusColors[viewFreelancer.status]}>{viewFreelancer.status}</Tag>
+            </Descriptions.Item>
+            <Descriptions.Item label="Skills" span={2}>
+              {viewFreelancer.skills.map((skill) => (
+                <Tag key={skill}>{skill}</Tag>
+              ))}
+            </Descriptions.Item>
+            <Descriptions.Item label="Completed Jobs">{viewFreelancer.completed}</Descriptions.Item>
+            <Descriptions.Item label="Rating">
+              {viewFreelancer.rating > 0 ? (
+                <Space>
+                  <StarFilled style={{ color: '#faad14' }} />
+                  {viewFreelancer.rating}
+                </Space>
+              ) : (
+                'N/A'
+              )}
+            </Descriptions.Item>
+            <Descriptions.Item label="Experience" span={2}>
+              {viewFreelancer.age - 20} years (calculated)
+            </Descriptions.Item>
+          </Descriptions>
+        )}
+      </Modal>
+    </div>
+  )
+}
 
-    return (
-        <div className="sw-ad-view-container">
-            <Title level={5} style={{ marginBottom: '20px', color: '#333' }}>
-                All Freelancers
-            </Title>
-
-            <Table
-                columns={columns}
-                dataSource={data}
-                className="custom-table"
-                scroll={{ x: 900 }}
-            />
-        </div>
-    );
-};
-
-export default Freelancers;
+export default FreelancersPage
