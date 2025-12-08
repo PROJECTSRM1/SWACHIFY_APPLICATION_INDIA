@@ -605,27 +605,37 @@ body,
   flex-wrap: wrap;
   gap: 24px;
   margin-top: 12px;
-  justify-content: flex-start;
+  justify-content: center;    /* <--- center each row (important) */
   align-items: stretch;
+  width: 100%;
+  max-width: 1200px;          /* optional: constrain row width for nicer centering */
+  margin-left: auto;
+  margin-right: auto;
 }
-
-
 .sw-cs-main-col {
   display: flex;
   flex-direction: column;
-  flex: 0 0 calc(25% - 18px);
+  flex: 0 0 calc((100% - 48px) / 3); /* 3 columns, subtracting two gaps (24px * 2) */
+  max-width: calc((100% - 48px) / 3);
+  box-sizing: border-box;
 }
-
 
 @media (max-width: 1200px) {
   .sw-cs-main-col {
-    flex: 0 0 calc(33.333% - 16px);
+    flex: 0 0 calc((100% - 24px) / 2); /* 2 columns, subtract one gap */
+    max-width: calc((100% - 24px) / 2);
   }
 }
 
 @media (max-width: 900px) {
   .sw-cs-main-col {
-    flex: 0 0 calc(50% - 12px);
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .sw-cs-main-row {
+    gap: 16px;
+    padding: 0 8px;
   }
 }
 
