@@ -19,35 +19,29 @@ import {
     initialVendors,
     tabItems,
 } from './data'
-
-
 import type { FreelancerStatus, TabKey, TicketStatus } from './types'
-
 function App() {
     return (
-     
-         
-            <AdminShell />
-          
-        
+       <AdminShell />   
     )
 }
 
 const tabPaths: Record<TabKey, string> = {
-    dashboard: 'dashboard',
-    tickets: 'tickets',
-    users: 'users',
-    freelancers: 'freelancers',
-    vendors: 'vendors',
-}
+    dashboard: '/adminshell/dashboard',
+    tickets: '/adminshell/tickets',
+    users: '/adminshell/users',
+    freelancers: '/adminshell/freelancers',
+    vendors: '/adminshell/vendors',
+};
 
 function getTabFromPath(pathname: string): TabKey {
-    if (pathname.startsWith('/tickets')) return 'tickets'
-    if (pathname.startsWith('/users')) return 'users'
-    if (pathname.startsWith('/freelancers')) return 'freelancers'
-    if (pathname.startsWith('/vendors')) return 'vendors'
-    return 'dashboard'
+    if (pathname.includes('/adminshell/tickets')) return 'tickets';
+    if (pathname.includes('/adminshell/users')) return 'users';
+    if (pathname.includes('/adminshell/freelancers')) return 'freelancers';
+    if (pathname.includes('/adminshell/vendors')) return 'vendors';
+    return 'dashboard';
 }
+
 
 const AdminShell = () => {
     const location = useLocation()

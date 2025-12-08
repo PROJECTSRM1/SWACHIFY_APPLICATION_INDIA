@@ -9,7 +9,7 @@ export const ProtectedRoutes = ({ children }: any) => {
 
   const verifyUser = async () => {
     try {
-      const res = await api.get("/api/auth/me", {
+      const res = await api.get("/auth/me", {
         params: { token },
       });
 

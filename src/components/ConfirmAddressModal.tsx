@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Modal, Button, Form, Input, message } from "antd";
+import { PaymentsAPI } from "../api/customerAuth";
 
 type CartItemLike = {
   id?: number | string;
@@ -50,64 +51,51 @@ export default function ConfirmAddressModal({ open, item, onClose, onConfirm }: 
 
   // 🎯 MAIN PAYMENT FUNCTION
   const handlePayment = async (booking: Booking) => {
-    try {
-      // 1️⃣ Create order from backend
-      const res = await fetch("http://127.0.0.1:8000/api/payments/create-order", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          bookingId: booking.id,
-          amount: (booking.amount ?? 0) * 100, // convert to paise
-        }),
-      });
-
-      const order = await res.json();
-
-      // 2️⃣ Razorpay checkout config
-      const options = {
-       key: import.meta.env.VITE_RAZORPAY_KEY_ID,
-
-        amount: order.amount,
-        currency: "INR",
-        name: "Swachify Services",
-        description: booking.title,
-        order_id: order.id,
-
-        handler: async function (response: any) {
-          console.log("Payment success:", response);
-
-          
-          await fetch("http://127.0.0.1:8000/api/payments/verify-payment", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              order_id: order.id,
-              payment_id: response.razorpay_payment_id,
-              signature: response.razorpay_signature,
-            }),
-          });
-
-          message.success("Payment successful!");
-
-         
-          onConfirm(booking);
-          onClose();
-        },
-
-        prefill: {
-          name: booking.customerName ?? "Customer",
-        },
-      };
+  try {
+   
+    const order = await PaymentsAPI.createOrder(
+      booking.id,
+      (booking.amount ?? 0) * 100
+    );
 
     
-      //@ts-ignore
-      const rzp = new window.Razorpay(options);
-      rzp.open();
-    } catch (error) {
-      console.error(error);
-      message.error("Payment failed. Try again.");
-    }
-  };
+    const options = {
+      key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+      amount: order.amount,
+      currency: "INR",
+      name: "Swachify Services",
+      description: booking.title,
+      order_id: order.id,
+
+      handler: async function (response: any) {
+        console.log("Payment success:", response);
+
+       
+        await PaymentsAPI.verifyPayment(
+          order.id,
+          response.razorpay_payment_id,
+          response.razorpay_signature
+        );
+
+        message.success("Payment successful!");
+
+        onConfirm(booking);
+        onClose();
+      },
+
+      prefill: {
+        name: booking.customerName ?? "Customer",
+      },
+    };
+
+    //@ts-ignore
+    const rzp = new window.Razorpay(options);
+    rzp.open();
+  } catch (error) {
+    console.error(error);
+    message.error("Payment failed. Try again.");
+  }
+};
 
   
   const handleOk = async () => {
