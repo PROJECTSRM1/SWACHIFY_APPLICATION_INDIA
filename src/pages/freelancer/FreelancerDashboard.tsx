@@ -1,5 +1,7 @@
 // src/pages/freelancer/FreelancerDashboard.tsx
-import React, { useState, useMemo, useEffect } from 'react';
+// at top of file
+import React, { useState, useMemo, useEffect, useRef, useCallback } from 'react';
+
 import {
   Layout,
   Card,
@@ -1029,6 +1031,9 @@ useEffect(() => {
     //   list = list.filter((req) => userSkillsSet.has(req.category));
     // }
 
+
+
+
     
 
     if (requestSort === 'Highest Price') {
@@ -1041,6 +1046,70 @@ useEffect(() => {
  [availableRequests, selectedSkill, requestSort]
 
 );
+
+  // ---------- Infinite scroll for Available Requests (client-side pagination) ----------
+  const pageSize = 6; // items per "page" — tweak as needed
+  // const [page, setPage] = useState(1);
+  const [visibleRequests, setVisibleRequests] = useState<Job[]>([]);
+  const [hasMore, setHasMore] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const sentinelRef = useRef<HTMLDivElement | null>(null);
+
+  // Reset pagination whenever the filtered list changes (filters, sort, accept/remove)
+  // useEffect(() => {
+  //   setPage(1);
+  //   const first = filteredRequests.slice(0, pageSize);
+  //   setVisibleRequests(first);
+  //   setHasMore(filteredRequests.length > first.length);
+  // }, [filteredRequests]);
+
+  useEffect(() => {
+  // reset visible list whenever filter/sort/availableRequests change
+  const first = filteredRequests.slice(0, pageSize);
+  setVisibleRequests(first);
+  setHasMore(filteredRequests.length > first.length);
+  setLoadingMore(false);
+}, [filteredRequests]);
+
+
+  // load more function (slices the filteredRequests array)
+ const loadMore = useCallback(() => {
+  if (loadingMore) return;
+  if (!hasMore) return;
+  setLoadingMore(true);
+
+  setTimeout(() => {
+    setVisibleRequests((prev) => {
+      const start = prev.length; // safe — uses most up-to-date length
+      const nextChunk = filteredRequests.slice(start, start + pageSize);
+      const newList = [...prev, ...nextChunk];
+      setHasMore(start + nextChunk.length < filteredRequests.length);
+      setLoadingMore(false);
+      return newList;
+    });
+  }, 250); // optional UX delay
+}, [filteredRequests, hasMore, loadingMore]);
+  // IntersectionObserver: watch sentinel and trigger loadMore
+  useEffect(() => {
+    const el = sentinelRef.current;
+    if (!el) return;
+    if (!hasMore) return;
+
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !loadingMore && hasMore) {
+            loadMore();
+          }
+        });
+      },
+      { root: null, rootMargin: '250px', threshold: 0.1 } // trigger early
+    );
+
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [loadMore, hasMore, loadingMore]);
+
 
   // --- ACTION HANDLERS ---
   const handleMarkComplete = (id: string) => {
@@ -1120,6 +1189,10 @@ useEffect(() => {
       // navigate('/freelancerlogin');
     }
   }, [navigate]);
+
+  // inside FreelancerDashboard component (near the top)
+
+
 
   return (
     <Layout className="sw-frd-layout-container">
@@ -1423,7 +1496,7 @@ useEffect(() => {
       </Space>
     </Row>
 
-    <div className="sw-frd-requests-list">
+    {/* <div className="sw-frd-requests-list">
       {filteredRequests.length > 0 ? (
         filteredRequests.map((req) => (
           <RequestCard
@@ -1447,7 +1520,40 @@ useEffect(() => {
 />
 
       )}
+    </div> */}
+
+        <div className="sw-frd-requests-list">
+      {visibleRequests.length === 0 && !loadingMore && (
+        <Empty
+          description={
+            selectedSkill === 'All Skills'
+              ? 'No available requests.'
+              : `No requests found for "${selectedSkill}".`
+          }
+          image={Empty.PRESENTED_IMAGE_SIMPLE}
+        />
+      )}
+
+      {visibleRequests.map((req) => (
+        <RequestCard key={req.ticketId} request={req} onAccept={handleAcceptRequest} />
+      ))}
+
+      {/* Sentinel observed by IntersectionObserver */}
+      <div ref={sentinelRef} style={{ height: 1 }} />
+
+      {/* Loading / end indicators */}
+      {loadingMore && (
+        <div style={{ textAlign: 'center', padding: 12 }}>
+          <span>Loading more…</span>
+        </div>
+      )}
+      {!hasMore && visibleRequests.length > 0 && (
+        <div style={{ textAlign: 'center', padding: 12, color: '#666' }}>
+          End of results
+        </div>
+      )}
     </div>
+
   </section>
 )}
 
