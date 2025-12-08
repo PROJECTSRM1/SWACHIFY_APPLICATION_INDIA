@@ -201,6 +201,8 @@ const CleaningService: React.FC = () => {
   const [serviceTypeKey, setServiceTypeKey] = useState<string>("standard");
 
   const [form] = Form.useForm();
+  const today = new Date().toISOString().split("T")[0];
+
 
   useEffect(() => {
     if (isDetailsModalOpen && selectedModule) {
@@ -697,7 +699,7 @@ const getDisplayPriceText = (): string => {
       {
         pattern: /^[A-Z][a-z]+ [A-Z][a-z]+$/,
         message:
-          "Enter valid full name"
+          " First letter should be capital for both first and last name"
       }
     ]}
     className="sw-cs-half-width"
@@ -899,7 +901,7 @@ const getDisplayPriceText = (): string => {
               rules={[{ required: true, message: "Select a date" }]}
               className="sw-cs-half-width"
             >
-              <input type="date" className="sw-cs-custom-date-input" />
+              <input type="date" className="sw-cs-custom-date-input"  min={today} />
             </Form.Item>
           )}
 
