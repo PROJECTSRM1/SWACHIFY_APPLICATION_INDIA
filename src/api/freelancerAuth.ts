@@ -22,7 +22,7 @@ export interface FreelancerLoginPayload {
 }
 
 export const freelancerRegister = async (data: FreelancerRegisterPayload) => {
-  const res = await api.post("api/freelancer/register", data);
+  const res = await api.post("/freelancer/register", data);
   return res.data;
 };
 
