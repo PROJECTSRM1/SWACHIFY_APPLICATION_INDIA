@@ -38,12 +38,12 @@ export interface RegisterResponse {
 }
 
 export const customerRegister = async (data: CustomerRegisterPayload) => {
-  const res = await api.post<RegisterResponse>("/auth/register", data);
+  const res = await api.post<RegisterResponse>("api/auth/register", data);
   return res.data;
 };
 
 export const customerLogin = async (data: CustomerLoginPayload) => {
-  const res = await api.post<LoginResponse>("/auth/login", data);
+  const res = await api.post<LoginResponse>("api/auth/login", data);
 
   const { access_token, refresh_token, user } = res.data;
 
@@ -84,7 +84,7 @@ export const customerLogout = async () => {
   const user_id = parsed?.id;
 
   if (user_id) {
-    await api.post("/auth/logout", { user_id });
+    await api.post("api/auth/logout", { user_id });
   }
 
   localStorage.removeItem("accessToken");
@@ -95,7 +95,7 @@ export const customerLogout = async () => {
 export const PaymentsAPI = {
   
   createOrder: async (bookingId: string, amount: number) => {
-    const res = await api.post("/payments/create-order", {
+    const res = await api.post("api/payments/create-order", {
       bookingId,
       amount,
     });
@@ -108,7 +108,7 @@ export const PaymentsAPI = {
     paymentId: string,
     signature: string
   ) => {
-    const res = await api.post("/payments/verify-payment", {
+    const res = await api.post("api/payments/verify-payment", {
       order_id: orderId,
       payment_id: paymentId,
       signature,
