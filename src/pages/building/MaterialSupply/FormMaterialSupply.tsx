@@ -166,10 +166,10 @@ const EquipmentDetails: React.FC<FormProps> = ({ id, onClose }) => {
 
                 <div className="sw-br-field">
                   <label>Delivery Date</label>
-                  <input type="date" name="deliveryDate" />
+                  <input type="date" name="deliveryDate"
+                  min={new Date().toISOString().split("T")[0]}/>
                 </div>
               </div>
-
               <div className="sw-br-field sw-br-full">
                 <label>Contact Number</label>
                 <input type="text" name="contact" placeholder="Contact number" />

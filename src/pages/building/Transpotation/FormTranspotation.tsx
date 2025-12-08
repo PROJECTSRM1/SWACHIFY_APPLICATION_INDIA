@@ -164,13 +164,13 @@ const TransportationForm: React.FC<FormProps> = ({ id, onClose }) => {
 
               <div className="sw-br-field3">
                 <label>Delivery Date</label>
-                <input
-                  type="date"
-                  name="deliveryDate"
-                  value={deliveryDate}
-                  onChange={(e) => setDeliveryDate(e.target.value)}
+                <input type="date" name="deliveryDate"
+                value={deliveryDate}
+                min={new Date().toISOString().split("T")[0]}   
+                onChange={(e) => setDeliveryDate(e.target.value)}
                 />
               </div>
+
             </div>
 
             <div className="sw-br-field3">
