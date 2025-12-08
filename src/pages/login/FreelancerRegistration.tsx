@@ -1,17 +1,15 @@
 import { useState } from 'react';
 import { Input, Button, Select, Modal } from 'antd';
+import { PaymentsAPI } from '../../api/customerAuth';
 import {
-  CreditCardOutlined,
-  MobileOutlined,
-  BankOutlined,
+ 
   CheckCircleOutlined
 } from '@ant-design/icons';
 import 'antd/dist/reset.css';
 import './Registration.css';
+import razorpay from "../../assets/razor_pay.png"
 
-import gpayLogo from "../../assets/Google_Pay_Logo.svg";
-import phonepeLogo from "../../assets/phonepe.webp";
-import paytmLogo from "../../assets/Paytm.svg";
+
 import { useNavigate } from 'react-router-dom';
 import { freelancerRegister } from "../../api/freelancerAuth";
 import { message } from "antd";
@@ -126,24 +124,64 @@ export default function Registration() {
   };
 
   // Simulate the payment processing
-  const handlePay = () => {
-    // validate payment method first
-    if (!validateStep4()) {
-      // make sure paymentMethod error is shown
-      return;
-    }
+ const handlePay = async () => {
+  if (!validateStep4()) return;  
 
-    // Already paid => do nothing
-    if (paymentCompleted) return;
+  setPayLoading(true);
 
-    setPayLoading(true);
-    // Simulate payment network call
-    setTimeout(() => {
-      setPayLoading(false);
-      setPaymentCompleted(true);
-      setShowPaymentSuccessModal(true);
-    }, 1600);
-  };
+  // Create a dummy booking for Razorpay ID purposes
+  const bookingId = "freelancer-" + Date.now();
+
+  try {
+    // 1️⃣ Create Razorpay order
+    const order = await PaymentsAPI.createOrder(bookingId, 49900); // ₹499
+
+    const options = {
+      key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+      amount: order.amount,
+      currency: "INR",
+      name: "Swachify - Freelancer Registration",
+      description: "Registration Fee",
+      order_id: order.id,
+
+      prefill: {
+        name: formData.firstName + " " + formData.lastName,
+        email: formData.email,
+        contact: formData.phone,
+      },
+
+      handler: async function (response: any) {
+        try {
+          // 2️⃣ Verify payment with backend
+          await PaymentsAPI.verifyPayment(
+            order.id,
+            response.razorpay_payment_id,
+            response.razorpay_signature
+          );
+
+          setPaymentCompleted(true);
+          setShowPaymentSuccessModal(true);
+        } catch (err) {
+          message.error("Payment verification failed");
+        }
+      },
+
+      theme: {
+        color: "#10b981"
+      }
+    };
+
+    // 3️⃣ Open Razorpay widget
+    //@ts-ignore
+    const rzp = new window.Razorpay(options);
+    rzp.open();
+  } catch (err) {
+    message.error("Payment failed!");
+  }
+
+  setPayLoading(false);
+};
+
 
   // Create account after payment
     const handleCreateAccount = async (e: React.FormEvent) => {
@@ -477,91 +515,47 @@ const navigate = useNavigate();
                 <div className="swc-fr-form-group">
                   <label className="swc-fr-form-label">Select Payment Method</label>
                   <div className="swc-fr-payment-methods">
-                    <div
-                      className={`swc-fr-payment-option ${formData.paymentMethod === 'gpay' ? 'active' : ''} ${paymentCompleted ? 'disabled-option' : ''}`}
-                      onClick={() => {
-                        if (paymentCompleted) return;
-                        setFormData({ ...formData, paymentMethod: 'gpay' });
-                        if (errors.paymentMethod) setErrors({ ...errors, paymentMethod: '' });
-                      }}
-                    >
-                      <div className="swc-fr-payment-icon">
-                        <img src={gpayLogo} alt="Google Pay" />
-                      </div>
-                      <span>Google Pay</span>
-                    </div>
 
-                    <div
-                      className={`swc-fr-payment-option ${formData.paymentMethod === 'phonepe' ? 'active' : ''} ${paymentCompleted ? 'disabled-option' : ''}`}
-                      onClick={() => {
-                        if (paymentCompleted) return;
-                        setFormData({ ...formData, paymentMethod: 'phonepe' });
-                        if (errors.paymentMethod) setErrors({ ...errors, paymentMethod: '' });
-                      }}
-                    >
-                      <div className="swc-fr-payment-icon">
-                        {/* exact PhonePe PNG */}
-                        <img src={phonepeLogo} alt="PhonePe" />
-                      </div>
-                      <span>PhonePe</span>
-                    </div>
+  {/* Razorpay Option */}
+  <div
+    className={`swc-fr-payment-option ${
+      formData.paymentMethod === "razorpay" ? "active" : ""
+    }`}
+    onClick={() => {
+      if (paymentCompleted) return;
+      setFormData({ ...formData, paymentMethod: "razorpay" });
+      if (errors.paymentMethod) setErrors({ ...errors, paymentMethod: "" });
+    }}
+  >
+    <div className="swc-fr-payment-icon">
+      <img
+        src={razorpay}
+        alt="Razorpay"
+        style={{ width: 36 }}
+      />
+    </div>
+    <span>Razorpay</span>
+  </div>
 
-                    <div
-                      className={`swc-fr-payment-option ${formData.paymentMethod === 'paytm' ? 'active' : ''} ${paymentCompleted ? 'disabled-option' : ''}`}
-                      onClick={() => {
-                        if (paymentCompleted) return;
-                        setFormData({ ...formData, paymentMethod: 'paytm' });
-                        if (errors.paymentMethod) setErrors({ ...errors, paymentMethod: '' });
-                      }}
-                    >
-                      <div className="swc-fr-payment-icon">
-                        <img src={paytmLogo} alt="Paytm" />
-                      </div>
-                      <span>Paytm</span>
-                    </div>
+  {/* Stripe Option */}
+  <div
+    className={`swc-fr-payment-option ${
+      formData.paymentMethod === "stripe" ? "active" : ""
+    }`}
+    onClick={() => {
+      if (paymentCompleted) return;
+      setFormData({ ...formData, paymentMethod: "stripe" });
+      if (errors.paymentMethod) setErrors({ ...errors, paymentMethod: "" });
+    }}
+  >
+    <div className="swc-fr-payment-icon">
+     
+    </div>
+    <span>Stripe</span>
+  </div>
 
-                    <div
-                      className={`swc-fr-payment-option ${formData.paymentMethod === 'upi' ? 'active' : ''} ${paymentCompleted ? 'disabled-option' : ''}`}
-                      onClick={() => {
-                        if (paymentCompleted) return;
-                        setFormData({ ...formData, paymentMethod: 'upi' });
-                        if (errors.paymentMethod) setErrors({ ...errors, paymentMethod: '' });
-                      }}
-                    >
-                      <div className="swc-fr-payment-icon">
-                        <MobileOutlined style={{ fontSize: '32px', color: '#5f6368' }} />
-                      </div>
-                      <span>UPI ID</span>
-                    </div>
+</div>
 
-                    <div
-                      className={`swc-fr-payment-option ${formData.paymentMethod === 'netbanking' ? 'active' : ''} ${paymentCompleted ? 'disabled-option' : ''}`}
-                      onClick={() => {
-                        if (paymentCompleted) return;
-                        setFormData({ ...formData, paymentMethod: 'netbanking' });
-                        if (errors.paymentMethod) setErrors({ ...errors, paymentMethod: '' });
-                      }}
-                    >
-                      <div className="swc-fr-payment-icon">
-                        <BankOutlined style={{ fontSize: '32px', color: '#5f6368' }} />
-                      </div>
-                      <span>Net Banking</span>
-                    </div>
-
-                    <div
-                      className={`swc-fr-payment-option ${formData.paymentMethod === 'card' ? 'active' : ''} ${paymentCompleted ? 'disabled-option' : ''}`}
-                      onClick={() => {
-                        if (paymentCompleted) return;
-                        setFormData({ ...formData, paymentMethod: 'card' });
-                        if (errors.paymentMethod) setErrors({ ...errors, paymentMethod: '' });
-                      }}
-                    >
-                      <div className="swc-fr-payment-icon">
-                        <CreditCardOutlined style={{ fontSize: '32px', color: '#5f6368' }} />
-                      </div>
-                      <span>Credit/Debit Card</span>
-                    </div>
-                  </div>
                   {errors.paymentMethod && <div className="swc-fr-form-error">{errors.paymentMethod}</div>}
                 </div>
 
