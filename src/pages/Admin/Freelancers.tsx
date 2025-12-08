@@ -1,6 +1,5 @@
 
-
-import { Badge, Button, Descriptions, Modal, Space, Table, Tag } from 'antd'
+import { Badge, Button, Descriptions, Modal, Space, Table, Tag, Tooltip } from 'antd'
 import { CheckOutlined, CloseOutlined, EyeOutlined, StarFilled } from '@ant-design/icons'
 import { useMemo, useState } from 'react'
 import type { Freelancer, FreelancerStatus } from './types'
@@ -23,6 +22,7 @@ const FreelancersPage = ({
   onRejectRequest,
 }: Props) => {
   const [viewFreelancer, setViewFreelancer] = useState<Freelancer | null>(null)
+  const [viewSkillsFreelancer, setViewSkillsFreelancer] = useState<Freelancer | null>(null)
 
   // Combine all freelancers (pending and active)
   const allFreelancers = useMemo(
@@ -49,13 +49,49 @@ const FreelancersPage = ({
             {
               title: 'Skills',
               dataIndex: 'skills',
-              render: (skills: string[]) => (
-                <>
-                  {skills.map((skill) => (
-                    <Tag key={skill}>{skill}</Tag>
-                  ))}
-                </>
-              ),
+              render: (skills: string[], record: Freelancer) => {
+                const maxVisible = 2
+                const visibleSkills = skills.slice(0, maxVisible)
+                const hasMore = skills.length > maxVisible
+                const maxSkillLength = 10
+
+                const truncateSkill = (skill: string) => {
+                  if (skill.length > maxSkillLength) {
+                    return skill.substring(0, maxSkillLength) + '...'
+                  }
+                  return skill
+                }
+
+                return (
+                  <Space wrap size="small" className="sw-ad-skills-cell">
+                    {visibleSkills.map((skill) => {
+                      const isTruncated = skill.length > maxSkillLength
+                      const displayText = truncateSkill(skill)
+
+                      return isTruncated ? (
+                        <Tooltip key={skill} title={skill} placement="top">
+                          <Tag className="sw-ad-skill-tag">{displayText}</Tag>
+                        </Tooltip>
+                      ) : (
+                        <Tag key={skill} className="sw-ad-skill-tag">{displayText}</Tag>
+                      )
+                    })}
+                    {hasMore && (
+                      <>
+                        <span className="sw-ad-skills-ellipsis">...</span>
+                        <Button
+                          type="link"
+                          size="small"
+                          onClick={() => setViewSkillsFreelancer(record)}
+                          className="sw-ad-view-more-btn"
+                        >
+                          View More
+                        </Button>
+                      </>
+                    )}
+                  </Space>
+                )
+              },
             },
             {
               title: 'Status',
@@ -150,7 +186,7 @@ const FreelancersPage = ({
         width={700}
       >
         {viewFreelancer && (
-          <Descriptions bordered column={{ xs: 1, sm: 1, md: 2 }} size="small">
+          <Descriptions bordered column={{ xs: 1, sm: 1, md: 2 }} size="small" className="sw-ad-descriptions-nowrap">
             <Descriptions.Item label="ID" span={2}>
               {viewFreelancer.id}
             </Descriptions.Item>
@@ -158,6 +194,8 @@ const FreelancersPage = ({
             <Descriptions.Item label="Email">{viewFreelancer.email}</Descriptions.Item>
             <Descriptions.Item label="City">{viewFreelancer.city}</Descriptions.Item>
             <Descriptions.Item label="Age">{viewFreelancer.age} years</Descriptions.Item>
+            <Descriptions.Item label="Aadhaar Number">{viewFreelancer.aadhaar}</Descriptions.Item>
+            <Descriptions.Item label="PAN Number">{viewFreelancer.pan}</Descriptions.Item>
             <Descriptions.Item label="Status" span={2}>
               <Tag color={freelancerStatusColors[viewFreelancer.status]}>{viewFreelancer.status}</Tag>
             </Descriptions.Item>
@@ -181,6 +219,24 @@ const FreelancersPage = ({
               {viewFreelancer.age - 20} years (calculated)
             </Descriptions.Item>
           </Descriptions>
+        )}
+      </Modal>
+
+      {/* Skills Modal */}
+      <Modal
+        open={!!viewSkillsFreelancer}
+        title={`Skills - ${viewSkillsFreelancer?.name}`}
+        onCancel={() => setViewSkillsFreelancer(null)}
+        footer={<Button onClick={() => setViewSkillsFreelancer(null)}>Close</Button>}
+        width={500}
+        className="sw-ad-skills-modal"
+      >
+        {viewSkillsFreelancer && (
+          <Space wrap size="small" className="sw-ad-skills-list">
+            {viewSkillsFreelancer.skills.slice(2).map((skill) => (
+              <Tag key={skill} className="sw-ad-skill-tag-modal">{skill}</Tag>
+            ))}
+          </Space>
         )}
       </Modal>
     </div>
