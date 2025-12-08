@@ -31,6 +31,8 @@ import {
   MailOutlined,
   QuestionCircleOutlined,
   CheckCircleOutlined,
+  ArrowLeftOutlined,
+  // ArrowLeftOutlined,
 } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 
@@ -150,6 +152,267 @@ const INITIAL_AVAILABLE_REQUESTS: Job[] = [
     estimatedPrice: 12000,
     price: 12000,
   },
+  {
+  ticketId: 'TKT007',
+  title: 'Cleaning - Basic House Cleaning',
+  category: 'Cleaning',
+  status: 'In Progress',
+  location: 'Indiranagar, Bangalore',
+  date: '2025-12-01 at 9:30 AM',
+  customer: 'Neha Verma',
+  customerName: 'Neha Verma',
+  customerPhone: '+91 98765 10001',
+  customerEmail: 'neha.verma@example.com',
+  customerAddress: 'Villa 12, Palm Meadows, Indiranagar',
+  description: 'Full house cleaning including dusting, mopping, and sanitizing.',
+  estimatedPrice: 1500,
+  price: 1500,
+},  
+{
+  ticketId: 'TKT008',
+  title: 'Home Services - Carpenter',
+  category: 'Home Services',
+  status: 'In Progress',
+  location: 'HSR Layout, Bangalore',
+  date: '2025-12-01 at 11:00 AM',
+  customer: 'Rohit Malhotra',
+  customerName: 'Rohit Malhotra',
+  customerPhone: '+91 98765 20002',
+  customerEmail: 'rohit.malhotra@example.com',
+  customerAddress: 'Flat 45B, LakeView Residency, HSR Layout',
+  description: 'Wooden door alignment and drawer repair work.',
+  estimatedPrice: 800,
+  price: 800,
+},
+{
+  ticketId: 'TKT009',
+  title: 'Home Services - Plumbing',
+  category: 'Plumbing',
+  status: 'In Progress',
+  location: 'BTM Layout, Bangalore',
+  date: '2025-12-02 at 10:00 AM',
+  customer: 'Ayesha Khan',
+  customerName: 'Ayesha Khan',
+  customerPhone: '+91 98765 30003',
+  customerEmail: 'ayesha.khan@example.com',
+  customerAddress: 'House 78, Pearl Residency, BTM Layout',
+  description: 'Kitchen sink drainage blocked; requires cleaning.',
+  estimatedPrice: 600,
+  price: 600,
+},
+{
+  ticketId: 'TKT010',
+  title: 'Home Services - Electrical',
+  category: 'Electrical',
+  status: 'In Progress',
+  location: 'Jayanagar, Bangalore',
+  date: '2025-12-02 at 3:00 PM',
+  customer: 'Manish Reddy',
+  customerName: 'Manish Reddy',
+  customerPhone: '+91 98765 40004',
+  customerEmail: 'manish.reddy@example.com',
+  customerAddress: 'Plot 21, Green Park Homes, Jayanagar',
+  description: 'Geyser not heating; requires inspection and repair.',
+  estimatedPrice: 900,
+  price: 900,
+},
+{
+  ticketId: 'TKT011',
+  title: 'Cleaning - Sofa Shampooing',
+  category: 'Cleaning',
+  status: 'In Progress',
+  location: 'Malleshwaram, Bangalore',
+  date: '2025-12-03 at 12:00 PM',
+  customer: 'Shruti Desai',
+  customerName: 'Shruti Desai',
+  customerPhone: '+91 98765 50005',
+  customerEmail: 'shruti.desai@example.com',
+  customerAddress: 'Block C, Sapphire Heights, Malleshwaram',
+  description: '6-seater sofa deep shampoo and vacuum cleaning.',
+  estimatedPrice: 1800,
+  price: 1800,
+},
+{
+  ticketId: 'TKT012',
+  title: 'Home Services - Electrical Wiring',
+  category: 'Electrical',
+  status: 'In Progress',
+  location: 'Banashankari, Bangalore',
+  date: '2025-12-03 at 4:30 PM',
+  customer: 'Gaurav Sinha',
+  customerName: 'Gaurav Sinha',
+  customerPhone: '+91 98765 60006',
+  customerEmail: 'gaurav.sinha@example.com',
+  customerAddress: 'Flat 22, Royal Enclave, Banashankari',
+  description: 'Electrical wiring replacement required in bedroom.',
+  estimatedPrice: 2200,
+  price: 2200,
+},
+
+
+{
+  ticketId: 'TKT013',
+  title: 'Cleaning - Bathroom Deep Cleaning',
+  category: 'Cleaning',
+  status: 'In Progress',
+  location: 'RT Nagar, Bangalore',
+  date: '2025-12-04 at 10:00 AM',
+  customer: 'Vishal R',
+  customerName: 'Vishal R',
+  customerPhone: '+91 98765 70001',
+  customerEmail: 'vishal.r@example.com',
+  customerAddress: 'House 12, RT Nagar Main Road, Bangalore',
+  description: '2 bathrooms deep cleaning including descaling and sanitizing.',
+  estimatedPrice: 1200,
+  price: 1200,
+},
+{
+  ticketId: 'TKT014',
+  title: 'Home Services - AC Gas Refill',
+  category: 'Home Services',
+  status: 'In Progress',
+  location: 'Hebbal, Bangalore',
+  date: '2025-12-04 at 1:00 PM',
+  customer: 'Karthik Menon',
+  customerName: 'Karthik Menon',
+  customerPhone: '+91 98765 70002',
+  customerEmail: 'karthik.menon@example.com',
+  customerAddress: 'LakeView Towers, Hebbal',
+  description: '1.5-ton AC gas refill and cooling performance check.',
+  estimatedPrice: 1800,
+  price: 1800,
+},
+{
+  ticketId: 'TKT015',
+  title: 'Plumbing - Tap Replacement',
+  category: 'Plumbing',
+  status: 'In Progress',
+  location: 'Yelahanka, Bangalore',
+  date: '2025-12-04 at 3:30 PM',
+  customer: 'Anita Bose',
+  customerName: 'Anita Bose',
+  customerPhone: '+91 98765 70003',
+  customerEmail: 'anita.bose@example.com',
+  customerAddress: 'Flat 8B, Orchid Greens, Yelahanka',
+  description: 'Kitchen tap broken; requires full replacement.',
+  estimatedPrice: 450,
+  price: 450,
+},
+{
+  ticketId: 'TKT016',
+  title: 'Electrical - Switchboard Replacement',
+  category: 'Electrical',
+  status: 'In Progress',
+  location: 'Basavanagudi, Bangalore',
+  date: '2025-12-05 at 11:00 AM',
+  customer: 'Harish Gowda',
+  customerName: 'Harish Gowda',
+  customerPhone: '+91 98765 70004',
+  customerEmail: 'harish.g@example.com',
+  customerAddress: 'House 52, Gandhi Bazaar, Basavanagudi',
+  description: 'Replace damaged switchboard and fix loose wiring.',
+  estimatedPrice: 700,
+  price: 700,
+},
+{
+  ticketId: 'TKT017',
+  title: 'Cleaning - Kitchen Deep Cleaning',
+  category: 'Cleaning',
+  status: 'In Progress',
+  location: 'Jeevan Bima Nagar, Bangalore',
+  date: '2025-12-05 at 2:00 PM',
+  customer: 'Meenakshi Prasad',
+  customerName: 'Meenakshi Prasad',
+  customerPhone: '+91 98765 70005',
+  customerEmail: 'meenakshi.p@example.com',
+  customerAddress: 'Flat 3C, Garden Homes, Jeevan Bima Nagar',
+  description: 'Full kitchen deep cleaning including chimney and tiles.',
+  estimatedPrice: 2000,
+  price: 2000,
+},
+{
+  ticketId: 'TKT018',
+  title: 'Home Services - Door Lock Repair',
+  category: 'Home Services',
+  status: 'In Progress',
+  location: 'Ulsoor, Bangalore',
+  date: '2025-12-06 at 9:00 AM',
+  customer: 'Divya Rao',
+  customerName: 'Divya Rao',
+  customerPhone: '+91 98765 70006',
+  customerEmail: 'divya.rao@example.com',
+  customerAddress: 'Flat 22B, Lakeside Residency, Ulsoor',
+  description: 'Main door lock jammed, requires adjustment or replacement.',
+  estimatedPrice: 650,
+  price: 650,
+},
+{
+  ticketId: 'TKT019',
+  title: 'Plumbing - Water Motor Issue',
+  category: 'Plumbing',
+  status: 'In Progress',
+  location: 'Banerghatta Road, Bangalore',
+  date: '2025-12-06 at 12:00 PM',
+  customer: 'Arun Shankar',
+  customerName: 'Arun Shankar',
+  customerPhone: '+91 98765 70007',
+  customerEmail: 'arun.shankar@example.com',
+  customerAddress: 'Sai Residency, Bannerghatta Road',
+  description: 'Water motor not pulling water; needs inspection.',
+  estimatedPrice: 900,
+  price: 900,
+},
+{
+  ticketId: 'TKT020',
+  title: 'Electrical - Tube Light Fitting',
+  category: 'Electrical',
+  status: 'In Progress',
+  location: 'Richmond Town, Bangalore',
+  date: '2025-12-06 at 4:00 PM',
+  customer: 'Sameer Shaikh',
+  customerName: 'Sameer Shaikh',
+  customerPhone: '+91 98765 70008',
+  customerEmail: 'sameer.shaikh@example.com',
+  customerAddress: 'Block 14, Rivera Apartments, Richmond Town',
+  description: 'Install new LED tube light in living room.',
+  estimatedPrice: 350,
+  price: 350,
+},
+{
+  ticketId: 'TKT021',
+  title: 'Cleaning - Balcony Cleaning',
+  category: 'Cleaning',
+  status: 'In Progress',
+  location: 'Kengeri, Bangalore',
+  date: '2025-12-07 at 10:30 AM',
+  customer: 'Lokesh N',
+  customerName: 'Lokesh N',
+  customerPhone: '+91 98765 70009',
+  customerEmail: 'lokesh.n@example.com',
+  customerAddress: 'Plot 26, Shanti Layout, Kengeri',
+  description: 'Balcony cleaning with moss removal and pressure wash.',
+  estimatedPrice: 900,
+  price: 900,
+},
+{
+  ticketId: 'TKT022',
+  title: 'Home Services - Curtain Rod Installation',
+  category: 'Home Services',
+  status: 'In Progress',
+  location: 'HSR Layout, Bangalore',
+  date: '2025-12-07 at 1:30 PM',
+  customer: 'Preeti Shetty',
+  customerName: 'Preeti Shetty',
+  customerPhone: '+91 98765 70010',
+  customerEmail: 'preeti.shetty@example.com',
+  customerAddress: 'Flat 7A, Sunshine Apartments, HSR Layout',
+  description: 'Install 2 curtain rods including drilling and fitting.',
+  estimatedPrice: 500,
+  price: 500,
+},
+
+
+
 ];
 
 // Utility to fetch user name from registration data (MOCK)
@@ -172,11 +435,73 @@ const MOCK_USER = {
 };
 
 // --- HEADER WITH PROFILE DROPDOWN (UPDATED) ---
+// const HeaderComponent: React.FC<{
+//   userName: string;
+//   onLogout: () => void;
+//   isDashboardVisible: boolean; // NEW: state prop
+//   onToggleDashboard: () => void; // NEW: handler prop
+// }> = ({ userName, onLogout, isDashboardVisible, onToggleDashboard }) => {
+//   const menu = (
+//     <Menu
+//       className="sw-frd-profile-menu"
+//       onClick={(e) => {
+//         if (e.key === 'logout') onLogout();
+//       }}
+//       style={{ borderRadius: 8, overflow: 'hidden', minWidth: 180 }}
+//     >
+//       <Menu.Item key="name" disabled style={{ fontWeight: 600, color: '#102030' }}>
+//         {userName}
+//       </Menu.Item>
+//       <Menu.Divider />
+//       <Menu.Item
+//         key="logout"
+//         icon={<LogoutOutlined />}
+//         style={{ color: '#dc3545', fontWeight: 500 }}
+//       >
+//         Logout
+//       </Menu.Item>
+//     </Menu>
+//   );
+
+//   return (
+//     <Header className="sw-frd-header">
+//       <div className="sw-frd-logo-area">
+//         <Text strong className="sw-frd-logo-text">
+//           SWACHIFY INDIA
+//         </Text>
+//         <Text className="sw-frd-portal-text">Freelancer Portal</Text>
+//       </div>
+
+//       <div className="sw-frd-user-area">
+//         {/* NEW: View My Dashboard button, visible only when dashboard is hidden */}
+//         {!isDashboardVisible && (
+//           <Button
+//             type="primary"
+//             className="sw-frd-view-dashboard-btn"
+//             onClick={onToggleDashboard}
+//             icon={<ArrowRightOutlined />}
+//           >
+//             View My Dashboard
+//           </Button>
+//         )}
+//         <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
+//           <Button
+//             type="default"
+//             className="sw-frd-profile-btn"
+//             icon={<UserOutlined style={{ fontSize: 18 }} />}
+//           />
+//         </Dropdown>
+//       </div>
+//     </Header>
+//   );
+// };
+
+
 const HeaderComponent: React.FC<{
   userName: string;
   onLogout: () => void;
-  isDashboardVisible: boolean; // NEW: state prop
-  onToggleDashboard: () => void; // NEW: handler prop
+  isDashboardVisible: boolean;
+  onToggleDashboard: () => void;
 }> = ({ userName, onLogout, isDashboardVisible, onToggleDashboard }) => {
   const menu = (
     <Menu
@@ -203,14 +528,12 @@ const HeaderComponent: React.FC<{
   return (
     <Header className="sw-frd-header">
       <div className="sw-frd-logo-area">
-        <Text strong className="sw-frd-logo-text">
-          SWACHIFY INDIA
-        </Text>
+        <Text strong className="sw-frd-logo-text">SWACHIFY INDIA</Text>
         <Text className="sw-frd-portal-text">Freelancer Portal</Text>
       </div>
 
       <div className="sw-frd-user-area">
-        {/* NEW: View My Dashboard button, visible only when dashboard is hidden */}
+        {/* When dashboard is hidden: show View My Dashboard */}
         {!isDashboardVisible && (
           <Button
             type="primary"
@@ -221,6 +544,20 @@ const HeaderComponent: React.FC<{
             View My Dashboard
           </Button>
         )}
+
+        {/* When dashboard IS visible: show Back to Requests */}
+        {isDashboardVisible && (
+          <Button
+            type="default"
+            className="sw-frd-back-btn"
+            onClick={onToggleDashboard}
+            icon={<ArrowLeftOutlined />}
+            style={{ marginRight: 12 }}
+          >
+            Back to Requests
+          </Button>
+        )}
+
         <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
           <Button
             type="default"
@@ -232,6 +569,7 @@ const HeaderComponent: React.FC<{
     </Header>
   );
 };
+
 
 // --- SMALL COMPONENTS (Unchanged) ---
 const UserSkills: React.FC<{ skills: string[] }> = ({ skills }) => (
@@ -611,13 +949,15 @@ const FreelancerDashboard: React.FC = () => {
   const [availableRequests, setAvailableRequests] =
     useState<Job[]>(INITIAL_AVAILABLE_REQUESTS);
 
-  const [requestFilter, setRequestFilter] = useState<
-    'All Requests' | 'Matched to My Skills'
-  >('All Requests');
+  // const [requestFilter, setRequestFilter] = useState<
+  //   'All Requests' | 'Matched to My Skills'
+  // >('All Requests');
   const [requestSort, setRequestSort] = useState<'Newest First' | 'Highest Price'>(
     'Newest First',
   );
-  
+  // add this
+const [selectedSkill, setSelectedSkill] = useState<string>('All Skills');
+
   // NEW STATE: Control visibility of non-request dashboard sections
   const [isDashboardVisible, setIsDashboardVisible] = useState(false); 
   
@@ -664,21 +1004,43 @@ const FreelancerDashboard: React.FC = () => {
     setStepImages({ 0: [], 1: [], 2: [], 3: [] });
   }, [activeJob?.ticketId]);
 
+
+  // Ensure we start on the Requests view when the dashboard mounts
+useEffect(() => {
+  setIsDashboardVisible(false);
+}, []);
+
+
   // --- FILTER & SORT AVAILABLE REQUESTS ---
   const filteredRequests = useMemo(() => {
     let list = [...availableRequests];
 
-    if (requestFilter === 'Matched to My Skills') {
-      const userSkillsSet = new Set(skills);
-      list = list.filter((req) => userSkillsSet.has(req.category));
-    }
+      // Skill-specific filter (if user selected one)
+  // if (selectedSkill && selectedSkill !== 'All Skills') {
+  //   list = list.filter((req) => req.category === selectedSkill);
+  // }
+
+    if (selectedSkill !== 'All Skills') {
+    list = list.filter((req) => req.category === selectedSkill);
+  }
+
+    // if (requestFilter === 'Matched to My Skills') {
+    //   const userSkillsSet = new Set(skills);
+    //   list = list.filter((req) => userSkillsSet.has(req.category));
+    // }
+
+    
 
     if (requestSort === 'Highest Price') {
       list.sort((a, b) => (b.estimatedPrice || b.price) - (a.estimatedPrice || a.price));
     }
 
     return list;
-  }, [availableRequests, requestFilter, requestSort, skills]);
+  }, 
+  // [availableRequests, requestFilter, requestSort, skills]
+ [availableRequests, selectedSkill, requestSort]
+
+);
 
   // --- ACTION HANDLERS ---
   const handleMarkComplete = (id: string) => {
@@ -746,33 +1108,11 @@ const FreelancerDashboard: React.FC = () => {
     message.success(`${newUrls.length} image(s) uploaded/captured.`);
   };
 
-  const handleLogout = async () => {
-  try {
-    const freelancer = JSON.parse(localStorage.getItem("freelancer") || "{}");
-
-    if (freelancer?.user_id) {
-      await freelancerLogout(freelancer.user_id);
-      console.log("Logout API HIT ✔️");
-    } else {
-      console.warn("No valid user_id found in storage");
-    }
-
-    // Clear storage
-    localStorage.removeItem("freelancer");
-    localStorage.removeItem("freelancerAccessToken");
-    localStorage.removeItem("freelancerRefreshToken");
-
-    message.success("Logged out successfully");
-    navigate("/freelancerlogin", { replace: true });
-
-  } catch (err) {
-    console.error("Logout error:", err);
-    message.error("Logout failed, please try again.");
-  }
-};
-
-
-
+  const handleLogout = () => {
+    localStorage.removeItem('freelancerLoggedIn');
+    //  setIsDashboardVisible(false); 
+    navigate('/freelancer');
+  };
 
   useEffect(() => {
     const isLoggedIn = localStorage.getItem('freelancerLoggedIn');
@@ -969,7 +1309,7 @@ const FreelancerDashboard: React.FC = () => {
         )}
 
         {/* AVAILABLE REQUESTS (ALWAYS VISIBLE) */}
-        <section className="sw-frd-section">
+        {/* <section className="sw-frd-section">
           <Row
             justify="space-between"
             align="middle"
@@ -1026,7 +1366,91 @@ const FreelancerDashboard: React.FC = () => {
               />
             )}
           </div>
-        </section>
+        </section> */}
+        {/* AVAILABLE REQUESTS — only show when dashboard is NOT visible (i.e. login/requests view) */}
+{!isDashboardVisible && (
+  <section className="sw-frd-section">
+    <Row
+      justify="space-between"
+      align="middle"
+      className="sw-frd-available-header"
+    >
+      <div>
+        <Title
+          level={4}
+          className="sw-frd-section-title sw-frd-requests-title"
+        >
+          Available Requests
+        </Title>
+        <Text className="sw-frd-section-subtitle">
+          Start your flow by accepting a request
+        </Text>
+      </div>
+
+      <Space size={12} className="sw-frd-filter-bar">
+        {/* <Select
+          value={requestFilter}
+          onChange={(value) => setRequestFilter(value as any)}
+          className="sw-frd-filter-select"
+        >
+          <Option value="All Requests">All Requests</Option>
+          <Option value="Matched to My Skills">
+            Matched to My Skills
+          </Option>
+        </Select> */}
+
+
+
+<Select
+  value={selectedSkill}
+  onChange={(val) => setSelectedSkill(val as string)}
+>
+  <Option value="All Skills">All Requests</Option>
+  {MOCK_USER.skills.map((s) => (
+    <Option key={s} value={s}>{s}</Option>
+  ))}
+</Select>
+
+
+        <Select
+          value={requestSort}
+          onChange={(value) => setRequestSort(value as any)}
+          className="sw-frd-sort-select"
+        >
+          <Option value="Newest First">Newest First</Option>
+          <Option value="Highest Price">Highest Price</Option>
+        </Select>
+      </Space>
+    </Row>
+
+    <div className="sw-frd-requests-list">
+      {filteredRequests.length > 0 ? (
+        filteredRequests.map((req) => (
+          <RequestCard
+            key={req.ticketId}
+            request={req}
+            onAccept={handleAcceptRequest}
+          />
+        ))
+      ) : (
+        // <Empty
+        //   description={`No available requests matching "${requestFilter}" criteria.`}
+        //   image={Empty.PRESENTED_IMAGE_SIMPLE}
+        // />
+        <Empty
+  description={
+    selectedSkill === 'All Skills'
+      ? 'No available requests.'
+      : `No requests found for "${selectedSkill}".`
+  }
+  image={Empty.PRESENTED_IMAGE_SIMPLE}
+/>
+
+      )}
+    </div>
+  </section>
+)}
+
       </Content>
     </Layout>
   );
