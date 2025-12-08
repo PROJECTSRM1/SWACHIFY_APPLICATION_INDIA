@@ -40,7 +40,7 @@ export default function Freelancerlogin() {
       password: values.password,
     };
 
-    const res = await freelancerLogin(payload);
+    await freelancerLogin(payload);
 
     message.success("Login successful");
     navigate("/freelancer-dashboard");
