@@ -16285,7 +16285,6 @@ body {
 }
 
 /* Header */
-
 .sw-frd-header {
   display: flex;
   justify-content: space-between;
@@ -16297,28 +16296,265 @@ body {
   box-shadow: var(--shadow-sm);
   position: sticky;
   top: 0;
-  z-index: 5;
+  z-index: 999;
+  background: #ffffff;
 }
+
+/* Scoped — FreelancerDashboard: attach filter visually to header */
+/* Container-scoped variables — edit if you know exact heights */
+.sw-frd-layout-container {
+  --sw-fd-header-h: 64px; /* adjust to actual header height if needed */
+  --sw-fd-filter-h: 56px; /* adjust if your filter row is taller */
+  position: relative;
+}
+
+/* ---------------- Header (fixed) ---------------- */
+.sw-frd-layout-container .sw-frd-header {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--sw-fd-header-h);
+  min-height: var(--sw-fd-header-h);
+  z-index: 1300;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  box-sizing: border-box;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+}
+
+/* Optional: tighten internal spacing so header + filter line up */
+/* Adjust as needed to match your header look */
+.sw-frd-layout-container .sw-frd-logo-area {
+  padding-left: 4px;
+}
+
+.sw-frd-layout-container .sw-frd-user-area {
+  padding-right: 4px;
+}
+
+/* ---------------- Filter row: pinned visually attached to header ---------------- */
+/* It will sit under header and use same background + border to appear as header extension */
+.sw-frd-layout-container .sw-frd-available-header {
+  position: fixed; /* fixed so it stays visible exactly under header (reliable) */
+  top: calc(var(--sw-fd-header-h)); /* immediately below header */
+  left: 0;
+  right: 0;
+  height: var(--sw-fd-filter-h);
+  min-height: var(--sw-fd-filter-h);
+  z-index: 1250; /* below header but above content */
+  background: #ffffff; /* same as header to look connected */
+  padding: 10px 20px; /* match header horizontal padding */
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* left: title, right: selects/buttons */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+}
+
+/* Make inner controls align like header: left block & right controls */
+.sw-frd-layout-container .sw-frd-available-header > div:first-child {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  justify-content: center;
+}
+
+.sw-frd-layout-container .sw-frd-available-header .sw-frd-filter-bar {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+/* Give selects and buttons a header-like appearance (optional) */
+.sw-frd-layout-container .sw-frd-available-header .ant-select,
+.sw-frd-layout-container .sw-frd-available-header .ant-btn {
+  vertical-align: middle;
+}
+
+/* ---------------- Reserve content space (prevent overlap) ---------------- */
+/* Important: content must begin below header + filter, otherwise cards hide behind */
+.sw-frd-layout-container .sw-frd-content-main {
+  padding-top: calc(var(--sw-fd-header-h) + var(--sw-fd-filter-h));
+  box-sizing: border-box;
+  min-height: 100vh;
+}
+
+/* ---------------- Small responsive tweaks ---------------- */
+/* MOBILE: make filter controls visible & usable (no TSX changes) */
+@media (max-width: 768px) {
+  /* Keep header + filter stacked without gap */
+  .sw-frd-layout-container {
+    --sw-fd-filter-h: 56px;
+  }
+
+  .sw-frd-layout-container .sw-frd-available-header {
+    top: var(--sw-fd-header-h);
+    padding: 8px 12px;
+    height: auto;
+    min-height: var(--sw-fd-filter-h);
+    align-items: flex-start;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  /* Make left block (title + subtitle) full width on mobile */
+  .sw-frd-layout-container .sw-frd-available-header > div:first-child {
+    width: 100%;
+    max-width: 100%;
+    padding-left: 0;
+    margin-bottom: 6px;
+  }
+
+  /* Make filters row full width and allow horizontal scroll if needed */
+  .sw-frd-layout-container .sw-frd-filter-bar {
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;         /* keep controls on one physical line if possible */
+    overflow-x: auto;          /* allow horizontal scrolling if they overflow */
+    -webkit-overflow-scrolling: touch;
+    gap: 8px;
+    padding-bottom: 6px;
+    justify-content: flex-start;
+  }
+
+  /* Ensure selects/buttons are sized reasonably and visible */
+  .sw-frd-layout-container .sw-frd-filter-bar .ant-select,
+  .sw-frd-layout-container .sw-frd-filter-bar .ant-btn {
+    flex: 0 0 auto;
+    min-width: 120px;         /* tweak smaller/larger as you like */
+    max-width: 48%;
+    white-space: nowrap;
+  }
+
+  /* If you prefer stacked controls instead of horizontally scrollable,
+     change .sw-frd-filter-bar flex-wrap to wrap and adjust min-widths above. */
+
+  /* Defensive: ensure nothing hides behind header */
+  .sw-frd-layout-container .sw-frd-content-main {
+    padding-top: calc(var(--sw-fd-header-h) + var(--sw-fd-filter-h));
+  }
+
+  /* If some parent adds overflow:hidden and clips the filter row, this helps */
+  .sw-frd-layout-container,
+  .sw-frd-layout-container .sw-frd-available-header {
+    overflow: visible !important;
+  }
+}
+
+/* ---------------- Defensive resets to avoid sticky issues ---------------- */
+.sw-frd-layout-container,
+.sw-frd-layout-container .sw-frd-section,
+.sw-frd-layout-container .sw-frd-content-main {
+  transform: none !important;
+  -webkit-transform: none !important;
+  overflow: visible !important;
+}
+
+/* ----- Align Available Requests title & filter controls on one nice line ----- */
+/* Scoped to .sw-frd-layout-container so it's unique to this page */
+.sw-frd-layout-container .sw-frd-available-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* keep left title and right controls separated */
+  gap: 24px;
+  padding: 10px 28px; /* horizontal padding inside the filter row */
+  box-sizing: border-box;
+  flex-wrap: nowrap; /* keep everything on one line */
+}
+
+/* Left block (title + subtitle) - give it more room and nudge it right */
+.sw-frd-layout-container .sw-frd-available-header > div:first-child {
+  flex: 1 1 auto; /* take remaining space */
+  min-width: 220px; /* never shrink below this */
+  max-width: calc(100% - 360px); /* reserve space for controls on the right */
+  padding-left: 12px; /* slight right nudge for the title */
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+/* Title style keep same but ensure no wrap inside */
+.sw-frd-layout-container .sw-frd-section-title.sw-frd-requests-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Right block (filter selects) - fixed-ish width and nudged left */
+.sw-frd-layout-container .sw-frd-filter-bar {
+  flex: 0 0 320px; /* fixed width area for filters (adjust if needed) */
+  display: flex;
+  justify-content: flex-end; /* keep controls right-aligned inside its area */
+  gap: 12px;
+  align-items: center;
+  padding-right: 8px; /* slight left nudge (reduces right empty space) */
+}
+
+/* Keep selects/buttons from wrapping inside the filter bar */
+.sw-frd-layout-container .sw-frd-filter-bar .ant-select,
+.sw-frd-layout-container .sw-frd-filter-bar .ant-btn {
+  white-space: nowrap;
+}
+
+/* Responsive: on small screens, allow wrapping and stack neatly */
+@media (max-width: 900px) {
+  .sw-frd-layout-container .sw-frd-available-header {
+    flex-wrap: wrap;
+    padding: 10px 16px;
+  }
+
+  .sw-frd-layout-container .sw-frd-available-header > div:first-child {
+    width: 100%;
+    max-width: 100%;
+    padding-left: 0;
+  }
+
+  .sw-frd-layout-container .sw-frd-filter-bar {
+    width: 100%;
+    flex: 1 1 100%;
+    justify-content: flex-start;
+    margin-top: 8px;
+    padding-right: 0;
+  }
+}
+
+/* Optional visual polish: keep the title vertically centered with the controls */
+.sw-frd-layout-container .sw-frd-available-header .sw-frd-section-subtitle {
+  color: #6b7280; /* subtle grey for subtitle */
+  font-size: 0.95rem;
+}
+
 /* ... (Logo, User Area styles remain the same) ... */
 .sw-frd-logo-area {
   display: flex;
   align-items: baseline;
   gap: 10px;
 }
+
 .sw-frd-logo-text {
   font-size: 1.2rem;
   color: var(--primary) !important;
   font-weight: 700;
 }
+
 .sw-frd-portal-text {
   color: var(--light-text) !important;
   font-size: 0.9rem;
 }
+
 .sw-frd-user-area {
   display: flex;
   align-items: center;
   gap: 10px;
 }
+
 .sw-frd-profile-btn {
   width: 40px;
   height: 40px;
@@ -16329,6 +16565,7 @@ body {
   border: 2px solid var(--primary);
   color: var(--primary);
 }
+
 .sw-frd-profile-menu .ant-menu-item-disabled {
   background-color: var(--primary-light) !important;
   cursor: default !important;
@@ -16772,6 +17009,7 @@ width: 100%;
     min-height: auto;
     padding: 14px;
   }
+  
 }
 
 /*freelancer dashboard rows changes**********/

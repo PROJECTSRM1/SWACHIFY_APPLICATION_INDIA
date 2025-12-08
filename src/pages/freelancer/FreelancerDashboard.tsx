@@ -1,5 +1,7 @@
 // src/pages/freelancer/FreelancerDashboard.tsx
-import React, { useState, useMemo, useEffect } from 'react';
+// at top of file
+import React, { useState, useMemo, useEffect, useRef, useCallback } from 'react';
+
 import {
   Layout,
   Card,
@@ -410,6 +412,650 @@ const INITIAL_AVAILABLE_REQUESTS: Job[] = [
   estimatedPrice: 500,
   price: 500,
 },
+
+{
+  ticketId: 'TKT023',
+  title: 'Cleaning - Window & Grill Cleaning',
+  category: 'Cleaning',
+  status: 'In Progress',
+  location: 'J.P. Nagar, Bangalore',
+  date: '2025-12-08 at 10:30 AM',
+  customer: 'Anurag Patel',
+  customerName: 'Anurag Patel',
+  customerPhone: '+91 98765 70011',
+  customerEmail: 'anurag.patel23@example.com',
+  customerAddress: 'House 9, JP Layout, J.P. Nagar',
+  description: 'Window glass and grill cleaning for 2 BHK apartment.',
+  estimatedPrice: 900,
+  price: 900,
+},
+{
+  ticketId: 'TKT024',
+  title: 'Plumbing - Drain Unclogging',
+  category: 'Plumbing',
+  status: 'In Progress',
+  location: 'Koramangala, Bangalore',
+  date: '2025-12-08 at 12:00 PM',
+  customer: 'Kavita Rao',
+  customerName: 'Kavita Rao',
+  customerPhone: '+91 98765 70012',
+  customerEmail: 'kavita.rao24@example.com',
+  customerAddress: 'Flat 5B, Green Court, Koramangala',
+  description: 'Kitchen drain severely slow; need unclog and clean.',
+  estimatedPrice: 600,
+  price: 600,
+},
+{
+  ticketId: 'TKT025',
+  title: 'Electrical - Switch Replacement',
+  category: 'Electrical',
+  status: 'In Progress',
+  location: 'Indiranagar, Bangalore',
+  date: '2025-12-09 at 11:00 AM',
+  customer: 'Rakesh Nair',
+  customerName: 'Rakesh Nair',
+  customerPhone: '+91 98765 70013',
+  customerEmail: 'rakesh.nair25@example.com',
+  customerAddress: 'No. 18, 4th Cross, Indiranagar',
+  description: 'Replace faulty switchboard and test circuits.',
+  estimatedPrice: 700,
+  price: 700,
+},
+{
+  ticketId: 'TKT026',
+  title: 'Home Services - Furniture Assembly',
+  category: 'Home Services',
+  status: 'In Progress',
+  location: 'HSR Layout, Bangalore',
+  date: '2025-12-09 at 2:30 PM',
+  customer: 'Sheetal Mehta',
+  customerName: 'Sheetal Mehta',
+  customerPhone: '+91 98765 70014',
+  customerEmail: 'sheetal.mehta26@example.com',
+  customerAddress: 'Apt 302, HSR Sunshine Towers',
+  description: 'Assemble 2 wardrobes and 3 chairs delivered today.',
+  estimatedPrice: 1200,
+  price: 1200,
+},
+{
+  ticketId: 'TKT027',
+  title: 'Cleaning - Mattress Cleaning',
+  category: 'Cleaning',
+  status: 'In Progress',
+  location: 'Whitefield, Bangalore',
+  date: '2025-12-10 at 9:00 AM',
+  customer: 'Vandana Singh',
+  customerName: 'Vandana Singh',
+  customerPhone: '+91 98765 70015',
+  customerEmail: 'vandana.singh27@example.com',
+  customerAddress: 'Flat 14, Oakwood Residency, Whitefield',
+  description: 'Deep shampooing for 2 queen mattresses.',
+  estimatedPrice: 1400,
+  price: 1400,
+},
+{
+  ticketId: 'TKT028',
+  title: 'Plumbing - Tap & Faucet Replacement',
+  category: 'Plumbing',
+  status: 'In Progress',
+  location: 'Jayanagar, Bangalore',
+  date: '2025-12-10 at 4:00 PM',
+  customer: 'Sandeep Kumar',
+  customerName: 'Sandeep Kumar',
+  customerPhone: '+91 98765 70016',
+  customerEmail: 'sandeep.kumar28@example.com',
+  customerAddress: 'Plot 7, Green Park Homes, Jayanagar',
+  description: 'Replace kitchen faucet and bathroom tap set.',
+  estimatedPrice: 800,
+  price: 800,
+},
+{
+  ticketId: 'TKT029',
+  title: 'Electrical - Fan Balance & Installation',
+  category: 'Electrical',
+  status: 'In Progress',
+  location: 'Banashankari, Bangalore',
+  date: '2025-12-11 at 10:00 AM',
+  customer: 'Bhavana Iyer',
+  customerName: 'Bhavana Iyer',
+  customerPhone: '+91 98765 70017',
+  customerEmail: 'bhavana.iyer29@example.com',
+  customerAddress: 'Flat 8A, Royal Enclave, Banashankari',
+  description: 'Install new ceiling fan + balancing of living room fan.',
+  estimatedPrice: 950,
+  price: 950,
+},
+{
+  ticketId: 'TKT030',
+  title: 'Home Services - Curtain Rod Repair',
+  category: 'Home Services',
+  status: 'In Progress',
+  location: 'Whitefield, Bangalore',
+  date: '2025-12-11 at 2:00 PM',
+  customer: 'Nitin Patel',
+  customerName: 'Nitin Patel',
+  customerPhone: '+91 98765 70018',
+  customerEmail: 'nitin.patel30@example.com',
+  customerAddress: 'House 22, Lakeside Residency, Whitefield',
+  description: 'Fix loose curtain rods and replace screws.',
+  estimatedPrice: 500,
+  price: 500,
+},
+{
+  ticketId: 'TKT031',
+  title: 'Cleaning - Kitchen Deep Clean & Degrease',
+  category: 'Cleaning',
+  status: 'In Progress',
+  location: 'Koramangala, Bangalore',
+  date: '2025-12-12 at 9:30 AM',
+  customer: 'Pooja Deshmukh',
+  customerName: 'Pooja Deshmukh',
+  customerPhone: '+91 98765 70019',
+  customerEmail: 'pooja.d29@example.com',
+  customerAddress: 'Flat 11, Green Meadows, Koramangala',
+  description: 'Deep clean kitchen, chimney degrease and tile scrub.',
+  estimatedPrice: 1600,
+  price: 1600,
+},
+{
+  ticketId: 'TKT032',
+  title: 'Plumbing - Toilet Cistern Repair',
+  category: 'Plumbing',
+  status: 'In Progress',
+  location: 'Indiranagar, Bangalore',
+  date: '2025-12-12 at 11:00 AM',
+  customer: 'Anjali Rao',
+  customerName: 'Anjali Rao',
+  customerPhone: '+91 98765 70020',
+  customerEmail: 'anjali.rao32@example.com',
+  customerAddress: 'No. 3, 2nd Cross, Indiranagar',
+  description: 'Cistern leaking; replace internal fittings.',
+  estimatedPrice: 650,
+  price: 650,
+},
+{
+  ticketId: 'TKT033',
+  title: 'Electrical - Light Fixture Replacement',
+  category: 'Electrical',
+  status: 'In Progress',
+  location: 'Malleshwaram, Bangalore',
+  date: '2025-12-13 at 3:00 PM',
+  customer: 'Ritu Sharma',
+  customerName: 'Ritu Sharma',
+  customerPhone: '+91 98765 70021',
+  customerEmail: 'ritu.sharma33@example.com',
+  customerAddress: 'Block B, Sapphire Heights, Malleshwaram',
+  description: 'Replace chandelier and 2 wall lights in living area.',
+  estimatedPrice: 1300,
+  price: 1300,
+},
+{
+  ticketId: 'TKT034',
+  title: 'Home Services - Door Hinge Replacement',
+  category: 'Home Services',
+  status: 'In Progress',
+  location: 'Hebbal, Bangalore',
+  date: '2025-12-14 at 10:00 AM',
+  customer: 'Mahesh Verma',
+  customerName: 'Mahesh Verma',
+  customerPhone: '+91 98765 70022',
+  customerEmail: 'mahesh.verma34@example.com',
+  customerAddress: 'LakeView Towers, Hebbal',
+  description: 'Replace hinges and align main door.',
+  estimatedPrice: 700,
+  price: 700,
+},
+{
+  ticketId: 'TKT035',
+  title: 'Cleaning - Office Carpet Shampooing',
+  category: 'Cleaning',
+  status: 'In Progress',
+  location: 'Richmond Town, Bangalore',
+  date: '2025-12-14 at 1:30 PM',
+  customer: 'Office Admin',
+  customerName: 'Office Admin',
+  customerPhone: '+91 98765 70023',
+  customerEmail: 'office.admin35@example.com',
+  customerAddress: 'Rivera Offices, Richmond Town',
+  description: 'Shampoo 150 sq ft office carpet and vacuum.',
+  estimatedPrice: 2200,
+  price: 2200,
+},
+{
+  ticketId: 'TKT036',
+  title: 'Plumbing - Overhead Tank Cleaning',
+  category: 'Plumbing',
+  status: 'In Progress',
+  location: 'Jeevan Bima Nagar, Bangalore',
+  date: '2025-12-15 at 9:00 AM',
+  customer: 'Gopinath N',
+  customerName: 'Gopinath N',
+  customerPhone: '+91 98765 70024',
+  customerEmail: 'gopinath.n36@example.com',
+  customerAddress: 'Flat 3C, Garden Homes, Jeevan Bima Nagar',
+  description: 'Clean and disinfect overhead water tank (single family).',
+  estimatedPrice: 1800,
+  price: 1800,
+},
+{
+  ticketId: 'TKT037',
+  title: 'Electrical - Geyser Service & Repair',
+  category: 'Electrical',
+  status: 'In Progress',
+  location: 'Ulsoor, Bangalore',
+  date: '2025-12-15 at 11:00 AM',
+  customer: 'Rohini Gupta',
+  customerName: 'Rohini Gupta',
+  customerPhone: '+91 98765 70025',
+  customerEmail: 'rohini.gupta37@example.com',
+  customerAddress: 'Flat 22B, Lakeside Residency, Ulsoor',
+  description: 'Service geyser and replace faulty thermostat if needed.',
+  estimatedPrice: 1200,
+  price: 1200,
+},
+{
+  ticketId: 'TKT038',
+  title: 'Home Services - Wall Hook Installation',
+  category: 'Home Services',
+  status: 'In Progress',
+  location: 'Kengeri, Bangalore',
+  date: '2025-12-16 at 10:30 AM',
+  customer: 'Vivek N',
+  customerName: 'Vivek N',
+  customerPhone: '+91 98765 70026',
+  customerEmail: 'vivek.n38@example.com',
+  customerAddress: 'Plot 26, Shanti Layout, Kengeri',
+  description: 'Install 6 heavy-duty wall hooks and anchors.',
+  estimatedPrice: 400,
+  price: 400,
+},
+{
+  ticketId: 'TKT039',
+  title: 'Cleaning - Tile & Grout Deep Clean',
+  category: 'Cleaning',
+  status: 'In Progress',
+  location: 'BTM Layout, Bangalore',
+  date: '2025-12-16 at 2:00 PM',
+  customer: 'Aarti Shah',
+  customerName: 'Aarti Shah',
+  customerPhone: '+91 98765 70027',
+  customerEmail: 'aarti.shah39@example.com',
+  customerAddress: 'House 78, Pearl Residency, BTM Layout',
+  description: 'Deep clean kitchen and bathroom tiles and grout.',
+  estimatedPrice: 1100,
+  price: 1100,
+},
+{
+  ticketId: 'TKT040',
+  title: 'Plumbing - Washing Machine Inlet Fix',
+  category: 'Plumbing',
+  status: 'In Progress',
+  location: 'Yelahanka, Bangalore',
+  date: '2025-12-17 at 9:00 AM',
+  customer: 'Rohit S',
+  customerName: 'Rohit S',
+  customerPhone: '+91 98765 70028',
+  customerEmail: 'rohit.s40@example.com',
+  customerAddress: 'Flat 8B, Orchid Greens, Yelahanka',
+  description: 'Fix inlet hose and connector for washing machine.',
+  estimatedPrice: 550,
+  price: 550,
+},
+{
+  ticketId: 'TKT041',
+  title: 'Electrical - Switchboard Safety Check',
+  category: 'Electrical',
+  status: 'In Progress',
+  location: 'Basavanagudi, Bangalore',
+  date: '2025-12-17 at 11:30 AM',
+  customer: 'Sujata Rao',
+  customerName: 'Sujata Rao',
+  customerPhone: '+91 98765 70029',
+  customerEmail: 'sujata.rao41@example.com',
+  customerAddress: 'House 52, Gandhi Bazaar, Basavanagudi',
+  description: 'Full electrical safety check and minor repairs as needed.',
+  estimatedPrice: 950,
+  price: 950,
+},
+{
+  ticketId: 'TKT042',
+  title: 'Home Services - Shelf Mounting & Fixing',
+  category: 'Home Services',
+  status: 'In Progress',
+  location: 'Kalyan Nagar, Bangalore',
+  date: '2025-12-18 at 10:00 AM',
+  customer: 'Deepak Menon',
+  customerName: 'Deepak Menon',
+  customerPhone: '+91 98765 70030',
+  customerEmail: 'deepak.menon42@example.com',
+  customerAddress: 'Flat 12A, Kalyan Residency, Kalyan Nagar',
+  description: 'Mount 3 floating shelves and ensure strong anchors.',
+  estimatedPrice: 600,
+  price: 600,
+},
+
+{
+  ticketId: 'TKT043',
+  title: 'Cleaning - Sofa Deep Cleaning',
+  category: 'Cleaning',
+  status: 'In Progress',
+  location: 'Brookefield, Bangalore',
+  date: '2025-12-18 at 1:00 PM',
+  customer: 'Haritha K',
+  customerName: 'Haritha K',
+  customerPhone: '+91 98765 70031',
+  customerEmail: 'haritha.k43@example.com',
+  customerAddress: 'Flat 9B, Brookefield Heights, Bangalore',
+  description: 'Deep shampoo cleaning for L-shaped sofa.',
+  estimatedPrice: 1700,
+  price: 1700,
+},
+{
+  ticketId: 'TKT044',
+  title: 'Plumbing - Shower Head Replacement',
+  category: 'Plumbing',
+  status: 'In Progress',
+  location: 'Kadubeesanahalli, Bangalore',
+  date: '2025-12-18 at 3:30 PM',
+  customer: 'Yogesh R',
+  customerName: 'Yogesh R',
+  customerPhone: '+91 98765 70032',
+  customerEmail: 'yogesh.r44@example.com',
+  customerAddress: 'Block 2, Fern Residency, Bangalore',
+  description: 'Replace old shower head and fix alignment.',
+  estimatedPrice: 550,
+  price: 550,
+},
+{
+  ticketId: 'TKT045',
+  title: 'Electrical - Inverter Wiring Check',
+  category: 'Electrical',
+  status: 'In Progress',
+  location: 'Sarjapur Road, Bangalore',
+  date: '2025-12-19 at 9:00 AM',
+  customer: 'Aishwarya M',
+  customerName: 'Aishwarya M',
+  customerPhone: '+91 98765 70033',
+  customerEmail: 'aishwarya.m45@example.com',
+  customerAddress: 'House 22, Green Leaf Villas, Sarjapur',
+  description: 'Check inverter wiring and battery connections.',
+  estimatedPrice: 1300,
+  price: 1300,
+},
+{
+  ticketId: 'TKT046',
+  title: 'Home Services - Kitchen Cabinet Fix',
+  category: 'Home Services',
+  status: 'In Progress',
+  location: 'Bellandur, Bangalore',
+  date: '2025-12-19 at 12:00 PM',
+  customer: 'Rohan B',
+  customerName: 'Rohan B',
+  customerPhone: '+91 98765 70034',
+  customerEmail: 'rohan.b46@example.com',
+  customerAddress: 'Apt 602, Sunshine Residency, Bellandur',
+  description: 'Fix loose hinges and level kitchen cabinets.',
+  estimatedPrice: 900,
+  price: 900,
+},
+{
+  ticketId: 'TKT047',
+  title: 'Cleaning - Chimney Deep Cleaning',
+  category: 'Cleaning',
+  status: 'In Progress',
+  location: 'Banerghatta Road, Bangalore',
+  date: '2025-12-19 at 3:00 PM',
+  customer: 'Chaitra N',
+  customerName: 'Chaitra N',
+  customerPhone: '+91 98765 70035',
+  customerEmail: 'chaitra.n47@example.com',
+  customerAddress: 'Plot 54, Sai Residency, Bangalore',
+  description: 'Deep cleaning and oil filter wash for chimney.',
+  estimatedPrice: 1200,
+  price: 1200,
+},
+{
+  ticketId: 'TKT048',
+  title: 'Plumbing - Pipe Leakage Fix',
+  category: 'Plumbing',
+  status: 'In Progress',
+  location: 'HSR Layout, Bangalore',
+  date: '2025-12-20 at 10:00 AM',
+  customer: 'Ritesh Panda',
+  customerName: 'Ritesh Panda',
+  customerPhone: '+91 98765 70036',
+  customerEmail: 'ritesh.p48@example.com',
+  customerAddress: 'Flat 21, Lakeshore Apartments, HSR Layout',
+  description: 'Fix leakage in kitchen inlet pipe.',
+  estimatedPrice: 750,
+  price: 750,
+},
+{
+  ticketId: 'TKT049',
+  title: 'Electrical - Switch Overload Repair',
+  category: 'Electrical',
+  status: 'In Progress',
+  location: 'Basaveshwar Nagar, Bangalore',
+  date: '2025-12-20 at 1:30 PM',
+  customer: 'Lavanya K',
+  customerName: 'Lavanya K',
+  customerPhone: '+91 98765 70037',
+  customerEmail: 'lavanya.k49@example.com',
+  customerAddress: 'House 18, West End Colony, Bangalore',
+  description: 'Repair burnt switch due to overload.',
+  estimatedPrice: 850,
+  price: 850,
+},
+{
+  ticketId: 'TKT050',
+  title: 'Home Services - Door Lock Replacement',
+  category: 'Home Services',
+  status: 'In Progress',
+  location: 'RT Nagar, Bangalore',
+  date: '2025-12-20 at 3:00 PM',
+  customer: 'Manoj P',
+  customerName: 'Manoj P',
+  customerPhone: '+91 98765 70038',
+  customerEmail: 'manoj.p50@example.com',
+  customerAddress: 'House 9, RT Main Road, Bangalore',
+  description: 'Replace main door lock and install new latch.',
+  estimatedPrice: 650,
+  price: 650,
+},
+{
+  ticketId: 'TKT051',
+  title: 'Cleaning - Full Home Sanitization',
+  category: 'Cleaning',
+  status: 'In Progress',
+  location: 'Electronic City, Bangalore',
+  date: '2025-12-21 at 9:30 AM',
+  customer: 'Swathi R',
+  customerName: 'Swathi R',
+  customerPhone: '+91 98765 70039',
+  customerEmail: 'swathi.r51@example.com',
+  customerAddress: 'Block C, Tech Meadows, E-City',
+  description: 'Full house sanitization for 3 BHK.',
+  estimatedPrice: 1800,
+  price: 1800,
+},
+{
+  ticketId: 'TKT052',
+  title: 'Plumbing - Water Heater Pipe Fix',
+  category: 'Plumbing',
+  status: 'In Progress',
+  location: 'Domlur, Bangalore',
+  date: '2025-12-21 at 11:30 AM',
+  customer: 'Arvind Shankar',
+  customerName: 'Arvind Shankar',
+  customerPhone: '+91 98765 70040',
+  customerEmail: 'arvind.s52@example.com',
+  customerAddress: 'Flat 11, Royal Homes, Domlur',
+  description: 'Fix hot water outlet pipe leakage.',
+  estimatedPrice: 950,
+  price: 950,
+},
+{
+  ticketId: 'TKT053',
+  title: 'Electrical - Home Safety Inspection',
+  category: 'Electrical',
+  status: 'In Progress',
+  location: 'Kormangala, Bangalore',
+  date: '2025-12-21 at 3:00 PM',
+  customer: 'Meera Menon',
+  customerName: 'Meera Menon',
+  customerPhone: '+91 98765 70041',
+  customerEmail: 'meera.m53@example.com',
+  customerAddress: 'Green Towers, Koramangala',
+  description: 'Complete electrical safety check of home.',
+  estimatedPrice: 1500,
+  price: 1500,
+},
+{
+  ticketId: 'TKT054',
+  title: 'Home Services - Chair Repair',
+  category: 'Home Services',
+  status: 'In Progress',
+  location: 'Indiranagar, Bangalore',
+  date: '2025-12-22 at 10:00 AM',
+  customer: 'Arthi V',
+  customerName: 'Arthi V',
+  customerPhone: '+91 98765 70042',
+  customerEmail: 'arthi.v54@example.com',
+  customerAddress: 'House 43, Indiranagar',
+  description: 'Fix loose legs of dining chairs.',
+  estimatedPrice: 450,
+  price: 450,
+},
+{
+  ticketId: 'TKT055',
+  title: 'Cleaning - Carpet Vacuum + Shampoo',
+  category: 'Cleaning',
+  status: 'In Progress',
+  location: 'Bellandur, Bangalore',
+  date: '2025-12-22 at 12:00 PM',
+  customer: 'Shravan D',
+  customerName: 'Shravan D',
+  customerPhone: '+91 98765 70043',
+  customerEmail: 'shravan.d55@example.com',
+  customerAddress: 'Flat 7A, Lakeview Paradise, Bellandur',
+  description: 'Deep shampoo cleaning of 2 carpets.',
+  estimatedPrice: 1400,
+  price: 1400,
+},
+{
+  ticketId: 'TKT056',
+  title: 'Plumbing - Sink Installation',
+  category: 'Plumbing',
+  status: 'In Progress',
+  location: 'BTM Layout, Bangalore',
+  date: '2025-12-22 at 3:30 PM',
+  customer: 'Ganesh M',
+  customerName: 'Ganesh M',
+  customerPhone: '+91 98765 70044',
+  customerEmail: 'ganesh.m56@example.com',
+  customerAddress: 'Pearl Residency, BTM Layout',
+  description: 'Install new stainless steel kitchen sink.',
+  estimatedPrice: 1200,
+  price: 1200,
+},
+{
+  ticketId: 'TKT057',
+  title: 'Electrical - LED Strip Installation',
+  category: 'Electrical',
+  status: 'In Progress',
+  location: 'HSR Layout, Bangalore',
+  date: '2025-12-23 at 10:00 AM',
+  customer: 'Naveen Rao',
+  customerName: 'Naveen Rao',
+  customerPhone: '+91 98765 70045',
+  customerEmail: 'naveen.rao57@example.com',
+  customerAddress: 'Flat 16B, Silver Ridge, HSR Layout',
+  description: 'Install LED strip lighting in living room.',
+  estimatedPrice: 950,
+  price: 950,
+},
+{
+  ticketId: 'TKT058',
+  title: 'Home Services - Shoe Rack Assembly',
+  category: 'Home Services',
+  status: 'In Progress',
+  location: 'Vasanth Nagar, Bangalore',
+  date: '2025-12-23 at 12:30 PM',
+  customer: 'Rekha I',
+  customerName: 'Rekha I',
+  customerPhone: '+91 98765 70046',
+  customerEmail: 'rekha.i58@example.com',
+  customerAddress: 'Block 4, Vasanth Enclave, Bangalore',
+  description: 'Assemble and mount wooden shoe rack.',
+  estimatedPrice: 750,
+  price: 750,
+},
+{
+  ticketId: 'TKT059',
+  title: 'Cleaning - Terrace Pressure Wash',
+  category: 'Cleaning',
+  status: 'In Progress',
+  location: 'Jayanagar, Bangalore',
+  date: '2025-12-23 at 3:00 PM',
+  customer: 'Vinod S',
+  customerName: 'Vinod S',
+  customerPhone: '+91 98765 70047',
+  customerEmail: 'vinod.s59@example.com',
+  customerAddress: 'Gandhi Street, Jayanagar',
+  description: 'High-pressure wash for terrace and exterior walls.',
+  estimatedPrice: 2000,
+  price: 2000,
+},
+{
+  ticketId: 'TKT060',
+  title: 'Plumbing - Bathroom Tap Realignment',
+  category: 'Plumbing',
+  status: 'In Progress',
+  location: 'Koramangala, Bangalore',
+  date: '2025-12-24 at 10:30 AM',
+  customer: 'Sahana D',
+  customerName: 'Sahana D',
+  customerPhone: '+91 98765 70048',
+  customerEmail: 'sahana.d60@example.com',
+  customerAddress: 'Green Court Apts, Koramangala',
+  description: 'Fix loose tap and realign water inlet pipe.',
+  estimatedPrice: 500,
+  price: 500,
+},
+{
+  ticketId: 'TKT061',
+  title: 'Electrical - Power Backup Installation',
+  category: 'Electrical',
+  status: 'In Progress',
+  location: 'Banashankari, Bangalore',
+  date: '2025-12-24 at 1:00 PM',
+  customer: 'Harini Rao',
+  customerName: 'Harini Rao',
+  customerPhone: '+91 98765 70049',
+  customerEmail: 'harini.r61@example.com',
+  customerAddress: 'Plot 52, Banashankari',
+  description: 'Install inverter backup for home.',
+  estimatedPrice: 2500,
+  price: 2500,
+},
+{
+  ticketId: 'TKT062',
+  title: 'Home Services - Bed Frame Assembly',
+  category: 'Home Services',
+  status: 'In Progress',
+  location: 'Whitefield, Bangalore',
+  date: '2025-12-24 at 3:00 PM',
+  customer: 'Shruti Narayan',
+  customerName: 'Shruti Narayan',
+  customerPhone: '+91 98765 70050',
+  customerEmail: 'shruti.n62@example.com',
+  customerAddress: 'Block D, Metro Residency, Whitefield',
+  description: 'Assemble queen-size bed frame and tighten joints.',
+  estimatedPrice: 1000,
+  price: 1000,
+}
+
+
 
 
 
@@ -1029,6 +1675,9 @@ useEffect(() => {
     //   list = list.filter((req) => userSkillsSet.has(req.category));
     // }
 
+
+
+
     
 
     if (requestSort === 'Highest Price') {
@@ -1041,6 +1690,65 @@ useEffect(() => {
  [availableRequests, selectedSkill, requestSort]
 
 );
+
+  // ---------- Infinite scroll for Available Requests (client-side pagination) ----------
+  const pageSize = 6; // items per "page" — tweak as needed
+  const [page, setPage] = useState(1);
+  const [visibleRequests, setVisibleRequests] = useState<Job[]>([]);
+  const [hasMore, setHasMore] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const sentinelRef = useRef<HTMLDivElement | null>(null);
+
+  // Reset pagination whenever the filtered list changes (filters, sort, accept/remove)
+  useEffect(() => {
+    setPage(1);
+    const first = filteredRequests.slice(0, pageSize);
+    setVisibleRequests(first);
+    setHasMore(filteredRequests.length > first.length);
+  }, [filteredRequests]);
+
+  // load more function (slices the filteredRequests array)
+  const loadMore = useCallback(() => {
+    if (loadingMore) return;
+    if (!hasMore) return;
+    setLoadingMore(true);
+
+    // Simulate fetch delay (optional). Remove setTimeout if you call real API.
+    setTimeout(() => {
+      setVisibleRequests((prev) => {
+     const start = (page - 1) * pageSize;
+
+        const nextChunk = filteredRequests.slice(start, start + pageSize);
+        const newList = [...prev, ...nextChunk];
+        setHasMore(start + nextChunk.length < filteredRequests.length);
+        setLoadingMore(false);
+        return newList;
+      });
+      setPage((p) => p + 1);
+    }, 250); // small delay for UX; remove/adjust as needed
+  }, [filteredRequests, hasMore, loadingMore]);
+
+  // IntersectionObserver: watch sentinel and trigger loadMore
+  useEffect(() => {
+    const el = sentinelRef.current;
+    if (!el) return;
+    if (!hasMore) return;
+
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !loadingMore && hasMore) {
+            loadMore();
+          }
+        });
+      },
+      { root: null, rootMargin: '250px', threshold: 0.1 } // trigger early
+    );
+
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [loadMore, hasMore, loadingMore]);
+
 
   // --- ACTION HANDLERS ---
   const handleMarkComplete = (id: string) => {
@@ -1120,6 +1828,10 @@ useEffect(() => {
       // navigate('/freelancerlogin');
     }
   }, [navigate]);
+
+  // inside FreelancerDashboard component (near the top)
+
+
 
   return (
     <Layout className="sw-frd-layout-container">
@@ -1423,7 +2135,7 @@ useEffect(() => {
       </Space>
     </Row>
 
-    <div className="sw-frd-requests-list">
+    {/* <div className="sw-frd-requests-list">
       {filteredRequests.length > 0 ? (
         filteredRequests.map((req) => (
           <RequestCard
@@ -1447,7 +2159,40 @@ useEffect(() => {
 />
 
       )}
+    </div> */}
+
+        <div className="sw-frd-requests-list">
+      {visibleRequests.length === 0 && !loadingMore && (
+        <Empty
+          description={
+            selectedSkill === 'All Skills'
+              ? 'No available requests.'
+              : `No requests found for "${selectedSkill}".`
+          }
+          image={Empty.PRESENTED_IMAGE_SIMPLE}
+        />
+      )}
+
+      {visibleRequests.map((req) => (
+        <RequestCard key={req.ticketId} request={req} onAccept={handleAcceptRequest} />
+      ))}
+
+      {/* Sentinel observed by IntersectionObserver */}
+      <div ref={sentinelRef} style={{ height: 1 }} />
+
+      {/* Loading / end indicators */}
+      {loadingMore && (
+        <div style={{ textAlign: 'center', padding: 12 }}>
+          <span>Loading more…</span>
+        </div>
+      )}
+      {!hasMore && visibleRequests.length > 0 && (
+        <div style={{ textAlign: 'center', padding: 12, color: '#666' }}>
+          End of results
+        </div>
+      )}
     </div>
+
   </section>
 )}
 
