@@ -8,6 +8,13 @@ import {
 //   GithubOutlined,
 } from "@ant-design/icons";
 
+import {
+  freelancerRequestOTP,
+  freelancerVerifyOTP,
+  freelancerResetPassword
+} from "../../api/freelancerAuth";
+
+
 import { freelancerLogin } from "../../api/freelancerAuth";
 import { message } from "antd";
 
@@ -169,6 +176,7 @@ export default function Freelancerlogin() {
         </Card>
       </div>
 {/* FREELANCER FORGOT PASSWORD MODAL */}
+{/* FREELANCER FORGOT PASSWORD MODAL */}
 <Modal
   open={forgotModalVisible}
   onCancel={() => setForgotModalVisible(false)}
@@ -179,71 +187,137 @@ export default function Freelancerlogin() {
 >
   {(() => {
     const [step, setStep] = useState(1);
+    const [loading, setLoading] = useState(false);
     const [form] = Form.useForm();
 
-    const handleSendOTP = () => {
-      const email = form.getFieldValue("email");
-      if (!email) return message.error("Please enter email");
+    // 1️⃣ SEND OTP
+    const handleSendOTP = async () => {
+      try {
+        const email = form.getFieldValue("email");
+        if (!email) return message.error("Please enter email");
 
-      message.success("OTP sent to email");
-      setStep(2);
+        setLoading(true);
+
+        await freelancerRequestOTP(email);
+
+        message.success("OTP sent to your registered email");
+        setStep(2);
+      } catch (err: any) {
+        message.error(
+          err?.response?.data?.detail ||
+          "Failed to send OTP"
+        );
+      } finally {
+        setLoading(false);
+      }
     };
 
-    const handleVerifyOTP = () => {
-      const otp = form.getFieldValue("otp");
-      if (!otp) return message.error("Please enter OTP");
+    // 2️⃣ VERIFY OTP
+    const handleVerifyOTP = async () => {
+      try {
+        const otp = form.getFieldValue("otp");
+        if (!otp) return message.error("Enter OTP");
 
-      message.success("OTP Verified");
-      setStep(3);
+        setLoading(true);
+
+        await freelancerVerifyOTP(otp);
+
+        message.success("OTP verified successfully");
+        setStep(3);
+      } catch (err: any) {
+        message.error(
+          err?.response?.data?.detail || "Invalid OTP"
+        );
+      } finally {
+        setLoading(false);
+      }
     };
 
-    const handleUpdatePassword = () => {
-      const newP = form.getFieldValue("newPassword");
-      const confirmP = form.getFieldValue("confirmPassword");
+    // 3️⃣ RESET PASSWORD
+    const handleUpdatePassword = async () => {
+      try {
+        const newP = form.getFieldValue("newPassword");
+        const confirmP = form.getFieldValue("confirmPassword");
 
-      if (!newP || !confirmP) return message.error("Fill all fields");
-      if (newP !== confirmP) return message.error("Passwords do not match");
+        if (!newP || !confirmP)
+          return message.error("All fields are required");
 
-      message.success("Password updated successfully");
-      setForgotModalVisible(false);
+        if (newP !== confirmP)
+          return message.error("Passwords do not match");
+
+        setLoading(true);
+
+        await freelancerResetPassword(newP, confirmP);
+
+        message.success("Password updated successfully! Please login.");
+        setForgotModalVisible(false);
+      } catch (err: any) {
+        message.error(
+          err?.response?.data?.detail || "Failed to reset password"
+        );
+      } finally {
+        setLoading(false);
+      }
     };
 
     return (
       <Form form={form} layout="vertical">
         <h3 style={{ textAlign: "center", marginBottom: 20 }}>
           {step === 1 && "Reset Password"}
-          {step === 2 && "Enter OTP"}
+          {step === 2 && "Verify OTP"}
           {step === 3 && "Set New Password"}
         </h3>
 
+        {/* STEP 1️⃣ Email */}
         {step === 1 && (
           <>
-            <Form.Item label="Email" name="email" rules={[{ required: true }]}>
+            <Form.Item
+              label="Registered Email"
+              name="email"
+              rules={[{ required: true, message: "Email required" }]}
+            >
               <Input placeholder="yourmail@example.com" />
             </Form.Item>
-            <Button block type="primary" onClick={handleSendOTP}>
+
+            <Button block type="primary" loading={loading} onClick={handleSendOTP}>
               Send OTP
             </Button>
           </>
         )}
 
+        {/* STEP 2️⃣ OTP */}
         {step === 2 && (
           <>
-            <Form.Item label="OTP" name="otp" rules={[{ required: true }]}>
+            <Form.Item
+              label="Enter OTP"
+              name="otp"
+              rules={[{ required: true, message: "Enter 6-digit OTP" }]}
+            >
               <Input maxLength={6} placeholder="Enter OTP" />
             </Form.Item>
-            <Button block type="primary" onClick={handleVerifyOTP}>
+
+            <Button block type="primary" loading={loading} onClick={handleVerifyOTP}>
               Verify OTP
             </Button>
           </>
         )}
 
+        {/* STEP 3️⃣ Reset Password */}
         {step === 3 && (
           <>
             <Form.Item
               label="New Password"
               name="newPassword"
-              rules={[{ required: true }]}
+              rules={[
+                { required: true, message: "Enter new password" },
+                {
+                  pattern:
+                    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
+                  message:
+                    "Must include uppercase, lowercase, number & symbol",
+                },
+              ]}
+              hasFeedback
             >
               <Input.Password />
             </Form.Item>
@@ -251,12 +325,23 @@ export default function Freelancerlogin() {
             <Form.Item
               label="Confirm Password"
               name="confirmPassword"
-              rules={[{ required: true }]}
+              dependencies={["newPassword"]}
+              hasFeedback
+              rules={[
+                { required: true, message: "Confirm your password" },
+                ({ getFieldValue }) => ({
+                  validator(_, value) {
+                    return value === getFieldValue("newPassword")
+                      ? Promise.resolve()
+                      : Promise.reject("Passwords do not match");
+                  },
+                }),
+              ]}
             >
               <Input.Password />
             </Form.Item>
 
-            <Button block type="primary" onClick={handleUpdatePassword}>
+            <Button block type="primary" loading={loading} onClick={handleUpdatePassword}>
               Update Password
             </Button>
           </>
@@ -265,6 +350,7 @@ export default function Freelancerlogin() {
     );
   })()}
 </Modal>
+
 </Layout>
   );
 }
