@@ -139,10 +139,7 @@ const PRICE_PER_SQFT: Record<string, number> = {
 
 const INCLUDES: Record<string, any> = {
 
-  /* ----------------------------------------------------
-     RESIDENTIAL – HOMES
-  ---------------------------------------------------- */
-
+  
   "living room": {
     standard: [
       "Surface dusting of furniture",
@@ -230,9 +227,7 @@ const INCLUDES: Record<string, any> = {
     ]
   },
 
-  /* ----------------------------------------------------
-     RESIDENTIAL – APARTMENTS
-  ---------------------------------------------------- */
+  
 
   "studio apartment": {
     standard: [
@@ -283,9 +278,7 @@ const INCLUDES: Record<string, any> = {
     ]
   },
 
-  /* ----------------------------------------------------
-     VILLAS
-  ---------------------------------------------------- */
+  
 
   "small villas": {
     standard: [
@@ -332,9 +325,7 @@ const INCLUDES: Record<string, any> = {
     ]
   },
 
-  /* ----------------------------------------------------
-     COMMERCIAL – OFFICES
-  ---------------------------------------------------- */
+ 
 
   "cabin cleaning": {
     standard: [
@@ -378,9 +369,7 @@ const INCLUDES: Record<string, any> = {
     ]
   },
 
-  /* ----------------------------------------------------
-     COMMERCIAL – SCHOOLS
-  ---------------------------------------------------- */
+
 
   classrooms: {
     standard: [
@@ -424,9 +413,7 @@ const INCLUDES: Record<string, any> = {
     ]
   },
 
-  /* ----------------------------------------------------
-     SHOPS & MALLS
-  ---------------------------------------------------- */
+  
 
   "shop cleaning": {
     standard: [
@@ -470,9 +457,7 @@ const INCLUDES: Record<string, any> = {
     ]
   },
 
-  /* ----------------------------------------------------
-     SPECIALIZED – FURNITURE
-  ---------------------------------------------------- */
+  
 
   "sofa cleaning": {
     standard: [
@@ -506,9 +491,7 @@ const INCLUDES: Record<string, any> = {
     ]
   },
 
-  /* ----------------------------------------------------
-     FLOORS / POLISHING
-  ---------------------------------------------------- */
+
 
   "marble polishing": {
     standard: ["Surface cleaning", "Basic buffing"],
@@ -537,9 +520,7 @@ const INCLUDES: Record<string, any> = {
     ]
   },
 
-  /* ----------------------------------------------------
-     GLASS CLEANING
-  ---------------------------------------------------- */
+
 
   "indoor glass cleaning": {
     standard: ["Glass wiping", "Frame cleaning"],
@@ -568,9 +549,7 @@ const INCLUDES: Record<string, any> = {
     ]
   },
 
-  /* ----------------------------------------------------
-     SANITIZATION
-  ---------------------------------------------------- */
+ 
 
   "home sanitization": {
     standard: ["Whole house spray sanitization"],
@@ -599,9 +578,7 @@ const INCLUDES: Record<string, any> = {
     ]
   },
 
-  /* ----------------------------------------------------
-     POST-CONSTRUCTION
-  ---------------------------------------------------- */
+
 
   "indoor dust removal": {
     standard: ["Dust sweeping", "Surface wipe"],
@@ -638,9 +615,7 @@ const INCLUDES: Record<string, any> = {
     ]
   },
 
-  /* ----------------------------------------------------
-     INDUSTRIAL CLEANING
-  ---------------------------------------------------- */
+  
 
   "assembly area cleaning": {
     standard: [
@@ -685,6 +660,148 @@ const INCLUDES: Record<string, any> = {
     ]
   }
 };
+const ADDONS_BY_TITLE: Record<string, { value: string; label: string }[]> = {
+  
+  "living room": [
+    { value: "curtainSteam", label: "Curtain Steam Cleaning — ₹199" },
+    { value: "tvUnit", label: "TV Unit Detailing — ₹149" }
+  ],
+
+  bedroom: [
+    { value: "mattressShampoo", label: "Mattress Shampoo — ₹249" },
+    { value: "curtainSteam", label: "Curtain Steam Cleaning — ₹199" }
+  ],
+
+  kitchen: [
+    { value: "chimneyService", label: "Chimney Deep Service — ₹349" },
+    { value: "fridgeInside", label: "Fridge Interior Cleaning — ₹149" }
+  ],
+
+  bathroom: [
+    { value: "jetSpray", label: "Jet Spray Cleaning — ₹149" },
+    { value: "hardwater", label: "Hard Water Treatment — ₹199" }
+  ],
+
+  // ---------- APARTMENTS ----------
+  "studio": [
+    { value: "curtainSteam", label: "Curtain Steam Cleaning — ₹199" },
+    { value: "balconyWash", label: "Balcony Wash — ₹149" }
+  ],
+
+  "1 bhk": [
+    { value: "curtainSteam", label: "Curtain Steam Cleaning — ₹199" },
+    { value: "fridgeInside", label: "Fridge Inside Clean — ₹149" }
+  ],
+
+  "2 bhk": [
+    { value: "balconyWash", label: "Balcony Wash — ₹149" },
+    { value: "curtainSteam", label: "Curtain Steam Cleaning — ₹199" }
+  ],
+
+  // ---------- VILLAS ----------
+  "villa": [
+    { value: "patioWash", label: "Patio / Terrace Wash — ₹249" },
+    { value: "curtainSteam", label: "Curtain Cleaning — ₹199" }
+  ],
+
+  // ---------- COMMERCIAL ----------
+  "cabin": [
+    { value: "chairShampoo", label: "Office Chair Shampoo — ₹129" },
+    { value: "whiteboardClean", label: "Whiteboard Deep Clean — ₹99" }
+  ],
+
+  "workstation": [
+    { value: "keyboardSanitize", label: "Keyboard Sanitization — ₹49" },
+    { value: "monitorClean", label: "Monitor Cleaning — ₹99" }
+  ],
+
+  "conference": [
+    { value: "micClean", label: "Microphone Cleaning — ₹99" },
+    { value: "chairShampoo", label: "Chair Shampoo — ₹129" }
+  ],
+
+  "shop": [
+    { value: "rackDeep", label: "Rack Deep Clean — ₹149" },
+    { value: "glassPolish", label: "Glass Polish — ₹129" }
+  ],
+
+  "mall": [
+    { value: "escalatorClean", label: "Escalator Cleaning — ₹499" },
+    { value: "glassPolish", label: "Glass Polish — ₹199" }
+  ],
+
+  // ---------- SPECIALIZED ----------
+  "sofa": [
+    { value: "fabricProtect", label: "Fabric Protector — ₹199" },
+    { value: "odorTreatment", label: "Odor Removal — ₹149" }
+  ],
+
+  "chair": [
+    { value: "odorTreatment", label: "Odor Removal — ₹99" },
+    { value: "fabricProtect", label: "Fabric Protector — ₹149" }
+  ],
+
+  "wooden": [
+    { value: "woodPolish", label: "Premium Wood Polish — ₹249" },
+    { value: "termiteCheck", label: "Termite Inspection — ₹299" }
+  ],
+
+  "marble": [
+    { value: "sealant", label: "Marble Sealant — ₹299" },
+    { value: "antiSlip", label: "Anti-Slip Treatment — ₹199" }
+  ],
+
+  "tile": [
+    { value: "antiSlip", label: "Anti-Slip Treatment — ₹199" },
+    { value: "groutProtect", label: "Grout Protector — ₹149" }
+  ],
+
+  "granite": [
+    { value: "sealant", label: "Granite Sealant — ₹249" },
+    { value: "antiSlip", label: "Anti-Slip Treatment — ₹199" }
+  ],
+
+  // ---------- GLASS ----------
+  "glass": [
+    { value: "trackClean", label: "Track Cleaning — ₹99" },
+    { value: "framePolish", label: "Frame Polish — ₹129" }
+  ],
+
+  // ---------- POST CONSTRUCTION ----------
+  "dust removal": [
+    { value: "pressureWash", label: "Pressure Wash — ₹299" },
+    { value: "glueRemoval", label: "Glue/Sticker Removal — ₹199" }
+  ],
+
+  "paint stain": [
+    { value: "chemicalWash", label: "Chemical Wash — ₹249" },
+    { value: "scraperWork", label: "Scraper Detailing — ₹149" }
+  ],
+
+  // ---------- INDUSTRIAL ----------
+  "assembly": [
+    { value: "oilRemoval", label: "Oil Removal — ₹399" },
+    { value: "machineDeep", label: "Machine Deep Cleaning — ₹499" }
+  ],
+
+  "production": [
+    { value: "greaseTreatment", label: "Grease Treatment — ₹349" },
+    { value: "scrubberMachine", label: "Scrubber Machine Wash — ₹299" }
+  ],
+
+  "warehouse": [
+    { value: "rackDeep", label: "Rack Deep Cleaning — ₹199" },
+    { value: "chemicalTreat", label: "Chemical Wash — ₹249" }
+  ],
+
+  // fallback
+  default: [
+    { value: "curtainSteam", label: "Curtain Cleaning — ₹199" },
+    { value: "windowExtra", label: "Extra Window Polishing — ₹99" }
+  ]
+};
+
+
 
 
 
@@ -774,6 +891,16 @@ const CleaningService: React.FC = () => {
   if (service.standard) return service.standard;
   return ["Basic cleaning included"];
 };
+const getModuleAddons = () => {
+  if (!selectedModule) return ADDONS_BY_TITLE.default;
+
+  const title = selectedModule.title.toLowerCase();
+  const match = Object.keys(ADDONS_BY_TITLE).find(k => title.includes(k));
+
+  return ADDONS_BY_TITLE[match || "default"];
+};
+
+
 
 
   useEffect(() => {
@@ -1413,25 +1540,24 @@ const getDisplayPriceText = (): string => {
 
         
         <div className="sw-cs-form-row">
-          <Form.Item
-            name="additional"
-            label="Optional Add-ons"
-            className={cfg.bedrooms ? "sw-cs-half-width" : "sw-cs-full-width"}
-          >
-            <Select
-              mode="multiple"
-              placeholder="Select optional add-ons"
-              onChange={() => computeTotal(form.getFieldsValue())}
-            >
-              <Option value="kitchenDeepClean">Kitchen Deep Clean — ₹199</Option>
-              <Option value="balconyWash">Balcony Wash — ₹149</Option>
-              <Option value="sofaShampoo">Sofa Shampooing — ₹299</Option>
-              <Option value="window">Window Cleaning — ₹100</Option>
-              <Option value="balcony">Balcony Cleaning — ₹150</Option>
-              <Option value="carpet">Carpet Shampooing — ₹200</Option>
-              <Option value="oven">Oven Deep Clean — ₹300</Option>
-            </Select>
-          </Form.Item>
+         <Form.Item
+  name="additional"
+  label="Optional Add-ons"
+  className={cfg.bedrooms ? "sw-cs-half-width" : "sw-cs-full-width"}
+>
+  <Select
+    mode="multiple"
+    placeholder="Select add-ons"
+    onChange={() => computeTotal(form.getFieldsValue())}
+  >
+    {getModuleAddons().map((addon) => (
+      <Option key={addon.value} value={addon.value}>
+        {addon.label}
+      </Option>
+    ))}
+  </Select>
+</Form.Item>
+
 
           {cfg.bedrooms && (
             <Form.Item
