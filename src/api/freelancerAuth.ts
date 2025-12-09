@@ -50,3 +50,20 @@ export const freelancerLogout = async (user_id: number) => {
   return api.post("api/freelancer/logout", { user_id });
 };
 
+
+
+// FORGOT PASSWORD - FREELANCER
+
+// Request OTP
+export const freelancerRequestOTP = (email: string) =>
+  api.post("/freelancer/forgot-password/request-otp", { email });
+
+// Verify OTP
+export const freelancerVerifyOTP = (otp: string) =>
+  api.post("/freelancer/forgot-password/verify-otp", { otp });
+
+// Reset Password
+export const freelancerResetPassword = (new_password: string, confirm_password: string) =>
+  api.post("/freelancer/forgot-password/reset", { new_password, confirm_password });
+
+

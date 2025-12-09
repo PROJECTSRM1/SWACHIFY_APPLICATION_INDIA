@@ -1,6 +1,13 @@
 // src/pages/landing/Header.tsx
 import React, { useState, useEffect } from "react";
 
+import {
+  requestPasswordOTP,
+  verifyPasswordOTP,
+  resetPassword,
+} from "../../api/customerAuth";
+
+
 //import { setUserDetails } from "../../utils/helpers/storage";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -447,79 +454,91 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
         </Modal>
 
 {/* FORGOT PASSWORD for Customer */}
-    <Modal open={forgotModalVisible} onCancel={() => {
+<Modal
+  open={forgotModalVisible}
+  onCancel={() => {
     setForgotModalVisible(false);
     setActiveAuthTab("login");
     setAuthModalVisible(true);
-    }}
-    footer={null}
-    centered
-    width={450}
-    destroyOnClose >
-      {(() => {
-    const [step, setStep] = useState(1); // 1 = email, 2 = OTP, 3 = new password
-
+  }}
+  footer={null}
+  centered
+  width={450}
+  destroyOnClose
+>
+  {(() => {
+    const [step, setStep] = useState(1); // 1=email, 2=otp, 3=new password
+    const [loading, setLoading] = useState(false);
     const [form] = Form.useForm();
 
+    // SEND OTP
     const handleSendOTP = async () => {
       try {
         const email = form.getFieldValue("email");
+        if (!email) return message.error("Please enter email");
 
-        if (!email) {
-          message.error("Please enter email");
-          return;
-        }
+        setLoading(true);
 
+        await requestPasswordOTP(email); // backend API call
         setEmailValue(email);
-        console.log(setEmailValue);
 
         message.success("OTP sent to your registered email.");
-
-        setStep(2); 
-      } catch (err) {
-        message.error("Failed to send OTP");
+        setStep(2);
+      } catch (err: any) {
+        message.error(
+          err?.response?.data?.detail || "Failed to send OTP"
+        );
+      } finally {
+        setLoading(false);
       }
     };
 
+    //  VERIFY OTP
     const handleVerifyOTP = async () => {
       try {
         const otp = form.getFieldValue("otp");
+        if (!otp) return message.error("Please enter OTP");
 
-        if (!otp) {
-          message.error("Please enter OTP");
-          return;
-        }
+        setLoading(true);
+        await verifyPasswordOTP(otp);
 
-        message.success("OTP verified successfully.");
-
-        setStep(3); 
-      } catch (err) {
-        message.error("Invalid OTP");
+        message.success("OTP verified successfully!");
+        setStep(3);
+      } catch (err: any) {
+        message.error(
+          err?.response?.data?.detail || "Invalid OTP"
+        );
+      } finally {
+        setLoading(false);
       }
     };
 
+    // RESET PASSWORD
     const handleUpdatePassword = async () => {
       try {
         const newPass = form.getFieldValue("newPassword");
         const confirmPass = form.getFieldValue("confirmNewPassword");
 
-        if (!newPass || !confirmPass) {
-          message.error("Please fill all fields");
-          return;
-        }
+        if (!newPass || !confirmPass)
+          return message.error("All fields required");
 
-        if (newPass !== confirmPass) {
-          message.error("Passwords do not match");
-          return;
-        }
+        if (newPass !== confirmPass)
+          return message.error("Passwords do not match");
 
-        message.success("Password updated successfully.");
+        setLoading(true);
+        await resetPassword(newPass, confirmPass);
+
+        message.success("Password reset successful! Please login.");
 
         setForgotModalVisible(false);
         setActiveAuthTab("login");
         setAuthModalVisible(true);
-      } catch (err) {
-        message.error("Failed to update password");
+      } catch (err: any) {
+        message.error(
+          err?.response?.data?.detail || "Reset failed"
+        );
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -531,53 +550,55 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
           {step === 3 && "Set New Password"}
         </h3>
 
+        {/* STEP 1 - Email */}
         {step === 1 && (
           <>
             <Form.Item
-              label="Enter Registered Email"
+              label="Registered Email"
               name="email"
               rules={[
                 { required: true, message: "Please enter email" },
-                { type: "email", message: "Enter a valid email" },
+                { type: "email", message: "Enter valid email" },
               ]}
             >
               <Input placeholder="yourmail@example.com" />
             </Form.Item>
 
-            <Button className="otp-btn" block type="primary" onClick={handleSendOTP}>
+            <Button block type="primary" loading={loading} onClick={handleSendOTP}>
               Send Reset OTP
             </Button>
           </>
         )}
 
+        {/* STEP 2 - OTP */}
         {step === 2 && (
           <>
             <Form.Item
               label="Enter OTP"
               name="otp"
-              rules={[{ required: true, message: "Please enter OTP" }]}
+              rules={[{ required: true, message: "Enter OTP" }]}
             >
-              <Input maxLength={6} placeholder="Enter 6-digit OTP" />
+              <Input maxLength={6} placeholder="6-digit OTP" />
             </Form.Item>
 
-            <Button block type="primary" onClick={handleVerifyOTP}>
+            <Button block type="primary" loading={loading} onClick={handleVerifyOTP}>
               Verify OTP
             </Button>
           </>
         )}
 
+        {/* STEP 3 - Reset Password */}
         {step === 3 && (
           <>
             <Form.Item
               label="New Password"
               name="newPassword"
               rules={[
-                { required: true, message: "Please enter new password" },
+                { required: true, message: "Enter new password" },
                 {
                   pattern:
                     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
-                  message:
-                    "Password must include uppercase, lowercase, digit & special symbol",
+                  message: "Must include uppercase, lowercase, number & symbol",
                 },
               ]}
               hasFeedback
@@ -591,12 +612,12 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
               dependencies={["newPassword"]}
               hasFeedback
               rules={[
-                { required: true, message: "Please confirm your password" },
+                { required: true, message: "Confirm password" },
                 ({ getFieldValue }) => ({
                   validator(_, value) {
-                    return !value || getFieldValue("newPassword") === value
+                    return value === getFieldValue("newPassword")
                       ? Promise.resolve()
-                      : Promise.reject(new Error("Passwords do not match"));
+                      : Promise.reject("Passwords do not match");
                   },
                 }),
               ]}
@@ -604,7 +625,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
               <Input.Password />
             </Form.Item>
 
-            <Button block type="primary" onClick={handleUpdatePassword}>
+            <Button block type="primary" loading={loading} onClick={handleUpdatePassword}>
               Update Password
             </Button>
           </>
@@ -613,6 +634,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
     );
   })()}
 </Modal>
+
 
 {/* VENDOR Forgot Password */}
 <Modal

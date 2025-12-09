@@ -38,22 +38,20 @@ export interface RegisterResponse {
 }
 
 export const customerRegister = async (data: CustomerRegisterPayload) => {
-  const res = await api.post<RegisterResponse>("api/auth/register", data);
+  const res = await api.post<RegisterResponse>("/api/auth/register", data);
   return res.data;
 };
 
 export const customerLogin = async (data: CustomerLoginPayload) => {
-  const res = await api.post<LoginResponse>("api/auth/login", data);
+  const res = await api.post<LoginResponse>("/api/auth/login", data);
 
   const { access_token, refresh_token, user } = res.data;
 
-  // Save tokens
   if (access_token) localStorage.setItem("accessToken", access_token);
   if (refresh_token) localStorage.setItem("refreshToken", refresh_token);
 
-  // Backend gives user with `sub` not `id`
   const normalizedUser = {
-    id: user?.id || user?.sub,  // 👈 main fix
+    id: user?.id || user?.sub,
     email: user?.email,
     first_name: user?.first_name,
     last_name: user?.last_name,
@@ -67,24 +65,20 @@ export const customerLogin = async (data: CustomerLoginPayload) => {
   return res.data;
 };
 
+//  🚨 USTOMER LOGOUT
 
-// =====================================================
-// 🚨 CUSTOMER LOGOUT API
-// =====================================================
 export const customerLogout = async () => {
   const raw = localStorage.getItem("user");
-  let parsed;
+  let parsed = null;
 
   try {
     parsed = raw ? JSON.parse(raw) : null;
-  } catch {
-    parsed = null;
-  }
+  } catch {}
 
   const user_id = parsed?.id;
 
   if (user_id) {
-    await api.post("api/auth/logout", { user_id });
+    await api.post("/api/auth/logout", { user_id });
   }
 
   localStorage.removeItem("accessToken");
@@ -92,23 +86,39 @@ export const customerLogout = async () => {
   localStorage.removeItem("user");
 };
 
+//  FORGOT PASSWORD FLOW
+
+//  Request OTP
+export const requestPasswordOTP = async (email: string) => {
+  const res = await api.post("/api/auth/forgot-password/request-otp", { email });
+  return res.data;
+};
+
+// Verify OTP
+export const verifyPasswordOTP = async (otp: string) => {
+  const res = await api.post("/api/auth/forgot-password/verify-otp", { otp });
+  return res.data;
+};
+
+//  Reset Password
+export const resetPassword = async (new_password: string, confirm_password: string) => {
+  const res = await api.post("/api/auth/forgot-password/reset", {
+    new_password,
+    confirm_password,
+  });
+  return res.data;
+};
+
+// Payments
+
 export const PaymentsAPI = {
-  
   createOrder: async (bookingId: string, amount: number) => {
-    const res = await api.post("api/payments/create-order", {
-      bookingId,
-      amount,
-    });
+    const res = await api.post("/api/payments/create-order", { bookingId, amount });
     return res.data;
   },
 
-  
-  verifyPayment: async (
-    orderId: string,
-    paymentId: string,
-    signature: string
-  ) => {
-    const res = await api.post("api/payments/verify-payment", {
+  verifyPayment: async (orderId: string, paymentId: string, signature: string) => {
+    const res = await api.post("/api/payments/verify-payment", {
       order_id: orderId,
       payment_id: paymentId,
       signature,
@@ -116,6 +126,3 @@ export const PaymentsAPI = {
     return res.data;
   },
 };
-
-
-

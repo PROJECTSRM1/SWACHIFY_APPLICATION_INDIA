@@ -9,20 +9,26 @@ export const api = axios.create({
   },
 });
 
-// ===================================================
-// 🔐 Attach tokens, BUT skip Authorization for `/api/auth/me`
-// ===================================================
 api.interceptors.request.use((config) => {
   const customerToken = localStorage.getItem("accessToken");
   const freelancerToken = localStorage.getItem("freelancerAccessToken");
 
-  // 👉 Backend specifically requires ?token only for `/api/auth/me`
-  if (config.url?.includes("/api/auth/me")) {
-    config.headers.Authorization = ""; // ❗ mandatory
+  // Skip auth for forgot password APIs
+  if (
+    config.url?.includes("forgot-password/request-otp") ||
+    config.url?.includes("forgot-password/verify-otp") ||
+    config.url?.includes("forgot-password/reset")
+  ) {
+    config.headers.Authorization = "";
     return config;
   }
 
-  // Otherwise attach token normally
+  // Backend specifically for /api/auth/me
+  if (config.url?.includes("/api/auth/me")) {
+    config.headers.Authorization = "";
+    return config;
+  }
+
   if (customerToken) {
     config.headers.Authorization = `Bearer ${customerToken}`;
   }
@@ -34,21 +40,18 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// ===================================================
-// 🔄 Auto Token Refresh for BOTH roles (if backend supports)
-// ===================================================
+//  Auto Token Refresh
+
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
 
-    // Only on token expiry
     if (error?.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
       const customerRefresh = localStorage.getItem("refreshToken");
       const freelancerRefresh = localStorage.getItem("freelancerRefreshToken");
-
       const refreshToken = customerRefresh || freelancerRefresh;
 
       if (!refreshToken) {
@@ -64,14 +67,9 @@ api.interceptors.response.use(
         const newAccess = res?.data?.access_token;
 
         if (newAccess) {
-          if (customerRefresh) {
-            localStorage.setItem("accessToken", newAccess);
-          }
-          if (freelancerRefresh) {
-            localStorage.setItem("freelancerAccessToken", newAccess);
-          }
+          if (customerRefresh) localStorage.setItem("accessToken", newAccess);
+          if (freelancerRefresh) localStorage.setItem("freelancerAccessToken", newAccess);
 
-          // Re-attach new token
           originalRequest.headers.Authorization = `Bearer ${newAccess}`;
           return api(originalRequest);
         }
