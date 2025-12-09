@@ -1,5 +1,6 @@
 // src/pages/landing/Header.tsx
 import React, { useState, useEffect } from "react";
+
 //import { setUserDetails } from "../../utils/helpers/storage";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -67,6 +68,10 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
   };
 
   const closeAuthModal = () => setAuthModalVisible(false);
+  const [vendorForgotModalVisible, setVendorForgotModalVisible] = useState(false);
+  const [emailValue, setEmailValue] = useState("");  
+
+
 
   // Expose openAuthModal/closeAuthModal on window so pages (like CommercialPlots) can call it
   useEffect(() => {
@@ -444,59 +449,325 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
         </Tabs>
         </Modal>
 
-      {/* FORGOT PASSWORD MODAL – placeholder for now */}
-      <Modal
-        open={forgotModalVisible}
-        onCancel={() => {
-          setForgotModalVisible(false);
-          setActiveAuthTab("login");
-          setAuthModalVisible(true);
-        }}
-        footer={null}
-        centered
-        width={450}
-        destroyOnClose
-      >
-        <h3 className="swl-forgot-modal-title">Reset Password</h3>
+      {/* FORGOT PASSWORD MODAL – NEW OTP FLOW */}
+      <Modal open={forgotModalVisible} onCancel={() => {
+    setForgotModalVisible(false);
+    setActiveAuthTab("login");
+    setAuthModalVisible(true);
+    }}
+    footer={null}
+    centered
+    width={450}
+    destroyOnClose >
+      {(() => {
+    const [step, setStep] = useState(1); // 1 = email, 2 = OTP, 3 = new password
 
-        <Form
-          layout="vertical"
-          onFinish={(values) => {
-            const email = (values.email || "").trim();
-            if (!email) {
-              message.error("Please enter email");
-              return;
-            }
+    const [form] = Form.useForm();
 
-            // TODO: integrate with backend forgot-password endpoint if available
-            message.success(
-              "If this email is registered, a reset link will be sent."
-            );
+    // STEP 1: Send OTP
+    const handleSendOTP = async () => {
+      try {
+        const email = form.getFieldValue("email");
 
-            setForgotModalVisible(false);
-            setActiveAuthTab("login");
-            setAuthModalVisible(true);
-          }}
-        >
-          <Form.Item
-            label="Enter Registered Email"
-            name="email"
-            rules={[
-              { required: true, message: "Please enter email" },
-              { type: "email", message: "Enter a valid email" },
-            ]}
-          >
-            <Input placeholder="yourmail@example.com" />
-          </Form.Item>
+        if (!email) {
+          message.error("Please enter email");
+          return;
+        }
 
-          <Form.Item>
-            <Button block htmlType="submit">
-              Send Reset Link
+        setEmailValue(email);
+        console.log(setEmailValue);
+
+        // TODO: Backend API: send OTP here
+        message.success("OTP sent to your registered email.");
+
+        setStep(2); // move to OTP screen
+      } catch (err) {
+        message.error("Failed to send OTP");
+      }
+    };
+
+    // STEP 2: Verify OTP
+    const handleVerifyOTP = async () => {
+      try {
+        const otp = form.getFieldValue("otp");
+
+        if (!otp) {
+          message.error("Please enter OTP");
+          return;
+        }
+
+        // TODO: Backend API: verify OTP here
+        message.success("OTP verified successfully.");
+
+        setStep(3); // move to new password screen
+      } catch (err) {
+        message.error("Invalid OTP");
+      }
+    };
+
+    // STEP 3: Update Password
+    const handleUpdatePassword = async () => {
+      try {
+        const newPass = form.getFieldValue("newPassword");
+        const confirmPass = form.getFieldValue("confirmNewPassword");
+
+        if (!newPass || !confirmPass) {
+          message.error("Please fill all fields");
+          return;
+        }
+
+        if (newPass !== confirmPass) {
+          message.error("Passwords do not match");
+          return;
+        }
+
+        // TODO: Backend API: update password here
+        message.success("Password updated successfully.");
+
+        setForgotModalVisible(false);
+        setActiveAuthTab("login");
+        setAuthModalVisible(true);
+      } catch (err) {
+        message.error("Failed to update password");
+      }
+    };
+
+    return (
+      <Form form={form} layout="vertical">
+        <h3 className="swl-forgot-modal-title">
+          {step === 1 && "Reset Password"}
+          {step === 2 && "Enter OTP"}
+          {step === 3 && "Set New Password"}
+        </h3>
+
+        {step === 1 && (
+          <>
+            <Form.Item
+              label="Enter Registered Email"
+              name="email"
+              rules={[
+                { required: true, message: "Please enter email" },
+                { type: "email", message: "Enter a valid email" },
+              ]}
+            >
+              <Input placeholder="yourmail@example.com" />
+            </Form.Item>
+
+            <Button className="otp-btn" block type="primary" onClick={handleSendOTP}>
+              Send Reset OTP
             </Button>
-          </Form.Item>
-        </Form>
-      </Modal>
+          </>
+        )}
 
+        {step === 2 && (
+          <>
+            <Form.Item
+              label="Enter OTP"
+              name="otp"
+              rules={[{ required: true, message: "Please enter OTP" }]}
+            >
+              <Input maxLength={6} placeholder="Enter 6-digit OTP" />
+            </Form.Item>
+
+            <Button block type="primary" onClick={handleVerifyOTP}>
+              Verify OTP
+            </Button>
+          </>
+        )}
+
+        {step === 3 && (
+          <>
+            <Form.Item
+              label="New Password"
+              name="newPassword"
+              rules={[
+                { required: true, message: "Please enter new password" },
+                {
+                  pattern:
+                    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
+                  message:
+                    "Password must include uppercase, lowercase, digit & special symbol",
+                },
+              ]}
+              hasFeedback
+            >
+              <Input.Password />
+            </Form.Item>
+
+            <Form.Item
+              label="Confirm Password"
+              name="confirmNewPassword"
+              dependencies={["newPassword"]}
+              hasFeedback
+              rules={[
+                { required: true, message: "Please confirm your password" },
+                ({ getFieldValue }) => ({
+                  validator(_, value) {
+                    return !value || getFieldValue("newPassword") === value
+                      ? Promise.resolve()
+                      : Promise.reject(new Error("Passwords do not match"));
+                  },
+                }),
+              ]}
+            >
+              <Input.Password />
+            </Form.Item>
+
+            <Button block type="primary" onClick={handleUpdatePassword}>
+              Update Password
+            </Button>
+          </>
+        )}
+      </Form>
+    );
+  })()}
+</Modal>
+<Modal
+  open={vendorForgotModalVisible}
+  onCancel={() => {
+    setVendorForgotModalVisible(false);
+    setVendorModalVisible(true);
+  }}
+  footer={null}
+  centered
+  width={450}
+  destroyOnClose
+>
+  {(() => {
+    const [step, setStep] = useState(1);
+    const [form] = Form.useForm();
+
+    const handleSendOTP = () => {
+      const email = form.getFieldValue("email");
+
+      if (!email) {
+        message.error("Please enter email");
+        return;
+      }
+
+      message.success("Vendor OTP sent");
+      setStep(2);
+    };
+
+    const handleVerifyOTP = () => {
+      const otp = form.getFieldValue("otp");
+
+      if (!otp) {
+        message.error("Enter OTP");
+        return;
+      }
+
+      message.success("OTP Verified");
+      setStep(3);
+    };
+
+    const handleUpdatePassword = () => {
+      const newPass = form.getFieldValue("newPassword");
+      const confirmPass = form.getFieldValue("confirmNewPassword");
+
+      if (!newPass || !confirmPass) {
+        message.error("Fill all fields");
+        return;
+      }
+
+      if (newPass !== confirmPass) {
+        message.error("Passwords do not match");
+        return;
+      }
+
+      message.success("Vendor password updated!");
+
+      setVendorForgotModalVisible(false);
+      setVendorModalVisible(true);
+    };
+
+    return (
+      <Form form={form} layout="vertical">
+        <h3 style={{ textAlign: "center", marginBottom: 20 }}>
+          {step === 1 && "Vendor Password Reset"}
+          {step === 2 && "Verify OTP"}
+          {step === 3 && "Set New Password"}
+        </h3>
+
+        {step === 1 && (
+          <>
+            <Form.Item
+              label="Registered Vendor Email"
+              name="email"
+              rules={[{ required: true, type: "email" }]}
+            >
+              <Input placeholder="business@example.com" />
+            </Form.Item>
+
+            <Button block type="primary" onClick={handleSendOTP}>
+              Send OTP
+            </Button>
+          </>
+        )}
+
+        {step === 2 && (
+          <>
+            <Form.Item
+              label="Enter OTP"
+              name="otp"
+              rules={[{ required: true }]}
+            >
+              <Input maxLength={6} placeholder="6-digit OTP" />
+            </Form.Item>
+
+            <Button block type="primary" onClick={handleVerifyOTP}>
+              Verify OTP
+            </Button>
+          </>
+        )}
+
+        {step === 3 && (
+          <>
+            <Form.Item
+              label="New Password"
+              name="newPassword"
+              rules={[
+                { required: true },
+                {
+                  pattern:
+                    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
+                  message:
+                    "Password must include uppercase, lowercase, number & special character",
+                },
+              ]}
+              hasFeedback
+            >
+              <Input.Password />
+            </Form.Item>
+
+            <Form.Item
+              label="Confirm Password"
+              name="confirmNewPassword"
+              dependencies={["newPassword"]}
+              rules={[
+                { required: true },
+                ({ getFieldValue }) => ({
+                  validator(_, value) {
+                    return !value || getFieldValue("newPassword") === value
+                      ? Promise.resolve()
+                      : Promise.reject(new Error("Passwords do not match"));
+                  },
+                }),
+              ]}
+              hasFeedback
+            >
+              <Input.Password />
+            </Form.Item>
+
+            <Button block type="primary" onClick={handleUpdatePassword}>
+              Update Password
+            </Button>
+          </>
+        )}
+      </Form>
+    );
+  })()}
+</Modal>     
       {/* VENDOR MODAL (unchanged, still local) */}
       <Modal
         open={vendorModalVisible}
@@ -514,30 +785,36 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
         <Tabs defaultActiveKey="vendor_register" centered>
           {/* VENDOR LOGIN TAB */}
           <Tabs.TabPane tab="Login" key="vendor_login">
-            <Form layout="vertical" onFinish={onVendorLogin}>
-              <Form.Item
-                label="Email / Phone"
-                name="identifier"
-                rules={[{ required: true }]}
-              >
-                <Input placeholder="Enter email or phone" />
+          <Form layout="vertical" onFinish={onVendorLogin}>
+            <Form.Item
+            label="Email / Phone"
+            name="identifier" 
+            rules={[{ required: true }]} >
+              <Input placeholder="Enter email or phone" />
               </Form.Item>
+              <Form.Item label="Password" name="password"
+              rules={[{ required: true }]} >
+      <Input.Password />
+    </Form.Item>
 
-              <Form.Item
-                label="Password"
-                name="password"
-                rules={[{ required: true }]}
-              >
-                <Input.Password />
-              </Form.Item>
+    <div style={{ textAlign: "right", marginBottom: 12 }}>
+      <a
+        onClick={() => {
+          setVendorModalVisible(false);
+          setVendorForgotModalVisible(true);
+        }}
+      >
+        Forgot Password?
+      </a>
+    </div>
 
-              <Form.Item>
-                <Button type="primary" block htmlType="submit">
-                  Login as Vendor
-                </Button>
-              </Form.Item>
-            </Form>
-          </Tabs.TabPane>
+    <Form.Item>
+      <Button type="primary" block htmlType="submit">
+        Login as Vendor
+      </Button>
+    </Form.Item>
+  </Form>
+</Tabs.TabPane>
 
           {/* VENDOR REGISTER TAB */}
           <Tabs.TabPane tab="Register" key="vendor_register">
