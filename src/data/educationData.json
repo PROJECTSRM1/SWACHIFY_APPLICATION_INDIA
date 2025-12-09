@@ -1,0 +1,169 @@
+{
+  "services": [
+    {
+      "id": 1,
+      "imageKey": "it",
+      "title": "IT Courses",
+      "desc": "Learn Full-Stack, Python, Cloud, Data Science and industry-ready IT skills.",
+      "route": "/education/it-courses"
+    },
+    {
+      "id": 2,
+      "imageKey": "ssc",
+      "title": "SSC Coaching",
+      "desc": "Complete preparation for SSC CGL, CHSL, MTS and other government exams.",
+      "route": "/education/ssc-coaching"
+    },
+    {
+      "id": 3,
+      "imageKey": "inter",
+      "title": "Intermediate (MPC/CEC/BiPC)",
+      "desc": "Subject-wise coaching for Maths, Physics, Chemistry, Commerce & Biology.",
+      "route": "/education/intermediate-programs"
+    },
+    {
+      "id": 4,
+      "imageKey": "btech",
+      "title": "B.Tech Support",
+      "desc": "CSE, ECE, EEE & Mechanical subjects, mini projects, major projects and labs.",
+      "route": "/education/btech-support"
+    },
+    {
+      "id": 5,
+      "imageKey": "competitive",
+      "title": "Competitive Exams",
+      "desc": "Coaching for RRB, Groups, Police, Banking, SI/Constable and State jobs.",
+      "route": "/education/competitive-exams"
+    },
+    {
+      "id": 6,
+      "imageKey": "skill",
+      "title": "Skill Development Programs",
+      "desc": "Soft skills, communication, interview prep and placement-oriented training.",
+      "route": "/education/skill-development"
+    }
+  ],
+  "whyCards": [
+    {
+      "id": 1,
+      "imageKey": "expert",
+      "title": "Expert Faculty",
+      "desc": "Experienced trainers from IT industry, academic backgrounds and govt exam fields."
+    },
+    {
+      "id": 2,
+      "imageKey": "curriculum",
+      "title": "Structured Curriculum",
+      "desc": "Well-planned syllabus for IT courses, SSC, Inter, B.Tech and competitive exams."
+    },
+    {
+      "id": 3,
+      "imageKey": "recorded",
+      "title": "Live + Recorded Classes",
+      "desc": "Study with live classes, revision videos and doubt-clearing sessions."
+    },
+    {
+      "id": 4,
+      "imageKey": "placement",
+      "title": "Placement Assistance",
+      "desc": "Resume building, mock interviews and job connections for IT students."
+    },
+    {
+      "id": 5,
+      "imageKey": "fees",
+      "title": "Affordable Fees",
+      "desc": "High-quality education at reasonable prices for students and job seekers."
+    },
+    {
+      "id": 6,
+      "imageKey": "certified",
+      "title": "Certified Courses",
+      "desc": "Certification for IT, skill development and technical courses."
+    }
+  ],
+
+
+
+  "swachifyProducts": {
+    "categories": [
+      {
+        "id": "vegetables",
+        "iconKey": "apple",
+        "title": "Fresh Vegetas",
+        "description": "Leafy greens and seasonal vegetables harvested directly from farms.",
+        "badge": "Daily Harvest",
+        "items": ["Tomato", "Onion", "Potato", "Leafy Greens", "Okra", "Brinjal"]
+      },
+      {
+        "id": "fruits",
+        "iconKey": "crown",
+        "title": "Fruits & Orchard Produce",
+        "description": "Naturally ripened fruits packed with nutrition and taste, carefully graded and sourced directly from farms for maximum freshness.",
+        "items": ["Banana", "Mango", "Papaya", "Apple", "Pomegranate", "Dragonfruit"]
+      },
+      {
+        "id": "grains",
+        "iconKey": "cart",
+        "title": "Grains, Rice & Wheat",
+        "description": "Staple grains cleaned and packed for homes, hotels and bulk buyers, with consistent quality.",
+        "badge": "Best Selling",
+        "items": ["Raw Rice", "Boiled Rice", "Wheat", "Ragi", "Millets", "Pulses"]
+      },
+      {
+        "id": "eggs",
+        "iconKey": "fire",
+        "title": "Eggs & Dairy Basics",
+        "description": "Farm eggs and essential dairy items for daily household needs.",
+        "items": ["Country Eggs", "White Eggs", "Paneer", "Ghee (bulk / retail)"]
+      },
+      {
+        "id": "farm-inputs",
+        "iconKey": "cart",
+        "title": "Seeds & Farm Inputs",
+        "description": "Quality seeds and basic farm inputs to support farmers.",
+        "items": ["Vegetable Seeds", "Paddy Seeds", "Bio Fertilizers", "Organic Manure"]
+      },
+      {
+        "id": "packs",
+        "iconKey": "crown",
+        "title": "Retail & Wholesale Packs",
+        "description": "Pre-packed combos ready for shops, hostels and institutions.",
+        "items": ["Mixed Veg Pack", "Family Grain Pack", "Hostel Combo Pack", "Canteen Supply Pack"]
+      }
+    ],
+    "comboPacks": [
+      {
+        "name": "Family Essentials Pack",
+        "tag": "Most Popular",
+        "price": "₹1,499",
+        "forWhom": "Ideal for 4–5 member families",
+        "points": [
+          "Weekly mix of seasonal vegetables",
+          "Rice / wheat combo + pulses",
+          "Optional add-on: fruits & eggs"
+        ]
+      },
+      {
+        "name": "Retailer Starter Pack",
+        "tag": "Best for Shops",
+        "price": "₹4,999",
+        "forWhom": "Small supermarkets & kirana stores",
+        "points": [
+          "Assorted vegetables in crates",
+          "Pre-packed grain & pulse pouches",
+          "Attractive margins & steady supply"
+        ]
+      },
+      {
+        "name": "Bulk Buyer / Hostel Pack",
+        "price": "Custom Quote",
+        "forWhom": "Hostels, canteens and catering units",
+        "points": [
+          "Bulk rice, wheat and pulses",
+          "Regular supply of cut / whole vegetables",
+          "Delivery schedule as per requirement"
+        ]
+      }
+    ]
+  }
+}

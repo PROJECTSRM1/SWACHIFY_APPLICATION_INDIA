@@ -303,7 +303,7 @@
 .sw-ad-skills-cell {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
   flex-wrap: wrap;
 }
 
@@ -314,22 +314,43 @@
 .sw-ad-skills-ellipsis {
   color: #94a3b8;
   font-weight: 500;
-  margin: 0 2px;
+  margin: 0 4px;
 }
 
 .sw-ad-view-more-btn {
-  padding: 0 4px;
-  height: auto;
-  font-size: 13px;
+  padding: 2px 8px !important;
+  height: 22px !important;
+  line-height: 18px !important;
+  font-size: 12px;
   color: #e2001a;
+  background: #fff1f0;
+  border: 1px solid #ffccc7;
+  border-radius: 4px;
+  margin-left: 2px;
 }
 
 .sw-ad-view-more-btn:hover {
-  color: #ff4d4f;
+  color: #fff;
+  background: #e2001a;
+  border-color: #e2001a;
 }
 
 .sw-ad-skills-modal .ant-modal-body {
   padding: 20px;
+}
+
+/* Freelancer Details Modal Styles */
+.sw-ad-descriptions-nowrap .ant-descriptions-item-content {
+  word-break: break-word;
+  padding: 12px 16px !important;
+}
+
+.sw-ad-descriptions-nowrap .ant-descriptions-item-label {
+  width: 120px;
+  max-width: 150px;
+  background-color: #fafafa;
+  font-weight: 500;
+  padding: 12px 16px !important;
 }
 
 .sw-ad-skills-list {
@@ -352,5 +373,202 @@
   .sw-ad-skill-tag-modal {
     font-size: 13px;
     padding: 3px 10px;
+  }
+}
+
+/* Carousel Styles */
+.sw-ad-carousel-wrapper {
+  margin-bottom: 24px;
+}
+
+.sw-ad-carousel {
+  background: #f0f2f5;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.sw-ad-carousel-item {
+  height: 200px;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  background: #e6f7ff;
+  color: #1890ff;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.sw-ad-carousel-image {
+  max-height: 200px;
+  object-fit: cover;
+}
+
+/* Rating Styles */
+.sw-ad-rating-star {
+  color: #faad14;
+}
+
+.sw-ad-rating-na {
+  color: #999;
+}
+
+
+
+/* Freelancer Details Modal Redesign (Clean Employee Profile Style) */
+
+.sw-ad-profile-header {
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+  margin-bottom: 32px;
+  padding: 24px;
+  background: #f8fafc;
+  border: 1px solid #f1f5f9;
+  border-radius: 16px;
+}
+
+.sw-ad-profile-img-placeholder {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: #f5f5f5;
+  /* Soft gray */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  flex-shrink: 0;
+  color: #8c8c8c;
+  font-size: 48px;
+  box-shadow: none;
+}
+
+.sw-ad-profile-basic-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  padding-top: 8px;
+}
+
+.sw-ad-profile-name {
+  font-size: 28px;
+  font-weight: 700;
+  color: blue; /* changed from #262626 to blue */
+  margin: 0;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.sw-ad-profile-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  color: #595959;
+  line-height: 1.5;
+}
+
+/* Personal Information Card */
+.sw-ad-info-card {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #f0f0f0;
+  padding: 24px;
+  margin-bottom: 32px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+}
+
+.sw-ad-section-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #262626;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  text-transform: none;
+  letter-spacing: normal;
+  padding-left: 0;
+  border-left: none;
+}
+
+.sw-ad-details-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 0;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+}
+
+.sw-ad-detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.sw-ad-detail-item:hover {
+  border-color: transparent;
+  box-shadow: none;
+  transform: none;
+}
+
+.sw-ad-detail-label {
+  font-size: 13px;
+  color: #8c8c8c;
+  text-transform: capitalize;
+  font-weight: 500;
+  letter-spacing: normal;
+}
+
+.sw-ad-detail-value {
+  font-size: 16px;
+  font-weight: 600;
+  color: #262626;
+  word-break: break-word;
+}
+
+/* Skills Section */
+.sw-ad-skills-container-modal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+@media (max-width: 992px) {
+  .sw-ad-details-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 576px) {
+  .sw-ad-profile-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+  }
+
+  .sw-ad-profile-basic-info {
+    padding-top: 0;
+    align-items: center;
+  }
+
+  .sw-ad-profile-meta-row {
+    justify-content: center;
+  }
+
+  .sw-ad-details-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sw-ad-info-card {
+    padding: 16px;
   }
 }
