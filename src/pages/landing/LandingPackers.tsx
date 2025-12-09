@@ -1,8 +1,8 @@
 // src/pages/landing/LandingPackers.tsx
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import CommonHeader from "../../pages/landing/Header";
 import "../../index.css";
-import FooterSection from '../../pages/landing/FooterSection';
+import FooterSection from "../../pages/landing/FooterSection";
 import "../../pages/landing/FooterSection.css";
 import {
   Card,
@@ -14,7 +14,7 @@ import {
   Checkbox,
   Row,
   Col,
-} from 'antd';
+} from "antd";
 import {
   CheckCircleOutlined,
   TruckOutlined,
@@ -23,19 +23,22 @@ import {
   UserOutlined,
   ClockCircleOutlined,
   MailOutlined,
-} from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom';
+} from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 
 // === IMAGE IMPORTS ===
-import heroPackers from '../../assets/landingimages/Packers.jpg';
-import packingServicesImg from '../../assets/landingimages/PackingServices .jpg';
-import localandlongdistance from '../../assets/landingimages/localandlongdistance.jpg';
-import residentialMovingImg from '../../assets/landingimages/residential-moving.jpg';
-import officeRelocationImg from '../../assets/landingimages/office-relocation.jpg';
-import vehicleTransportImg from '../../assets/landingimages/vehicle-transport.jpg';
-import Loadingtransport from '../../assets/landingimages/Loadingtransport.jpg';
-import insurance from '../../assets/landingimages/insurance.jpeg';
+import heroPackers from "../../assets/landingimages/Packers.jpg";
+import packingServicesImg from "../../assets/landingimages/PackingServices .jpg";
+import localandlongdistance from "../../assets/landingimages/localandlongdistance.jpg";
+import residentialMovingImg from "../../assets/landingimages/residential-moving.jpg";
+import officeRelocationImg from "../../assets/landingimages/office-relocation.jpg";
+import vehicleTransportImg from "../../assets/landingimages/vehicle-transport.jpg";
+import Loadingtransport from "../../assets/landingimages/Loadingtransport.jpg";
+import insurance from "../../assets/landingimages/insurance.jpeg";
 // =====================
+
+// 🔹 JSON CONFIG IMPORT
+import educationData from "../../data/educationData.json";
 
 declare global {
   interface Window {
@@ -46,86 +49,111 @@ declare global {
 
 const { TabPane } = Tabs;
 
-const services = [
-  {
-    img: packingServicesImg,
-    icon: <CheckCircleOutlined style={{ fontSize: 30, color: '#00aa33' }} />,
-    title: 'Packing Services',
-    desc: 'Professional packing with premium quality materials.',
-  },
-  {
-    img: Loadingtransport,
-    icon: <DollarOutlined style={{ fontSize: 30, color: '#8b00ff' }} />,
-    title: 'Loading Transport',
-    desc: 'Best value moving services at competitive rates.',
-  },
-  {
-    img: localandlongdistance,
-    icon: <TruckOutlined style={{ fontSize: 30, color: '#1677ff' }} />,
-    title: 'Local & Long Distance',
-    desc: 'Reliable transportation services ensuring safe relocations.',
-  },
-  {
-    img: insurance,
-    icon: <SafetyCertificateOutlined style={{ fontSize: 30, color: '#ff7a00' }} />,
-    title: 'Insurance Coverage',
-    desc: 'Fully insured service for your peace of mind.',
-  },
-];
+// 🔹 Types for config
+type PackersHeroConfig = {
+  title: string;
+  subtitle: string;
+  primaryButtonText: string;
+  secondaryButtonText: string;
+  backgroundImageKey: string;
+};
 
-const typesOfServices = [
-  {
-    title: 'Residential Moving',
-    price: '$299',
-    features: [
-      '1–5 bedroom homes',
-      'Packing & unpacking',
-      'Furniture disassembly/assembly',
-      'Storage solutions available',
-    ],
-    image: residentialMovingImg,
-  },
-  {
-    title: 'Office Relocation',
-    price: 'Custom Quote',
-    features: [
-      'Minimal disruption',
-      'After-hours moving',
-      'IT equipment handling',
-      'Floor plan setup',
-    ],
-    image: officeRelocationImg,
-  },
-  {
-    title: 'Vehicle Transport',
-    price: '$499',
-    features: [
-      'Cars & motorcycles',
-      'Enclosed transport',
-      'Door to door service',
-      'Insurance included',
-    ],
-    image: vehicleTransportImg,
-  },
-];
+type PackersServiceConfig = {
+  id: number;
+  imageKey: string;
+  iconKey: string;
+  title: string;
+  desc: string;
+};
 
-const reasons = [
-  {
-    icon: <UserOutlined style={{ fontSize: 30, color: '#00aa33' }} />,
-    title: 'Expert Team',
-    desc: 'Trained professionals with years of relocation experience.',
-  },
-  {
-    icon: <ClockCircleOutlined style={{ fontSize: 30, color: '#1677ff' }} />,
-    title: 'On-Time Delivery',
-    desc: 'We value your time and ensure timely relocation.',
-  },
-  {
-    icon: <SafetyCertificateOutlined style={{ fontSize: 30, color: '#ff7a00' }} />,
-    title: 'Full Insurance',
-    desc: 'Your belongings are fully covered during transit.',
-  },
-];
+type PackersTypeConfig = {
+  id: number;
+  title: string;
+  price: string;
+  imageKey: string;
+  features: string[];
+};
+
+type PackersReasonConfig = {
+  iconKey: string;
+  title: string;
+  desc: string;
+};
+
+// 🔹 Hero background map
+const packersHeroBgMap: Record<string, string> = {
+  packersHero: heroPackers,
+};
+
+// 🔹 Image maps
+const packersImageMap: Record<string, string> = {
+  packingServices: packingServicesImg,
+  loadingTransport: Loadingtransport,
+  localLongDistance: localandlongdistance,
+  insurance: insurance,
+  residentialMoving: residentialMovingImg,
+  officeRelocation: officeRelocationImg,
+  vehicleTransport: vehicleTransportImg,
+};
+
+// 🔹 Icon maps (keep same colors & styles as your original UI)
+const packersServiceIconMap: Record<string, React.ReactNode> = {
+  checkCircle: <CheckCircleOutlined style={{ fontSize: 30, color: "#00aa33" }} />,
+  dollar: <DollarOutlined style={{ fontSize: 30, color: "#8b00ff" }} />,
+  truck: <TruckOutlined style={{ fontSize: 30, color: "#1677ff" }} />,
+  safety: (
+    <SafetyCertificateOutlined style={{ fontSize: 30, color: "#ff7a00" }} />
+  ),
+};
+
+const packersReasonIconMap: Record<string, React.ReactNode> = {
+  user: <UserOutlined style={{ fontSize: 30, color: "#00aa33" }} />,
+  clock: <ClockCircleOutlined style={{ fontSize: 30, color: "#1677ff" }} />,
+  safety: (
+    <SafetyCertificateOutlined style={{ fontSize: 30, color: "#ff7a00" }} />
+  ),
+};
+
+// 🔹 Read data from JSON with fallbacks
+const packersHero: PackersHeroConfig = (educationData as any).packersHero || {
+  title: "Stress-Free Relocation Services",
+  subtitle: "From packing to delivery, we make your move effortless.",
+  primaryButtonText: "Book Now",
+  secondaryButtonText: "Get Quote",
+  backgroundImageKey: "packersHero",
+};
+
+const heroBackgroundImage =
+  packersHeroBgMap[packersHero.backgroundImageKey] || heroPackers;
+
+const packersServicesConfig: PackersServiceConfig[] =
+  ((educationData as any).packersServices as PackersServiceConfig[]) || [];
+
+const services = packersServicesConfig.map((s) => ({
+  img: packersImageMap[s.imageKey] || packingServicesImg,
+  icon: packersServiceIconMap[s.iconKey] || null,
+  title: s.title,
+  desc: s.desc,
+}));
+
+const packersTypesConfig: PackersTypeConfig[] =
+  ((educationData as any).packersTypes as PackersTypeConfig[]) || [];
+
+const typesOfServices = packersTypesConfig.map((t) => ({
+  title: t.title,
+  price: t.price,
+  image: packersImageMap[t.imageKey] || residentialMovingImg,
+  features: t.features,
+}));
+
+const packersReasonsConfig: PackersReasonConfig[] =
+  ((educationData as any).packersReasons as PackersReasonConfig[]) || [];
+
+const reasons = packersReasonsConfig.map((r) => ({
+  icon: packersReasonIconMap[r.iconKey] || null,
+  title: r.title,
+  desc: r.desc,
+}));
 
 const LandingPackers: React.FC = () => {
   const [authVisible, setAuthVisible] = useState(false);
@@ -254,11 +282,11 @@ const LandingPackers: React.FC = () => {
       {/* HERO SECTION */}
       <section
         className="sw-lpm-classname-packes-hero"
-        style={{ backgroundImage: `url(${heroPackers})` }}
+        style={{ backgroundImage: `url(${heroBackgroundImage})` }}
       >
         <div className="sw-lpm-classname-hero-overlay">
-          <h1>Stress-Free Relocation Services</h1>
-          <p>From packing to delivery, we make your move effortless.</p>
+          <h1>{packersHero.title}</h1>
+          <p>{packersHero.subtitle}</p>
 
           <div className="sw-lpm-classname-hero-actions">
             <Button
@@ -275,7 +303,7 @@ const LandingPackers: React.FC = () => {
                 }
               }}
             >
-              Book Now
+              {packersHero.primaryButtonText}
             </Button>
 
             <Button
@@ -291,7 +319,7 @@ const LandingPackers: React.FC = () => {
                 }
               }}
             >
-              Get Quote
+              {packersHero.secondaryButtonText}
             </Button>
           </div>
         </div>
@@ -385,7 +413,7 @@ const LandingPackers: React.FC = () => {
                   <Form.Item
                     label="Email"
                     name="email"
-                    rules={[{ required: true, type: 'email' }]}
+                    rules={[{ required: true, type: "email" }]}
                   >
                     <Input
                       placeholder="you@example.com"
@@ -405,10 +433,7 @@ const LandingPackers: React.FC = () => {
                 </Col>
 
                 <Col xs={24} md={12}>
-                  <Form.Item
-                    label="Moving Date (optional)"
-                    name="moveDate"
-                  >
+                  <Form.Item label="Moving Date (optional)" name="moveDate">
                     <Input placeholder="Preferred moving date" />
                   </Form.Item>
                 </Col>
