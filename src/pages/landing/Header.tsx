@@ -62,7 +62,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
     "register"
   );
 
-  const [authLoading, setAuthLoading] = useState(false); // ✅ NEW
+  const [authLoading, setAuthLoading] = useState(false); 
   const navigate = useNavigate();
 
   const openAuthModal = (tab: "login" | "register" = "register") => {
