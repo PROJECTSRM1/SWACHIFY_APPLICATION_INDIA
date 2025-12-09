@@ -449,8 +449,8 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
         </Tabs>
         </Modal>
 
-      {/* FORGOT PASSWORD MODAL – NEW OTP FLOW */}
-      <Modal open={forgotModalVisible} onCancel={() => {
+{/* FORGOT PASSWORD for Customer */}
+    <Modal open={forgotModalVisible} onCancel={() => {
     setForgotModalVisible(false);
     setActiveAuthTab("login");
     setAuthModalVisible(true);
@@ -464,7 +464,6 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
 
     const [form] = Form.useForm();
 
-    // STEP 1: Send OTP
     const handleSendOTP = async () => {
       try {
         const email = form.getFieldValue("email");
@@ -477,16 +476,14 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
         setEmailValue(email);
         console.log(setEmailValue);
 
-        // TODO: Backend API: send OTP here
         message.success("OTP sent to your registered email.");
 
-        setStep(2); // move to OTP screen
+        setStep(2); 
       } catch (err) {
         message.error("Failed to send OTP");
       }
     };
 
-    // STEP 2: Verify OTP
     const handleVerifyOTP = async () => {
       try {
         const otp = form.getFieldValue("otp");
@@ -496,16 +493,14 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
           return;
         }
 
-        // TODO: Backend API: verify OTP here
         message.success("OTP verified successfully.");
 
-        setStep(3); // move to new password screen
+        setStep(3); 
       } catch (err) {
         message.error("Invalid OTP");
       }
     };
 
-    // STEP 3: Update Password
     const handleUpdatePassword = async () => {
       try {
         const newPass = form.getFieldValue("newPassword");
@@ -521,7 +516,6 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
           return;
         }
 
-        // TODO: Backend API: update password here
         message.success("Password updated successfully.");
 
         setForgotModalVisible(false);
@@ -622,6 +616,8 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
     );
   })()}
 </Modal>
+
+{/* VENDOR Forgot Password */}
 <Modal
   open={vendorForgotModalVisible}
   onCancel={() => {
@@ -767,7 +763,8 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
       </Form>
     );
   })()}
-</Modal>     
+</Modal> 
+
       {/* VENDOR MODAL (unchanged, still local) */}
       <Modal
         open={vendorModalVisible}
@@ -780,10 +777,9 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
         bodyStyle={{
           maxHeight: "65vh",
           overflowY: "auto",
-        }}
-      >
-        <Tabs defaultActiveKey="vendor_register" centered>
+        }} >
           {/* VENDOR LOGIN TAB */}
+        <Tabs defaultActiveKey="vendor_register" centered>          
           <Tabs.TabPane tab="Login" key="vendor_login">
           <Form layout="vertical" onFinish={onVendorLogin}>
             <Form.Item
