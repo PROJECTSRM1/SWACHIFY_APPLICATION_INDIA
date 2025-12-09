@@ -67,7 +67,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
   const closeAuthModal = () => setAuthModalVisible(false);
   const [vendorForgotModalVisible, setVendorForgotModalVisible] = useState(false);
   const [emailValue, setEmailValue] = useState("");  
-
+  
   console.log(emailValue);
 
 
