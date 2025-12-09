@@ -67,6 +67,8 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
   const closeAuthModal = () => setAuthModalVisible(false);
   const [vendorForgotModalVisible, setVendorForgotModalVisible] = useState(false);
   const [emailValue, setEmailValue] = useState("");  
+  
+  console.log(emailValue);
 
 
 
@@ -245,11 +247,11 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
               {n.label}
             </li>
           ))}
-          <li>
+          {/* <li>
             <Link to="/Cart" onClick={() => setMenuOpen(false)}>
               Cart
             </Link>
-          </li>
+          </li> */}
           <li>
             <a
               href="#"
