@@ -4,8 +4,8 @@ import "../../index.css";
 
 import { useNavigate } from "react-router-dom";
 import { Button, Card, Row, Col } from "antd";
-import FooterSection from '../../pages/landing/FooterSection';
-import "../../pages/landing/FooterSection.css"
+import FooterSection from "../../pages/landing/FooterSection";
+import "../../pages/landing/FooterSection.css";
 
 
 import {
@@ -17,57 +17,93 @@ import {
   BuildOutlined,
   BookOutlined,
   ShoppingCartOutlined,
-  UserOutlined
-  // PhoneOutlined,
-  // MailOutlined,
-  // EnvironmentOutlined,
-  // GlobalOutlined
+  UserOutlined,
 } from "@ant-design/icons";
+
 import heroImage from "../../assets/landingimages/hero.jpg";
-const services = [
-  {
-    icon: <HomeOutlined style={{ fontSize: 28, color: "#1677ff" }} />,
-    title: "Cleaning & Home Services",
-    desc: "Deep cleaning, regular housekeeping and specialized home maintenance services.",
-    route: "/cleaningservice",
-  },
-  {
-    icon: <TruckOutlined style={{ fontSize: 28, color: "#00aa33" }} />,
-    title: "Transport",
-    desc: "Secure packing and door-to-door relocation with insured transportation options.",
-    route: "/LandingPackers",
-  },
-  {
-    icon: <ShopOutlined style={{ fontSize: 28, color: "#ff7a00" }} />,
-    title: "Buy / Sale / Rentals",
-    desc: "Browse commercial & residential listings buy, sell or rent with expert support.",
-    route: "/commercial-plots",
-  },
-  {
-    icon: <BuildOutlined style={{ fontSize: 28, color: "#8b00ff" }} />,
-    title: "Raw Materials",
-    desc: "Cement, steel, sand and other building materials sourced from trusted suppliers.",
-    route: "/ConstructionMaterials",
-  },
-  {
-    icon: <BookOutlined style={{ fontSize: 28, color: "#ff3333" }} />,
-    title: "Education",
-    desc: "Courses, training programs and learning resources for construction & trades.",
-    route: "/education",
-  },
-  {
-    icon: <ShoppingCartOutlined style={{ fontSize: 28, color: "#ffaa00" }} />,
-    title: "Swachify Products",
-    desc: "Shop quality construction products and tools with transparent pricing.",
-    route: "/ConstructionMaterials",
-  },
-  {
-    icon: <UserOutlined style={{ fontSize: 28, color: "#ffaa00" }} />,
-    title: "Freelancer",
-    desc: "Hire vetted freelancers: masons, electricians, plumbers and skilled tradespeople.",
-    route: "/Freelancer",
-  },
-];
+
+// 🔹 Import shared JSON config
+import educationData from "../../data/educationData.json";
+import type React from "react";
+
+// 🔹 Types (optional, just for clarity)
+type LandingService = {
+  id: number;
+  iconKey: string;
+  title: string;
+  desc: string;
+  route: string;
+};
+
+type LandingWhyCard = {
+  iconKey: string;
+  title: string;
+  desc: string;
+};
+
+type LandingHero = {
+  title: string;
+  subtitle: string;
+  buttonText: string;
+  backgroundImageKey: string;
+};
+
+// 🔹 Map hero background imageKey -> actual import
+const heroBgMap: Record<string, string> = {
+  landingHero: heroImage,
+};
+
+// 🔹 Extract hero data from JSON with fallback
+const landingHero: LandingHero = (educationData as any).landingHero || {
+  title: "Transform Your Home & Property Services",
+  subtitle: "Your trusted solution for cleaning, moving, rentals, construction, and more.",
+  buttonText: "Get Started",
+  backgroundImageKey: "landingHero",
+};
+
+// 🔹 Resolve background image
+const heroBackgroundImage =
+  heroBgMap[landingHero.backgroundImageKey] ?? heroImage;
+
+// 🔹 Icon maps for services & why-cards
+const landingServiceIconMap: Record<string, React.ReactNode> = {
+  home: <HomeOutlined style={{ fontSize: 28, color: "#1677ff" }} />,
+  truck: <TruckOutlined style={{ fontSize: 28, color: "#00aa33" }} />,
+  shop: <ShopOutlined style={{ fontSize: 28, color: "#ff7a00" }} />,
+  build: <BuildOutlined style={{ fontSize: 28, color: "#8b00ff" }} />,
+  book: <BookOutlined style={{ fontSize: 28, color: "#ff3333" }} />,
+  cart: <ShoppingCartOutlined style={{ fontSize: 28, color: "#ffaa00" }} />,
+  user: <UserOutlined style={{ fontSize: 28, color: "#ffaa00" }} />,
+};
+
+const landingWhyIconMap: Record<string, React.ReactNode> = {
+  tools: <ToolOutlined style={{ fontSize: 28, color: "#ff7a00" }} />,
+  home: <HomeOutlined style={{ fontSize: 28, color: "#1677ff" }} />,
+  truck: <TruckOutlined style={{ fontSize: 28, color: "#00aa33" }} />,
+  build: <BuildOutlined style={{ fontSize: 28, color: "#ffaa00" }} />,
+  apartment: <ApartmentOutlined style={{ fontSize: 28, color: "#8b00ff" }} />,
+  shop: <ShopOutlined style={{ fontSize: 28, color: "#ff3333" }} />,
+};
+
+// 🔹 Read services & why-choose-us from JSON
+const landingServicesConfig: LandingService[] =
+  ((educationData as any).landingServices as LandingService[]) || [];
+
+const services = landingServicesConfig.map((item) => ({
+  icon: landingServiceIconMap[item.iconKey] || null,
+  title: item.title,
+  desc: item.desc,
+  route: item.route,
+}));
+
+const landingWhyConfig: LandingWhyCard[] =
+  ((educationData as any).landingWhyChooseUs as LandingWhyCard[]) || [];
+
+const whyChooseCards = landingWhyConfig.map((item) => ({
+  icon: landingWhyIconMap[item.iconKey] || null,
+  title: item.title,
+  desc: item.desc,
+}));
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -80,20 +116,19 @@ const LandingPage = () => {
 
   return (
     <div className="sw-lp-classname-landing-container">
-
       <CommonHeader selectedKey="landing" />
 
       {/* HERO SECTION */}
       <section
         className="sw-lp-classname-hero-section"
-        style={{ backgroundImage: `url(${heroImage})` }}
+        style={{ backgroundImage: `url(${heroBackgroundImage})` }}
       >
         <div className="sw-lp-classname-hero-content">
-          <h1>Transform Your Home & Property Services</h1>
-          <p>Your trusted solution for cleaning, moving, rentals, construction, and more.</p>
+          <h1>{landingHero.title}</h1>
+          <p>{landingHero.subtitle}</p>
 
           <Button type="primary" size="large" onClick={scrollToServices}>
-            Get Started
+            {landingHero.buttonText}
           </Button>
         </div>
       </section>
@@ -132,14 +167,7 @@ const LandingPage = () => {
           </p>
 
           <Row gutter={[20, 20]} justify="center">
-            {[ 
-              { icon: <ToolOutlined style={{ fontSize: 28, color: "#ff7a00" }} />, title: "Skilled Professionals", desc: "Verified, trained technicians who deliver quality service." },
-              { icon: <HomeOutlined style={{ fontSize: 28, color: "#1677ff" }} />, title: "Trusted & Local", desc: "Local teams committed to timely service." },
-              { icon: <TruckOutlined style={{ fontSize: 28, color: "#00aa33" }} />, title: "Transparent Pricing", desc: "Clear quotes with no hidden charges." },
-              { icon: <BuildOutlined style={{ fontSize: 28, color: "#ffaa00" }} />, title: "Licensed & Insured", desc: "Fully insured technicians and certified service providers." },
-              { icon: <ApartmentOutlined style={{ fontSize: 28, color: "#8b00ff" }} />, title: "Satisfaction Guarantee", desc: "If you're not satisfied, we fix it." },
-              { icon: <ShopOutlined style={{ fontSize: 28, color: "#ff3333" }} />, title: "24/7 Support", desc: "Round-the-clock emergency support." },
-            ].map((card, i) => (
+            {whyChooseCards.map((card, i) => (
               <Col xs={24} sm={12} md={8} key={i}>
                 <Card className="sw-lp-classname-why-card" hoverable>
                   <div style={{ display: "flex", gap: 12 }}>
@@ -156,65 +184,8 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* FOOTER */}
-      {/* <footer className="sw-lp-classname-footer">
-        <div className="sw-lp-classname-footer-grid">
-          
-          <div>
-            <h3>About Us</h3>
-            <p>Your trusted partner for all home and property needs.</p>
-          </div>
-
-          <div>
-            <h3>Services</h3>
-            <ul>
-              <li>Cleaning Service</li>
-              <li>Packers & Movers</li>
-              <li>Home Services</li>
-              <li>Rentals</li>
-              <li>Commercial Plots</li>
-              <li>Construction Materials</li>
-            </ul>
-          </div>
-
-          <div>
-            <h3>Quick Links</h3>
-            <ul>
-              <li>Home</li>
-              <li>About</li>
-              <li>Contact</li>
-              <li>Careers</li>
-            </ul>
-          </div>
-
-          <div>
-            <h3>Contact Info</h3>
-
-            <div className="sw-lp-classname-contact-item">
-              <PhoneOutlined /> <span>+1 (555) 123-4567</span>
-            </div>
-
-            <div className="sw-lp-classname-contact-item">
-              <MailOutlined /> <span>info@homeservices.com</span>
-            </div>
-
-            <div className="sw-lp-classname-contact-item">
-              <EnvironmentOutlined /> <span>123 Service Street, City, State</span>
-            </div>
-
-            <div className="sw-lp-classname-contact-item">
-              <GlobalOutlined /> <span>www.homeservices.com</span>
-            </div>
-
-          </div>
-        </div>
-
-        <p className="sw-lp-classname-footer-bottom">
-          © 2025 Home Services. All rights reserved.
-        </p>
-      </footer> */}
+      {/* FOOTER (still via FooterSection component) */}
       <FooterSection selectedKey="LandingPackers" />
-
     </div>
   );
 };
