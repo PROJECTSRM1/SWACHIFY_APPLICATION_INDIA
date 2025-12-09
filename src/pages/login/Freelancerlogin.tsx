@@ -19,6 +19,7 @@ import {
   Input,
   Button,
   Checkbox,
+  Modal,
 //   Divider,
 //   Row,
 //   Col,
@@ -30,6 +31,8 @@ export default function Freelancerlogin() {
   const [loading, setLoading] = useState(false);
 //   const [showPassword, setShowPassword] = useState(false);
   const [form] = Form.useForm();
+  const [forgotModalVisible, setForgotModalVisible] = useState(false);
+
 
  const onFinish = async (values: any) => {
   try {
@@ -135,7 +138,8 @@ export default function Freelancerlogin() {
 
             <div className="sw-fr-row-between">
               <Checkbox>Remember me</Checkbox>
-              <a className="sw-fr-forgot">Forgot Password?</a>
+            <a className="sw-fr-forgot" onClick={() => setForgotModalVisible(true)}>
+            Forgot Password? </a>
             </div>
 
             <Form.Item>
@@ -161,8 +165,106 @@ export default function Freelancerlogin() {
               Sign up free
             </button>
           </p>
+          
         </Card>
       </div>
-    </Layout>
+{/* FREELANCER FORGOT PASSWORD MODAL */}
+<Modal
+  open={forgotModalVisible}
+  onCancel={() => setForgotModalVisible(false)}
+  footer={null}
+  centered
+  width={450}
+  destroyOnClose
+>
+  {(() => {
+    const [step, setStep] = useState(1);
+    const [form] = Form.useForm();
+
+    const handleSendOTP = () => {
+      const email = form.getFieldValue("email");
+      if (!email) return message.error("Please enter email");
+
+      message.success("OTP sent to email");
+      setStep(2);
+    };
+
+    const handleVerifyOTP = () => {
+      const otp = form.getFieldValue("otp");
+      if (!otp) return message.error("Please enter OTP");
+
+      message.success("OTP Verified");
+      setStep(3);
+    };
+
+    const handleUpdatePassword = () => {
+      const newP = form.getFieldValue("newPassword");
+      const confirmP = form.getFieldValue("confirmPassword");
+
+      if (!newP || !confirmP) return message.error("Fill all fields");
+      if (newP !== confirmP) return message.error("Passwords do not match");
+
+      message.success("Password updated successfully");
+      setForgotModalVisible(false);
+    };
+
+    return (
+      <Form form={form} layout="vertical">
+        <h3 style={{ textAlign: "center", marginBottom: 20 }}>
+          {step === 1 && "Reset Password"}
+          {step === 2 && "Enter OTP"}
+          {step === 3 && "Set New Password"}
+        </h3>
+
+        {step === 1 && (
+          <>
+            <Form.Item label="Email" name="email" rules={[{ required: true }]}>
+              <Input placeholder="yourmail@example.com" />
+            </Form.Item>
+            <Button block type="primary" onClick={handleSendOTP}>
+              Send OTP
+            </Button>
+          </>
+        )}
+
+        {step === 2 && (
+          <>
+            <Form.Item label="OTP" name="otp" rules={[{ required: true }]}>
+              <Input maxLength={6} placeholder="Enter OTP" />
+            </Form.Item>
+            <Button block type="primary" onClick={handleVerifyOTP}>
+              Verify OTP
+            </Button>
+          </>
+        )}
+
+        {step === 3 && (
+          <>
+            <Form.Item
+              label="New Password"
+              name="newPassword"
+              rules={[{ required: true }]}
+            >
+              <Input.Password />
+            </Form.Item>
+
+            <Form.Item
+              label="Confirm Password"
+              name="confirmPassword"
+              rules={[{ required: true }]}
+            >
+              <Input.Password />
+            </Form.Item>
+
+            <Button block type="primary" onClick={handleUpdatePassword}>
+              Update Password
+            </Button>
+          </>
+        )}
+      </Form>
+    );
+  })()}
+</Modal>
+</Layout>
   );
 }
