@@ -1,6 +1,6 @@
 // EducationPage.tsx
 import CommonHeader from "../../pages/landing/Header";
-import "./Education.css";
+// import "./Education.css";
 import { useNavigate } from "react-router-dom";
 import { Button, Card, Row, Col } from "antd";
 import FooterSection from "../../pages/landing/FooterSection";
