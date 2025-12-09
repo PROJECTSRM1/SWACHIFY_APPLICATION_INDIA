@@ -87,7 +87,7 @@ const SERVICE_FLOW_DESCRIPTIONS: string[] = [
 const IMAGE_REQUIRED_STEPS: ServiceStepIndex[] = [2, 3];
 
 // --- MOCK DATA (ONLY AVAILABLE REQUESTS TO START) ---
-const INITIAL_AVAILABLE_REQUESTS: Job[] = [
+export const INITIAL_AVAILABLE_REQUESTS: Job[] = [
   {
     ticketId: 'TKT001',
     title: 'Cleaning - Deep Cleaning',
@@ -617,6 +617,7 @@ const JobCard: React.FC<JobCardProps> = ({
   onStepImageUpload,
 }) => {
   const isLastStep = currentStep === (SERVICE_FLOW_STEPS.length - 1 as ServiceStepIndex);
+const navigate = useNavigate();
 
   const requiresImage = (idx: ServiceStepIndex) =>
     IMAGE_REQUIRED_STEPS.includes(idx);
@@ -712,13 +713,25 @@ const JobCard: React.FC<JobCardProps> = ({
                 </a>
               </div>
             )}
+<p className="sw-address-text">{job.customerAddress
 
-            {job.customerAddress && (
-              <div className="sw-frd-customer-line sw-frd-customer-address">
-                <EnvironmentOutlined className="sw-frd-customer-icon" />
-                <span className="sw-frd-customer-text">{job.customerAddress}</span>
-              </div>
-            )}
+ && (
+  <div
+    className="sw-frd-customer-line sw-frd-customer-address"
+    onClick={(e) => {
+      e.stopPropagation(); // prevents other flex containers from eating the click
+      console.log("Navigating to", `/freelancer/navigate/${job.ticketId}`);
+      navigate(`/freelancer/navigate/${job.ticketId}`);
+    }}
+  >
+    <EnvironmentOutlined className="sw-frd-customer-icon" />
+    <span className="sw-frd-customer-text">
+      {job.customerAddress} (Tap to Navigate)
+    </span>
+  </div>
+)
+}</p>
+
           </div>
         )}
 
@@ -942,6 +955,7 @@ const PendingApprovalCard: React.FC<{
 
 // --- MAIN DASHBOARD ---
 const FreelancerDashboard: React.FC = () => {
+  
   const navigate = useNavigate();
 
   const [activeJobs, setActiveJobs] = useState<Job[]>([]);

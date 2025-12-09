@@ -186,6 +186,36 @@ const formatINR = (value: number | null) => {
 };
 
 const CleaningService: React.FC = () => {
+  const detectAddress = () => {
+  if (!navigator.geolocation) {
+    message.error("Your browser does not support location detection");
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    async (pos) => {
+      const { latitude, longitude } = pos.coords;
+      try {
+        const res = await fetch(
+          `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
+        );
+        const data = await res.json();
+        if (data.display_name) {
+          form.setFieldsValue({ address: data.display_name });
+          message.success("Address detected successfully");
+        } else {
+          message.error("Failed to detect address");
+        }
+      } catch {
+        message.error("Unable to fetch address from OpenStreetMap");
+      }
+    },
+    () => {
+      message.warning("Please allow location permission");
+    }
+  );
+};
+
   const { addToCart } = useCart();
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
   const [isModulesModalOpen, setIsModulesModalOpen] = useState(false);
@@ -201,8 +231,6 @@ const CleaningService: React.FC = () => {
   const [serviceTypeKey, setServiceTypeKey] = useState<string>("standard");
 
   const [form] = Form.useForm();
-  const today = new Date().toISOString().split("T")[0];
-
 
   useEffect(() => {
     if (isDetailsModalOpen && selectedModule) {
@@ -689,87 +717,65 @@ const getDisplayPriceText = (): string => {
   initialValues={{ additional: [] }}
   onValuesChange={(_changed, allValues) => computeTotal(allValues)}
 >
-<div className="sw-cs-form-row">
- 
-  <Form.Item
-    name="fullName"
-    label="Full Name"
-    rules={[
-      { required: true, message: "Enter full name" },
-      {
-        pattern: /^[A-Z][a-z]+ [A-Z][a-z]+$/,
-        message:
-          " First letter should be capital for both first and last name"
-      }
-    ]}
-    className="sw-cs-half-width"
-  >
-    <Input placeholder="John Doe" />
-  </Form.Item>
+  <div className="sw-cs-form-row">
+    <Form.Item
+      name="fullName"
+      label="Full Name"
+      rules={[{ required: true, message: "Enter full name" }]}
+      className="sw-cs-half-width"
+    >
+      <Input placeholder="Enter full name" />
+    </Form.Item>
 
-  
-  <Form.Item
-    name="email"
-    label="Email"
-    rules={[
-      { required: true, message: "Enter email" },
-      { type: "email", message: "Enter valid email" },
-      {
-        validator: (_, value) => {
-          if (!value) return Promise.resolve();
-
-          const allowedDomains = [
-            "gmail.com",
-            "yahoo.com",
-            "outlook.com",
-            "hotmail.com",
-            "rediffmail.com",
-            "protonmail.com",
-            "icloud.com"
-          ];
-
-          const domain = value.split("@")[1];
-          if (allowedDomains.includes(domain)) {
-            return Promise.resolve();
-          }
-          return Promise.reject(
-            "Email must be Gmail, Yahoo, Outlook "
-          );
-        }
-      }
-    ]}
-    className="sw-cs-half-width"
-  >
-    <Input placeholder="example@gmail.com" />
-  </Form.Item>
-</div>
+    <Form.Item
+      name="email"
+      label="Email"
+      rules={[
+        { required: true, message: "Enter email" },
+        { type: "email", message: "Enter valid email" }
+      ]}
+      className="sw-cs-half-width"
+    >
+      <Input placeholder="example@email.com" />
+    </Form.Item>
+  </div>
 
 <div className="sw-cs-form-row">
-  
   <Form.Item
     name="mobile"
     label="Mobile Number"
     rules={[
       { required: true, message: "Enter mobile number" },
-      {
-        pattern: /^[0-9]{10}$/,
-        message: "Enter valid 10-digit Indian mobile number"
-      }
+      { pattern: /^[0-9]{10}$/, message: "Enter valid 10-digit number" },
     ]}
     className="sw-cs-half-width"
   >
-    <Input maxLength={10} placeholder="+91 9876543210" />
+    <Input maxLength={10} placeholder="9876543210" />
   </Form.Item>
 
-  
   <Form.Item
     name="address"
     label="Address"
     rules={[{ required: true, message: "Enter address" }]}
     className="sw-cs-half-width"
   >
-    <Input placeholder="House No, Street, City" />
+    <Input
+      placeholder="House No, Street, City"
+      value={form.getFieldValue("address")}
+      onChange={(e) => form.setFieldsValue({ address: e.target.value })}
+    />
   </Form.Item>
+</div>
+
+{/* Detect button goes BELOW the row */}
+<div className="sw-cs-form-row">
+  <Button
+    className="sw-cs-location-btn"
+    onClick={detectAddress}
+    type="default"
+  >
+    Detect My Current Location
+  </Button>
 </div>
 
 
@@ -901,7 +907,7 @@ const getDisplayPriceText = (): string => {
               rules={[{ required: true, message: "Select a date" }]}
               className="sw-cs-half-width"
             >
-              <input type="date" className="sw-cs-custom-date-input"  min={today} />
+              <input type="date" className="sw-cs-custom-date-input" />
             </Form.Item>
           )}
 
@@ -960,4 +966,4 @@ const getDisplayPriceText = (): string => {
   );
 };
 
-export default CleaningService;
+export default CleaningService;  

@@ -17589,3 +17589,52 @@ width: 100%;
   .sw-booking-page-content { width: 100%; height: 100%; max-width: none; border-radius: 0; }
   .sw-booking-page-overlay { align-items: flex-end; justify-content: center; }
 }
+/* 🔥 Do NOT disable pointer events globally */
+.sw-frd-job-card {
+  pointer-events: auto !important;
+}
+
+/* Make address clickable */
+.sw-frd-customer-address {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  text-decoration: underline !important;
+  color: #1677ff !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+}
+
+/* Ensure parent block doesn't block clicks */
+.sw-frd-customer-block {
+  pointer-events: auto !important;
+}
+
+/* The text should respond to click */
+.sw-frd-customer-text {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+
+/* Hover feedback */
+.sw-frd-customer-address:hover {
+  opacity: 0.8;
+}
+/* FIX: allow clicking inside address text and icons */
+.request-card,
+.sw-cs-main-card {
+  position: relative; /* ensure layout stays same */
+}
+
+.request-address,
+.address-container,
+.sw-address-text {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+
+/* FIX: prevent outer card from eating clicks */
+.sw-cs-main-card *,
+.request-card * {
+  pointer-events: auto !important;
+}
