@@ -467,7 +467,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
   destroyOnClose
 >
   {(() => {
-    const [step, setStep] = useState(1); // 1=email, 2=otp, 3=new password
+    const [step, setStep] = useState(1); 
     const [loading, setLoading] = useState(false);
     const [form] = Form.useForm();
 
