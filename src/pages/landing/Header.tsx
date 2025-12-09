@@ -1,6 +1,5 @@
 // src/pages/landing/Header.tsx
 import React, { useState, useEffect } from "react";
-//import { setUserDetails } from "../../utils/helpers/storage";
 import { Link, useNavigate } from "react-router-dom";
 import {
   Button,
@@ -20,16 +19,25 @@ import {
   CloseOutlined,
 } from "@ant-design/icons";
 
-import { customerRegister, customerLogin } from "../../api/customerAuth"; // ✅ NEW
+import { customerRegister, customerLogin } from "../../api/customerAuth";
 
 import "./Header.css";
 
 const navItems = [
   { key: "home", label: <Link to="/landing">Home</Link> },
-  { key: "cleaning", label: <Link to="/cleaningservice">Cleaning&Home Services</Link> },
+  {
+    key: "cleaning",
+    label: <Link to="/cleaningservice">Cleaning&Home Services</Link>,
+  },
   { key: "packers", label: <Link to="/LandingPackers">Transport</Link> },
-  { key: "commercial", label: <Link to="/commercial-plots">Buy/Sale/Rentals</Link> },
-  { key: "materials", label: <Link to="/ConstructionMaterials">Raw Materials</Link> },
+  {
+    key: "commercial",
+    label: <Link to="/commercial-plots">Buy/Sale/Rentals</Link>,
+  },
+  {
+    key: "materials",
+    label: <Link to="/ConstructionMaterials">Raw Materials</Link>,
+  },
   { key: "education", label: <Link to="/education">Education</Link> },
   {
     key: "Swachifyproducts",
@@ -38,7 +46,6 @@ const navItems = [
   { key: "freelancer", label: <Link to="/Freelancer">Freelancer</Link> },
 ];
 
-
 const { TabPane } = Tabs;
 
 const CommonHeader: React.FC<{ selectedKey?: string }> = ({
@@ -46,15 +53,12 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
 }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [authModalVisible, setAuthModalVisible] = useState(false);
-
   const [forgotModalVisible, setForgotModalVisible] = useState(false);
   const [vendorModalVisible, setVendorModalVisible] = useState(false);
-
   const [activeAuthTab, setActiveAuthTab] = useState<"login" | "register">(
     "register"
   );
-
-  const [authLoading, setAuthLoading] = useState(false); // ✅ NEW
+  const [authLoading, setAuthLoading] = useState(false);
   const navigate = useNavigate();
 
   const openAuthModal = (tab: "login" | "register" = "register") => {
@@ -65,7 +69,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
 
   const closeAuthModal = () => setAuthModalVisible(false);
 
-  // Expose openAuthModal/closeAuthModal on window so pages (like CommercialPlots) can call it
+  // Expose to window so other pages can call openAuthModal()
   useEffect(() => {
     (window as any).openAuthModal = (tab: "login" | "register" = "login") => {
       openAuthModal(tab);
@@ -79,63 +83,61 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
         delete (window as any).openAuthModal;
         delete (window as any).closeAuthModal;
       } catch (e) {
-        // ignore deletion errors
+        // ignore
       }
     };
-   
-  }, []); // run once on mount
+  }, []);
 
   // ==========================
-  // CUSTOMER LOGIN (BACKEND)
+  // CUSTOMER LOGIN
   // ==========================
   const onLogin = async (values: any) => {
-  try {
-    const identifier = values.identifier?.toString().trim();
-    const password = values.password;
+    try {
+      const identifier = values.identifier?.toString().trim();
+      const password = values.password;
 
-    // Admin (local) – keep
-    if (identifier === "admin@gmail.com" && password === "1234") {
-      message.success("Admin login successful");
+      // Admin (local)
+      if (identifier === "admin@gmail.com" && password === "1234") {
+        message.success("Admin login successful");
+        closeAuthModal();
+        navigate("/adminshell/dashboard");
+        return;
+      }
+
+      const loginPayload = {
+        email_or_phone: identifier,
+        password,
+      };
+
+      setAuthLoading(true);
+
+      const res: any = await customerLogin(loginPayload);
+
+      if (res?.access_token) {
+        localStorage.setItem("accessToken", res.access_token);
+      }
+
+      if (res?.user) {
+        localStorage.setItem("user", JSON.stringify(res.user));
+      }
+
+      message.success("Login successful");
       closeAuthModal();
-      navigate("/adminshell/dashboard");
-      return;
+      navigate("/app/dashboard");
+    } catch (err: any) {
+      console.error("Login error", err);
+      message.error(
+        err?.response?.data?.detail ||
+          err?.response?.data?.message ||
+          "Invalid login credentials"
+      );
+    } finally {
+      setAuthLoading(false);
     }
-
-    const loginPayload = {
-      email_or_phone: identifier,
-      password,
-    };
-
-    setAuthLoading(true);
-
-    const res: any = await customerLogin(loginPayload);
-
-    if (res?.access_token) {
-      localStorage.setItem("accessToken", res.access_token);
-    }
-
-    if (res?.user) {
-      localStorage.setItem("user", JSON.stringify(res.user));
-    }
-
-    message.success("Login successful");
-    closeAuthModal();
-    navigate("/app/dashboard");
-  } catch (err: any) {
-    console.error("Login error", err);
-    message.error(
-      err?.response?.data?.detail ||
-        err?.response?.data?.message ||
-        "Invalid login credentials"
-    );
-  } finally {
-    setAuthLoading(false);
-  }
-};
-
+  };
 
   // ==========================
-  // VENDOR LOGIN (still local)
+  // VENDOR LOGIN (local)
   // ==========================
   const onVendorLogin = (values: any) => {
     console.log("Vendor Login:", values);
@@ -147,62 +149,62 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
   };
 
   // ==========================
-  // CUSTOMER REGISTER (BACKEND)
+  // CUSTOMER REGISTER
   // ==========================
   const onRegister = async (values: any) => {
-  try {
-    const {
-      firstName,
-      lastName,
-      email,
-      phone,
-      password,
-      confirm,
-      address,
-      gender,
-    } = values;
+    try {
+      const {
+        firstName,
+        lastName,
+        email,
+        phone,
+        password,
+        confirm,
+        address,
+        gender,
+      } = values;
 
-    const genderMap: any = {
-      male: 1,
-      female: 2,
-      other: 3,
-    };
+      const genderMap: any = {
+        male: 1,
+        female: 2,
+        other: 3,
+      };
 
-    const payload = {
-      first_name: firstName,
-      last_name: lastName,
-      email,
-      mobile: phone,
-      password,
-      confirm_password: confirm,
-      gender_id: genderMap[gender], // backend expects number
-      address,
-    };
+      const payload = {
+        first_name: firstName,
+        last_name: lastName,
+        email,
+        mobile: phone,
+        password,
+        confirm_password: confirm,
+        gender_id: genderMap[gender],
+        address,
+      };
 
-    setAuthLoading(true);
+      setAuthLoading(true);
 
-    const res: any = await customerRegister(payload);
+      const res: any = await customerRegister(payload);
 
-    message.success(
-      res?.message || "Registration successful. Check your email."
-    );
+      message.success(
+        res?.message || "Registration successful. Check your email."
+      );
 
-    setActiveAuthTab("login");
-  } catch (err: any) {
-    console.error("Registration error", err);
-    message.error(
-      err?.response?.data?.detail ||
-        err?.response?.data?.message ||
-        "Registration failed"
-    );
-  } finally {
-    setAuthLoading(false);
-  }
-};
-
+      setActiveAuthTab("login");
+    } catch (err: any) {
+      console.error("Registration error", err);
+      message.error(
+        err?.response?.data?.detail ||
+          err?.response?.data?.message ||
+          "Registration failed"
+      );
+    } finally {
+      setAuthLoading(false);
+    }
+  };
 
   return (
     <>
+      {/* FIXED NAVBAR */}
       <header className="swl-hs-navbar">
         <div className="swl-hs-navbar-logo">
           <span className="swl-hs-logo-text">SWACHIFY INDIA</span>
@@ -233,6 +235,10 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
         </Button>
       </header>
 
+      {/* Spacer so page content starts below fixed header */}
+      <div className="swl-hs-navbar-spacer" />
+
+      {/* MOBILE MENU */}
       {menuOpen && (
         <ul className="swl-mobile-menu">
           {navItems.map((n) => (
@@ -323,125 +329,152 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
             </Form>
           </TabPane>
 
-          
           {/* REGISTER TAB */}
           <TabPane tab="Register" key="register">
             <Form layout="vertical" onFinish={onRegister} preserve={false}>
               <div style={{ display: "flex", gap: 8 }}>
-                <Form.Item label="First Name" name="firstName" rules={[
-          { required: true, message: "Please enter your first name" },
-          { min: 2, message: "First name must be at least 2 characters" },
-          {
-            pattern: /^[A-Za-z]+$/,
-            message: "First name must contain only letters",
-          },
-        ]}
-        style={{ flex: 1 }}  >
-          <Input />
-          </Form.Item>
-          <Form.Item label="Last Name" name="lastName" rules={[
-          { required: true, message: "Please enter your last name" },
-          { min: 2, message: "Last name must be at least 2 characters" },
-          {
-            pattern: /^[A-Za-z]+$/,
-            message: "Last name must contain only letters",
-          },
-          ]}
-          style={{ flex: 1 }} >
-            <Input />
-            </Form.Item>
-      </div>
-      <Form.Item label="Email" name="email" rules={[
-        { required: true, message: "Please enter your email" },
-        { type: "email", message: "Enter a valid email (Ex: abcd@gmail.com)" },
-      ]} >
-        <Input />
-        </Form.Item> 
-        <Form.Item label="Phone" name="phone" rules={[
-        { required: true, message: "Please enter phone number" },
-        {
-          pattern: /^[0-9]{10}$/,
-          message: "Phone number must be exactly 10 digits",
-        },
-      ]} >
-      <Input maxLength={10} />
-      </Form.Item> 
-      <Form.Item label="Gender" name="gender" rules={[{ required: true, message: "Please select your gender" }]} >
-      <Radio.Group>
-        <Radio value="male">Male</Radio>
-        <Radio value="female">Female</Radio>
-        <Radio value="other">Other</Radio>
-      </Radio.Group>
-      </Form.Item>
+                <Form.Item
+                  label="First Name"
+                  name="firstName"
+                  rules={[
+                    { required: true, message: "Please enter your first name" },
+                    { min: 2, message: "First name must be at least 2 characters" },
+                    {
+                      pattern: /^[A-Za-z]+$/,
+                      message: "First name must contain only letters",
+                    },
+                  ]}
+                  style={{ flex: 1 }}
+                >
+                  <Input />
+                </Form.Item>
 
-    <Form.Item
-      label="Password"
-      name="password"
-      rules={[
-        { required: true, message: "Please enter password" },
-        {
-          pattern:
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
-          message:
-            "Password must have 1 uppercase, 1 lowercase, 1 digit & 1 special symbol (Ex: Abcd123@)",
-        },
-      ]}
-      hasFeedback
-    >
-      <Input.Password />
-    </Form.Item>
-      <Form.Item
-      label="Confirm Password"
-      name="confirm"
-      dependencies={["password"]}
-      hasFeedback
-      rules={[
-        { required: true, message: "Please confirm your password" },
-        ({ getFieldValue }) => ({
-          validator(_, value) {
-            return !value || getFieldValue("password") === value
-              ? Promise.resolve()
-              : Promise.reject(new Error("Passwords do not match"));
-          },
-        }),
-      ]}
-    >
-      <Input.Password />
-    </Form.Item>
+                <Form.Item
+                  label="Last Name"
+                  name="lastName"
+                  rules={[
+                    { required: true, message: "Please enter your last name" },
+                    { min: 2, message: "Last name must be at least 2 characters" },
+                    {
+                      pattern: /^[A-Za-z]+$/,
+                      message: "Last name must contain only letters",
+                    },
+                  ]}
+                  style={{ flex: 1 }}
+                >
+                  <Input />
+                </Form.Item>
+              </div>
 
-    {/* ADDRESS */}
-    <Form.Item
-      label="Address"
-      name="address"
-      rules={[
-        { required: true, message: "Please enter your address" },
-        { min: 5, message: "Address must be at least 8 characters" },
-      ]}
-    >
-      <Input.TextArea rows={3} placeholder="Enter your address" />
-    </Form.Item>
+              <Form.Item
+                label="Email"
+                name="email"
+                rules={[
+                  { required: true, message: "Please enter your email" },
+                  {
+                    type: "email",
+                    message: "Enter a valid email (Ex: abcd@gmail.com)",
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
 
-    <Form.Item>
-      <Button block htmlType="submit" loading={authLoading}>
-        Register
-      </Button>
-    </Form.Item>
+              <Form.Item
+                label="Phone"
+                name="phone"
+                rules={[
+                  { required: true, message: "Please enter phone number" },
+                  {
+                    pattern: /^[0-9]{10}$/,
+                    message: "Phone number must be exactly 10 digits",
+                  },
+                ]}
+              >
+                <Input maxLength={10} />
+              </Form.Item>
 
-    <Form.Item style={{ marginTop: -10 }}>
-      <a
-        onClick={() => {
-          setAuthModalVisible(false);
-          setVendorModalVisible(true);
-        }} >
-          Are you a vendor?
-          </a>
-          </Form.Item>
-          </Form>
+              <Form.Item
+                label="Gender"
+                name="gender"
+                rules={[{ required: true, message: "Please select your gender" }]}
+              >
+                <Radio.Group>
+                  <Radio value="male">Male</Radio>
+                  <Radio value="female">Female</Radio>
+                  <Radio value="other">Other</Radio>
+                </Radio.Group>
+              </Form.Item>
+
+              <Form.Item
+                label="Password"
+                name="password"
+                rules={[
+                  { required: true, message: "Please enter password" },
+                  {
+                    pattern:
+                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
+                    message:
+                      "Password must have 1 uppercase, 1 lowercase, 1 digit & 1 special symbol (Ex: Abcd123@)",
+                  },
+                ]}
+                hasFeedback
+              >
+                <Input.Password />
+              </Form.Item>
+
+              <Form.Item
+                label="Confirm Password"
+                name="confirm"
+                dependencies={["password"]}
+                hasFeedback
+                rules={[
+                  { required: true, message: "Please confirm your password" },
+                  ({ getFieldValue }) => ({
+                    validator(_, value) {
+                      return !value || getFieldValue("password") === value
+                        ? Promise.resolve()
+                        : Promise.reject(new Error("Passwords do not match"));
+                    },
+                  }),
+                ]}
+              >
+                <Input.Password />
+              </Form.Item>
+
+              <Form.Item
+                label="Address"
+                name="address"
+                rules={[
+                  { required: true, message: "Please enter your address" },
+                  { min: 5, message: "Address must be at least 8 characters" },
+                ]}
+              >
+                <Input.TextArea rows={3} placeholder="Enter your address" />
+              </Form.Item>
+
+              <Form.Item>
+                <Button block htmlType="submit" loading={authLoading}>
+                  Register
+                </Button>
+              </Form.Item>
+
+              <Form.Item style={{ marginTop: -10 }}>
+                <a
+                  onClick={() => {
+                    setAuthModalVisible(false);
+                    setVendorModalVisible(true);
+                  }}
+                >
+                  Are you a vendor?
+                </a>
+              </Form.Item>
+            </Form>
           </TabPane>
         </Tabs>
-        </Modal>
+      </Modal>
 
-      {/* FORGOT PASSWORD MODAL – placeholder for now */}
+      {/* FORGOT PASSWORD MODAL */}
       <Modal
         open={forgotModalVisible}
         onCancel={() => {
@@ -465,7 +498,6 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
               return;
             }
 
-            // TODO: integrate with backend forgot-password endpoint if available
             message.success(
               "If this email is registered, a reset link will be sent."
             );
@@ -494,7 +526,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
         </Form>
       </Modal>
 
-      {/* VENDOR MODAL (unchanged, still local) */}
+      {/* VENDOR MODAL */}
       <Modal
         open={vendorModalVisible}
         onCancel={() => setVendorModalVisible(false)}
@@ -509,7 +541,6 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
         }}
       >
         <Tabs defaultActiveKey="vendor_register" centered>
-          {/* VENDOR LOGIN TAB */}
           <Tabs.TabPane tab="Login" key="vendor_login">
             <Form layout="vertical" onFinish={onVendorLogin}>
               <Form.Item
@@ -536,7 +567,6 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
             </Form>
           </Tabs.TabPane>
 
-          {/* VENDOR REGISTER TAB */}
           <Tabs.TabPane tab="Register" key="vendor_register">
             <Form
               layout="vertical"
@@ -576,11 +606,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
                 <Input />
               </Form.Item>
 
-              <Form.Item
-                label="PAN"
-                name="pan"
-                rules={[{ required: true }]}
-              >
+              <Form.Item label="PAN" name="pan" rules={[{ required: true }]}>
                 <Input />
               </Form.Item>
 

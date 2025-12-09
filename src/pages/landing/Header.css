@@ -1,6 +1,6 @@
-/* Header.css - EXACT COPY OF YOUR FILE + PERFECT SCROLL FIX */
+/* Header.css */
 
-/* =================== BASE NAV =================== */
+/* =================== BASE NAV (NOW FIXED / STICKY) =================== */
 .swl-hs-navbar {
   display: flex;
   align-items: center;
@@ -8,13 +8,26 @@
   gap: 16px;
   padding: 8px 8px;
   box-sizing: border-box;
+
   background: #fff;
-  position: sticky;
+
+  /* 👇 IMPORTANT: makes navbar always visible on scroll */
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+
   z-index: 1000;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
+/* Spacer to push page content below fixed header */
+.swl-hs-navbar-spacer {
+  height: 56px; /* adjust if your header becomes taller */
+}
+
+/* =================== LOGO =================== */
 .swl-hs-navbar-logo {
   display: flex;
   align-items: center;
@@ -29,7 +42,6 @@
   color: #111;
 }
 
-
 /* =================== MOBILE MENU ICON =================== */
 .swl-mobile-menu-icon {
   display: none;
@@ -41,7 +53,6 @@
   color: #333;
   order: 1;
 }
-
 
 /* =================== MENU =================== */
 .swl-hs-navbar .swl-hs-navbar-menu {
@@ -74,7 +85,6 @@
   padding: 8px 4px;
 }
 
-
 /* =================== SIGN UP BUTTON =================== */
 .swl-hs-contact-btn {
   order: 3;
@@ -82,14 +92,16 @@
   margin-left: 12px;
 }
 
-
 /* =================== MOBILE MENU =================== */
 .swl-mobile-menu {
   width: 100%;
   background: #fff;
   list-style: none;
   padding: 16px 20px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.12);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.12);
+
+  /* 👇 to ensure it appears BELOW the fixed header */
+  margin-top: 56px;
 }
 
 .swl-mobile-menu li {
@@ -101,14 +113,18 @@
   color: #333;
 }
 
-
 /* =================== RESPONSIVE =================== */
 @media (max-width: 900px) {
-  .swl-hs-navbar .swl-hs-navbar-menu { display: none !important; }
-  .swl-mobile-menu-icon { display: block; }
-  .swl-hs-contact-btn { display: block; }
+  .swl-hs-navbar .swl-hs-navbar-menu {
+    display: none !important;
+  }
+  .swl-mobile-menu-icon {
+    display: block;
+  }
+  .swl-hs-contact-btn {
+    display: block;
+  }
 }
-
 
 /* =========================================================
    SIGN UP BUTTON — LIGHT BLUE OVERRIDE
@@ -131,7 +147,6 @@
   border-color: #3b8fe6 !important;
 }
 
-
 /* Remove underline from all links in menu + mobile menu */
 .swl-hs-navbar a,
 .swl-mobile-menu a {
@@ -145,7 +160,6 @@
   border-bottom: none !important;
   box-shadow: none !important;
 }
-
 
 /* =================== MODAL TEXT UTILS =================== */
 .swl-forgot-modal-title {
@@ -172,8 +186,6 @@
   text-decoration: underline;
 }
 
-
-
 /* =========================================================
    ✅ FIX: SCROLLBAR SHOULD NOT BE UNDER CLOSE ICON
    ========================================================= */
@@ -188,10 +200,10 @@
 .ant-modal .ant-modal-body {
   max-height: 72vh;
   overflow-y: auto !important;
-  padding-right: 48px !important;   /* pushes scrollbar inward */
+  padding-right: 48px !important; /* pushes scrollbar inward */
   box-sizing: border-box;
   scrollbar-gutter: stable;
-  -webkit-overflow-scrolling: touch; 
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Close icon must be above scrollbar and clickable */
@@ -212,7 +224,6 @@
   background: transparent;
 }
 
-
 /* Scrollbar style (optional clean look) */
 .ant-modal .ant-modal-body::-webkit-scrollbar {
   width: 10px;
@@ -229,7 +240,7 @@
 
 .ant-modal .ant-modal-body {
   scrollbar-width: thin;
-  scrollbar-color: rgba(0,0,0,0.25) transparent;
+  scrollbar-color: rgba(0, 0, 0, 0.25) transparent;
 }
 
 /* Mobile extra space to avoid overlap */
@@ -238,3 +249,4 @@
     padding-right: 58px !important;
   }
 }
+  
