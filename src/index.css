@@ -7,6 +7,29 @@
   padding: 20px 0px;
   box-sizing: border-box;
 }
+.sw-cs-form-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.sw-cs-half-width {
+  width: 48%;
+}
+
+.sw-cs-location-btn {
+  width: 100%;
+  height: 40px;
+  border-radius: 6px;
+  border: 1px solid #000;
+  background: #fff;
+  margin-top: -8px; /* aligns perfectly under address */
+}
+
+.sw-cs-location-btn:hover {
+  background: #000;
+  color: #fff;
+}
 
 /* header kept (you asked earlier to remove header function in TSX — CSS kept to avoid breaking layout) */
 .sw-cs-cs-header {
@@ -17060,13 +17083,6 @@ body {
   margin-bottom: 5px;
 }
 
-.sw-frd-accept-btn {
-  margin-top: 20px;
-  border-radius: 8px;
-  font-weight: 600;
-  background-color: #28a745 !important;
-  border-color: #28a745 !important;
-}
 .sw-frd-accept-btn:hover {
   background-color: #1e7e34 !important;
   border-color: #1e7e34 !important;
@@ -17140,6 +17156,171 @@ width: 100%;
 /* =========================
    Requests grid — responsive
    ========================= */
+
+/* Make cards uniform height */
+.sw-frd-request-card {
+  height: 100%;
+}
+
+.sw-frd-request-card .ant-card-body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Body grows, footer sticks to bottom */
+.sw-frd-request-body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.sw-frd-request-footer {
+  margin-top: auto;
+  padding-top: 12px;
+}
+
+/* --- TOP HEADER ALIGNMENT --- */
+.sw-frd-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start; /* ensures price stays top-right */
+  margin-bottom: 10px;
+}
+
+.sw-frd-card-title-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.sw-frd-card-price {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #28a745;
+  white-space: nowrap;
+  align-self: flex-start; /* lock price to top-right */
+}
+
+/* Optional: Ensure consistent Accept button look */
+.sw-frd-accept-btn {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* =========================
+   HEADER – MOBILE LAYOUT
+   ========================= */
+@media (max-width: 768px) {
+  /* Header can grow in height and wrap */
+  .sw-frd-layout-container .sw-frd-header {
+    padding: 0 12px;
+    height: auto;
+    min-height: 56px;
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+
+  /* Adjust virtual header height so content below doesn't hide */
+  .sw-frd-layout-container {
+    --sw-fd-header-h: 90px; /* tweak if you see overlap */
+  }
+
+  /* LOGO AREA (top row, full width) */
+  .sw-frd-logo-area {
+    flex: 1 1 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    padding: 8px 0;
+  }
+
+  .sw-frd-logo-text {
+    font-size: 1rem;        /* smaller SWACHIFY INDIA */
+  }
+
+  .sw-frd-portal-text {
+    font-size: 0.75rem;
+    white-space: nowrap;
+  }
+
+  /* USER AREA (second row, full width) */
+  .sw-frd-user-area {
+    flex: 1 1 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+    padding-bottom: 8px;
+  }
+
+  /* "View My Dashboard" button – smaller and not so wide */
+  .sw-frd-user-area .ant-btn {
+    font-size: 0.78rem;
+    height: 32px;
+    padding: 0 10px;
+  }
+
+  /* Profile icon size tuned for mobile */
+  .sw-frd-profile-btn {
+    width: 34px;
+    height: 34px;
+  }
+}
+
+/* EXTRA small phones: hide subtitle text if it still wraps */
+@media (max-width: 420px) {
+  .sw-frd-portal-text {
+    display: none;
+  }
+
+  .sw-frd-layout-container {
+    --sw-fd-header-h: 72px;
+  }
+}
+/* ===== FIX: first card cut off on mobile (header + filter overlap) ===== */
+@media (max-width: 768px) {
+  /* Tell the layout that header + filter are taller on mobile */
+  .sw-frd-layout-container {
+    /* tweak these two until it feels perfect on your device */
+    --sw-fd-header-h: 80px;   /* total header height on mobile */
+    --sw-fd-filter-h: 90px;   /* available-requests bar height on mobile */
+  }
+
+  /* Make sure content starts AFTER header + filter */
+  .sw-frd-layout-container .sw-frd-content-main {
+    padding-top: calc(var(--sw-fd-header-h) + var(--sw-fd-filter-h) + 8px);
+    /* extra 8px just to be safe so card never hides */
+  }
+}
+
+/* =========================
+   MOBILE: fix first card being hidden
+   ========================= */
+@media (max-width: 768px) {
+  /* 1) Make header non-fixed on mobile */
+  .sw-frd-layout-container .sw-frd-header {
+    position: static !important;
+    height: auto;
+    min-height: 56px;
+  }
+
+  /* 2) Make "Available Requests" filter bar non-fixed too */
+  .sw-frd-layout-container .sw-frd-available-header {
+    position: static !important;
+    top: auto;
+    height: auto;
+    min-height: 0;
+    box-shadow: none;
+  }
+
+  /* 3) Now that nothing is fixed, content doesn’t need big top padding */
+  .sw-frd-layout-container .sw-frd-content-main {
+    padding-top: 16px !important;  /* small, normal spacing */
+  }
+}
+
 .sw-frd-back-btn {
   margin-right: 12px;
   border-radius: 8px;
@@ -17318,6 +17499,164 @@ width: 100%;
 .ant-tooltip,
 .ant-dropdown-menu {
   z-index: 200000 !important;
+}
+/* =========================
+   AVAILABLE REQUESTS GRID – COMPACT CARDS
+   ========================= */
+
+/* Smaller cards, more per row on desktop */
+.sw-frd-requests-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); /* 3–4 per row depending on width */
+  gap: 18px;
+  margin-top: 20px;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  align-items: stretch; /* stretch all cards to same height */
+}
+
+/* Card: compact + flex column so footer can sit at bottom */
+.sw-frd-request-card {
+  padding: 14px 16px;
+  border-radius: 10px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  min-height: 230px; /* ensures consistent height so buttons align */
+  background-color: var(--card-bg) !important;
+}
+
+/* Body takes all vertical space above the footer */
+.sw-frd-request-body {
+  flex: 1 1 auto;
+}
+
+/* Footer pinned to bottom of card */
+.sw-frd-request-footer {
+  margin-top: auto;
+  padding-top: 10px;
+}
+
+/* Make Accept button visually consistent across cards */
+.sw-frd-accept-btn {
+  margin-top: 0;
+  border-radius: 8px;
+  font-weight: 600;
+  background-color: #28a745 !important;
+  border-color: #28a745 !important;
+}
+
+/* Typography a bit tighter for compact layout */
+.sw-frd-request-title {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.sw-frd-request-price {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.sw-frd-request-desc-text {
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+/* Desktop-wide: allow slightly smaller columns to fit 4 cards in 1366px */
+@media (min-width: 1280px) {
+  .sw-frd-requests-list {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
+}
+
+/* Tablet: 2 cards per row */
+@media (max-width: 1024px) {
+  .sw-frd-requests-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Mobile: single column, full-width button */
+@media (max-width: 600px) {
+  .sw-frd-requests-list {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .sw-frd-request-card {
+    padding: 12px 14px;
+    min-height: auto;
+  }
+
+  .sw-frd-accept-btn {
+    width: 100%;
+  }
+
+  .sw-frd-details-row {
+    flex-direction: column;
+    gap: 6px;
+  }
+}
+/* Make every request card the same height */
+.sw-frd-request-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;      /* stretch inside grid */
+  min-height: 320px; /* adjust based on your design */
+}
+
+/* Body grows and pushes footer down */
+.sw-frd-request-body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Footer fixed at bottom of card */
+.sw-frd-request-footer {
+  margin-top: auto;       /* pushes footer to bottom */
+  padding-top: 12px;
+}
+
+/* Ensure Accept button has consistent height */
+.sw-frd-accept-btn {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* Make each request card the same height inside the grid */
+.sw-frd-requests-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+  align-items: stretch; /* all cards same row height */
+}
+
+/* Card wrapper should stretch */
+.sw-frd-request-card {
+  height: 100%;
+}
+
+/* ANT CARD BODY AS FLEX COLUMN */
+.sw-frd-request-card .ant-card-body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Push Accept button to the bottom of the card */
+.sw-frd-request-card .ant-card-body > .sw-frd-accept-btn {
+  margin-top: auto;       /* key line */
+}
+
+/* Optional: consistent button size */
+.sw-frd-accept-btn {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* /////////surya header css////// */
@@ -18538,6 +18877,50 @@ body {
 .sw-ep-classname-footer a:hover {
   text-decoration: underline;
 }
+
+/* ================= HERO MOBILE RESPONSIVE FIX ================ */
+
+/* Tablets / small screens */
+@media (max-width: 768px) {
+  .sw-ep-classname-hero-section {
+    height: auto;               /* allow content height */
+    min-height: 80vh;           /* still fill most of screen */
+    padding: 90px 16px 32px;    /* leave space for header & sides */
+    text-align: center;
+  }
+
+  .sw-ep-classname-hero-content {
+    max-width: 100%;
+    gap: 14px;
+  }
+
+  .sw-ep-classname-hero-content h1 {
+    font-size: 2.1rem;          /* smaller than 3rem */
+    line-height: 1.25;
+  }
+
+  .sw-ep-classname-hero-subtitle {
+    font-size: 1rem;
+    max-width: 100%;
+  }
+}
+
+/* Very small phones */
+@media (max-width: 480px) {
+  .sw-ep-classname-hero-section {
+    padding: 88px 12px 28px;
+  }
+
+  .sw-ep-classname-hero-content h1 {
+    font-size: 1.7rem;
+    line-height: 1.25;
+  }
+
+  .sw-ep-classname-hero-subtitle {
+    font-size: 0.95rem;
+  }
+}
+
 
 /* Landing educationpage harish */
 
