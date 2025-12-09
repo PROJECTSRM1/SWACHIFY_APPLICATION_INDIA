@@ -191,7 +191,7 @@
   padding-right: 48px !important;   /* pushes scrollbar inward */
   box-sizing: border-box;
   scrollbar-gutter: stable;
-  -webkit-overflow-scrolling: touch;
+  -webkit-overflow-scrolling: touch; 
 }
 
 /* Close icon must be above scrollbar and clickable */
