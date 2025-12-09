@@ -15,6 +15,8 @@ import LandingCleaningPage from "../../pages/landing/landingcleaningpage";
 //Import rentals page (file: src/pages/landing/landingrentals.tsx)
 import Landingrentals from "../../pages/landing/landingrentals";
 import Freelancer from '../../pages/landing/Freelancer';
+import Education from '../../pages/landing/EducationPage';
+
 import Freelancerlogin from '../../pages/login/Freelancerlogin';
 import FreelancerRegistration from '../../pages/login/FreelancerRegistration';
 import ServiceRequests from '../../pages/landing/ServiceRequests';
@@ -51,6 +53,7 @@ export const NonSecureRoutes = () => {
 
       {/* rentals landing page */}
       <Route path="/rentals" element={<Landingrentals />} />
+      <Route path="/Education" element={<Education />} />
       <Route path="/freelancer" element={<Freelancer />} />
       <Route path="/freelancerlogin" element={<Freelancerlogin />} />
       <Route path="/freelancerregistration" element={<FreelancerRegistration />} />

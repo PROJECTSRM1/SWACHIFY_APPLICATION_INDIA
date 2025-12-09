@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Modal, Button, Form, Input, message } from "antd";
 import { PaymentsAPI } from "../api/customerAuth";
+import { useCart } from "../context/CartContext";
 
 type CartItemLike = {
   id?: number | string;
@@ -36,6 +37,8 @@ type Props = {
 
 export default function ConfirmAddressModal({ open, item, onClose, onConfirm }: Props) {
   const [form] = Form.useForm();
+  const { removeFromCart } = useCart(); 
+
 
   useEffect(() => {
     if (item) {
@@ -78,6 +81,9 @@ export default function ConfirmAddressModal({ open, item, onClose, onConfirm }: 
         );
 
         message.success("Payment successful!");
+        if (item.id) {
+          removeFromCart(Number(item.id));
+        }
 
         onConfirm(booking);
         onClose();

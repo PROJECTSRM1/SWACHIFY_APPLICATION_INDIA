@@ -1,4 +1,4 @@
-/* Header.css - EXACT COPY OF YOUR FILE + signup override */
+/* Header.css - EXACT COPY OF YOUR FILE + PERFECT SCROLL FIX */
 
 /* =================== BASE NAV =================== */
 .swl-hs-navbar {
@@ -30,8 +30,6 @@
 }
 
 
-
-
 /* =================== MOBILE MENU ICON =================== */
 .swl-mobile-menu-icon {
   display: none;
@@ -43,6 +41,7 @@
   color: #333;
   order: 1;
 }
+
 
 /* =================== MENU =================== */
 .swl-hs-navbar .swl-hs-navbar-menu {
@@ -75,12 +74,14 @@
   padding: 8px 4px;
 }
 
+
 /* =================== SIGN UP BUTTON =================== */
 .swl-hs-contact-btn {
   order: 3;
   flex: 0 0 auto;
   margin-left: 12px;
 }
+
 
 /* =================== MOBILE MENU =================== */
 .swl-mobile-menu {
@@ -100,6 +101,7 @@
   color: #333;
 }
 
+
 /* =================== RESPONSIVE =================== */
 @media (max-width: 900px) {
   .swl-hs-navbar .swl-hs-navbar-menu { display: none !important; }
@@ -107,8 +109,9 @@
   .swl-hs-contact-btn { display: block; }
 }
 
+
 /* =========================================================
-   💙 SIGN UP BUTTON — LIGHT BLUE OVERRIDE (100% WORKING)
+   SIGN UP BUTTON — LIGHT BLUE OVERRIDE
    ========================================================= */
 .swl-signup-btn.ant-btn,
 .swl-signup-btn .ant-btn,
@@ -129,23 +132,12 @@
 }
 
 
-
-
 /* Remove underline from all links in menu + mobile menu */
 .swl-hs-navbar a,
 .swl-mobile-menu a {
   text-decoration: none !important;
-}
-
-/* Optional: keep color consistent */
-.swl-hs-navbar a,
-.swl-mobile-menu a {
   color: #111 !important;
 }
-
-
-
-
 
 .swl-hs-navbar-menu .ant-menu-item-selected,
 .swl-hs-navbar-menu .ant-menu-item-selected::after {
@@ -154,6 +146,8 @@
   box-shadow: none !important;
 }
 
+
+/* =================== MODAL TEXT UTILS =================== */
 .swl-forgot-modal-title {
   text-align: center;
   margin-bottom: 20px;
@@ -161,14 +155,12 @@
   font-weight: 600;
 }
 
-
 .swl-login-options-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 12px;
 }
-
 
 .swl-forgot-password-text {
   color: #1677ff;
@@ -182,4 +174,67 @@
 
 
 
+/* =========================================================
+   ✅ FIX: SCROLLBAR SHOULD NOT BE UNDER CLOSE ICON
+   ========================================================= */
 
+/* Ensure modal content allows layering */
+.ant-modal .ant-modal-content {
+  position: relative;
+  overflow: visible !important;
+}
+
+/* Scroll should happen only inside body */
+.ant-modal .ant-modal-body {
+  max-height: 72vh;
+  overflow-y: auto !important;
+  padding-right: 48px !important;   /* pushes scrollbar inward */
+  box-sizing: border-box;
+  scrollbar-gutter: stable;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Close icon must be above scrollbar and clickable */
+.ant-modal .ant-modal-close {
+  z-index: 9999 !important;
+  right: 27px !important;
+  top: 14px !important;
+}
+
+/* Close button clickable area */
+.ant-modal .ant-modal-close button {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+}
+
+
+/* Scrollbar style (optional clean look) */
+.ant-modal .ant-modal-body::-webkit-scrollbar {
+  width: 10px;
+}
+
+.ant-modal .ant-modal-body::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+}
+
+.ant-modal .ant-modal-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.ant-modal .ant-modal-body {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0,0,0,0.25) transparent;
+}
+
+/* Mobile extra space to avoid overlap */
+@media (max-width: 480px) {
+  .ant-modal .ant-modal-body {
+    padding-right: 58px !important;
+  }
+}

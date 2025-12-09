@@ -1,9 +1,9 @@
 // src/pages/landing/LandingPackers.tsx
 import React, { useState } from 'react';
 import CommonHeader from "../../pages/landing/Header";
-import "../../index.css"
+import "../../index.css";
 import FooterSection from '../../pages/landing/FooterSection';
-import "../../pages/landing/FooterSection.css"
+import "../../pages/landing/FooterSection.css";
 import {
   Card,
   Button,
@@ -25,6 +25,7 @@ import {
   MailOutlined,
 } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
+
 // === IMAGE IMPORTS ===
 import heroPackers from '../../assets/landingimages/Packers.jpg';
 import packingServicesImg from '../../assets/landingimages/PackingServices .jpg';
@@ -36,10 +37,6 @@ import Loadingtransport from '../../assets/landingimages/Loadingtransport.jpg';
 import insurance from '../../assets/landingimages/insurance.jpeg';
 // =====================
 
-/**
- * Allow calling the header modal helper added by CommonHeader
- * (CommonHeader sets window.openAuthModal in its useEffect)
- */
 declare global {
   interface Window {
     openAuthModal?: (tab?: "login" | "register") => void;
@@ -48,6 +45,7 @@ declare global {
 }
 
 const { TabPane } = Tabs;
+
 const services = [
   {
     img: packingServicesImg,
@@ -74,6 +72,7 @@ const services = [
     desc: 'Fully insured service for your peace of mind.',
   },
 ];
+
 const typesOfServices = [
   {
     title: 'Residential Moving',
@@ -109,6 +108,7 @@ const typesOfServices = [
     image: vehicleTransportImg,
   },
 ];
+
 const reasons = [
   {
     icon: <UserOutlined style={{ fontSize: 30, color: '#00aa33' }} />,
@@ -126,6 +126,7 @@ const reasons = [
     desc: 'Your belongings are fully covered during transit.',
   },
 ];
+
 const LandingPackers: React.FC = () => {
   const [authVisible, setAuthVisible] = useState(false);
   const [loginForm] = Form.useForm();
@@ -156,10 +157,18 @@ const LandingPackers: React.FC = () => {
       <Tabs defaultActiveKey="login" centered>
         <TabPane tab="Login" key="login">
           <Form form={loginForm} layout="vertical" onFinish={handleLogin}>
-            <Form.Item label="Email / Phone" name="identifier" rules={[{ required: true }]}>
+            <Form.Item
+              label="Email / Phone"
+              name="identifier"
+              rules={[{ required: true }]}
+            >
               <Input placeholder="john@example.com" />
             </Form.Item>
-            <Form.Item label="Password" name="password" rules={[{ required: true }]}>
+            <Form.Item
+              label="Password"
+              name="password"
+              rules={[{ required: true }]}
+            >
               <Input.Password placeholder="Password" />
             </Form.Item>
             <Form.Item name="remember" valuePropName="checked">
@@ -170,18 +179,35 @@ const LandingPackers: React.FC = () => {
             </Button>
           </Form>
         </TabPane>
+
         <TabPane tab="Register" key="register">
           <Form form={registerForm} layout="vertical" onFinish={handleRegister}>
-            <Form.Item label="Full Name" name="fullName" rules={[{ required: true }]}>
+            <Form.Item
+              label="Full Name"
+              name="fullName"
+              rules={[{ required: true }]}
+            >
               <Input placeholder="John Doe" />
             </Form.Item>
-            <Form.Item label="Email" name="email" rules={[{ required: true, type: "email" }]}>
+            <Form.Item
+              label="Email"
+              name="email"
+              rules={[{ required: true, type: "email" }]}
+            >
               <Input placeholder="john@example.com" />
             </Form.Item>
-            <Form.Item label="Phone" name="phone" rules={[{ required: true }]}>
+            <Form.Item
+              label="Phone"
+              name="phone"
+              rules={[{ required: true }]}
+            >
               <Input placeholder="+1 555 123 4567" />
             </Form.Item>
-            <Form.Item label="Password" name="password" rules={[{ required: true }]}>
+            <Form.Item
+              label="Password"
+              name="password"
+              rules={[{ required: true }]}
+            >
               <Input.Password placeholder="Password" />
             </Form.Item>
             <Form.Item
@@ -210,9 +236,7 @@ const LandingPackers: React.FC = () => {
     </Modal>
   );
 
-  // --- NEW: handler used by the Request Quote form submit (only added logic) ---
   const handleRequestQuoteSubmit = (values: any) => {
-    // open the header signup (register) modal if available, else fallback to local modal
     if (typeof window !== "undefined" && (window as any).openAuthModal) {
       (window as any).openAuthModal("register");
     } else {
@@ -220,7 +244,6 @@ const LandingPackers: React.FC = () => {
     }
     console.log("Request Quote submitted (redirecting to signup):", values);
   };
-  // ---------------------------------------------------------------------------
 
   return (
     <div className="sw-lpm-classname-packers-container">
@@ -229,23 +252,25 @@ const LandingPackers: React.FC = () => {
       <AuthModal />
 
       {/* HERO SECTION */}
-      <section className="sw-lpm-classname-packes-hero" style={{ backgroundImage: `url(${heroPackers})` }}>
+      <section
+        className="sw-lpm-classname-packes-hero"
+        style={{ backgroundImage: `url(${heroPackers})` }}
+      >
         <div className="sw-lpm-classname-hero-overlay">
           <h1>Stress-Free Relocation Services</h1>
           <p>From packing to delivery, we make your move effortless.</p>
 
-          {/* Book Now -> open header signup (register) modal
-              Get Quote -> open header signup (register) modal
-              (Using window.openAuthModal which CommonHeader exposes) */}
-          <div style={{ display: 'flex', gap: 12, marginTop: 12 }}>
+          <div className="sw-lpm-classname-hero-actions">
             <Button
               type="primary"
               size="large"
               onClick={() => {
-                if (typeof window !== "undefined" && (window as any).openAuthModal) {
+                if (
+                  typeof window !== "undefined" &&
+                  (window as any).openAuthModal
+                ) {
                   (window as any).openAuthModal("register");
                 } else {
-                  // fallback: open local modal as a safe fallback
                   setAuthVisible(true);
                 }
               }}
@@ -256,7 +281,10 @@ const LandingPackers: React.FC = () => {
             <Button
               size="large"
               onClick={() => {
-                if (typeof window !== "undefined" && (window as any).openAuthModal) {
+                if (
+                  typeof window !== "undefined" &&
+                  (window as any).openAuthModal
+                ) {
                   (window as any).openAuthModal("register");
                 } else {
                   setAuthVisible(true);
@@ -275,7 +303,11 @@ const LandingPackers: React.FC = () => {
         <div className="sw-lpm-classname-services-row">
           {services.map((s, i) => (
             <Card key={i} className="sw-lpm-classname-packes-card">
-              <img src={s.img} className="sw-lpm-classname-service-img" alt={s.title} />
+              <img
+                src={s.img}
+                className="sw-lpm-classname-service-img"
+                alt={s.title}
+              />
               <div className="sw-lpm-classname-packes-icon">{s.icon}</div>
               <h3>{s.title}</h3>
               <p>{s.desc}</p>
@@ -284,22 +316,36 @@ const LandingPackers: React.FC = () => {
         </div>
       </section>
 
-      {/* SERVICE TYPES */}
+      {/* TYPES OF SERVICES */}
       <section className="sw-lpm-classname-types-of-services">
         <h2>Types of Moving Services</h2>
         <div className="sw-lpm-classname-types-row">
           {typesOfServices.map((t, i) => (
-            <Card key={i} className="sw-lpm-classname-service-card" cover={<img src={t.image} className="sw-lpm-classname-service-img" alt={t.title} />}>
+            <Card
+              key={i}
+              className="sw-lpm-classname-service-card"
+              cover={
+                <img
+                  src={t.image}
+                  className="sw-lpm-classname-service-img"
+                  alt={t.title}
+                />
+              }
+            >
               <h3>{t.title}</h3>
               <p>Starting at {t.price}</p>
               <ul>
-                {t.features.map((f, idx) => <li key={idx}>{f}</li>)}
+                {t.features.map((f, idx) => (
+                  <li key={idx}>{f}</li>
+                ))}
               </ul>
               <Button
                 type="primary"
                 onClick={() => {
-                  // keep existing behavior for in-card Get Quote — open header register
-                  if (typeof window !== "undefined" && (window as any).openAuthModal) {
+                  if (
+                    typeof window !== "undefined" &&
+                    (window as any).openAuthModal
+                  ) {
                     (window as any).openAuthModal("register");
                   } else {
                     setAuthVisible(true);
@@ -313,61 +359,99 @@ const LandingPackers: React.FC = () => {
         </div>
       </section>
 
-      {/* REQUEST QUOTE - UPDATED: responsive full-width container */}
+      {/* REQUEST QUOTE */}
       <section className="sw-lpm-classname-request-quote">
         <h2>Request a Moving Quote</h2>
 
-        {/* container that expands full width on large screens but keeps readable max-width */}
         <div className="sw-lpm-classname-quote-form-wrap">
           <div className="sw-lpm-classname-quote-form-container">
-            {/* ADDED onFinish prop and changed button to htmlType="submit" (no other logic altered) */}
-            <Form layout="vertical" className="sw-lpm-classname-quote-form" onFinish={handleRequestQuoteSubmit}>
+            <Form
+              layout="vertical"
+              className="sw-lpm-classname-quote-form"
+              onFinish={handleRequestQuoteSubmit}
+            >
               <Row gutter={[16, 12]}>
                 <Col xs={24} md={12}>
-                  <Form.Item label="Full Name" name="fullName" rules={[{ required: true }]}>
+                  <Form.Item
+                    label="Full Name"
+                    name="fullName"
+                    rules={[{ required: true }]}
+                  >
                     <Input placeholder="Your full name" />
                   </Form.Item>
                 </Col>
 
                 <Col xs={24} md={12}>
-                  <Form.Item label="Email" name="email" rules={[{ required: true, type: 'email' }]}>
-                    <Input placeholder="you@example.com" prefix={<MailOutlined />} />
+                  <Form.Item
+                    label="Email"
+                    name="email"
+                    rules={[{ required: true, type: 'email' }]}
+                  >
+                    <Input
+                      placeholder="you@example.com"
+                      prefix={<MailOutlined />}
+                    />
                   </Form.Item>
                 </Col>
 
                 <Col xs={24} md={12}>
-                  <Form.Item label="Phone Number" name="phoneNumber" rules={[{ required: true }]}>
+                  <Form.Item
+                    label="Phone Number"
+                    name="phoneNumber"
+                    rules={[{ required: true }]}
+                  >
                     <Input placeholder="+1 555 123 4567" />
                   </Form.Item>
                 </Col>
 
                 <Col xs={24} md={12}>
-                  <Form.Item label="Moving Date (optional)" name="moveDate">
+                  <Form.Item
+                    label="Moving Date (optional)"
+                    name="moveDate"
+                  >
                     <Input placeholder="Preferred moving date" />
                   </Form.Item>
                 </Col>
 
                 <Col xs={24}>
-                  <Form.Item label="Pickup Address" name="pickup" rules={[{ required: true }]}>
+                  <Form.Item
+                    label="Pickup Address"
+                    name="pickup"
+                    rules={[{ required: true }]}
+                  >
                     <Input placeholder="Pickup address" />
                   </Form.Item>
                 </Col>
 
                 <Col xs={24}>
-                  <Form.Item label="Delivery Address" name="delivery" rules={[{ required: true }]}>
+                  <Form.Item
+                    label="Delivery Address"
+                    name="delivery"
+                    rules={[{ required: true }]}
+                  >
                     <Input placeholder="Delivery address" />
                   </Form.Item>
                 </Col>
 
                 <Col xs={24}>
                   <Form.Item label="Additional Details" name="details">
-                    <Input.TextArea rows={4} placeholder="Number of rooms, special items, stairs, parking, etc." />
+                    <Input.TextArea
+                      rows={4}
+                      placeholder="Number of rooms, special items, stairs, parking, etc."
+                    />
                   </Form.Item>
                 </Col>
 
                 <Col xs={24}>
                   <Form.Item>
-                    <Button type="primary" htmlType="submit" block className="sw-lpm-classname-quote-submit-btn">Submit</Button>
+                    <Button
+                      type="primary"
+                      htmlType="submit"
+                      block
+                      className="sw-lpm-classname-quote-submit-btn"
+                    >
+                      Submit
+                    </Button>
                   </Form.Item>
                 </Col>
               </Row>
@@ -391,8 +475,8 @@ const LandingPackers: React.FC = () => {
       </section>
 
       <FooterSection selectedKey="LandingPackers" />
-      
     </div>
   );
 };
+
 export default LandingPackers;
