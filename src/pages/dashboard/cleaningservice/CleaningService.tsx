@@ -136,6 +136,560 @@ const PRICE_PER_SQFT: Record<string, number> = {
   "warehouse floor cleaning": 2.0,
 };
 
+
+const INCLUDES: Record<string, any> = {
+
+  /* ----------------------------------------------------
+     RESIDENTIAL – HOMES
+  ---------------------------------------------------- */
+
+  "living room": {
+    standard: [
+      "Surface dusting of furniture",
+      "Floor sweeping & mopping",
+      "Window & sill wiping",
+      "Cushion & sofa surface cleaning"
+    ],
+    deep: [
+      "Everything in regular cleaning",
+      "Wet scrubbing of floors & corners",
+      "Deep sofa vacuuming",
+      "Ceiling fan & light fixture cleaning",
+      "Switchboards & door handle sanitization",
+      "Glass & mirror detailing",
+      "Baseboard / skirting cleaning",
+      "Under-furniture dust removal"
+    ]
+  },
+
+  bedroom: {
+    standard: [
+      "Bed & mattress surface cleaning",
+      "Wardrobe exterior cleaning",
+      "Floor sweeping & mopping",
+      "Cobweb removal"
+    ],
+    deep: [
+      "Everything in regular cleaning",
+      "Deep mattress vacuuming",
+      "Wardrobe interior cleaning",
+      "Fan & light cleaning",
+      "Window tracks detailing",
+      "Mirror & glass polishing",
+      "Switchboard sanitization"
+    ]
+  },
+
+  kitchen: {
+    standard: [
+      "Countertop & surface wiping",
+      "Gas stove exterior cleaning",
+      "Floor cleaning",
+      "Exterior appliance cleaning"
+    ],
+    deep: [
+      "Everything in regular cleaning",
+      "Tile degreasing & scrubbing",
+      "Burner + stove deep clean",
+      "Sink descaling",
+      "Cabinet exterior detailing",
+      "Chimney exterior cleaning",
+      "Oil stain removal"
+    ],
+    grease: [
+      "Heavy grease removal from tiles",
+      "Oil residue breakdown using chemicals",
+      "Chimney heavy-duty cleaning",
+      "Stove burner full dismantle & clean",
+      "Backsplash deep scrubbing",
+      "Sink + tap stain removal"
+    ]
+  },
+
+  bathroom: {
+    standard: [
+      "Basin & tap cleaning",
+      "Mirror wiping",
+      "Floor scrubbing",
+      "General stain removal"
+    ],
+    deep: [
+      "Everything in regular cleaning",
+      "Tile scaling & stain removal",
+      "Shower & faucet deep clean",
+      "Toilet bowl descaling",
+      "Hard water stain removal",
+      "Drain cleaning",
+      "Glass partition polishing"
+    ],
+    sanitization: [
+      "Full bathroom disinfection",
+      "Touch-point sanitizing",
+      "High-grade disinfectant spray",
+      "Odor neutralizing treatment"
+    ]
+  },
+
+  /* ----------------------------------------------------
+     RESIDENTIAL – APARTMENTS
+  ---------------------------------------------------- */
+
+  "studio apartment": {
+    standard: [
+      "Complete surface cleaning",
+      "Floor sweeping & mopping",
+      "Bathroom & kitchen basic cleaning"
+    ],
+    deep: [
+      "Complete deep home cleaning",
+      "Ceiling fan & exhaust cleaning",
+      "Bathroom scaling removal",
+      "Kitchen degreasing",
+      "Furniture detailing",
+      "Window track cleaning"
+    ]
+  },
+
+  "1 bhk apartment": {
+    standard: [
+      "1 Bedroom cleaning",
+      "Kitchen basic cleaning",
+      "Bathroom wipe & clean",
+      "Floor mopping"
+    ],
+    deep: [
+      "Deep cleaning for entire apartment",
+      "Tile & grout scrubbing",
+      "Kitchen degreasing",
+      "Bathroom hard stain removal",
+      "Under-furniture cleaning",
+      "Fan & switchboard detailing"
+    ]
+  },
+
+  "2 bhk / 3 bhk apartment": {
+    standard: [
+      "Full apartment surface cleaning",
+      "Room & hall sweeping/mopping",
+      "Kitchen & bathroom basic cleaning"
+    ],
+    deep: [
+      "Complete deep cleaning for all rooms",
+      "Cabinet exterior degreasing",
+      "Bathroom scaling removal",
+      "Glass/mirror polishing",
+      "Detailed fan cleaning",
+      "Interior dust removal"
+    ]
+  },
+
+  /* ----------------------------------------------------
+     VILLAS
+  ---------------------------------------------------- */
+
+  "small villas": {
+    standard: [
+      "Room-wise general cleaning",
+      "Floor sweeping & mopping",
+      "Window & sill wiping"
+    ],
+    deep: [
+      "Complete villa deep clean",
+      "Staircase railing polishing",
+      "Balcony dust removal",
+      "Kitchen & bathroom deep clean",
+      "Fan, lights & cobweb removal"
+    ]
+  },
+
+  "duplex villas": {
+    standard: [
+      "Stair cleaning",
+      "Floor mopping",
+      "Surface dusting"
+    ],
+    deep: [
+      "Two-floor deep cleaning",
+      "Handrail + staircase detailing",
+      "Balcony & terrace cleaning",
+      "Deep bathroom/kitchen treatment",
+      "Glass & railing polishing"
+    ]
+  },
+
+  "luxury villas": {
+    standard: [
+      "Premium room cleaning",
+      "Glass & surface cleaning",
+      "Floor polishing (basic)"
+    ],
+    deep: [
+      "Premium deep cleaning",
+      "Granite/marble detailing",
+      "High-ceiling dust removal",
+      "Balcony + terrace heavy clean",
+      "Premium sanitization"
+    ]
+  },
+
+  /* ----------------------------------------------------
+     COMMERCIAL – OFFICES
+  ---------------------------------------------------- */
+
+  "cabin cleaning": {
+    standard: [
+      "Table & chair cleaning",
+      "Glass wiping",
+      "Floor mopping"
+    ],
+    deep: [
+      "Detailed workstation cleaning",
+      "Phone & switch sanitizing",
+      "Glass & panel polishing",
+      "Under-table cleaning"
+    ]
+  },
+
+  "workstation cleaning": {
+    standard: [
+      "Desk surface wipe",
+      "Chair cleaning",
+      "Floor vacuuming"
+    ],
+    deep: [
+      "Keyboard/mouse sanitization",
+      "Chair deep cleaning",
+      "Panel & divider dust removal",
+      "Carpet vacuuming"
+    ]
+  },
+
+  "conference hall cleaning": {
+    standard: [
+      "Table surface cleaning",
+      "Chair arrangement & wipe",
+      "Floor mopping"
+    ],
+    deep: [
+      "Glass board polishing",
+      "Panel/fabric cleaning",
+      "Switchboard sanitization",
+      "Curtain/blind dust removal"
+    ]
+  },
+
+  /* ----------------------------------------------------
+     COMMERCIAL – SCHOOLS
+  ---------------------------------------------------- */
+
+  classrooms: {
+    standard: [
+      "Desk & bench wiping",
+      "Blackboard cleaning",
+      "Floor sweeping"
+    ],
+    deep: [
+      "Desk sanitization",
+      "Window grills deep cleaning",
+      "Fan & cobweb removal",
+      "Washroom sanitization"
+    ]
+  },
+
+  "laboratory cleaning": {
+    standard: [
+      "Table wiping",
+      "Floor cleaning",
+      "Basic disinfecting"
+    ],
+    deep: [
+      "Chemical stain removal",
+      "Sink + tap deep clean",
+      "Equipment exterior sanitizing",
+      "Fume area cleaning"
+    ]
+  },
+
+  "library cleaning": {
+    standard: [
+      "Table + reading area wipe",
+      "Floor cleaning",
+      "Window wipe"
+    ],
+    deep: [
+      "Book rack dust removal",
+      "Deep carpet vacuum",
+      "Glass partition polishing",
+      "Furniture sanitizing"
+    ]
+  },
+
+  /* ----------------------------------------------------
+     SHOPS & MALLS
+  ---------------------------------------------------- */
+
+  "shop cleaning": {
+    standard: [
+      "Shelf & counter cleaning",
+      "Floor mopping",
+      "Glass wiping"
+    ],
+    deep: [
+      "Product shelf dust removal",
+      "Glass detailing",
+      "Deep floor scrubbing",
+      "Ceiling dust removal"
+    ]
+  },
+
+  "mall cleaning": {
+    standard: [
+      "Large area sweeping",
+      "Wet mop",
+      "Glass/panel wiping"
+    ],
+    deep: [
+      "Machine scrubbing",
+      "Escalator cleaning",
+      "High-rise glass wiping",
+      "Sanitization treatment"
+    ]
+  },
+
+  "showroom cleaning": {
+    standard: [
+      "Surface cleaning",
+      "Floor polish (basic)",
+      "Glass wiping"
+    ],
+    deep: [
+      "Display polishing",
+      "Floor buff machine cleaning",
+      "High-touch sanitizing",
+      "Glass detailing"
+    ]
+  },
+
+  /* ----------------------------------------------------
+     SPECIALIZED – FURNITURE
+  ---------------------------------------------------- */
+
+  "sofa cleaning": {
+    standard: [
+      "Dry vacuuming",
+      "Spot cleaning",
+      "Fabric dust removal"
+    ],
+    deep: [
+      "Shampoo + extraction clean",
+      "Stain treatment",
+      "Odor removal",
+      "Fabric sanitizing"
+    ]
+  },
+
+  "chair cleaning": {
+    standard: ["Surface wipe", "Basic vacuum"],
+    deep: [
+      "Foam shampoo wash",
+      "Mesh stain removal",
+      "Deep vacuum extraction"
+    ]
+  },
+
+  "wooden furniture cleaning": {
+    standard: ["Dry dusting", "Polish wipe"],
+    deep: [
+      "Wood-safe chemical polish",
+      "Stain treatment",
+      "Detailing of corners"
+    ]
+  },
+
+  /* ----------------------------------------------------
+     FLOORS / POLISHING
+  ---------------------------------------------------- */
+
+  "marble polishing": {
+    standard: ["Surface cleaning", "Basic buffing"],
+    deep: [
+      "Grinding + polishing",
+      "Mirror finish treatment",
+      "Chemical stain removal"
+    ]
+  },
+
+  "tile cleaning": {
+    standard: ["Tile wiping", "Grout cleaning (basic)"],
+    deep: [
+      "Machine scrubbing",
+      "Grout deep restoration",
+      "Hard stain removal"
+    ]
+  },
+
+  "granite polishing": {
+    standard: ["Surface cleaning", "Basic shine buff"],
+    deep: [
+      "Industrial-grade polishing",
+      "Scratch removal",
+      "Stain lifting"
+    ]
+  },
+
+  /* ----------------------------------------------------
+     GLASS CLEANING
+  ---------------------------------------------------- */
+
+  "indoor glass cleaning": {
+    standard: ["Glass wiping", "Frame cleaning"],
+    deep: [
+      "Spot-free glass polish",
+      "Track cleaning",
+      "Mirror detailing"
+    ]
+  },
+
+  "outdoor glass cleaning": {
+    standard: ["Exterior wipe", "Dust removal"],
+    deep: [
+      "Hard stain removal",
+      "Ladder/safety wash",
+      "Frame & track detailing"
+    ]
+  },
+
+  "high-rise glass cleaning": {
+    standard: ["Exterior wipe"],
+    deep: [
+      "Rope-access cleaning",
+      "Chemical stain removal",
+      "Safety harness operation"
+    ]
+  },
+
+  /* ----------------------------------------------------
+     SANITIZATION
+  ---------------------------------------------------- */
+
+  "home sanitization": {
+    standard: ["Whole house spray sanitization"],
+    deep: [
+      "ULV fogging",
+      "Touch-point disinfection",
+      "Kitchen & bathroom sanitizing"
+    ]
+  },
+
+  "office sanitization": {
+    standard: ["Workstation disinfecting"],
+    deep: [
+      "Full office fogging",
+      "Chair/desk sanitization",
+      "Conference hall disinfecting"
+    ]
+  },
+
+  "commercial sanitization": {
+    standard: ["Shop/mall disinfectant spray"],
+    deep: [
+      "Fogging + deep spray",
+      "Shelf sanitization",
+      "Entrance & counter disinfection"
+    ]
+  },
+
+  /* ----------------------------------------------------
+     POST-CONSTRUCTION
+  ---------------------------------------------------- */
+
+  "indoor dust removal": {
+    standard: ["Dust sweeping", "Surface wipe"],
+    deep: [
+      "Heavy dust removal",
+      "Vacuum + pressure cleaning",
+      "Window track dust extraction"
+    ]
+  },
+
+  "outdoor dust removal": {
+    standard: ["Outdoor sweeping"],
+    deep: [
+      "High-pressure jet cleaning",
+      "Footpath/parking wash",
+      "Deep dust removal"
+    ]
+  },
+
+  "paint stain from tiles": {
+    standard: ["Surface stain removal"],
+    deep: [
+      "Chemical paint removal",
+      "Tile restoration",
+      "Scrub machine treatment"
+    ]
+  },
+
+  "paint stain from windows": {
+    standard: ["Paint wipe-off"],
+    deep: [
+      "Chemical solvent stain removal",
+      "Glass scratch-free restoration"
+    ]
+  },
+
+  /* ----------------------------------------------------
+     INDUSTRIAL CLEANING
+  ---------------------------------------------------- */
+
+  "assembly area cleaning": {
+    standard: [
+      "Surface dusting",
+      "Floor sweeping"
+    ],
+    deep: [
+      "Industrial machine cleaning",
+      "Oil stain removal",
+      "Safety equipment disinfecting",
+      "Detailed workstation cleanup"
+    ]
+  },
+
+  "production line cleaning": {
+    standard: [
+      "Line surface cleaning",
+      "Floor mopping"
+    ],
+    deep: [
+      "Grease/oil degreasing",
+      "Machine detailing",
+      "Scrub machine cleaning"
+    ]
+  },
+
+  "warehouse rack cleaning": {
+    standard: ["Rack wiping", "Dust removal"],
+    deep: [
+      "High-reach dust removal",
+      "Rack degreasing",
+      "Shelf sanitization"
+    ]
+  },
+
+  "warehouse floor cleaning": {
+    standard: ["Floor sweeping"],
+    deep: [
+      "Scrub machine cleaning",
+      "Oil/chemical stain removal",
+      "Deep warehouse wash"
+    ]
+  }
+};
+
+
+
+
+
 const getPricePerSqft = (moduleTitle: string): number => {
   const key = moduleTitle.toLowerCase().trim();
   if (PRICE_PER_SQFT[key] != null) return PRICE_PER_SQFT[key];
@@ -202,6 +756,24 @@ const CleaningService: React.FC = () => {
 
   const [form] = Form.useForm();
   const today = new Date().toISOString().split("T")[0];
+ const getIncludedItems = () => {
+  if (!selectedModule) return [];
+
+  const title = selectedModule.title.toLowerCase().trim();
+  const type = serviceTypeKey || "standard"; 
+  const keyList = Object.keys(INCLUDES);
+
+ 
+  const matchedKey = keyList.find((k) =>
+    title.includes(k.toLowerCase())
+  );
+
+  if (!matchedKey) return ["Basic cleaning included"];
+  const service = INCLUDES[matchedKey];
+  if (service[type]) return service[type];
+  if (service.standard) return service.standard;
+  return ["Basic cleaning included"];
+};
 
 
   useEffect(() => {
@@ -666,12 +1238,16 @@ const getDisplayPriceText = (): string => {
               <img src={selectedModule?.image} alt={selectedModule?.title} className="sw-cs-details-image" />
               <Paragraph className="sw-cs-details-paragraph">{selectedModule?.desc}</Paragraph>
 
-              <div className="sw-cs-includes-block">
-                <div className="sw-cs-includes-title">What's Included</div>
-                <div className="sw-cs-include-item">• Surface dusting & wiping</div>
-                <div className="sw-cs-include-item">• Floor mopping / vacuum</div>
-                <div className="sw-cs-include-item">• Window wiping</div>
-              </div>
+            <div className="sw-cs-includes-block">
+  <div className="sw-cs-includes-title">What's Included</div>
+
+  {getIncludedItems().map((item: string, idx: number) => (
+    <div key={idx} className="sw-cs-include-item">
+      • {item}
+    </div>
+  ))}
+</div>
+
 
               <div className="sw-cs-price-card">
                 <div className="sw-cs-price-card-label">Service Price</div>
@@ -792,31 +1368,30 @@ const getDisplayPriceText = (): string => {
                 onChange={() => computeTotal(form.getFieldsValue())}
                 allowClear
               >
-                {selectedModule.title.toLowerCase().includes("room") ||
-                selectedModule.title.toLowerCase().includes("bedroom") ? (
-                  <>
-                    <Option value="standard">Regular Cleaning</Option>
-                    <Option value="deep">Deep Cleaning</Option>
-                    <Option value="move">Move-in / Move-out Cleaning</Option>
-                  </>
-                ) : selectedModule.title.toLowerCase().includes("kitchen") ? (
-                  <>
-                    <Option value="standard">Regular Cleaning</Option>
-                    <Option value="deep">Deep Cleaning</Option>
-                    <Option value="grease">Grease Removal</Option>
-                  </>
-                ) : selectedModule.title.toLowerCase().includes("bathroom") ? (
-                  <>
-                    <Option value="sanitization">Sanitization</Option>
-                    <Option value="deep">Deep Bathroom Clean</Option>
-                  </>
-                ) : (
-                  <>
-                    <Option value="standard">Regular Cleaning</Option>
-                    <Option value="deep">Deep Cleaning</Option>
-                    <Option value="move">Move-in / Move-out Cleaning</Option>
-                  </>
-                )}
+              {selectedModule.title.toLowerCase().includes("room") ||
+ selectedModule.title.toLowerCase().includes("bedroom") ? (
+  <>
+    <Option value="standard">Regular Cleaning</Option>
+    <Option value="deep">Deep Cleaning</Option>
+  </>
+) : selectedModule.title.toLowerCase().includes("kitchen") ? (
+  <>
+    <Option value="standard">Regular Cleaning</Option>
+    <Option value="deep">Deep Cleaning</Option>
+    <Option value="grease">Grease Removal</Option>
+  </>
+) : selectedModule.title.toLowerCase().includes("bathroom") ? (
+  <>
+    <Option value="sanitization">Sanitization</Option>
+    <Option value="deep">Deep Bathroom Clean</Option>
+  </>
+) : (
+  <>
+    <Option value="standard">Regular Cleaning</Option>
+    <Option value="deep">Deep Cleaning</Option>
+  </>
+)}
+
               </Select>
             </Form.Item>
           )}
