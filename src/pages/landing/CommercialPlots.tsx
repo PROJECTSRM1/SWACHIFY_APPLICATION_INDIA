@@ -1,5 +1,5 @@
 // src/pages/landing/CommercialPlots.tsx
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import CommonHeader from "../../pages/landing/Header";
 import "../../pages/landing/Header.css"; // import CSS for header
 import FooterSection from "../../pages/landing/FooterSection";
@@ -88,30 +88,32 @@ const propertyTypes: PropertyTypeJson[] =
   ((educationData as any).commercialPropertyTypes || []) as PropertyTypeJson[];
 
 const CommercialPlots: React.FC = () => {
+  // example unused state in your original code was removed
   const [searchLocation, setSearchLocation] = useState("");
   const [searchType, setSearchType] = useState<string | undefined>(undefined);
-  const [selectedType, setSelectedType] = useState<string | undefined>(
-    undefined
-  );
-
+  const [selectedType, setSelectedType] = useState<string | undefined>(undefined);
   const [bookingForm] = Form.useForm();
   const navigate = useNavigate();
+
+  // ref pointing to the featured listings section
+  const resultsRef = useRef<HTMLDivElement | null>(null);
+
+  const disablePastDates = (current: any) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return current && current < today; // disable all past dates
+  };
 
   const filteredProducts = React.useMemo(() => {
     const q = searchLocation.trim().toLowerCase();
     return PRODUCTS.filter((p) => {
-      const matchesQuery =
-        !q ||
-        p.title.toLowerCase().includes(q) ||
-        p.desc.toLowerCase().includes(q);
-
-      const matchesType =
-        !searchType ||
-        (p.category?.toLowerCase() === searchType.toLowerCase());
-
-      return matchesQuery && matchesType;
+      const matchesQuery = !q || p.title.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q);
+      const matchesType = !searchType || (p.category?.toLowerCase() === searchType.toLowerCase());
+      // also respect selectedType (from the browse cards) if set (optional)
+      const matchesSelectedType = !selectedType || selectedType === "" || p.category?.toLowerCase() === selectedType.toLowerCase();
+      return matchesQuery && matchesType && matchesSelectedType;
     });
-  }, [searchLocation, searchType]);
+  }, [searchLocation, searchType, selectedType]);
 
   const handleBookingSubmit = () => {
     if ((window as any).openAuthModal) {
@@ -121,11 +123,24 @@ const CommercialPlots: React.FC = () => {
     }
   };
 
+  // Scroll function: smooth scroll to featured quick listings
+  const scrollToResults = () => {
+    if (resultsRef.current) {
+      resultsRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
+  // allow pressing Enter in search input to scroll as well
+  const handleSearchEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      scrollToResults();
+    }
+  };
+
   return (
     <Layout className="sw-cp-cp-layout">
       {/* Header must be mounted so it can open the modal via window.openAuthModal */}
       <CommonHeader selectedKey="commercial-plots" />
-
       <Content className="sw-cp-cp-content">
         {/* =========================
             SEARCH HERO
@@ -143,24 +158,22 @@ const CommercialPlots: React.FC = () => {
               <span className="sw-cp-search-crumb-icon">🏠</span>
               <span>Buy & Sale Properties</span>
             </div>
-
             <h1 className="sw-cp-cp-search-title">Find Your Perfect Property</h1>
             <p className="sw-cp-cp-search-sub">
               Browse thousands of properties. From cozy studios to luxury
               penthouses, find a place you'll love to call home.
             </p>
-
             <div className="sw-cp-cp-search-box">
               <div className="sw-cp-cp-search-field">
                 <Input
                   placeholder="Enter city or neighborhood"
                   value={searchLocation}
                   onChange={(e) => setSearchLocation(e.target.value)}
+                  onKeyDown={handleSearchEnter}
                   className="sw-cp-cp-search-input"
                   allowClear
                 />
               </div>
-
               <div className="sw-cp-cp-search-field">
                 <Select
                   placeholder="Property Type"
@@ -174,12 +187,12 @@ const CommercialPlots: React.FC = () => {
                   <Option value="mixed">Mixed</Option>
                 </Select>
               </div>
-
               <Button
                 className="sw-cp-cp-search-btn"
                 type="primary"
                 onClick={() => {
-                  // filtering is handled by state
+                  // keep search logic (state) and scroll to results
+                  scrollToResults();
                 }}
               >
                 <SearchOutlined />
@@ -192,10 +205,7 @@ const CommercialPlots: React.FC = () => {
         {/* Browse by property type – NOW DYNAMIC FROM JSON */}
         <section className="sw-cp-cp-browse-section">
           <div className="sw-cp-cp-browse-inner">
-            <Title level={2} className="sw-cp-cp-browse-title">
-              Browse by Property Type
-            </Title>
-
+            <Title level={2} className="sw-cp-cp-browse-title">Browse by Property Type</Title>
             <div className="sw-cp-cp-browse-row" role="list">
               {propertyTypes.map((pt) => (
                 <div
@@ -218,7 +228,6 @@ const CommercialPlots: React.FC = () => {
                         <HomeOutlined />
                       </div>
                     </div>
-
                     <div className="sw-cp-browse-body">
                       <div className="sw-cp-browse-title">{pt.title}</div>
                       <div className="sw-cp-browse-count">{pt.count}</div>
@@ -232,7 +241,8 @@ const CommercialPlots: React.FC = () => {
         </section>
 
         {/* Products grid */}
-        <section className="sw-cp-cp-products-section">
+        {/* attach ref here so scrollIntoView lands at start of this block */}
+        <section className="sw-cp-cp-products-section" ref={resultsRef}>
           <div className="sw-cp-cp-products-inner">
             <Row justify="center" style={{ marginBottom: 8 }}>
               <Col>
@@ -241,7 +251,6 @@ const CommercialPlots: React.FC = () => {
                 </Title>
               </Col>
             </Row>
-
             <div className="sw-cp-product-grid" aria-live="polite">
               {filteredProducts.map((item) => (
                 <Card
@@ -260,7 +269,6 @@ const CommercialPlots: React.FC = () => {
                   <div className="sw-cp-product-body">
                     <h4 className="sw-cp-product-title">{item.title}</h4>
                     <p className="sw-cp-product-desc">{item.desc}</p>
-
                     <div className="sw-cp-product-meta">
                       <div className="sw-cp-product-price">{item.price}</div>
                       <Space>
@@ -290,10 +298,7 @@ const CommercialPlots: React.FC = () => {
         {/* Process section */}
         <section className="sw-cp-cp-process-section">
           <div className="sw-cp-cp-process-inner">
-            <Title level={2} className="sw-cp-cp-process-title">
-              How It Works
-            </Title>
-
+            <Title level={2} className="sw-cp-cp-process-title">How It Works</Title>
             <div className="sw-cp-process-row">
               <div className="sw-cp-process-step">
                 <div className="sw-cp-step-circle">1</div>
@@ -303,7 +308,6 @@ const CommercialPlots: React.FC = () => {
                   Browse properties matching your needs
                 </div>
               </div>
-
               <div className="sw-cp-process-step">
                 <div className="sw-cp-step-circle">2</div>
                 <div className="sw-cp-step-line" />
@@ -312,7 +316,6 @@ const CommercialPlots: React.FC = () => {
                   Visit properties at your convenience
                 </div>
               </div>
-
               <div className="sw-cp-process-step">
                 <div className="sw-cp-step-circle">3</div>
                 <div className="sw-cp-step-line" />
@@ -321,7 +324,6 @@ const CommercialPlots: React.FC = () => {
                   Complete the rental application
                 </div>
               </div>
-
               <div className="sw-cp-process-step">
                 <div className="sw-cp-step-circle">4</div>
                 <div className="sw-cp-step-line" />
@@ -340,7 +342,6 @@ const CommercialPlots: React.FC = () => {
             <h2>Schedule a Consultation</h2>
             <p>Let our experts guide you to the right investment opportunity</p>
           </div>
-
           <div className="sw-cp-hs-booking-card">
             <Form
               form={bookingForm}
@@ -363,7 +364,6 @@ const CommercialPlots: React.FC = () => {
                     />
                   </Form.Item>
                 </Col>
-
                 <Col xs={24} sm={12}>
                   <Form.Item
                     label="Email"
@@ -379,7 +379,6 @@ const CommercialPlots: React.FC = () => {
                     />
                   </Form.Item>
                 </Col>
-
                 <Col xs={24} sm={12}>
                   <Form.Item
                     label="Phone Number"
@@ -394,7 +393,6 @@ const CommercialPlots: React.FC = () => {
                     />
                   </Form.Item>
                 </Col>
-
                 <Col xs={24} sm={12}>
                   <Form.Item
                     label="Service Type"
@@ -418,7 +416,6 @@ const CommercialPlots: React.FC = () => {
                     </Select>
                   </Form.Item>
                 </Col>
-
                 <Col xs={24}>
                   <Form.Item
                     label="Service Address"
@@ -433,38 +430,25 @@ const CommercialPlots: React.FC = () => {
                     />
                   </Form.Item>
                 </Col>
-
                 <Col xs={24} sm={12}>
                   <Form.Item
                     label="Preferred Date"
                     name="date"
-                    rules={[
-                      { required: true, message: "Please pick a date" },
-                    ]}
-                  >
-                    <DatePicker className="sw-cp-date-input" />
+                    rules={[{ required: true, message: "Please pick a date"}]}>
+                    <DatePicker
+                      className="sw-cp-date-input"
+                      disabledDate={disablePastDates}/>
                   </Form.Item>
                 </Col>
-
                 <Col xs={24} sm={12}>
-                  <Form.Item
-                    label="Preferred Time"
-                    name="time"
-                    rules={[
-                      { required: true, message: "Please select a time" },
-                    ]}
-                  >
-                    <Select
-                      className="sw-cp-hs-booking-input"
-                      placeholder="Select time slot"
-                    >
+                  <Form.Item label="Preferred Time" name="time" rules={[{ required: true, message: "Please select a time"}]}>
+                    <Select className="sw-cp-hs-booking-input" placeholder="Select time slot">
                       <Option value="morning">Morning (9am - 12pm)</Option>
                       <Option value="afternoon">Afternoon (12pm - 4pm)</Option>
                       <Option value="evening">Evening (4pm - 8pm)</Option>
                     </Select>
                   </Form.Item>
                 </Col>
-
                 <Col xs={24}>
                   <Form.Item label="Additional Details" name="details">
                     <Input.TextArea
@@ -473,7 +457,6 @@ const CommercialPlots: React.FC = () => {
                     />
                   </Form.Item>
                 </Col>
-
                 <Col xs={24}>
                   <Form.Item>
                     <Button
@@ -490,7 +473,6 @@ const CommercialPlots: React.FC = () => {
           </div>
         </div>
       </Content>
-
       <FooterSection selectedKey="CommercialPlots" />
     </Layout>
   );

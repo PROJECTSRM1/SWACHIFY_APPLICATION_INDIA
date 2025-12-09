@@ -43,6 +43,7 @@
       "route": "/education/skill-development"
     }
   ],
+
   "whyCards": [
     {
       "id": 1,
@@ -81,12 +82,13 @@
       "desc": "Certification for IT, skill development and technical courses."
     }
   ],
+
   "swachifyProducts": {
     "categories": [
       {
         "id": "vegetables",
         "iconKey": "apple",
-        "title": "Fresh Vegetas",
+        "title": "Fresh Vegetables",
         "description": "Leafy greens and seasonal vegetables harvested directly from farms.",
         "badge": "Daily Harvest",
         "items": [
@@ -307,6 +309,301 @@
       "title": "Studio",
       "count": "600+",
       "sub": "Properties"
+    }
+],
+
+  "landingHero": {
+    "title": "Transform Your Home & Property Services",
+    "subtitle": "Your trusted solution for cleaning, moving, rentals, construction, and more.",
+    "buttonText": "Get Started",
+    "backgroundImageKey": "landingHero"
+  },
+
+  "landingServices": [
+    {
+      "id": 1,
+      "iconKey": "home",
+      "title": "Cleaning & Home Services",
+      "desc": "Deep cleaning, regular housekeeping and specialized home maintenance services.",
+      "route": "/cleaningservice"
+    },
+    {
+      "id": 2,
+      "iconKey": "truck",
+      "title": "Transport",
+      "desc": "Secure packing and door-to-door relocation with insured transportation options.",
+      "route": "/LandingPackers"
+    },
+    {
+      "id": 3,
+      "iconKey": "shop",
+      "title": "Buy / Sale / Rentals",
+      "desc": "Browse commercial & residential listings buy, sell or rent with expert support.",
+      "route": "/commercial-plots"
+    },
+    {
+      "id": 4,
+      "iconKey": "build",
+      "title": "Raw Materials",
+      "desc": "Cement, steel, sand and other building materials sourced from trusted suppliers.",
+      "route": "/ConstructionMaterials"
+    },
+    {
+      "id": 5,
+      "iconKey": "book",
+      "title": "Education",
+      "desc": "Courses, training programs and learning resources for construction & trades.",
+      "route": "/education"
+    },
+    {
+      "id": 6,
+      "iconKey": "cart",
+      "title": "Swachify Products",
+      "desc": "Shop quality construction products and tools with transparent pricing.",
+      "route": "/ConstructionMaterials"
+    },
+    {
+      "id": 7,
+      "iconKey": "user",
+      "title": "Freelancer",
+      "desc": "Hire vetted freelancers: masons, electricians, plumbers and skilled tradespeople.",
+      "route": "/Freelancer"
+    }
+  ],
+
+  "landingWhyChooseUs": [
+    {
+      "iconKey": "tools",
+      "title": "Skilled Professionals",
+      "desc": "Verified, trained technicians who deliver quality service."
+    },
+    {
+      "iconKey": "home",
+      "title": "Trusted & Local",
+      "desc": "Local teams committed to timely service."
+    },
+    {
+      "iconKey": "truck",
+      "title": "Transparent Pricing",
+      "desc": "Clear quotes with no hidden charges."
+    },
+    {
+      "iconKey": "build",
+      "title": "Licensed & Insured",
+      "desc": "Fully insured technicians and certified service providers."
+    },
+    {
+      "iconKey": "apartment",
+      "title": "Satisfaction Guarantee",
+      "desc": "If you're not satisfied, we fix it."
+    },
+    {
+      "iconKey": "shop",
+      "title": "24/7 Support",
+      "desc": "Round-the-clock emergency support."
+    }
+  ],
+
+  
+
+  "packersHero": {
+    "title": "Stress-Free Relocation Services",
+    "subtitle": "From packing to delivery, we make your move effortless.",
+    "primaryButtonText": "Book Now",
+    "secondaryButtonText": "Get Quote",
+    "backgroundImageKey": "packersHero"
+  },
+
+  "packersServices": [
+    {
+      "id": 1,
+      "imageKey": "packingServices",
+      "iconKey": "checkCircle",
+      "title": "Packing Services",
+      "desc": "Professional packing with premium quality materials."
+    },
+    {
+      "id": 2,
+      "imageKey": "loadingTransport",
+      "iconKey": "dollar",
+      "title": "Loading Transport",
+      "desc": "Best value moving services at competitive rates."
+    },
+    {
+      "id": 3,
+      "imageKey": "localLongDistance",
+      "iconKey": "truck",
+      "title": "Local & Long Distance",
+      "desc": "Reliable transportation services ensuring safe relocations."
+    },
+    {
+      "id": 4,
+      "imageKey": "insurance",
+      "iconKey": "safety",
+      "title": "Insurance Coverage",
+      "desc": "Fully insured service for your peace of mind."
+    }
+  ],
+
+  "packersTypes": [
+    {
+      "id": 1,
+      "title": "Residential Moving",
+      "price": "$299",
+      "imageKey": "residentialMoving",
+      "features": [
+        "1–5 bedroom homes",
+        "Packing & unpacking",
+        "Furniture disassembly/assembly",
+        "Storage solutions available"
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Office Relocation",
+      "price": "Custom Quote",
+      "imageKey": "officeRelocation",
+      "features": [
+        "Minimal disruption",
+        "After-hours moving",
+        "IT equipment handling",
+        "Floor plan setup"
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Vehicle Transport",
+      "price": "$499",
+      "imageKey": "vehicleTransport",
+      "features": [
+        "Cars & motorcycles",
+        "Enclosed transport",
+        "Door to door service",
+        "Insurance included"
+      ]
+    }
+  ],
+
+  "packersReasons": [
+    {
+      "iconKey": "user",
+      "title": "Expert Team",
+      "desc": "Trained professionals with years of relocation experience."
+    },
+    {
+      "iconKey": "clock",
+      "title": "On-Time Delivery",
+      "desc": "We value your time and ensure timely relocation."
+    },
+    {
+      "iconKey": "safety",
+      "title": "Full Insurance",
+      "desc": "Your belongings are fully covered during transit."
+    }
+  ],
+
+  "constructionHero": {
+    "title": "Quality Building Materials at Best Prices",
+    "subtitle": "Browse our comprehensive range of construction materials.",
+    "primaryButtonText": "Browse Catalog",
+    "secondaryButtonText": "Get Bulk Quote",
+    "backgroundImageKey": "constructionHero"
+  },
+
+  "constructionServices": [
+    {
+      "id": 1,
+      "title": "Free Delivery",
+      "description": "On orders above $500 within 50 miles"
+    },
+    {
+      "id": 2,
+      "title": "Same-Day Dispatch",
+      "description": "Orders placed before 2 PM ship the same day"
+    },
+    {
+      "id": 3,
+      "title": "Quality Assured",
+      "description": "All materials tested and certified"
+    },
+    {
+      "id": 4,
+      "title": "Quantity Calculator",
+      "description": "Free estimation service for your project"
+    }
+  ],
+
+  "constructionCategories": [
+    {
+      "id": 1,
+      "title": "Cement & Concrete",
+      "items": ["Portland Cement", "Ready-Mix Concrete", "Mortar", "Grout"],
+      "imageKey": "cementConcrete"
+    },
+    {
+      "id": 2,
+      "title": "Steel & Metals",
+      "items": ["TMT Bars", "Steel Beams", "Wire Mesh", "Angles & Channels"],
+      "imageKey": "steelMetals"
+    },
+    {
+      "id": 3,
+      "title": "Bricks & Blocks",
+      "items": ["Red Bricks", "Fly Ash Bricks", "AAC Blocks", "Concrete Blocks"],
+      "imageKey": "bricksBlocks"
+    },
+    {
+      "id": 4,
+      "title": "Sand & Aggregates",
+      "items": ["River Sand", "M Sand", "Coarse Aggregates", "Stone Chips"],
+      "imageKey": "sandAggregates"
+    },
+    {
+      "id": 5,
+      "title": "Roofing Materials",
+      "items": ["Roof Tiles", "Metal Sheets", "Waterproofing", "Insulation"],
+      "imageKey": "roofingMaterials"
+    },
+    {
+      "id": 6,
+      "title": "Plumbing & Electrical",
+      "items": ["PPR Pipes", "Copper Wires", "Switches", "Fittings"],
+      "imageKey": "plumbingElectrical"
+    }
+  ],
+
+  "constructionFeaturedProducts": [
+    {
+      "id": 1,
+      "title": "Premium Portland Cement",
+      "price": "$8.50 per bag (50kg)",
+      "rating": "4.8/5",
+      "details": ["High Strength", "Quick Setting", "Weather Resistant"],
+      "imageKey": "premiumPortlandCement"
+    },
+    {
+      "id": 2,
+      "title": "TMT Steel Bars (Fe 500)",
+      "price": "$650 per ton",
+      "rating": "4.9/5",
+      "details": ["High Tensile", "Corrosion Resistant", "ISI Certified"],
+      "imageKey": "tmtSteelBars"
+    },
+    {
+      "id": 3,
+      "title": "AAC Blocks",
+      "price": "$2.20 per block",
+      "rating": "4.7/5",
+      "details": ["Lightweight", "Thermal Insulation", "Fire Resistant"],
+      "imageKey": "aacBlocks"
+    },
+    {
+      "id": 4,
+      "title": "M-Sand (Manufactured Sand)",
+      "price": "$45 per ton",
+      "rating": "4.6/5",
+      "details": ["Consistent Quality", "Eco Friendly", "No Impurities"],
+      "imageKey": "mSand"
     }
   ]
 }

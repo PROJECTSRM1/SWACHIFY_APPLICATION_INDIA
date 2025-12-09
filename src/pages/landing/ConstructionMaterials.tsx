@@ -1,13 +1,12 @@
-// c:/Users/Manikantha.N/Desktop/SWACHIFY_APPLICATION_INDIA/src/pages/landing/ConstructionMaterials.tsx
+// src/pages/landing/ConstructionMaterials.tsx
 import React, { useState, useEffect } from "react";
 import CommonHeader from "../../pages/landing/Header";
-import "../../index.css"
-import FooterSection from '../../pages/landing/FooterSection';
-import "../../pages/landing/FooterSection.css"
+import "../../index.css";
+import FooterSection from "../../pages/landing/FooterSection";
+import "../../pages/landing/FooterSection.css";
 import {
   Row,
   Col,
-  // Menu,
   Card,
   Button,
   Typography,
@@ -20,6 +19,7 @@ import {
   Checkbox,
 } from "antd";
 import { useNavigate } from "react-router-dom";
+
 import brickwalss from "../../assets/landingimages/brickwall.jpg";
 import premiumportlandcement from "../../assets/landingimages/PremiumPortlandCement.jpg";
 import tmtsteelbars from "../../assets/landingimages/TMTSteelBars.jpg";
@@ -31,6 +31,9 @@ import bricksandblocks from "../../assets/landingimages/Bricks&Blocks.jpg";
 import sandandaggregates from "../../assets/landingimages/Sand&Aggregates.jpg";
 import roofingmaterials from "../../assets/landingimages/RoofingMaterials.jpg";
 import plumbingandelectrical from "../../assets/landingimages/Plumbing&Electrical.jpeg";
+
+// 🔹 JSON CONFIG IMPORT
+import educationData from "../../data/educationData.json";
 
 const { Title, Text } = Typography;
 const { Option } = Select;
@@ -54,82 +57,109 @@ const NavbarSection: React.FC = () => (
   </>
 );
 
-/* ================= DATA ================= */
-const services = [
-  { title: "Free Delivery", description: "On orders above $500 within 50 miles" },
-  { title: "Same-Day Dispatch", description: "Orders placed before 2 PM ship the same day" },
-  { title: "Quality Assured", description: "All materials tested and certified" },
-  { title: "Quantity Calculator", description: "Free estimation service for your project" },
-];
-const featuredProducts = [
-  {
-    title: "Premium Portland Cement",
-    image: premiumportlandcement,
-    price: "$8.50 per bag (50kg)",
-    rating: "4.8/5",
-    details: ["High Strength", "Quick Setting", "Weather Resistant"],
-  },
-  {
-    title: "TMT Steel Bars (Fe 500)",
-    image: tmtsteelbars,
-    price: "$650 per ton",
-    rating: "4.9/5",
-    details: ["High Tensile", "Corrosion Resistant", "ISI Certified"],
-  },
-  {
-    title: "AAC Blocks",
-    image: aacblocks,
-    price: "$2.20 per block",
-    rating: "4.7/5",
-    details: ["Lightweight", "Thermal Insulation", "Fire Resistant"],
-  },
-  {
-    title: "M-Sand (Manufactured Sand)",
-    image: msand,
-    price: "$45 per ton",
-    rating: "4.6/5",
-    details: ["Consistent Quality", "Eco Friendly", "No Impurities"],
-  },
-];
-const productCategories = [
-  {
-    title: "Cement & Concrete",
-    items: ["Portland Cement", "Ready-Mix Concrete", "Mortar", "Grout"],
-    image: cementandconcrete,
-  },
-  {
-    title: "Steel & Metals",
-    items: ["TMT Bars", "Steel Beams", "Wire Mesh", "Angles & Channels"],
-    image: steelandmetals,
-  },
-  {
-    title: "Bricks & Blocks",
-    items: ["Red Bricks", "Fly Ash Bricks", "AAC Blocks", "Concrete Blocks"],
-    image: bricksandblocks,
-  },
-  {
-    title: "Sand & Aggregates",
-    items: ["River Sand", "M Sand", "Coarse Aggregates", "Stone Chips"],
-    image: sandandaggregates,
-  },
-  {
-    title: "Roofing Materials",
-    items: ["Roof Tiles", "Metal Sheets", "Waterproofing", "Insulation"],
-    image: roofingmaterials,
-  },
-  {
-    title: "Plumbing & Electrical",
-    items: ["PPR Pipes", "Copper Wires", "Switches", "Fittings"],
-    image: plumbingandelectrical,
-  },
-];
+/* ================= TYPES FOR JSON CONFIG ================= */
+type ConstructionHeroConfig = {
+  title: string;
+  subtitle: string;
+  primaryButtonText: string;
+  secondaryButtonText: string;
+  backgroundImageKey: string;
+};
+
+type ConstructionServiceConfig = {
+  id: number;
+  title: string;
+  description: string;
+};
+
+type ConstructionCategoryConfig = {
+  id: number;
+  title: string;
+  items: string[];
+  imageKey: string;
+};
+
+type ConstructionFeaturedProductConfig = {
+  id: number;
+  title: string;
+  price: string;
+  rating: string;
+  details: string[];
+  imageKey: string;
+};
+
+/* ================= IMAGE MAPS ================= */
+const constructionHeroBgMap: Record<string, string> = {
+  constructionHero: brickwalss,
+};
+
+const constructionCategoryImageMap: Record<string, string> = {
+  cementConcrete: cementandconcrete,
+  steelMetals: steelandmetals,
+  bricksBlocks: bricksandblocks,
+  sandAggregates: sandandaggregates,
+  roofingMaterials: roofingmaterials,
+  plumbingElectrical: plumbingandelectrical,
+};
+
+const constructionFeaturedImageMap: Record<string, string> = {
+  premiumPortlandCement: premiumportlandcement,
+  tmtSteelBars: tmtsteelbars,
+  aacBlocks: aacblocks,
+  mSand: msand,
+};
+
+/* ================= READ DATA FROM JSON ================= */
+const constructionHero: ConstructionHeroConfig =
+  (educationData as any).constructionHero || {
+    title: "Quality Building Materials at Best Prices",
+    subtitle: "Browse our comprehensive range of construction materials.",
+    primaryButtonText: "Browse Catalog",
+    secondaryButtonText: "Get Bulk Quote",
+    backgroundImageKey: "constructionHero",
+  };
+
+const heroBackgroundImage =
+  constructionHeroBgMap[constructionHero.backgroundImageKey] || brickwalss;
+
+const constructionServicesConfig: ConstructionServiceConfig[] =
+  ((educationData as any).constructionServices as ConstructionServiceConfig[]) ||
+  [];
+
+const services = constructionServicesConfig.map((s) => ({
+  title: s.title,
+  description: s.description,
+}));
+
+const constructionCategoriesConfig: ConstructionCategoryConfig[] =
+  ((educationData as any)
+    .constructionCategories as ConstructionCategoryConfig[]) || [];
+
+const productCategories = constructionCategoriesConfig.map((category) => ({
+  title: category.title,
+  items: category.items,
+  image:
+    constructionCategoryImageMap[category.imageKey] || cementandconcrete,
+}));
+
+const constructionFeaturedConfig: ConstructionFeaturedProductConfig[] =
+  ((educationData as any)
+    .constructionFeaturedProducts as ConstructionFeaturedProductConfig[]) || [];
+
+const featuredProducts = constructionFeaturedConfig.map((p) => ({
+  title: p.title,
+  price: p.price,
+  rating: p.rating,
+  details: p.details,
+  image: constructionFeaturedImageMap[p.imageKey] || premiumportlandcement,
+}));
 
 /* ================= AUTH MODAL (kept for local pages if needed) ================= */
-const AuthModal: React.FC<{ visible: boolean; onClose: () => void; onSuccess: () => void }> = ({
-  visible,
-  onClose,
-  onSuccess,
-}) => {
+const AuthModal: React.FC<{
+  visible: boolean;
+  onClose: () => void;
+  onSuccess: () => void;
+}> = ({ visible, onClose, onSuccess }) => {
   const [activeKey, setActiveKey] = useState("login");
   const handleLoginFinish = () => {
     onSuccess();
@@ -139,38 +169,75 @@ const AuthModal: React.FC<{ visible: boolean; onClose: () => void; onSuccess: ()
     onSuccess();
     onClose();
   };
-  console.log(AuthModal,RequestQuote);
+  console.log(AuthModal, RequestQuote);
   return (
-    <Modal open={visible} onCancel={onClose} footer={null} centered width={520} className="sw-lcm-classname-auth-modal">
-      <Tabs activeKey={activeKey} onChange={(k) => setActiveKey(k)} className="sw-lcm-classname-auth-tabs">
+    <Modal
+      open={visible}
+      onCancel={onClose}
+      footer={null}
+      centered
+      width={520}
+      className="sw-lcm-classname-auth-modal"
+    >
+      <Tabs
+        activeKey={activeKey}
+        onChange={(k) => setActiveKey(k)}
+        className="sw-lcm-classname-auth-tabs"
+      >
         <TabPane tab="Login" key="login">
           <Form layout="vertical" onFinish={handleLoginFinish}>
-            <Form.Item label={<span className="sw-lcm-classname-required"> Email / Phone</span>} name="identifier" rules={[{ required: true }]}>
+            <Form.Item
+              label={<span className="sw-lcm-classname-required"> Email / Phone</span>}
+              name="identifier"
+              rules={[{ required: true }]}
+            >
               <Input placeholder="john@example.com" />
             </Form.Item>
-            <Form.Item label={<span className="sw-lcm-classname-required">Password</span>} name="password" rules={[{ required: true }]}>
+            <Form.Item
+              label={<span className="sw-lcm-classname-required">Password</span>}
+              name="password"
+              rules={[{ required: true }]}
+            >
               <Input.Password placeholder="Password" />
             </Form.Item>
             <Form.Item>
               <Checkbox>Remember me</Checkbox>
             </Form.Item>
             <Form.Item>
-              <Button type="primary" htmlType="submit" block>Login</Button>
+              <Button type="primary" htmlType="submit" block>
+                Login
+              </Button>
             </Form.Item>
           </Form>
         </TabPane>
         <TabPane tab="Register" key="register">
           <Form layout="vertical" onFinish={handleRegisterFinish}>
-            <Form.Item name="fullName" label={<span className="sw-lcm-classname-required"> Full name</span>} rules={[{ required: true }]}>
+            <Form.Item
+              name="fullName"
+              label={<span className="sw-lcm-classname-required"> Full name</span>}
+              rules={[{ required: true }]}
+            >
               <Input placeholder="John Doe" />
             </Form.Item>
-            <Form.Item name="email" label={<span className="sw-lcm-classname-required"> Email</span>} rules={[{ required: true, type: 'email' }]}>
+            <Form.Item
+              name="email"
+              label={<span className="sw-lcm-classname-required"> Email</span>}
+              rules={[{ required: true, type: "email" }]}
+            >
               <Input placeholder="john@example.com" />
             </Form.Item>
-            <Form.Item name="phone" label={<span className="sw-lcm-classname-required"> Phone</span>} rules={[{ required: true }]}>
+            <Form.Item
+              name="phone"
+              label={<span className="sw-lcm-classname-required"> Phone</span>}
+              rules={[{ required: true }]}
+            >
               <Input placeholder="+1 555 123 4567" />
             </Form.Item>
-            <Form.Item name="password" label={<span className="sw-lcm-classname-required"> Password</span>} rules={[{ required: true }]}>
+            <Form.Item
+              name="password"
+              label={<span className="sw-lcm-classname-required"> Password</span>}
+              rules={[{ required: true }]}
+            >
               <Input.Password placeholder="Choose a password" />
             </Form.Item>
             <Form.Item
@@ -181,8 +248,11 @@ const AuthModal: React.FC<{ visible: boolean; onClose: () => void; onSuccess: ()
                 { required: true },
                 ({ getFieldValue }) => ({
                   validator(_, value) {
-                    if (!value || getFieldValue('password') === value) return Promise.resolve();
-                    return Promise.reject(new Error('Passwords do not match'));
+                    if (!value || getFieldValue("password") === value)
+                      return Promise.resolve();
+                    return Promise.reject(
+                      new Error("Passwords do not match")
+                    );
                   },
                 }),
               ]}
@@ -190,7 +260,9 @@ const AuthModal: React.FC<{ visible: boolean; onClose: () => void; onSuccess: ()
               <Input.Password placeholder="Confirm password" />
             </Form.Item>
             <Form.Item>
-              <Button type="primary" htmlType="submit" block>Register</Button>
+              <Button type="primary" htmlType="submit" block>
+                Register
+              </Button>
             </Form.Item>
           </Form>
         </TabPane>
@@ -208,51 +280,89 @@ const RequestQuote: React.FC = () => {
   return (
     <section className="sw-lcm-classname-request-quote">
       <div className="sw-lcm-classname-rq-inner">
-        <Title level={2} className="sw-lcm-classname-rq-title">Request a Quote</Title>
-        <Text className="sw-lcm-classname-rq-sub">Tell us about your project and get a customized quote</Text>
+        <Title level={2} className="sw-lcm-classname-rq-title">
+          Request a Quote
+        </Title>
+        <Text className="sw-lcm-classname-rq-sub">
+          Tell us about your project and get a customized quote
+        </Text>
         <div className="sw-lcm-classname-rq-card">
-          <Form onFinish={handleSubmit} layout="vertical" className="sw-lcm-classname-rq-form">
+          <Form
+            onFinish={handleSubmit}
+            layout="vertical"
+            className="sw-lcm-classname-rq-form"
+          >
             <Row gutter={24}>
               <Col xs={24} sm={12}>
-                <Form.Item label="Full Name *" name="fullName" rules={[{ required: true }]}>
+                <Form.Item
+                  label="Full Name *"
+                  name="fullName"
+                  rules={[{ required: true }]}
+                >
                   <Input placeholder="John Doe" />
                 </Form.Item>
               </Col>
               <Col xs={24} sm={12}>
-                <Form.Item label="Email *" name="email" rules={[{ required: true }]}>
+                <Form.Item
+                  label="Email *"
+                  name="email"
+                  rules={[{ required: true }]}
+                >
                   <Input placeholder="john@example.com" />
                 </Form.Item>
               </Col>
             </Row>
             <Row gutter={24}>
               <Col xs={24} sm={12}>
-                <Form.Item label="Phone Number *" name="phone" rules={[{ required: true }]}>
+                <Form.Item
+                  label="Phone Number *"
+                  name="phone"
+                  rules={[{ required: true }]}
+                >
                   <Input placeholder="+1 555 123 4567" />
                 </Form.Item>
               </Col>
               <Col xs={24} sm={12}>
-                <Form.Item label="Service Type *" name="service" rules={[{ required: true }]}>
+                <Form.Item
+                  label="Service Type *"
+                  name="service"
+                  rules={[{ required: true }]}
+                >
                   <Select placeholder="Select Material">
-                    <Option value="construction-materials">Construction Materials</Option>
+                    <Option value="construction-materials">
+                      Construction Materials
+                    </Option>
                   </Select>
                 </Form.Item>
               </Col>
             </Row>
             <Row gutter={24}>
               <Col xs={24}>
-                <Form.Item label="Service Address *" name="address" rules={[{ required: true }]}>
+                <Form.Item
+                  label="Service Address *"
+                  name="address"
+                  rules={[{ required: true }]}
+                >
                   <Input placeholder="123 Main St" />
                 </Form.Item>
               </Col>
             </Row>
             <Row gutter={24}>
               <Col xs={24} sm={12}>
-                <Form.Item label="Preferred Date *" name="date" rules={[{ required: true }]}>
+                <Form.Item
+                  label="Preferred Date *"
+                  name="date"
+                  rules={[{ required: true }]}
+                >
                   <DatePicker style={{ width: "100%" }} />
                 </Form.Item>
               </Col>
               <Col xs={24} sm={12}>
-                <Form.Item label="Preferred Time *" name="time" rules={[{ required: true }]}>
+                <Form.Item
+                  label="Preferred Time *"
+                  name="time"
+                  rules={[{ required: true }]}
+                >
                   <Select placeholder="Select time">
                     <Option>8:00 AM - 10:00 AM</Option>
                     <Option>10:00 AM - 12:00 PM</Option>
@@ -263,7 +373,13 @@ const RequestQuote: React.FC = () => {
             <Form.Item label="Additional Details" name="details">
               <Input.TextArea placeholder="Tell us more..." rows={4} />
             </Form.Item>
-            <Button type="primary" htmlType="submit" size="large" block className="sw-lcm-classname-rq-submit">
+            <Button
+              type="primary"
+              htmlType="submit"
+              size="large"
+              block
+              className="sw-lcm-classname-rq-submit"
+            >
               Submit Booking Request
             </Button>
           </Form>
@@ -291,6 +407,7 @@ const ConstructionMaterials: React.FC = () => {
     navigate("/app/dashboard");
   };
   console.log(handleAuthSuccess);
+
   return (
     <div className="sw-lcm-classname-construction-materials-container">
       <NavbarSection />
@@ -298,42 +415,52 @@ const ConstructionMaterials: React.FC = () => {
       <section
         className="sw-lcm-classname-hero-section"
         style={{
-          backgroundImage: `url(${brickwalss})`,
+          backgroundImage: `url(${heroBackgroundImage})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
       >
         <div className="sw-lcm-classname-hero-overlay">
-          <h1>Quality Building Materials at Best Prices</h1>
-          <p>Browse our comprehensive range of construction materials.</p>
+          <h1>{constructionHero.title}</h1>
+          <p>{constructionHero.subtitle}</p>
           <div className="sw-lcm-classname-hero-buttons">
             <Button
               type="primary"
               size="large"
               onClick={() => {
-                if (typeof window !== "undefined" && (window as any).openAuthModal) {
+                if (
+                  typeof window !== "undefined" &&
+                  (window as any).openAuthModal
+                ) {
                   (window as any).openAuthModal("register");
                 } else {
                   // fallback: show local auth modal (keeps behavior safe if header helper isn't mounted)
                   setAuthVisible(true);
-                  console.warn("openAuthModal not available on window. Showing local auth modal as fallback.");
+                  console.warn(
+                    "openAuthModal not available on window. Showing local auth modal as fallback."
+                  );
                 }
               }}
             >
-              Browse Catalog
+              {constructionHero.primaryButtonText}
             </Button>
             <Button
               size="large"
               onClick={() => {
-                if (typeof window !== "undefined" && (window as any).openAuthModal) {
+                if (
+                  typeof window !== "undefined" &&
+                  (window as any).openAuthModal
+                ) {
                   (window as any).openAuthModal("register");
                 } else {
                   setAuthVisible(true);
-                  console.warn("openAuthModal not available on window. Showing local auth modal as fallback.");
+                  console.warn(
+                    "openAuthModal not available on window. Showing local auth modal as fallback."
+                  );
                 }
               }}
             >
-              Get Bulk Quote
+              {constructionHero.secondaryButtonText}
             </Button>
           </div>
         </div>
@@ -353,7 +480,11 @@ const ConstructionMaterials: React.FC = () => {
                 >
                   <div className="sw-lcm-classname-pc-card-inner">
                     <h3>{category.title}</h3>
-                    <ul>{category.items.map((it, j) => <li key={j}>{it}</li>)}</ul>
+                    <ul>
+                      {category.items.map((it, j) => (
+                        <li key={j}>{it}</li>
+                      ))}
+                    </ul>
                     <Button
                       type="primary"
                       block
@@ -362,7 +493,9 @@ const ConstructionMaterials: React.FC = () => {
                         if ((window as any).openAuthModal) {
                           (window as any).openAuthModal("register");
                         } else {
-                          console.warn("openAuthModal not available on window. Ensure CommonHeader is mounted.");
+                          console.warn(
+                            "openAuthModal not available on window. Ensure CommonHeader is mounted."
+                          );
                         }
                       }}
                     >
@@ -401,21 +534,32 @@ const ConstructionMaterials: React.FC = () => {
             {featuredProducts.map((p, i) => (
               <article key={i} className="sw-lcm-classname-featured-item">
                 <div className="sw-lcm-classname-featured-card">
-                  <div className="sw-lcm-classname-featured-media"><img src={p.image} alt={p.title} /></div>
+                  <div className="sw-lcm-classname-featured-media">
+                    <img src={p.image} alt={p.title} />
+                  </div>
                   <div className="sw-lcm-classname-featured-body">
                     <h3>{p.title}</h3>
-                    <p className="sw-lcm-classname-fp-price">Price: {p.price}</p>
-                    <p className="sw-lcm-classname-fp-rating">Rating: {p.rating}</p>
-                    <ul>{p.details.map((d, j) => <li key={j}>{d}</li>)}</ul>
+                    <p className="sw-lcm-classname-fp-price">
+                      Price: {p.price}
+                    </p>
+                    <p className="sw-lcm-classname-fp-rating">
+                      Rating: {p.rating}
+                    </p>
+                    <ul>
+                      {p.details.map((d, j) => (
+                        <li key={j}>{d}</li>
+                      ))}
+                    </ul>
                     <Button
                       type="primary"
                       block
                       onClick={() => {
-                        // Request Quote here could open auth as well — keep original behavior (if you want auth, uncomment)
                         if ((window as any).openAuthModal) {
                           (window as any).openAuthModal("register");
                         } else {
-                          console.warn("openAuthModal not available on window. Ensure CommonHeader is mounted.");
+                          console.warn(
+                            "openAuthModal not available on window. Ensure CommonHeader is mounted."
+                          );
                         }
                       }}
                     >
@@ -429,19 +573,20 @@ const ConstructionMaterials: React.FC = () => {
         </div>
       </section>
 
-      {/* REQUEST QUOTE (optional) */}
+      {/* REQUEST QUOTE (optional / as per your original layout) */}
       {/* <RequestQuote /> */}
 
-      {/* AUTH MODAL (local) */}
-      {/*
-        Local modal fallback — used only if CommonHeader's window.openAuthModal isn't available.
-        Kept commented out in main render earlier; we'll render it here when needed.
-      */}
-      <AuthModal visible={authVisible} onClose={() => setAuthVisible(false)} onSuccess={handleAuthSuccess} />
+      {/* AUTH MODAL (local fallback) */}
+      <AuthModal
+        visible={authVisible}
+        onClose={() => setAuthVisible(false)}
+        onSuccess={handleAuthSuccess}
+      />
 
       {/* FOOTER */}
       <FooterSection selectedKey="ConstructionMaterials" />
     </div>
   );
 };
+
 export default ConstructionMaterials;
