@@ -39,7 +39,6 @@ const navItems = [
   { key: "freelancer", label: <Link to="/Freelancer">Freelancer</Link> },
 ];
 
-
 const { TabPane } = Tabs;
 
 const CommonHeader: React.FC<{ selectedKey?: string }> = ({
@@ -66,11 +65,9 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
 
   const closeAuthModal = () => setAuthModalVisible(false);
   const [vendorForgotModalVisible, setVendorForgotModalVisible] = useState(false);
-  const [emailValue, setEmailValue] = useState("");  
-  
+  const [emailValue, setEmailValue] = useState("");
+
   console.log(emailValue);
-
-
 
   // Expose openAuthModal/closeAuthModal on window so pages (like CommercialPlots) can call it
   useEffect(() => {
@@ -89,57 +86,55 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
         // ignore deletion errors
       }
     };
-   
   }, []); // run once on mount
 
   // ==========================
   // CUSTOMER LOGIN (BACKEND)
   // ==========================
   const onLogin = async (values: any) => {
-  try {
-    const identifier = values.identifier?.toString().trim();
-    const password = values.password;
+    try {
+      const identifier = values.identifier?.toString().trim();
+      const password = values.password;
 
-    // Admin (local) – keep
-    if (identifier === "admin@gmail.com" && password === "1234") {
-      message.success("Admin login successful");
+      // Admin (local) – keep
+      if (identifier === "admin@gmail.com" && password === "1234") {
+        message.success("Admin login successful");
+        closeAuthModal();
+        navigate("/adminshell/dashboard");
+        return;
+      }
+
+      const loginPayload = {
+        email_or_phone: identifier,
+        password,
+      };
+
+      setAuthLoading(true);
+
+      const res: any = await customerLogin(loginPayload);
+
+      if (res?.access_token) {
+        localStorage.setItem("accessToken", res.access_token);
+      }
+
+      if (res?.user) {
+        localStorage.setItem("user", JSON.stringify(res.user));
+      }
+
+      message.success("Login successful");
       closeAuthModal();
-      navigate("/adminshell/dashboard");
-      return;
+      navigate("/app/dashboard");
+    } catch (err: any) {
+      console.error("Login error", err);
+      message.error(
+        err?.response?.data?.detail ||
+          err?.response?.data?.message ||
+          "Invalid login credentials"
+      );
+    } finally {
+      setAuthLoading(false);
     }
-
-    const loginPayload = {
-      email_or_phone: identifier,
-      password,
-    };
-
-    setAuthLoading(true);
-
-    const res: any = await customerLogin(loginPayload);
-
-    if (res?.access_token) {
-      localStorage.setItem("accessToken", res.access_token);
-    }
-
-    if (res?.user) {
-      localStorage.setItem("user", JSON.stringify(res.user));
-    }
-
-    message.success("Login successful");
-    closeAuthModal();
-    navigate("/app/dashboard");
-  } catch (err: any) {
-    console.error("Login error", err);
-    message.error(
-      err?.response?.data?.detail ||
-        err?.response?.data?.message ||
-        "Invalid login credentials"
-    );
-  } finally {
-    setAuthLoading(false);
-  }
-};
-
+  };
 
   // ==========================
   // VENDOR LOGIN (still local)
@@ -157,56 +152,55 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
   // CUSTOMER REGISTER (BACKEND)
   // ==========================
   const onRegister = async (values: any) => {
-  try {
-    const {
-      firstName,
-      lastName,
-      email,
-      phone,
-      password,
-      confirm,
-      address,
-      gender,
-    } = values;
+    try {
+      const {
+        firstName,
+        lastName,
+        email,
+        phone,
+        password,
+        confirm,
+        address,
+        gender,
+      } = values;
 
-    const genderMap: any = {
-      male: 1,
-      female: 2,
-      other: 3,
-    };
+      const genderMap: any = {
+        male: 1,
+        female: 2,
+        other: 3,
+      };
 
-    const payload = {
-      first_name: firstName,
-      last_name: lastName,
-      email,
-      mobile: phone,
-      password,
-      confirm_password: confirm,
-      gender_id: genderMap[gender], // backend expects number
-      address,
-    };
+      const payload = {
+        first_name: firstName,
+        last_name: lastName,
+        email,
+        mobile: phone,
+        password,
+        confirm_password: confirm,
+        gender_id: genderMap[gender], // backend expects number
+        address,
+      };
 
-    setAuthLoading(true);
+      setAuthLoading(true);
 
-    const res: any = await customerRegister(payload);
+      const res: any = await customerRegister(payload);
 
-    message.success(
-      res?.message || "Registration successful. Check your email."
-    );
+      message.success(
+        res?.message || "Registration successful. Check your email."
+      );
 
-    setActiveAuthTab("login");
-  } catch (err: any) {
-    console.error("Registration error", err);
-    message.error(
-      err?.response?.data?.detail ||
-        err?.response?.data?.message ||
-        "Registration failed"
-    );
-  } finally {
-    setAuthLoading(false);
-  }
-};
-
+      setActiveAuthTab("login");
+    } catch (err: any) {
+      console.error("Registration error", err);
+      message.error(
+        err?.response?.data?.detail ||
+          err?.response?.data?.message ||
+          "Registration failed"
+      );
+    } finally {
+      setAuthLoading(false);
+    }
+  };
 
   return (
     <>
@@ -239,6 +233,9 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
           Sign Up
         </Button>
       </header>
+
+      {/* Spacer so content starts below fixed navbar */}
+      <div className="swl-hs-navbar-spacer" />
 
       {menuOpen && (
         <ul className="swl-mobile-menu">
@@ -330,439 +327,465 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
             </Form>
           </TabPane>
 
-          
           {/* REGISTER TAB */}
           <TabPane tab="Register" key="register">
             <Form layout="vertical" onFinish={onRegister} preserve={false}>
               <div style={{ display: "flex", gap: 8 }}>
-                <Form.Item label="First Name" name="firstName" rules={[
-          { required: true, message: "Please enter your first name" },
-          { min: 2, message: "First name must be at least 2 characters" },
-          {
-            pattern: /^[A-Za-z]+$/,
-            message: "First name must contain only letters",
-          },
-        ]}
-        style={{ flex: 1 }}  >
-          <Input />
-          </Form.Item>
-          <Form.Item label="Last Name" name="lastName" rules={[
-          { required: true, message: "Please enter your last name" },
-          { min: 2, message: "Last name must be at least 2 characters" },
-          {
-            pattern: /^[A-Za-z]+$/,
-            message: "Last name must contain only letters",
-          },
-          ]}
-          style={{ flex: 1 }} >
-            <Input />
-            </Form.Item>
-      </div>
-      <Form.Item label="Email" name="email" rules={[
-        { required: true, message: "Please enter your email" },
-        { type: "email", message: "Enter a valid email (Ex: abcd@gmail.com)" },
-      ]} >
-        <Input />
-        </Form.Item> 
-        <Form.Item label="Phone" name="phone" rules={[
-        { required: true, message: "Please enter phone number" },
-        {
-          pattern: /^[0-9]{10}$/,
-          message: "Phone number must be exactly 10 digits",
-        },
-      ]} >
-      <Input maxLength={10} />
-      </Form.Item> 
-      <Form.Item label="Gender" name="gender" rules={[{ required: true, message: "Please select your gender" }]} >
-      <Radio.Group>
-        <Radio value="male">Male</Radio>
-        <Radio value="female">Female</Radio>
-        <Radio value="other">Other</Radio>
-      </Radio.Group>
-      </Form.Item>
+                <Form.Item
+                  label="First Name"
+                  name="firstName"
+                  rules={[
+                    { required: true, message: "Please enter your first name" },
+                    { min: 2, message: "First name must be at least 2 characters" },
+                    {
+                      pattern: /^[A-Za-z]+$/,
+                      message: "First name must contain only letters",
+                    },
+                  ]}
+                  style={{ flex: 1 }}
+                >
+                  <Input />
+                </Form.Item>
+                <Form.Item
+                  label="Last Name"
+                  name="lastName"
+                  rules={[
+                    { required: true, message: "Please enter your last name" },
+                    { min: 2, message: "Last name must be at least 2 characters" },
+                    {
+                      pattern: /^[A-Za-z]+$/,
+                      message: "Last name must contain only letters",
+                    },
+                  ]}
+                  style={{ flex: 1 }}
+                >
+                  <Input />
+                </Form.Item>
+              </div>
+              <Form.Item
+                label="Email"
+                name="email"
+                rules={[
+                  { required: true, message: "Please enter your email" },
+                  {
+                    type: "email",
+                    message: "Enter a valid email (Ex: abcd@gmail.com)",
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item
+                label="Phone"
+                name="phone"
+                rules={[
+                  { required: true, message: "Please enter phone number" },
+                  {
+                    pattern: /^[0-9]{10}$/,
+                    message: "Phone number must be exactly 10 digits",
+                  },
+                ]}
+              >
+                <Input maxLength={10} />
+              </Form.Item>
+              <Form.Item
+                label="Gender"
+                name="gender"
+                rules={[{ required: true, message: "Please select your gender" }]}
+              >
+                <Radio.Group>
+                  <Radio value="male">Male</Radio>
+                  <Radio value="female">Female</Radio>
+                  <Radio value="other">Other</Radio>
+                </Radio.Group>
+              </Form.Item>
 
-    <Form.Item
-      label="Password"
-      name="password"
-      rules={[
-        { required: true, message: "Please enter password" },
-        {
-          pattern:
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
-          message:
-            "Password must have 1 uppercase, 1 lowercase, 1 digit & 1 special symbol (Ex: Abcd123@)",
-        },
-      ]}
-      hasFeedback
-    >
-      <Input.Password />
-    </Form.Item>
-      <Form.Item
-      label="Confirm Password"
-      name="confirm"
-      dependencies={["password"]}
-      hasFeedback
-      rules={[
-        { required: true, message: "Please confirm your password" },
-        ({ getFieldValue }) => ({
-          validator(_, value) {
-            return !value || getFieldValue("password") === value
-              ? Promise.resolve()
-              : Promise.reject(new Error("Passwords do not match"));
-          },
-        }),
-      ]}
-    >
-      <Input.Password />
-    </Form.Item>
+              <Form.Item
+                label="Password"
+                name="password"
+                rules={[
+                  { required: true, message: "Please enter password" },
+                  {
+                    pattern:
+                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
+                    message:
+                      "Password must have 1 uppercase, 1 lowercase, 1 digit & 1 special symbol (Ex: Abcd123@)",
+                  },
+                ]}
+                hasFeedback
+              >
+                <Input.Password />
+              </Form.Item>
+              <Form.Item
+                label="Confirm Password"
+                name="confirm"
+                dependencies={["password"]}
+                hasFeedback
+                rules={[
+                  { required: true, message: "Please confirm your password" },
+                  ({ getFieldValue }) => ({
+                    validator(_, value) {
+                      return !value || getFieldValue("password") === value
+                        ? Promise.resolve()
+                        : Promise.reject(new Error("Passwords do not match"));
+                    },
+                  }),
+                ]}
+              >
+                <Input.Password />
+              </Form.Item>
 
-    {/* ADDRESS */}
-    <Form.Item
-      label="Address"
-      name="address"
-      rules={[
-        { required: true, message: "Please enter your address" },
-        { min: 5, message: "Address must be at least 8 characters" },
-      ]}
-    >
-      <Input.TextArea rows={3} placeholder="Enter your address" />
-    </Form.Item>
+              {/* ADDRESS */}
+              <Form.Item
+                label="Address"
+                name="address"
+                rules={[
+                  { required: true, message: "Please enter your address" },
+                  { min: 5, message: "Address must be at least 8 characters" },
+                ]}
+              >
+                <Input.TextArea rows={3} placeholder="Enter your address" />
+              </Form.Item>
 
-    <Form.Item>
-      <Button block htmlType="submit" loading={authLoading}>
-        Register
-      </Button>
-    </Form.Item>
+              <Form.Item>
+                <Button block htmlType="submit" loading={authLoading}>
+                  Register
+                </Button>
+              </Form.Item>
 
-    <Form.Item style={{ marginTop: -10 }}>
-      <a
-        onClick={() => {
-          setAuthModalVisible(false);
-          setVendorModalVisible(true);
-        }} >
-          Are you a vendor?
-          </a>
-          </Form.Item>
-          </Form>
+              <Form.Item style={{ marginTop: -10 }}>
+                <a
+                  onClick={() => {
+                    setAuthModalVisible(false);
+                    setVendorModalVisible(true);
+                  }}
+                >
+                  Are you a vendor?
+                </a>
+              </Form.Item>
+            </Form>
           </TabPane>
         </Tabs>
-        </Modal>
+      </Modal>
 
-{/* FORGOT PASSWORD for Customer */}
-    <Modal open={forgotModalVisible} onCancel={() => {
-    setForgotModalVisible(false);
-    setActiveAuthTab("login");
-    setAuthModalVisible(true);
-    }}
-    footer={null}
-    centered
-    width={450}
-    destroyOnClose >
-      {(() => {
-    const [step, setStep] = useState(1); // 1 = email, 2 = OTP, 3 = new password
+      {/* FORGOT PASSWORD for Customer */}
+      <Modal
+        open={forgotModalVisible}
+        onCancel={() => {
+          setForgotModalVisible(false);
+          setActiveAuthTab("login");
+          setAuthModalVisible(true);
+        }}
+        footer={null}
+        centered
+        width={450}
+        destroyOnClose
+      >
+        {(() => {
+          const [step, setStep] = useState(1); // 1 = email, 2 = OTP, 3 = new password
 
-    const [form] = Form.useForm();
+          const [form] = Form.useForm();
 
-    const handleSendOTP = async () => {
-      try {
-        const email = form.getFieldValue("email");
+          const handleSendOTP = async () => {
+            try {
+              const email = form.getFieldValue("email");
 
-        if (!email) {
-          message.error("Please enter email");
-          return;
-        }
+              if (!email) {
+                message.error("Please enter email");
+                return;
+              }
 
-        setEmailValue(email);
-        console.log(setEmailValue);
+              setEmailValue(email);
+              console.log(setEmailValue);
 
-        message.success("OTP sent to your registered email.");
+              message.success("OTP sent to your registered email.");
 
-        setStep(2); 
-      } catch (err) {
-        message.error("Failed to send OTP");
-      }
-    };
+              setStep(2);
+            } catch (err) {
+              message.error("Failed to send OTP");
+            }
+          };
 
-    const handleVerifyOTP = async () => {
-      try {
-        const otp = form.getFieldValue("otp");
+          const handleVerifyOTP = async () => {
+            try {
+              const otp = form.getFieldValue("otp");
 
-        if (!otp) {
-          message.error("Please enter OTP");
-          return;
-        }
+              if (!otp) {
+                message.error("Please enter OTP");
+                return;
+              }
 
-        message.success("OTP verified successfully.");
+              message.success("OTP verified successfully.");
 
-        setStep(3); 
-      } catch (err) {
-        message.error("Invalid OTP");
-      }
-    };
+              setStep(3);
+            } catch (err) {
+              message.error("Invalid OTP");
+            }
+          };
 
-    const handleUpdatePassword = async () => {
-      try {
-        const newPass = form.getFieldValue("newPassword");
-        const confirmPass = form.getFieldValue("confirmNewPassword");
+          const handleUpdatePassword = async () => {
+            try {
+              const newPass = form.getFieldValue("newPassword");
+              const confirmPass = form.getFieldValue("confirmNewPassword");
 
-        if (!newPass || !confirmPass) {
-          message.error("Please fill all fields");
-          return;
-        }
+              if (!newPass || !confirmPass) {
+                message.error("Please fill all fields");
+                return;
+              }
 
-        if (newPass !== confirmPass) {
-          message.error("Passwords do not match");
-          return;
-        }
+              if (newPass !== confirmPass) {
+                message.error("Passwords do not match");
+                return;
+              }
 
-        message.success("Password updated successfully.");
+              message.success("Password updated successfully.");
 
-        setForgotModalVisible(false);
-        setActiveAuthTab("login");
-        setAuthModalVisible(true);
-      } catch (err) {
-        message.error("Failed to update password");
-      }
-    };
+              setForgotModalVisible(false);
+              setActiveAuthTab("login");
+              setAuthModalVisible(true);
+            } catch (err) {
+              message.error("Failed to update password");
+            }
+          };
 
-    return (
-      <Form form={form} layout="vertical">
-        <h3 className="swl-forgot-modal-title">
-          {step === 1 && "Reset Password"}
-          {step === 2 && "Enter OTP"}
-          {step === 3 && "Set New Password"}
-        </h3>
+          return (
+            <Form form={form} layout="vertical">
+              <h3 className="swl-forgot-modal-title">
+                {step === 1 && "Reset Password"}
+                {step === 2 && "Enter OTP"}
+                {step === 3 && "Set New Password"}
+              </h3>
 
-        {step === 1 && (
-          <>
-            <Form.Item
-              label="Enter Registered Email"
-              name="email"
-              rules={[
-                { required: true, message: "Please enter email" },
-                { type: "email", message: "Enter a valid email" },
-              ]}
-            >
-              <Input placeholder="yourmail@example.com" />
-            </Form.Item>
+              {step === 1 && (
+                <>
+                  <Form.Item
+                    label="Enter Registered Email"
+                    name="email"
+                    rules={[
+                      { required: true, message: "Please enter email" },
+                      { type: "email", message: "Enter a valid email" },
+                    ]}
+                  >
+                    <Input placeholder="yourmail@example.com" />
+                  </Form.Item>
 
-            <Button className="otp-btn" block type="primary" onClick={handleSendOTP}>
-              Send Reset OTP
-            </Button>
-          </>
-        )}
+                  <Button className="otp-btn" block type="primary" onClick={handleSendOTP}>
+                    Send Reset OTP
+                  </Button>
+                </>
+              )}
 
-        {step === 2 && (
-          <>
-            <Form.Item
-              label="Enter OTP"
-              name="otp"
-              rules={[{ required: true, message: "Please enter OTP" }]}
-            >
-              <Input maxLength={6} placeholder="Enter 6-digit OTP" />
-            </Form.Item>
+              {step === 2 && (
+                <>
+                  <Form.Item
+                    label="Enter OTP"
+                    name="otp"
+                    rules={[{ required: true, message: "Please enter OTP" }]}
+                  >
+                    <Input maxLength={6} placeholder="Enter 6-digit OTP" />
+                  </Form.Item>
 
-            <Button block type="primary" onClick={handleVerifyOTP}>
-              Verify OTP
-            </Button>
-          </>
-        )}
+                  <Button block type="primary" onClick={handleVerifyOTP}>
+                    Verify OTP
+                  </Button>
+                </>
+              )}
 
-        {step === 3 && (
-          <>
-            <Form.Item
-              label="New Password"
-              name="newPassword"
-              rules={[
-                { required: true, message: "Please enter new password" },
-                {
-                  pattern:
-                    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
-                  message:
-                    "Password must include uppercase, lowercase, digit & special symbol",
-                },
-              ]}
-              hasFeedback
-            >
-              <Input.Password />
-            </Form.Item>
+              {step === 3 && (
+                <>
+                  <Form.Item
+                    label="New Password"
+                    name="newPassword"
+                    rules={[
+                      { required: true, message: "Please enter new password" },
+                      {
+                        pattern:
+                          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
+                        message:
+                          "Password must include uppercase, lowercase, digit & special symbol",
+                      },
+                    ]}
+                    hasFeedback
+                  >
+                    <Input.Password />
+                  </Form.Item>
 
-            <Form.Item
-              label="Confirm Password"
-              name="confirmNewPassword"
-              dependencies={["newPassword"]}
-              hasFeedback
-              rules={[
-                { required: true, message: "Please confirm your password" },
-                ({ getFieldValue }) => ({
-                  validator(_, value) {
-                    return !value || getFieldValue("newPassword") === value
-                      ? Promise.resolve()
-                      : Promise.reject(new Error("Passwords do not match"));
-                  },
-                }),
-              ]}
-            >
-              <Input.Password />
-            </Form.Item>
+                  <Form.Item
+                    label="Confirm Password"
+                    name="confirmNewPassword"
+                    dependencies={["newPassword"]}
+                    hasFeedback
+                    rules={[
+                      { required: true, message: "Please confirm your password" },
+                      ({ getFieldValue }) => ({
+                        validator(_, value) {
+                          return !value || getFieldValue("newPassword") === value
+                            ? Promise.resolve()
+                            : Promise.reject(new Error("Passwords do not match"));
+                        },
+                      }),
+                    ]}
+                  >
+                    <Input.Password />
+                  </Form.Item>
 
-            <Button block type="primary" onClick={handleUpdatePassword}>
-              Update Password
-            </Button>
-          </>
-        )}
-      </Form>
-    );
-  })()}
-</Modal>
+                  <Button block type="primary" onClick={handleUpdatePassword}>
+                    Update Password
+                  </Button>
+                </>
+              )}
+            </Form>
+          );
+        })()}
+      </Modal>
 
-{/* VENDOR Forgot Password */}
-<Modal
-  open={vendorForgotModalVisible}
-  onCancel={() => {
-    setVendorForgotModalVisible(false);
-    setVendorModalVisible(true);
-  }}
-  footer={null}
-  centered
-  width={450}
-  destroyOnClose
->
-  {(() => {
-    const [step, setStep] = useState(1);
-    const [form] = Form.useForm();
+      {/* VENDOR Forgot Password */}
+      <Modal
+        open={vendorForgotModalVisible}
+        onCancel={() => {
+          setVendorForgotModalVisible(false);
+          setVendorModalVisible(true);
+        }}
+        footer={null}
+        centered
+        width={450}
+        destroyOnClose
+      >
+        {(() => {
+          const [step, setStep] = useState(1);
+          const [form] = Form.useForm();
 
-    const handleSendOTP = () => {
-      const email = form.getFieldValue("email");
+          const handleSendOTP = () => {
+            const email = form.getFieldValue("email");
 
-      if (!email) {
-        message.error("Please enter email");
-        return;
-      }
+            if (!email) {
+              message.error("Please enter email");
+              return;
+            }
 
-      message.success("Vendor OTP sent");
-      setStep(2);
-    };
+            message.success("Vendor OTP sent");
+            setStep(2);
+          };
 
-    const handleVerifyOTP = () => {
-      const otp = form.getFieldValue("otp");
+          const handleVerifyOTP = () => {
+            const otp = form.getFieldValue("otp");
 
-      if (!otp) {
-        message.error("Enter OTP");
-        return;
-      }
+            if (!otp) {
+              message.error("Enter OTP");
+              return;
+            }
 
-      message.success("OTP Verified");
-      setStep(3);
-    };
+            message.success("OTP Verified");
+            setStep(3);
+          };
 
-    const handleUpdatePassword = () => {
-      const newPass = form.getFieldValue("newPassword");
-      const confirmPass = form.getFieldValue("confirmNewPassword");
+          const handleUpdatePassword = () => {
+            const newPass = form.getFieldValue("newPassword");
+            const confirmPass = form.getFieldValue("confirmNewPassword");
 
-      if (!newPass || !confirmPass) {
-        message.error("Fill all fields");
-        return;
-      }
+            if (!newPass || !confirmPass) {
+              message.error("Fill all fields");
+              return;
+            }
 
-      if (newPass !== confirmPass) {
-        message.error("Passwords do not match");
-        return;
-      }
+            if (newPass !== confirmPass) {
+              message.error("Passwords do not match");
+              return;
+            }
 
-      message.success("Vendor password updated!");
+            message.success("Vendor password updated!");
 
-      setVendorForgotModalVisible(false);
-      setVendorModalVisible(true);
-    };
+            setVendorForgotModalVisible(false);
+            setVendorModalVisible(true);
+          };
 
-    return (
-      <Form form={form} layout="vertical">
-        <h3 style={{ textAlign: "center", marginBottom: 20 }}>
-          {step === 1 && "Vendor Password Reset"}
-          {step === 2 && "Verify OTP"}
-          {step === 3 && "Set New Password"}
-        </h3>
+          return (
+            <Form form={form} layout="vertical">
+              <h3 style={{ textAlign: "center", marginBottom: 20 }}>
+                {step === 1 && "Vendor Password Reset"}
+                {step === 2 && "Verify OTP"}
+                {step === 3 && "Set New Password"}
+              </h3>
 
-        {step === 1 && (
-          <>
-            <Form.Item
-              label="Registered Vendor Email"
-              name="email"
-              rules={[{ required: true, type: "email" }]}
-            >
-              <Input placeholder="business@example.com" />
-            </Form.Item>
+              {step === 1 && (
+                <>
+                  <Form.Item
+                    label="Registered Vendor Email"
+                    name="email"
+                    rules={[{ required: true, type: "email" }]}
+                  >
+                    <Input placeholder="business@example.com" />
+                  </Form.Item>
 
-            <Button block type="primary" onClick={handleSendOTP}>
-              Send OTP
-            </Button>
-          </>
-        )}
+                  <Button block type="primary" onClick={handleSendOTP}>
+                    Send OTP
+                  </Button>
+                </>
+              )}
 
-        {step === 2 && (
-          <>
-            <Form.Item
-              label="Enter OTP"
-              name="otp"
-              rules={[{ required: true }]}
-            >
-              <Input maxLength={6} placeholder="6-digit OTP" />
-            </Form.Item>
+              {step === 2 && (
+                <>
+                  <Form.Item
+                    label="Enter OTP"
+                    name="otp"
+                    rules={[{ required: true }]}
+                  >
+                    <Input maxLength={6} placeholder="6-digit OTP" />
+                  </Form.Item>
 
-            <Button block type="primary" onClick={handleVerifyOTP}>
-              Verify OTP
-            </Button>
-          </>
-        )}
+                  <Button block type="primary" onClick={handleVerifyOTP}>
+                    Verify OTP
+                  </Button>
+                </>
+              )}
 
-        {step === 3 && (
-          <>
-            <Form.Item
-              label="New Password"
-              name="newPassword"
-              rules={[
-                { required: true },
-                {
-                  pattern:
-                    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
-                  message:
-                    "Password must include uppercase, lowercase, number & special character",
-                },
-              ]}
-              hasFeedback
-            >
-              <Input.Password />
-            </Form.Item>
+              {step === 3 && (
+                <>
+                  <Form.Item
+                    label="New Password"
+                    name="newPassword"
+                    rules={[
+                      { required: true },
+                      {
+                        pattern:
+                          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
+                        message:
+                          "Password must include uppercase, lowercase, number & special character",
+                      },
+                    ]}
+                    hasFeedback
+                  >
+                    <Input.Password />
+                  </Form.Item>
 
-            <Form.Item
-              label="Confirm Password"
-              name="confirmNewPassword"
-              dependencies={["newPassword"]}
-              rules={[
-                { required: true },
-                ({ getFieldValue }) => ({
-                  validator(_, value) {
-                    return !value || getFieldValue("newPassword") === value
-                      ? Promise.resolve()
-                      : Promise.reject(new Error("Passwords do not match"));
-                  },
-                }),
-              ]}
-              hasFeedback
-            >
-              <Input.Password />
-            </Form.Item>
+                  <Form.Item
+                    label="Confirm Password"
+                    name="confirmNewPassword"
+                    dependencies={["newPassword"]}
+                    rules={[
+                      { required: true },
+                      ({ getFieldValue }) => ({
+                        validator(_, value) {
+                          return !value || getFieldValue("newPassword") === value
+                            ? Promise.resolve()
+                            : Promise.reject(new Error("Passwords do not match"));
+                        },
+                      }),
+                    ]}
+                    hasFeedback
+                  >
+                    <Input.Password />
+                  </Form.Item>
 
-            <Button block type="primary" onClick={handleUpdatePassword}>
-              Update Password
-            </Button>
-          </>
-        )}
-      </Form>
-    );
-  })()}
-</Modal> 
+                  <Button block type="primary" onClick={handleUpdatePassword}>
+                    Update Password
+                  </Button>
+                </>
+              )}
+            </Form>
+          );
+        })()}
+      </Modal>
 
       {/* VENDOR MODAL (unchanged, still local) */}
       <Modal
@@ -776,40 +799,45 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
         bodyStyle={{
           maxHeight: "65vh",
           overflowY: "auto",
-        }} >
-          {/* VENDOR LOGIN TAB */}
-        <Tabs defaultActiveKey="vendor_register" centered>          
-          <Tabs.TabPane tab="Login" key="vendor_login">
-          <Form layout="vertical" onFinish={onVendorLogin}>
-            <Form.Item
-            label="Email / Phone"
-            name="identifier" 
-            rules={[{ required: true }]} >
-              <Input placeholder="Enter email or phone" />
-              </Form.Item>
-              <Form.Item label="Password" name="password"
-              rules={[{ required: true }]} >
-      <Input.Password />
-    </Form.Item>
-
-    <div style={{ textAlign: "right", marginBottom: 12 }}>
-      <a
-        onClick={() => {
-          setVendorModalVisible(false);
-          setVendorForgotModalVisible(true);
         }}
       >
-        Forgot Password?
-      </a>
-    </div>
+        {/* VENDOR LOGIN TAB */}
+        <Tabs defaultActiveKey="vendor_register" centered>
+          <Tabs.TabPane tab="Login" key="vendor_login">
+            <Form layout="vertical" onFinish={onVendorLogin}>
+              <Form.Item
+                label="Email / Phone"
+                name="identifier"
+                rules={[{ required: true }]}
+              >
+                <Input placeholder="Enter email or phone" />
+              </Form.Item>
+              <Form.Item
+                label="Password"
+                name="password"
+                rules={[{ required: true }]}
+              >
+                <Input.Password />
+              </Form.Item>
 
-    <Form.Item>
-      <Button type="primary" block htmlType="submit">
-        Login as Vendor
-      </Button>
-    </Form.Item>
-  </Form>
-</Tabs.TabPane>
+              <div style={{ textAlign: "right", marginBottom: 12 }}>
+                <a
+                  onClick={() => {
+                    setVendorModalVisible(false);
+                    setVendorForgotModalVisible(true);
+                  }}
+                >
+                  Forgot Password?
+                </a>
+              </div>
+
+              <Form.Item>
+                <Button type="primary" block htmlType="submit">
+                  Login as Vendor
+                </Button>
+              </Form.Item>
+            </Form>
+          </Tabs.TabPane>
 
           {/* VENDOR REGISTER TAB */}
           <Tabs.TabPane tab="Register" key="vendor_register">
