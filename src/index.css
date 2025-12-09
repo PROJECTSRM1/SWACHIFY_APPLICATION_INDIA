@@ -7,6 +7,29 @@
   padding: 20px 0px;
   box-sizing: border-box;
 }
+.sw-cs-form-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.sw-cs-half-width {
+  width: 48%;
+}
+
+.sw-cs-location-btn {
+  width: 100%;
+  height: 40px;
+  border-radius: 6px;
+  border: 1px solid #000;
+  background: #fff;
+  margin-top: -8px; /* aligns perfectly under address */
+}
+
+.sw-cs-location-btn:hover {
+  background: #000;
+  color: #fff;
+}
 
 /* header kept (you asked earlier to remove header function in TSX — CSS kept to avoid breaking layout) */
 .sw-cs-cs-header {
