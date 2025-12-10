@@ -65,26 +65,33 @@ export const customerLogin = async (data: CustomerLoginPayload) => {
   return res.data;
 };
 
-//  🚨 USTOMER LOGOUT
-
 export const customerLogout = async () => {
   const raw = localStorage.getItem("user");
   let parsed = null;
 
   try {
     parsed = raw ? JSON.parse(raw) : null;
-  } catch {}
+  } catch (err) {
+    parsed = null;
+  }
 
   const user_id = parsed?.id;
 
+  // 👇 Call backend logout only if user_id exists
   if (user_id) {
-    await api.post("/api/auth/logout", { user_id });
+    try {
+      await api.post("/api/auth/logout", { user_id });
+    } catch (error) {
+      console.error("Logout API failed but continuing", error);
+    }
   }
 
+  // 👇 Clear local stored auth details
   localStorage.removeItem("accessToken");
   localStorage.removeItem("refreshToken");
   localStorage.removeItem("user");
 };
+
 
 //  FORGOT PASSWORD FLOW
 
