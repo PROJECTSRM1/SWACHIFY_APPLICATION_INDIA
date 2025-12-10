@@ -91,14 +91,28 @@
         "title": "Fresh Vegetables",
         "description": "Leafy greens and seasonal vegetables harvested directly from farms.",
         "badge": "Daily Harvest",
-        "items": ["Tomato", "Onion", "Potato", "Leafy Greens", "Okra", "Brinjal"]
+        "items": [
+          "Tomato",
+          "Onion",
+          "Potato",
+          "Leafy Greens",
+          "Okra",
+          "Brinjal"
+        ]
       },
       {
         "id": "fruits",
         "iconKey": "crown",
         "title": "Fruits & Orchard Produce",
         "description": "Naturally ripened fruits packed with nutrition and taste, carefully graded and sourced directly from farms for maximum freshness.",
-        "items": ["Banana", "Mango", "Papaya", "Apple", "Pomegranate", "Dragonfruit"]
+        "items": [
+          "Banana",
+          "Mango",
+          "Papaya",
+          "Apple",
+          "Pomegranate",
+          "Dragonfruit"
+        ]
       },
       {
         "id": "grains",
@@ -106,28 +120,50 @@
         "title": "Grains, Rice & Wheat",
         "description": "Staple grains cleaned and packed for homes, hotels and bulk buyers, with consistent quality.",
         "badge": "Best Selling",
-        "items": ["Raw Rice", "Boiled Rice", "Wheat", "Ragi", "Millets", "Pulses"]
+        "items": [
+          "Raw Rice",
+          "Boiled Rice",
+          "Wheat",
+          "Ragi",
+          "Millets",
+          "Pulses"
+        ]
       },
       {
         "id": "eggs",
         "iconKey": "fire",
         "title": "Eggs & Dairy Basics",
         "description": "Farm eggs and essential dairy items for daily household needs.",
-        "items": ["Country Eggs", "White Eggs", "Paneer", "Ghee (bulk / retail)"]
+        "items": [
+          "Country Eggs",
+          "White Eggs",
+          "Paneer",
+          "Ghee (bulk / retail)"
+        ]
       },
       {
         "id": "farm-inputs",
         "iconKey": "cart",
         "title": "Seeds & Farm Inputs",
         "description": "Quality seeds and basic farm inputs to support farmers.",
-        "items": ["Vegetable Seeds", "Paddy Seeds", "Bio Fertilizers", "Organic Manure"]
+        "items": [
+          "Vegetable Seeds",
+          "Paddy Seeds",
+          "Bio Fertilizers",
+          "Organic Manure"
+        ]
       },
       {
         "id": "packs",
         "iconKey": "crown",
         "title": "Retail & Wholesale Packs",
         "description": "Pre-packed combos ready for shops, hostels and institutions.",
-        "items": ["Mixed Veg Pack", "Family Grain Pack", "Hostel Combo Pack", "Canteen Supply Pack"]
+        "items": [
+          "Mixed Veg Pack",
+          "Family Grain Pack",
+          "Hostel Combo Pack",
+          "Canteen Supply Pack"
+        ]
       }
     ],
     "comboPacks": [
@@ -165,6 +201,116 @@
       }
     ]
   },
+  "commercialPlots": [
+    {
+      "id": 1,
+      "imageKey": "building",
+      "title": "Building - 1000 sq.ft",
+      "desc": "Prime commercial plot in business district",
+      "price": "$50,000",
+      "category": "Retail"
+    },
+    {
+      "id": 2,
+      "imageKey": "commercialPlot",
+      "title": "Plot - 2500 sq.ft",
+      "desc": "Large commercial plot near highway",
+      "price": "$120,000",
+      "category": "Industrial"
+    },
+    {
+      "id": 3,
+      "imageKey": "land",
+      "title": "Land - 5000 sq.ft",
+      "desc": "Premium location for development",
+      "price": "$250,000",
+      "category": "Mixed"
+    },
+    {
+      "id": 4,
+      "imageKey": "cornerPlot",
+      "title": "Corner Plot - 3000 sq.ft",
+      "desc": "Corner plot with excellent visibility",
+      "price": "$180,000",
+      "category": "Retail"
+    }
+  ],
+  "cleaningServices": [
+    {
+      "id": 1,
+      "imageKey": "homeCleaning",
+      "title": "Residential Cleaning",
+      "desc": "Homes, apartments, and condos"
+    },
+    {
+      "id": 2,
+      "imageKey": "officeCleaning",
+      "title": "Office Cleaning",
+      "desc": "Commercial spaces and offices"
+    },
+    {
+      "id": 3,
+      "imageKey": "moveInOut",
+      "title": "Move In/Out Cleaning",
+      "desc": "Deep cleaning for relocations"
+    },
+    {
+      "id": 4,
+      "imageKey": "regularMaintenance",
+      "title": "Regular Maintenance",
+      "desc": "Weekly, bi-weekly, or monthly"
+    },
+    {
+      "id": 5,
+      "imageKey": "kitchenBathroom",
+      "title": "Kitchen & Bathroom",
+      "desc": "Sanitization & deep scrubbing"
+    },
+    {
+      "id": 6,
+      "imageKey": "sofaUpholstery",
+      "title": "Sofa & Upholstery",
+      "desc": "Shampoo and stain removal"
+    },
+    {
+      "id": 7,
+      "imageKey": "carpetCleaning",
+      "title": "Carpet Cleaning",
+      "desc": "Foam wash & extraction"
+    },
+    {
+      "id": 8,
+      "imageKey": "postConstruction",
+      "title": "Post-Construction",
+      "desc": "Debris removal & polish"
+    }
+  ],
+  "commercialPropertyTypes": [
+    {
+      "id": "apt",
+      "title": "Apartments",
+      "count": "1,250+",
+      "sub": "Properties"
+    },
+    {
+      "id": "house",
+      "title": "Houses",
+      "count": "800+",
+      "sub": "Properties"
+    },
+    {
+      "id": "villa",
+      "title": "Villas",
+      "count": "350+",
+      "sub": "Properties"
+    },
+    {
+      "id": "studio",
+      "title": "Studio",
+      "count": "600+",
+      "sub": "Properties"
+    }
+],
 
   "landingHero": {
     "title": "Transform Your Home & Property Services",
