@@ -95,14 +95,51 @@ const SERVICE_MULTIPLIERS: Record<string, number> = {
 };
 
 const ADDON_PRICES: Record<string, number> = {
-  window: 100,
-  balcony: 150,
-  carpet: 200,
-  oven: 300,
-  kitchenDeepClean: 199,
+  curtainSteam: 199,
+  tvUnit: 149,
+  mattressShampoo: 249,
+  chimneyService: 349,
+  fridgeInside: 149,
+  jetSpray: 149,
+  hardwater: 199,
   balconyWash: 149,
-  sofaShampoo: 299,
+  patioWash: 249,
+  chairShampoo: 129,
+  whiteboardClean: 99,
+  keyboardSanitize: 49,
+  monitorClean: 99,
+  micClean: 99,
+  rackDeep: 149,
+  glassPolish: 129,
+  escalatorClean: 499,
+  fabricProtect: 199,
+  odorTreatment: 149,
+  woodPolish: 249,
+  termiteCheck: 299,
+  sealant: 299,
+  antiSlip: 199,
+  groutProtect: 149,
+  trackClean: 99,
+  framePolish: 129,
+  pressureWash: 299,
+  glueRemoval: 199,
+  chemicalWash: 249,
+  scraperWork: 149,
+  oilRemoval: 399,
+  machineDeep: 499,
+  greaseTreatment: 349,
+  scrubberMachine: 299,
+  chemicalTreat: 249,
+  windowExtra: 99,
 };
+const INDIVIDUAL_SERVICE_PRICES: Record<string, number> = {
+  kitchen: 59,
+  bathroom: 45,
+  living: 49,
+  bedroom: 39,
+};
+
+
 
 const PRICE_PER_SQFT: Record<string, number> = {
   "living room cleaning": 1.5,
@@ -833,22 +870,28 @@ const calculatePrice = (
   module: Module,
   sqft: number,
   serviceType: string,
-  addons: string[]
+  addons: string[],
+  selectedServices: string[] = []
 ) => {
   const perSqft = getPricePerSqft(module.title);
   const multiplier = SERVICE_MULTIPLIERS[serviceType] ?? 1.0;
 
-  
-  const basePrice = parseInt((module.price || "").toString().replace(/[₹,\s]/g, "")) || 0;
+  // Base module price
+  const basePrice = parseInt((module.price || "").replace(/[₹,\s]/g, "")) || 0;
 
-  const addonCost = (addons || []).reduce((s, a) => s + (ADDON_PRICES[a] || 0), 0);
+  // Add selected individual service prices
+  const extraSelectedServicePrice = selectedServices.reduce(
+    (sum, s) => sum + (INDIVIDUAL_SERVICE_PRICES[s] || 0),
+    0
+  );
 
-  
+  const addonCost = addons.reduce((s, a) => s + (ADDON_PRICES[a] || 0), 0);
+
   const sqftPart = Math.round(Math.max(0, sqft) * perSqft * multiplier);
 
- 
-  return Math.round(basePrice * multiplier) + sqftPart + addonCost;
+  return Math.round((basePrice + extraSelectedServicePrice) * multiplier) + sqftPart + addonCost;
 };
+
 
 
 const formatINR = (value: number | null) => {
@@ -873,24 +916,57 @@ const CleaningService: React.FC = () => {
 
   const [form] = Form.useForm();
   const today = new Date().toISOString().split("T")[0];
- const getIncludedItems = () => {
+const getIncludedItems = () => {
   if (!selectedModule) return [];
 
   const title = selectedModule.title.toLowerCase().trim();
-  const type = serviceTypeKey || "standard"; 
-  const keyList = Object.keys(INCLUDES);
+  const type = serviceTypeKey || "standard";
+  const values = form.getFieldsValue();
+  const selectedServices: string[] = values?.selectedServices || [];
 
- 
-  const matchedKey = keyList.find((k) =>
-    title.includes(k.toLowerCase())
-  );
+  // ⭐ SPECIAL CASE: Show includes ONLY for selected items in "All Services"
+  if (title === "all services") {
+    if (!selectedServices.length) return ["Select a service to see what's included"];
+
+    const map: Record<string, string> = {
+      kitchen: "kitchen",
+      bathroom: "bathroom",
+      living: "living room",
+      bedroom: "bedroom"
+    };
+
+    let combined: string[] = [];
+
+    selectedServices.forEach((srv) => {
+      const key = map[srv];
+      if (!key) return;
+
+      const match = INCLUDES[key];
+      if (!match) return;
+
+      combined.push(`--- ${key.toUpperCase()} ---`);
+
+      const items = match[type] || match.standard || [];
+      combined = [...combined, ...items];
+    });
+
+    return combined.length ? combined : ["No details available"];
+  }
+
+  // ⭐ NORMAL SERVICES BELOW
+  const keyList = Object.keys(INCLUDES);
+  const matchedKey = keyList.find((k) => title.includes(k.toLowerCase()));
 
   if (!matchedKey) return ["Basic cleaning included"];
+
   const service = INCLUDES[matchedKey];
   if (service[type]) return service[type];
   if (service.standard) return service.standard;
+
   return ["Basic cleaning included"];
 };
+
+
 const getModuleAddons = () => {
   if (!selectedModule) return ADDONS_BY_TITLE.default;
 
@@ -1010,6 +1086,7 @@ const getModuleAddons = () => {
       { title: "Bedroom Cleaning", desc: "Thorough cleaning of bedrooms including mattress and wardrobes", price: "₹39", image: bedroomImg },
       { title: "Kitchen Cleaning", desc: "Complete kitchen cleaning with appliances and surfaces", price: "₹59", image: kitchenImg },
       { title: "Bathroom Cleaning", desc: "Sanitization and deep cleaning of bathrooms", price: "₹45", image: bathroomImg },
+      { title: "All Services", desc: " Bathroom, Kitchen, Bedroom, and Living Room. A 4-in-1 service ", price: "₹599", image: bathroomImg },
     ],
     apartments: [
       { title: "Studio Apartment", desc: "Complete cleaning for studio apartments", price: "₹69", image: studioImg },
@@ -1161,34 +1238,52 @@ const computeTotal = (values: any) => {
     return;
   }
 
-  
-  let st = values?.serviceType;
-  if (!st) st = "standard";   
+  let st = values?.serviceType || "standard";
   setServiceTypeKey(st);
 
   const sqftRaw = values?.propertySize;
   let sqft = 0;
+
   if (typeof sqftRaw === "number") sqft = sqftRaw;
   else if (typeof sqftRaw === "string") sqft = parseFloat(sqftRaw || "0") || 0;
 
   const addons: string[] = values?.additional || [];
+  const selectedServices: string[] = values?.selectedServices || [];
 
-  
-  if (sqft > 0) {
-    const total = calculatePrice(selectedModule, sqft, st, addons);
-    setComputedPrice(total);
-    return;
-  }
-
-  
   const basePrice =
     parseInt((selectedModule.price || "").toString().replace(/[₹,\s]/g, "")) || 0;
 
   const mult = SERVICE_MULTIPLIERS[st] ?? 1;
-  const display = Math.round(basePrice * mult);
+
+ 
+  const extraSelectedServicePrice = selectedServices.reduce(
+    (sum, s) => sum + (INDIVIDUAL_SERVICE_PRICES[s] || 0),
+    0
+  );
+
+ 
+  const addonCost = addons.reduce((s, a) => s + (ADDON_PRICES[a] || 0), 0);
+
+ 
+  if (sqft > 0) {
+    const total = calculatePrice(
+      selectedModule,
+      sqft,
+      st,
+      addons,
+      selectedServices
+    );
+    setComputedPrice(total);
+    return;
+  }
+
+
+  const display =
+    Math.round((basePrice + extraSelectedServicePrice) * mult) + addonCost;
 
   setComputedPrice(display);
 };
+
 
 
  
@@ -1557,6 +1652,35 @@ const getDisplayPriceText = (): string => {
     ))}
   </Select>
 </Form.Item>
+{selectedSubKey === "homes" && selectedModule?.title === "All Services" && (
+  <Form.Item
+    name="selectedServices"
+    label="Select Service"
+    rules={[{ required: true, message: "Select at least one service" }]}
+    className="sw-cs-full-width"
+  >
+    <Select
+      mode="multiple"
+      placeholder="Select services"
+      style={{ cursor: "pointer" }}
+      dropdownStyle={{ cursor: "pointer" }}
+      optionLabelProp="label"
+    >
+      <Option value="kitchen" label="Kitchen Cleaning" style={{ cursor: "pointer" }}>
+        Kitchen Cleaning
+      </Option>
+      <Option value="bathroom" label="Bathroom Cleaning" style={{ cursor: "pointer" }}>
+        Bathroom Cleaning
+      </Option>
+      <Option value="living" label="Living Room Cleaning" style={{ cursor: "pointer" }}>
+        Living Room Cleaning
+      </Option>
+      <Option value="bedroom" label="Bedroom Cleaning" style={{ cursor: "pointer" }}>
+        Bedroom Cleaning
+      </Option>
+    </Select>
+  </Form.Item>
+)}
 
 
           {cfg.bedrooms && (
