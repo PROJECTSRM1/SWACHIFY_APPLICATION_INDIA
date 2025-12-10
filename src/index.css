@@ -17583,297 +17583,6 @@ width: 100%;
 
 
 
- /* anil & srihari vender page  */
-
-.sw-vendor-page {
-  padding: 30px 40px;
-  background: #f5f6f8;
-  min-height: calc(100vh - 65px);
-}
-
-/* Header */
-.sw-vendor-header-container {
-  background: #ffffff;
-  padding: 0 40px;
-  height: 65px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid #e6e6e6;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-}
-
-.sw-vendor-header-left {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-}
-
-.sw-brand-title {
-  font-size: 22px;
-  font-weight: 700;
-  color: #e60000;
-}
-
-.sw-vendor-portal-text {
-  font-size: 15px;
-  color: #444;
-}
-
-.sw-vendor-header-right {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.sw-profile-avatar {
-  cursor: pointer;
-  background-color: #007bff;
-}
-
-/* Info Card */
-.sw-vendor-info-card {
-  padding: 20px;
-  border-radius: 12px;
-  margin-bottom: 30px;
-}
-
-.sw-vendor-info-row {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-}
-
-.sw-vendor-label {
-  font-size: 13px;
-  color: gray;
-  margin-bottom: 4px;
-}
-
-.sw-vendor-value {
-  font-size: 15px;
-  font-weight: 600;
-}
-
-/* Section Heading */
-.sw-section-title {
-  font-size: 18px;
-  margin: 18px 0 10px;
-  font-weight: 600;
-}
-
-/* Order Cards */
-.sw-order-card {
-  border-radius: 12px !important;
-  padding: 20px;
-  margin-bottom: 25px;
-  background: #fff;
-}
-
-.sw-accepted-order {
-  border-left: 6px solid #2ecc71;
-}
-
-.sw-pending-order {
-  border-left: 6px solid #f4d03f;
-}
-
-/* Card header (title + ID) */
-.sw-order-header-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 6px;
-}
-
-.sw-order-id {
-  font-size: 13px;
-  color: #777;
-}
-
-/* Details row (icons) */
-
-.sw-order-details {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  margin-top: 6px;
-  flex-wrap: wrap;
-}
-
-.sw-order-details p {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 14px;
-  margin: 0 !important;
-  padding: 0 !important;
-  color: #333;
-}
-
-.sw-order-details .anticon {
-  font-size: 16px;
-  color: #005cfa;
-  display: inline-flex;
-}
-
-.sw-deliver-btn {
-  display: inline-flex !important;
-  align-items: center;
-  justify-content: center;
-  height: 44px;
-  background: #005cfa !important;
-  color: #fff !important;
-  border: none !important;
-  outline: none !important;
-  /* border-radius: 10px !important; */
-  box-shadow: none !important;
-  padding: 0 !important;
-  margin: 12px 0 0 0 !important;
-  display: flex !important;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
-}
-
-.sw-deliver-btn span {
-  padding: 0 22px !important;  /* ✅ this pads the text properly inside */
-}
-.sw-deliver-btn:hover {
-  box-shadow: 0 4px 12px rgba(0, 92, 250, 0.3);
-   background: #005cfa !important;
-  border: none !important;
-}
-
-
-
-/* Request description text */
-.sw-request-description {
-  margin-top: 10px;
-  font-size: 14px;
-}
-
-/* Accept / Reject buttons area */
-.sw-request-actions {
-  display: flex;
-  gap: 12px;
-  margin-top: 12px;
-}
-
-
-.sw-accept-btn, .sw-accept-btn:hover {
-
-  width: 100%;
-  height: 45px;
-  background: #06A826 !important;
-  color: #fff !important;
-  border: none !important;
-  outline: none !important;
-  /* border-radius: 12px !important; */
-  box-shadow: none !important;  /* Remove outer glow bleed */
-  padding: 0 !important;        /* Prevent inner crop */
-  margin: 0 !important;         /* Avoid spacing issues */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-
-.sw-reject-btn, .sw-reject-btn:hover {
-  width: 100%;
-  height: 45px;
-  background: #d92121 !important;
-  color: #fff !important;
-  border: none !important;
-  outline: none !important;
-  /* border-radius: 12px !important; */
-  box-shadow: none !important;  /* Remove outer glow bleed */
-  padding: 0 !important;        /* Prevent inner crop */
-  margin: 0 !important;         /* Avoid spacing issues */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Empty state text */
-.sw-empty-text {
-  font-size: 14px;
-  color: #777;
-  margin-bottom: 20px;
-}
-
-/* 📱 RESPONSIVE BREAKPOINTS */
-
-/* Tablets and small laptops */
-@media (max-width: 1024px) {
-  .sw-vendor-page {
-    padding: 20px;
-  }
-
-  .sw-vendor-info-row {
-    flex-wrap: wrap;
-  }
-
-  .sw-order-details {
-    gap: 16px;
-  }
-}
-
-/* Tablets / large phones */
-@media (max-width: 768px) {
-  .sw-vendor-header-container {
-    padding: 0 20px;
-  }
-
-  .sw-brand-title {
-    font-size: 20px;
-  }
-
-  .sw-order-details {
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .sw-request-actions {
-    flex-direction: column;
-  }
-
-  .sw-accept-btn,
-  .sw-reject-btn {
-    width: 100%;
-  }
-}
-
-/* Small phones */
-@media (max-width: 480px) {
-  .sw-vendor-header-container {
-    height: auto;
-    padding: 10px 15px;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .sw-vendor-page {
-    padding: 15px;
-  }
-
-  .sw-vendor-info-row {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .sw-order-card {
-    padding: 16px;
-  }
-
-  .sw-section-title {
-    font-size: 16px;
-  }
-}
-
-/* anil & srihari vender page  */
 
 
 
@@ -17912,3 +17621,790 @@ width: 100%;
   .sw-booking-page-content { width: 100%; height: 100%; max-width: none; border-radius: 0; }
   .sw-booking-page-overlay { align-items: flex-end; justify-content: center; }
 }
+
+
+
+
+
+/* anil and srihari vender page new css */
+/* Vendor full CSS - combined header, top-nav and dashboard styles
+   Filename suggestion: VendorDashboard.full.sw-vd.css
+   Use as a single imported stylesheet for VendorLayoutSwVd + DashboardSwVd
+*/
+
+/* ===== tokens ===== */
+:root{
+  --sw-vd-bg: #f6f7f9;
+  --sw-vd-white: #fff;
+  --sw-vd-accent: #e11d2a;
+  --sw-vd-muted: #6b6b6b;
+  --sw-vd-shadow: 0 6px 18px rgba(18,26,38,0.06);
+  --sw-vd-container: 1280px;
+  --sw-vd-font: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+/* ===== layout / page ===== */
+.sw-vd-layout {
+  min-height: 100vh;
+  background: var(--sw-vd-bg);
+  font-family: var(--sw-vd-font);
+  color: #111;
+}
+
+/* ===== header ===== */
+.sw-vd-header {
+  position: fixed;
+  background: var(--sw-vd-white);
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+  padding: 0;
+}
+.sw-vd-header-inner {
+  max-width: var(--sw-vd-container);
+  margin: 0 auto;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.sw-vd-brand { display:flex; align-items:center; gap:10px; font-weight:500; }
+.sw-vd-brand-ico { font-size:18px; line-height:1; }
+.sw-vd-brand-text { color: var(--sw-vd-accent); font-size: 16px; }
+
+/* header actions */
+.sw-vd-header-actions .sw-vd-link { color:#333 !important; font-weight:500; }
+.sw-vd-header-actions .sw-vd-logout { background: var(--sw-vd-accent) !important; border-color: var(--sw-vd-accent) !important; color:#fff !important; }
+
+/* ===== top navigation ===== */
+.sw-vd-topnav {background: var(--sw-vd-white); border-bottom: 1px solid rgba(0,0,0,0.04); }
+.sw-vd-topnav-inner { max-width: var(--sw-vd-container); margin: 0 auto; padding: 6px 20px; }
+
+/* Ant Menu tweaks */
+.sw-vd-menu { border-bottom: none !important; display:flex; align-items:center; height:44px; }
+/* Fix duplicated underline */
+.sw-vd-menu .ant-menu-item::after,
+.sw-vd-menu .ant-menu-item-selected::after {
+  display: none !important;
+}
+
+/* Keep only your custom highlight */
+.sw-vd-menu .ant-menu-item-selected {
+  border-bottom: 3px solid var(--sw-vd-accent) !important;
+  background: transparent !important;
+  color: var(--sw-vd-accent) !important;
+}
+
+.sw-vd-menu .ant-menu-item {
+  padding: 0 18px !important;
+  height: 44px !important;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  color:#333;
+  font-weight:500;
+}
+.sw-vd-menu .ant-menu-item a { color: inherit; }
+.sw-vd-menu .ant-menu-item svg { font-size:16px; }
+.sw-vd-menu .ant-menu-item-selected {
+  border-bottom: 3px solid var(--sw-vd-accent) !important;
+  background: transparent !important;
+  color: var(--sw-vd-accent) !important;
+}
+
+/* optional small colored icon wrapper inside menu */
+.sw-vd-menu .ant-menu-item .sw-vd-menu-icon {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:20px;
+  height:20px;
+  border-radius:4px;
+}
+
+:root{
+  --sw-vd-bg: #f6f7f9;
+  --sw-vd-white: #fff;
+  --sw-vd-accent: #e11d2a;
+  --sw-vd-muted: #6b6b6b;
+  --sw-vd-shadow: 0 10px 28px rgba(18,26,38,0.06);
+  --sw-vd-container: 1280px;
+}
+
+/* ===== Layout: vendor header + top nav (VendorLayout) ===== */
+.sw-vd-layout { min-height: 100vh; background: var(--sw-vd-bg); font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; color:#111; }
+.sw-vd-header {
+  background: var(--sw-vd-white);
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+  padding: 0;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+.sw-vd-header-inner {
+  max-width: var(--sw-vd-container);
+  margin: 0 auto;
+  padding: 10px 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.sw-vd-brand { display:flex; align-items:center; gap:10px; font-weight:600; }
+.sw-vd-brand-ico { font-size:18px; }
+.sw-vd-brand-text { color: var(--sw-vd-accent); font-size:16px; }
+
+/* header right actions */
+.sw-vd-header-actions .ant-btn { margin-left: 8px; }
+.sw-vd-logout .ant-btn { box-shadow:none; }
+
+/* Top nav bar below header */
+.sw-vd-topnav { background: var(--sw-vd-white); border-bottom: 1px solid rgba(0,0,0,0.04); }
+.sw-vd-topnav-inner { max-width: var(--sw-vd-container); margin:0 auto; padding:6px 20px; overflow:auto; }
+
+/* Ant menu adjustments — keep look like screenshot */
+.sw-vd-menu { border-bottom:none !important; display:flex; align-items:center; height:44px; min-width: 100%; }
+.sw-vd-menu .ant-menu-item { padding:0 18px !important; height:44px !important; display:flex; align-items:center; gap:8px; color:#333; font-weight:500; }
+.sw-vd-menu .ant-menu-item a { color:inherit; }
+.sw-vd-menu .ant-menu-item-selected { border-bottom:3px solid var(--sw-vd-accent) !important; background:transparent !important; color:var(--sw-vd-accent) !important; }
+.sw-vd-menu .ant-menu-item svg { font-size:16px; }
+
+/* ===== content wrapper (dashboard) ===== */
+.sw-vd-content { max-width: var(--sw-vd-container); margin: 0 auto; padding: 22px; }
+
+/* ===== page header ===== */
+.sw-vd-page-header { margin-bottom: 10px; }
+.sw-vd-title { font-size: 22px; margin: 6px 0 6px; font-weight:500; }
+.sw-vd-sub { color: var(--sw-vd-muted); font-size: 13px; margin: 0 0 12px; }
+
+/* ===== KPI grid ===== */
+.sw-vd-stats-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; margin-bottom: 16px; }
+.sw-vd-stat-card {
+  background: var(--sw-vd-white);
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: var(--sw-vd-shadow);
+  display:flex;
+  gap: 12px;
+  align-items:flex-start;
+  min-height: 86px;
+}
+.sw-vd-stat-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color: #fff;
+  font-size: 16px;
+}
+.sw-vd-icon-blue  { background: #3b82f6; }
+.sw-vd-icon-red   { background: #ef4444; }
+.sw-vd-icon-green { background: #10b981; }
+.sw-vd-icon-purple{ background: #8b5cf6; }
+.sw-vd-icon-orange{ background: #fb923c; }
+.sw-vd-icon-yellow{ background: #f59e0b; }
+
+/* force svg inside to appear white */
+.sw-vd-stat-icon .sw-vd-kpi-svg { color: #fff; font-size: 16px; line-height: 1; }
+
+/* KPI body */
+.sw-vd-stat-body { display:flex; flex-direction:column; gap:6px; }
+.sw-vd-stat-number { font-size:19px; font-weight:500; color:#111; }
+.sw-vd-stat-label { color: var(--sw-vd-muted); font-size:12px; }
+.sw-vd-stat-trend { font-size:12px; display:inline-flex; align-items:center; gap:6px; }
+.sw-vd-trend-up { color:#10b981; font-weight:500; }
+.sw-vd-trend-down { color:#ef4444; font-weight:500; }
+.sw-vd-trend-neutral { color:var(--sw-vd-muted); font-weight:500; }
+
+/* ===== cards (charts + pie) ===== */
+.sw-vd-cards-row { display:grid; grid-template-columns: 2fr 1fr; gap:16px; margin-bottom:16px; }
+.sw-vd-card { background: var(--sw-vd-white); border-radius:12px; padding:14px; box-shadow: var(--sw-vd-shadow); }
+.sw-vd-card-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
+.sw-vd-card-title { font-weight:600; font-size:15px; }
+.sw-vd-card-sub { color:var(--sw-vd-muted); font-size:12px; }
+
+/* pills */
+.sw-vd-range-pills { display:flex; gap:8px; }
+.sw-vd-pill {
+  padding:6px 10px;
+  border-radius:999px;
+  background:#fff;
+  border:1px solid rgba(0,0,0,0.04);
+  cursor:pointer;
+  font-size:13px;
+}
+.sw-vd-pill.sw-vd-active { background: #ffeaea; border-color: rgba(225,29,42,0.12); color:var(--sw-vd-accent); }
+
+/* chart sizes */
+.sw-vd-chart-wrapper { height: 180px; }
+
+/* pie area */
+.sw-vd-pie-area { display:flex; align-items:center; gap:12px; padding-top:8px; }
+.sw-vd-pie-chart { width:160px; height:160px; }
+.sw-vd-pie-chart canvas { width:160px !important; height:160px !important; }
+.sw-vd-pie-legend { display:flex; flex-direction:column; gap:8px; }
+.sw-vd-legend-row { display:flex; align-items:center; gap:10px; }
+.sw-vd-legend-dot { width:12px; height:12px; border-radius:50%; display:inline-block; margin-right:6px; }
+.sw-vd-legend-dot.sw-vd-out { background:#ef4444; }
+.sw-vd-legend-dot.sw-vd-in  { background:#10b981; }
+.sw-vd-legend-label { font-size:13px; color:#666; }
+.sw-vd-legend-value { font-weight:600; }
+
+/* ===== requests + snapshot (updated to match screenshot 2) ===== */
+.sw-vd-cards-row.lower { display:grid; grid-template-columns: 2fr 1fr; gap:16px; margin-top:6px; }
+.sw-vd-requests-list { display:flex; flex-direction:column; gap:14px; }
+
+/* Each booking item = white rounded box with subtle border */
+.sw-vd-booking-item {
+  background: var(--sw-vd-white);
+  border-radius: 12px;
+  border:1px solid rgba(0,0,0,0.04);
+  padding: 14px;
+  display: grid;
+  grid-template-columns: 1fr auto; /* left content + right price/summary */
+  gap: 12px;
+  align-items: center;
+}
+
+/* top row: left meta, right pending badge */
+.sw-vd-booking-top {
+  grid-column: 1 / -1;
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:12px;
+}
+.sw-vd-booking-meta { display:flex; flex-direction:column; gap:8px; min-width:0; }
+.sw-vd-booking-name { font-weight:600; color:#111; font-size:13px; }
+.sw-vd-booking-type { color:var(--sw-vd-muted); font-size:13px; margin-top:4px; }
+
+/* when row stacked (date, place) to match screenshot */
+.sw-vd-booking-when { display:flex; gap:14px; color:var(--sw-vd-muted); font-size:13px; margin-top:8px; flex-wrap:wrap; }
+.sw-vd-booking-when span { display:inline-flex; align-items:center; gap:8px; }
+
+/* pending tag on top right */
+.sw-vd-booking-status { margin-left: 12px; align-self:flex-start; }
+.sw-vd-pending {
+  display:inline-block;
+  background:#fff4d6;
+  color:#a57f00;
+  padding:6px 12px;
+  border-radius:12px;
+  font-weight:600;
+  border:1px solid rgba(0,0,0,0.02);
+  font-size:13px;
+}
+
+/* bottom row actions: Accept + Reject + right column price/days */
+.sw-vd-booking-actions { grid-column: 1 / span 1; display:flex; gap:12px; align-items:center; margin-top:8px; width:100%; }
+
+/* Make accept big red pill that fills available left space */
+.sw-vd-btn-accept {
+  background: var(--sw-vd-accent) !important;
+  border-color: var(--sw-vd-accent) !important;
+  color:#fff !important;
+  height:42px;
+  border-radius:10px;
+  padding: 0 18px;
+  min-width: 220px;
+  flex: 1; /* fill remaining width */
+  font-weight:600;
+  box-shadow:none;
+}
+
+/* Reject small outlined */
+.sw-vd-btn-reject {
+  background:#fff;
+  border:1px solid rgba(0,0,0,0.08);
+  height:42px;
+  padding:0 16px;
+  border-radius:10px;
+  min-width:250px;
+  font-weight:500;
+}
+
+/* right column: days and price (aligned right) */
+.sw-vd-booking-price {
+  grid-column: auto;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  justify-content:center;
+  min-width:120px;
+  text-align:right;
+  color:var(--sw-vd-muted);
+  gap:6px;
+}
+.sw-vd-booking-days { font-size:13px; }
+.sw-vd-booking-amount { font-weight:700; color:#111; font-size:15px; }
+
+/* snapshot */
+/* .sw-vd-snapshot-list { display:flex; flex-direction:column; gap:12px; padding-top:6px; }
+.sw-vd-snapshot-row { display:flex; gap:12px; align-items:center; }
+.sw-vd-snapshot-bar { width:6px; height:40px; background:var(--sw-vd-accent); border-radius:3px; }
+.sw-vd-snapshot-label { color:var(--sw-vd-muted); font-size:11px; }
+.sw-vd-snapshot-value { font-weight:500; } */
+
+
+/* Snapshot card — replace existing snapshot rules with this block */
+.sw-vd-card.sw-vd-card-snapshot {
+  min-height: 320px;                /* Taller card like screenshot */
+  padding: 18px;                    /* a touch more breathing room */
+  border-radius: 12px;
+  box-shadow: var(--sw-vd-shadow);
+  background: var(--sw-vd-white);
+}
+
+/* list and row */
+.sw-vd-snapshot-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;               /* larger vertical spacing between rows */
+  padding-top: 8px;
+}
+
+/* each metric row */
+.sw-vd-snapshot-row {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start; /* label+value stack aligns to top of bar */
+}
+
+/* the red vertical indicator */
+.sw-vd-snapshot-bar {
+  width: 6px;
+  height: 56px;             /* taller bar to match screenshot */
+  background: var(--sw-vd-accent);
+  border-radius: 4px;
+  flex-shrink: 0;
+  margin-top: 2px;          /* small offset so it visually centers with text */
+}
+
+/* label/value wrapper to the right of the bar */
+.sw-vd-snapshot-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* label (smaller muted text) */
+.sw-vd-snapshot-label {
+  color: var(--sw-vd-muted);
+  font-size: 13px;
+  line-height: 1.1;
+  margin: 0;
+}
+
+/* value (larger & bolder) */
+.sw-vd-snapshot-value {
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--sw-vd-text, #111); /* fallback if var not set */
+  line-height: 1.1;
+}
+
+/* small responsive adjustments */
+@media (max-width: 992px) {
+  .sw-vd-card.sw-vd-card-snapshot { min-height: 280px; }
+  .sw-vd-snapshot-bar { height: 48px; }
+  .sw-vd-snapshot-list { gap: 16px; }
+}
+
+@media (max-width: 420px) {
+  .sw-vd-card.sw-vd-card-snapshot { min-height: auto; padding: 12px; }
+  .sw-vd-snapshot-row { gap: 12px; }
+  .sw-vd-snapshot-bar { height: 40px; width: 5px; margin-top: 0; }
+  .sw-vd-snapshot-value { font-size: 15px; }
+  .sw-vd-snapshot-label { font-size: 12px; }
+}
+/*  */
+
+
+/* ===== smaller screens / responsive adjustments ===== */
+@media (max-width: 1200px) {
+  .sw-vd-stats-grid { grid-template-columns: repeat(3, 1fr); }
+  .sw-vd-cards-row { grid-template-columns: 1fr 1fr; }
+  .sw-vd-cards-row.lower { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 768px) {
+  .sw-vd-stats-grid { grid-template-columns: repeat(2, 1fr); gap:12px; }
+  .sw-vd-cards-row, .sw-vd-cards-row.lower { grid-template-columns: 1fr; }
+  .sw-vd-chart-wrapper { height:160px; }
+  .sw-vd-pie-chart, .sw-vd-pie-chart canvas { width:140px !important; height:140px !important; }
+  .sw-vd-header-inner, .sw-vd-topnav-inner, .sw-vd-content { padding-left:12px; padding-right:12px; }
+  .sw-vd-menu { min-width:640px; } /* allow horizontal scroll of top nav */
+  /* Booking items stack on small screens */
+  .sw-vd-booking-item { grid-template-columns: 1fr; }
+  .sw-vd-booking-actions { margin-top: 12px; }
+  .sw-vd-booking-price { align-items:flex-start; text-align:left; margin-top:8px; min-width:auto; }
+  .sw-vd-btn-accept { min-width:140px; }
+  .sw-vd-btn-reject { min-width:110px; }
+}
+
+@media (max-width: 420px) {
+  .sw-vd-stats-grid { grid-template-columns: 1fr; }
+  .sw-vd-pie-chart, .sw-vd-pie-chart canvas { width:120px !important; height:120px !important; }
+  .sw-vd-btn-accept, .sw-vd-btn-reject { min-width: 96px; height:40px; }
+}
+
+/* helpers */
+.sw-vd-view-all { color: var(--sw-vd-accent); font-weight:600; }
+.sw-vd-placeholder { background: var(--sw-vd-white); padding:24px; border-radius:8px; box-shadow:var(--sw-vd-shadow); }
+
+/* prevent charts overflow */
+.sw-vd-card .chartjs-render-monitor { max-width: 100% !important; height: auto !important; }
+
+
+/* ===========================
+   REQUESTS PAGE (sw-vd)
+=========================== */
+
+/* =========================
+   REQUESTS TABLE PAGE (sw-vd)
+   Append to VendorDashboard.full.sw-vd.css
+   ========================= */
+
+.sw-vd-requests-page-container {
+  max-width: var(--sw-vd-container);
+  margin: 0 auto;
+  padding: 18px 22px;
+  background: transparent;
+}
+
+.sw-vd-requests-page-container .sw-vd-title { margin-bottom: 6px; font-size: 28px; }
+.sw-vd-requests-page-container .sw-vd-sub { margin-bottom: 18px; color: var(--sw-vd-muted); }
+
+/* table wrapper */
+.sw-vd-req-table-wrap {
+  background: var(--sw-vd-white);
+  border-radius: 12px;
+  box-shadow: var(--sw-vd-shadow);
+  overflow: hidden;
+}
+
+/* table */
+.sw-vd-req-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 900px; /* allows columns spacing on desktop; scrolls on small devices */
+}
+.sw-vd-req-table thead tr {
+  background: #fff;
+}
+.sw-vd-req-table th {
+  text-align: left;
+  padding: 12px 18px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #4b5563;
+  border-bottom: 1px solid #eef2f5;
+}
+.sw-vd-req-table td {
+  padding: 14px 18px;
+  vertical-align: middle;
+  font-size: 14px;
+  color: #111;
+  border-bottom: 1px solid #f6f7f9;
+}
+
+/* booking id / timeago */
+.sw-vd-req-id-cell .sw-vd-bid { font-weight: 700; margin-bottom: 6px; }
+.sw-vd-req-id-cell .sw-vd-timeago { font-size: 12px; color: var(--sw-vd-muted); }
+
+/* customer */
+.sw-vd-customer-cell .sw-vd-cust-name { font-weight: 700; }
+.sw-vd-customer-cell .sw-vd-cust-phone { font-size: 12px; color: var(--sw-vd-muted); margin-top: 6px; }
+
+/* service tag */
+.sw-vd-service-tag { font-size: 12px; padding: 4px 8px; border-radius: 6px; }
+
+/* amount */
+.sw-vd-amount-col .sw-vd-amount { color: var(--sw-vd-accent); font-weight:700; }
+
+/* actions column */
+.sw-vd-actions-col .sw-vd-action-buttons { display:flex; gap:8px; align-items:center; justify-content:flex-end; }
+.sw-vd-actions-col .ant-btn.sw-vd-accept-btn {
+  background: var(--sw-vd-accent) !important;
+  color: #fff !important;
+  border-color: var(--sw-vd-accent) !important;
+}
+.sw-vd-actions-col .ant-btn.sw-vd-reject-btn {
+  background: #fff !important;
+  color: #111 !important;
+  border: 1px solid rgba(0,0,0,0.08) !important;
+}
+
+/* make the action buttons slightly larger like screenshot */
+.sw-vd-actions-col .ant-btn { width:40px; height:40px; display:inline-flex; align-items:center; justify-content:center; border-radius:8px; }
+
+/* responsive behavior - table will scroll on smaller screens */
+@media (max-width: 1200px) {
+  .sw-vd-req-table { min-width: 820px; }
+  .sw-vd-req-table th, .sw-vd-req-table td { padding: 12px 14px; }
+  .sw-vd-requests-page-container { padding-left: 12px; padding-right: 12px; }
+}
+
+@media (max-width: 768px) {
+  .sw-vd-req-table { min-width: 640px; }
+  .sw-vd-req-table th, .sw-vd-req-table td { padding: 10px 12px; font-size: 13px; }
+  .sw-vd-req-id-cell .sw-vd-timeago { display:block; }
+}
+
+/* mobile card fallback (optional) - convert table rows to stacked cards on very small screens */
+@media (max-width: 420px) {
+  .sw-vd-req-table { display: block; }
+  .sw-vd-req-table thead { display: none; }
+  .sw-vd-req-table tbody { display: block; }
+  .sw-vd-req-table tr { display: block; border-bottom: none; margin: 12px; background: var(--sw-vd-white); border-radius: 10px; box-shadow: var(--sw-vd-shadow); padding: 12px; }
+  .sw-vd-req-table td { display:flex; justify-content:space-between; padding:6px 8px; border-bottom: 1px dashed #f1f1f1; }
+  .sw-vd-req-table td:last-child { border-bottom: none; }
+  .sw-vd-actions-col .sw-vd-action-buttons { justify-content:flex-start; }
+}
+
+
+/* FleetPage */
+/* =========================
+   FLEET PAGE (sw-vd)
+   Add this to VendorDashboard.full.sw-vd.css
+   ========================= */
+
+.sw-vd-fleet-page { background: transparent; }
+
+/* page header: reuse existing sw-vd-page-header if present */
+.sw-vd-page-header {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:18px;
+  max-width: var(--sw-vd-container);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.sw-vd-add-btn {
+  background: var(--sw-vd-accent) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 20px;
+  padding: 8px 14px !important;
+  box-shadow: none;
+}
+
+/* lite KPI cards for fleet summary */
+.sw-vd-stats-grid.small {
+  display:flex;
+  gap:12px;
+  margin-bottom:18px;
+  max-width: var(--sw-vd-container);
+  margin-left: auto;
+  margin-right: auto;
+}
+.sw-vd-stats-grid.small .sw-vd-stat-card-lite {
+  flex: 1 1 0;
+  min-height: 78px;
+  display:flex;
+  align-items:center;
+  padding: 16px;
+  border-radius: 10px;
+}
+.sw-vd-stat-card-available { background: #ecfdf5; }
+.sw-vd-stat-card-ontrip { background: #eef2ff; }
+.sw-vd-stat-card-maint { background: #fffbeb; }
+
+/* table wrapper */
+.sw-vd-fleet-table-wrap {
+  max-width: var(--sw-vd-container);
+  margin-left: auto;
+  margin-right: auto;
+  background: var(--sw-vd-white);
+  border-radius: 12px;
+  box-shadow: var(--sw-vd-shadow);
+  padding: 8px 0 16px 0;
+  overflow: hidden;
+}
+
+/* table basics */
+.sw-vd-fleet-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 900px; /* keeps columns readable on desktop (table will scroll on smaller screens) */
+}
+.sw-vd-fleet-table thead tr {
+  background: #fff;
+}
+.sw-vd-fleet-table th {
+  text-align: left;
+  padding: 14px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #4b5563;
+  border-bottom: 1px solid #f2f4f6;
+}
+.sw-vd-fleet-table td {
+  padding: 14px 18px;
+  vertical-align: middle;
+  font-size: 14px;
+  border-bottom: 1px solid #f6f7f9;
+}
+
+/* car media cell */
+.sw-vd-td-car .sw-vd-car-media {
+  display:flex;
+  gap:12px;
+  align-items:center;
+}
+.sw-vd-car-img {
+  width:56px;
+  height:56px;
+  object-fit:cover;
+  border-radius:8px;
+  border: 1px solid rgba(0,0,0,0.04);
+}
+.sw-vd-car-meta .sw-vd-car-name { font-weight:600; }
+.sw-vd-car-meta .sw-vd-car-daily { font-size:12px; color:var(--sw-vd-muted); margin-top:6px; }
+
+/* status column */
+.sw-vd-tag-available { background: #ecf9f0 !important; color: #059669 !important; border: none !important; padding: 6px 10px; border-radius: 10px; }
+.sw-vd-ontrip-note { font-size: 12px; color: var(--sw-vd-muted); margin-top:6px; }
+
+/* action buttons */
+.sw-vd-actions { display:flex; gap:8px; align-items:center; }
+.sw-vd-actions .ant-btn { box-shadow:none; }
+.sw-vd-btn-available { background:#d1fae5 !important; color:#065f46 !important; border-radius: 8px; padding:6px 10px; border:none; }
+.sw-vd-btn-mainten { background:#fff; border:1px solid rgba(0,0,0,0.06); border-radius:8px; }
+
+/* responsive behaviour - table scroll on small screens */
+@media (max-width: 1200px) {
+  .sw-vd-fleet-table { min-width: 800px; }
+  .sw-vd-stats-grid.small { gap:10px; padding: 0 12px; }
+  .sw-vd-page-header { padding: 0 12px; }
+}
+
+@media (max-width: 992px) {
+  .sw-vd-fleet-table { min-width: 720px; }
+  .sw-vd-car-img { width:48px; height:48px; }
+}
+
+@media (max-width: 768px) {
+  .sw-vd-fleet-table-wrap { overflow-x: auto; padding-bottom: 10px; }
+  .sw-vd-fleet-table { min-width: 640px; }
+  .sw-vd-page-header { padding: 0 12px; }
+  .sw-vd-stats-grid.small { display:grid; grid-template-columns: 1fr 1fr; gap:10px; padding: 0 12px; }
+}
+
+@media (max-width: 480px) {
+  .sw-vd-fleet-table { min-width: 560px; }
+  .sw-vd-stats-grid.small { grid-template-columns: 1fr; }
+  .sw-vd-car-meta .sw-vd-car-daily { display:block; }
+  .sw-vd-page-header { flex-direction: column; align-items: flex-start; gap:8px; padding: 0 12px; }
+  .sw-vd-add-btn { align-self:flex-start; }
+}
+
+/* small helper */
+.sw-vd-fleet-table th:first-child, .sw-vd-fleet-table td:first-child { min-width: 250px; }
+
+/* =========================
+   DRIVERS PAGE (sw-vd)
+   Append to VendorDashboard.full.sw-vd.css
+   ========================= */
+
+.sw-vd-drivers-page { padding-bottom: 12px; }
+
+/* reuse .sw-vd-page-header and small stat grid styles from fleet/dashboard */
+
+.sw-vd-drivers-table th { min-width: 80px; }
+
+/* driver media cell uses same styles as car media */
+.sw-vd-td-driver .sw-vd-car-media { display:flex; gap:12px; align-items:center; }
+.sw-vd-td-driver .sw-vd-car-img { width:56px; height:56px; object-fit:cover; border-radius:50%; border:1px solid rgba(0,0,0,0.04); }
+.sw-vd-td-driver .sw-vd-car-meta .sw-vd-car-name { font-weight:600; }
+.sw-vd-td-driver .sw-vd-car-meta .sw-vd-car-daily { font-size:12px; color:var(--sw-vd-muted); margin-top:6px; }
+
+/* availability small note */
+.sw-vd-ontrip-note { font-size:12px; color:var(--sw-vd-muted); margin-top:6px; }
+
+/* actions align */
+.sw-vd-drivers-table .sw-vd-actions { display:flex; gap:8px; align-items:center; }
+
+/* responsive tweaks */
+@media (max-width: 992px) {
+  .sw-vd-car-img { width:48px; height:48px; }
+  .sw-vd-fleet-table { min-width: 720px; }
+}
+
+@media (max-width: 768px) {
+  .sw-vd-fleet-table { min-width: 640px; }
+  .sw-vd-stats-grid.small { grid-template-columns: 1fr 1fr; gap:10px; padding: 0 12px; }
+  .sw-vd-page-header { padding: 0 12px; }
+}
+
+@media (max-width: 480px) {
+  .sw-vd-stats-grid.small { grid-template-columns: 1fr; }
+  .sw-vd-td-driver .sw-vd-car-meta .sw-vd-car-daily { display:block; }
+  .sw-vd-page-header { flex-direction: column; align-items: flex-start; gap:8px; padding: 0 12px; }
+  .sw-vd-add-btn { align-self:flex-start; }
+}
+
+/* keep look consistent with fleet */
+.sw-vd-drivers-table tbody tr td { vertical-align: middle; }
+
+
+/* =========================
+   BOOKINGS PAGE (sw-vd)
+   Append to VendorDashboard.full.sw-vd.css
+   ========================= */
+
+.sw-vd-bookings-page { padding-bottom: 24px; }
+
+.sw-vd-stats-grid.small.bookings-stats { margin-bottom: 18px; }
+
+/* booking tabs */
+.sw-vd-booking-tabs { display:flex; gap:18px; align-items:center; margin: 8px 0 12px 0; padding-left: 8px; }
+.sw-vd-booking-tab {
+  background: transparent;
+  border: none;
+  padding: 6px 10px;
+  font-size: 14px;
+  cursor: pointer;
+  color: #6b6b6b;
+  border-bottom: 2px solid transparent;
+}
+.sw-vd-booking-tab.sw-vd-active { color: var(--sw-vd-accent); border-bottom-color: var(--sw-vd-accent); font-weight:600; }
+
+/* bookings table wrapper reuse .sw-vd-fleet-table-wrap */
+.sw-vd-bookings-table-wrap { margin-top: 12px; }
+
+/* table tweaks for bookings */
+.sw-vd-bookings-table th { text-align:left; padding:12px 18px; font-size:13px; color:#4b5563; border-bottom:1px solid #f2f4f6; }
+.sw-vd-bookings-table td { padding:14px 18px; vertical-align: middle; border-bottom:1px solid #f6f7f9; font-size:14px; }
+
+.sw-vd-amount-value { font-weight:700; color: var(--sw-vd-accent); }
+.sw-vd-amount-sub { font-size:12px; color:#10b981; } /* Paid color */
+
+.sw-vd-bookings-table .sw-vd-actions { display:flex; gap:8px; }
+
+/* small / responsive */
+@media (max-width: 992px) {
+  .sw-vd-fleet-table { min-width: 780px; }
+}
+@media (max-width: 768px) {
+  .sw-vd-fleet-table { min-width: 640px; }
+  .sw-vd-booking-tabs { gap:12px; padding-left: 6px; }
+}
+@media (max-width: 480px) {
+  .sw-vd-fleet-table { min-width: 520px; }
+  .sw-vd-booking-tab { font-size:13px; }
+}
+
+
+
+
+
+
+
+/* anil and srihari vender page new css */
+
+
+
+
