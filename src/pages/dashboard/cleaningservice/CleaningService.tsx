@@ -915,6 +915,36 @@ const CleaningService: React.FC = () => {
   const [serviceTypeKey, setServiceTypeKey] = useState<string>("standard");
 
   const [form] = Form.useForm();
+  const detectAddress = () => {
+  if (!navigator.geolocation) {
+    message.error("Your browser does not support location detection");
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    async (pos) => {
+      const { latitude, longitude } = pos.coords;
+      try {
+        const res = await fetch(
+          `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
+        );
+        const data = await res.json();
+        if (data.display_name) {
+          form.setFieldsValue({ address: data.display_name });
+          message.success("Address detected successfully");
+        } else {
+          message.error("Failed to detect address");
+        }
+      } catch {
+        message.error("Unable to fetch address from OpenStreetMap");
+      }
+    },
+    () => {
+      message.warning("Please allow location permission");
+    }
+  );
+};
+
   const today = new Date().toISOString().split("T")[0];
 const getIncludedItems = () => {
   if (!selectedModule) return [];
@@ -1543,31 +1573,41 @@ const getDisplayPriceText = (): string => {
 </div>
 
 <div className="sw-cs-form-row">
-  
   <Form.Item
     name="mobile"
     label="Mobile Number"
     rules={[
       { required: true, message: "Enter mobile number" },
-      {
-        pattern: /^[0-9]{10}$/,
-        message: "Enter valid 10-digit Indian mobile number"
-      }
+      { pattern: /^[0-9]{10}$/, message: "Enter valid 10-digit number" },
     ]}
     className="sw-cs-half-width"
   >
-    <Input maxLength={10} placeholder="+91 9876543210" />
+    <Input maxLength={10} placeholder="9876543210" />
   </Form.Item>
 
-  
   <Form.Item
     name="address"
     label="Address"
     rules={[{ required: true, message: "Enter address" }]}
     className="sw-cs-half-width"
   >
-    <Input placeholder="House No, Street, City" />
+    <Input
+      placeholder="House No, Street, City"
+      value={form.getFieldValue("address")}
+      onChange={(e) => form.setFieldsValue({ address: e.target.value })}
+    />
   </Form.Item>
+</div>
+
+{/* Detect button goes BELOW the row */}
+<div className="sw-cs-form-row">
+  <Button
+    className="sw-cs-location-btn"
+    onClick={detectAddress}
+    type="default"
+  >
+    Detect My Current Location
+  </Button>
 </div>
 
 
