@@ -13,7 +13,10 @@ import {
 } from "@ant-design/icons";
 
 import "../../index.css";
-import "./SwachifyProducts.css";
+// import "./Swachifyproducts.css";
+
+// 🔹 NEW: import shared JSON (same as EducationPage)
+import appData from "../../data/educationData.json";
 
 type ProductCategory = {
   id: string;
@@ -32,90 +35,32 @@ type ComboPack = {
   points: string[];
 };
 
-const PRODUCT_CATEGORIES: ProductCategory[] = [
-  {
-    id: "vegetables",
-    title: "Fresh Vegetables",
-    description:
-      "Leafy greens and seasonal vegetables harvested directly from farms.",
-    icon: <AppleOutlined />,
-    badge: "Daily Harvest",
-    items: ["Tomato", "Onion", "Potato", "Leafy Greens", "Okra", "Brinjal",],
-  },
-  {
-    id: "fruits",
-    title: "Fruits & Orchard Produce",
-    description: "Naturally ripened fruits packed with nutrition and taste, carefully graded and sourced directly from farms for maximum freshness.",
-    icon: <CrownOutlined />,
-    items: ["Banana", "Mango", "Papaya", "Apple", "Pomegranate", "Dragonfruit",],
-  },
-  {
-    id: "grains",
-    title: "Grains, Rice & Wheat",
-    description:
-      "Staple grains cleaned and packed for homes, hotels and bulk buyers, with consistent quality.",
-    icon: <ShoppingCartOutlined />,
-    badge: "Best Selling",
-    items: ["Raw Rice", "Boiled Rice", "Wheat", "Ragi", "Millets", "Pulses"],
-  },
-  {
-    id: "eggs",
-    title: "Eggs & Dairy Basics",
-    description:
-      "Farm eggs and essential dairy items for daily household needs.",
-    icon: <FireOutlined />,
-    items: ["Country Eggs", "White Eggs", "Paneer", "Ghee (bulk / retail)"],
-  },
-  {
-    id: "farm-inputs",
-    title: "Seeds & Farm Inputs",
-    description: "Quality seeds and basic farm inputs to support farmers.",
-    icon: <ShoppingCartOutlined />,
-    items: ["Vegetable Seeds", "Paddy Seeds", "Bio Fertilizers", "Organic Manure"],
-  },
-  {
-    id: "packs",
-    title: "Retail & Wholesale Packs",
-    description: "Pre-packed combos ready for shops, hostels and institutions.",
-    icon: <CrownOutlined />,
-    items: ["Mixed Veg Pack", "Family Grain Pack", "Hostel Combo Pack","Canteen Supply Pack"],
-  },
-];
+// 🔹 NEW: icon map for JSON iconKey -> actual Ant icons
+const iconMap: Record<string, React.ReactNode> = {
+  apple: <AppleOutlined />,
+  crown: <CrownOutlined />,
+  cart: <ShoppingCartOutlined />,
+  fire: <FireOutlined />,
+};
 
-const COMBO_PACKS: ComboPack[] = [
-  {
-    name: "Family Essentials Pack",
-    tag: "Most Popular",
-    price: "₹1,499",
-    forWhom: "Ideal for 4–5 member families",
-    points: [
-      "Weekly mix of seasonal vegetables",
-      "Rice / wheat combo + pulses",
-      "Optional add-on: fruits & eggs",
-    ],
-  },
-  {
-    name: "Retailer Starter Pack",
-    tag: "Best for Shops",
-    price: "₹4,999",
-    forWhom: "Small supermarkets & kirana stores",
-    points: [
-      "Assorted vegetables in crates",
-      "Pre-packed grain & pulse pouches",
-      "Attractive margins & steady supply",
-    ],
-  },
-  {
-    name: "Bulk Buyer / Hostel Pack",
-    price: "Custom Quote",
-    forWhom: "Hostels, canteens and catering units",
-    points: [
-      "Bulk rice, wheat and pulses",
-      "Regular supply of cut / whole vegetables",
-      "Delivery schedule as per requirement",
-    ],
-  },
-];
+// 🔹 NEW: safely read Swachify data from JSON
+const swachifyProducts = (appData as any).swachifyProducts || {
+  categories: [],
+  comboPacks: [],
+};
+
+// 🔹 NEW: build categories array exactly like your old constant
+const PRODUCT_CATEGORIES: ProductCategory[] =
+  swachifyProducts.categories.map((cat: any): ProductCategory => {
+    const { iconKey, ...rest } = cat;
+    return {
+      ...rest,
+      icon: iconMap[iconKey] || <ShoppingCartOutlined />,
+    };
+  });
+
+// 🔹 NEW: combo packs directly from JSON
+const COMBO_PACKS: ComboPack[] = (swachifyProducts.comboPacks || []) as ComboPack[];
 
 const SwachifyProducts: React.FC = () => {
   return (

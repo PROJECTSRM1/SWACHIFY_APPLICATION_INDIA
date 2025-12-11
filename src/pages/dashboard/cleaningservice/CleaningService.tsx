@@ -95,14 +95,51 @@ const SERVICE_MULTIPLIERS: Record<string, number> = {
 };
 
 const ADDON_PRICES: Record<string, number> = {
-  window: 100,
-  balcony: 150,
-  carpet: 200,
-  oven: 300,
-  kitchenDeepClean: 199,
+  curtainSteam: 199,
+  tvUnit: 149,
+  mattressShampoo: 249,
+  chimneyService: 349,
+  fridgeInside: 149,
+  jetSpray: 149,
+  hardwater: 199,
   balconyWash: 149,
-  sofaShampoo: 299,
+  patioWash: 249,
+  chairShampoo: 129,
+  whiteboardClean: 99,
+  keyboardSanitize: 49,
+  monitorClean: 99,
+  micClean: 99,
+  rackDeep: 149,
+  glassPolish: 129,
+  escalatorClean: 499,
+  fabricProtect: 199,
+  odorTreatment: 149,
+  woodPolish: 249,
+  termiteCheck: 299,
+  sealant: 299,
+  antiSlip: 199,
+  groutProtect: 149,
+  trackClean: 99,
+  framePolish: 129,
+  pressureWash: 299,
+  glueRemoval: 199,
+  chemicalWash: 249,
+  scraperWork: 149,
+  oilRemoval: 399,
+  machineDeep: 499,
+  greaseTreatment: 349,
+  scrubberMachine: 299,
+  chemicalTreat: 249,
+  windowExtra: 99,
 };
+const INDIVIDUAL_SERVICE_PRICES: Record<string, number> = {
+  kitchen: 59,
+  bathroom: 45,
+  living: 49,
+  bedroom: 39,
+};
+
+
 
 const PRICE_PER_SQFT: Record<string, number> = {
   "living room cleaning": 1.5,
@@ -136,6 +173,677 @@ const PRICE_PER_SQFT: Record<string, number> = {
   "warehouse floor cleaning": 2.0,
 };
 
+
+const INCLUDES: Record<string, any> = {
+
+  
+  "living room": {
+    standard: [
+      "Surface dusting of furniture",
+      "Floor sweeping & mopping",
+      "Window & sill wiping",
+      "Cushion & sofa surface cleaning"
+    ],
+    deep: [
+      "Everything in regular cleaning",
+      "Wet scrubbing of floors & corners",
+      "Deep sofa vacuuming",
+      "Ceiling fan & light fixture cleaning",
+      "Switchboards & door handle sanitization",
+      "Glass & mirror detailing",
+      "Baseboard / skirting cleaning",
+      "Under-furniture dust removal"
+    ]
+  },
+
+  bedroom: {
+    standard: [
+      "Bed & mattress surface cleaning",
+      "Wardrobe exterior cleaning",
+      "Floor sweeping & mopping",
+      "Cobweb removal"
+    ],
+    deep: [
+      "Everything in regular cleaning",
+      "Deep mattress vacuuming",
+      "Wardrobe interior cleaning",
+      "Fan & light cleaning",
+      "Window tracks detailing",
+      "Mirror & glass polishing",
+      "Switchboard sanitization"
+    ]
+  },
+
+  kitchen: {
+    standard: [
+      "Countertop & surface wiping",
+      "Gas stove exterior cleaning",
+      "Floor cleaning",
+      "Exterior appliance cleaning"
+    ],
+    deep: [
+      "Everything in regular cleaning",
+      "Tile degreasing & scrubbing",
+      "Burner + stove deep clean",
+      "Sink descaling",
+      "Cabinet exterior detailing",
+      "Chimney exterior cleaning",
+      "Oil stain removal"
+    ],
+    grease: [
+      "Heavy grease removal from tiles",
+      "Oil residue breakdown using chemicals",
+      "Chimney heavy-duty cleaning",
+      "Stove burner full dismantle & clean",
+      "Backsplash deep scrubbing",
+      "Sink + tap stain removal"
+    ]
+  },
+
+  bathroom: {
+    standard: [
+      "Basin & tap cleaning",
+      "Mirror wiping",
+      "Floor scrubbing",
+      "General stain removal"
+    ],
+    deep: [
+      "Everything in regular cleaning",
+      "Tile scaling & stain removal",
+      "Shower & faucet deep clean",
+      "Toilet bowl descaling",
+      "Hard water stain removal",
+      "Drain cleaning",
+      "Glass partition polishing"
+    ],
+    sanitization: [
+      "Full bathroom disinfection",
+      "Touch-point sanitizing",
+      "High-grade disinfectant spray",
+      "Odor neutralizing treatment"
+    ]
+  },
+
+  
+
+  "studio apartment": {
+    standard: [
+      "Complete surface cleaning",
+      "Floor sweeping & mopping",
+      "Bathroom & kitchen basic cleaning"
+    ],
+    deep: [
+      "Complete deep home cleaning",
+      "Ceiling fan & exhaust cleaning",
+      "Bathroom scaling removal",
+      "Kitchen degreasing",
+      "Furniture detailing",
+      "Window track cleaning"
+    ]
+  },
+
+  "1 bhk apartment": {
+    standard: [
+      "1 Bedroom cleaning",
+      "Kitchen basic cleaning",
+      "Bathroom wipe & clean",
+      "Floor mopping"
+    ],
+    deep: [
+      "Deep cleaning for entire apartment",
+      "Tile & grout scrubbing",
+      "Kitchen degreasing",
+      "Bathroom hard stain removal",
+      "Under-furniture cleaning",
+      "Fan & switchboard detailing"
+    ]
+  },
+
+  "2 bhk / 3 bhk apartment": {
+    standard: [
+      "Full apartment surface cleaning",
+      "Room & hall sweeping/mopping",
+      "Kitchen & bathroom basic cleaning"
+    ],
+    deep: [
+      "Complete deep cleaning for all rooms",
+      "Cabinet exterior degreasing",
+      "Bathroom scaling removal",
+      "Glass/mirror polishing",
+      "Detailed fan cleaning",
+      "Interior dust removal"
+    ]
+  },
+
+  
+
+  "small villas": {
+    standard: [
+      "Room-wise general cleaning",
+      "Floor sweeping & mopping",
+      "Window & sill wiping"
+    ],
+    deep: [
+      "Complete villa deep clean",
+      "Staircase railing polishing",
+      "Balcony dust removal",
+      "Kitchen & bathroom deep clean",
+      "Fan, lights & cobweb removal"
+    ]
+  },
+
+  "duplex villas": {
+    standard: [
+      "Stair cleaning",
+      "Floor mopping",
+      "Surface dusting"
+    ],
+    deep: [
+      "Two-floor deep cleaning",
+      "Handrail + staircase detailing",
+      "Balcony & terrace cleaning",
+      "Deep bathroom/kitchen treatment",
+      "Glass & railing polishing"
+    ]
+  },
+
+  "luxury villas": {
+    standard: [
+      "Premium room cleaning",
+      "Glass & surface cleaning",
+      "Floor polishing (basic)"
+    ],
+    deep: [
+      "Premium deep cleaning",
+      "Granite/marble detailing",
+      "High-ceiling dust removal",
+      "Balcony + terrace heavy clean",
+      "Premium sanitization"
+    ]
+  },
+
+ 
+
+  "cabin cleaning": {
+    standard: [
+      "Table & chair cleaning",
+      "Glass wiping",
+      "Floor mopping"
+    ],
+    deep: [
+      "Detailed workstation cleaning",
+      "Phone & switch sanitizing",
+      "Glass & panel polishing",
+      "Under-table cleaning"
+    ]
+  },
+
+  "workstation cleaning": {
+    standard: [
+      "Desk surface wipe",
+      "Chair cleaning",
+      "Floor vacuuming"
+    ],
+    deep: [
+      "Keyboard/mouse sanitization",
+      "Chair deep cleaning",
+      "Panel & divider dust removal",
+      "Carpet vacuuming"
+    ]
+  },
+
+  "conference hall cleaning": {
+    standard: [
+      "Table surface cleaning",
+      "Chair arrangement & wipe",
+      "Floor mopping"
+    ],
+    deep: [
+      "Glass board polishing",
+      "Panel/fabric cleaning",
+      "Switchboard sanitization",
+      "Curtain/blind dust removal"
+    ]
+  },
+
+
+
+  classrooms: {
+    standard: [
+      "Desk & bench wiping",
+      "Blackboard cleaning",
+      "Floor sweeping"
+    ],
+    deep: [
+      "Desk sanitization",
+      "Window grills deep cleaning",
+      "Fan & cobweb removal",
+      "Washroom sanitization"
+    ]
+  },
+
+  "laboratory cleaning": {
+    standard: [
+      "Table wiping",
+      "Floor cleaning",
+      "Basic disinfecting"
+    ],
+    deep: [
+      "Chemical stain removal",
+      "Sink + tap deep clean",
+      "Equipment exterior sanitizing",
+      "Fume area cleaning"
+    ]
+  },
+
+  "library cleaning": {
+    standard: [
+      "Table + reading area wipe",
+      "Floor cleaning",
+      "Window wipe"
+    ],
+    deep: [
+      "Book rack dust removal",
+      "Deep carpet vacuum",
+      "Glass partition polishing",
+      "Furniture sanitizing"
+    ]
+  },
+
+  
+
+  "shop cleaning": {
+    standard: [
+      "Shelf & counter cleaning",
+      "Floor mopping",
+      "Glass wiping"
+    ],
+    deep: [
+      "Product shelf dust removal",
+      "Glass detailing",
+      "Deep floor scrubbing",
+      "Ceiling dust removal"
+    ]
+  },
+
+  "mall cleaning": {
+    standard: [
+      "Large area sweeping",
+      "Wet mop",
+      "Glass/panel wiping"
+    ],
+    deep: [
+      "Machine scrubbing",
+      "Escalator cleaning",
+      "High-rise glass wiping",
+      "Sanitization treatment"
+    ]
+  },
+
+  "showroom cleaning": {
+    standard: [
+      "Surface cleaning",
+      "Floor polish (basic)",
+      "Glass wiping"
+    ],
+    deep: [
+      "Display polishing",
+      "Floor buff machine cleaning",
+      "High-touch sanitizing",
+      "Glass detailing"
+    ]
+  },
+
+  
+
+  "sofa cleaning": {
+    standard: [
+      "Dry vacuuming",
+      "Spot cleaning",
+      "Fabric dust removal"
+    ],
+    deep: [
+      "Shampoo + extraction clean",
+      "Stain treatment",
+      "Odor removal",
+      "Fabric sanitizing"
+    ]
+  },
+
+  "chair cleaning": {
+    standard: ["Surface wipe", "Basic vacuum"],
+    deep: [
+      "Foam shampoo wash",
+      "Mesh stain removal",
+      "Deep vacuum extraction"
+    ]
+  },
+
+  "wooden furniture cleaning": {
+    standard: ["Dry dusting", "Polish wipe"],
+    deep: [
+      "Wood-safe chemical polish",
+      "Stain treatment",
+      "Detailing of corners"
+    ]
+  },
+
+
+
+  "marble polishing": {
+    standard: ["Surface cleaning", "Basic buffing"],
+    deep: [
+      "Grinding + polishing",
+      "Mirror finish treatment",
+      "Chemical stain removal"
+    ]
+  },
+
+  "tile cleaning": {
+    standard: ["Tile wiping", "Grout cleaning (basic)"],
+    deep: [
+      "Machine scrubbing",
+      "Grout deep restoration",
+      "Hard stain removal"
+    ]
+  },
+
+  "granite polishing": {
+    standard: ["Surface cleaning", "Basic shine buff"],
+    deep: [
+      "Industrial-grade polishing",
+      "Scratch removal",
+      "Stain lifting"
+    ]
+  },
+
+
+
+  "indoor glass cleaning": {
+    standard: ["Glass wiping", "Frame cleaning"],
+    deep: [
+      "Spot-free glass polish",
+      "Track cleaning",
+      "Mirror detailing"
+    ]
+  },
+
+  "outdoor glass cleaning": {
+    standard: ["Exterior wipe", "Dust removal"],
+    deep: [
+      "Hard stain removal",
+      "Ladder/safety wash",
+      "Frame & track detailing"
+    ]
+  },
+
+  "high-rise glass cleaning": {
+    standard: ["Exterior wipe"],
+    deep: [
+      "Rope-access cleaning",
+      "Chemical stain removal",
+      "Safety harness operation"
+    ]
+  },
+
+ 
+
+  "home sanitization": {
+    standard: ["Whole house spray sanitization"],
+    deep: [
+      "ULV fogging",
+      "Touch-point disinfection",
+      "Kitchen & bathroom sanitizing"
+    ]
+  },
+
+  "office sanitization": {
+    standard: ["Workstation disinfecting"],
+    deep: [
+      "Full office fogging",
+      "Chair/desk sanitization",
+      "Conference hall disinfecting"
+    ]
+  },
+
+  "commercial sanitization": {
+    standard: ["Shop/mall disinfectant spray"],
+    deep: [
+      "Fogging + deep spray",
+      "Shelf sanitization",
+      "Entrance & counter disinfection"
+    ]
+  },
+
+
+
+  "indoor dust removal": {
+    standard: ["Dust sweeping", "Surface wipe"],
+    deep: [
+      "Heavy dust removal",
+      "Vacuum + pressure cleaning",
+      "Window track dust extraction"
+    ]
+  },
+
+  "outdoor dust removal": {
+    standard: ["Outdoor sweeping"],
+    deep: [
+      "High-pressure jet cleaning",
+      "Footpath/parking wash",
+      "Deep dust removal"
+    ]
+  },
+
+  "paint stain from tiles": {
+    standard: ["Surface stain removal"],
+    deep: [
+      "Chemical paint removal",
+      "Tile restoration",
+      "Scrub machine treatment"
+    ]
+  },
+
+  "paint stain from windows": {
+    standard: ["Paint wipe-off"],
+    deep: [
+      "Chemical solvent stain removal",
+      "Glass scratch-free restoration"
+    ]
+  },
+
+  
+
+  "assembly area cleaning": {
+    standard: [
+      "Surface dusting",
+      "Floor sweeping"
+    ],
+    deep: [
+      "Industrial machine cleaning",
+      "Oil stain removal",
+      "Safety equipment disinfecting",
+      "Detailed workstation cleanup"
+    ]
+  },
+
+  "production line cleaning": {
+    standard: [
+      "Line surface cleaning",
+      "Floor mopping"
+    ],
+    deep: [
+      "Grease/oil degreasing",
+      "Machine detailing",
+      "Scrub machine cleaning"
+    ]
+  },
+
+  "warehouse rack cleaning": {
+    standard: ["Rack wiping", "Dust removal"],
+    deep: [
+      "High-reach dust removal",
+      "Rack degreasing",
+      "Shelf sanitization"
+    ]
+  },
+
+  "warehouse floor cleaning": {
+    standard: ["Floor sweeping"],
+    deep: [
+      "Scrub machine cleaning",
+      "Oil/chemical stain removal",
+      "Deep warehouse wash"
+    ]
+  }
+};
+const ADDONS_BY_TITLE: Record<string, { value: string; label: string }[]> = {
+  
+  "living room": [
+    { value: "curtainSteam", label: "Curtain Steam Cleaning — ₹199" },
+    { value: "tvUnit", label: "TV Unit Detailing — ₹149" }
+  ],
+
+  bedroom: [
+    { value: "mattressShampoo", label: "Mattress Shampoo — ₹249" },
+    { value: "curtainSteam", label: "Curtain Steam Cleaning — ₹199" }
+  ],
+
+  kitchen: [
+    { value: "chimneyService", label: "Chimney Deep Service — ₹349" },
+    { value: "fridgeInside", label: "Fridge Interior Cleaning — ₹149" }
+  ],
+
+  bathroom: [
+    { value: "jetSpray", label: "Jet Spray Cleaning — ₹149" },
+    { value: "hardwater", label: "Hard Water Treatment — ₹199" }
+  ],
+
+  // ---------- APARTMENTS ----------
+  "studio": [
+    { value: "curtainSteam", label: "Curtain Steam Cleaning — ₹199" },
+    { value: "balconyWash", label: "Balcony Wash — ₹149" }
+  ],
+
+  "1 bhk": [
+    { value: "curtainSteam", label: "Curtain Steam Cleaning — ₹199" },
+    { value: "fridgeInside", label: "Fridge Inside Clean — ₹149" }
+  ],
+
+  "2 bhk": [
+    { value: "balconyWash", label: "Balcony Wash — ₹149" },
+    { value: "curtainSteam", label: "Curtain Steam Cleaning — ₹199" }
+  ],
+
+  // ---------- VILLAS ----------
+  "villa": [
+    { value: "patioWash", label: "Patio / Terrace Wash — ₹249" },
+    { value: "curtainSteam", label: "Curtain Cleaning — ₹199" }
+  ],
+
+  // ---------- COMMERCIAL ----------
+  "cabin": [
+    { value: "chairShampoo", label: "Office Chair Shampoo — ₹129" },
+    { value: "whiteboardClean", label: "Whiteboard Deep Clean — ₹99" }
+  ],
+
+  "workstation": [
+    { value: "keyboardSanitize", label: "Keyboard Sanitization — ₹49" },
+    { value: "monitorClean", label: "Monitor Cleaning — ₹99" }
+  ],
+
+  "conference": [
+    { value: "micClean", label: "Microphone Cleaning — ₹99" },
+    { value: "chairShampoo", label: "Chair Shampoo — ₹129" }
+  ],
+
+  "shop": [
+    { value: "rackDeep", label: "Rack Deep Clean — ₹149" },
+    { value: "glassPolish", label: "Glass Polish — ₹129" }
+  ],
+
+  "mall": [
+    { value: "escalatorClean", label: "Escalator Cleaning — ₹499" },
+    { value: "glassPolish", label: "Glass Polish — ₹199" }
+  ],
+
+  // ---------- SPECIALIZED ----------
+  "sofa": [
+    { value: "fabricProtect", label: "Fabric Protector — ₹199" },
+    { value: "odorTreatment", label: "Odor Removal — ₹149" }
+  ],
+
+  "chair": [
+    { value: "odorTreatment", label: "Odor Removal — ₹99" },
+    { value: "fabricProtect", label: "Fabric Protector — ₹149" }
+  ],
+
+  "wooden": [
+    { value: "woodPolish", label: "Premium Wood Polish — ₹249" },
+    { value: "termiteCheck", label: "Termite Inspection — ₹299" }
+  ],
+
+  "marble": [
+    { value: "sealant", label: "Marble Sealant — ₹299" },
+    { value: "antiSlip", label: "Anti-Slip Treatment — ₹199" }
+  ],
+
+  "tile": [
+    { value: "antiSlip", label: "Anti-Slip Treatment — ₹199" },
+    { value: "groutProtect", label: "Grout Protector — ₹149" }
+  ],
+
+  "granite": [
+    { value: "sealant", label: "Granite Sealant — ₹249" },
+    { value: "antiSlip", label: "Anti-Slip Treatment — ₹199" }
+  ],
+
+  // ---------- GLASS ----------
+  "glass": [
+    { value: "trackClean", label: "Track Cleaning — ₹99" },
+    { value: "framePolish", label: "Frame Polish — ₹129" }
+  ],
+
+  // ---------- POST CONSTRUCTION ----------
+  "dust removal": [
+    { value: "pressureWash", label: "Pressure Wash — ₹299" },
+    { value: "glueRemoval", label: "Glue/Sticker Removal — ₹199" }
+  ],
+
+  "paint stain": [
+    { value: "chemicalWash", label: "Chemical Wash — ₹249" },
+    { value: "scraperWork", label: "Scraper Detailing — ₹149" }
+  ],
+
+  // ---------- INDUSTRIAL ----------
+  "assembly": [
+    { value: "oilRemoval", label: "Oil Removal — ₹399" },
+    { value: "machineDeep", label: "Machine Deep Cleaning — ₹499" }
+  ],
+
+  "production": [
+    { value: "greaseTreatment", label: "Grease Treatment — ₹349" },
+    { value: "scrubberMachine", label: "Scrubber Machine Wash — ₹299" }
+  ],
+
+  "warehouse": [
+    { value: "rackDeep", label: "Rack Deep Cleaning — ₹199" },
+    { value: "chemicalTreat", label: "Chemical Wash — ₹249" }
+  ],
+
+  // fallback
+  default: [
+    { value: "curtainSteam", label: "Curtain Cleaning — ₹199" },
+    { value: "windowExtra", label: "Extra Window Polishing — ₹99" }
+  ]
+};
+
+
+
+
+
+
+
 const getPricePerSqft = (moduleTitle: string): number => {
   const key = moduleTitle.toLowerCase().trim();
   if (PRICE_PER_SQFT[key] != null) return PRICE_PER_SQFT[key];
@@ -162,22 +870,28 @@ const calculatePrice = (
   module: Module,
   sqft: number,
   serviceType: string,
-  addons: string[]
+  addons: string[],
+  selectedServices: string[] = []
 ) => {
   const perSqft = getPricePerSqft(module.title);
   const multiplier = SERVICE_MULTIPLIERS[serviceType] ?? 1.0;
 
-  
-  const basePrice = parseInt((module.price || "").toString().replace(/[₹,\s]/g, "")) || 0;
+  // Base module price
+  const basePrice = parseInt((module.price || "").replace(/[₹,\s]/g, "")) || 0;
 
-  const addonCost = (addons || []).reduce((s, a) => s + (ADDON_PRICES[a] || 0), 0);
+  // Add selected individual service prices
+  const extraSelectedServicePrice = selectedServices.reduce(
+    (sum, s) => sum + (INDIVIDUAL_SERVICE_PRICES[s] || 0),
+    0
+  );
 
-  
+  const addonCost = addons.reduce((s, a) => s + (ADDON_PRICES[a] || 0), 0);
+
   const sqftPart = Math.round(Math.max(0, sqft) * perSqft * multiplier);
 
- 
-  return Math.round(basePrice * multiplier) + sqftPart + addonCost;
+  return Math.round((basePrice + extraSelectedServicePrice) * multiplier) + sqftPart + addonCost;
 };
+
 
 
 const formatINR = (value: number | null) => {
@@ -201,7 +915,98 @@ const CleaningService: React.FC = () => {
   const [serviceTypeKey, setServiceTypeKey] = useState<string>("standard");
 
   const [form] = Form.useForm();
+  const detectAddress = () => {
+  if (!navigator.geolocation) {
+    message.error("Your browser does not support location detection");
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    async (pos) => {
+      const { latitude, longitude } = pos.coords;
+      try {
+        const res = await fetch(
+          `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
+        );
+        const data = await res.json();
+        if (data.display_name) {
+          form.setFieldsValue({ address: data.display_name });
+          message.success("Address detected successfully");
+        } else {
+          message.error("Failed to detect address");
+        }
+      } catch {
+        message.error("Unable to fetch address from OpenStreetMap");
+      }
+    },
+    () => {
+      message.warning("Please allow location permission");
+    }
+  );
+};
+
   const today = new Date().toISOString().split("T")[0];
+const getIncludedItems = () => {
+  if (!selectedModule) return [];
+
+  const title = selectedModule.title.toLowerCase().trim();
+  const type = serviceTypeKey || "standard";
+  const values = form.getFieldsValue();
+  const selectedServices: string[] = values?.selectedServices || [];
+
+  // ⭐ SPECIAL CASE: Show includes ONLY for selected items in "All Services"
+  if (title === "all services") {
+    if (!selectedServices.length) return ["Select a service to see what's included"];
+
+    const map: Record<string, string> = {
+      kitchen: "kitchen",
+      bathroom: "bathroom",
+      living: "living room",
+      bedroom: "bedroom"
+    };
+
+    let combined: string[] = [];
+
+    selectedServices.forEach((srv) => {
+      const key = map[srv];
+      if (!key) return;
+
+      const match = INCLUDES[key];
+      if (!match) return;
+
+      combined.push(`--- ${key.toUpperCase()} ---`);
+
+      const items = match[type] || match.standard || [];
+      combined = [...combined, ...items];
+    });
+
+    return combined.length ? combined : ["No details available"];
+  }
+
+  // ⭐ NORMAL SERVICES BELOW
+  const keyList = Object.keys(INCLUDES);
+  const matchedKey = keyList.find((k) => title.includes(k.toLowerCase()));
+
+  if (!matchedKey) return ["Basic cleaning included"];
+
+  const service = INCLUDES[matchedKey];
+  if (service[type]) return service[type];
+  if (service.standard) return service.standard;
+
+  return ["Basic cleaning included"];
+};
+
+
+const getModuleAddons = () => {
+  if (!selectedModule) return ADDONS_BY_TITLE.default;
+
+  const title = selectedModule.title.toLowerCase();
+  const match = Object.keys(ADDONS_BY_TITLE).find(k => title.includes(k));
+
+  return ADDONS_BY_TITLE[match || "default"];
+};
+
+
 
 
   useEffect(() => {
@@ -311,6 +1116,7 @@ const CleaningService: React.FC = () => {
       { title: "Bedroom Cleaning", desc: "Thorough cleaning of bedrooms including mattress and wardrobes", price: "₹39", image: bedroomImg },
       { title: "Kitchen Cleaning", desc: "Complete kitchen cleaning with appliances and surfaces", price: "₹59", image: kitchenImg },
       { title: "Bathroom Cleaning", desc: "Sanitization and deep cleaning of bathrooms", price: "₹45", image: bathroomImg },
+      { title: "All Services", desc: " Bathroom, Kitchen, Bedroom, and Living Room. A 4-in-1 service ", price: "₹599", image: bathroomImg },
     ],
     apartments: [
       { title: "Studio Apartment", desc: "Complete cleaning for studio apartments", price: "₹69", image: studioImg },
@@ -462,34 +1268,52 @@ const computeTotal = (values: any) => {
     return;
   }
 
-  
-  let st = values?.serviceType;
-  if (!st) st = "standard";   
+  let st = values?.serviceType || "standard";
   setServiceTypeKey(st);
 
   const sqftRaw = values?.propertySize;
   let sqft = 0;
+
   if (typeof sqftRaw === "number") sqft = sqftRaw;
   else if (typeof sqftRaw === "string") sqft = parseFloat(sqftRaw || "0") || 0;
 
   const addons: string[] = values?.additional || [];
+  const selectedServices: string[] = values?.selectedServices || [];
 
-  
-  if (sqft > 0) {
-    const total = calculatePrice(selectedModule, sqft, st, addons);
-    setComputedPrice(total);
-    return;
-  }
-
-  
   const basePrice =
     parseInt((selectedModule.price || "").toString().replace(/[₹,\s]/g, "")) || 0;
 
   const mult = SERVICE_MULTIPLIERS[st] ?? 1;
-  const display = Math.round(basePrice * mult);
+
+ 
+  const extraSelectedServicePrice = selectedServices.reduce(
+    (sum, s) => sum + (INDIVIDUAL_SERVICE_PRICES[s] || 0),
+    0
+  );
+
+ 
+  const addonCost = addons.reduce((s, a) => s + (ADDON_PRICES[a] || 0), 0);
+
+ 
+  if (sqft > 0) {
+    const total = calculatePrice(
+      selectedModule,
+      sqft,
+      st,
+      addons,
+      selectedServices
+    );
+    setComputedPrice(total);
+    return;
+  }
+
+
+  const display =
+    Math.round((basePrice + extraSelectedServicePrice) * mult) + addonCost;
 
   setComputedPrice(display);
 };
+
 
 
  
@@ -666,12 +1490,16 @@ const getDisplayPriceText = (): string => {
               <img src={selectedModule?.image} alt={selectedModule?.title} className="sw-cs-details-image" />
               <Paragraph className="sw-cs-details-paragraph">{selectedModule?.desc}</Paragraph>
 
-              <div className="sw-cs-includes-block">
-                <div className="sw-cs-includes-title">What's Included</div>
-                <div className="sw-cs-include-item">• Surface dusting & wiping</div>
-                <div className="sw-cs-include-item">• Floor mopping / vacuum</div>
-                <div className="sw-cs-include-item">• Window wiping</div>
-              </div>
+            <div className="sw-cs-includes-block">
+  <div className="sw-cs-includes-title">What's Included</div>
+
+  {getIncludedItems().map((item: string, idx: number) => (
+    <div key={idx} className="sw-cs-include-item">
+      • {item}
+    </div>
+  ))}
+</div>
+
 
               <div className="sw-cs-price-card">
                 <div className="sw-cs-price-card-label">Service Price</div>
@@ -745,31 +1573,41 @@ const getDisplayPriceText = (): string => {
 </div>
 
 <div className="sw-cs-form-row">
-  
   <Form.Item
     name="mobile"
     label="Mobile Number"
     rules={[
       { required: true, message: "Enter mobile number" },
-      {
-        pattern: /^[0-9]{10}$/,
-        message: "Enter valid 10-digit Indian mobile number"
-      }
+      { pattern: /^[0-9]{10}$/, message: "Enter valid 10-digit number" },
     ]}
     className="sw-cs-half-width"
   >
-    <Input maxLength={10} placeholder="+91 9876543210" />
+    <Input maxLength={10} placeholder="9876543210" />
   </Form.Item>
 
-  
   <Form.Item
     name="address"
     label="Address"
     rules={[{ required: true, message: "Enter address" }]}
     className="sw-cs-half-width"
   >
-    <Input placeholder="House No, Street, City" />
+    <Input
+      placeholder="House No, Street, City"
+      value={form.getFieldValue("address")}
+      onChange={(e) => form.setFieldsValue({ address: e.target.value })}
+    />
   </Form.Item>
+</div>
+
+{/* Detect button goes BELOW the row */}
+<div className="sw-cs-form-row">
+  <Button
+    className="sw-cs-location-btn"
+    onClick={detectAddress}
+    type="default"
+  >
+    Detect My Current Location
+  </Button>
 </div>
 
 
@@ -792,31 +1630,30 @@ const getDisplayPriceText = (): string => {
                 onChange={() => computeTotal(form.getFieldsValue())}
                 allowClear
               >
-                {selectedModule.title.toLowerCase().includes("room") ||
-                selectedModule.title.toLowerCase().includes("bedroom") ? (
-                  <>
-                    <Option value="standard">Regular Cleaning</Option>
-                    <Option value="deep">Deep Cleaning</Option>
-                    <Option value="move">Move-in / Move-out Cleaning</Option>
-                  </>
-                ) : selectedModule.title.toLowerCase().includes("kitchen") ? (
-                  <>
-                    <Option value="standard">Regular Cleaning</Option>
-                    <Option value="deep">Deep Cleaning</Option>
-                    <Option value="grease">Grease Removal</Option>
-                  </>
-                ) : selectedModule.title.toLowerCase().includes("bathroom") ? (
-                  <>
-                    <Option value="sanitization">Sanitization</Option>
-                    <Option value="deep">Deep Bathroom Clean</Option>
-                  </>
-                ) : (
-                  <>
-                    <Option value="standard">Regular Cleaning</Option>
-                    <Option value="deep">Deep Cleaning</Option>
-                    <Option value="move">Move-in / Move-out Cleaning</Option>
-                  </>
-                )}
+              {selectedModule.title.toLowerCase().includes("room") ||
+ selectedModule.title.toLowerCase().includes("bedroom") ? (
+  <>
+    <Option value="standard">Regular Cleaning</Option>
+    <Option value="deep">Deep Cleaning</Option>
+  </>
+) : selectedModule.title.toLowerCase().includes("kitchen") ? (
+  <>
+    <Option value="standard">Regular Cleaning</Option>
+    <Option value="deep">Deep Cleaning</Option>
+    <Option value="grease">Grease Removal</Option>
+  </>
+) : selectedModule.title.toLowerCase().includes("bathroom") ? (
+  <>
+    <Option value="sanitization">Sanitization</Option>
+    <Option value="deep">Deep Bathroom Clean</Option>
+  </>
+) : (
+  <>
+    <Option value="standard">Regular Cleaning</Option>
+    <Option value="deep">Deep Cleaning</Option>
+  </>
+)}
+
               </Select>
             </Form.Item>
           )}
@@ -838,25 +1675,53 @@ const getDisplayPriceText = (): string => {
 
         
         <div className="sw-cs-form-row">
-          <Form.Item
-            name="additional"
-            label="Optional Add-ons"
-            className={cfg.bedrooms ? "sw-cs-half-width" : "sw-cs-full-width"}
-          >
-            <Select
-              mode="multiple"
-              placeholder="Select optional add-ons"
-              onChange={() => computeTotal(form.getFieldsValue())}
-            >
-              <Option value="kitchenDeepClean">Kitchen Deep Clean — ₹199</Option>
-              <Option value="balconyWash">Balcony Wash — ₹149</Option>
-              <Option value="sofaShampoo">Sofa Shampooing — ₹299</Option>
-              <Option value="window">Window Cleaning — ₹100</Option>
-              <Option value="balcony">Balcony Cleaning — ₹150</Option>
-              <Option value="carpet">Carpet Shampooing — ₹200</Option>
-              <Option value="oven">Oven Deep Clean — ₹300</Option>
-            </Select>
-          </Form.Item>
+         <Form.Item
+  name="additional"
+  label="Optional Add-ons"
+  className={cfg.bedrooms ? "sw-cs-half-width" : "sw-cs-full-width"}
+>
+  <Select
+    mode="multiple"
+    placeholder="Select add-ons"
+    onChange={() => computeTotal(form.getFieldsValue())}
+  >
+    {getModuleAddons().map((addon) => (
+      <Option key={addon.value} value={addon.value}>
+        {addon.label}
+      </Option>
+    ))}
+  </Select>
+</Form.Item>
+{selectedSubKey === "homes" && selectedModule?.title === "All Services" && (
+  <Form.Item
+    name="selectedServices"
+    label="Select Service"
+    rules={[{ required: true, message: "Select at least one service" }]}
+    className="sw-cs-full-width"
+  >
+    <Select
+      mode="multiple"
+      placeholder="Select services"
+      style={{ cursor: "pointer" }}
+      dropdownStyle={{ cursor: "pointer" }}
+      optionLabelProp="label"
+    >
+      <Option value="kitchen" label="Kitchen Cleaning" style={{ cursor: "pointer" }}>
+        Kitchen Cleaning
+      </Option>
+      <Option value="bathroom" label="Bathroom Cleaning" style={{ cursor: "pointer" }}>
+        Bathroom Cleaning
+      </Option>
+      <Option value="living" label="Living Room Cleaning" style={{ cursor: "pointer" }}>
+        Living Room Cleaning
+      </Option>
+      <Option value="bedroom" label="Bedroom Cleaning" style={{ cursor: "pointer" }}>
+        Bedroom Cleaning
+      </Option>
+    </Select>
+  </Form.Item>
+)}
+
 
           {cfg.bedrooms && (
             <Form.Item
