@@ -144,7 +144,8 @@ export default function Freelancer() {
           <Button
             type="primary"
             className="sw-fr-fix-header-btn"
-            onClick={() => navigate("/freelancerregistration")}
+            // onClick={() => navigate("/freelancerregistration")}
+            onClick={()=>navigate("/freelancerlogin")}
           >
             Login / Register
           </Button>

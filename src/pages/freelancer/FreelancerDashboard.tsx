@@ -1,5 +1,3 @@
-// src/pages/freelancer/FreelancerDashboard.tsx
-// at top of file
 import React, { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 
 import {
@@ -17,7 +15,8 @@ import {
   Menu,
   Space,
   Upload,
-  Modal, // Modal is used in handleApprovePending
+  Modal, 
+  Input,
 } from 'antd';
 import {
   EnvironmentOutlined,
@@ -626,17 +625,53 @@ const JobCard: React.FC<JobCardProps> = ({
   const canProceedFromCurrent =
     !requiresImage(currentStep) || stepImages[currentStep].length > 0;
 
+  /* ---------------- OTP STATE (for demo) ---------------- */
+  const [isOtpModalVisible, setIsOtpModalVisible] = useState(false);
+  const [generatedOtp, setGeneratedOtp] = useState<string>('');
+  const [enteredOtp, setEnteredOtp] = useState<string>('');
+
+  // Generate a 6-digit OTP and open modal
+  const openOtpModal = () => {
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    setGeneratedOtp(otp);
+    setEnteredOtp('');
+    setIsOtpModalVisible(true);
+  };
+
+  const handleVerifyOtp = () => {
+    if (enteredOtp === generatedOtp) {
+      // Correct OTP → move to next stage
+      const next = ((currentStep + 1) as unknown) as ServiceStepIndex;
+      if (onStepChange) onStepChange(next);
+      setIsOtpModalVisible(false);
+      message.success('OTP verified. Moved to next stage.');
+    } else {
+      message.error('Invalid OTP. Please try again.');
+    }
+  };
+
+  /* ---------------- STEP ACTION HANDLER ---------------- */
   const handleStepAction = () => {
     if (!canProceedFromCurrent) {
-      message.error(`Please upload image proof for the '${SERVICE_FLOW_STEPS[currentStep]}' stage before proceeding.`);
+      message.error(
+        `Please upload image proof for the '${SERVICE_FLOW_STEPS[currentStep]}' stage before proceeding.`,
+      );
       return;
     }
 
+    // If this is the last step, just complete the job
     if (isLastStep) {
       if (onMarkComplete) onMarkComplete(job.ticketId);
       return;
     }
 
+    // We want OTP when moving from "On the way" (step 0) → "Reached location" (step 1)
+    if (currentStep === 1) {
+      openOtpModal();
+      return;
+    }
+
+    // Normal flow for other steps
     const next = ((currentStep + 1) as unknown) as ServiceStepIndex;
     if (onStepChange) onStepChange(next);
   };
@@ -674,65 +709,71 @@ const JobCard: React.FC<JobCardProps> = ({
           </div>
 
           <Text className="sw-frd-ticket-id">Ticket ID: {job.ticketId}</Text>
-        <div className="sw-frd-details-row">
-          <Text className="sw-frd-detail-item">
-            <EnvironmentOutlined className="sw-frd-icon-sm" /> {job.location}
-          </Text>
-          <Text className="sw-frd-detail-item">
-            <ClockCircleOutlined className="sw-frd-icon-sm" /> {job.date}
-          </Text>
-        </div>
+          <div className="sw-frd-details-row">
+            <Text className="sw-frd-detail-item">
+              <EnvironmentOutlined className="sw-frd-icon-sm" /> {job.location}
+            </Text>
+            <Text className="sw-frd-detail-item">
+              <ClockCircleOutlined className="sw-frd-icon-sm" /> {job.date}
+            </Text>
+          </div>
 
-        {/* NEW: Customer details block */}
-        {(job.customerName || job.customerPhone || job.customerEmail || job.customerAddress) && (
-          <div className="sw-frd-customer-block">
-            <div className="sw-frd-customer-block-header">
-              <span className="sw-frd-customer-block-title">Customer details</span>
+          {/* Customer details block (unchanged) */}
+          {(job.customerName ||
+            job.customerPhone ||
+            job.customerEmail ||
+            job.customerAddress) && (
+            <div className="sw-frd-customer-block">
+              <div className="sw-frd-customer-block-header">
+                <span className="sw-frd-customer-block-title">Customer details</span>
+              </div>
+
+              {job.customerName && (
+                <div className="sw-frd-customer-line">
+                  <UserOutlined className="sw-frd-customer-icon" />
+                  <span className="sw-frd-customer-text">{job.customerName}</span>
+                </div>
+              )}
+
+              {job.customerPhone && (
+                <div className="sw-frd-customer-line">
+                  <PhoneOutlined className="sw-frd-customer-icon" />
+                  <a href={`tel:${job.customerPhone}`} className="sw-frd-customer-link">
+                    {job.customerPhone}
+                  </a>
+                </div>
+              )}
+
+              {job.customerEmail && (
+                <div className="sw-frd-customer-line">
+                  <MailOutlined className="sw-frd-customer-icon" />
+                  <a
+                    href={`mailto:${job.customerEmail}`}
+                    className="sw-frd-customer-link"
+                  >
+                    {job.customerEmail}
+                  </a>
+                </div>
+              )}
+
+              {job.customerAddress && (
+                <div className="sw-frd-customer-line sw-frd-customer-address">
+                  <EnvironmentOutlined className="sw-frd-customer-icon" />
+                  <span className="sw-frd-customer-text">{job.customerAddress}</span>
+                </div>
+              )}
             </div>
+          )}
 
-            {job.customerName && (
-              <div className="sw-frd-customer-line">
-                <UserOutlined className="sw-frd-customer-icon" />
-                <span className="sw-frd-customer-text">{job.customerName}</span>
-              </div>
-            )}
-
-            {job.customerPhone && (
-              <div className="sw-frd-customer-line">
-                <PhoneOutlined className="sw-frd-customer-icon" />
-                <a href={`tel:${job.customerPhone}`} className="sw-frd-customer-link">
-                  {job.customerPhone}
-                </a>
-              </div>
-            )}
-
-            {job.customerEmail && (
-              <div className="sw-frd-customer-line">
-                <MailOutlined className="sw-frd-customer-icon" />
-                <a href={`mailto:${job.customerEmail}`} className="sw-frd-customer-link">
-                  {job.customerEmail}
-                </a>
-              </div>
-            )}
-
-            {job.customerAddress && (
-              <div className="sw-frd-customer-line sw-frd-customer-address">
-                <EnvironmentOutlined className="sw-frd-customer-icon" />
-                <span className="sw-frd-customer-text">{job.customerAddress}</span>
-              </div>
-            )}
-          </div>
-        )}
-
-        {isActive && showFlow && (
-          <div className="sw-frd-next-step-chip">
-            <span className="sw-frd-next-step-label">Current stage</span>
-            <span className="sw-frd-next-step-value">
-              {SERVICE_FLOW_STEPS[currentStep]}
-            </span>
-          </div>
-        )}
-        {isActive && (
+          {isActive && showFlow && (
+            <div className="sw-frd-next-step-chip">
+              <span className="sw-frd-next-step-label">Current stage</span>
+              <span className="sw-frd-next-step-value">
+                {SERVICE_FLOW_STEPS[currentStep]}
+              </span>
+            </div>
+          )}
+          {isActive && (
             <Button
               type="default"
               className="sw-frd-help-btn"
@@ -767,7 +808,6 @@ const JobCard: React.FC<JobCardProps> = ({
                   const stepIndex = idx as ServiceStepIndex;
                   const isActiveStep = stepIndex === currentStep;
                   const isCompletedStep = stepIndex < currentStep;
-                  // UPDATED: Checks array length
                   const imageCount = stepImages[stepIndex].length;
                   const needsImage = requiresImage(stepIndex);
 
@@ -795,27 +835,27 @@ const JobCard: React.FC<JobCardProps> = ({
                           {SERVICE_FLOW_DESCRIPTIONS[idx]}
                         </p>
 
-                        {/* UPDATED: Only show upload on steps that require it and are active */}
                         {needsImage && isActiveStep && (
                           <div className="sw-frd-flow-upload">
                             <Upload
                               showUploadList={false}
                               accept="image/*"
-                              multiple // Allow multiple files
-                             beforeUpload={(_, fileList) => {
-  if (onStepImageUpload) {
-    onStepImageUpload(stepIndex, fileList as File[]);
-  }
-  return false;
-}}
-
+                              multiple
+                              beforeUpload={(_, fileList) => {
+                                if (onStepImageUpload) {
+                                  onStepImageUpload(stepIndex, fileList as File[]);
+                                }
+                                return false;
+                              }}
                             >
                               <Button
                                 size="small"
                                 icon={<UploadOutlined />}
                                 className="sw-frd-flow-upload-btn"
                               >
-                                {imageCount > 0 ? 'Add / Replace images' : 'Capture / Upload proof'}
+                                {imageCount > 0
+                                  ? 'Add / Replace images'
+                                  : 'Capture / Upload proof'}
                               </Button>
                             </Upload>
                             {imageCount > 0 && (
@@ -842,105 +882,169 @@ const JobCard: React.FC<JobCardProps> = ({
           </Col>
         )}
       </Row>
+
+      {/* -------- OTP MODAL (demo) -------- */}
+      <Modal
+        title="Verify OTP with customer"
+        open={isOtpModalVisible}
+        onOk={handleVerifyOtp}
+        onCancel={() => setIsOtpModalVisible(false)}
+        okText="Verify & Continue"
+        cancelText="Cancel"
+        centered
+      >
+        <p style={{ marginBottom: 8 }}>
+          Ask the customer for the OTP shown in their SMS/app and enter it below.
+        </p>
+        <Input
+          placeholder="Enter 6-digit OTP"
+          value={enteredOtp}
+          onChange={(e) => setEnteredOtp(e.target.value)}
+          maxLength={6}
+        />
+        <div style={{ marginTop: 10, fontSize: 12, color: '#6b7280' }}>
+          <strong>OTP:</strong> {generatedOtp}
+        </div>
+      </Modal>
     </Card>
   );
 };
+
 
 const RequestCard: React.FC<{ request: Job; onAccept: (req: Job) => void }> = ({
   request,
   onAccept,
 }) => (
   <Card className="sw-frd-request-card" bordered={false}>
-    <Row justify="space-between" align="top">
-      <Col xs={24} sm={18}>
-        <div className="sw-frd-request-header">
+    <div className="sw-frd-request-body">
+
+      {/* HEADER: Title (left) + Price (right) */}
+      <div className="sw-frd-card-header">
+        <div className="sw-frd-card-title-block">
           <Text strong className="sw-frd-request-title">
             {request.title}
           </Text>
-          <Text className="sw-frd-request-price">
-            ₹{(request.estimatedPrice || request.price).toLocaleString()}
-          </Text>
-        </div>
-        <Text className="sw-frd-ticket-id">Ticket ID: {request.ticketId}</Text>
-        <Text className="sw-frd-customer">Customer: {request.customer}</Text>
-        <Text className="sw-frd-request-desc-text">{request.description}</Text>
 
-        <div className="sw-frd-details-row">
-          <Text className="sw-frd-detail-item">
-            <EnvironmentOutlined className="sw-frd-icon-sm" /> {request.location}
-          </Text>
-          <Text className="sw-frd-detail-item">
-            <ClockCircleOutlined className="sw-frd-icon-sm" /> {request.date}
-          </Text>
-          <Text className="sw-frd-detail-item sw-frd-estimated">
-            <DollarCircleOutlined className="sw-frd-icon-sm" /> Estimated:{' '}
-            ₹{(request.estimatedPrice || request.price).toLocaleString()}
+          <Text className="sw-frd-ticket-id">
+            Ticket ID: {request.ticketId}
           </Text>
         </div>
-      </Col>
-    </Row>
-    <Button
-      type="primary"
-      danger
-      className="sw-frd-accept-btn"
-      onClick={() => onAccept(request)}
-      icon={<ArrowRightOutlined />}
-    >
-      Accept Request
-    </Button>
+
+        <div className="sw-frd-card-price">
+          ₹{(request.estimatedPrice || request.price).toLocaleString()}
+        </div>
+      </div>
+
+      {/* CUSTOMER */}
+      <Text className="sw-frd-customer">Customer: {request.customer}</Text>
+
+      {/* DESCRIPTION */}
+      <Text className="sw-frd-request-desc-text">{request.description}</Text>
+
+      {/* DETAILS */}
+      <div className="sw-frd-details-row">
+        <Text className="sw-frd-detail-item">
+          <EnvironmentOutlined className="sw-frd-icon-sm" /> {request.location}
+        </Text>
+
+        <Text className="sw-frd-detail-item">
+          <ClockCircleOutlined className="sw-frd-icon-sm" /> {request.date}
+        </Text>
+
+        <Text className="sw-frd-detail-item sw-frd-estimated">
+          <DollarCircleOutlined className="sw-frd-icon-sm" /> Estimated:{' '}
+          ₹{(request.estimatedPrice || request.price).toLocaleString()}
+        </Text>
+      </div>
+    </div>
+
+    {/* FOOTER WITH ACCEPT BUTTON */}
+    <div className="sw-frd-request-footer">
+      <Button
+        type="primary"
+        danger
+        className="sw-frd-accept-btn"
+        onClick={() => onAccept(request)}
+        icon={<ArrowRightOutlined />}
+      >
+        Accept Request
+      </Button>
+    </div>
   </Card>
 );
+
+
 
 const PendingApprovalCard: React.FC<{
   job: Job;
   onApprove: (id: string) => void;
 }> = ({ job, onApprove }) => (
   <Card className="sw-frd-pending-card" bordered={false}>
-    <div className="sw-frd-pending-header">
-      <div>
-        <Text strong className="sw-frd-job-title">
-          {job.title}
+    <div className="sw-frd-pending-body">
+      {/* Header: title + status + price */}
+      <div className="sw-frd-card-header">
+        <div className="sw-frd-card-title-block">
+          <Text strong className="sw-frd-request-title">
+            {job.title}
+          </Text>
+
+          <Tag color="orange" className="sw-frd-status-tag">
+            Waiting for admin approval
+          </Tag>
+
+          <Text className="sw-frd-ticket-id">
+            Ticket ID: {job.ticketId}
+          </Text>
+
+          <Text className="sw-frd-customer">
+            Customer: {job.customer}
+          </Text>
+        </div>
+
+        <div className="sw-frd-card-price">
+          ₹{(job.estimatedPrice || job.price).toLocaleString()}
+        </div>
+      </div>
+
+      {/* Description */}
+      <Text className="sw-frd-request-desc-text">{job.description}</Text>
+
+      {/* Details row – location + FULL date string (with timeslot) + estimated */}
+      <div className="sw-frd-details-row">
+        <Text className="sw-frd-detail-item">
+          <EnvironmentOutlined className="sw-frd-icon-sm" /> {job.location}
         </Text>
-        <Tag color="orange" className="sw-frd-status-tag">
-          Waiting for admin approval
-        </Tag>
+        <Text className="sw-frd-detail-item">
+          <ClockCircleOutlined className="sw-frd-icon-sm" /> {job.date}
+        </Text>
+        <Text className="sw-frd-detail-item sw-frd-estimated">
+          <DollarCircleOutlined className="sw-frd-icon-sm" /> Estimated:{' '}
+          ₹{(job.estimatedPrice || job.price).toLocaleString()}
+        </Text>
       </div>
-      <div className="sw-frd-job-price-wrap">
-        <Text className="sw-frd-price-label">Payout</Text>
-        <Text className="sw-frd-price">₹{job.price.toLocaleString()}</Text>
-      </div>
-    </div>
 
-    <Text className="sw-frd-ticket-id">Ticket ID: {job.ticketId}</Text>
-
-    <div className="sw-frd-details-row">
-      <Text className="sw-frd-detail-item">
-        <EnvironmentOutlined className="sw-frd-icon-sm" /> {job.location}
-      </Text>
-      <Text className="sw-frd-detail-item">
-        <ClockCircleOutlined className="sw-frd-icon-sm" /> {job.date}
-      </Text>
-    </div>
-
-    <div className="sw-frd-pending-footer">
+      {/* Pending note */}
       <div className="sw-frd-pending-note">
         <HourglassOutlined className="sw-frd-pending-icon" />
-        <span>
-          Admin review in progress. You’ll be able to start only after approval.
-        </span>
+        Admin review in progress. You’ll be able to start only after approval.
       </div>
-      {/* Mock button to simulate admin approval */}
+    </div>
+
+    {/* Footer button */}
+    <div className="sw-frd-pending-footer">
       <Button
         size="small"
         type="primary"
         className="sw-frd-pending-approve-btn"
         onClick={() => onApprove(job.ticketId)}
       >
-        Mark approved & start job 
+        Mark approved &amp; start job
       </Button>
     </div>
   </Card>
 );
+
+
 
 // --- MAIN DASHBOARD ---
 const FreelancerDashboard: React.FC = () => {
@@ -1122,23 +1226,27 @@ useEffect(() => {
   };
 
   const handleAcceptRequest = (request: Job) => {
-    setAvailableRequests((prev) =>
-      prev.filter((req) => req.ticketId !== request.ticketId),
-    );
+  // Remove from Available Requests
+  setAvailableRequests((prev) =>
+    prev.filter((req) => req.ticketId !== request.ticketId),
+  );
 
-    const pendingJob: Job = {
-      ...request,
-      status: 'Approval Pending',
-      date: new Date().toISOString().slice(0, 10),
-      price: request.estimatedPrice || request.price,
-    };
-
-    setPendingJobs((prev) => [...prev, pendingJob]);
-
-    message.success(
-      `Request ${request.ticketId} accepted! Waiting for admin approval.`,
-    );
+  // Move to Approval Pending – KEEP original date + timeslot
+  const pendingJob: Job = {
+    ...request,                  // keeps "2025-11-29 at 4:00 PM"
+    status: 'Approval Pending',
+    // don't override date here
+    // date: new Date().toISOString().slice(0, 10),  ❌ remove this line
+    price: request.estimatedPrice || request.price,
   };
+
+  setPendingJobs((prev) => [...prev, pendingJob]);
+
+  message.success(
+    `Request ${request.ticketId} accepted! Waiting for admin approval.`,
+  );
+};
+
 
   const handleApprovePending = (ticketId: string) => {
     const alreadyActive = activeJobs.some((j) => j.status === 'In Progress');
@@ -1233,19 +1341,7 @@ useEffect(() => {
                   </Text>
                 </Card>
 
-                <Card className="sw-frd-overview-card" bordered={false}>
-                  <Text className="sw-frd-overview-label">Active Jobs</Text>
-                  <div className="sw-frd-overview-value-row">
-                    <Text className="sw-frd-overview-value">
-                      {activeJobsInProgress.length}
-                    </Text>
-                  </div>
-                  <Text className="sw-frd-overview-subtext">
-                    {activeJob
-                      ? `Current: ${activeJob.title}`
-                      : 'No jobs currently active'}
-                  </Text>
-                </Card>
+                
 
                 <Card className="sw-frd-overview-card sw-frd-pending-metric" bordered={false}>
                   <Text className="sw-frd-overview-label">Approval Pending</Text>

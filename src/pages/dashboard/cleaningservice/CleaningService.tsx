@@ -95,14 +95,51 @@ const SERVICE_MULTIPLIERS: Record<string, number> = {
 };
 
 const ADDON_PRICES: Record<string, number> = {
-  window: 100,
-  balcony: 150,
-  carpet: 200,
-  oven: 300,
-  kitchenDeepClean: 199,
+  curtainSteam: 199,
+  tvUnit: 149,
+  mattressShampoo: 249,
+  chimneyService: 349,
+  fridgeInside: 149,
+  jetSpray: 149,
+  hardwater: 199,
   balconyWash: 149,
-  sofaShampoo: 299,
+  patioWash: 249,
+  chairShampoo: 129,
+  whiteboardClean: 99,
+  keyboardSanitize: 49,
+  monitorClean: 99,
+  micClean: 99,
+  rackDeep: 149,
+  glassPolish: 129,
+  escalatorClean: 499,
+  fabricProtect: 199,
+  odorTreatment: 149,
+  woodPolish: 249,
+  termiteCheck: 299,
+  sealant: 299,
+  antiSlip: 199,
+  groutProtect: 149,
+  trackClean: 99,
+  framePolish: 129,
+  pressureWash: 299,
+  glueRemoval: 199,
+  chemicalWash: 249,
+  scraperWork: 149,
+  oilRemoval: 399,
+  machineDeep: 499,
+  greaseTreatment: 349,
+  scrubberMachine: 299,
+  chemicalTreat: 249,
+  windowExtra: 99,
 };
+const INDIVIDUAL_SERVICE_PRICES: Record<string, number> = {
+  kitchen: 59,
+  bathroom: 45,
+  living: 49,
+  bedroom: 39,
+};
+
+
 
 const PRICE_PER_SQFT: Record<string, number> = {
   "living room cleaning": 1.5,
@@ -139,10 +176,7 @@ const PRICE_PER_SQFT: Record<string, number> = {
 
 const INCLUDES: Record<string, any> = {
 
-  /* ----------------------------------------------------
-     RESIDENTIAL – HOMES
-  ---------------------------------------------------- */
-
+  
   "living room": {
     standard: [
       "Surface dusting of furniture",
@@ -230,9 +264,7 @@ const INCLUDES: Record<string, any> = {
     ]
   },
 
-  /* ----------------------------------------------------
-     RESIDENTIAL – APARTMENTS
-  ---------------------------------------------------- */
+  
 
   "studio apartment": {
     standard: [
@@ -283,9 +315,7 @@ const INCLUDES: Record<string, any> = {
     ]
   },
 
-  /* ----------------------------------------------------
-     VILLAS
-  ---------------------------------------------------- */
+  
 
   "small villas": {
     standard: [
@@ -332,9 +362,7 @@ const INCLUDES: Record<string, any> = {
     ]
   },
 
-  /* ----------------------------------------------------
-     COMMERCIAL – OFFICES
-  ---------------------------------------------------- */
+ 
 
   "cabin cleaning": {
     standard: [
@@ -378,9 +406,7 @@ const INCLUDES: Record<string, any> = {
     ]
   },
 
-  /* ----------------------------------------------------
-     COMMERCIAL – SCHOOLS
-  ---------------------------------------------------- */
+
 
   classrooms: {
     standard: [
@@ -424,9 +450,7 @@ const INCLUDES: Record<string, any> = {
     ]
   },
 
-  /* ----------------------------------------------------
-     SHOPS & MALLS
-  ---------------------------------------------------- */
+  
 
   "shop cleaning": {
     standard: [
@@ -470,9 +494,7 @@ const INCLUDES: Record<string, any> = {
     ]
   },
 
-  /* ----------------------------------------------------
-     SPECIALIZED – FURNITURE
-  ---------------------------------------------------- */
+  
 
   "sofa cleaning": {
     standard: [
@@ -506,9 +528,7 @@ const INCLUDES: Record<string, any> = {
     ]
   },
 
-  /* ----------------------------------------------------
-     FLOORS / POLISHING
-  ---------------------------------------------------- */
+
 
   "marble polishing": {
     standard: ["Surface cleaning", "Basic buffing"],
@@ -537,9 +557,7 @@ const INCLUDES: Record<string, any> = {
     ]
   },
 
-  /* ----------------------------------------------------
-     GLASS CLEANING
-  ---------------------------------------------------- */
+
 
   "indoor glass cleaning": {
     standard: ["Glass wiping", "Frame cleaning"],
@@ -568,9 +586,7 @@ const INCLUDES: Record<string, any> = {
     ]
   },
 
-  /* ----------------------------------------------------
-     SANITIZATION
-  ---------------------------------------------------- */
+ 
 
   "home sanitization": {
     standard: ["Whole house spray sanitization"],
@@ -599,9 +615,7 @@ const INCLUDES: Record<string, any> = {
     ]
   },
 
-  /* ----------------------------------------------------
-     POST-CONSTRUCTION
-  ---------------------------------------------------- */
+
 
   "indoor dust removal": {
     standard: ["Dust sweeping", "Surface wipe"],
@@ -638,9 +652,7 @@ const INCLUDES: Record<string, any> = {
     ]
   },
 
-  /* ----------------------------------------------------
-     INDUSTRIAL CLEANING
-  ---------------------------------------------------- */
+  
 
   "assembly area cleaning": {
     standard: [
@@ -685,6 +697,148 @@ const INCLUDES: Record<string, any> = {
     ]
   }
 };
+const ADDONS_BY_TITLE: Record<string, { value: string; label: string }[]> = {
+  
+  "living room": [
+    { value: "curtainSteam", label: "Curtain Steam Cleaning — ₹199" },
+    { value: "tvUnit", label: "TV Unit Detailing — ₹149" }
+  ],
+
+  bedroom: [
+    { value: "mattressShampoo", label: "Mattress Shampoo — ₹249" },
+    { value: "curtainSteam", label: "Curtain Steam Cleaning — ₹199" }
+  ],
+
+  kitchen: [
+    { value: "chimneyService", label: "Chimney Deep Service — ₹349" },
+    { value: "fridgeInside", label: "Fridge Interior Cleaning — ₹149" }
+  ],
+
+  bathroom: [
+    { value: "jetSpray", label: "Jet Spray Cleaning — ₹149" },
+    { value: "hardwater", label: "Hard Water Treatment — ₹199" }
+  ],
+
+  // ---------- APARTMENTS ----------
+  "studio": [
+    { value: "curtainSteam", label: "Curtain Steam Cleaning — ₹199" },
+    { value: "balconyWash", label: "Balcony Wash — ₹149" }
+  ],
+
+  "1 bhk": [
+    { value: "curtainSteam", label: "Curtain Steam Cleaning — ₹199" },
+    { value: "fridgeInside", label: "Fridge Inside Clean — ₹149" }
+  ],
+
+  "2 bhk": [
+    { value: "balconyWash", label: "Balcony Wash — ₹149" },
+    { value: "curtainSteam", label: "Curtain Steam Cleaning — ₹199" }
+  ],
+
+  // ---------- VILLAS ----------
+  "villa": [
+    { value: "patioWash", label: "Patio / Terrace Wash — ₹249" },
+    { value: "curtainSteam", label: "Curtain Cleaning — ₹199" }
+  ],
+
+  // ---------- COMMERCIAL ----------
+  "cabin": [
+    { value: "chairShampoo", label: "Office Chair Shampoo — ₹129" },
+    { value: "whiteboardClean", label: "Whiteboard Deep Clean — ₹99" }
+  ],
+
+  "workstation": [
+    { value: "keyboardSanitize", label: "Keyboard Sanitization — ₹49" },
+    { value: "monitorClean", label: "Monitor Cleaning — ₹99" }
+  ],
+
+  "conference": [
+    { value: "micClean", label: "Microphone Cleaning — ₹99" },
+    { value: "chairShampoo", label: "Chair Shampoo — ₹129" }
+  ],
+
+  "shop": [
+    { value: "rackDeep", label: "Rack Deep Clean — ₹149" },
+    { value: "glassPolish", label: "Glass Polish — ₹129" }
+  ],
+
+  "mall": [
+    { value: "escalatorClean", label: "Escalator Cleaning — ₹499" },
+    { value: "glassPolish", label: "Glass Polish — ₹199" }
+  ],
+
+  // ---------- SPECIALIZED ----------
+  "sofa": [
+    { value: "fabricProtect", label: "Fabric Protector — ₹199" },
+    { value: "odorTreatment", label: "Odor Removal — ₹149" }
+  ],
+
+  "chair": [
+    { value: "odorTreatment", label: "Odor Removal — ₹99" },
+    { value: "fabricProtect", label: "Fabric Protector — ₹149" }
+  ],
+
+  "wooden": [
+    { value: "woodPolish", label: "Premium Wood Polish — ₹249" },
+    { value: "termiteCheck", label: "Termite Inspection — ₹299" }
+  ],
+
+  "marble": [
+    { value: "sealant", label: "Marble Sealant — ₹299" },
+    { value: "antiSlip", label: "Anti-Slip Treatment — ₹199" }
+  ],
+
+  "tile": [
+    { value: "antiSlip", label: "Anti-Slip Treatment — ₹199" },
+    { value: "groutProtect", label: "Grout Protector — ₹149" }
+  ],
+
+  "granite": [
+    { value: "sealant", label: "Granite Sealant — ₹249" },
+    { value: "antiSlip", label: "Anti-Slip Treatment — ₹199" }
+  ],
+
+  // ---------- GLASS ----------
+  "glass": [
+    { value: "trackClean", label: "Track Cleaning — ₹99" },
+    { value: "framePolish", label: "Frame Polish — ₹129" }
+  ],
+
+  // ---------- POST CONSTRUCTION ----------
+  "dust removal": [
+    { value: "pressureWash", label: "Pressure Wash — ₹299" },
+    { value: "glueRemoval", label: "Glue/Sticker Removal — ₹199" }
+  ],
+
+  "paint stain": [
+    { value: "chemicalWash", label: "Chemical Wash — ₹249" },
+    { value: "scraperWork", label: "Scraper Detailing — ₹149" }
+  ],
+
+  // ---------- INDUSTRIAL ----------
+  "assembly": [
+    { value: "oilRemoval", label: "Oil Removal — ₹399" },
+    { value: "machineDeep", label: "Machine Deep Cleaning — ₹499" }
+  ],
+
+  "production": [
+    { value: "greaseTreatment", label: "Grease Treatment — ₹349" },
+    { value: "scrubberMachine", label: "Scrubber Machine Wash — ₹299" }
+  ],
+
+  "warehouse": [
+    { value: "rackDeep", label: "Rack Deep Cleaning — ₹199" },
+    { value: "chemicalTreat", label: "Chemical Wash — ₹249" }
+  ],
+
+  // fallback
+  default: [
+    { value: "curtainSteam", label: "Curtain Cleaning — ₹199" },
+    { value: "windowExtra", label: "Extra Window Polishing — ₹99" }
+  ]
+};
+
+
 
 
 
@@ -716,22 +870,28 @@ const calculatePrice = (
   module: Module,
   sqft: number,
   serviceType: string,
-  addons: string[]
+  addons: string[],
+  selectedServices: string[] = []
 ) => {
   const perSqft = getPricePerSqft(module.title);
   const multiplier = SERVICE_MULTIPLIERS[serviceType] ?? 1.0;
 
-  
-  const basePrice = parseInt((module.price || "").toString().replace(/[₹,\s]/g, "")) || 0;
+  // Base module price
+  const basePrice = parseInt((module.price || "").replace(/[₹,\s]/g, "")) || 0;
 
-  const addonCost = (addons || []).reduce((s, a) => s + (ADDON_PRICES[a] || 0), 0);
+  // Add selected individual service prices
+  const extraSelectedServicePrice = selectedServices.reduce(
+    (sum, s) => sum + (INDIVIDUAL_SERVICE_PRICES[s] || 0),
+    0
+  );
 
-  
+  const addonCost = addons.reduce((s, a) => s + (ADDON_PRICES[a] || 0), 0);
+
   const sqftPart = Math.round(Math.max(0, sqft) * perSqft * multiplier);
 
- 
-  return Math.round(basePrice * multiplier) + sqftPart + addonCost;
+  return Math.round((basePrice + extraSelectedServicePrice) * multiplier) + sqftPart + addonCost;
 };
+
 
 
 const formatINR = (value: number | null) => {
@@ -755,25 +915,98 @@ const CleaningService: React.FC = () => {
   const [serviceTypeKey, setServiceTypeKey] = useState<string>("standard");
 
   const [form] = Form.useForm();
+  const detectAddress = () => {
+  if (!navigator.geolocation) {
+    message.error("Your browser does not support location detection");
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    async (pos) => {
+      const { latitude, longitude } = pos.coords;
+      try {
+        const res = await fetch(
+          `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
+        );
+        const data = await res.json();
+        if (data.display_name) {
+          form.setFieldsValue({ address: data.display_name });
+          message.success("Address detected successfully");
+        } else {
+          message.error("Failed to detect address");
+        }
+      } catch {
+        message.error("Unable to fetch address from OpenStreetMap");
+      }
+    },
+    () => {
+      message.warning("Please allow location permission");
+    }
+  );
+};
+
   const today = new Date().toISOString().split("T")[0];
- const getIncludedItems = () => {
+const getIncludedItems = () => {
   if (!selectedModule) return [];
 
   const title = selectedModule.title.toLowerCase().trim();
-  const type = serviceTypeKey || "standard"; 
-  const keyList = Object.keys(INCLUDES);
+  const type = serviceTypeKey || "standard";
+  const values = form.getFieldsValue();
+  const selectedServices: string[] = values?.selectedServices || [];
 
- 
-  const matchedKey = keyList.find((k) =>
-    title.includes(k.toLowerCase())
-  );
+  // ⭐ SPECIAL CASE: Show includes ONLY for selected items in "All Services"
+  if (title === "all services") {
+    if (!selectedServices.length) return ["Select a service to see what's included"];
+
+    const map: Record<string, string> = {
+      kitchen: "kitchen",
+      bathroom: "bathroom",
+      living: "living room",
+      bedroom: "bedroom"
+    };
+
+    let combined: string[] = [];
+
+    selectedServices.forEach((srv) => {
+      const key = map[srv];
+      if (!key) return;
+
+      const match = INCLUDES[key];
+      if (!match) return;
+
+      combined.push(`--- ${key.toUpperCase()} ---`);
+
+      const items = match[type] || match.standard || [];
+      combined = [...combined, ...items];
+    });
+
+    return combined.length ? combined : ["No details available"];
+  }
+
+  // ⭐ NORMAL SERVICES BELOW
+  const keyList = Object.keys(INCLUDES);
+  const matchedKey = keyList.find((k) => title.includes(k.toLowerCase()));
 
   if (!matchedKey) return ["Basic cleaning included"];
+
   const service = INCLUDES[matchedKey];
   if (service[type]) return service[type];
   if (service.standard) return service.standard;
+
   return ["Basic cleaning included"];
 };
+
+
+const getModuleAddons = () => {
+  if (!selectedModule) return ADDONS_BY_TITLE.default;
+
+  const title = selectedModule.title.toLowerCase();
+  const match = Object.keys(ADDONS_BY_TITLE).find(k => title.includes(k));
+
+  return ADDONS_BY_TITLE[match || "default"];
+};
+
+
 
 
   useEffect(() => {
@@ -883,6 +1116,7 @@ const CleaningService: React.FC = () => {
       { title: "Bedroom Cleaning", desc: "Thorough cleaning of bedrooms including mattress and wardrobes", price: "₹39", image: bedroomImg },
       { title: "Kitchen Cleaning", desc: "Complete kitchen cleaning with appliances and surfaces", price: "₹59", image: kitchenImg },
       { title: "Bathroom Cleaning", desc: "Sanitization and deep cleaning of bathrooms", price: "₹45", image: bathroomImg },
+      { title: "All Services", desc: " Bathroom, Kitchen, Bedroom, and Living Room. A 4-in-1 service ", price: "₹599", image: bathroomImg },
     ],
     apartments: [
       { title: "Studio Apartment", desc: "Complete cleaning for studio apartments", price: "₹69", image: studioImg },
@@ -1034,34 +1268,52 @@ const computeTotal = (values: any) => {
     return;
   }
 
-  
-  let st = values?.serviceType;
-  if (!st) st = "standard";   
+  let st = values?.serviceType || "standard";
   setServiceTypeKey(st);
 
   const sqftRaw = values?.propertySize;
   let sqft = 0;
+
   if (typeof sqftRaw === "number") sqft = sqftRaw;
   else if (typeof sqftRaw === "string") sqft = parseFloat(sqftRaw || "0") || 0;
 
   const addons: string[] = values?.additional || [];
+  const selectedServices: string[] = values?.selectedServices || [];
 
-  
-  if (sqft > 0) {
-    const total = calculatePrice(selectedModule, sqft, st, addons);
-    setComputedPrice(total);
-    return;
-  }
-
-  
   const basePrice =
     parseInt((selectedModule.price || "").toString().replace(/[₹,\s]/g, "")) || 0;
 
   const mult = SERVICE_MULTIPLIERS[st] ?? 1;
-  const display = Math.round(basePrice * mult);
+
+ 
+  const extraSelectedServicePrice = selectedServices.reduce(
+    (sum, s) => sum + (INDIVIDUAL_SERVICE_PRICES[s] || 0),
+    0
+  );
+
+ 
+  const addonCost = addons.reduce((s, a) => s + (ADDON_PRICES[a] || 0), 0);
+
+ 
+  if (sqft > 0) {
+    const total = calculatePrice(
+      selectedModule,
+      sqft,
+      st,
+      addons,
+      selectedServices
+    );
+    setComputedPrice(total);
+    return;
+  }
+
+
+  const display =
+    Math.round((basePrice + extraSelectedServicePrice) * mult) + addonCost;
 
   setComputedPrice(display);
 };
+
 
 
  
@@ -1321,31 +1573,41 @@ const getDisplayPriceText = (): string => {
 </div>
 
 <div className="sw-cs-form-row">
-  
   <Form.Item
     name="mobile"
     label="Mobile Number"
     rules={[
       { required: true, message: "Enter mobile number" },
-      {
-        pattern: /^[0-9]{10}$/,
-        message: "Enter valid 10-digit Indian mobile number"
-      }
+      { pattern: /^[0-9]{10}$/, message: "Enter valid 10-digit number" },
     ]}
     className="sw-cs-half-width"
   >
-    <Input maxLength={10} placeholder="+91 9876543210" />
+    <Input maxLength={10} placeholder="9876543210" />
   </Form.Item>
 
-  
   <Form.Item
     name="address"
     label="Address"
     rules={[{ required: true, message: "Enter address" }]}
     className="sw-cs-half-width"
   >
-    <Input placeholder="House No, Street, City" />
+    <Input
+      placeholder="House No, Street, City"
+      value={form.getFieldValue("address")}
+      onChange={(e) => form.setFieldsValue({ address: e.target.value })}
+    />
   </Form.Item>
+</div>
+
+{/* Detect button goes BELOW the row */}
+<div className="sw-cs-form-row">
+  <Button
+    className="sw-cs-location-btn"
+    onClick={detectAddress}
+    type="default"
+  >
+    Detect My Current Location
+  </Button>
 </div>
 
 
@@ -1413,25 +1675,53 @@ const getDisplayPriceText = (): string => {
 
         
         <div className="sw-cs-form-row">
-          <Form.Item
-            name="additional"
-            label="Optional Add-ons"
-            className={cfg.bedrooms ? "sw-cs-half-width" : "sw-cs-full-width"}
-          >
-            <Select
-              mode="multiple"
-              placeholder="Select optional add-ons"
-              onChange={() => computeTotal(form.getFieldsValue())}
-            >
-              <Option value="kitchenDeepClean">Kitchen Deep Clean — ₹199</Option>
-              <Option value="balconyWash">Balcony Wash — ₹149</Option>
-              <Option value="sofaShampoo">Sofa Shampooing — ₹299</Option>
-              <Option value="window">Window Cleaning — ₹100</Option>
-              <Option value="balcony">Balcony Cleaning — ₹150</Option>
-              <Option value="carpet">Carpet Shampooing — ₹200</Option>
-              <Option value="oven">Oven Deep Clean — ₹300</Option>
-            </Select>
-          </Form.Item>
+         <Form.Item
+  name="additional"
+  label="Optional Add-ons"
+  className={cfg.bedrooms ? "sw-cs-half-width" : "sw-cs-full-width"}
+>
+  <Select
+    mode="multiple"
+    placeholder="Select add-ons"
+    onChange={() => computeTotal(form.getFieldsValue())}
+  >
+    {getModuleAddons().map((addon) => (
+      <Option key={addon.value} value={addon.value}>
+        {addon.label}
+      </Option>
+    ))}
+  </Select>
+</Form.Item>
+{selectedSubKey === "homes" && selectedModule?.title === "All Services" && (
+  <Form.Item
+    name="selectedServices"
+    label="Select Service"
+    rules={[{ required: true, message: "Select at least one service" }]}
+    className="sw-cs-full-width"
+  >
+    <Select
+      mode="multiple"
+      placeholder="Select services"
+      style={{ cursor: "pointer" }}
+      dropdownStyle={{ cursor: "pointer" }}
+      optionLabelProp="label"
+    >
+      <Option value="kitchen" label="Kitchen Cleaning" style={{ cursor: "pointer" }}>
+        Kitchen Cleaning
+      </Option>
+      <Option value="bathroom" label="Bathroom Cleaning" style={{ cursor: "pointer" }}>
+        Bathroom Cleaning
+      </Option>
+      <Option value="living" label="Living Room Cleaning" style={{ cursor: "pointer" }}>
+        Living Room Cleaning
+      </Option>
+      <Option value="bedroom" label="Bedroom Cleaning" style={{ cursor: "pointer" }}>
+        Bedroom Cleaning
+      </Option>
+    </Select>
+  </Form.Item>
+)}
+
 
           {cfg.bedrooms && (
             <Form.Item
