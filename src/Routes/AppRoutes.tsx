@@ -3,7 +3,7 @@ import { NonSecureRoutes } from "./nonSecureRoutes/NonSecureRoutes";
 import { ProtectedRoutes } from './ProtectedRoutes'
 import { SecureRoutes } from "./secureRoutes/SecureRoutes";
 import App from "../pages/Admin/Appadmin";
-import Vendor from "../pages/landing/Vendor";
+import Vendor from "../pages/vendor/Vendor";
 import Freelancerlogin from "../pages/login/Freelancerlogin";
 import FreelancerDashboard from "../pages/freelancer/FreelancerDashboard";
 import SwachifyProducts from "../pages/landing/Swachifyproducts";
@@ -23,7 +23,7 @@ export const AppRoutes = () => {
                 />
                 
 
-                 <Route path="vendor" element={<Vendor />} />
+                 <Route path="/vendor/*" element={<Vendor />} />
                  <Route path="/freelancerlogin" element={<Freelancerlogin />} />
         <Route path="/freelancer-dashboard" element={<FreelancerDashboard />} />
         <Route path="/adminshell/*" element={<App />} />
