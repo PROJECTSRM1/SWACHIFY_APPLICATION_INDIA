@@ -1,0 +1,20 @@
+/* Make only Save Form and Add Field buttons blue */
+.form-builder-btn {
+  background-color: #1d4ed8 !important;
+  color: #fff !important;
+  border-radius: 6px !important;
+  padding: 6px 18px !important;
+  font-weight: 600;
+}
+
+/* Preview button normal */
+.form-builder-preview-btn {
+  border-radius: 6px !important;
+  font-weight: 500 !important;
+}
+
+/* Increase sizes of form inputs */
+.big-input {
+  height: 48px !important;
+  font-size: 16px !important;
+}
