@@ -84,6 +84,7 @@ const FormBuilder: React.FC<Props> = ({ targetName, onSave }) => {
       message.error("Please fill form name & add at least 1 field");
       return;
     }
+    console.log(saveForm);
 
     const newForm = {
       id: Date.now().toString(),

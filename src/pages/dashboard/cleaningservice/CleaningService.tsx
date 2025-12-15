@@ -1524,11 +1524,11 @@ const getDisplayPriceText = (): string => {
     label="Full Name"
     rules={[
       { required: true, message: "Enter full name" },
-      {
-        pattern: /^[A-Z][a-z]+ [A-Z][a-z]+$/,
-        message:
-          " First letter should be capital for both first and last name"
-      }
+      // {
+      //   pattern: /^[A-Z][a-z]+ [A-Z][a-z]+$/,
+      //   message:
+      //     " First letter should be capital for both first and last name"
+      // }
     ]}
     className="sw-cs-half-width"
   >
