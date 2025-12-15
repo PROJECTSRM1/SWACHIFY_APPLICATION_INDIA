@@ -149,9 +149,10 @@ const FleetPie: React.FC<{ out: number; inNum: number }> = ({ out, inNum }) => {
           startAngle={90}
           endAngle={-270}
         >
-          {data.map((entry, index) => (
+          {data.map((_, index) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
+          
         </Pie>
         <ReTooltip formatter={(value: number, name: string) => [`${value}`, name]} />
       </PieChart>
