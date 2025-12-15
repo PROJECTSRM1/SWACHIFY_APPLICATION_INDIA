@@ -1,4 +1,4 @@
-/* Header.css - EXACT COPY OF YOUR FILE + PERFECT SCROLL FIX */
+/* Header.css - EXACT COPY OF YOUR FILE + STICKY/FIXED NAVBAR */
 
 /* =================== BASE NAV =================== */
 .swl-hs-navbar {
@@ -9,8 +9,14 @@
   padding: 8px 8px;
   box-sizing: border-box;
   background: #fff;
-  position: sticky;
+
+  /* 🔥 Changed from sticky to fixed so it NEVER disappears */
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+
   z-index: 1000;
   box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
@@ -29,6 +35,10 @@
   color: #111;
 }
 
+/* 🔹 Spacer to push page content below fixed navbar */
+.swl-hs-navbar-spacer {
+  height: 64px; /* adjust if your header height changes */
+}
 
 /* =================== MOBILE MENU ICON =================== */
 .swl-mobile-menu-icon {
