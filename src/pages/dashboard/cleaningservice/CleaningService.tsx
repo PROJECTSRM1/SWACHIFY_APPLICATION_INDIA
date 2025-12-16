@@ -1879,9 +1879,15 @@ const getDisplayPriceText = (): string => {
   {/* ACTION BUTTONS */}
   <div className="sw-cs-details-actions">
     <Button onClick={handleDetailsCancel}>Cancel</Button>
-    <Button type="primary" htmlType="submit" className="sw-cs-black-btn">
-      Add to Cart
-    </Button>
+    <Button
+  type="primary"
+  htmlType="submit"
+  className="sw-cs-black-btn"
+  disabled={!verified}   // 👈 key line
+>
+  Add to Cart
+</Button>
+
   </div>
 </Form>
 

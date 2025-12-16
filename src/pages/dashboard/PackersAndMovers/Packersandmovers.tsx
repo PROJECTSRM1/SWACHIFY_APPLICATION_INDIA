@@ -840,7 +840,12 @@ const [emailOtp, setEmailOtp] = useState("");
                     <Button onClick={closeBookingForm} style={{ marginRight: 12 }}>
                       Cancel
                     </Button>
-                    <Button type="primary" htmlType="submit" className="sw-pm-addcart-btn">
+                    <Button
+  type="primary"
+  htmlType="submit"
+  className="sw-pm-addcart-btn"
+  disabled={!verified}   // ✅ KEY LINE
+>
                       <ShoppingCartOutlined style={{ marginRight: 8 }} /> Book Service
                     </Button>
                   </div>
