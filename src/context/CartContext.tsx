@@ -18,6 +18,7 @@ export interface CartItem {
 
 
   customerName: string;
+  email: string; 
   deliveryType: string;
   deliveryDate: string;
   contact: string;

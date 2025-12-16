@@ -15014,8 +15014,7 @@ body {
 
 /* Anil and Srihari Home Service CSS Updates */
 
- /* Khasim and Vanamanla Bulding Raw Service CSS Updates */
- /* for material supply*/
+
 /* Khasim and Vanamanla Bulding Raw Service CSS Updates */
 /* for material supply*/
 
@@ -15250,6 +15249,13 @@ body {
   margin-top: 5px;
 }
 
+/* ✅ Ensure Email + Contact always stay side by side */
+.sw-br-row > .sw-br-field {
+  flex: 1;
+  min-width: 0;
+}
+
+
 .sw-br-full {
   width: 100% !important;
 }
@@ -15260,7 +15266,7 @@ textarea {
   width: 99%;
   border-radius: 8px;
   border: 1px solid #cbd5e1;
-  padding: 3px 10px;
+  padding: 6px 10px;
   font-size: 12px;
 }
 
@@ -15314,6 +15320,51 @@ textarea {
   background: black;
   color: white;
 }
+
+.sw-br-otp-input {
+  position: relative;
+}
+
+.sw-br-otp-input input {
+  padding-right: 1px;
+}
+
+.sw-br-mach-otp-btn{
+    width: 55%;
+    padding: 5px;
+    border-radius: 8px;
+    border: none;
+    background: black;
+    color: white;
+    margin-top: -10px;
+}
+
+.sw-br-mach-otp-btn-wrap {
+  display: flex;
+  align-items: flex-end;
+}
+
+.sw-br-send-otp {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  color: #005cfa;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.sw-br-otp-verified {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #22c55e;
+  font-size: 16px;
+  font-weight: bold;
+}
+
 
 @media (max-width: 900px) {
   .sw-br-grid {
@@ -15610,8 +15661,9 @@ textarea {
 
 .sw-br-mach-row {
   display: flex;
-  gap: 12px;
+  gap: 16px;
   margin-bottom: 12px;
+  width: 100%;
 }
 
 .sw-br-mach-form-item {
@@ -15621,6 +15673,7 @@ textarea {
   font-size: 11px;
   font-weight: 600;
   margin-top: 5px;
+  flex: 1;
 }
 
 .sw-br-mach-form-item.full-width {
@@ -15885,7 +15938,7 @@ textarea {
 }
 
 .sw-br-form-left {
-  width: 79%;
+  width: 42%;
 }
 
 .sw-br-form-image {
@@ -15986,9 +16039,9 @@ textarea {
 }
 
 .sw-br-grid3 {
-  width: 151% !important;
+  width: 100% !important;
   display: grid !important;
-  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   gap: 18px !important;
   padding-left: 0 !important;
   padding-right: 0 !important;
@@ -16014,7 +16067,7 @@ textarea {
 .sw-br-field3 input,
 .sw-br-field3 select,
 .sw-br-field3 textarea {
-  padding: 5px 14px;
+  padding: 5px 2px;
   border: 1px solid #cbd5e1;
   border-radius: 10px;
   font-size: 13px;
@@ -16181,7 +16234,6 @@ textarea {
   margin: 0 auto;
   box-sizing: border-box;
 }
-
 
 .sw-br-bc-header {
   background: #005cfa;
