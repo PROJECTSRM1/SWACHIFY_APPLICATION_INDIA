@@ -1,5 +1,4 @@
-import { Modal, Form, Input, Select, DatePicker, Button } from "antd";
-
+import { Modal, Form, Input, Select, DatePicker, Button, message } from "antd";
 import dayjs from "dayjs";
 import { useCart } from "../../../context/CartContext";
 import { useEffect, useState } from "react";
@@ -38,18 +37,19 @@ export default function ServiceRequestForm({
   const basePrice = Number(String(totalprice).replace(/[^0-9.]/g, ""));
   const [extraIssuePrice, setExtraIssuePrice] = useState(0);
 
+  // ---------------- OTP STATES ----------------
+  const [isOtpSent, setIsOtpSent] = useState(false);
+  const [phoneOtp, setPhoneOtp] = useState("");
+  const [emailOtp, setEmailOtp] = useState("");
+  const [verified, setVerified] = useState(false);
+  // ---------------------------------------------
+
   useEffect(() => {
-  if (open) {
-    document.body.classList.add("sw-hs-scrolling-disable");
-  } else {
-    document.body.classList.remove("sw-hs-scrolling-disable");
-  }
+    if (open) document.body.classList.add("sw-hs-scrolling-disable");
+    else document.body.classList.remove("sw-hs-scrolling-disable");
 
-  return () => {
-    document.body.classList.remove("sw-hs-scrolling-disable");
-  };
-}, [open]);
-
+    return () => document.body.classList.remove("sw-hs-scrolling-disable");
+  }, [open]);
 
   const handleFinish = (values: any) => {
     const selectedIssue = issues.find((i) => i.label === values.issueType);
@@ -70,11 +70,18 @@ export default function ServiceRequestForm({
     addToCart(payload);
     onSubmit(payload);
 
+    // Keep Add-to-Cart modal as you requested
     Modal.success({
       title: "Added to Cart",
       content: "Your service has been successfully added to your cart",
       centered: true,
     });
+
+    // RESET OTP
+    setVerified(false);
+    setIsOtpSent(false);
+    setPhoneOtp("");
+    setEmailOtp("");
 
     form.resetFields();
     onCancel();
@@ -91,7 +98,7 @@ export default function ServiceRequestForm({
       className="sw-hs-sdform-ant-modal"
     >
       <div className="sw-hs-sdform-ant-container">
-        {/* custom close (X) */}
+        
         <button
           type="button"
           className="sw-hs-sdform-ant-close"
@@ -103,13 +110,8 @@ export default function ServiceRequestForm({
         <h2 className="sw-hs-sdform-ant-title">{title}</h2>
 
         <div className="sw-hs-sdform-ant-header">
-          {/* LEFT SIDE */}
           <div>
-            <img
-              src={image}
-              alt={title}
-              className="sw-hs-sdform-ant-image"
-            />
+            <img src={image} alt={title} className="sw-hs-sdform-ant-image" />
             <p className="sw-hs-sdform-ant-description">{description}</p>
 
             <div className="sw-hs-sdform-price-wrapper">
@@ -120,7 +122,6 @@ export default function ServiceRequestForm({
             </div>
           </div>
 
-          {/* RIGHT SIDE */}
           <div className="sw-hs-sdform-ant-header-info">
             <h4>What's Included</h4>
             <ul className="sw-hs-sdform-ant-list">
@@ -131,30 +132,26 @@ export default function ServiceRequestForm({
           </div>
         </div>
 
-        {/* FORM SECTION */}
         <Form
           form={form}
           layout="vertical"
           onFinish={handleFinish}
           className="sw-hs-sdform-ant-form"
         >
-          {/* FULL NAME + EMAIL SIDE BY SIDE */}
+          {/* NAME + EMAIL */}
           <div className="sw-hs-sdform-ant-two-col">
             <Form.Item
               label="Full Name"
               name="fullName"
-              className="sw-hs-sdform-ant-form-item"
               rules={[
                 {
                   validator: (_, value) => {
-                    if (!value || !value.trim()) {
+                    if (!value || !value.trim())
                       return Promise.reject("Full name is required");
-                    }
 
                     const parts = value.trim().split(/\s+/);
-                    if (parts.length < 2) {
+                    if (parts.length < 2)
                       return Promise.reject("Please enter first and last name");
-                    }
 
                     return Promise.resolve();
                   },
@@ -167,44 +164,67 @@ export default function ServiceRequestForm({
             <Form.Item
               label="Email"
               name="email"
-              className="sw-hs-sdform-ant-form-item"
               rules={[
                 { required: true, message: "Email is required" },
                 { type: "email", message: "Enter valid email" },
               ]}
             >
-              <Input placeholder="Enter email" />
+              <Input placeholder="Enter email" suffix={verified ? "✔" : null} />
             </Form.Item>
           </div>
 
+          {/* PHONE + ISSUE */}
           <div className="sw-hs-sdform-ant-two-col">
             <Form.Item
               label="Phone"
               name="phone"
-              className="sw-hs-sdform-ant-form-item"
               rules={[
                 { required: true, message: "Phone no is required" },
-                {
-                  pattern: /^[0-9]{10}$/,
-                  message: "Enter valid 10 digit phone number",
-                },
+                { pattern: /^[0-9]{10}$/, message: "Enter valid 10 digit number" },
               ]}
             >
-              <Input placeholder="Enter Phone Number" maxLength={10} />
+              <Input
+                prefix="+91 "
+                maxLength={10}
+                placeholder="Enter Phone Number"
+                onChange={(e) => {
+                  const onlyDigits = e.target.value.replace(/\D/g, "");
+                  form.setFieldsValue({ phone: onlyDigits });
+                }}
+                suffix={
+                  !verified && !isOtpSent ? (
+                    <Button
+                      type="link"
+                      onClick={() => {
+                        if (
+                          !form.getFieldValue("phone") ||
+                          !form.getFieldValue("email")
+                        ) {
+                          message.error("Enter email & mobile first");
+                          return;
+                        }
+
+                        setIsOtpSent(true);
+                        message.success("OTP Sent (Demo Mode)");
+                      }}
+                    >
+                      Send OTP
+                    </Button>
+                  ) : verified ? (
+                    "✔"
+                  ) : null
+                }
+              />
             </Form.Item>
 
             <Form.Item
               label="Issue"
               name="issueType"
-              className="sw-hs-sdform-ant-form-item"
               rules={[{ required: true, message: "Please select an issue" }]}
             >
               <Select
                 placeholder="Select issue"
-                options={issues.map((i) => ({
-                  label: i.label,
-                  value: i.label,
-                }))}
+                options={issues.map((i) => ({ label: i.label, value: i.label }))}
                 size="middle"
                 onChange={(value) => {
                   const selected = issues.find((i) => i.label === value);
@@ -214,10 +234,61 @@ export default function ServiceRequestForm({
             </Form.Item>
           </div>
 
+          {/* OTP ROW */}
+          {isOtpSent && !verified && (
+            <div className="sw-cs-otp-row">
+              <Form.Item label="Phone OTP" className="otp-item">
+                <Input
+                  maxLength={4}
+                  placeholder="Enter Phone OTP"
+                  value={phoneOtp}
+                  onChange={(e) =>
+                    setPhoneOtp(e.target.value.replace(/\D/g, ""))
+                  }
+                />
+              </Form.Item>
+
+              <Form.Item label="Email OTP" className="otp-item">
+                <Input
+                  maxLength={4}
+                  placeholder="Enter Email OTP"
+                  value={emailOtp}
+                  onChange={(e) =>
+                    setEmailOtp(e.target.value.replace(/\D/g, ""))
+                  }
+                />
+              </Form.Item>
+
+              <div className="sw-cs-otp-verify">
+                <Button
+                  type="primary"
+                  className="sw-cs-black-btn"
+                  style={{ height: 40 }}
+                  onClick={() => {
+                    if (phoneOtp.length !== 4 || emailOtp.length !== 4) {
+                      message.error("OTP must be 4 digits");
+                      return;
+                    }
+
+                    if (phoneOtp === emailOtp) {
+                      message.error("Phone OTP & Email OTP must be different");
+                      return;
+                    }
+
+                    message.success("OTP Verified");
+                    setVerified(true);
+                    setIsOtpSent(false);
+                  }}
+                >
+                  Verify OTP
+                </Button>
+              </div>
+            </div>
+          )}
+
           <Form.Item
             label="Problem Description"
             name="problemDescription"
-            className="sw-hs-sdform-ant-form-item"
             rules={[{ required: true, message: "Enter problem details" }]}
           >
             <Input.TextArea rows={3} />
@@ -226,21 +297,19 @@ export default function ServiceRequestForm({
           <Form.Item
             label="Location / Area"
             name="locationArea"
-            className="sw-hs-sdform-ant-form-item"
             rules={[{ required: true, message: "Location is required" }]}
           >
             <Input />
           </Form.Item>
 
+          {/* DATE + TIME */}
           <div className="sw-hs-sdform-ant-two-col">
             <Form.Item
               label="Preferred Date"
               name="preferredDate"
-              className="sw-hs-sdform-ant-form-item"
               rules={[{ required: true, message: "Select a date" }]}
             >
               <DatePicker
-                className="sw-hs-sdform-ant-date-picker"
                 disabledDate={(current) =>
                   current && current < dayjs().startOf("day")
                 }
@@ -250,7 +319,6 @@ export default function ServiceRequestForm({
             <Form.Item
               label="Preferred Time Slot"
               name="preferredTime"
-              className="sw-hs-sdform-ant-form-item"
               rules={[{ required: true, message: "Select a time slot" }]}
             >
               <Select
@@ -262,24 +330,18 @@ export default function ServiceRequestForm({
                   { label: "03:00 PM - 05:00 PM", value: "15:00-17:00" },
                   { label: "05:00 PM - 07:00 PM", value: "17:00-19:00" },
                 ]}
-                size="middle"
               />
             </Form.Item>
           </div>
 
           {/* BUTTONS */}
           <div className="sw-hs-sdform-ant-buttons">
-            <Button
-              onClick={onCancel}
-              className="sw-hs-sdform-ant-cancel"
-            >
-              Cancel
-            </Button>
+            <Button onClick={onCancel}>Cancel</Button>
 
             <Button
               type="primary"
               htmlType="submit"
-              className="sw-hs-sdform-ant-submit"
+              disabled={!verified}
             >
               Add to Cart
             </Button>

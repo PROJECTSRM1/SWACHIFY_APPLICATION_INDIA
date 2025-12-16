@@ -1,6 +1,12 @@
 /* ---------------- updated CleaningService.css  nithin cleaning dash ---------------- */
 
-.sw-cs-cs-container {
+ap {
+    height: 150px;
+  }
+
+  .sw-cs-main-card {
+    min-height: 330px;
+  }.sw-cs-cs-container {
   width: 100%;
   max-width: 1350px;
   margin: 0 auto;
@@ -578,6 +584,8 @@ body,
   border-color: #000 !important;
   color: #fff !important;
   box-shadow: none !important;
+  margin-bottom: 24px ;
+padding: 15px;
 }
 
 .sw-cs-black-btn.ant-btn:hover,
@@ -704,13 +712,7 @@ body,
 
 
 @media (max-width: 900px) {
-  .sw-cs-main-card-image-wrap {
-    height: 150px;
-  }
-
-  .sw-cs-main-card {
-    min-height: 330px;
-  }
+  .sw-cs-main-card-image-wr
 
   .sw-cs-main-card-title {
     font-size: 18px;
@@ -750,6 +752,35 @@ body,
 
   margin: 0;
 }
+
+
+.sw-otp-success {
+  color: #2ecc71;
+  font-weight: bold;
+  margin-left: 6px;
+}
+
+
+
+/* === FINAL FIX FOR OTP ROW === */
+.sw-cs-otp-row {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+  flex-wrap: nowrap !important;
+  align-items: flex-end;
+}
+
+.otp-item {
+  width: 180px;
+}
+
+.sw-cs-otp-verify {
+  display: flex;
+  align-items: flex-end;
+}
+
+
 
 /* nithin cleaning dash */
 
@@ -3718,6 +3749,158 @@ body,
 #root {
   overflow-x: hidden;
 }
+
+
+/* =========================================
+   USER DETAILS INPUT FIELDS
+========================================= */
+.sw-pm-form-right .ant-form-item {
+  margin-bottom: 14px !important;
+}
+
+.sw-pm-form-right .ant-input,
+.sw-pm-form-right .ant-input-affix-wrapper,
+.sw-pm-form-right .ant-input-number,
+.sw-pm-form-right .ant-picker,
+.sw-pm-form-right .ant-select-selector {
+  height: 36px !important;
+  border-radius: 8px !important;
+  font-size: 14px;
+}
+
+.sw-pm-form-right .ant-input::placeholder {
+  color: #9c9c9c !important;
+}
+
+/* =========================================
+   SEND OTP LINK STYLING
+========================================= */
+.sw-pm-form-right .ant-input-affix-wrapper .ant-btn-link {
+  font-size: 13px;
+  font-weight: 600;
+  color: #2b6cff !important;
+  padding: 0 !important;
+}
+
+.sw-pm-form-right .ant-input-affix-wrapper .ant-btn-link:hover {
+  color: #1d4fcc !important;
+}
+
+/* =========================================
+   VERIFIED TICK (same as Cleaning Service)
+========================================= */
+.sw-clean-tick {
+  color: #2b6cff !important;
+  font-weight: bold;
+  font-size: 17px;
+}
+
+/* =========================================
+   OTP BLOCK STYLING
+========================================= */
+.sw-otp-block {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+  margin-top: -4px;
+  margin-bottom: 12px;
+}
+
+.sw-otp-block .ant-form-item {
+  flex: 1;
+  margin-bottom: 0 !important;
+}
+
+.sw-otp-block .ant-input {
+  text-align: center;
+  font-size: 16px;
+  height: 36px !important;
+  border-radius: 8px;
+}
+
+/* Verify OTP button */
+.sw-otp-block .ant-btn-primary {
+  height: 36px !important;
+  font-weight: 600;
+  border-radius: 8px !important;
+}
+
+/* =========================================
+   DETECT LOCATION BUTTON
+========================================= */
+.sw-pm-location-btn {
+  width: 100%;
+  border-radius: 8px;
+  padding: 10px 16px;
+  background: #eef5ff;
+  border: 1px solid #2b6cff;
+  color: #2b6cff;
+  font-weight: 600;
+  margin-bottom: 14px;
+  transition: 0.25s ease-in-out;
+}
+
+.sw-pm-location-btn:hover {
+  background: #dceaff;
+  border-color: #1a4ed0;
+}
+
+/* =========================================
+   PAYMENT TYPE SELECT
+========================================= */
+.sw-pm-form-right .ant-select-selector {
+  height: 36px !important;
+  display: flex !important;
+  align-items: center !important;
+  border-radius: 8px !important;
+}
+
+.sw-pm-form-right .ant-select-selection-item {
+  font-weight: 500;
+}
+
+/* =========================================
+   FORM PANEL SPACING / LAYOUT
+========================================= */
+.sw-pm-form-right {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sw-pm-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.sw-pm-addcart-btn {
+  padding: 0 20px !important;
+  height: 36px !important;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+
+
+.sw-cs-otp-row {
+  display: flex;
+  gap: 16px;
+  align-items: flex-end;
+  margin-top: 10px;
+}
+
+.otp-item {
+  flex: 1;
+}
+
+.sw-cs-otp-verify {
+  display: flex;
+  align-items: flex-end;
+}
+
+
 
 /* ///////////// Vamsi Packers and Movers ///// */
 
@@ -14541,6 +14724,25 @@ body.sw-hs-scrolling-disable {
     padding: 8px;
   }
 }
+
+
+
+.sw-cs-otp-row {
+  display: flex;
+  gap: 16px;
+  align-items: flex-end;
+  margin-top: 10px;
+}
+
+.otp-item {
+  flex: 1;
+}
+
+.sw-cs-otp-verify {
+  display: flex;
+  align-items: flex-end;
+}
+
 
 
 /* Anil and Srihari Home Service CSS Updates */
