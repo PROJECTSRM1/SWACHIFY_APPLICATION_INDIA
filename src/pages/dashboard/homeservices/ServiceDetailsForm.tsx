@@ -235,57 +235,63 @@ export default function ServiceRequestForm({
           </div>
 
           {/* OTP ROW */}
-          {isOtpSent && !verified && (
-            <div className="sw-cs-otp-row">
-              <Form.Item label="Phone OTP" className="otp-item">
-                <Input
-                  maxLength={4}
-                  placeholder="Enter Phone OTP"
-                  value={phoneOtp}
-                  onChange={(e) =>
-                    setPhoneOtp(e.target.value.replace(/\D/g, ""))
-                  }
-                />
-              </Form.Item>
+          {/* OTP ROW */}
+{isOtpSent && !verified && (
+  <div className="sw-hs-otp-row">
+    <Form.Item label="Phone OTP" className="otp-item">
+      <Input
+        maxLength={4}
+        placeholder="Enter Phone OTP"
+        value={phoneOtp}
+        onChange={(e) =>
+          setPhoneOtp(e.target.value.replace(/\D/g, ""))
+        }
+      />
+    </Form.Item>
 
-              <Form.Item label="Email OTP" className="otp-item">
-                <Input
-                  maxLength={4}
-                  placeholder="Enter Email OTP"
-                  value={emailOtp}
-                  onChange={(e) =>
-                    setEmailOtp(e.target.value.replace(/\D/g, ""))
-                  }
-                />
-              </Form.Item>
+    <Form.Item label="Email OTP" className="otp-item">
+      <Input
+        maxLength={4}
+        placeholder="Enter Email OTP"
+        value={emailOtp}
+        onChange={(e) =>
+          setEmailOtp(e.target.value.replace(/\D/g, ""))
+        }
+      />
+    </Form.Item>
 
-              <div className="sw-cs-otp-verify">
-                <Button
-                  type="primary"
-                  className="sw-cs-black-btn"
-                  style={{ height: 40 }}
-                  onClick={() => {
-                    if (phoneOtp.length !== 4 || emailOtp.length !== 4) {
-                      message.error("OTP must be 4 digits");
-                      return;
-                    }
+    {/* ✅ Button inside Form.Item (no inline CSS) */}
+    <Form.Item
+      label=" "
+      colon={false}
+      className="sw-hs-otp-verify"
+    >
+      <Button
+        type="primary"
+        className="sw-hs-black-btn"
+        onClick={() => {
+          if (phoneOtp.length !== 4 || emailOtp.length !== 4) {
+            message.error("OTP must be 4 digits");
+            return;
+          }
 
-                    if (phoneOtp === emailOtp) {
-                      message.error("Phone OTP & Email OTP must be different");
-                      return;
-                    }
+          if (phoneOtp === emailOtp) {
+            message.error("Phone OTP & Email OTP must be different");
+            return;
+          }
 
-                    message.success("OTP Verified");
-                    setVerified(true);
-                    setIsOtpSent(false);
-                  }}
-                >
-                  Verify OTP
-                </Button>
-              </div>
-            </div>
-          )}
+          message.success("OTP Verified");
+          setVerified(true);
+          setIsOtpSent(false);
+        }}
+      >
+        Verify OTP
+      </Button>
+    </Form.Item>
+  </div>
+)}
 
+     
           <Form.Item
             label="Problem Description"
             name="problemDescription"

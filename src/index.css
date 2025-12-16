@@ -14368,30 +14368,21 @@ body {
   }
 }
 
+
 /* next  */
 
 /* ROOT WRAPPER - Fully isolated */
-
-/* Modal internal scroll only */
-.sw-hs-sdform-ant-modal .ant-modal-body {
-  max-height: 80vh;
-  overflow-y: auto;
-}
-
-/* Prevent background scroll when modal opens */
-body.sw-hs-scrolling-disable {
-  overflow: hidden !important;
-}
 .sw-hs-sdp-modal .ant-modal-content {
   border-radius: 16px;
   padding: 0 !important;
   overflow: hidden;
 }
-
+.sw-hs-sdp-modal .ant-modal-content,
+.sw-hs-sdp-modal .ant-modal-body,
 .sw-hs-sdp-wrapper {
-  padding: 18px 24px;
   background: #fafbff;
 }
+
 
 /* Title */
 .sw-hs-sdp-title {
@@ -14511,29 +14502,36 @@ body.sw-hs-scrolling-disable {
   .sw-hs-sdp-img {
     height: 125px;
   }
-
-  .sw-hs-sdp-footer {
-    gap: 6px;
-    /* optional - reduces spacing */
+    .sw-hs-sdp-footer {
+    gap: 6px; /* optional - reduces spacing */
   }
 
   .sw-hs-sdp-btn {
     padding: 4px 6px !important;
     font-size: 10px !important;
     border-radius: 4px;
-    min-width: auto !important;
-    /* remove default min-width */
-    width: auto !important;
-    /* allow it to shrink */
-    flex-shrink: 1 !important;
-    /* allow flexbox to shrink it */
+    min-width: auto !important;     /* remove default min-width */
+    width: auto !important;         /* allow it to shrink */
+    flex-shrink: 1 !important;      /* allow flexbox to shrink it */
   }
-
   .sw-hs-sdp-modal .ant-modal-close {
     top: 4px !important;
     right: 14px !important;
   }
 }
+
+
+/* REMOVE right gap caused by scrollbar gutter */
+.sw-hs-sdp-modal .ant-modal-body {
+  padding: 18px 24px 18px 18px; /* ⬅️ smaller right padding */
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  background: transparent;
+}
+
+
 
 /* next two */
 
@@ -14568,6 +14566,35 @@ body.sw-hs-scrolling-disable {
   cursor: pointer;
   line-height: 1;
 }
+
+/* REMOVE white strip near scrollbar */
+.sw-hs-sdform-ant-modal .ant-modal {
+  padding-right: 0 !important;
+}
+
+/* Control scrolling cleanly */
+.sw-hs-sdform-ant-modal .ant-modal-body {
+  padding: 0 !important;
+  background: transparent;
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: calc(100vh - 80px);
+}
+
+/* Make scrollbar overlay-style */
+.sw-hs-sdform-ant-modal .ant-modal-body::-webkit-scrollbar {
+  width: 4px;
+}
+
+.sw-hs-sdform-ant-modal .ant-modal-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sw-hs-sdform-ant-modal .ant-modal-body::-webkit-scrollbar-thumb {
+   background: rgba(0, 0, 0, 0.35);
+  border-radius: 8px;
+}
+
 
 /* TITLE */
 .sw-hs-sdform-ant-title {
@@ -14621,6 +14648,8 @@ body.sw-hs-scrolling-disable {
 .sw-hs-sdform-ant-header-info h4 {
   font-size: 14px;
   margin: 0 0 6px 0;
+  color: #00A73E !important;
+ 
 }
 
 .sw-hs-sdform-ant-list {
@@ -14686,6 +14715,159 @@ body.sw-hs-scrolling-disable {
   border: none !important;
 }
 
+/* Reduce spacing between all Ant form items */
+.sw-hs-sdform-ant-form .ant-form-item {
+  margin-bottom: 10px !important;
+}
+
+/* Inputs compact */
+.sw-hs-sdform-ant-form input,
+.sw-hs-sdform-ant-form textarea,
+.sw-hs-sdform-ant-form .ant-select-selector {
+  height: 34px !important;
+  font-size: 13px;
+}
+
+/* Textarea specific */
+.sw-hs-sdform-ant-form textarea {
+  min-height: 60px !important;
+  padding-top: 6px;
+}
+
+/* Labels tighter */
+.sw-hs-sdform-ant-form .ant-form-item-label > label {
+  font-size: 12px;
+  padding-bottom: 2px;
+}
+
+
+/* ADD TO CART */
+.sw-hs-sdform-ant-buttons .ant-btn-primary {
+  background: #000 !important;
+  border: none !important;
+  height: 34px;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.sw-hs-sdform-ant-buttons .ant-btn-primary:hover,
+.sw-hs-sdform-ant-buttons .ant-btn-primary:focus {
+  background: #222 !important;
+  box-shadow: none !important;
+  transform: translateY(-1px);
+}
+
+.sw-hs-sdform-ant-buttons .ant-btn-primary:disabled {
+  background: #bbb !important;
+  color: #fff !important;
+}
+
+/* PHONE INPUT COMPACT */
+.sw-hs-sdform-ant-form .ant-input-affix-wrapper {
+  height: 34px !important;
+  padding: 0 8px !important;
+  display: flex;
+  align-items: center;
+}
+
+/* Inner input */
+.sw-hs-sdform-ant-form .ant-input {
+  height: 32px !important;
+  font-size: 13px;
+}
+
+/* Send OTP button */
+.sw-hs-sdform-ant-form .ant-input-suffix .ant-btn {
+  height: 26px !important;
+  padding: 0 8px !important;
+  font-size: 12px !important;
+  line-height: 26px !important;
+}
+
+/* DATE PICKER FULL WIDTH */
+.sw-hs-sdform-ant-form .ant-picker {
+  width: 100% !important;
+  height: 34px !important;
+  align-items: center;
+}
+
+/* DatePicker input text */
+.sw-hs-sdform-ant-form .ant-picker-input > input {
+  font-size: 13px;
+}
+
+/* ================= OTP ROW ================= */
+
+/* OTP row layout – wider OTP fields */
+.sw-hs-otp-row {
+  display: grid;
+  grid-template-columns: minmax(220px, 1.4fr) minmax(220px, 1.4fr) minmax(110px, max-content);
+  gap: 9px;
+  align-items: end;
+}
+
+
+.sw-hs-otp-row .ant-form-item-control {
+  flex: 1;
+}
+
+.sw-hs-otp-row .ant-form-item-control-input {
+  width: 100%;
+}
+
+.sw-hs-otp-row input {
+  width: 100% !important;
+}
+
+
+/* FORCE OTP Form.Item to stretch */
+.sw-hs-otp-row .otp-item {
+  width: 100%;
+}
+
+
+
+
+
+/* Remove AntD default spacing */
+.sw-hs-otp-row .ant-form-item {
+  margin-bottom: 0 !important;
+}
+
+/* OTP input size */
+.sw-hs-otp-row .ant-input {
+  height: 34px;
+  font-size: 13px;
+}
+
+/* Verify button styling */
+.sw-hs-otp-verify .ant-btn {
+  height: 34px;
+  padding: 0 14px;
+  font-size: 12px;
+  line-height: 34px;
+}
+
+/* Hide label space for Verify button */
+.sw-hs-otp-verify .ant-form-item-label {
+  visibility: hidden;
+}
+
+
+/* Reduce space between label & input for OTP fields */
+.sw-hs-otp-row .ant-form-item-label {
+  padding-bottom: 1px !important;
+}
+
+/* Reduce label line-height */
+.sw-hs-otp-row .ant-form-item-label > label {
+  line-height: 1.2;
+  font-size: 12px;
+}
+
+
+
 /* RESPONSIVE */
 @media (max-width: 700px) {
   .sw-hs-sdform-ant-header {
@@ -14727,21 +14909,6 @@ body.sw-hs-scrolling-disable {
 
 
 
-.sw-cs-otp-row {
-  display: flex;
-  gap: 16px;
-  align-items: flex-end;
-  margin-top: 10px;
-}
-
-.otp-item {
-  flex: 1;
-}
-
-.sw-cs-otp-verify {
-  display: flex;
-  align-items: flex-end;
-}
 
 
 
