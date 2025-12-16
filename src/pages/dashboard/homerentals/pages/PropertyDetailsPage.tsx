@@ -63,6 +63,9 @@ import warehouseImg4 from "../../../../assets/HomeRental/openplot3.jpg";
 
 const { TextArea } = Input;
 const { Option } = Select;
+// ---------- OTP STATES ----------
+
+// --------------------------------
 
 interface PropertyDetails {
   id: string;
@@ -87,6 +90,10 @@ interface PropertyDetailsPageProps {
 const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, onClose }) => {
   const [form] = Form.useForm();
   const { addToCart } = useCart();
+  const [isOtpSent, setIsOtpSent] = React.useState(false);
+  const [phoneOtp, setPhoneOtp] = React.useState("");
+  const [emailOtp, setEmailOtp] = React.useState("");
+  const [verified, setVerified] = React.useState(false);
 
   // Details for each property (ids match ApartmentListingsPage)
   const propertiesById: Record<string, PropertyDetails> = {
@@ -450,7 +457,7 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
   //   message.success('Your inquiry has been submitted! Our team will contact you within 24 hours.');
   //   form.resetFields();
   // };
-  const onFinish = (values: {
+ const onFinish = (values: {
   fullName?: string;
   phone?: string;
   moveInDate?: string | Date;
@@ -476,11 +483,19 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
     addToCart(cartItem);
     message.success('Property added to cart. Our team will contact you within 24 hours.');
     form.resetFields();
+
+    // ✅ RESET OTP (VERY IMPORTANT)
+    setVerified(false);
+    setIsOtpSent(false);
+    setPhoneOtp("");
+    setEmailOtp("");
+
   } catch (err) {
     console.error('Add to cart error:', err);
     message.error('Could not add to cart. Try again.');
   }
 };
+
 
   return (
     <div className="sw-hr-property-details-page">
@@ -579,29 +594,35 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
               <span className="sw-hr-pd-price">${property.price}</span>
               <span className="sw-hr-pd-price-unit">/month</span>
             </div>
+<Form
+  form={form}
+  layout="vertical"
+  onFinish={onFinish}
+  className="sw-hr-booking-form"
+>
 
-            <Form
-              form={form}
-              layout="vertical"
-              onFinish={onFinish}
-              className="sw-hr-booking-form"
-            >
-              {/* Common Fields */}
-              <Form.Item
-                name="fullName"
-                label={isCommercial || isOpenPlot ? "Full Name / Business Name" : "Full Name"}
-                rules={[
-                  { required: true, message: 'Please enter your name' },
-                  { min: 2, message: 'Name must be at least 2 characters' },
-                  { max: 50, message: 'Name must not exceed 50 characters' },
-                  {
-                    pattern: /^[a-zA-Z\s]+$/,
-                    message: 'Name can only contain letters and spaces',
-                  },
-                ]}
-              >
-                <Input placeholder={isCommercial || isOpenPlot ? "Enter name or business name" : "Enter your name"} size="large" />
-              </Form.Item>
+           <Form.Item
+  name="fullName"
+  label={isCommercial || isOpenPlot ? "Full Name / Business Name" : "Full Name"}
+  rules={[
+    { required: true, message: 'Please enter your name' },
+    { min: 2, message: 'Name must be at least 2 characters' },
+    { max: 50, message: 'Name must not exceed 50 characters' },
+    {
+      pattern: /^[a-zA-Z\s]+$/,
+      message: 'Name can only contain letters and spaces',
+    },
+  ]}
+>
+  <Input
+    placeholder={
+      isCommercial || isOpenPlot
+        ? "Enter name or business name"
+        : "Enter your name"
+    }
+    size="large"
+  />
+</Form.Item>
 
               <Form.Item
                 name="email"
@@ -610,27 +631,105 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
                   { required: true, message: 'Please enter your email' },
                   { type: 'email', message: 'Please enter a valid email address' },
                   {
-                    pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                    message: 'Please enter a valid email format (e.g., user@example.com)',
+                    // pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                    // message: 'Please enter a valid email format (e.g., user@example.com)',
                   },
                 ]}
               >
-                <Input placeholder="your@email.com" size="large" type="email" />
+                
+                <Input
+    placeholder="your@email.com"
+    size="large"
+    type="email"
+    suffix={verified ? "✔" : null}
+  />
               </Form.Item>
 
               <Form.Item
-                name="phone"
-                label="Phone Number"
-                rules={[
-                  { required: true, message: 'Please enter your phone number' },
-                  {
-                    pattern: /^[+]?[(]?[0-9]{1,4}[)]?[-\s.]?[(]?[0-9]{1,4}[)]?[-\s.]?[0-9]{1,9}$/,
-                    message: 'Please enter a valid phone number',
-                  },
-                ]}
-              >
-                <Input placeholder="+1 (555) 000-0000" size="large" />
-              </Form.Item>
+  name="phone"
+  label="Phone Number"
+  rules={[
+    { required: true, message: "Please enter your phone number" },
+    { pattern: /^[0-9]{10}$/, message: "Enter valid 10 digit number" },
+  ]}
+>
+  <Input
+    prefix="+91 "
+    maxLength={10}
+    placeholder="Enter phone number"
+    size="large"
+    onChange={(e) => {
+      const onlyDigits = e.target.value.replace(/\D/g, "");
+      form.setFieldsValue({ phone: onlyDigits });
+    }}
+    suffix={
+      !verified && !isOtpSent ? (
+        <Button
+          type="link"
+          onClick={() => {
+            if (!form.getFieldValue("phone") || !form.getFieldValue("email")) {
+              message.error("Enter email & phone first");
+              return;
+            }
+            setIsOtpSent(true);
+            message.success("OTP Sent (Demo Mode)");
+          }}
+        >
+          Send OTP
+        </Button>
+      ) : verified ? "✔" : null
+    }
+  />
+</Form.Item>
+{isOtpSent && !verified && (
+  <div className="sw-hr-otp-row">
+    <Form.Item label="Phone OTP" className="otp-item">
+      <Input
+        maxLength={4}
+        placeholder="Enter Phone OTP"
+        value={phoneOtp}
+        onChange={(e) =>
+          setPhoneOtp(e.target.value.replace(/\D/g, ""))
+        }
+      />
+    </Form.Item>
+
+    <Form.Item label="Email OTP" className="otp-item">
+      <Input
+        maxLength={4}
+        placeholder="Enter Email OTP"
+        value={emailOtp}
+        onChange={(e) =>
+          setEmailOtp(e.target.value.replace(/\D/g, ""))
+        }
+      />
+    </Form.Item>
+
+    <div className="sw-hr-otp-verify">
+      <Button
+        type="primary"
+        onClick={() => {
+          if (phoneOtp.length !== 4 || emailOtp.length !== 4) {
+            message.error("OTP must be 4 digits");
+            return;
+          }
+          if (phoneOtp === emailOtp) {
+            message.error("Phone & Email OTP must be different");
+            return;
+          }
+          message.success("OTP Verified");
+          setVerified(true);
+          setIsOtpSent(false);
+        }}
+      >
+        Verify OTP
+      </Button>
+    </div>
+  </div>
+)}
+
+
+
 
               {/* Residential Form Fields */}
               {isResidential && (
@@ -881,16 +980,36 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
                 />
               </Form.Item>
 
+              <Form.Item
+  name="paymentType"
+  label="Payment Type"
+  rules={[{ required: true, message: "Select payment type" }]}
+>
+  <Select placeholder="Select payment type" size="large">
+    <Option value="cash">Cash</Option>
+    <Option value="upi">UPI</Option>
+    <Option value="card">Credit / Debit Card</Option>
+    <Option value="netbanking">Net Banking</Option>
+  </Select>
+</Form.Item>
+
+
               <Form.Item>
                 <Button
-                  type="primary"
-                  htmlType="submit"
-                  size="small"
-                  block
-                  className="sw-hr-submit-btn"
-                >
-                  {isOpenPlot ? 'Submit Inquiry' : isCommercial ? 'Request Quote' : 'Schedule Viewing & Add to Cart'}
-                </Button>
+  type="primary"
+  htmlType="submit"
+  size="small"
+  block
+  disabled={!verified}
+  className="sw-hr-submit-btn"
+>
+  {isOpenPlot
+    ? "Submit Inquiry"
+    : isCommercial
+    ? "Request Quote"
+    : "Schedule Viewing & Add to Cart"}
+</Button>
+
               </Form.Item>
 
               <p className="sw-hr-form-note">
