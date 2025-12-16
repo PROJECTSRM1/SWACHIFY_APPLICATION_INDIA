@@ -98,6 +98,8 @@ export type Freelancer = {
   status: FreelancerStatus;
   age: number;
   city: string;
+  aadhaar?: string
+  pan?: string
 };
 export interface FormField {
   id: string;

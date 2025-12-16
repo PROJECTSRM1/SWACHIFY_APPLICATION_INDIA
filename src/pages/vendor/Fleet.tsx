@@ -3,8 +3,8 @@ import { Button, Tag, Tooltip } from "antd";
 import {
   EditOutlined,
   ToolOutlined,
-  CheckOutlined,
-  CarOutlined,
+  //CheckOutlined,
+  //CarOutlined,
 } from "@ant-design/icons";
 import Toyota from "../../assets/VendorPage/Toyota.jpg"
 import honda from "../../assets/VendorPage/Honda.jpg"
