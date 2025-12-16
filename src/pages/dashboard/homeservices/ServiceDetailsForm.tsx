@@ -1,4 +1,15 @@
-import { Modal, Form, Input, Select, DatePicker, Button, message } from "antd";
+import {
+  Modal,
+  Form,
+  Input,
+  Select,
+  DatePicker,
+  Button,
+  message,
+  Row,   // ✅ ADD
+  Col,   // ✅ ADD
+} from "antd";
+
 import dayjs from "dayjs";
 import { useCart } from "../../../context/CartContext";
 import { useEffect, useState } from "react";
@@ -176,46 +187,43 @@ export default function ServiceRequestForm({
           {/* PHONE + ISSUE */}
           <div className="sw-hs-sdform-ant-two-col">
             <Form.Item
-              label="Phone"
-              name="phone"
-              rules={[
-                { required: true, message: "Phone no is required" },
-                { pattern: /^[0-9]{10}$/, message: "Enter valid 10 digit number" },
-              ]}
-            >
-              <Input
-                prefix="+91 "
-                maxLength={10}
-                placeholder="Enter Phone Number"
-                onChange={(e) => {
-                  const onlyDigits = e.target.value.replace(/\D/g, "");
-                  form.setFieldsValue({ phone: onlyDigits });
-                }}
-                suffix={
-                  !verified && !isOtpSent ? (
-                    <Button
-                      type="link"
-                      onClick={() => {
-                        if (
-                          !form.getFieldValue("phone") ||
-                          !form.getFieldValue("email")
-                        ) {
-                          message.error("Enter email & mobile first");
-                          return;
-                        }
-
-                        setIsOtpSent(true);
-                        message.success("OTP Sent (Demo Mode)");
-                      }}
-                    >
-                      Send OTP
-                    </Button>
-                  ) : verified ? (
-                    "✔"
-                  ) : null
-                }
-              />
-            </Form.Item>
+  label="Phone"
+  name="mobile"
+  rules={[
+    { required: true, message: "Phone no is required" },
+    { pattern: /^[0-9]{10}$/, message: "Enter valid 10 digit number" },
+  ]}
+>
+  <Input
+    addonBefore="+91"
+    placeholder="Enter Phone Number"
+    maxLength={10}
+    onChange={(e) => {
+      const onlyDigits = e.target.value.replace(/\D/g, "");
+      form.setFieldsValue({ mobile: onlyDigits });
+    }}
+    suffix={
+      !verified && !isOtpSent ? (
+        <Button
+          type="link"
+          className="sw-otp-send-btn"
+          onClick={() => {
+            if (!form.getFieldValue("mobile") || !form.getFieldValue("email")) {
+              message.error("Enter email & mobile first");
+              return;
+            }
+            setIsOtpSent(true);
+            message.success("OTP Sent (Demo Mode)");
+          }}
+        >
+          Send OTP
+        </Button>
+      ) : verified ? (
+        <span className="sw-otp-tick">✔</span>
+      ) : null
+    }
+  />
+</Form.Item>
 
             <Form.Item
               label="Issue"
@@ -236,55 +244,61 @@ export default function ServiceRequestForm({
 
           {/* OTP ROW */}
           {isOtpSent && !verified && (
-            <div className="sw-cs-otp-row">
-              <Form.Item label="Phone OTP" className="otp-item">
-                <Input
-                  maxLength={4}
-                  placeholder="Enter Phone OTP"
-                  value={phoneOtp}
-                  onChange={(e) =>
-                    setPhoneOtp(e.target.value.replace(/\D/g, ""))
-                  }
-                />
-              </Form.Item>
+  <Row gutter={16} align="middle" className="sw-otp-row">
+    <Col xs={24} md={7}>
+      <Form.Item label="Phone OTP" className="mb-0">
+        <Input
+          maxLength={4}
+          placeholder="Enter Phone OTP"
+          value={phoneOtp}
+          onChange={(e) =>
+            setPhoneOtp(e.target.value.replace(/\D/g, ""))
+          }
+        />
+      </Form.Item>
+    </Col>
 
-              <Form.Item label="Email OTP" className="otp-item">
-                <Input
-                  maxLength={4}
-                  placeholder="Enter Email OTP"
-                  value={emailOtp}
-                  onChange={(e) =>
-                    setEmailOtp(e.target.value.replace(/\D/g, ""))
-                  }
-                />
-              </Form.Item>
+    <Col xs={24} md={7}>
+      <Form.Item label="Email OTP" className="mb-0">
+        <Input
+          maxLength={4}
+          placeholder="Enter Email OTP"
+          value={emailOtp}
+          onChange={(e) =>
+            setEmailOtp(e.target.value.replace(/\D/g, ""))
+          }
+        />
+      </Form.Item>
+    </Col>
 
-              <div className="sw-cs-otp-verify">
-                <Button
-                  type="primary"
-                  className="sw-cs-black-btn"
-                  style={{ height: 40 }}
-                  onClick={() => {
-                    if (phoneOtp.length !== 4 || emailOtp.length !== 4) {
-                      message.error("OTP must be 4 digits");
-                      return;
-                    }
+    <Col xs={24} md={6}>
+      <Form.Item label=" " className="mb-0">
+        <Button
+          type="primary"
+          className="sw-otp-verify-btn"
+          onClick={() => {
+            if (phoneOtp.length !== 4 || emailOtp.length !== 4) {
+              message.error("OTP must be 4 digits");
+              return;
+            }
 
-                    if (phoneOtp === emailOtp) {
-                      message.error("Phone OTP & Email OTP must be different");
-                      return;
-                    }
+            if (phoneOtp === emailOtp) {
+              message.error("Phone OTP & Email OTP must be different");
+              return;
+            }
 
-                    message.success("OTP Verified");
-                    setVerified(true);
-                    setIsOtpSent(false);
-                  }}
-                >
-                  Verify OTP
-                </Button>
-              </div>
-            </div>
-          )}
+            message.success("OTP Verified");
+            setVerified(true);
+            setIsOtpSent(false);
+          }}
+        >
+          Verify OTP
+        </Button>
+      </Form.Item>
+    </Col>
+  </Row>
+)}
+
 
           <Form.Item
             label="Problem Description"

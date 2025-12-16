@@ -584,7 +584,7 @@ body,
   border-color: #000 !important;
   color: #fff !important;
   box-shadow: none !important;
-  margin-bottom: 24px ;
+  margin-bottom: 12px ;
 padding: 15px;
 }
 
@@ -779,6 +779,8 @@ padding: 15px;
   display: flex;
   align-items: flex-end;
 }
+
+
 
 
 
@@ -3902,6 +3904,10 @@ body,
 
 
 
+
+
+
+
 /* ///////////// Vamsi Packers and Movers ///// */
 
 /* ---------------- Buy and Sale CSS ---------------- */
@@ -4562,7 +4568,68 @@ body,
   gap: 4px;
 }
 
+/* ================= OTP SECTION (SAFE & SCOPED) ================= */
 
+.sw-hr-otp-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+  margin-bottom: 16px;
+}
+
+/* Each OTP input same width */
+.sw-hr-otp-row .otp-item {
+  flex: 1;
+  margin-bottom: 0 !important;
+}
+
+/* Verify button column */
+.sw-hr-otp-verify {
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-end;
+}
+
+/* Verify button */
+.sw-hr-otp-verify button {
+  height: 40px;
+  padding: 0 20px;
+  white-space: nowrap;
+}
+
+/* ---------- FIX INPUT TEXT CUTTING ---------- */
+.sw-hr-otp-row .ant-input-affix-wrapper {
+  width: 100%;
+}
+
+.sw-hr-otp-row .ant-input {
+  padding-right: 12px;
+}
+
+/* ---------- BLACK ✔ TICK (PHONE + EMAIL) ---------- */
+.swc-bs-detail-form-container
+  .ant-input-affix-wrapper
+  .ant-input-suffix {
+  color: #000 !important; /* BLACK tick */
+  font-weight: 600;
+}
+
+/* ---------- SEND OTP BUTTON INSIDE INPUT ---------- */
+.ant-input-suffix button {
+  padding-left: 8px;
+  padding-right: 0;
+}
+
+/* ---------- MOBILE FIX ---------- */
+@media (max-width: 768px) {
+  .sw-hr-otp-row {
+    flex-direction: column;
+  }
+
+  .sw-hr-otp-verify button {
+    width: 100%;
+  }
+}
 /* -------------------------------freelancer.css --------------------------------------*/
 /* FULL Freelancer.css
    - Footer responsive fix for 425px
@@ -14080,6 +14147,38 @@ body {
   }
 }
 
+
+
+/* ================= OTP SECTION ================= */
+
+.sw-hr-otp-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.sw-hr-otp-row .otp-item {
+  margin-bottom: 0 !important;
+}
+
+/* Verify button spans full width */
+.sw-hr-otp-verify {
+  grid-column: span 2;
+  margin-bottom: 0;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .sw-hr-otp-row {
+    grid-template-columns: 1fr;
+  }
+
+  .sw-hr-otp-verify {
+    grid-column: span 1;
+  }
+}
+
 /* Trilok Home Rentals CSS Updates */
 
 /* Anil and Srihari Home Service CSS Updates */
@@ -14649,6 +14748,7 @@ body.sw-hs-scrolling-disable {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
+  
 }
 
 /* DatePicker full width via class */
