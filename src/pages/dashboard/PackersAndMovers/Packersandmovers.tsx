@@ -1,4 +1,11 @@
 // Packersandmovers.tsx
+// Toast styling same as service form
+message.config({
+  top: 80,
+  duration: 2,
+  maxCount: 1,
+});
+
 import React, { useEffect, useRef, useState } from "react";
 import {
   Row,
@@ -13,6 +20,7 @@ import {
   DatePicker,
   InputNumber,
   Checkbox,
+  message   // <-- ADD THIS
 } from "antd";
 import {
   ShoppingCartOutlined,
@@ -258,6 +266,13 @@ const Packersandmovers: React.FC = () => {
   const [bookingFormsData, setBookingFormsData] = useState<Record<string, any>>({});
   const previouslyFocused = useRef<HTMLElement | null>(null);
   const [form] = Form.useForm();
+  // OTP STATES (correct position)
+const [isOtpSent, setIsOtpSent] = useState(false);
+const [verified, setVerified] = useState(false);
+const [phoneOtp, setPhoneOtp] = useState("");
+const [emailOtp, setEmailOtp] = useState("");
+
+
   // Confirmation popup state (top)
   const [showConfirmTop, setShowConfirmTop] = useState(false);
   const [confirmTextTop, setConfirmTextTop] = useState("");
@@ -290,9 +305,24 @@ const Packersandmovers: React.FC = () => {
   };
   // open booking form for submodule with groupIndex
   const openBookingForm = (img: CardImage, grpIndex: number) => {
-    const key = `${grpIndex}-${img.title}`;
-    setSelectedKey(key);
-    setSelectedImage(img);
+
+  // ✅ Reset OTP states every time user opens the booking form
+  setVerified(false);
+  setIsOtpSent(false);
+  setPhoneOtp("");
+  setEmailOtp("");
+
+  // Also clear phone+email fields (optional but matches service form behavior)
+  form.setFieldsValue({
+    fullName: "",
+    email: "",
+    mobile: ""
+  });
+
+  const key = `${grpIndex}-${img.title}`;
+  setSelectedKey(key);
+  setSelectedImage(img);
+
     // load saved data if exists
     const saved = bookingFormsData[key];
     if (saved) {
@@ -621,7 +651,166 @@ const Packersandmovers: React.FC = () => {
               </div>
               <div className="sw-pm-form-right">
                 <Form form={form} layout="vertical" onFinish={onFinish}>
-                  {/* metadata */}
+
+                {/* USER DETAILS */}
+{/* USER DETAILS - SAME AS SERVICE FORM PAGE */}
+
+<div className="sw-hs-sdform-ant-two-col">
+  <Form.Item
+    label="Full Name"
+    name="fullName"
+    rules={[
+      {
+        validator: (_, value) => {
+          if (!value || !value.trim())
+            return Promise.reject("Full name is required");
+
+          const parts = value.trim().split(/\s+/);
+          if (parts.length < 2)
+            return Promise.reject("Please enter first and last name");
+
+          return Promise.resolve();
+        },
+      },
+    ]}
+  >
+    <Input placeholder="Enter full name" />
+  </Form.Item>
+
+  <Form.Item
+    label="Email"
+    name="email"
+    rules={[
+      { required: true, message: "Email is required" },
+      { type: "email", message: "Enter valid email" },
+    ]}
+  >
+    <Input placeholder="Enter email" suffix={verified ? "✔" : null} />
+  </Form.Item>
+</div>
+
+<div className="sw-hs-sdform-ant-two-col">
+  <Form.Item
+    label="Phone"
+    name="mobile"
+    rules={[
+      { required: true, message: "Phone no is required" },
+      { pattern: /^[0-9]{10}$/, message: "Enter valid 10 digit number" },
+    ]}
+  >
+    <Input
+      prefix="+91 "
+      maxLength={10}
+      placeholder="Enter Phone Number"
+      onChange={(e) => {
+        const onlyDigits = e.target.value.replace(/\D/g, "");
+        form.setFieldsValue({ mobile: onlyDigits });
+      }}
+      suffix={
+        !verified && !isOtpSent ? (
+          <Button
+            type="link"
+            onClick={() => {
+              if (!form.getFieldValue("mobile") || !form.getFieldValue("email")) {
+                message.error("Enter email & mobile first");
+                return;
+              }
+
+              setIsOtpSent(true);
+              message.success("OTP Sent (Demo Mode)");
+            }}
+          >
+            Send OTP
+          </Button>
+        ) : verified ? (
+          "✔"
+        ) : null
+      }
+    />
+  </Form.Item>
+</div>
+
+{/* OTP SECTION (Same as service form) */}
+{isOtpSent && !verified && (
+  <div className="sw-cs-otp-row">
+    <Form.Item label="Phone OTP" className="otp-item">
+      <Input
+        maxLength={4}
+        placeholder="Enter Phone OTP"
+        value={phoneOtp}
+        onChange={(e) => setPhoneOtp(e.target.value.replace(/\D/g, ""))}
+      />
+    </Form.Item>
+
+    <Form.Item label="Email OTP" className="otp-item">
+      <Input
+        maxLength={4}
+        placeholder="Enter Email OTP"
+        value={emailOtp}
+        onChange={(e) => setEmailOtp(e.target.value.replace(/\D/g, ""))}
+      />
+    </Form.Item>
+
+    <div className="sw-cs-otp-verify">
+      <Button
+        type="primary"
+        className="sw-cs-black-btn"
+        style={{ height: 40 }}
+        onClick={() => {
+          if (phoneOtp.length !== 4 || emailOtp.length !== 4) {
+            message.error("OTP must be 4 digits");
+            return;
+          }
+
+          if (phoneOtp === emailOtp) {
+            message.error("Phone OTP & Email OTP must be different");
+            return;
+          }
+
+          message.success("OTP Verified");
+          setVerified(true);
+          setIsOtpSent(false);
+        }}
+      >
+        Verify OTP
+      </Button>
+    </div>
+  </div>
+)}
+
+
+
+
+<Button
+  style={{ marginBottom: 12 }}
+  onClick={() => {
+    if (!navigator.geolocation) return message.error("Location not supported");
+
+    navigator.geolocation.getCurrentPosition(async pos => {
+      const { latitude, longitude } = pos.coords;
+      const res = await fetch(
+        `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
+      );
+      const data = await res.json();
+      if (data.display_name) {
+        form.setFieldsValue({ address: data.display_name });
+        message.success("Location detected");
+       
+      }
+    });
+  }}
+>
+  Detect My Current Location
+</Button>
+
+<Form.Item
+  name="address"
+  label="Address"
+  rules={[{ required: true, message: "Enter address" }]}
+>
+  <Input placeholder="House No, Street, City" />
+</Form.Item>
+
                   <Form.Item name="serviceGroup" style={{ display: "none" }}>
                     <Input />
                   </Form.Item>
@@ -635,12 +824,28 @@ const Packersandmovers: React.FC = () => {
                   {(selectedImage.formSchema || []).map((f) => (
                     <div key={f.name}>{renderField(f)}</div>
                   ))}
+                  <Form.Item
+  name="paymentType"
+  label="Payment Type"
+  rules={[{ required: true, message: "Select payment type" }]}
+>
+  <Select placeholder="Choose payment type">
+    <Option value="full">Full Payment</Option>
+    <Option value="partial">Partial Advance</Option>
+  </Select>
+</Form.Item>
+
                   {/* actions */}
                   <div className="sw-pm-form-actions">
                     <Button onClick={closeBookingForm} style={{ marginRight: 12 }}>
                       Cancel
                     </Button>
-                    <Button type="primary" htmlType="submit" className="sw-pm-addcart-btn">
+                    <Button
+  type="primary"
+  htmlType="submit"
+  className="sw-pm-addcart-btn"
+  disabled={!verified}   // ✅ KEY LINE
+>
                       <ShoppingCartOutlined style={{ marginRight: 8 }} /> Book Service
                     </Button>
                   </div>

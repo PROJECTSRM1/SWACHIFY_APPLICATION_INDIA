@@ -210,14 +210,16 @@ export const popupData: PopupDataType =
         "Safety compliance",
         "Quality tools",
         "Post-service cleanup",
-        "Quick installation"
+        "Quick installation",
+      
       ],
       issues: [
         { label: "Wiring issue", price: 50 },
         { label: "Bulb not working", price: 30 },
         { label: "Short circuit", price: 80 },
         { label: "Switch issue", price: 40 },
-        { label: "Loose connections", price: 20 }
+        { label: "Loose connections", price: 20 },
+        {label: "Others...", price: 300}
       ]
     },
 
@@ -238,7 +240,8 @@ export const popupData: PopupDataType =
         { label: "Fan making noise", price: 80 },
         { label: "Fan not starting", price: 90 },
         { label: "Regulator issue", price: 30 },
-        { label: "Low fan speed", price: 40 }
+        { label: "Low fan speed", price: 40 },
+            {label: "Others...", price: 300}
       ]
     },
 
@@ -259,7 +262,8 @@ export const popupData: PopupDataType =
         { label: "Overload issues", price: 20 },
         { label: "Loose switches", price: 10 },
         { label: "Socket not working", price: 50 },
-        { label: "Sparking problem", price: 60 }
+        { label: "Sparking problem", price: 60 },
+           {label: "Others...", price: 300}
       ]
     },
 
@@ -280,7 +284,8 @@ export const popupData: PopupDataType =
         { label: "Connectivity issues", price: 40 },
         { label: "Incorrect setup", price: 50 },
         { label: "App integration problems", price: 70 },
-        { label: "Power supply issues", price: 90 }
+        { label: "Power supply issues", price: 90 },
+          {label: "Others...", price: 300}
       ]
     }
   ]
@@ -306,7 +311,8 @@ export const popupData: PopupDataType =
         { label: "Pipe leakage", price: 80 },
         { label: "Water dripping", price: 70 },
         { label: "Joint loose", price: 20 },
-        { label: "Moisture patches", price: 90 }
+        { label: "Moisture patches", price: 90 },
+         {label: "Others...", price: 300}
       ]
     },
 
@@ -327,7 +333,8 @@ export const popupData: PopupDataType =
         { label: "Pipe replacement needed", price: 50 },
         { label: "Low water flow", price: 80 },
         { label: "Pipe cracks", price: 90 },
-        { label: "Improper fitting", price: 50 }
+        { label: "Improper fitting", price: 50 },
+         {label: "Others...", price: 300}
       ]
     },
 
@@ -348,7 +355,8 @@ export const popupData: PopupDataType =
         { label: "Water leakage", price: 50 },
         { label: "Incorrect installation", price: 80 },
         { label: "Pipe fitting issue", price: 20 },
-        { label: "Pressure problems", price: 60 }
+        { label: "Pressure problems", price: 60 },
+         {label: "Others...", price: 300}
       ]
     },
 
@@ -369,7 +377,8 @@ export const popupData: PopupDataType =
         { label: "Shower leakage", price: 50 },
         { label: "Broken fittings", price: 40 },
         { label: "Low water pressure", price: 70 },
-        { label: "Improper installation", price: 20 }
+        { label: "Improper installation", price: 20 },
+         {label: "Others...", price: 300}
       ]
     },
 
@@ -390,7 +399,8 @@ export const popupData: PopupDataType =
         { label: "Foul smell", price: 50 },
         { label: "Algae build-up", price: 50 },
         { label: "Sediment accumulation", price: 50 },
-        { label: "Overflow issues", price: 50 }
+        { label: "Overflow issues", price: 50 },
+         {label: "Others...", price: 300}
       ]
     },
 
@@ -411,7 +421,8 @@ export const popupData: PopupDataType =
         { label: "Slow water flow", price: 30},
         { label: "Bad drain smell", price: 70 },
         { label: "Grease buildup", price: 115 },
-        { label: "Hair clogging", price: 20 }
+        { label: "Hair clogging", price: 20 },
+         {label: "Others...", price: 300}
       ]
     }
   ]
@@ -437,7 +448,8 @@ export const popupData: PopupDataType =
         { label: "Water leakage", price: 210 },
         { label: "Bad smell", price: 70 },
         { label: "Low airflow", price: 60 },
-        { label: "Compressor issue", price: 50 }
+        { label: "Compressor issue", price: 50 },
+         {label: "Others...", price: 300}
       ]
     },
 
@@ -458,7 +470,8 @@ export const popupData: PopupDataType =
         { label: "Water leakage", price: 80 },
         { label: "Freezer over-icing", price: 20 },
         { label: "Noise from compressor", price: 110 },
-        { label: "Door not sealing", price: 130 }
+        { label: "Door not sealing", price: 130 },
+         {label: "Others...", price: 300}
       ]
     },
 
@@ -479,7 +492,8 @@ export const popupData: PopupDataType =
         { label: "Water not draining", price: 115 },
         { label: "Motor noise", price: 50 },
         { label: "Vibration issues", price: 70 },
-        { label: "Door not locking", price: 50 }
+        { label: "Door not locking", price: 50 },
+         {label: "Others...", price: 300}
       ]
     },
 
@@ -500,7 +514,8 @@ export const popupData: PopupDataType =
         { label: "Plate not rotating", price: 50 },
         { label: "Sparking inside", price: 80 },
         { label: "Burning smell", price: 50 },
-        { label: "Button malfunction", price: 220 }
+        { label: "Button malfunction", price: 220 },
+         {label: "Others...", price: 300}
       ]
     },
 
@@ -521,7 +536,8 @@ export const popupData: PopupDataType =
         { label: "No sound", price: 90 },
         { label: "Lines on screen", price: 70 },
         { label: "Port not working", price: 80 },
-        { label: "Remote not responding", price: 50 }
+        { label: "Remote not responding", price: 50 },
+         {label: "Others...", price: 300}
       ]
     },
 
@@ -542,7 +558,8 @@ export const popupData: PopupDataType =
         { label: "Overheating issues", price: 45 },
         { label: "Noise from appliance", price: 110 },
         { label: "Irregular functioning", price: 50 },
-        { label: "Wear and tear", price: 250 }
+        { label: "Wear and tear", price: 250 },
+         {label: "Others...", price: 300}
       ]
     },
 
@@ -563,7 +580,8 @@ export const popupData: PopupDataType =
         { label: "Damaged wiring", price: 50 },
         { label: "Worn-out parts", price: 80 },
         { label: "Non-functional buttons", price: 50 },
-        { label: "Motor or compressor faults", price: 70}
+        { label: "Motor or compressor faults", price: 70},
+         {label: "Others...", price: 300}
       ]
     }
   ]
@@ -589,7 +607,8 @@ export const popupData: PopupDataType =
         { label: "Custom size needed", price: 50 },
         { label: "Design modification", price: 50 },
         { label: "Material selection help", price: 50 },
-        { label: "Loose structure concerns", price: 50 }
+        { label: "Loose structure concerns", price: 50 },
+         {label: "Others...", price: 300}
       ]
     },
 
@@ -610,7 +629,8 @@ export const popupData: PopupDataType =
         { label: "Loose joints", price: 50 },
         { label: "Scratches & dents", price: 50 },
         { label: "Damaged hinges", price: 50 },
-        { label: "Cracked wood", price: 50 }
+        { label: "Cracked wood", price: 50 },
+         {label: "Others...", price: 300}
       ]
     },
 
@@ -631,7 +651,8 @@ export const popupData: PopupDataType =
         { label: "Window jammed", price: 50 },
         { label: "Loose hinges", price: 50 },
         { label: "Lock not working", price: 50 },
-        { label: "Frame misalignment", price: 50 }
+        { label: "Frame misalignment", price: 50 },
+         {label: "Others...", price: 300}
       ]
     },
 
@@ -652,7 +673,8 @@ export const popupData: PopupDataType =
         { label: "Broken hinges", price: 50 },
         { label: "Loose shelves", price: 50 },
         { label: "Sliding not smooth", price: 50 },
-        { label: "New installation required", price: 50 }
+        { label: "New installation required", price: 50 },
+         {label: "Others...", price: 300}
       ]
     }
   ]
@@ -678,7 +700,8 @@ export const popupData: PopupDataType =
         { label: "Peeling paint", price: 50 },
         { label: "Cracks on wall", price: 50 },
         { label: "Faded colors", price: 50 },
-        { label: "Moisture patches", price: 50 }
+        { label: "Moisture patches", price: 50 },
+         {label: "Others...", price: 300}
       ]
     },
 
@@ -699,7 +722,8 @@ export const popupData: PopupDataType =
         { label: "Exterior cracks", price: 50 },
         { label: "Water damage marks", price: 50 },
         { label: "Wall roughness", price: 50 },
-        { label: "Peeling layers", price: 50 }
+        { label: "Peeling layers", price: 50 },
+         {label: "Others...", price: 300}
       ]
     },
 
@@ -720,7 +744,8 @@ export const popupData: PopupDataType =
         { label: "Wall bubbles", price: 50 },
         { label: "Misalignment issues", price: 50 },
         { label: "Minor cracks", price: 50 },
-        { label: "Paint scratches", price: 50 }
+        { label: "Paint scratches", price: 50 },
+         {label: "Others...", price: 300}
       ]
     },
 
@@ -741,7 +766,8 @@ export const popupData: PopupDataType =
         { label: "Water leakage", price: 50 },
         { label: "Damp patches", price: 50 },
         { label: "Ceiling moisture", price: 50 },
-        { label: "Crack water flow", price: 50 }
+        { label: "Crack water flow", price: 50 },
+         {label: "Others...", price: 300}
       ]
     },
 
@@ -762,7 +788,8 @@ export const popupData: PopupDataType =
         { label: "Holes in wall", price: 50 },
         { label: "Uneven surface", price: 50 },
         { label: "Chipped plaster", price: 50 },
-        { label: "Damaged corners", price: 50 }
+        { label: "Damaged corners", price: 50 },
+         {label: "Others...", price: 300}
       ]
     }
   ]
@@ -788,7 +815,8 @@ export const popupData: PopupDataType =
         { label: "Improper cooling", price: 50 },
         { label: "Vibration issues", price: 50 },
         { label: "Loose mounting", price: 50 },
-        { label: "High noise", price: 50 }
+        { label: "High noise", price: 50 },
+         {label: "Others...", price: 300}
       ]
     },
 
@@ -809,7 +837,8 @@ export const popupData: PopupDataType =
         { label: "Bad smell", price: 50 },
         { label: "Water dripping", price: 50 },
         { label: "Dirty filters", price: 50 },
-        { label: "High power usage", price: 50 }
+        { label: "High power usage", price: 50 },
+         {label: "Others...", price: 300}
       ]
     },
 
@@ -830,7 +859,8 @@ export const popupData: PopupDataType =
         { label: "Low airflow", price: 50 },
         { label: "Bad odor", price: 50 },
         { label: "Allergy triggers", price: 50 },
-        { label: "Clogged ducts", price: 50 }
+        { label: "Clogged ducts", price: 50 },
+         {label: "Others...", price: 300}
       ]
     },
 
@@ -851,7 +881,8 @@ export const popupData: PopupDataType =
         { label: "Weak cooling", price: 50 },
         { label: "Bad airflow", price: 50 },
         { label: "High noise", price: 50 },
-        { label: "Odor issues", price: 50 }
+        { label: "Odor issues", price: 50 },
+         {label: "Others...", price: 300}
       ]
     },
 
@@ -872,7 +903,8 @@ export const popupData: PopupDataType =
         { label: "Cooling delay", price: 50 },
         { label: "Thermostat issues", price: 50 },
         { label: "Gas leakage", price: 50 },
-        { label: "Overheating", price: 50 }
+        { label: "Overheating", price: 50 },
+         {label: "Others...", price: 300}
       ]
     }
   ]
@@ -898,7 +930,8 @@ export const popupData: PopupDataType =
         { label: "Weed spread", price: 50 },
         { label: "Uneven edges", price: 50 },
         { label: "Dry patches", price: 50 },
-        { label: "Insect damage", price: 50 }
+        { label: "Insect damage", price: 50 },
+         {label: "Others...", price: 300}
       ]
     },
 
@@ -919,7 +952,8 @@ export const popupData: PopupDataType =
         { label: "Unhealthy plants", price: 50 },
         { label: "Soil imbalance", price: 50 },
         { label: "Patchy design", price: 50 },
-        { label: "Water drainage issue", price: 50 }
+        { label: "Water drainage issue", price: 50 },
+         {label: "Others...", price: 300}
       ]
     },
 
@@ -940,7 +974,8 @@ export const popupData: PopupDataType =
         { label: "Excess leaves", price: 50 },
         { label: "Moss buildup", price: 50 },
         { label: "Outdoor stains", price: 50 },
-        { label: "Garbage accumulation", price: 50 }
+        { label: "Garbage accumulation", price: 50 },
+         {label: "Others...", price: 300}
       ]
     },
 
@@ -961,7 +996,8 @@ export const popupData: PopupDataType =
         { label: "Leaf damage", price: 50 },
         { label: "Soil insects", price: 50 },
         { label: "Fungal infection", price: 50 },
-        { label: "Plant wilting", price: 50 }
+        { label: "Plant wilting", price: 50 },
+         {label: "Others...", price: 300}
       ]
     }
   ]
@@ -987,7 +1023,8 @@ export const popupData: PopupDataType =
         { label: "Tilt not working", price: 50 },
         { label: "Wall alignment issue", price: 50 },
         { label: "Bracket replacement needed", price: 50 },
-        { label: "Drilling support required", price: 50 }
+        { label: "Drilling support required", price: 50 },
+         {label: "Others...", price: 300}
       ]
     },
 
@@ -1008,7 +1045,8 @@ export const popupData: PopupDataType =
         { label: "Loose screws", price: 50 },
         { label: "Wall cracks", price: 50 },
         { label: "Incorrect placement", price: 50 },
-        { label: "Heavy load concerns", price: 50 }
+        { label: "Heavy load concerns", price: 50 },
+         {label: "Others...", price: 300}
       ]
     },
 
@@ -1029,7 +1067,8 @@ export const popupData: PopupDataType =
         { label: "Broken hinges", price: 50 },
         { label: "Damaged fixtures", price: 50 },
         { label: "Misalignment", price: 50 },
-        { label: "Wear and tear", price: 50 }
+        { label: "Wear and tear", price: 50 },
+         {label: "Others...", price: 300}
       ]
     },
 
@@ -1050,7 +1089,8 @@ export const popupData: PopupDataType =
         { label: "Wobbling chair", price: 50 },
         { label: "Broken drawer", price: 50 },
         { label: "Cracked wood", price: 50 },
-        { label: "Damaged hinges", price: 50 }
+        { label: "Damaged hinges", price: 50 },
+         {label: "Others...", price: 300}
       ]
     },
 
@@ -1071,7 +1111,8 @@ export const popupData: PopupDataType =
         { label: "Wall damage", price: 50 },
         { label: "Small cracks", price: 50 },
         { label: "Stuck doors", price: 50 },
-        { label: "Minor wear issues", price: 50 }
+        { label: "Minor wear issues", price: 50 },
+         {label: "Others...", price: 300}
       ]
     }
   ]
@@ -1097,7 +1138,8 @@ export const popupData: PopupDataType =
         { label: "Blurry video feed", price: 50 },
         { label: "App not connecting", price: 50 },
         { label: "Cable damage", price: 50 },
-        { label: "DVR storage issues", price: 50 }
+        { label: "DVR storage issues", price: 50 },
+         {label: "Others...", price: 300}
       ]
     },
 
@@ -1118,7 +1160,8 @@ export const popupData: PopupDataType =
         { label: "Key not turning", price: 50 },
         { label: "Broken latch", price: 50 },
         { label: "Door misalignment", price: 50 },
-        { label: "Lock replacement needed", price: 50 }
+        { label: "Lock replacement needed", price: 50 },
+         {label: "Others...", price: 300}
       ]
     },
 
@@ -1139,7 +1182,8 @@ export const popupData: PopupDataType =
         { label: "Sensor not detecting", price: 50 },
         { label: "Mobile alerts not working", price: 50 },
         { label: "Wiring fault", price: 50 },
-        { label: "Low battery issue", price: 50 }
+        { label: "Low battery issue", price: 50 },
+         {label: "Others...", price: 300}
       ]
     },
 
@@ -1160,7 +1204,8 @@ export const popupData: PopupDataType =
         { label: "False alerts", price: 50 },
         { label: "Low range", price: 50 },
         { label: "Connectivity issues", price: 50 },
-        { label: "Power supply fault", price: 50 }
+        { label: "Power supply fault", price: 50 },
+         {label: "Others...", price: 300}
       ]
     },
 
@@ -1181,7 +1226,8 @@ export const popupData: PopupDataType =
         { label: "App-sync issues", price: 90 },
         { label: "Smart hub offline", price: 100 },
         { label: "Voice assistant errors", price: 70 },
-        { label: "Battery or power issue", price: 60 }
+        { label: "Battery or power issue", price: 60 },
+         {label: "Others...", price: 300}
       ]
     }
   ]
