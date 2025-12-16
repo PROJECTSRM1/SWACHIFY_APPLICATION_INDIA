@@ -904,6 +904,14 @@ const CleaningService: React.FC = () => {
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
   const [isModulesModalOpen, setIsModulesModalOpen] = useState(false);
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
+    // OTP States (MUST be inside component)
+  const [isOtpSent, setIsOtpSent] = useState(false);
+  const [phoneOtp, setPhoneOtp] = useState("");
+  const [emailOtp, setEmailOtp] = useState("");
+  const [verified, setVerified] = useState(false);
+
+  
+
 
   const [selectedMainKey, setSelectedMainKey] = useState<string>("");
   const [selectedSubKey, setSelectedSubKey] = useState<string>("");
@@ -1010,13 +1018,18 @@ const getModuleAddons = () => {
 
 
   useEffect(() => {
-    if (isDetailsModalOpen && selectedModule) {
-      form.resetFields();
-      form.setFieldsValue({  additional: [] });
-      setComputedPrice(null);
-      // setServiceTypeKey();
-    }
-  }, [isDetailsModalOpen, selectedModule, form]);
+  if (isDetailsModalOpen && selectedModule) {
+    form.resetFields();
+    form.setFieldsValue({ additional: [] });
+    setComputedPrice(null);
+
+    // RESET OTP WHEN MODAL OPENS
+    setVerified(false);
+    setIsOtpSent(false);
+    setPhoneOtp("");
+    setEmailOtp("");
+  }
+}, [isDetailsModalOpen, selectedModule, form]);
 
   const prevOverflowRef = useRef<string | null>(null);
   useEffect(() => {
@@ -1360,9 +1373,16 @@ const getDisplayPriceText = (): string => {
   };
 
   const handleDetailsCancel = () => {
-    setIsDetailsModalOpen(false);
-    if (selectedSubKey) setIsModulesModalOpen(true);
-  };
+  // RESET OTP STATES
+  setVerified(false);
+  setIsOtpSent(false);
+  setPhoneOtp("");
+  setEmailOtp("");
+
+  setIsDetailsModalOpen(false);
+  if (selectedSubKey) setIsModulesModalOpen(true);
+};
+
 
   const visibleCategories = categories;
   const modulesForSelected = modulesBySubKey[selectedSubKey] || [];
@@ -1537,39 +1557,20 @@ const getDisplayPriceText = (): string => {
 
   
   <Form.Item
-    name="email"
-    label="Email"
-    rules={[
-      { required: true, message: "Enter email" },
-      { type: "email", message: "Enter valid email" },
-      {
-        validator: (_, value) => {
-          if (!value) return Promise.resolve();
+  name="email"
+  label="Email"
+  rules={[
+    { required: true, message: "Enter email" },
+    { type: "email", message: "Enter valid email" },
+  ]}
+  className="sw-cs-half-width"
+>
+  <Input
+    placeholder="example@gmail.com"
+    suffix={verified ? "✔" : null}
+  />
+</Form.Item>
 
-          const allowedDomains = [
-            "gmail.com",
-            "yahoo.com",
-            "outlook.com",
-            "hotmail.com",
-            "rediffmail.com",
-            "protonmail.com",
-            "icloud.com"
-          ];
-
-          const domain = value.split("@")[1];
-          if (allowedDomains.includes(domain)) {
-            return Promise.resolve();
-          }
-          return Promise.reject(
-            "Email must be Gmail, Yahoo, Outlook "
-          );
-        }
-      }
-    ]}
-    className="sw-cs-half-width"
-  >
-    <Input placeholder="example@gmail.com" />
-  </Form.Item>
 </div>
 
 <div className="sw-cs-form-row">
@@ -1582,7 +1583,28 @@ const getDisplayPriceText = (): string => {
     ]}
     className="sw-cs-half-width"
   >
-    <Input maxLength={10} placeholder="9876543210" />
+    <Input
+      prefix="+91 "
+      maxLength={10}
+      placeholder="9876543210"
+      suffix={
+        !verified && !isOtpSent ? (
+          <Button
+            type="link"
+            onClick={() => {
+              if (!form.getFieldValue("mobile") || !form.getFieldValue("email")) {
+                message.error("Enter email & mobile first");
+                return;
+              }
+              setIsOtpSent(true);
+              message.success("OTP sent (Mock: 1234)");
+            }}
+          >
+            Send OTP
+          </Button>
+        ) : verified ? "✔" : null
+      }
+    />
   </Form.Item>
 
   <Form.Item
@@ -1591,13 +1613,59 @@ const getDisplayPriceText = (): string => {
     rules={[{ required: true, message: "Enter address" }]}
     className="sw-cs-half-width"
   >
-    <Input
-      placeholder="House No, Street, City"
-      value={form.getFieldValue("address")}
-      onChange={(e) => form.setFieldsValue({ address: e.target.value })}
-    />
+    <Input placeholder="House No, Street, City" />
   </Form.Item>
 </div>
+{isOtpSent && !verified && (
+  <div className="sw-cs-otp-row">
+    <Form.Item label="Phone OTP" className="otp-item">
+      <Input
+  maxLength={4}
+  placeholder="Enter Phone OTP"
+  value={phoneOtp}
+  onChange={(e) => setPhoneOtp(e.target.value.replace(/\D/g, ""))}
+/>
+
+    </Form.Item>
+
+    <Form.Item label="Email OTP" className="otp-item">
+      <Input
+  maxLength={4}
+  placeholder="Enter Email OTP"
+  value={emailOtp}
+  onChange={(e) => setEmailOtp(e.target.value.replace(/\D/g, ""))}
+/>
+
+    </Form.Item>
+
+    <div className="sw-cs-otp-verify">
+      <Button
+        type="primary"
+        className="sw-cs-black-btn"
+        style={{ height: 40 }}
+        onClick={() => {
+  if (phoneOtp.length !== 4 || emailOtp.length !== 4) {
+    message.error("OTP must be 4 digits");
+    return;
+  }
+
+  if (phoneOtp === emailOtp) {
+    message.error("Phone OTP and Email OTP should be different");
+    return;
+  }
+
+  message.success("OTP Verified (Demo Mode)");
+  setVerified(true);
+  setIsOtpSent(false);
+}}
+
+      >
+        Verify OTP
+      </Button>
+    </div>
+  </div>
+)}
+
 
 {/* Detect button goes BELOW the row */}
 <div className="sw-cs-form-row">
