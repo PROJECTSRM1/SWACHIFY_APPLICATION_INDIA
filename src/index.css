@@ -14,7 +14,7 @@
 }
 
 .sw-cs-half-width {
-  width: 48%;
+  width: 100%;
 }
 
 .sw-cs-location-btn {
@@ -750,7 +750,11 @@ body,
 
   margin: 0;
 }
-
+@media (max-width: 480px) {
+  .ant-modal .ant-modal-body {
+    padding-right: 0px !important;
+  }
+}
 /* nithin cleaning dash */
 
 
