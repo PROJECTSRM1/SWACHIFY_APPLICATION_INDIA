@@ -1607,8 +1607,8 @@ const getServiceId = (mainKey: string): number => {
       problem_description: selectedModule.title,
       property_size_sqft: parseFloat(propertySize) || 0,
       add_on_id: Array.isArray(additional)
-        ? additional.map(addon => ADDON_ID_MAPPING[addon] || 0)[0] || 1  // Take first addon ID or 0
-        : ADDON_ID_MAPPING[additional || ''] || 1,
+        ? additional.map(addon => ADDON_ID_MAPPING[addon] || 0)[0] || null  // Take first addon ID or 0
+        : ADDON_ID_MAPPING[additional || ''] || null,
       preferred_date: preferredDate,
       special_instructions: instructions || "",
     };
