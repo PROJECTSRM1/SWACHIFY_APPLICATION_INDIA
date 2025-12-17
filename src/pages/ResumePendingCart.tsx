@@ -1,41 +1,72 @@
 import { useEffect } from "react";
 import { message } from "antd";
 import { useCart } from "../context/CartContext";
+import { bookHomeService } from "../api/homeService";
 
 const ResumePendingCart = () => {
   const { addToCart } = useCart();
 
   useEffect(() => {
-    const token = localStorage.getItem("accessToken");
-    const pending = localStorage.getItem("pendingCartItem");
+    const waitForAuthAndResume = async () => {
+      // ⏳ Wait until token is actually available
+      let attempts = 0;
+      let token = localStorage.getItem("accessToken");
 
-    if (!token || !pending) return;
+      while (!token && attempts < 10) {
+        await new Promise((r) => setTimeout(r, 300));
+        token = localStorage.getItem("accessToken");
+        attempts++;
+      }
 
-    try {
-      const { module, values, computedPrice } = JSON.parse(pending);
+      if (!token) return;
 
-      addToCart({
-        id: Date.now(),
-        title: module.title,
-        image: module.image,
-        quantity: 1,
-        price: module.price,
-        totalPrice: computedPrice,
-        customerName: values?.fullName || "",
-        contact: values?.mobile || "",
-        address: values?.address || "",
-        deliveryDate: values?.preferredDate || "",
-        deliveryType: values?.paymentType || "",
-        instructions: values?.instructions || "",
-      });
+      const pending = localStorage.getItem("pendingHomeServiceBooking");
+      if (!pending) return;
 
-      localStorage.removeItem("pendingCartItem");
+      try {
+        const {
+          values,
+          selectedModule,
+          computedPrice,
+          payload,
+        } = JSON.parse(pending);
 
-      message.success(`${module.title} added to cart`);
-    } catch (e) {
-      console.error("Failed to resume cart", e);
-    }
-  }, []);
+        // ✅ API call (token is now guaranteed)
+        await bookHomeService(payload);
+
+        // ✅ Add to cart
+        addToCart({
+          id: Date.now(),
+          title: selectedModule.title,
+          image: selectedModule.image,
+          quantity: 1,
+          price: selectedModule.price,
+          totalPrice: computedPrice ?? 0,
+          customerName: values.fullName,
+          email: values.email,
+          contact: values.mobile,
+          address: values.address,
+          deliveryDate: values.preferredDate,
+          deliveryType: values.paymentType,
+          instructions: values.instructions || "",
+        });
+        console.log("RESUME PAYLOAD", payload);
+
+        localStorage.removeItem("pendingHomeServiceBooking");
+        message.success(`${selectedModule.title} added to cart`);
+      } catch (err: any) {
+        console.error("Resume failed:", err?.response || err);
+
+        // ❗ DO NOT remove pending on failure
+        message.error(
+          err?.response?.data?.message ||
+          "Failed to resume booking. Please retry."
+        );
+      }
+    };
+
+    waitForAuthAndResume();
+  }, [addToCart]);
 
   return null;
 };
