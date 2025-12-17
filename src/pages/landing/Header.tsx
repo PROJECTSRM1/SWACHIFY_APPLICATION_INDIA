@@ -27,7 +27,7 @@ import "./Header.css";
 
 const navItems = [
   { key: "home", label: <Link to="/landing">Home</Link> },
-  { key: "cleaning", label: <Link to="/cleaningservice">Cleaning&Home Services</Link> },
+  { key: "cleaning", label: <Link to="/cleaningservice">Cleaning & Home Services</Link> },
   { key: "packers", label: <Link to="/LandingPackers">Transport</Link> },
   { key: "commercial", label: <Link to="/commercial-plots">Buy/Sale/Rentals</Link> },
   { key: "materials", label: <Link to="/ConstructionMaterials">Raw Materials</Link> },
@@ -227,7 +227,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
 
         <Button
           className="swl-hs-contact-btn swl-signup-btn"
-          onClick={() => openAuthModal("register")}
+          onClick={() => openAuthModal("login")}
           htmlType="button"
         >
           Sign Up

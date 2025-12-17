@@ -7,10 +7,11 @@ import {
   Form,
   Select,
   Input,
-  // InputNumber,
   message,
 } from "antd";
-// import "./CleaningService.css";
+import { useCart, type CartItem } from '../../../context/CartContext';
+
+import { bookHomeService, type HomeServiceBookingPayload } from "../../../api/homeService"; // <-- ADD THIS
 
 import residentialImg from "../../../assets/CleaningServices/resi.png";
 import commercialImg from "../../../assets/CleaningServices/office_cleaning.png";
@@ -72,8 +73,6 @@ import disposalImg from "../../../assets/CleaningServices/chemicalwh.png";
 import labImg from "../../../assets/CleaningServices/laboratory_cleaning.png";
 import cliniImg from "../../../assets/CleaningServices/clinic_image.png";
 
-import { useCart, type CartItem } from "../../../context/CartContext";
-
 const { Title, Paragraph } = Typography;
 const { TextArea } = Input;
 const { Option } = Select;
@@ -132,6 +131,46 @@ const ADDON_PRICES: Record<string, number> = {
   chemicalTreat: 249,
   windowExtra: 99,
 };
+const ADDON_ID_MAPPING: Record<string, number> = {
+  curtainSteam: 1,
+  tvUnit: 1,
+  mattressShampoo: 1,
+  chimneyService: 1,
+  fridgeInside: 1,
+  jetSpray: 1,
+  hardwater: 1,
+  balconyWash: 1,
+  patioWash: 1,
+  chairShampoo: 1,
+  whiteboardClean: 1,
+  keyboardSanitize: 1,
+  monitorClean: 1,
+  micClean: 1,
+  rackDeep: 1,
+  glassPolish: 1,
+  escalatorClean: 1,
+  fabricProtect: 1,
+  odorTreatment: 1,
+  woodPolish: 1,
+  termiteCheck: 1,
+  sealant: 1,
+  antiSlip: 1,
+  groutProtect: 1,
+  trackClean: 1,
+  framePolish: 1,
+  pressureWash: 1,
+  glueRemoval: 1,
+  chemicalWash: 1,
+  scraperWork: 1,
+  oilRemoval: 1,
+  machineDeep: 1,
+  greaseTreatment: 1,
+  scrubberMachine: 1,
+  chemicalTreat: 1,
+  windowExtra: 1
+  // Add more as needed from your ADDONPRICES
+};
+
 const INDIVIDUAL_SERVICE_PRICES: Record<string, number> = {
   kitchen: 59,
   bathroom: 45,
@@ -139,6 +178,26 @@ const INDIVIDUAL_SERVICE_PRICES: Record<string, number> = {
   bedroom: 39,
 };
 
+
+const SERVICE_TYPE_IDS: Record<string, number> = {
+  standard: 1, 
+  deep: 2,     
+  grease: 3,   // Example: Grease Removal ID
+  sanitization: 4, // Example: Sanitization ID
+};
+
+const TIME_SLOT_IDS: Record<string, number> = {
+  "9am-11am": 1,
+  "11am-1pm": 2,
+  "1pm-3pm": 3,
+  "3pm-5pm": 4,
+  "5pm-7pm": 5,
+};
+
+const PAYMENT_TYPE_IDS: Record<string, number> = {
+  full: 1,
+  partial: 2,
+};
 
 
 const PRICE_PER_SQFT: Record<string, number> = {
@@ -176,7 +235,7 @@ const PRICE_PER_SQFT: Record<string, number> = {
 
 const INCLUDES: Record<string, any> = {
 
-  
+
   "living room": {
     standard: [
       "Surface dusting of furniture",
@@ -264,7 +323,7 @@ const INCLUDES: Record<string, any> = {
     ]
   },
 
-  
+
 
   "studio apartment": {
     standard: [
@@ -315,7 +374,7 @@ const INCLUDES: Record<string, any> = {
     ]
   },
 
-  
+
 
   "small villas": {
     standard: [
@@ -362,7 +421,7 @@ const INCLUDES: Record<string, any> = {
     ]
   },
 
- 
+
 
   "cabin cleaning": {
     standard: [
@@ -450,7 +509,7 @@ const INCLUDES: Record<string, any> = {
     ]
   },
 
-  
+
 
   "shop cleaning": {
     standard: [
@@ -494,7 +553,7 @@ const INCLUDES: Record<string, any> = {
     ]
   },
 
-  
+
 
   "sofa cleaning": {
     standard: [
@@ -586,7 +645,7 @@ const INCLUDES: Record<string, any> = {
     ]
   },
 
- 
+
 
   "home sanitization": {
     standard: ["Whole house spray sanitization"],
@@ -652,7 +711,7 @@ const INCLUDES: Record<string, any> = {
     ]
   },
 
-  
+
 
   "assembly area cleaning": {
     standard: [
@@ -698,7 +757,7 @@ const INCLUDES: Record<string, any> = {
   }
 };
 const ADDONS_BY_TITLE: Record<string, { value: string; label: string }[]> = {
-  
+
   "living room": [
     { value: "curtainSteam", label: "Curtain Steam Cleaning — ₹199" },
     { value: "tvUnit", label: "TV Unit Detailing — ₹149" }
@@ -900,10 +959,11 @@ const formatINR = (value: number | null) => {
 };
 
 const CleaningService: React.FC = () => {
-  const { addToCart } = useCart();
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
   const [isModulesModalOpen, setIsModulesModalOpen] = useState(false);
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
+  const { addToCart } = useCart();
+
 
   const [selectedMainKey, setSelectedMainKey] = useState<string>("");
   const [selectedSubKey, setSelectedSubKey] = useState<string>("");
@@ -916,95 +976,95 @@ const CleaningService: React.FC = () => {
 
   const [form] = Form.useForm();
   const detectAddress = () => {
-  if (!navigator.geolocation) {
-    message.error("Your browser does not support location detection");
-    return;
-  }
-
-  navigator.geolocation.getCurrentPosition(
-    async (pos) => {
-      const { latitude, longitude } = pos.coords;
-      try {
-        const res = await fetch(
-          `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
-        );
-        const data = await res.json();
-        if (data.display_name) {
-          form.setFieldsValue({ address: data.display_name });
-          message.success("Address detected successfully");
-        } else {
-          message.error("Failed to detect address");
-        }
-      } catch {
-        message.error("Unable to fetch address from OpenStreetMap");
-      }
-    },
-    () => {
-      message.warning("Please allow location permission");
+    if (!navigator.geolocation) {
+      message.error("Your browser does not support location detection");
+      return;
     }
-  );
-};
+
+    navigator.geolocation.getCurrentPosition(
+      async (pos) => {
+        const { latitude, longitude } = pos.coords;
+        try {
+          const res = await fetch(
+            `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
+          );
+          const data = await res.json();
+          if (data.display_name) {
+            form.setFieldsValue({ address: data.display_name });
+            message.success("Address detected successfully");
+          } else {
+            message.error("Failed to detect address");
+          }
+        } catch {
+          message.error("Unable to fetch address from OpenStreetMap");
+        }
+      },
+      () => {
+        message.warning("Please allow location permission");
+      }
+    );
+  };
 
   const today = new Date().toISOString().split("T")[0];
-const getIncludedItems = () => {
-  if (!selectedModule) return [];
+  const getIncludedItems = () => {
+    if (!selectedModule) return [];
 
-  const title = selectedModule.title.toLowerCase().trim();
-  const type = serviceTypeKey || "standard";
-  const values = form.getFieldsValue();
-  const selectedServices: string[] = values?.selectedServices || [];
+    const title = selectedModule.title.toLowerCase().trim();
+    const type = serviceTypeKey || "standard";
+    const values = form.getFieldsValue();
+    const selectedServices: string[] = values?.selectedServices || [];
 
-  // ⭐ SPECIAL CASE: Show includes ONLY for selected items in "All Services"
-  if (title === "all services") {
-    if (!selectedServices.length) return ["Select a service to see what's included"];
+    // ⭐ SPECIAL CASE: Show includes ONLY for selected items in "All Services"
+    if (title === "all services") {
+      if (!selectedServices.length) return ["Select a service to see what's included"];
 
-    const map: Record<string, string> = {
-      kitchen: "kitchen",
-      bathroom: "bathroom",
-      living: "living room",
-      bedroom: "bedroom"
-    };
+      const map: Record<string, string> = {
+        kitchen: "kitchen",
+        bathroom: "bathroom",
+        living: "living room",
+        bedroom: "bedroom"
+      };
 
-    let combined: string[] = [];
+      let combined: string[] = [];
 
-    selectedServices.forEach((srv) => {
-      const key = map[srv];
-      if (!key) return;
+      selectedServices.forEach((srv) => {
+        const key = map[srv];
+        if (!key) return;
 
-      const match = INCLUDES[key];
-      if (!match) return;
+        const match = INCLUDES[key];
+        if (!match) return;
 
-      combined.push(`--- ${key.toUpperCase()} ---`);
+        combined.push(`--- ${key.toUpperCase()} ---`);
 
-      const items = match[type] || match.standard || [];
-      combined = [...combined, ...items];
-    });
+        const items = match[type] || match.standard || [];
+        combined = [...combined, ...items];
+      });
 
-    return combined.length ? combined : ["No details available"];
-  }
+      return combined.length ? combined : ["No details available"];
+    }
 
-  // ⭐ NORMAL SERVICES BELOW
-  const keyList = Object.keys(INCLUDES);
-  const matchedKey = keyList.find((k) => title.includes(k.toLowerCase()));
+    // ⭐ NORMAL SERVICES BELOW
+    const keyList = Object.keys(INCLUDES);
+    const matchedKey = keyList.find((k) => title.includes(k.toLowerCase()));
 
-  if (!matchedKey) return ["Basic cleaning included"];
+    if (!matchedKey) return ["Basic cleaning included"];
 
-  const service = INCLUDES[matchedKey];
-  if (service[type]) return service[type];
-  if (service.standard) return service.standard;
+    const service = INCLUDES[matchedKey];
+    if (service[type]) return service[type];
+    if (service.standard) return service.standard;
 
-  return ["Basic cleaning included"];
-};
+    return ["Basic cleaning included"];
+  };
 
 
-const getModuleAddons = () => {
-  if (!selectedModule) return ADDONS_BY_TITLE.default;
+  const getModuleAddons = () => {
+    if (!selectedModule) return ADDONS_BY_TITLE.default;
 
-  const title = selectedModule.title.toLowerCase();
-  const match = Object.keys(ADDONS_BY_TITLE).find(k => title.includes(k));
+    const title = selectedModule.title.toLowerCase();
+    const match = Object.keys(ADDONS_BY_TITLE).find(k => title.includes(k));
 
-  return ADDONS_BY_TITLE[match || "default"];
-};
+    return ADDONS_BY_TITLE[match || "default"];
+  };
 
 
 
@@ -1012,7 +1072,7 @@ const getModuleAddons = () => {
   useEffect(() => {
     if (isDetailsModalOpen && selectedModule) {
       form.resetFields();
-      form.setFieldsValue({  additional: [] });
+      form.setFieldsValue({ additional: [] });
       setComputedPrice(null);
       // setServiceTypeKey();
     }
@@ -1045,6 +1105,7 @@ const getModuleAddons = () => {
 
   const categories = [
     {
+      id: 1,
       key: "residential",
       title: "Residential Cleaning",
       desc: "Complete cleaning service solutions for homes, apartments, and villas",
@@ -1052,6 +1113,7 @@ const getModuleAddons = () => {
       count: 13,
     },
     {
+      id: 2,
       key: "commercial",
       title: "Commercial Cleaning",
       desc: "Professional cleaning service for offices, schools, and commercial spaces",
@@ -1059,6 +1121,7 @@ const getModuleAddons = () => {
       count: 11,
     },
     {
+      id: 3,
       key: "specialized",
       title: "Specialized Cleaning",
       desc: "Expert cleaning service for furniture, floors, windows, and sanitization",
@@ -1066,6 +1129,7 @@ const getModuleAddons = () => {
       count: 12,
     },
     {
+      id: 4,
       key: "industrial",
       title: "Industrial Cleaning",
       desc: "Heavy-duty cleaning for factories, warehouses, and industrial facilities",
@@ -1073,6 +1137,7 @@ const getModuleAddons = () => {
       count: 8,
     },
     {
+      id: 5,
       key: "post",
       title: "Post-Construction Cleaning",
       desc: "Complete cleanup after construction and renovation",
@@ -1261,102 +1326,334 @@ const getModuleAddons = () => {
     setIsDetailsModalOpen(true);
   };
 
- 
-const computeTotal = (values: any) => {
-  if (!selectedModule) {
-    setComputedPrice(null);
-    return;
-  }
 
-  let st = values?.serviceType || "standard";
-  setServiceTypeKey(st);
+  const computeTotal = (values: any) => {
+    if (!selectedModule) {
+      setComputedPrice(null);
+      return;
+    }
 
-  const sqftRaw = values?.propertySize;
-  let sqft = 0;
+    let st = values?.serviceType || "standard";
+    setServiceTypeKey(st);
 
-  if (typeof sqftRaw === "number") sqft = sqftRaw;
-  else if (typeof sqftRaw === "string") sqft = parseFloat(sqftRaw || "0") || 0;
+    const sqftRaw = values?.propertySize;
+    let sqft = 0;
 
-  const addons: string[] = values?.additional || [];
-  const selectedServices: string[] = values?.selectedServices || [];
+    if (typeof sqftRaw === "number") sqft = sqftRaw;
+    else if (typeof sqftRaw === "string") sqft = parseFloat(sqftRaw || "0") || 0;
 
-  const basePrice =
-    parseInt((selectedModule.price || "").toString().replace(/[₹,\s]/g, "")) || 0;
+    const addons: string[] = values?.additional || [];
+    const selectedServices: string[] = values?.selectedServices || [];
 
-  const mult = SERVICE_MULTIPLIERS[st] ?? 1;
+    const basePrice =
+      parseInt((selectedModule.price || "").toString().replace(/[₹,\s]/g, "")) || 0;
 
- 
-  const extraSelectedServicePrice = selectedServices.reduce(
-    (sum, s) => sum + (INDIVIDUAL_SERVICE_PRICES[s] || 0),
-    0
-  );
+    const mult = SERVICE_MULTIPLIERS[st] ?? 1;
 
- 
-  const addonCost = addons.reduce((s, a) => s + (ADDON_PRICES[a] || 0), 0);
 
- 
-  if (sqft > 0) {
-    const total = calculatePrice(
-      selectedModule,
-      sqft,
-      st,
-      addons,
-      selectedServices
+    const extraSelectedServicePrice = selectedServices.reduce(
+      (sum, s) => sum + (INDIVIDUAL_SERVICE_PRICES[s] || 0),
+      0
     );
-    setComputedPrice(total);
-    return;
+
+
+    const addonCost = addons.reduce((s, a) => s + (ADDON_PRICES[a] || 0), 0);
+
+
+    if (sqft > 0) {
+      const total = calculatePrice(
+        selectedModule,
+        sqft,
+        st,
+        addons,
+        selectedServices
+      );
+      setComputedPrice(total);
+      return;
+    }
+
+
+    const display =
+      Math.round((basePrice + extraSelectedServicePrice) * mult) + addonCost;
+
+    setComputedPrice(display);
+  };
+
+  const getModuleId = (key: string): number => {
+    // Assuming 'residential' is ID 1, 'commercial' is ID 2, etc.
+    if (key === 'residential') return 1;
+    // if (key === 'commercial') return 2;
+    // if (key === 'specialized') return 3;
+    // if (key === 'industrial') return 4;
+    // if (key === 'post') return 5;
+
+
+
+
+    // ... add more if known
+    return 1; // Fallback to a known working ID (1) instead of 0
+  };
+
+  const getSubModuleId = (key: string): number => {
+    // Assuming 'homes' is ID 1, 'apartments' is ID 2, etc.
+    if (key === 'homes') return 1;
+    if (key === 'apartments') return 2;
+    // ... add more if known
+    return 1; // Fallback to 1
+  };
+
+const getServiceId = (mainKey: string): number => {
+  switch (mainKey) {
+    case "residential":
+      return 1;
+    case "commercial":
+      return 2;
+    case "specialized":
+      return 3;
+    case "industrial":
+      return 4;
+    case "post":
+      return 5;
+    default:
+      throw new Error(`Unknown service key: ${mainKey}`);
   }
-
-
-  const display =
-    Math.round((basePrice + extraSelectedServicePrice) * mult) + addonCost;
-
-  setComputedPrice(display);
 };
 
+  // Complete subservice ID mapping - use this object for payload
+  const SUBSERVICE_ID_MAP: Record<string, number> = {
+    // Residential (1-3)
+    'homes': 1,
+    'apartments': 2,
+    'villas': 3,
+
+    // Commercial (4-7)
+    'offices': 4,
+    'shops': 5,
+    'clinics': 6,
+    'schools': 7,
+
+    // Specialized (8-10)
+    'furniture': 8,
+    'floors': 9,
+    'glass': 10,
+
+    // Post-construction (11-13)
+    'marble': 14,
+    'dustremoval': 15,
+    'paintstain': 16,
+
+    // Industrial (14-16)
+    'assembly': 11,
+    'production': 12,
+    'waste': 13
+  };
+
+  // Updated function - direct key lookup
+  const getSubServiceId = (subKey: string): number => {
+    return SUBSERVICE_ID_MAP[subKey.toLowerCase().trim()] || 1; // Fallback to 1
+  };
 
 
- 
-const getDisplayPriceText = (): string => {
-  if (computedPrice) return formatINR(computedPrice);
+  // 1. Subgroup (service) ID master
+  const SUBGROUP_ID_BY_TITLE: Record<string, number> = {
+    // ---------- RESIDENTIAL / HOMES ----------
+    'living room cleaning': 1,
+    'bedroom cleaning': 2,
+    'kitchen cleaning': 3,
+    'bathroom cleaning': 4,
+    'all services': 49,
 
-  if (!selectedModule) return "—";
+    // ---------- APARTMENTS ----------
+    'studio apartment': 5,
+    '1 bhk apartment': 6,
+    '2 bhk 3 bhk apartment': 7,
 
- 
-  const basePriceNum =
-    parseInt((selectedModule.price || "").toString().replace(/[₹,\s]/g, "")) || 0;
+    // ---------- VILLAS ----------
+    'small villas': 8,
+    'duplex villas': 9,
+    'luxury villas': 10,
 
-  
-  const mult = SERVICE_MULTIPLIERS[serviceTypeKey] ?? 1;
+    // ---------- OFFICES ----------
+    'cabin cleaning': 11,
+    'workstation cleaning': 12,
+    'conference hall cleaning': 13,
 
-  const displayNum = Math.round(basePriceNum * mult);
+    // ---------- SCHOOLS ----------
+    'classrooms': 20,
+    'laboratory cleaning': 21,
+    'library cleaning': 22,
 
-  if (displayNum > 0) return formatINR(displayNum);
-  return selectedModule.price || "—";
-};
+    // ---------- SHOPS / MALLS ----------
+    'shop cleaning': 14,
+    'mall cleaning': 15,
+    'showroom cleaning': 16,
+
+    // ---------- CLINICS / LABS ----------
+    'clinic cleaning': 18,
+    'diagnostic centers': 19,
+    // 'laboratory cleaning': 17,
+
+    // ---------- FURNITURE ----------
+    'sofa cleaning': 23,
+    'chair cleaning': 24,
+    'wooden furniture cleaning': 25,
+
+    // ---------- FLOORS ----------
+    'marble polishing': 26,
+    'tile cleaning': 27,
+    'granite polishing': 28,
+
+    // ---------- GLASS ----------
+    'indoor glass cleaning': 29,
+    'outdoor glass cleaning': 30,
+    'high-rise glass cleaning': 31,
+
+    // ---------- SANITIZATION ----------
+    'home sanitization': 32,
+    'office sanitization': 33,
+    'commercial sanitization': 34,
+
+    // ---------- POST-CONSTRUCTION ----------
+    'indoor dust removal': 45,
+    'outdoor dust removal': 46,
+    'paint stain from tiles': 47,
+    'paint stain from windows': 48,
+
+    // ---------- INDUSTRIAL ----------
+    'assembly area cleaning': 35,
+    'production line cleaning': 36,
+    'warehouse rack cleaning': 37,
+    'warehouse floor cleaning': 38,
+    'heavy equipment cleaning': 39,
+    'precision tools cleaning': 40,
+    'chemical waste handling': 41,
+    'solid waste handling': 42,
+  };
+  const getSubGroupId = (moduleTitle: string): number => {
+    const key = moduleTitle.toLowerCase().trim();
+    return SUBGROUP_ID_BY_TITLE[key] ?? 1; // fallback to Living Room Cleaning
+  };
+  // const resolveAddonId = (additional: any): number | null => {
+  //   if (!additional) return null;
+
+  //   if (Array.isArray(additional)) {
+  //     // Take first selected addon, else null
+  //     const first = additional[0];
+  //     if (!first) return null;
+  //     const mapped = ADDONIDMAPPING[first];
+  //     return mapped ?? null;
+  //   }
+
+  //   const mapped = ADDONIDMAPPING[additional];
+  //   return mapped ?? null;
+  // };
 
 
-  const onAddToCart = (values: any) => {
+
+
+
+  const getDisplayPriceText = (): string => {
+    if (computedPrice) return formatINR(computedPrice);
+
+    if (!selectedModule) return "—";
+
+
+    const basePriceNum =
+      parseInt((selectedModule.price || "").toString().replace(/[₹,\s]/g, "")) || 0;
+
+
+    const mult = SERVICE_MULTIPLIERS[serviceTypeKey] ?? 1;
+
+    const displayNum = Math.round(basePriceNum * mult);
+
+    if (displayNum > 0) return formatINR(displayNum);
+    return selectedModule.price || "—";
+  };
+
+
+  const onSubmitBooking = async (values: any) => { // Made async
     if (!selectedModule) return;
-    const cartItem: CartItem = {
-      id: Date.now(),
-      title: selectedModule.title,
-      image: selectedModule.image,
-      quantity: 1,
-      price: selectedModule.price,
-      totalPrice: computedPrice ?? Math.round((parseInt((selectedModule.price || "").replace(/[₹,\s]/g, "")) || 0) * (SERVICE_MULTIPLIERS[serviceTypeKey] ?? 1)),
-      customerName: "",
-      deliveryType: "",
-      deliveryDate: "",
-      contact: "",
-      address: "",
-      instructions: values?.instructions || "",
+
+    const {
+      fullName,
+      email,
+      mobile,
+      address,
+      serviceType,
+      propertySize,
+      additional,
+      preferredDate,
+      timeSlot,
+      instructions,
+      paymentType,
+    } = values;
+
+    // --- 1. Data Mapping ---
+    // NOTE: module_id, sub_module_id, service_id are placeholders (0) or derived from keys. 
+    // You must implement a lookup function if these IDs are available from your category data.
+    const payload: HomeServiceBookingPayload = {
+      module_id: getModuleId(selectedMainKey),
+      sub_module_id: getSubModuleId(selectedSubKey),
+      service_id: getServiceId(selectedMainKey),
+      sub_service_id: getSubServiceId(selectedSubKey),
+      sub_group_id: getSubGroupId(selectedModule.title),
+      full_name: fullName,
+      email: email,
+      mobile: mobile,
+      address: address,
+      service_type_id: SERVICE_TYPE_IDS[serviceType] || 1,
+      time_slot_id: TIME_SLOT_IDS[timeSlot] || 0,
+      payment_type_id: PAYMENT_TYPE_IDS[paymentType] || 0,
+      problem_description: selectedModule.title,
+      property_size_sqft: parseFloat(propertySize) || 0,
+      add_on_id: Array.isArray(additional)
+        ? additional.map(addon => ADDON_ID_MAPPING[addon] || 0)[0] || null  // Take first addon ID or 0
+        : ADDON_ID_MAPPING[additional || ''] || null,
+      preferred_date: preferredDate,
+      special_instructions: instructions || "",
     };
-    addToCart(cartItem);
-    message.success(
-      `${selectedModule.title} added to cart — ${formatINR(cartItem.totalPrice)}`
-    );
-    setIsDetailsModalOpen(false);
+
+    // --- 2. API Submission ---
+    try {
+      message.loading(`Booking ${selectedModule.title}...`, 0);
+
+      const apiResponse = await bookHomeService(payload);
+
+      message.destroy();
+      message.success(`Service booked successfully! Order ID: ${apiResponse?.order_id || 'N/A'}`);
+
+     
+      const cartItem: CartItem = {
+        id: Date.now(),
+        title: selectedModule.title,
+        image: selectedModule.image,
+        price: parseInt(selectedModule.price.toString().replace(/,/g, '0')),
+        quantity: 1,
+        totalPrice: computedPrice ?? 0,
+        // Required CartItem fields from form
+        customerName: fullName,
+        contact: mobile,
+        deliveryType: 'Cleaning Service',  // or serviceType
+        deliveryDate: preferredDate || new Date().toISOString().split('T')[0],
+        // Add the 2 missing fields (common for your cart):
+        address: address,
+        instructions: instructions || '',  // ← ADD THIS LINE
+        email:email,
+      };
+      addToCart(cartItem);
+
+
+      // addToCart(cartItem); 
+
+      setIsDetailsModalOpen(false);
+      form.resetFields();
+
+    } catch (error) {
+      // --- 4. Error Handling ---
+      message.destroy();
+      console.error("Booking API Error:", error);
+      message.error("Failed to submit booking. Please try again.");
+    }
   };
 
   const handleDetailsCancel = () => {
@@ -1490,15 +1787,15 @@ const getDisplayPriceText = (): string => {
               <img src={selectedModule?.image} alt={selectedModule?.title} className="sw-cs-details-image" />
               <Paragraph className="sw-cs-details-paragraph">{selectedModule?.desc}</Paragraph>
 
-            <div className="sw-cs-includes-block">
-  <div className="sw-cs-includes-title">What's Included</div>
+              <div className="sw-cs-includes-block">
+                <div className="sw-cs-includes-title">What's Included</div>
 
-  {getIncludedItems().map((item: string, idx: number) => (
-    <div key={idx} className="sw-cs-include-item">
-      • {item}
-    </div>
-  ))}
-</div>
+                {getIncludedItems().map((item: string, idx: number) => (
+                  <div key={idx} className="sw-cs-include-item">
+                    • {item}
+                  </div>
+                ))}
+              </div>
 
 
               <div className="sw-cs-price-card">
@@ -1510,312 +1807,312 @@ const getDisplayPriceText = (): string => {
             <div className="sw-cs-details-right">
               <div className="sw-cs-details-section-title">Service Details</div>
 
-            <Form
-  form={form}
-  layout="vertical"
-  onFinish={onAddToCart}
-  initialValues={{ additional: [] }}
-  onValuesChange={(_changed, allValues) => computeTotal(allValues)}
->
-<div className="sw-cs-form-row">
- 
-  <Form.Item
-    name="fullName"
-    label="Full Name"
-    rules={[
-      { required: true, message: "Enter full name" },
-      {
-        pattern: /^[A-Z][a-z]+ [A-Z][a-z]+$/,
-        message:
-          " First letter should be capital for both first and last name"
-      }
-    ]}
-    className="sw-cs-half-width"
-  >
-    <Input placeholder="John Doe" />
-  </Form.Item>
-
-  
-  <Form.Item
-    name="email"
-    label="Email"
-    rules={[
-      { required: true, message: "Enter email" },
-      { type: "email", message: "Enter valid email" },
-      {
-        validator: (_, value) => {
-          if (!value) return Promise.resolve();
-
-          const allowedDomains = [
-            "gmail.com",
-            "yahoo.com",
-            "outlook.com",
-            "hotmail.com",
-            "rediffmail.com",
-            "protonmail.com",
-            "icloud.com"
-          ];
-
-          const domain = value.split("@")[1];
-          if (allowedDomains.includes(domain)) {
-            return Promise.resolve();
-          }
-          return Promise.reject(
-            "Email must be Gmail, Yahoo, Outlook "
-          );
-        }
-      }
-    ]}
-    className="sw-cs-half-width"
-  >
-    <Input placeholder="example@gmail.com" />
-  </Form.Item>
-</div>
-
-<div className="sw-cs-form-row">
-  <Form.Item
-    name="mobile"
-    label="Mobile Number"
-    rules={[
-      { required: true, message: "Enter mobile number" },
-      { pattern: /^[0-9]{10}$/, message: "Enter valid 10-digit number" },
-    ]}
-    className="sw-cs-half-width"
-  >
-    <Input maxLength={10} placeholder="9876543210" />
-  </Form.Item>
-
-  <Form.Item
-    name="address"
-    label="Address"
-    rules={[{ required: true, message: "Enter address" }]}
-    className="sw-cs-half-width"
-  >
-    <Input
-      placeholder="House No, Street, City"
-      value={form.getFieldValue("address")}
-      onChange={(e) => form.setFieldsValue({ address: e.target.value })}
-    />
-  </Form.Item>
-</div>
-
-{/* Detect button goes BELOW the row */}
-<div className="sw-cs-form-row">
-  <Button
-    className="sw-cs-location-btn"
-    onClick={detectAddress}
-    type="default"
-  >
-    Detect My Current Location
-  </Button>
-</div>
-
-
-  {selectedModule && (() => {
-    const cfg = getFieldConfig(selectedModule.title);
-
-    return (
-      <>
-        
-        <div className="sw-cs-form-row">
-          {cfg.serviceType && (
-            <Form.Item
-              name="serviceType"
-              label="Service Type"
-              rules={[{ required: true, message: "Choose service type" }]}
-              className="sw-cs-half-width"
-            >
-              <Select
-                placeholder="Select service type"
-                onChange={() => computeTotal(form.getFieldsValue())}
-                allowClear
+              <Form
+                form={form}
+                layout="vertical"
+                onFinish={onSubmitBooking} // <-- CHANGE THIS
+                initialValues={{ additional: [], serviceType: 'standard', propertySize: 1000 }} // Added defaults
+                onValuesChange={(_changed, allValues) => computeTotal(allValues)}
               >
-              {selectedModule.title.toLowerCase().includes("room") ||
- selectedModule.title.toLowerCase().includes("bedroom") ? (
-  <>
-    <Option value="standard">Regular Cleaning</Option>
-    <Option value="deep">Deep Cleaning</Option>
-  </>
-) : selectedModule.title.toLowerCase().includes("kitchen") ? (
-  <>
-    <Option value="standard">Regular Cleaning</Option>
-    <Option value="deep">Deep Cleaning</Option>
-    <Option value="grease">Grease Removal</Option>
-  </>
-) : selectedModule.title.toLowerCase().includes("bathroom") ? (
-  <>
-    <Option value="sanitization">Sanitization</Option>
-    <Option value="deep">Deep Bathroom Clean</Option>
-  </>
-) : (
-  <>
-    <Option value="standard">Regular Cleaning</Option>
-    <Option value="deep">Deep Cleaning</Option>
-  </>
-)}
+                <div className="sw-cs-form-row">
 
-              </Select>
-            </Form.Item>
-          )}
-
-          {cfg.sqft && (
-            <Form.Item
-              name="propertySize"
-              label="Property Size (sq ft)"
-              rules={[{ required: true, message: "Enter size" }]}
-              className="sw-cs-half-width"
-            >
-              <Input
-                placeholder="e.g., 1200"
-                onChange={() => computeTotal(form.getFieldsValue())}
-              />
-            </Form.Item>
-          )}
-        </div>
-
-        
-        <div className="sw-cs-form-row">
-         <Form.Item
-  name="additional"
-  label="Optional Add-ons"
-  className={cfg.bedrooms ? "sw-cs-half-width" : "sw-cs-full-width"}
->
-  <Select
-    mode="multiple"
-    placeholder="Select add-ons"
-    onChange={() => computeTotal(form.getFieldsValue())}
-  >
-    {getModuleAddons().map((addon) => (
-      <Option key={addon.value} value={addon.value}>
-        {addon.label}
-      </Option>
-    ))}
-  </Select>
-</Form.Item>
-{selectedSubKey === "homes" && selectedModule?.title === "All Services" && (
-  <Form.Item
-    name="selectedServices"
-    label="Select Service"
-    rules={[{ required: true, message: "Select at least one service" }]}
-    className="sw-cs-full-width"
-  >
-    <Select
-      mode="multiple"
-      placeholder="Select services"
-      style={{ cursor: "pointer" }}
-      dropdownStyle={{ cursor: "pointer" }}
-      optionLabelProp="label"
-    >
-      <Option value="kitchen" label="Kitchen Cleaning" style={{ cursor: "pointer" }}>
-        Kitchen Cleaning
-      </Option>
-      <Option value="bathroom" label="Bathroom Cleaning" style={{ cursor: "pointer" }}>
-        Bathroom Cleaning
-      </Option>
-      <Option value="living" label="Living Room Cleaning" style={{ cursor: "pointer" }}>
-        Living Room Cleaning
-      </Option>
-      <Option value="bedroom" label="Bedroom Cleaning" style={{ cursor: "pointer" }}>
-        Bedroom Cleaning
-      </Option>
-    </Select>
-  </Form.Item>
-)}
+                  <Form.Item
+                    name="fullName"
+                    label="Full Name"
+                    rules={[
+                      { required: true, message: "Enter full name" },
+                      // {
+                      //   pattern: /^[A-Z][a-z]+ [A-Z][a-z]+$/,
+                      //   message:
+                      //     " First letter should be capital for both first and last name"
+                      // }
+                    ]}
+                    className="sw-cs-half-width"
+                  >
+                    <Input placeholder="John Doe" />
+                  </Form.Item>
 
 
-          {cfg.bedrooms && (
-            <Form.Item
-              name="bedrooms"
-              label="Bedrooms"
-              rules={[{ required: true }]}
-              className="sw-cs-half-width"
-            >
-              <Select placeholder="Select">
-                <Option value={0}>0</Option>
-                <Option value={1}>1</Option>
-                <Option value={2}>2</Option>
-                <Option value={3}>3</Option>
-                <Option value={4}>4+</Option>
-              </Select>
-            </Form.Item>
-          )}
-        </div>
+                  <Form.Item
+                    name="email"
+                    label="email"
+                    rules={[
+                      { required: true, message: "Enter email" },
+                      { type: "email", message: "Enter valid email" },
+                      {
+                        validator: (_, value) => {
+                          if (!value) return Promise.resolve();
 
-      
-        {cfg.bathrooms && (
-          <div className="sw-cs-form-row">
-            <Form.Item
-              name="bathrooms"
-              label="Bathrooms"
-              rules={[{ required: true }]}
-              className="sw-cs-half-width"
-            >
-              <Select placeholder="Select">
-                <Option value={1}>1</Option>
-                <Option value={2}>2</Option>
-                <Option value={3}>3+</Option>
-              </Select>
-            </Form.Item>
-          </div>
-        )}
-        <div className="sw-cs-form-row">
-          {cfg.preferredDate && (
-            <Form.Item
-              name="preferredDate"
-              label="Preferred Date"
-              rules={[{ required: true, message: "Select a date" }]}
-              className="sw-cs-half-width"
-            >
-              <input type="date" className="sw-cs-custom-date-input"  min={today} />
-            </Form.Item>
-          )}
+                          const allowedDomains = [
+                            "gmail.com",
+                            "yahoo.com",
+                            "outlook.com",
+                            "hotmail.com",
+                            "rediffmail.com",
+                            "protonmail.com",
+                            "icloud.com"
+                          ];
 
-          <Form.Item
-            name="timeSlot"
-            label="Preferred Time Slot"
-            rules={[{ required: true, message: "Select a time slot" }]}
-            className="sw-cs-half-width"
-          >
-            <Select placeholder="Select time slot">
-              <Option value="9am-11am">9:00 AM – 11:00 AM</Option>
-              <Option value="11am-1pm">11:00 AM – 1:00 PM</Option>
-              <Option value="1pm-3pm">1:00 PM – 3:00 PM</Option>
-              <Option value="3pm-5pm">3:00 PM – 5:00 PM</Option>
-              <Option value="5pm-7pm">5:00 PM – 7:00 PM</Option>
-            </Select>
-          </Form.Item>
-        </div>
+                          const domain = value.split("@")[1];
+                          if (allowedDomains.includes(domain)) {
+                            return Promise.resolve();
+                          }
+                          return Promise.reject(
+                            "Email must be Gmail, Yahoo, Outlook "
+                          );
+                        }
+                      }
+                    ]}
+                    className="sw-cs-half-width"
+                  >
+                    <Input placeholder="example@gmail.com" />
+                  </Form.Item>
+                </div>
 
-        {/* SPECIAL INSTRUCTIONS */}
-        {cfg.instructions && (
-          <Form.Item name="instructions" label="Special Instructions">
-            <TextArea rows={3} placeholder="Any specific requirements..." />
-          </Form.Item>
-        )}
+                <div className="sw-cs-form-row">
+                  <Form.Item
+                    name="mobile"
+                    label="Mobile Number"
+                    rules={[
+                      { required: true, message: "Enter mobile number" },
+                      { pattern: /^[0-9]{10}$/, message: "Enter valid 10-digit number" },
+                    ]}
+                    className="sw-cs-half-width"
+                  >
+                    <Input maxLength={10} placeholder="9876543210" />
+                  </Form.Item>
 
-        {/* PAYMENT TYPE */}
-        <Form.Item
-          name="paymentType"
-          label="Payment Type"
-          rules={[{ required: true, message: "Select payment type" }]}
-        >
-          <Select placeholder="Choose payment option">
-            <Option value="full">Full Payment</Option>
-            <Option value="partial">Partial Payment (Advance)</Option>
-          </Select>
-        </Form.Item>
-      </>
-    );
-  })()}
+                  <Form.Item
+                    name="address"
+                    label="Address"
+                    rules={[{ required: true, message: "Enter address" }]}
+                    className="sw-cs-half-width"
+                  >
+                    <Input
+                      placeholder="House No, Street, City"
+                      value={form.getFieldValue("address")}
+                      onChange={(e) => form.setFieldsValue({ address: e.target.value })}
+                    />
+                  </Form.Item>
+                </div>
 
-  {/* ACTION BUTTONS */}
-  <div className="sw-cs-details-actions">
-    <Button onClick={handleDetailsCancel}>Cancel</Button>
-    <Button type="primary" htmlType="submit" className="sw-cs-black-btn">
-      Add to Cart
-    </Button>
-  </div>
-</Form>
+                {/* Detect button goes BELOW the row */}
+                <div className="sw-cs-form-row">
+                  <Button
+                    className="sw-cs-location-btn"
+                    onClick={detectAddress}
+                    type="default"
+                  >
+                    Detect My Current Location
+                  </Button>
+                </div>
+
+
+                {selectedModule && (() => {
+                  const cfg = getFieldConfig(selectedModule.title);
+
+                  return (
+                    <>
+
+                      <div className="sw-cs-form-row">
+                        {cfg.serviceType && (
+                          <Form.Item
+                            name="serviceType"
+                            label="Service Type"
+                            rules={[{ required: true, message: "Choose service type" }]}
+                            className="sw-cs-half-width"
+                          >
+                            <Select
+                              placeholder="Select service type"
+                              onChange={() => computeTotal(form.getFieldsValue())}
+                              allowClear
+                            >
+                              {selectedModule.title.toLowerCase().includes("room") ||
+                                selectedModule.title.toLowerCase().includes("bedroom") ? (
+                                <>
+                                  <Option value="standard">Regular Cleaning</Option>
+                                  <Option value="deep">Deep Cleaning</Option>
+                                </>
+                              ) : selectedModule.title.toLowerCase().includes("kitchen") ? (
+                                <>
+                                  <Option value="standard">Regular Cleaning</Option>
+                                  <Option value="deep">Deep Cleaning</Option>
+                                  <Option value="grease">Grease Removal</Option>
+                                </>
+                              ) : selectedModule.title.toLowerCase().includes("bathroom") ? (
+                                <>
+                                  <Option value="sanitization">Sanitization</Option>
+                                  <Option value="deep">Deep Bathroom Clean</Option>
+                                </>
+                              ) : (
+                                <>
+                                  <Option value="standard">Regular Cleaning</Option>
+                                  <Option value="deep">Deep Cleaning</Option>
+                                </>
+                              )}
+
+                            </Select>
+                          </Form.Item>
+                        )}
+
+                        {cfg.sqft && (
+                          <Form.Item
+                            name="propertySize"
+                            label="Property Size (sq ft)"
+                            rules={[{ required: true, message: "Enter size" }]}
+                            className="sw-cs-half-width"
+                          >
+                            <Input
+                              placeholder="e.g., 1200"
+                              onChange={() => computeTotal(form.getFieldsValue())}
+                            />
+                          </Form.Item>
+                        )}
+                      </div>
+
+
+                      <div className="sw-cs-form-row">
+                        <Form.Item
+                          name="additional"
+                          label="Optional Add-ons"
+                          className={cfg.bedrooms ? "sw-cs-half-width" : "sw-cs-full-width"}
+                        >
+                          <Select
+                            mode="multiple"
+                            placeholder="Select add-ons"
+                            onChange={() => computeTotal(form.getFieldsValue())}
+                          >
+                            {getModuleAddons().map((addon) => (
+                              <Option key={addon.value} value={addon.value}>
+                                {addon.label}
+                              </Option>
+                            ))}
+                          </Select>
+                        </Form.Item>
+                        {selectedSubKey === "homes" && selectedModule?.title === "All Services" && (
+                          <Form.Item
+                            name="selectedServices"
+                            label="Select Service"
+                            rules={[{ required: true, message: "Select at least one service" }]}
+                            className="sw-cs-full-width"
+                          >
+                            <Select
+                              mode="multiple"
+                              placeholder="Select services"
+                              style={{ cursor: "pointer" }}
+                              dropdownStyle={{ cursor: "pointer" }}
+                              optionLabelProp="label"
+                            >
+                              <Option value="kitchen" label="Kitchen Cleaning" style={{ cursor: "pointer" }}>
+                                Kitchen Cleaning
+                              </Option>
+                              <Option value="bathroom" label="Bathroom Cleaning" style={{ cursor: "pointer" }}>
+                                Bathroom Cleaning
+                              </Option>
+                              <Option value="living" label="Living Room Cleaning" style={{ cursor: "pointer" }}>
+                                Living Room Cleaning
+                              </Option>
+                              <Option value="bedroom" label="Bedroom Cleaning" style={{ cursor: "pointer" }}>
+                                Bedroom Cleaning
+                              </Option>
+                            </Select>
+                          </Form.Item>
+                        )}
+
+
+                        {cfg.bedrooms && (
+                          <Form.Item
+                            name="bedrooms"
+                            label="Bedrooms"
+                            rules={[{ required: true }]}
+                            className="sw-cs-half-width"
+                          >
+                            <Select placeholder="Select">
+                              <Option value={0}>0</Option>
+                              <Option value={1}>1</Option>
+                              <Option value={2}>2</Option>
+                              <Option value={3}>3</Option>
+                              <Option value={4}>4+</Option>
+                            </Select>
+                          </Form.Item>
+                        )}
+                      </div>
+
+
+                      {cfg.bathrooms && (
+                        <div className="sw-cs-form-row">
+                          <Form.Item
+                            name="bathrooms"
+                            label="Bathrooms"
+                            rules={[{ required: true }]}
+                            className="sw-cs-half-width"
+                          >
+                            <Select placeholder="Select">
+                              <Option value={1}>1</Option>
+                              <Option value={2}>2</Option>
+                              <Option value={3}>3+</Option>
+                            </Select>
+                          </Form.Item>
+                        </div>
+                      )}
+                      <div className="sw-cs-form-row">
+                        {cfg.preferredDate && (
+                          <Form.Item
+                            name="preferredDate"
+                            label="Preferred Date"
+                            rules={[{ required: true, message: "Select a date" }]}
+                            className="sw-cs-half-width"
+                          >
+                            <input type="date" className="sw-cs-custom-date-input" min={today} />
+                          </Form.Item>
+                        )}
+
+                        <Form.Item
+                          name="timeSlot"
+                          label="Preferred Time Slot"
+                          rules={[{ required: true, message: "Select a time slot" }]}
+                          className="sw-cs-half-width"
+                        >
+                          <Select placeholder="Select time slot">
+                            <Option value="9am-11am">9:00 AM – 11:00 AM</Option>
+                            <Option value="11am-1pm">11:00 AM – 1:00 PM</Option>
+                            <Option value="1pm-3pm">1:00 PM – 3:00 PM</Option>
+                            <Option value="3pm-5pm">3:00 PM – 5:00 PM</Option>
+                            <Option value="5pm-7pm">5:00 PM – 7:00 PM</Option>
+                          </Select>
+                        </Form.Item>
+                      </div>
+
+                      {/* SPECIAL INSTRUCTIONS */}
+                      {cfg.instructions && (
+                        <Form.Item name="instructions" label="Special Instructions">
+                          <TextArea rows={3} placeholder="Any specific requirements..." />
+                        </Form.Item>
+                      )}
+
+                      {/* PAYMENT TYPE */}
+                      <Form.Item
+                        name="paymentType"
+                        label="Payment Type"
+                        rules={[{ required: true, message: "Select payment type" }]}
+                      >
+                        <Select placeholder="Choose payment option">
+                          <Option value="full">Full Payment</Option>
+                          <Option value="partial">Partial Payment (Advance)</Option>
+                        </Select>
+                      </Form.Item>
+                    </>
+                  );
+                })()}
+
+                {/* ACTION BUTTONS */}
+                <div className="sw-cs-details-actions">
+                  <Button onClick={handleDetailsCancel}>Cancel</Button>
+                  <Button type="primary" htmlType="submit" className="sw-cs-black-btn">
+                    Add to Cart
+                  </Button>
+                </div>
+              </Form>
 
             </div>
           </div>
