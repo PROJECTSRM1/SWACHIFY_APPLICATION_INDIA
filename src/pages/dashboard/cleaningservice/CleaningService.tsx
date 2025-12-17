@@ -1105,6 +1105,7 @@ const CleaningService: React.FC = () => {
 
   const categories = [
     {
+      id: 1,
       key: "residential",
       title: "Residential Cleaning",
       desc: "Complete cleaning service solutions for homes, apartments, and villas",
@@ -1112,6 +1113,7 @@ const CleaningService: React.FC = () => {
       count: 13,
     },
     {
+      id: 2,
       key: "commercial",
       title: "Commercial Cleaning",
       desc: "Professional cleaning service for offices, schools, and commercial spaces",
@@ -1119,6 +1121,7 @@ const CleaningService: React.FC = () => {
       count: 11,
     },
     {
+      id: 3,
       key: "specialized",
       title: "Specialized Cleaning",
       desc: "Expert cleaning service for furniture, floors, windows, and sanitization",
@@ -1126,6 +1129,7 @@ const CleaningService: React.FC = () => {
       count: 12,
     },
     {
+      id: 4,
       key: "industrial",
       title: "Industrial Cleaning",
       desc: "Heavy-duty cleaning for factories, warehouses, and industrial facilities",
@@ -1133,6 +1137,7 @@ const CleaningService: React.FC = () => {
       count: 8,
     },
     {
+      id: 5,
       key: "post",
       title: "Post-Construction Cleaning",
       desc: "Complete cleanup after construction and renovation",
@@ -1397,25 +1402,23 @@ const CleaningService: React.FC = () => {
     return 1; // Fallback to 1
   };
 
-  const getServiceId = (title: string): number => {
-    // This should map selectedModule.title to a Service ID.
-    // For immediate fix, use a consistent non-zero value.
-    if (title.toLowerCase().includes('residential')) return 1;
-    if (title.toLowerCase().includes('commercial')) return 2;
-    if (title.toLowerCase().includes('specialized')) return 3;
-    if (title.toLowerCase().includes('industrial')) return 4;
-    if (title.toLowerCase().includes('post')) return 5;
+const getServiceId = (mainKey: string): number => {
+  switch (mainKey) {
+    case "residential":
+      return 1;
+    case "commercial":
+      return 2;
+    case "specialized":
+      return 3;
+    case "industrial":
+      return 4;
+    case "post":
+      return 5;
+    default:
+      throw new Error(`Unknown service key: ${mainKey}`);
+  }
+};
 
-
-
-
-
-
-
-
-    // ... add more if known
-    return 1; // Fallback to 1
-  };
   // Complete subservice ID mapping - use this object for payload
   const SUBSERVICE_ID_MAP: Record<string, number> = {
     // Residential (1-3)
@@ -1591,7 +1594,7 @@ const CleaningService: React.FC = () => {
     const payload: HomeServiceBookingPayload = {
       module_id: getModuleId(selectedMainKey),
       sub_module_id: getSubModuleId(selectedSubKey),
-      service_id: getServiceId(selectedModule.title),
+      service_id: getServiceId(selectedMainKey),
       sub_service_id: getSubServiceId(selectedSubKey),
       sub_group_id: getSubGroupId(selectedModule.title),
       full_name: fullName,
