@@ -227,7 +227,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
 
         <Button
           className="swl-hs-contact-btn swl-signup-btn"
-          onClick={() => openAuthModal("register")}
+          onClick={() => openAuthModal("login")}
           htmlType="button"
         >
           Sign Up

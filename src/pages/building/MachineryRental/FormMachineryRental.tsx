@@ -30,6 +30,14 @@ const MachineryDetails: React.FC<FormProps> = ({ id, onClose }) => {
   const [rentalType, setRentalType] = useState("");
   const [fuelSupply, setFuelSupply] = useState(false);
 
+  // ✅ OTP STATE (ADDED)
+  const [showOtpFields, setShowOtpFields] = useState(false);
+  const [otpVerified, setOtpVerified] = useState(false);
+  const [phoneOtp, setPhoneOtp] = useState("");
+  const [otpError, setOtpError] = useState("");
+
+
+
   const basePrice = Number(machine.price) * quantity;
   const operatorCharge = rentalType === "With Operator" ? 150 : 0;
   const fuelCharge = fuelSupply ? 200 : 0;
@@ -40,6 +48,7 @@ const MachineryDetails: React.FC<FormProps> = ({ id, onClose }) => {
     setQuantity(1);
     setRentalType("");
     setFuelSupply(false);
+    setShowOtpFields(false);
   };
 
   const handleAddToCart = () => {
@@ -58,6 +67,7 @@ const MachineryDetails: React.FC<FormProps> = ({ id, onClose }) => {
       deliveryType: rentalType,
       deliveryDate: form.rentalDate.value,
       contact: form.contact.value,
+      email: form.email.value,
       address: form.address.value,
       instructions: form.instructions.value,
     });
@@ -135,15 +145,93 @@ const MachineryDetails: React.FC<FormProps> = ({ id, onClose }) => {
 
                 <div className="sw-br-mach-form-item">
                   <label>Rental Date</label>
-                  <input type="date" name="rentalDate"
-                  min={new Date().toISOString().split("T")[0]} />
+                  <input
+                    type="date"
+                    name="rentalDate"
+                    min={new Date().toISOString().split("T")[0]}
+                  />
                 </div>
               </div>
 
-              <div className="sw-br-mach-form-item full-width">
-                <label>Contact Number</label>
-                <input type="text" name="contact" />
-              </div>
+              {/* CONTACT + EMAIL */}
+              <div className="sw-br-mach-row">
+
+  {/* EMAIL — FIRST */}
+  <div className="sw-br-mach-form-item">
+    <label>Email</label>
+    <div className="sw-br-otp-input">
+      <input
+        type="email"
+        name="email"
+        placeholder="Enter email address"
+      />
+      {otpVerified && <span className="sw-br-otp-verified">✓</span>}
+    </div>
+  </div>
+
+  {/* CONTACT NUMBER — SECOND (Send OTP here) */}
+  <div className="sw-br-mach-form-item">
+    <label>Contact Number</label>
+    <div className="sw-br-otp-input">
+      <input
+        type="text"
+        name="contact"
+        placeholder="Contact number"
+      />
+
+      {!otpVerified && !showOtpFields && (
+        <span
+          className="sw-br-send-otp"
+          onClick={() => setShowOtpFields(true)}
+        >
+          
+          Send OTP
+        </span>
+      )}
+
+      {otpVerified && <span className="sw-br-otp-verified">✓</span>}
+    </div>
+  </div>
+
+</div>
+
+
+              {/* OTP FIELDS */}
+              {showOtpFields && (
+                <div className="sw-br-mach-row">
+                  <div className="sw-br-mach-form-item">
+                    <label>Phone OTP</label>
+<input
+  type="text"
+  placeholder="Enter Phone OTP"
+  value={phoneOtp}
+  maxLength={4}
+  onChange={(e) => {
+    const value = e.target.value.replace(/\D/g, ""); // numbers only
+    if (value.length <= 4) {
+      setPhoneOtp(value);
+      setOtpError("");
+    }
+  }}
+/>
+                  </div>
+
+                  <div className="sw-br-mach-form-item">
+                    <label>Email OTP</label>
+                    <input type="text" placeholder="Enter Email OTP" />
+                  </div>
+
+                  <div className="sw-br-mach-form-item">
+                    <button type="button" className="sw-br-mach-otp-btn" style={{ marginTop: "22px" }}
+                   onClick={() => {
+                    setOtpVerified(true);
+                    setShowOtpFields(false);
+                    message.success("OTP Verified"); }} >
+                      Verify OTP </button>
+
+                  </div>
+                </div>
+              )}
 
               <div className="sw-br-mach-form-item full-width">
                 <label>Site Address</label>
@@ -169,11 +257,19 @@ const MachineryDetails: React.FC<FormProps> = ({ id, onClose }) => {
               </div>
 
               <div className="sw-br-mach-button-row">
-                <button type="button" className="sw-br-mach-cancel-btn" onClick={handleReset}>
+                <button
+                  type="button"
+                  className="sw-br-mach-cancel-btn"
+                  onClick={handleReset}
+                >
                   Cancel
                 </button>
 
-                <button type="button" className="sw-br-mach-add-btn" onClick={handleAddToCart}>
+                <button
+                  type="button"
+                  className="sw-br-mach-add-btn"
+                  onClick={handleAddToCart}
+                >
                   Add to Cart
                 </button>
               </div>
