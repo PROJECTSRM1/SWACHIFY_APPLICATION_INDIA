@@ -133,41 +133,41 @@ const ADDON_PRICES: Record<string, number> = {
 };
 const ADDON_ID_MAPPING: Record<string, number> = {
   curtainSteam: 1,
-  tvUnit: 2,
-  mattressShampoo: 3,
-  chimneyService: 4,
-  fridgeInside: 5,
-  jetSpray: 6,
-  hardwater: 7,
-  balconyWash: 8,
-  patioWash: 9,
-  chairShampoo: 10,
-  whiteboardClean: 11,
-  keyboardSanitize: 12,
-  monitorClean: 13,
-  micClean: 14,
-  rackDeep: 15,
-  glassPolish: 16,
-  escalatorClean: 17,
-  fabricProtect: 18,
-  odorTreatment: 19,
-  woodPolish: 20,
-  termiteCheck: 21,
-  sealant: 22,
-  antiSlip: 23,
-  groutProtect: 24,
-  trackClean: 25,
-  framePolish: 26,
-  pressureWash: 27,
-  glueRemoval: 28,
-  chemicalWash: 29,
-  scraperWork: 30,
-  oilRemoval: 31,
-  machineDeep: 32,
-  greaseTreatment: 33,
-  scrubberMachine: 34,
-  chemicalTreat: 35,
-  windowExtra: 36
+  tvUnit: 1,
+  mattressShampoo: 1,
+  chimneyService: 1,
+  fridgeInside: 1,
+  jetSpray: 1,
+  hardwater: 1,
+  balconyWash: 1,
+  patioWash: 1,
+  chairShampoo: 1,
+  whiteboardClean: 1,
+  keyboardSanitize: 1,
+  monitorClean: 1,
+  micClean: 1,
+  rackDeep: 1,
+  glassPolish: 1,
+  escalatorClean: 1,
+  fabricProtect: 1,
+  odorTreatment: 1,
+  woodPolish: 1,
+  termiteCheck: 1,
+  sealant: 1,
+  antiSlip: 1,
+  groutProtect: 1,
+  trackClean: 1,
+  framePolish: 1,
+  pressureWash: 1,
+  glueRemoval: 1,
+  chemicalWash: 1,
+  scraperWork: 1,
+  oilRemoval: 1,
+  machineDeep: 1,
+  greaseTreatment: 1,
+  scrubberMachine: 1,
+  chemicalTreat: 1,
+  windowExtra: 1
   // Add more as needed from your ADDONPRICES
 };
 
@@ -1071,28 +1071,28 @@ const CleaningService: React.FC = () => {
 
     return ADDONS_BY_TITLE[match || "default"];
   };
-  const getDisplayPriceText = (): string => {
-    if (computedPrice) return formatINR(computedPrice);
+  // const getDisplayPriceText = (): string => {
+  //   if (computedPrice) return formatINR(computedPrice);
 
 
-    if (!selectedModule) return "—";
-
-
-
-    const basePriceNum =
-      parseInt((selectedModule.price || "").toString().replace(/[₹,\s]/g, "")) || 0;
+  //   if (!selectedModule) return "—";
 
 
 
-    const mult = SERVICE_MULTIPLIERS[serviceTypeKey] ?? 1;
+  //   const basePriceNum =
+  //     parseInt((selectedModule.price || "").toString().replace(/[₹,\s]/g, "")) || 0;
 
 
-    const displayNum = Math.round(basePriceNum * mult);
+
+  //   const mult = SERVICE_MULTIPLIERS[serviceTypeKey] ?? 1;
 
 
-    if (displayNum > 0) return formatINR(displayNum);
-    return selectedModule.price || "—";
-  };
+  //   const displayNum = Math.round(basePriceNum * mult);
+
+
+  //   if (displayNum > 0) return formatINR(displayNum);
+  //   return selectedModule.price || "—";
+  // };
 
 
 
@@ -1133,6 +1133,7 @@ const CleaningService: React.FC = () => {
 
   const categories = [
     {
+      id: 1,
       key: "residential",
       title: "Residential Cleaning",
       desc: "Complete cleaning service solutions for homes, apartments, and villas",
@@ -1140,6 +1141,7 @@ const CleaningService: React.FC = () => {
       count: 13,
     },
     {
+      id: 2,
       key: "commercial",
       title: "Commercial Cleaning",
       desc: "Professional cleaning service for offices, schools, and commercial spaces",
@@ -1147,6 +1149,7 @@ const CleaningService: React.FC = () => {
       count: 11,
     },
     {
+      id: 3,
       key: "specialized",
       title: "Specialized Cleaning",
       desc: "Expert cleaning service for furniture, floors, windows, and sanitization",
@@ -1154,6 +1157,7 @@ const CleaningService: React.FC = () => {
       count: 12,
     },
     {
+      id: 4,
       key: "industrial",
       title: "Industrial Cleaning",
       desc: "Heavy-duty cleaning for factories, warehouses, and industrial facilities",
@@ -1161,6 +1165,7 @@ const CleaningService: React.FC = () => {
       count: 8,
     },
     {
+      id: 5,
       key: "post",
       title: "Post-Construction Cleaning",
       desc: "Complete cleanup after construction and renovation",
@@ -1589,6 +1594,113 @@ const processBookingAndAddToCart = async (values: any) => {
 
 
 
+
+
+  const getDisplayPriceText = (): string => {
+    if (computedPrice) return formatINR(computedPrice);
+
+    if (!selectedModule) return "—";
+
+
+    const basePriceNum =
+      parseInt((selectedModule.price || "").toString().replace(/[₹,\s]/g, "")) || 0;
+
+
+    const mult = SERVICE_MULTIPLIERS[serviceTypeKey] ?? 1;
+
+    const displayNum = Math.round(basePriceNum * mult);
+
+    if (displayNum > 0) return formatINR(displayNum);
+    return selectedModule.price || "—";
+  };
+
+
+  const onSubmitBooking = async (values: any) => { // Made async
+    if (!selectedModule) return;
+
+    const {
+      fullName,
+      email,
+      mobile,
+      address,
+      serviceType,
+      propertySize,
+      additional,
+      preferredDate,
+      timeSlot,
+      instructions,
+      paymentType,
+    } = values;
+
+    // --- 1. Data Mapping ---
+    // NOTE: module_id, sub_module_id, service_id are placeholders (0) or derived from keys. 
+    // You must implement a lookup function if these IDs are available from your category data.
+    const payload: HomeServiceBookingPayload = {
+      module_id: getModuleId(selectedMainKey),
+      sub_module_id: getSubModuleId(selectedSubKey),
+      service_id: getServiceId(selectedMainKey),
+     sub_service_id: getSubModuleId(selectedSubKey),
+sub_group_id: getSubModuleId(selectedSubKey),
+
+      full_name: fullName,
+      email: email,
+      mobile: mobile,
+      address: address,
+      service_type_id: SERVICE_TYPE_IDS[serviceType] || 1,
+      time_slot_id: TIME_SLOT_IDS[timeSlot] || 0,
+      payment_type_id: PAYMENT_TYPE_IDS[paymentType] || 0,
+      problem_description: selectedModule.title,
+      property_size_sqft: parseFloat(propertySize) || 0,
+      add_on_id: Array.isArray(additional)
+        ? additional.map(addon => ADDON_ID_MAPPING[addon] || 0)[0] || null  // Take first addon ID or 0
+        : ADDON_ID_MAPPING[additional || ''] || null,
+      preferred_date: preferredDate,
+      special_instructions: instructions || "",
+    };
+
+    // --- 2. API Submission ---
+    try {
+      message.loading(`Booking ${selectedModule.title}...`, 0);
+
+      const apiResponse = await bookHomeService(payload);
+
+      message.destroy();
+      message.success(`Service booked successfully! Order ID: ${apiResponse?.order_id || 'N/A'}`);
+
+     
+      const cartItem: CartItem = {
+        id: Date.now(),
+        title: selectedModule.title,
+        image: selectedModule.image,
+        price: parseInt(selectedModule.price.toString().replace(/,/g, '0')),
+        quantity: 1,
+        totalPrice: computedPrice ?? 0,
+        // Required CartItem fields from form
+        customerName: fullName,
+        contact: mobile,
+        deliveryType: 'Cleaning Service',  // or serviceType
+        deliveryDate: preferredDate || new Date().toISOString().split('T')[0],
+        // Add the 2 missing fields (common for your cart):
+        address: address,
+        instructions: instructions || '',  // ← ADD THIS LINE
+        email:email,
+      };
+      addToCart(cartItem);
+      console.log(onSubmitBooking);
+
+
+      // addToCart(cartItem); 
+
+      setIsDetailsModalOpen(false);
+      form.resetFields();
+
+    } catch (error) {
+      // --- 4. Error Handling ---
+      message.destroy();
+      console.error("Booking API Error:", error);
+      message.error("Failed to submit booking. Please try again.");
+    }
+  };
 
 
   const handleDetailsCancel = () => {
