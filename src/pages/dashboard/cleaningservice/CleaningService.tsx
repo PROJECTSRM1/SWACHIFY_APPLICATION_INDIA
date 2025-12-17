@@ -1635,9 +1635,8 @@ const CleaningService: React.FC = () => {
         deliveryDate: preferredDate || new Date().toISOString().split('T')[0],
         // Add the 2 missing fields (common for your cart):
         address: address,
-        instructions: instructions || ''  // ← ADD THIS LINE
-
-        // email: email
+        instructions: instructions || '',  // ← ADD THIS LINE
+        email:email,
       };
       addToCart(cartItem);
 

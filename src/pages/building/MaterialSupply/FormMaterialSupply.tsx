@@ -32,6 +32,13 @@ const EquipmentDetails: React.FC<FormProps> = ({ id, onClose }) => {
   const [deliveryType, setDeliveryType] = useState("");
   const [unloading, setUnloading] = useState(false);
 
+  const [showOtpFields, setShowOtpFields] = useState(false);
+const [otpVerified, setOtpVerified] = useState(false);
+const [phoneOtp, setPhoneOtp] = useState("");
+const [emailOtp, setEmailOtp] = useState("");
+const [otpError, setOtpError] = useState("");
+
+
   const formRef = useRef<HTMLFormElement>(null);
 
   if (!material) return null;
@@ -59,6 +66,7 @@ const EquipmentDetails: React.FC<FormProps> = ({ id, onClose }) => {
   const handleAddToCart = () => {
     const customerName = (formRef.current?.elements.namedItem("customerName") as HTMLInputElement)?.value;
     const deliveryDate = (formRef.current?.elements.namedItem("deliveryDate") as HTMLInputElement)?.value;
+    const email = (formRef.current?.elements.namedItem("email") as HTMLInputElement)?.value?.trim(); 
     const contact = (formRef.current?.elements.namedItem("contact") as HTMLInputElement)?.value;
     const address = (formRef.current?.elements.namedItem("address") as HTMLTextAreaElement)?.value;
     const instructions = (formRef.current?.elements.namedItem("instructions") as HTMLTextAreaElement)?.value;
@@ -74,6 +82,7 @@ const EquipmentDetails: React.FC<FormProps> = ({ id, onClose }) => {
       unloadingCharge,
       totalPrice,
       unit, 
+      email,
       customerName,
       deliveryType,
       deliveryDate,
@@ -170,12 +179,112 @@ const EquipmentDetails: React.FC<FormProps> = ({ id, onClose }) => {
                   min={new Date().toISOString().split("T")[0]}/>
                 </div>
               </div>
-              <div className="sw-br-field sw-br-full">
-                <label>Contact Number</label>
-                <input type="text" name="contact" placeholder="Contact number" />
-              </div>
+                  {/* EMAIL + CONTACT — SIDE BY SIDE */}
+{/* EMAIL + CONTACT */}
+<div className="sw-br-row">
 
-              
+  {/* EMAIL — FIRST */}
+  <div className="sw-br-field">
+    <label>Email</label>
+    <div className="sw-br-otp-input">
+      <input
+        type="email"
+        name="email"
+        placeholder="Enter email address"
+      />
+      {otpVerified && <span className="sw-br-otp-verified">✓</span>}
+    </div>
+  </div>
+
+  {/* CONTACT — SECOND */}
+  <div className="sw-br-field">
+    <label>Contact Number</label>
+    <div className="sw-br-otp-input">
+      <input
+        type="text"
+        name="contact"
+        placeholder="Contact number"
+      />
+
+      {!otpVerified && !showOtpFields && (
+        <span
+          className="sw-br-send-otp"
+          onClick={() => setShowOtpFields(true)}
+        >
+          Send OTP
+        </span>
+      )}
+
+      {otpVerified && <span className="sw-br-otp-verified">✓</span>}
+    </div>
+  </div>
+
+</div>
+{showOtpFields && (
+  <div className="sw-br-row">
+
+    <div className="sw-br-field">
+      <label>Phone OTP</label>
+      <input
+        type="text"
+        placeholder="Enter Phone OTP"
+        maxLength={4}
+        value={phoneOtp}
+        onChange={(e) => {
+          const v = e.target.value.replace(/\D/g, "");
+          if (v.length <= 4) {
+            setPhoneOtp(v);
+            setOtpError("");
+          }
+        }}
+      />
+    </div>
+
+    <div className="sw-br-field">
+      <label>Email OTP</label>
+      <input
+        type="text"
+        placeholder="Enter Email OTP"
+        maxLength={4}
+        value={emailOtp}
+        onChange={(e) => {
+          const v = e.target.value.replace(/\D/g, "");
+          if (v.length <= 4) {
+            setEmailOtp(v);
+            setOtpError("");
+          }
+        }}
+      />
+
+      {otpError && (
+        <p style={{ color: "red", fontSize: "12px" }}>{otpError}</p>
+      )}
+    </div>
+
+    <div className="sw-br-field" style={{ justifyContent: "flex-end" }}>
+      <button
+        type="button"
+        className="sw-br-mach-otp-btn"
+        onClick={() => {
+          if (phoneOtp.length !== 4 || emailOtp.length !== 4) {
+            setOtpError("OTP must be exactly 4 digits");
+            return;
+          }
+
+          setOtpVerified(true);
+          setShowOtpFields(false);
+          setOtpError("");
+          message.success("OTP Verified");
+        }}
+      >
+        Verify OTP
+      </button>
+    </div>
+
+  </div>
+)}
+
+        
               <div className="sw-br-field sw-br-full">
                 <label>Delivery Address</label>
                 <textarea name="address" placeholder="Construction site address" />
@@ -205,9 +314,20 @@ const EquipmentDetails: React.FC<FormProps> = ({ id, onClose }) => {
               <button type="button" className="sw-br-cancel" onClick={handleReset}>
                 Cancel
               </button>
-              <button type="button" className="sw-br-add" onClick={handleAddToCart}>
-                Add to Cart
-              </button>
+              <button
+  type="button"
+  className="sw-br-add"
+  onClick={handleAddToCart}
+  disabled={!otpVerified}
+  style={{
+    background: otpVerified ? "black" : "#9ca3af",
+    cursor: otpVerified ? "pointer" : "not-allowed",
+  }}
+>
+  Add to Cart
+</button>
+
+
             </div>
 
           </form>

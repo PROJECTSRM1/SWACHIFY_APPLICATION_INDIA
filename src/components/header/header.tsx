@@ -8,7 +8,7 @@ import {
   UserOutlined,
   CloseOutlined,
 } from "@ant-design/icons";
-import { Menu, Drawer, message, Button, Dropdown, Badge, Avatar } from "antd";
+import { Menu, message, Button, Dropdown, Badge, Avatar, Modal } from "antd";
 import { useNavigate } from "react-router-dom";
 
 import { customerLogout } from "../../api/customerAuth";
@@ -208,58 +208,85 @@ const handleLogout = async () => {
         </Dropdown>
 
         {/* CART DRAWER */}
-        <Drawer placement="right" width={350} open={cartOpen} onClose={() => setCartOpen(false)} closable={false}>
-          <div className="sw-cart-drawer-header">
-            <div className="sw-cart-drawer-title">
-              {cart.length === 0 ? "Your cart is empty" : `Your cart (${cart.length})`}
-            </div>
-            <button className="sw-cart-drawer-close-btn" onClick={() => setCartOpen(false)}>
-              <CloseOutlined />
-            </button>
-          </div>
+       <Modal
+  open={cartOpen}
+  footer={null}
+  centered
+  width={650}
+  closable={false}
+  onCancel={() => setCartOpen(false)}
+  bodyStyle={{
+    padding: 0,
+    height: "75vh",
+    overflow: "hidden", 
+  }}
+  style={{ top: 20 }}
+>
+  <div className="cart-container">
+    {/* HEADER */}
+    <div className="cart-header">
+      <span className="cart-title">My Cart ({cart.length})</span>
+      <CloseOutlined
+        className="cart-close"
+        onClick={() => setCartOpen(false)}
+      />
+    </div>
 
-          <div className="sw-cart-drawer-content">
-            {cart.length === 0 ? (
-              <div className="sw-cart-empty-note">Nothing here yet.</div>
-            ) : (
-              <div className="sw-cart-list">
-                {cart.map((item, i) => (
-                  <div
-                    key={i}
-                    className="sw-cart-item"
-                    style={{
-                      display: "flex",
-                      gap: 12,
-                      padding: 12,
-                      alignItems: "center",
-                      borderBottom: "1px solid #f1f5f9",
-                    }}
-                  >
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      style={{ width: 68, height: 68, objectFit: "cover", borderRadius: 8 }}
-                    />
-                    <div style={{ flex: 1 }}>
-                      <h4 style={{ margin: 0 }}>{item.title}</h4>
-                      <p style={{ margin: 0, color: "#6b7280" }}>Qty: {item.quantity}</p>
-                      <p style={{ margin: 0, color: "#071227", fontWeight: 700 }}>
-                        Total: ₹{item.totalPrice}
-                      </p>
-                    </div>
+    {/* ITEMS (ONLY SCROLL) */}
+<div className="cart-items-scroll">
+  {cart.length === 0 ? (
+    <div className="cart-empty">
+      <h3>No items in cart</h3>
+      <p>Add services to proceed</p>
+    </div>
+  ) : (
+    cart.map((item, i) => (
+      <div key={i} className="cart-item">
+        <img src={item.image} alt={item.title} />
 
-                    <div className="sw-cart-buttons" style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                      <Button onClick={() => handleBuyNowClick(item)}>Buy Now</Button>
-                      <Button danger onClick={() => removeFromCart(item.id)}>
-                        Remove
-                      </Button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        </Drawer>
+        <div className="cart-info">
+          <strong>{item.title}</strong>
+          <span>Qty: {item.quantity}</span>
+          <span
+            className="cart-remove"
+            onClick={() => removeFromCart(item.id)}
+          >
+            REMOVE
+          </span>
+        </div>
+
+        <div className="cart-price">₹{item.totalPrice}</div>
+      </div>
+    ))
+  )}
+</div>
+
+
+    {/* FOOTER */}
+    <div className="cart-footer">
+      <div className="cart-total">
+        <span>Total Amount</span>
+        <strong>
+          ₹{cart.reduce(
+            (s, i) => s + Number(i.totalPrice || 0),
+            0
+          )}
+        </strong>
+      </div>
+
+      <Button
+        type="primary"
+        block
+        size="large"
+        className="cart-place-order"
+        onClick={() => handleBuyNowClick(cart[0])}
+      >
+        PLACE ORDER
+      </Button>
+    </div>
+  </div>
+</Modal>
+
 
         {/* CONFIRM ADDRESS MODAL */}
         <ConfirmBookingModal

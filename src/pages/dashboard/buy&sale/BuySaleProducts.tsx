@@ -316,162 +316,38 @@ const PropertyCard: React.FC<{
 
 
 /* ---------- price negotiation (INR) ---------- */
+/* ---------- price negotiation (INR) ---------- */
 
-const PriceNegotiationContent: React.FC<ContentComponentProps & { currentPrice: number; property: PropertyListing  }> = ({
-  currentPrice,
-  property,
-}) => {
+const PriceNegotiationContent: React.FC<
+  ContentComponentProps & { currentPrice: number; property: PropertyListing }
+> = ({ currentPrice, property }) => {
   const [form] = Form.useForm<PriceNegotiationFormValues>();
+  const { addToCart } = useCart();
 
-   const { addToCart } = useCart();
+  // -------- OTP STATES (SAME AS SERVICE FORM) --------
+  const [isOtpSent, setIsOtpSent] = useState(false);
+  const [phoneOtp, setPhoneOtp] = useState("");
+  const [emailOtp, setEmailOtp] = useState("");
+  const [verified, setVerified] = useState(false);
+  // --------------------------------------------------
 
   const handleAddToCart = () => {
-  addToCart({
-    id: property.id,
-    title: property.title,
-    price: property.price,
-    quantity: 1,
-    image: property.imagePath,
+    addToCart({
+      id: property.id,
+      title: property.title,
+      price: property.price,
+      quantity: 1,
+      image: property.imagePath,
+      totalPrice: Number(property.price),
+      customerName: "",
+      deliveryType: "",
+      deliveryDate: "",
+      contact: "",
+      address: "",
+      instructions: "",
+    });
 
-    totalPrice: Number(property.price),   // or computed
-
-    customerName: "",
-    deliveryType: "",
-    deliveryDate: "",
-    contact: "",
-    address: "",
-    instructions: "",
-  });
-
-  message.success('Property added to cart');
-};
-
-
-  const [priceComparison, setPriceComparison] = useState<{
-    diff: number;
-    percentDiff: number;
-    message: string;
-    type: 'success' | 'warning' | 'error' | 'info';
-  } | null>(null);
-
-  const [offerAnalysis, setOfferAnalysis] = useState<{
-    diff: number;
-    percentDiff: number;
-    message: string;
-    type: 'success' | 'warning' | 'error' | 'info';
-  } | null>(null);
-
-  const analyzeOffer = (values: PriceNegotiationFormValues) => {
-    const asking = values.currentAskingPrice || currentPrice;
-    const offer = values.offerPrice;
-
-    if (!asking || !offer) {
-      setOfferAnalysis(null);
-      return;
-    }
-
-    const diff = offer - asking;
-    const percentDiff = (diff / asking) * 100;
-    const absPercent = Math.abs(percentDiff);
-
-    let messageText = '';
-    let type: 'success' | 'warning' | 'error' | 'info' = 'info';
-
-    if (percentDiff === 0) {
-      messageText = 'Your offer matches the asking price exactly.';
-      type = 'info';
-    } else if (percentDiff < 0) {
-      if (absPercent <= 3) {
-        messageText = `Your offer is about ${absPercent.toFixed(
-          1,
-        )}% below asking – a small, reasonable discount.`;
-        type = 'success';
-      } else if (absPercent <= 10) {
-        messageText = `Your offer is ${absPercent.toFixed(
-          1,
-        )}% below asking – within a typical negotiation band. Expect a counter-offer.`;
-        type = 'warning';
-      } else {
-        messageText = `Your offer is ${absPercent.toFixed(
-          1,
-        )}% below asking – this may be treated as a very aggressive offer unless the property is clearly overpriced.`;
-        type = 'error';
-      }
-    } else {
-      if (percentDiff <= 3) {
-        messageText = `Your offer is ${percentDiff.toFixed(
-          1,
-        )}% above asking – useful in highly competitive markets.`;
-        type = 'warning';
-      } else {
-        messageText = `Your offer is ${percentDiff.toFixed(
-          1,
-        )}% above asking – double-check that you are not overpaying.`;
-        type = 'error';
-      }
-    }
-
-    setOfferAnalysis({ diff, percentDiff, message: messageText, type });
-  };
-
-  const handleCompareClick = async () => {
-    try {
-      await form.validateFields(['predictedMarketPrice']);
-      const current = form.getFieldValue('currentMarketPrice') || currentPrice;
-      const predicted = form.getFieldValue('predictedMarketPrice');
-
-      if (!current || !predicted) return;
-
-      if (predicted <= 0) {
-        message.error('Predicted market price must be greater than zero.');
-        return;
-      }
-
-      const maxAllowed = current * 1.5;
-      const minAllowed = current * 0.5;
-      if (predicted > maxAllowed || predicted < minAllowed) {
-        message.error(
-          'Predicted price is more than ±50% away from current price. Please re-check the number.',
-        );
-        setPriceComparison(null);
-        return;
-      }
-
-      const diff = predicted - current;
-      const percentDiff = (diff / current) * 100;
-      const absPercent = Math.abs(percentDiff);
-
-      let messageText = '';
-      let type: 'success' | 'warning' | 'error' | 'info' = 'info';
-
-      if (absPercent < 5) {
-        messageText = 'Predicted price is well aligned with current market value (within ±5%).';
-        type = 'success';
-      } else if (absPercent < 15) {
-        messageText =
-          diff > 0
-            ? 'Property looks moderately under-priced (5–15% below your prediction).'
-            : 'Property looks moderately over-priced (5–15% above your prediction).';
-        type = 'warning';
-      } else {
-        messageText =
-          diff > 0
-            ? 'Property appears significantly under-priced (>15% below). Validate with more comps.'
-            : 'Property appears significantly over-priced (>15% above). Negotiate strongly or reassess.';
-        type = 'error';
-      }
-
-      setPriceComparison({ diff, percentDiff, message: messageText, type });
-      message.success('Price comparison completed.');
-    } catch {
-      /* AntD validation already shows errors */
-    }
-  };
-
-  const onSubmit: FormProps<PriceNegotiationFormValues>['onFinish'] = (values) => {
-    analyzeOffer(values);
-    message.success('Your enquiry and offer have been submitted!');
-    console.log('Contact & negotiation form submitted:', values);
+    message.success("Property added to cart");
   };
 
   return (
@@ -479,190 +355,188 @@ const PriceNegotiationContent: React.FC<ContentComponentProps & { currentPrice: 
       <Form
         layout="vertical"
         form={form}
-        onFinish={onSubmit}
         className="swc-bs-form-content-spacing"
         initialValues={{
-          currentMarketPrice: currentPrice,
           currentAskingPrice: currentPrice,
         }}
-        onValuesChange={(_, allValues) =>
-          analyzeOffer(allValues as PriceNegotiationFormValues)
-        }
       >
-        {/* contact details */}
+        {/* CONTACT DETAILS */}
         <Title level={4} className="swc-bs-detail-section-title">
           <UserOutlined /> Contact Details
         </Title>
+
         <Row gutter={[16, 16]}>
           <Col xs={24} md={8}>
-            <Form.Item<PriceNegotiationFormValues>
+            <Form.Item
               name="name"
               label="Full Name"
-              rules={[{ required: true, message: 'Please enter your name' }]}
+              rules={[{ required: true, message: "Please enter your name" }]}
             >
               <Input placeholder="Enter your full name" />
             </Form.Item>
           </Col>
+
           <Col xs={24} md={8}>
-            <Form.Item<PriceNegotiationFormValues>
+            <Form.Item
               name="email"
               label="Email"
               rules={[
-                { required: true, message: 'Please enter your email' },
-                { type: 'email', message: 'Enter a valid email' },
+                { required: true, message: "Please enter your email" },
+                { type: "email", message: "Enter valid email" },
               ]}
             >
-              <Input placeholder="Enter your email address" prefix={<MailOutlined />} />
+              <Input
+                prefix={<MailOutlined />}
+                placeholder="Enter your email"
+                suffix={verified ? "✔" : null}
+              />
             </Form.Item>
           </Col>
+
           <Col xs={24} md={8}>
-            <Form.Item<PriceNegotiationFormValues>
+            <Form.Item
               name="phone"
               label="Phone"
-              rules={[{ required: true, message: 'Please enter your phone number' }]}
-            >
-              <Input placeholder="Enter your phone number" prefix={<PhoneOutlined />} />
-            </Form.Item>
-          </Col>
-        </Row>
-
-        <Divider />
-
-        {/* price comparison */}
-        <Title level={4} className="swc-bs-detail-section-title">
-          <DollarOutlined /> Price Comparison Tool
-        </Title>
-        <Row gutter={[16, 16]}>
-          <Col xs={24} md={12}>
-            <Form.Item<PriceNegotiationFormValues>
-              name="currentMarketPrice"
-              label="Current Market Price (₹)"
-            >
-              <Input type="number" prefix="₹" disabled />
-            </Form.Item>
-          </Col>
-          <Col xs={24} md={12}>
-            <Form.Item<PriceNegotiationFormValues>
-              name="predictedMarketPrice"
-              label="Predicted Market Price (₹)"
               rules={[
-                { required: true, message: 'Please enter predicted market price' },
-                {
-                  validator: (_, value) => {
-                    if (value == null || value === '') return Promise.resolve();
-                    if (value <= 0)
-                      return Promise.reject(
-                        new Error('Predicted market price must be greater than zero.'),
-                      );
-                    return Promise.resolve();
-                  },
-                },
+                { required: true, message: "Please enter your phone number" },
+                { pattern: /^[0-9]{10}$/, message: "Enter valid 10 digit number" },
               ]}
             >
-              <Input type="number" prefix="₹" placeholder="e.g. 26000000" />
-            </Form.Item>
-          </Col>
-          <Col xs={24}>
-            <Button type="default" onClick={handleCompareClick}>
-              Analyse Comparison
-            </Button>
-          </Col>
-          {priceComparison && (
-            <Col xs={24}>
-              <Alert
-                showIcon
-                type={priceComparison.type}
-                message={
-                  <>
-                    <div>{priceComparison.message}</div>
-                    <div className="swc-bs-alert-extra-line">
-                      Difference:{' '}
-                      <b>
-                        {priceComparison.diff >= 0 ? '+' : '-'}
-                        {formatINR(Math.abs(priceComparison.diff))}
-                      </b>{' '}
-                      (
-                      {`${priceComparison.diff >= 0 ? '+' : '-'}${Math.abs(
-                        priceComparison.percentDiff,
-                      ).toFixed(2)}%`}{' '}
-                      vs. current price)
-                    </div>
-                  </>
+              <Input
+                prefix="+91 "
+                maxLength={10}
+                placeholder="Enter phone number"
+                onChange={(e) => {
+                  const onlyDigits = e.target.value.replace(/\D/g, "");
+                  form.setFieldsValue({ phone: onlyDigits });
+                }}
+                suffix={
+                  !verified && !isOtpSent ? (
+                    <Button
+                      type="link"
+                      onClick={() => {
+                        if (
+                          !form.getFieldValue("phone") ||
+                          !form.getFieldValue("email")
+                        ) {
+                          message.error("Enter email & mobile first");
+                          return;
+                        }
+                        setIsOtpSent(true);
+                        message.success("OTP Sent (Demo Mode)");
+                      }}
+                    >
+                      Send OTP
+                    </Button>
+                  ) : verified ? (
+                    "✔"
+                  ) : null
                 }
               />
-            </Col>
-          )}
+            </Form.Item>
+          </Col>
         </Row>
+
+        {/* OTP SECTION */}
+        {/* OTP SECTION */}
+{isOtpSent && !verified && (
+  <Row gutter={[16, 16]} align="bottom">
+    <Col xs={24} md={8}>
+      <Form.Item label="Phone OTP" className="otp-item">
+        <Input
+          maxLength={4}
+          placeholder="Enter Phone OTP"
+          value={phoneOtp}
+          onChange={(e) =>
+            setPhoneOtp(e.target.value.replace(/\D/g, ""))
+          }
+        />
+      </Form.Item>
+    </Col>
+
+    <Col xs={24} md={8}>
+      <Form.Item label="Email OTP" className="otp-item">
+        <Input
+          maxLength={4}
+          placeholder="Enter Email OTP"
+          value={emailOtp}
+          onChange={(e) =>
+            setEmailOtp(e.target.value.replace(/\D/g, ""))
+          }
+        />
+      </Form.Item>
+    </Col>
+
+    <Col xs={24} md={8}>
+      <Form.Item label=" " className="otp-item">
+        <Button
+          type="primary"
+          style={{ height: 40, width: "100%" }}
+          onClick={() => {
+            if (phoneOtp.length !== 4 || emailOtp.length !== 4) {
+              message.error("OTP must be 4 digits");
+              return;
+            }
+
+            if (phoneOtp === emailOtp) {
+              message.error("Phone OTP & Email OTP must be different");
+              return;
+            }
+
+            message.success("OTP Verified");
+            setVerified(true);
+            setIsOtpSent(false);
+          }}
+        >
+          Verify OTP
+        </Button>
+      </Form.Item>
+    </Col>
+  </Row>
+)}
+
 
         <Divider />
 
-        {/* negotiation offer */}
+        {/* NEGOTIATION */}
         <Title level={4} className="swc-bs-detail-section-title">
           <RiseOutlined /> Negotiation Offer
         </Title>
+
         <Row gutter={[16, 16]}>
           <Col xs={24} md={12}>
-            <Form.Item<PriceNegotiationFormValues>
-              name="currentAskingPrice"
-              label="Current Asking Price (₹)"
-            >
-              <Input type="number" prefix="₹" disabled />
+            <Form.Item label="Current Asking Price (₹)">
+              <Input prefix="₹" disabled />
             </Form.Item>
           </Col>
+
           <Col xs={24} md={12}>
-            <Form.Item<PriceNegotiationFormValues>
+            <Form.Item
               name="offerPrice"
               label="Your Offer (₹)"
-              rules={[{ required: true, message: 'Please enter your offer price' }]}
+              rules={[{ required: true, message: "Please enter your offer price" }]}
             >
-              <Input type="number" prefix="₹" />
+              <Input prefix="₹" />
             </Form.Item>
           </Col>
-          <Col xs={24}>
-            <Form.Item<PriceNegotiationFormValues>
-              name="negotiationMessage"
-              label="Negotiation Message"
-            >
-              <TextArea
-                rows={3}
-                placeholder="Share your expectations, payment timeline, or any conditions…"
-              />
-            </Form.Item>
-          </Col>
-          {offerAnalysis && (
-            <Col xs={24}>
-              <Alert
-                showIcon
-                type={offerAnalysis.type}
-                message={
-                  <>
-                    <div>{offerAnalysis.message}</div>
-                    <div className="swc-bs-alert-extra-line">
-                      Difference:{' '}
-                      <b>
-                        {offerAnalysis.diff >= 0 ? '+' : '-'}
-                        {formatINR(Math.abs(offerAnalysis.diff))}
-                      </b>{' '}
-                      (
-                      {`${offerAnalysis.diff >= 0 ? '+' : '-'}${Math.abs(
-                        offerAnalysis.percentDiff,
-                      ).toFixed(2)}%`}{' '}
-                      vs. asking price)
-                    </div>
-                  </>
-                }
-              />
-            </Col>
-          )}
         </Row>
 
-        <Button size="middle" onClick={handleAddToCart}>
-                Add to Cart
-              </Button>
+        <Form.Item name="negotiationMessage" label="Negotiation Message">
+          <TextArea rows={3} />
+        </Form.Item>
+
+        <Button
+          size="middle"
+          onClick={handleAddToCart}
+          disabled={!verified}
+        >
+          Add to Cart
+        </Button>
       </Form>
     </div>
   );
 };
+
 
 /* ---------- document verification ---------- */
 
