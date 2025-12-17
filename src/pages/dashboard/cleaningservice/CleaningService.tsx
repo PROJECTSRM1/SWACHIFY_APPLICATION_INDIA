@@ -864,6 +864,12 @@ const getPricePerSqft = (moduleTitle: string): number => {
   if (key.includes("warehouse")) return 2.0;
   return 1.8;
 };
+const isLoggedIn = () => {
+  const token = localStorage.getItem("accessToken");
+  const isGuest = localStorage.getItem("isGuest") === "true";
+  return Boolean(token) && !isGuest;
+};
+
 
 
 const calculatePrice = (
@@ -1349,28 +1355,69 @@ const getDisplayPriceText = (): string => {
 };
 
 
-  const onAddToCart = (values: any) => {
-    if (!selectedModule) return;
-    const cartItem: CartItem = {
-      id: Date.now(),
-      title: selectedModule.title,
-      image: selectedModule.image,
-      quantity: 1,
-      price: selectedModule.price,
-      totalPrice: computedPrice ?? Math.round((parseInt((selectedModule.price || "").replace(/[₹,\s]/g, "")) || 0) * (SERVICE_MULTIPLIERS[serviceTypeKey] ?? 1)),
-      customerName: "",
-      deliveryType: "",
-      deliveryDate: "",
-      contact: "",
-      address: "",
-      instructions: values?.instructions || "",
-    };
-    addToCart(cartItem);
-    message.success(
-      `${selectedModule.title} added to cart — ${formatINR(cartItem.totalPrice)}`
-    );
-    setIsDetailsModalOpen(false);
+ const onAddToCart = (values: any) => {
+  if (!selectedModule) return;
+
+
+ if (!isLoggedIn()) {
+  message.info("Please login or register to continue");
+
+  const pendingCartData = {
+    module: selectedModule,
+    values,
+    computedPrice,
+    serviceTypeKey,
   };
+
+  localStorage.setItem(
+    "pendingCartItem",
+    JSON.stringify(pendingCartData)
+  );
+
+  localStorage.setItem("postLoginRedirect", window.location.pathname);
+  localStorage.setItem("loginSource", "addToCart");
+
+  (window as any).openAuthModal?.("login");
+
+  setTimeout(() => {
+    setIsDetailsModalOpen(false);
+  }, 0);
+
+  return;
+}
+
+
+
+
+  
+  const cartItem: CartItem = {
+    id: Date.now(),
+    title: selectedModule.title,
+    image: selectedModule.image,
+    quantity: 1,
+    price: selectedModule.price,
+    totalPrice:
+      computedPrice ??
+      Math.round(
+        (parseInt((selectedModule.price || "").replace(/[₹,\s]/g, "")) || 0) *
+          (SERVICE_MULTIPLIERS[serviceTypeKey] ?? 1)
+      ),
+    customerName: "",
+    deliveryType: "",
+    deliveryDate: "",
+    contact: "",
+    address: "",
+    instructions: values?.instructions || "",
+  };
+
+  addToCart(cartItem);
+  message.success(
+    `${selectedModule.title} added to cart`
+  );
+
+  setIsDetailsModalOpen(false);
+};
+
 
   const handleDetailsCancel = () => {
   // RESET OTP STATES
