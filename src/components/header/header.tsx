@@ -23,13 +23,13 @@ type Booking = {
   id: string;
   title: string;
   date: string;
-  time?: string;
-  status: "Upcoming" | "Completed" | "Cancelled";
-  serviceType?: string;
-  amount?: number;
-  address?: string;
-  notes?: string;
+  time: string;
+  status: "Upcoming" | "Completed" | "Expired";
+  amount: number;
+  image?: string;
+  paymentDone: boolean;
 };
+
 
 const LS_BOOKINGS_KEY = "bookings";
 
