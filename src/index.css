@@ -20,7 +20,7 @@ ap {
 }
 
 .sw-cs-half-width {
-  width: 48%;
+  width: 100%;
 }
 
 .sw-cs-location-btn {
@@ -752,38 +752,11 @@ padding: 15px;
 
   margin: 0;
 }
-
-
-.sw-otp-success {
-  color: #2ecc71;
-  font-weight: bold;
-  margin-left: 6px;
+@media (max-width: 480px) {
+  .ant-modal .ant-modal-body {
+    padding-right: 0px !important;
+  }
 }
-
-
-
-/* === FINAL FIX FOR OTP ROW === */
-.sw-cs-otp-row {
-  display: flex;
-  gap: 16px;
-  width: 100%;
-  flex-wrap: nowrap !important;
-  align-items: flex-end;
-}
-
-.otp-item {
-  width: 180px;
-}
-
-.sw-cs-otp-verify {
-  display: flex;
-  align-items: flex-end;
-}
-
-
-
-
-
 /* nithin cleaning dash */
 
 
