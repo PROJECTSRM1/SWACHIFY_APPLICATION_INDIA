@@ -27,6 +27,10 @@ import {
 import ReactApexChart from "react-apexcharts";
 import "./appadmin.css";
 
+import { LogoutOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
+
+
 const scaleTo300to700 = (value: number) => {
   if (value <= 0) return 300;
 
@@ -460,6 +464,16 @@ const FREELANCER_SKILLS: ServiceKey[] = [
 
 const Appadmin: React.FC = () => {
 const [bookings, setBookings] = useState<BookingRow[]>(generateBookings());
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.clear();
+    sessionStorage.clear();
+    message.success("Logged out successfully");
+    navigate("/Landing");
+  };
+
 
 const [openPopup, setOpenPopup] =
   useState<null | "freelancer" | "vendor">(null);
@@ -896,6 +910,18 @@ const filteredBookings = bookings.filter(b => {
             </li>
           ))}
         </ul>
+          {/* 🔥 BOTTOM LOGOUT */}
+  <div className="sidebar-footer">
+    <Button
+      danger
+      type="text"
+      icon={<LogoutOutlined />}
+      onClick={handleLogout}
+      className="logout-btn"
+    >
+      Logout
+    </Button>
+  </div>
       </aside>
 
       {/* RIGHT: main content + footer */}

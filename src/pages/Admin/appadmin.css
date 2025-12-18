@@ -83,7 +83,7 @@
 .page-title {
   font-size: 24px;
   font-weight: 700;
-  margin-bottom: 8px;
+  margin-top:150px;
 }
 
 /* ------------ DATE FILTER BAR ------------ */
@@ -808,4 +808,40 @@ body {
 .final-status-row .fail {
   color: #ff4d4f;
   font-size: 20px;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-menu {
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* ---------- Sticky logout ---------- */
+.sidebar-footer {
+  padding: 12px 16px;
+  border-top: 1px solid #eee;
+  background: #5c2e91;
+}
+
+/* Logout button text + icon */
+.logout-btn {
+  width: 100%;
+  text-align: left;
+  color: #ffffff !important;
+  font-weight: 600;
+}
+
+/* Icon color */
+.logout-btn .anticon {
+  color: #ffffff !important;
+}
+
+/* Optional hover (slightly darker purple) */
+.logout-btn:hover {
+  background-color: #4a2476 !important;
+  color: #ffffff !important;
 }
