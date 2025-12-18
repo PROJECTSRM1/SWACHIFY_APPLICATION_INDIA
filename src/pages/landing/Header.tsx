@@ -272,7 +272,7 @@ navigate(redirectTo);
         >
           Sign Up
         </Button>
-        <h1>vamsi</h1>
+        
       </header>
 
       {/* Spacer so content starts below fixed navbar */}
