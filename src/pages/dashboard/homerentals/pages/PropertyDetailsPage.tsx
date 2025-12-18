@@ -459,6 +459,7 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
   // };
  const onFinish = (values: {
   fullName?: string;
+  email:string;
   phone?: string;
   moveInDate?: string | Date;
   message?: string;
@@ -472,6 +473,7 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
     totalPrice: Number(property.price),
 
     customerName: values.fullName || '',
+    email: values.email,
     deliveryType: '',
     deliveryDate: values.moveInDate ? String(values.moveInDate) : '',
     contact: values.phone || '',

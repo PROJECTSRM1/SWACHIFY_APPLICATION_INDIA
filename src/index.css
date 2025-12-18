@@ -20,7 +20,7 @@ ap {
 }
 
 .sw-cs-half-width {
-  width: 48%;
+  width: 100%;
 }
 
 .sw-cs-location-btn {
@@ -752,13 +752,12 @@ padding: 15px;
 
   margin: 0;
 }
-
-
-.sw-otp-success {
-  color: #2ecc71;
-  font-weight: bold;
-  margin-left: 6px;
+@media (max-width: 480px) {
+  .ant-modal .ant-modal-body {
+    padding-right: 0px !important;
+  }
 }
+<<<<<<< HEAD
 
 
 
@@ -817,6 +816,8 @@ padding: 15px;
 
 
 
+=======
+>>>>>>> main
 /* nithin cleaning dash */
 
 
@@ -19524,6 +19525,7 @@ body {
   padding: 60px 40px;
   margin-top: 50px;
   margin-bottom: -44px;
+  margin-top: 1px;
 }
 
 .sw-ep-classname-services-section .sw-ep-classname-section-title {

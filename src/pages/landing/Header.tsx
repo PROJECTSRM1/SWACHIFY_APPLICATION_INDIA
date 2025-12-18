@@ -12,7 +12,7 @@ import {
   Input,
   Checkbox,
   message,
-  Radio,
+  //Radio,
 } from "antd";
 import {
   EyeInvisibleOutlined,
@@ -21,7 +21,7 @@ import {
   CloseOutlined,
 } from "@ant-design/icons";
 
-import { customerRegister, customerLogin } from "../../api/customerAuth"; // ✅ NEW
+import { customerRegister, customerLogin } from "../../api/customerAuth";
 
 import "./Header.css";
 
@@ -51,25 +51,33 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
   const [vendorModalVisible, setVendorModalVisible] = useState(false);
 
   const [activeAuthTab, setActiveAuthTab] = useState<"login" | "register">(
-    "register"
-  );
+  "login"
+);
 
-  const [authLoading, setAuthLoading] = useState(false); // ✅ NEW
+
+  const [authLoading, setAuthLoading] = useState(false); 
   const navigate = useNavigate();
 
-  const openAuthModal = (tab: "login" | "register" = "register") => {
+  const openAuthModal = (tab: "login" | "register" = "login") => {
     setActiveAuthTab(tab);
     setAuthModalVisible(true);
     setMenuOpen(false);
   };
 
-  const closeAuthModal = () => setAuthModalVisible(false);
+  const closeAuthModal = () => {
+  localStorage.removeItem("loginSource");
+  setAuthModalVisible(false);
+};
+
   const [vendorForgotModalVisible, setVendorForgotModalVisible] = useState(false);
   const [emailValue, setEmailValue] = useState("");
 
   console.log(emailValue);
+  const hideSkipLogin =
+  localStorage.getItem("loginSource") === "addToCart";
 
-  // Expose openAuthModal/closeAuthModal on window so pages (like CommercialPlots) can call it
+
+ 
   useEffect(() => {
     (window as any).openAuthModal = (tab: "login" | "register" = "login") => {
       openAuthModal(tab);
@@ -121,9 +129,28 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
         localStorage.setItem("user", JSON.stringify(res.user));
       }
 
-      message.success("Login successful");
-      closeAuthModal();
-      navigate("/app/dashboard");
+      // remove guest mode
+localStorage.removeItem("isGuest");
+
+const loginSource = localStorage.getItem("loginSource");
+
+if (loginSource !== "addToCart") {
+  message.success("Login successful");
+}
+
+localStorage.removeItem("loginSource");
+
+closeAuthModal();
+
+
+// redirect user back to intended page
+const redirectTo =
+  localStorage.getItem("postLoginRedirect") || "/app/dashboard";
+
+localStorage.removeItem("postLoginRedirect");
+
+navigate(redirectTo);
+
     } catch (err: any) {
       console.error("Login error", err);
       message.error(
@@ -135,6 +162,19 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
       setAuthLoading(false);
     }
   };
+  const handleSkipLogin = () => {
+  localStorage.setItem("isGuest", "true");
+  
+   localStorage.removeItem("accessToken");
+  localStorage.removeItem("user");
+
+  closeAuthModal();
+
+ 
+  navigate("/app/dashboard");
+};
+
+
 
   // ==========================
   // VENDOR LOGIN (still local)
@@ -232,6 +272,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
         >
           Sign Up
         </Button>
+        <h1>vamsi</h1>
       </header>
 
       {/* Spacer so content starts below fixed navbar */}
@@ -324,6 +365,15 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
                   Login
                 </Button>
               </Form.Item>
+             {!hideSkipLogin && (
+  <Form.Item>
+    <Button block type="default" onClick={handleSkipLogin}>
+      Skip Login
+    </Button>
+  </Form.Item>
+)}
+
+
             </Form>
           </TabPane>
 
@@ -388,7 +438,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
               >
                 <Input maxLength={10} />
               </Form.Item>
-              <Form.Item
+              {/* <Form.Item
                 label="Gender"
                 name="gender"
                 rules={[{ required: true, message: "Please select your gender" }]}
@@ -398,7 +448,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
                   <Radio value="female">Female</Radio>
                   <Radio value="other">Other</Radio>
                 </Radio.Group>
-              </Form.Item>
+              </Form.Item> */}
 
               <Form.Item
                 label="Password"
@@ -436,7 +486,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
               </Form.Item>
 
               {/* ADDRESS */}
-              <Form.Item
+              {/* <Form.Item
                 label="Address"
                 name="address"
                 rules={[
@@ -445,7 +495,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
                 ]}
               >
                 <Input.TextArea rows={3} placeholder="Enter your address" />
-              </Form.Item>
+              </Form.Item> */}
 
               <Form.Item>
                 <Button block htmlType="submit" loading={authLoading}>

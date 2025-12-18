@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 
 import HeaderBar from "../../components/header/header";   // <-- add this
+//import CommonHeader from "../../pages/landing/Header";
 
 import Dashboard from "../../pages/dashboard/Dashboard";
 import ConstructionServices from "../../pages/building/building";
@@ -17,7 +18,8 @@ import BuySaleProducts from "../../pages/dashboard/buy&sale/BuySaleProducts";
 export const SecureRoutes = () => {
   return (
     <>
-      <HeaderBar />  
+      <HeaderBar /> 
+      
 
       <Routes>
         <Route path="/" element={<Dashboard />} />
