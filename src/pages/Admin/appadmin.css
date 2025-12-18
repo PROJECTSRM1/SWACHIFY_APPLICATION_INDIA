@@ -1,734 +1,811 @@
-.sw-ad-app-shell {
-  background: #f5f6fa;
+
+/* ------------ LAYOUT ------------ */
+
+.layout-container {
+  display: flex;
+  width: 100%;
   min-height: 100vh;
-  padding: 32px;
-  max-width: 1360px;
-  margin: 0 auto;
+  background: #f4f5f7;
 }
 
-.sw-ad-top-bar {
+/* ------------ SIDEBAR ------------ */
+
+.sidebar {
+  width: 240px;
+  background: #fff;
+  border-right: 1px solid #ddd;
+  padding-top: 10px;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  overflow-y: auto;
+}
+
+.sidebar-user {
+  font-size: 20px;
+  font-weight: bold;
+  padding: 15px 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.sidebar-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-menu li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  color: #444;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.sidebar-menu li:hover {
+  background: #f5edff;
+}
+
+.sidebar-menu li.active {
+  background: #f2eaff;
+  border-right: 4px solid #6a2dff;
+  color: #6a2dff;
+  font-weight: bold;
+}
+
+.sidebar-menu li span {
+  font-size: 15px;
+}
+
+.sidebar-menu li svg {
+  font-size: 20px;
+}
+
+/* right wrapper that contains main + footer */
+.dashboard-right-wrapper {
+  width: calc(100% - 240px);
+  margin-left: 240px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ------------ MAIN CONTENT ------------ */
+
+.dashboard-main {
+  padding: 20px;
+  /* don't set min-height here so footer sits below naturally */
+}
+
+.page-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+/* ------------ DATE FILTER BAR ------------ */
+
+.date-filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+  padding: 8px 0;
+}
+
+.date-filter-bar .ant-btn {
+  border-radius: 8px;
+}
+
+/* active preset highlight (black bg + white text) */
+.df-active {
+  background: #000 !important;
+  color: #fff !important;
+  border-color: #000 !important;
+}
+.df-active:hover {
+  background: #000 !important;
+  color: #fff !important;
+}
+
+.date-range-label {
+  margin-left: 12px;
+  color: rgba(11,23,36,0.6);
+  font-size: 13px;
+}
+
+/* ------------ SUMMARY CARDS ------------ */
+
+.big-card {
+  background: white;
+  border-radius: 8px;
+}
+
+.summary-card {
+  padding: 0;
+  border-radius: 8px;
+}
+
+.header-purple {
+  background: #5c2e91;
+  color: white;
+  padding: 12px 15px;
+  border-radius: 8px 8px 0 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.amount {
+  padding: 12px 15px 0 15px;
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.sub-text {
+  margin-left: 15px;
+  color: gray;
+}
+
+.last-month {
+  margin-left: 15px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.btn-group {
+  padding: 15px;
+  display: flex;
+  gap: 10px;
+}
+
+.links-row {
+  border-top: 1px solid #eee;
+  padding: 10px 15px;
+  display: flex;
+  gap: 20px;
+  font-size: 14px;
+  color: #6a2dff;
+  cursor: pointer;
+}
+
+/* small extra row inside sales card */
+.sales-extra {
+  padding: 10px 15px;
+  font-size: 13px;
+  color: rgba(11,23,36,0.6);
+}
+
+/* ------------ VAT / CHARTS ------------ */
+
+.panel-card {
+  border-radius: 8px !important;
+}
+
+.vat-row {
   display: flex;
   justify-content: space-between;
-  gap: 24px;
-  flex-wrap: wrap;
-  margin-bottom: 24px;
-  align-items: flex-start;
+  padding: 6px 0;
 }
 
-.sw-ad-brand {
-  color: #e2001a !important;
-  margin-bottom: 8px !important;
+.vat-amount {
+  font-weight: bold;
 }
 
-.sw-ad-tab-nav {
+.cap-btn {
+  background: #6a2dff !important;
+  color: white !important;
+  border: none !important;
+}
+
+.vat-green {
+  color: #00a65a;
+  font-weight: bold;
+}
+
+.vat-red {
+  color: #d32f2f;
+  font-weight: bold;
+}
+
+/* ------------ AGEING (DESIGN FIX) ------------ */
+
+.ageing-card {
+  padding: 12px 18px;
+  border-radius: 10px;
+}
+
+.age-row {
   display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  overflow-x: auto;
-  padding: 8px 0;
-  margin-bottom: 16px;
+  justify-content: space-between;
+  padding: 10px 6px;
+  align-items: center;
+  border-bottom: 1px dashed rgba(11,23,36,0.06);
 }
 
-.sw-ad-tab-nav::-webkit-scrollbar {
-  height: 6px;
+.age-row:last-child {
+  border-bottom: none;
 }
 
-.sw-ad-tab-nav::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 999px;
-}
-
-.sw-ad-tab-btn {
-  background: transparent;
-  border: none;
-  padding: 10px 14px;
-  font-size: 15px;
+.age-label {
   font-weight: 600;
-  color: #475569;
-  cursor: pointer;
-  border-bottom: 2px solid transparent;
-  border-radius: 999px;
-  transition: color 0.2s ease, border-color 0.2s ease;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  color: #2b2b2b;
 }
 
-.sw-ad-tab-btn--active {
-  color: #e2001a;
-  border-color: transparent;
-  background: #fff;
-  box-shadow: 0 8px 18px rgba(226, 0, 26, 0.12);
+.age-amt {
+  color: #6a2dff;
+  font-weight: 700;
 }
 
-.sw-ad-tab-icon {
-  display: flex;
-  align-items: center;
-}
+/* ------------ RESPONSIVE ------------ */
 
-.sw-ad-content {
-  min-height: 60vh;
-  min-width: 0;
-}
-
-.sw-ad-page-card {
-  background: #fff;
-  border-radius: 20px;
-  padding: 24px;
-  box-shadow: 0 15px 35px rgba(15, 23, 42, 0.08);
-  width: 100%;
-}
-
-.sw-ad-stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 16px;
-}
-
-.sw-ad-stat-card {
-  border-radius: 16px;
-  box-shadow: none;
-  border: 1px solid #f2f2f2;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.sw-ad-clickable-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 28px rgba(226, 0, 26, 0.15);
-}
-
-.sw-ad-stat-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 14px;
-  background: #fff1f0;
-  color: #e2001a;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-}
-
-.sw-ad-stat-label {
-  color: #94a3b8;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  font-size: 12px;
-}
-
-.sw-ad-stat-value {
-  margin: 0 !important;
-}
-
-.sw-ad-chart-row {
-  margin-top: 24px;
-}
-
-.sw-ad-chart-card {
-  border-radius: 16px !important;
-  border: 1px solid #f2f2f2;
-}
-
-.sw-ad-legend {
-  font-size: 14px;
-}
-
-.sw-ad-legend-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: #64748b;
-}
-
-.sw-ad-legend-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  display: inline-block;
-}
-
-.sw-ad-legend-dot--red {
-  background: #ff4d4f;
-}
-
-.sw-ad-legend-dot--green {
-  background: #52c41a;
-}
-
-.sw-ad-recent-card {
-  margin-top: 24px;
-  border-radius: 16px;
-}
-
-.sw-ad-pending-card {
-  border-radius: 16px;
-  margin-bottom: 24px;
-}
-
-.sw-ad-filters-bar {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 12px;
-  margin-bottom: 16px;
-  width: 100%;
-}
-
-.sw-ad-freelancer-card {
-  border-radius: 16px;
-  border: 1px solid blue;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  height: 100%;
-  padding: 12px;
-}
-
-.sw-ad-freelancer-meta {
-  display: flex;
-  gap: 24px;
-  margin: 8px 0 16px;
-  flex-wrap: wrap;
-}
-
-.sw-ad-freelancer-tag-group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.sw-ad-table-wrapper {
-  width: 100%;
-  overflow-x: auto;
-  padding-bottom: 8px;
-}
-
-.sw-ad-table-wrapper .ant-table {
-  min-width: 560px;
-}
-
-.sw-ad-profile-block {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.sw-ad-admin-badge {
-  background: #fff;
-  border-radius: 999px;
-  padding: 6px 16px;
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
-}
-
-.sw-ad-tab-btn:focus-visible {
-  outline: none;
-  border-color: #111;
-}
-
-.sw-ad-subtitle {
-  color: #94a3b8;
-  display: block;
-  margin-top: -4px;
-}
-
-.sw-ad-chart-scroll {
-  width: 100%;
-  overflow-x: auto;
-  padding-bottom: 12px;
-}
-
-@media (max-width: 1024px) {
-  .sw-ad-app-shell {
-    padding: 24px;
+@media (max-width: 900px) {
+  .sidebar {
+    width: 200px;
   }
-
-  .sw-ad-chart-row {
-    margin-top: 16px;
+  .dashboard-right-wrapper {
+    margin-left: 200px;
+    width: calc(100% - 200px);
   }
 }
 
 @media (max-width: 768px) {
-  .sw-ad-app-shell {
-    padding: 16px;
+  .sidebar {
+    position: absolute;
+    width: 180px;
+    z-index: 999;
   }
-
-  .sw-ad-top-bar {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .sw-ad-tab-nav {
-    justify-content: flex-start;
-  }
-
-  .sw-ad-page-card {
-    padding: 16px;
-  }
-
-}
-
-@media (max-width: 576px) {
-  .sw-ad-filters-bar {
-    grid-template-columns: 1fr;
-  }
-
-  .sw-ad-stats-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .sw-ad-freelancer-meta {
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .sw-ad-tab-btn {
-    font-size: 14px;
+  .dashboard-right-wrapper {
+    margin-left: 180px;
+    width: calc(100% - 180px);
   }
 }
 
-.sw-ad-chart-row {
-  min-width: 640px;
-}
-
-@media (max-width: 768px) {
-  .sw-ad-chart-row {
-    min-width: 560px;
+@media (max-width: 600px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  .dashboard-right-wrapper {
+    margin-left: 0;
+    width: 100%;
   }
 }
 
-/* Skills Display Styles */
-.sw-ad-skills-cell-vertical {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 4px;
-}
-
-.sw-ad-skills-row {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  flex-wrap: wrap;
-  /* User likely allows wrapping now if button is below, otherwise nowrap if single line still desired */
-  /* User said "down word of skills" - implying distinct separation. I will use wrap for tags if needed, or nowrap if preferred. Given "View More" is now below, tags can take full width. */
-  flex-wrap: nowrap;
-  white-space: nowrap;
-}
-
-.sw-ad-skill-tag {
-  margin: 0;
-}
-
-.sw-ad-skills-ellipsis {
-  color: #94a3b8;
-  font-weight: 500;
-  margin: 0;
-  line-height: inherit;
-}
-
-.sw-ad-view-more-btn-vertical {
-  padding: 0 !important;
-  height: auto !important;
-  line-height: 1.2 !important;
-  font-size: 12px;
-  color: #1890ff;
-  background: transparent;
-  border: none;
-  border-radius: 0;
-  margin-left: 0;
-  box-shadow: none;
-  display: inline-flex;
-  align-items: center;
-}
-
-.sw-ad-view-more-btn-vertical:hover {
-  color: #40a9ff;
-  background: transparent;
-  border: none;
-}
-
-.sw-ad-skills-modal .ant-modal-body {
-  padding: 20px;
-}
-
-/* Fix close (X) button position inside AntD modal */
-.ant-modal-close {
-  top: 12px !important;
-  right: 12px !important;
-}
-
-/* Freelancer Details Modal Styles */
-.sw-ad-descriptions-nowrap .ant-descriptions-item-content {
-  word-break: break-word;
-  padding: 12px 16px !important;
-}
-
-.sw-ad-descriptions-nowrap .ant-descriptions-item-label {
-  width: 120px;
-  max-width: 150px;
-  background-color: #fafafa;
-  font-weight: 500;
-  padding: 12px 16px !important;
-}
-
-.sw-ad-skills-list {
-  display: flex;
-  gap: 8px;
-  width: 100%;
-}
-
-.sw-ad-skill-tag-modal {
-  margin: 0;
-  font-size: 14px;
-  padding: 4px 12px;
-}
-
-@media (max-width: 576px) {
-  .sw-ad-skills-modal {
-    max-width: calc(100vw - 32px);
-  }
-
-  .sw-ad-skill-tag-modal {
-    font-size: 13px;
-    padding: 3px 10px;
-  }
-}
-
-/* Carousel Styles */
-.sw-ad-carousel-wrapper {
-  margin-bottom: 24px;
-}
-
-.sw-ad-carousel {
-  background: #f0f2f5;
-  border-radius: 8px;
+/* ---- VAT SAME HEIGHT AS CHARTS ---- */
+.vat-card {
+  height: 270px;
   overflow: hidden;
 }
 
-.sw-ad-carousel-item {
-  height: 200px;
-  display: flex !important;
-  align-items: center;
+.vat-scroll {
+  height: 210px;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+.vat-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.vat-scroll::-webkit-scrollbar-thumb {
+  background: #c5c5c5;
+  border-radius: 4px;
+}
+
+/* ---- Purchase Items Count ---- */
+.purchase-items {
+  margin-left: 15px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #444;
+}
+/* ----------------- MINI BOOKING CARDS (size increased to avoid overlap) -------------- */
+
+.mini-stat-card {
+  height: 140px; /* increased to give space for footer and icons */
+  border-radius: 10px !important;
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
-  background: #e6f7ff;
-  color: #1890ff;
+  box-shadow: 0 6px 20px rgba(22, 28, 37, 0.06);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  overflow: hidden;
+  position: relative;
+  cursor: default;
+}
+
+.mini-stat-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 30px rgba(22, 28, 37, 0.09);
+}
+
+.mini-stat-card .mini-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #3b3b3b;
+  margin: 0;
+  line-height: 1;
+}
+
+.mini-stat-card .stat-number {
+  font-size: 26px;
+  font-weight: 700;
+  margin-top: 8px;
+  color: #222;
+}
+
+.total-bookings {
+  background: #f2f8ff;
+  border-left: 4px solid #3399ff !important;
+}
+
+.completed {
+  background: #f2fff6;
+  border-left: 4px solid #22c55e !important;
+}
+
+.pending {
+  background: #fffaf0;
+  border-left: 4px solid #f5c542 !important;
+}
+
+.rejected {
+  background: #fff5f5;
+  border-left: 4px solid #ff4d4f !important;
+}
+
+.clickable-card {
+  cursor: pointer;
+}
+.clickable-card .mini-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+  color: rgba(0,0,0,0.55);
+  font-size: 13px;
+}
+
+/* ------------------ BOOKINGS MODAL + TABLE STYLES (premium) ------------------ */
+
+.bookings-modal .ant-modal-content {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 18px 60px rgba(15, 23, 42, 0.18);
+  left: 75px;
+  bottom: 10px;
+}
+
+/* ensure header has right padding to avoid popover / reset overlap with close X */
+.bookings-modal .ant-modal-header {
+  padding-right: 70px !important;
+}
+
+.modal-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+}
+
+.modal-title-left h3 {
+  font-size: 18px;
+  margin: 0;
+  color: #0b1724;
+}
+
+.modal-sub {
+  font-size: 13px;
+  color: rgba(11,23,36,0.6);
+  margin-top: 4px;
+}
+
+.modal-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* table wrapper to remove default modal padding and give premium top bar */
+.modal-table-wrap {
+  padding: 8px 18px 18px 18px; /* reduced top padding to avoid white-line gap */
+  background: linear-gradient(180deg, #fff 0%, #fbfbfd 100%);
+}
+
+/* table row hover tint */
+.ant-table-tbody > tr > td {
+  transition: background 160ms ease, transform 160ms ease;
+}
+
+.ant-table-tbody > tr:hover > td {
+  background: rgba(106,45,255,0.03);
+  transform: translateY(-1px);
+}
+
+/* header style */
+.ant-table-thead > tr > th {
+  background: transparent;
+  font-weight: 700;
+  color: #050505;
+  border-bottom: 1px solid #edf0f6;
+}
+
+/* amount cell style */
+.table-amount {
+  font-weight: 700;
+  color: #0b1724;
+}
+
+/* status tag */
+.status-tag {
+  font-weight: 700;
+  border-radius: 6px;
+  padding: 4px 8px;
+  box-shadow: none;
+  display: inline-flex;
+  align-items: center;
+  left: 20px;
+}
+
+/* pagination style */
+.ant-pagination-item a {
+  color: #6a2dff;
+}
+
+/* compact responsive adjustments */
+@media (max-width: 800px) {
+  .modal-actions .ant-input {
+    width: 140px !important;
+  }
+}
+
+/* small visual polish for modal footer button */
+.bookings-modal .ant-modal-footer {
+  border-top: none;
+  padding: 12px 24px 18px;
+}
+
+/* make the table look card-like on large screens */
+@media (min-width: 1000px) {
+  .modal-table-wrap {
+    border-radius: 8px;
+    box-shadow: 0 6px 24px rgba(22,28,37,0.06);
+  }
+}
+
+/* keep existing color theme intact for the rest of the UI */
+/* ---------- STICKY NAVBAR FOR DATE FILTER ---------- */
+.sticky-date-bar {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background: #ffffff;
+  padding: 0px 0px;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+/* FIXED TOP NAVBAR FOR DATE BUTTONS */
+.date-nav {
+  position: fixed;
+  top: 0;
+  left: 240px;
+  width: calc(100% - 240px);
+  background: #ffffff;
+  z-index: 3000;
+  padding: 12px 16px;
+  border-bottom: 1px solid #e6e6e6;
+  display: flex;
+  gap: 10px;
+}
+
+
+/* Navbar-style buttons */
+.date-nav .ant-btn {
+  background: #f5f5f5;
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-weight: 600;
+  border: 1px solid #ddd;
+  transition: 0.2s ease;
+}
+
+.date-nav .ant-btn:hover {
+  background: #ececec;
+}
+
+/* Active button (selected tab) */
+.date-nav .df-active {
+  background: #000 !important;
+  color: #fff !important;
+  border-color: #000 !important;
+}
+
+/* Date range chip */
+.date-range-label {
+  margin-left: 10px;
+  padding: 4px 10px;
+  background: #fafafa;
+  border-radius: 6px;
+  border: 1px solid #e3e3e3;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+
+/* ===== REMOVE HORIZONTAL SCROLL FOR BOOKING CARDS ===== */
+html,
+body {
+  overflow-x: hidden;
+}
+
+/* stop row overflow */
+.dashboard-main {
+  overflow-x: hidden;
+}
+
+/* fix Ant Row negative margin issue */
+.dashboard-main .ant-row {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* booking cards must not exceed width */
+.mini-stat-card {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* fixed date navbar should not overflow */
+.date-nav {
+  box-sizing: border-box;
+  max-width: calc(100% - 240px);
+}
+
+
+
+
+.bookings-modal .ant-modal-body {
+  overflow-x: hidden;
+}
+
+.modal-table-wrap {
+  overflow-x: hidden;
+}
+
+
+
+/* Pending-style button (same as Pending tag) */
+.pending-btn {
+  background: #95e486 !important;
+  color: #0c0c0c !important;
+  border: 1px solid #f5bd9a !important;
+  border-radius: 6px !important;
+  font-weight: 600;
+  padding: 4px 8px;   /* slightly tighter */
+  height: auto;
+  line-height: 1.3;
+}
+
+
+.pending-btn:hover {
+  background: #bddb72de !important;
+  color: #0c0c0c !important;
+  border-color: #f5a623 !important;
+}
+
+/* ✅ Center table header text exactly */
+.ant-table-thead > tr > th {
+  text-align: center !important;
+  vertical-align: middle !important;
+}
+/* ================= ASSIGN MODAL – PREMIUM FREELANCER / VENDOR CARDS ================= */
+
+/* target ONLY cards inside assign modal */
+.ant-modal-content .ant-card {
+  border-radius: 14px !important;
+  border: 1px solid #edf0f6 !important;
+  background: linear-gradient(180deg, #ffffff 0%, #fafbff 100%);
+  box-shadow: 0 6px 18px rgba(22, 28, 37, 0.08);
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+/* hover animation */
+.ant-modal-content .ant-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 36px rgba(22, 28, 37, 0.14);
+  border-color: #6a2dff !important;
+}
+
+/* tighten card body spacing */
+.ant-modal-content .ant-card-body {
+  padding: 18px 20px !important;
+}
+
+/* name (first line) */
+.ant-modal-content .ant-card-body > .ant-row strong {
   font-size: 16px;
+  font-weight: 700;
+  color: #0b1724;
+}
+
+/* secondary text lines */
+.ant-modal-content .ant-card-body div {
+  line-height: 1.45;
+}
+
+/* rating block */
+.ant-modal-content .ant-col[style*="text-align: right"] {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 6px;
+}
+
+/* rating number */
+.ant-modal-content .ant-col[style*="text-align: right"] > div:first-child {
+  font-size: 16px;
+  font-weight: 700;
+  color: #111;
+}
+
+/* Freelancer / Vendor label */
+.ant-modal-content .ant-col[style*="text-align: right"] > div:nth-child(2) {
+  font-size: 12px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgba(106, 45, 255, 0.08);
+}
+
+/* Assign button – premium CTA */
+.ant-modal-content .ant-btn-primary {
+  border-radius: 8px !important;
+  padding: 4px 14px !important;
+  font-weight: 700;
+  box-shadow: 0 6px 14px rgba(22, 119, 255, 0.35);
+}
+
+/* Assign button hover */
+.ant-modal-content .ant-btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(22, 119, 255, 0.45);
+}
+
+/* 🔥 FIX CLICK BLOCKING INSIDE STICKY DATE BAR */
+.date-filter-bar,
+.date-nav,
+.assignee-toggle {
+  pointer-events: auto;
+}
+
+.date-filter-bar * {
+  pointer-events: auto;
+}
+
+/* Ensure sticky bar is above overlays */
+.sticky-date-bar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+
+/* ---------- Popup Table ---------- */
+
+.popup-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.popup-table {
+  width: 100%;
+  min-width: 1100px;
+  border-collapse: collapse;
+}
+
+.popup-table th {
+  text-align: left;
+  font-weight: 600;
+  padding: 16px 14px;
+  background: #fafafa;
+  border-bottom: 1px solid #eee;
+}
+
+.popup-table td {
+  padding: 18px 14px;
+  border-bottom: 1px solid #f0f0f0;
+  vertical-align: middle;
+}
+
+.skill-wrap {
+  display: flex;
+  gap: 8px;
+}
+
+.skill-chip {
+  padding: 6px 12px;
+  border-radius: 16px;
+  border: 1px solid #d9d9d9;
+  background: #fff;
+  font-size: 13px;
   font-weight: 500;
 }
 
-.sw-ad-carousel-image {
-  max-height: 200px;
-  object-fit: cover;
+.status.pending {
+  background: #fff7e6;
+  color: #d48806;
+  border: 1px solid #ffd591;
+  padding: 6px 14px;
+  border-radius: 14px;
+  font-size: 13px;
+  font-weight: 600;
 }
 
-/* Rating Styles */
-.sw-ad-rating-star {
-  color: #faad14;
-}
-
-.sw-ad-rating-na {
+.muted {
   color: #999;
 }
 
-/* Freelancer Details Modal Redesign (Clean Employee Profile Style) */
-
-.sw-ad-profile-header {
+.actions {
   display: flex;
-  gap: 32px;
-  align-items: flex-start;
-  margin-bottom: 32px;
-  padding: 24px;
-  background: #f8fafc;
-  border: 1px solid #f1f5f9;
-  border-radius: 16px;
+  gap: 10px;
 }
 
-.sw-ad-profile-img-placeholder {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  background-color: #f5f5f5;
-  /* Soft gray */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  flex-shrink: 0;
-  color: #8c8c8c;
-  font-size: 48px;
-  box-shadow: none;
-}
-
-.sw-ad-profile-basic-info {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  flex: 1;
-  padding-top: 8px;
-}
-
-.sw-ad-profile-name {
-  font-size: 28px;
-  font-weight: 700;
-  color: #262626;
-  margin: 0;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-}
-
-.sw-ad-profile-meta-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 15px;
-  color: #595959;
-  line-height: 1.5;
-}
-
-
-/* Personal Information Card */
-.sw-ad-info-card {
+.btn {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid #d9d9d9;
   background: #fff;
-  border-radius: 12px;
-  border: 1px solid #f0f0f0;
-  padding: 24px;
-  margin-bottom: 32px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+  cursor: pointer;
+  font-size: 14px;
 }
 
+.btn.view {
+  color: #333;
+}
 
-.sw-ad-section-title {
-  font-size: 18px;
-  font-weight: 700;
-  color: #1890ff;
-  /* Blue Heading */
-  margin-bottom: 24px;
+.btn.approve {
+  color: #1a7f37;
+  border-color: #b7eb8f;
+}
+
+.btn.reject {
+  color: #cf1322;
+  border-color: #ffa39e;
+}
+
+.btn:hover {
+  background: #f5f5f5;
+}
+
+.popup-footer {
   display: flex;
-  align-items: center;
-  text-transform: none;
-  letter-spacing: normal;
-  padding-left: 0;
-  border-left: none;
+  justify-content: flex-end;
+  margin-top: 16px;
 }
 
-.sw-ad-details-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  margin-bottom: 0;
-  padding: 0;
-  background: transparent;
-  border-radius: 0;
-}
 
-.sw-ad-detail-item {
+
+
+.final-status-row {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 0;
-  background: transparent;
-  border: none;
-  box-shadow: none;
+  gap: 40px;
+  justify-content: center;
+  padding: 12px 0;
 }
 
-.sw-ad-detail-item:hover {
-  border-color: transparent;
-  box-shadow: none;
-  transform: none;
+.final-status-row .ok {
+  color: #52c41a;
+  font-size: 20px;
 }
 
-.sw-ad-detail-label {
-  font-size: 13px;
-  color: #8c8c8c;
-  text-transform: capitalize;
-  font-weight: 500;
-  letter-spacing: normal;
-}
-
-.sw-ad-detail-value {
-  font-size: 16px;
-  font-weight: 600;
-  color: #262626;
-  word-break: break-word;
-}
-
-/* Skills Section */
-.sw-ad-skills-container-modal {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 12px;
-}
-
-.sw-ad-skill-tag-styled {
-  font-size: 13px;
-  padding: 6px 16px;
-  border-radius: 20px;
-  background: #1890ff;
-  /* Blue Background */
-  color: #ffffff;
-  /* White Text */
-  margin: 0;
-  border: none;
-}
-
-@media (max-width: 992px) {
-  .sw-ad-details-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 576px) {
-  .sw-ad-profile-header {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 16px;
-  }
-
-  .sw-ad-profile-basic-info {
-    padding-top: 0;
-    align-items: center;
-  }
-
-  .sw-ad-profile-meta-row {
-    justify-content: center;
-  }
-
-  .sw-ad-details-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .sw-ad-info-card {
-    padding: 16px;
-  }
-}
-
-.sw-ad-horizontal-actions {
-  display: flex !important;
-  gap: 8px !important;
-  flex-direction: row !important;
-  flex-wrap: nowrap !important;
-  align-items: center !important;
-  width: max-content;
-}
-
-.sw-ad-horizontal-actions .ant-btn {
-  margin: 0 !important;
-  width: auto !important;
-}
-
-
-
-
-@media (max-width: 576px) {
-  .sw-ad-profile-header {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 12px;
-    padding: 16px;
-  }
-
-  .sw-ad-profile-img-placeholder {
-    width: 90px;
-    height: 90px;
-    font-size: 38px;
-  }
-
-  .sw-ad-profile-basic-info {
-    padding-top: 0;
-    align-items: center;
-    width: 100%;
-    text-align: center;
-    gap: 4px;
-  }
-
-  .sw-ad-profile-name {
-    font-size: 22px;
-    margin-bottom: 4px;
-  }
-
-  /* FIX META SPACING + STACK CLEANLY */
-  .sw-ad-profile-meta-row {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    font-size: 14px;
-    line-height: 1.3;
-    width: 100%;
-  }
-
-  .sw-ad-profile-meta-row span {
-    display: block;
-    width: 100%;
-    word-break: break-word;
-  }
-
-  /* Reduce spacing between each detail block */
-  .sw-ad-profile-meta-row + .sw-ad-profile-meta-row {
-    margin-top: 6px;
-  }
-
-  /* Make tag closer */
-  .ant-tag {
-    margin-top: 6px;
-  }
-}
-
-
-@media (max-width: 576px) {
-  .ant-modal-close {
-    top: 16px !important;   /* Previously too high */
-    right: 12px !important;
-    transform: scale(0.85); /* Slightly smaller on mobile */
-  }
-}
-
-
-
-
-
-/* Reduce both buttons inside AntD modal footer */
-.ant-modal-footer .ant-btn {
-  padding: 4px 18px !important;   /* smaller height + width */
-  font-size: 14px !important;     /* slightly smaller text */
-  border-radius: 6px !important;  /* cleaner shape */
-  height: 32px !important;        /* default is 40px */
-}
-
-/* Make OK button (primary) slightly tighter */
-.ant-modal-footer .ant-btn-primary {
-  padding: 4px 22px !important;   /* keeps primary balanced */
-  height: 32px !important;
-}
-
-/* Optional: Mobile even smaller */
-@media (max-width: 576px) {
-  .ant-modal-footer .ant-btn {
-    padding: 3px 14px !important;
-    height: 30px !important;
-    font-size: 13px !important;
-  }
-
-  .ant-modal-footer .ant-btn-primary {
-    padding: 3px 18px !important;
-  }
-}
-
-
-/* Force AntD modal footer buttons to stay in one row */
-.ant-modal-footer {
-  display: flex !important;
-  justify-content: flex-end !important; /* both on the right */
-  gap: 12px !important;                 /* spacing between buttons */
-  flex-wrap: nowrap !important;         /* prevents moving to next line */
-}
-
-/* Optional: make them centered instead */
-.ant-modal-footer.center-buttons {
-  justify-content: center !important;
+.final-status-row .fail {
+  color: #ff4d4f;
+  font-size: 20px;
 }
