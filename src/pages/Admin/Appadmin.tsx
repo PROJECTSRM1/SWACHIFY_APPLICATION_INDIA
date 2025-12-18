@@ -668,6 +668,7 @@ const columns = [
     title: "Service Type",
     dataIndex: "serviceType",
     width: 160,
+    // history:10,
   },
   {
     title: "Amount",
