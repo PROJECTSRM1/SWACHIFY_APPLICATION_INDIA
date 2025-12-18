@@ -427,6 +427,7 @@ const [emailOtp, setEmailOtp] = useState("");
       price: String(payload.servicePrice || selectedImage.price || "0"),
       totalPrice: parsedPrice * 1,
       customerName: payload.customerName || "",
+      email: payload.email||"",
       deliveryType: payload.deliveryType || payload.rentalType || "",
       deliveryDate: payload.date || payload.serviceDate || payload.deliveryDate || "",
       contact: payload.contact || "",

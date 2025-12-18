@@ -16,7 +16,7 @@ import {
   Tag,
   Upload,
   Divider,
-  Alert,
+  //Alert,
 } from 'antd';
 import type { FormProps, UploadFile, UploadProps } from 'antd';
 
@@ -30,9 +30,9 @@ import {
   PlusOutlined,
   EyeOutlined,
   FileTextOutlined,
-  DollarOutlined,
+ // DollarOutlined,
   UserOutlined,
-  PhoneOutlined,
+ // PhoneOutlined,
   MailOutlined,
 } from '@ant-design/icons';
 
@@ -340,6 +340,7 @@ const PriceNegotiationContent: React.FC<
       image: property.imagePath,
       totalPrice: Number(property.price),
       customerName: "",
+      email: "",
       deliveryType: "",
       deliveryDate: "",
       contact: "",
