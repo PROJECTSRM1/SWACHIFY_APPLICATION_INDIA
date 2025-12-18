@@ -35,6 +35,7 @@ const MachineryDetails: React.FC<FormProps> = ({ id, onClose }) => {
   const [otpVerified, setOtpVerified] = useState(false);
   const [phoneOtp, setPhoneOtp] = useState("");
   const [otpError, setOtpError] = useState("");
+console.log(otpError);
 
 
 
