@@ -923,6 +923,12 @@ const getPricePerSqft = (moduleTitle: string): number => {
   if (key.includes("warehouse")) return 2.0;
   return 1.8;
 };
+const isLoggedIn = () => {
+  const token = localStorage.getItem("accessToken");
+  const isGuest = localStorage.getItem("isGuest") === "true";
+  return Boolean(token) && !isGuest;
+};
+
 
 
 const calculatePrice = (
@@ -1065,6 +1071,28 @@ const CleaningService: React.FC = () => {
 
     return ADDONS_BY_TITLE[match || "default"];
   };
+  // const getDisplayPriceText = (): string => {
+  //   if (computedPrice) return formatINR(computedPrice);
+
+
+  //   if (!selectedModule) return "—";
+
+
+
+  //   const basePriceNum =
+  //     parseInt((selectedModule.price || "").toString().replace(/[₹,\s]/g, "")) || 0;
+
+
+
+  //   const mult = SERVICE_MULTIPLIERS[serviceTypeKey] ?? 1;
+
+
+  //   const displayNum = Math.round(basePriceNum * mult);
+
+
+  //   if (displayNum > 0) return formatINR(displayNum);
+  //   return selectedModule.price || "—";
+  // };
 
 
 
@@ -1402,151 +1430,167 @@ const CleaningService: React.FC = () => {
     return 1; // Fallback to 1
   };
 
-const getServiceId = (mainKey: string): number => {
-  switch (mainKey) {
-    case "residential":
-      return 1;
-    case "commercial":
-      return 2;
-    case "specialized":
-      return 3;
-    case "industrial":
-      return 4;
-    case "post":
-      return 5;
-    default:
-      throw new Error(`Unknown service key: ${mainKey}`);
+ const getServiceId = (title: string): number => {
+  if (title.toLowerCase().includes("residential")) return 1;
+  if (title.toLowerCase().includes("commercial")) return 2;
+  if (title.toLowerCase().includes("specialized")) return 3;
+  if (title.toLowerCase().includes("industrial")) return 4;
+  if (title.toLowerCase().includes("post")) return 5;
+  return 1;
+};
+const buildBookingPayload = (
+  values: any
+): HomeServiceBookingPayload => {
+  if (!selectedModule) {
+    throw new Error("Module not selected");
   }
+
+  const selectedAddons: string[] = values.additional || [];
+  const addOnId =
+    selectedAddons.length > 0
+      ? ADDON_ID_MAPPING[selectedAddons[0]] ?? null
+      : null;
+
+  return {
+    module_id: getModuleId(selectedMainKey),
+    sub_module_id: getSubModuleId(selectedSubKey),
+
+    service_id: getModuleId(selectedMainKey),
+    sub_service_id: getSubModuleId(selectedSubKey),
+    sub_group_id: getSubModuleId(selectedSubKey),
+
+    full_name: values.fullName,
+    email: values.email,
+    mobile: values.mobile,
+    address: values.address,
+
+    service_type_id: SERVICE_TYPE_IDS[values.serviceType],
+    payment_type_id: PAYMENT_TYPE_IDS[values.paymentType],
+    time_slot_id: TIME_SLOT_IDS[values.timeSlot],
+
+    property_size_sqft: Number(values.propertySize || 0),
+
+    add_on_id: addOnId,
+
+    preferred_date: values.preferredDate,
+
+    problem_description: values.selectedServices?.length
+      ? `Selected services: ${values.selectedServices.join(", ")}`
+      : "",
+
+    special_instructions: values.instructions || "",
+  };
 };
 
-  // Complete subservice ID mapping - use this object for payload
-  const SUBSERVICE_ID_MAP: Record<string, number> = {
-    // Residential (1-3)
-    'homes': 1,
-    'apartments': 2,
-    'villas': 3,
 
-    // Commercial (4-7)
-    'offices': 4,
-    'shops': 5,
-    'clinics': 6,
-    'schools': 7,
 
-    // Specialized (8-10)
-    'furniture': 8,
-    'floors': 9,
-    'glass': 10,
 
-    // Post-construction (11-13)
-    'marble': 14,
-    'dustremoval': 15,
-    'paintstain': 16,
+const processBookingAndAddToCart = async (values: any) => {
+  if (!selectedModule) return;
 
-    // Industrial (14-16)
-    'assembly': 11,
-    'production': 12,
-    'waste': 13
+  const payload = buildBookingPayload(values);
+  await bookHomeService(payload);
+
+  const cartItem: CartItem = {
+    id: Date.now(),
+    title: selectedModule.title,
+    image: selectedModule.image,
+    quantity: 1,
+    price: selectedModule.price,
+    totalPrice: computedPrice ?? 0,
+
+    customerName: values.fullName,
+    email: values.email,
+    contact: values.mobile,
+    address: values.address,
+
+    deliveryType: values.paymentType,
+    deliveryDate: values.preferredDate,
+    instructions: values.instructions || "",
   };
 
-  // Updated function - direct key lookup
-  const getSubServiceId = (subKey: string): number => {
-    return SUBSERVICE_ID_MAP[subKey.toLowerCase().trim()] || 1; // Fallback to 1
-  };
+  addToCart(cartItem);
+};
 
 
-  // 1. Subgroup (service) ID master
-  const SUBGROUP_ID_BY_TITLE: Record<string, number> = {
-    // ---------- RESIDENTIAL / HOMES ----------
-    'living room cleaning': 1,
-    'bedroom cleaning': 2,
-    'kitchen cleaning': 3,
-    'bathroom cleaning': 4,
-    'all services': 49,
+ const onAddToCart = async (values: any) => {
+  if (!selectedModule) return;
 
-    // ---------- APARTMENTS ----------
-    'studio apartment': 5,
-    '1 bhk apartment': 6,
-    '2 bhk 3 bhk apartment': 7,
+  // -------- GUEST FLOW --------
+  if (!isLoggedIn()) {
+  message.info("Please login or register to continue");
 
-    // ---------- VILLAS ----------
-    'small villas': 8,
-    'duplex villas': 9,
-    'luxury villas': 10,
+  const payload = buildBookingPayload(values); // 🔥 BUILD IT NOW
 
-    // ---------- OFFICES ----------
-    'cabin cleaning': 11,
-    'workstation cleaning': 12,
-    'conference hall cleaning': 13,
+  localStorage.setItem(
+    "pendingHomeServiceBooking",
+    JSON.stringify({
+      values,
+      selectedModule,
+      computedPrice,
+      payload, // ✅ THIS WAS MISSING
+    })
+  );
 
-    // ---------- SCHOOLS ----------
-    'classrooms': 20,
-    'laboratory cleaning': 21,
-    'library cleaning': 22,
+  localStorage.setItem("postLoginRedirect", window.location.pathname);
 
-    // ---------- SHOPS / MALLS ----------
-    'shop cleaning': 14,
-    'mall cleaning': 15,
-    'showroom cleaning': 16,
+  localStorage.setItem("loginSource", "addToCart"); 
 
-    // ---------- CLINICS / LABS ----------
-    'clinic cleaning': 18,
-    'diagnostic centers': 19,
-    // 'laboratory cleaning': 17,
+  //localStorage.setItem("loginSource", "homeService");
 
-    // ---------- FURNITURE ----------
-    'sofa cleaning': 23,
-    'chair cleaning': 24,
-    'wooden furniture cleaning': 25,
+  (window as any).openAuthModal?.("login");
+  setIsDetailsModalOpen(false);
+  return;
+}
 
-    // ---------- FLOORS ----------
-    'marble polishing': 26,
-    'tile cleaning': 27,
-    'granite polishing': 28,
 
-    // ---------- GLASS ----------
-    'indoor glass cleaning': 29,
-    'outdoor glass cleaning': 30,
-    'high-rise glass cleaning': 31,
+  // -------- LOGGED-IN FLOW --------
+ try {
+  await processBookingAndAddToCart(values);
 
-    // ---------- SANITIZATION ----------
-    'home sanitization': 32,
-    'office sanitization': 33,
-    'commercial sanitization': 34,
+  message.success("Service booked and added to cart");
+  setIsDetailsModalOpen(false);
+} catch (err) {
+  console.error(err);
+  message.error("Failed to book service. Please try again.");
+}
 
-    // ---------- POST-CONSTRUCTION ----------
-    'indoor dust removal': 45,
-    'outdoor dust removal': 46,
-    'paint stain from tiles': 47,
-    'paint stain from windows': 48,
+};
 
-    // ---------- INDUSTRIAL ----------
-    'assembly area cleaning': 35,
-    'production line cleaning': 36,
-    'warehouse rack cleaning': 37,
-    'warehouse floor cleaning': 38,
-    'heavy equipment cleaning': 39,
-    'precision tools cleaning': 40,
-    'chemical waste handling': 41,
-    'solid waste handling': 42,
-  };
-  const getSubGroupId = (moduleTitle: string): number => {
-    const key = moduleTitle.toLowerCase().trim();
-    return SUBGROUP_ID_BY_TITLE[key] ?? 1; // fallback to Living Room Cleaning
-  };
-  // const resolveAddonId = (additional: any): number | null => {
-  //   if (!additional) return null;
+// useEffect(() => {
+//   // ✅ WAIT until user is actually logged in
+//   if (!isLoggedIn()) return;
 
-  //   if (Array.isArray(additional)) {
-  //     // Take first selected addon, else null
-  //     const first = additional[0];
-  //     if (!first) return null;
-  //     const mapped = ADDONIDMAPPING[first];
-  //     return mapped ?? null;
-  //   }
+//   const pending = localStorage.getItem("pendingHomeServiceBooking");
+//   if (!pending) return;
 
-  //   const mapped = ADDONIDMAPPING[additional];
-  //   return mapped ?? null;
-  // };
+//   try {
+//     const data = JSON.parse(pending);
+
+//     setSelectedMainKey(data.selectedMainKey);
+//     setSelectedSubKey(data.selectedSubKey);
+//     setSelectedModule(data.selectedModule);
+//     setComputedPrice(data.computedPrice);
+//     setServiceTypeKey(data.serviceTypeKey);
+
+//     // ⬇️ wait for state + auth header to be ready
+//     setTimeout(async () => {
+//       try {
+//         await processBookingAndAddToCart(data.values);
+//         message.success("Service booked and added to cart");
+//       } catch (e) {
+//         message.error("Failed to complete booking after login");
+//       } finally {
+//         localStorage.removeItem("pendingHomeServiceBooking");
+//         setIsDetailsModalOpen(false);
+//       }
+//     }, 300);
+
+//   } catch {
+//     localStorage.removeItem("pendingHomeServiceBooking");
+//   }
+// }, [isLoggedIn()]);
+
 
 
 
@@ -1595,8 +1639,9 @@ const getServiceId = (mainKey: string): number => {
       module_id: getModuleId(selectedMainKey),
       sub_module_id: getSubModuleId(selectedSubKey),
       service_id: getServiceId(selectedMainKey),
-      sub_service_id: getSubServiceId(selectedSubKey),
-      sub_group_id: getSubGroupId(selectedModule.title),
+     sub_service_id: getSubModuleId(selectedSubKey),
+sub_group_id: getSubModuleId(selectedSubKey),
+
       full_name: fullName,
       email: email,
       mobile: mobile,
@@ -1641,6 +1686,7 @@ const getServiceId = (mainKey: string): number => {
         email:email,
       };
       addToCart(cartItem);
+      console.log(onSubmitBooking);
 
 
       // addToCart(cartItem); 
@@ -1655,6 +1701,7 @@ const getServiceId = (mainKey: string): number => {
       message.error("Failed to submit booking. Please try again.");
     }
   };
+
 
   const handleDetailsCancel = () => {
     setIsDetailsModalOpen(false);
@@ -1810,7 +1857,7 @@ const getServiceId = (mainKey: string): number => {
               <Form
                 form={form}
                 layout="vertical"
-                onFinish={onSubmitBooking} // <-- CHANGE THIS
+                onFinish={onAddToCart} // <-- CHANGE THIS
                 initialValues={{ additional: [], serviceType: 'standard', propertySize: 1000 }} // Added defaults
                 onValuesChange={(_changed, allValues) => computeTotal(allValues)}
               >

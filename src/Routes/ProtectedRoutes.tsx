@@ -4,6 +4,8 @@ import { api } from "../api/client";
 
 export const ProtectedRoutes = ({ children }: any) => {
   const token = localStorage.getItem("accessToken");
+  const isGuest = localStorage.getItem("isGuest") === "true";
+
   const [loading, setLoading] = useState(true);
   const [validUser, setValidUser] = useState(false);
 
@@ -16,7 +18,6 @@ export const ProtectedRoutes = ({ children }: any) => {
       const rawUser = res?.data?.user || res?.data?.data;
 
       if (!rawUser) {
-        localStorage.clear();
         setValidUser(false);
         return;
       }
@@ -42,20 +43,28 @@ export const ProtectedRoutes = ({ children }: any) => {
   };
 
   useEffect(() => {
-    if (!token) {
-      localStorage.clear();
+    
+    if (isGuest) {
+      setValidUser(true);
       setLoading(false);
       return;
     }
 
-    // small delay prevents bounce after login
+   
+    if (!token) {
+      setLoading(false);
+      return;
+    }
+
+  
     const timer = setTimeout(() => verifyUser(), 200);
     return () => clearTimeout(timer);
-  }, [token]);
+  }, [token, isGuest]);
 
   if (loading) return null;
 
-  if (!token || !validUser) {
+ 
+  if (!isGuest && (!token || !validUser)) {
     localStorage.clear();
     return <Navigate to="/landing" replace />;
   }
