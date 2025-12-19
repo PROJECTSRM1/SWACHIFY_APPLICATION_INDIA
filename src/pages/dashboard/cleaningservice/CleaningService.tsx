@@ -1479,6 +1479,8 @@ const buildBookingPayload = (
       : "",
 
     special_instructions: values.instructions || "",
+    service_price:computedPrice ?? 0,
+    payment_done:false,
   };
 };
 
@@ -1656,6 +1658,8 @@ sub_group_id: getSubModuleId(selectedSubKey),
         : ADDON_ID_MAPPING[additional || ''] || null,
       preferred_date: preferredDate,
       special_instructions: instructions || "",
+      service_price:computedPrice ?? 0,
+      payment_done:false,
     };
 
     // --- 2. API Submission ---
