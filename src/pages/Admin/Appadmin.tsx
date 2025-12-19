@@ -459,10 +459,17 @@ const FREELANCER_SKILLS: ServiceKey[] = [
 /* ---------------------- LandingDashboard ---------------------- */
 
 const Appadmin: React.FC = () => {
-const [bookings, setBookings] = useState<BookingRow[]>(generateBookings());
+  const [bookings, setBookings] = useState<BookingRow[]>(generateBookings());
+  const [openPopup, setOpenPopup] = useState<null | "freelancer" | "vendor">(null);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
-const [openPopup, setOpenPopup] =
-  useState<null | "freelancer" | "vendor">(null);
+
+  // 👇 PASTE HERE
+  
+
+  // rest of your code...
+
+
 
 
 const [active, setActive] = useState<"Dashboard" | ServiceKey>("Dashboard");
@@ -875,18 +882,43 @@ const filteredBookings = bookings.filter(b => {
 
   return (
     <div className="layout-container">
+      <div className="mobile-topbar">
+<div
+  className={`hamburger ${sidebarOpen ? "active" : ""}`}
+  onClick={() => setSidebarOpen(prev => !prev)}
+>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <div className="mobile-title">Swachify India</div>
+</div>
+
       {/* SIDEBAR */}
-      <aside className="sidebar">
+<aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
         <div className="sidebar-user">Swachify India</div>
 
         <ul className="sidebar-menu">
-          <li className={active === "Dashboard" ? "active" : ""} onClick={() => setActive("Dashboard")}>
+<li
+  className={active === "Dashboard" ? "active" : ""}
+  onClick={() => {
+    setActive("Dashboard");
+    setSidebarOpen(false); // ✅ CLOSE
+  }}
+>
             <HomeOutlined />
             <span>Dashboard (All)</span>
           </li>
 
           {SERVICE_KEYS.map((k) => (
-            <li key={k} className={active === k ? "active" : ""} onClick={() => setActive(k)}>
+<li
+  key={k}
+  className={active === k ? "active" : ""}
+  onClick={() => {
+    setActive(k);
+    setSidebarOpen(false); // ✅ CLOSE
+  }}
+>
               {k === "Home Service" && <ShoppingCartOutlined />}
               {k === "Transport" && <CarOutlined />}
               {k === "Buy/Sale/Rentals" && <ThunderboltOutlined />}
@@ -897,6 +929,13 @@ const filteredBookings = bookings.filter(b => {
           ))}
         </ul>
       </aside>
+      {sidebarOpen && (
+  <div
+    className="sidebar-overlay"
+    onClick={() => setSidebarOpen(false)}
+  />
+)}
+
 
       {/* RIGHT: main content + footer */}
       <div className="dashboard-right-wrapper">
