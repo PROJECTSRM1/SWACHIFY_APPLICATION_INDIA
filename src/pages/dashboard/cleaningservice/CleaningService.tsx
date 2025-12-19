@@ -968,6 +968,50 @@ const CleaningService: React.FC = () => {
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
   const [isModulesModalOpen, setIsModulesModalOpen] = useState(false);
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
+  const [otpSent, setOtpSent] = useState(false);
+const [otpVerified, setOtpVerified] = useState({
+  phone: false,
+  email: false,
+});
+// ===== SEND OTP =====
+const handleSendOtp = () => {
+  const { mobile, email } = form.getFieldsValue();
+
+  if (!mobile || !email) {
+    message.error("Please enter mobile number and email");
+    return;
+  }
+
+  // 🔥 CALL SEND OTP API HERE (later)
+  console.log("Sending OTP to:", mobile, email);
+
+  message.success("OTP sent successfully");
+  setOtpSent(true);
+};
+
+// ===== VERIFY OTP =====
+const handleVerifyOtp = () => {
+  const { phoneOtp, emailOtp } = form.getFieldsValue();
+
+  if (!phoneOtp || !emailOtp) {
+    message.error("Please enter both OTPs");
+    return;
+  }
+
+  // 🔥 CALL VERIFY OTP API HERE (later)
+  console.log("Verifying OTPs:", phoneOtp, emailOtp);
+
+  message.success("OTP verified successfully");
+
+  setOtpVerified({
+    phone: true,
+    email: true,
+  });
+
+  setOtpSent(false); // hide OTP fields
+};
+
+
   const { addToCart } = useCart();
 
 
@@ -1882,58 +1926,7 @@ sub_group_id: getSubModuleId(selectedSubKey),
                   >
                     <Input placeholder="John Doe" />
                   </Form.Item>
-
-
-                  <Form.Item
-                    name="email"
-                    label="email"
-                    rules={[
-                      { required: true, message: "Enter email" },
-                      { type: "email", message: "Enter valid email" },
-                      {
-                        validator: (_, value) => {
-                          if (!value) return Promise.resolve();
-
-                          const allowedDomains = [
-                            "gmail.com",
-                            "yahoo.com",
-                            "outlook.com",
-                            "hotmail.com",
-                            "rediffmail.com",
-                            "protonmail.com",
-                            "icloud.com"
-                          ];
-
-                          const domain = value.split("@")[1];
-                          if (allowedDomains.includes(domain)) {
-                            return Promise.resolve();
-                          }
-                          return Promise.reject(
-                            "Email must be Gmail, Yahoo, Outlook "
-                          );
-                        }
-                      }
-                    ]}
-                    className="sw-cs-half-width"
-                  >
-                    <Input placeholder="example@gmail.com" />
-                  </Form.Item>
-                </div>
-
-                <div className="sw-cs-form-row">
-                  <Form.Item
-                    name="mobile"
-                    label="Mobile Number"
-                    rules={[
-                      { required: true, message: "Enter mobile number" },
-                      { pattern: /^[0-9]{10}$/, message: "Enter valid 10-digit number" },
-                    ]}
-                    className="sw-cs-half-width"
-                  >
-                    <Input maxLength={10} placeholder="9876543210" />
-                  </Form.Item>
-
-                  <Form.Item
+<Form.Item
                     name="address"
                     label="Address"
                     rules={[{ required: true, message: "Enter address" }]}
@@ -1945,9 +1938,98 @@ sub_group_id: getSubModuleId(selectedSubKey),
                       onChange={(e) => form.setFieldsValue({ address: e.target.value })}
                     />
                   </Form.Item>
+
                 </div>
 
-                {/* Detect button goes BELOW the row */}
+                <div className="sw-cs-form-row">
+                  
+  <Form.Item
+    name="email"
+    label="Email"
+    className="sw-cs-half-width"
+  >
+    <Input
+      disabled={otpVerified.email}
+      suffix={otpVerified.email && <span className="sw-otp-success">✔</span>}
+      placeholder="example@gmail.com"
+    />
+  </Form.Item>
+  <Form.Item
+  name="mobile"
+  label="Mobile Number"
+  rules={[
+    { required: true, message: "Enter mobile number" },
+    { pattern: /^[0-9]{10}$/, message: "Enter valid 10-digit number" },
+  ]}
+  className="sw-cs-half-width"
+>
+  <Input
+    maxLength={10}
+    placeholder="9876543210"
+    disabled={otpVerified.phone}
+    suffix={
+      otpVerified.phone ? (
+        <span className="sw-otp-success">✔</span>
+      ) : (
+        <span
+          className="sw-send-otp-inside"
+          onClick={handleSendOtp}
+        >
+          Send OTP
+        </span>
+      )
+    }
+  />
+</Form.Item>
+
+
+</div>
+
+{/* SEND OTP aligned to right */}
+
+
+{otpSent && (
+  <div className="sw-cs-otp-row-below">
+    <Form.Item
+  name="phoneOtp"
+  label="Phone OTP"
+  rules={[
+    { required: true, message: "Enter phone OTP" },
+    { pattern: /^[0-9]{4}$/, message: "OTP must be 4 digits" },
+  ]}
+  className="sw-cs-half-width"
+>
+  <Input
+    maxLength={4}
+    inputMode="numeric"
+    placeholder="Enter 4-digit OTP"
+  />
+</Form.Item>
+<Form.Item
+  name="emailOtp"
+  label="Email OTP"
+  rules={[
+    { required: true, message: "Enter email OTP" },
+    { pattern: /^[0-9]{4}$/, message: "OTP must be 4 digits" },
+  ]}
+  className="sw-cs-half-width"
+>
+  <Input
+    maxLength={4}
+    inputMode="numeric"
+    placeholder="Enter 4-digit OTP"
+  />
+</Form.Item>
+
+
+    <div className="sw-cs-otp-verify-btn">
+      <Button type="primary" onClick={handleVerifyOtp}>
+        Verify OTP
+      </Button>
+    </div>
+  </div>
+)}  
+{/* Detect button goes BELOW the row */}
                 <div className="sw-cs-form-row">
                   <Button
                     className="sw-cs-location-btn"
@@ -2159,9 +2241,15 @@ sub_group_id: getSubModuleId(selectedSubKey),
                 {/* ACTION BUTTONS */}
                 <div className="sw-cs-details-actions">
                   <Button onClick={handleDetailsCancel}>Cancel</Button>
-                  <Button type="primary" htmlType="submit" className="sw-cs-black-btn">
-                    Add to Cart
-                  </Button>
+                  <Button
+  type="primary"
+  htmlType="submit"
+  className="sw-cs-black-btn"
+  disabled={!otpVerified.phone || !otpVerified.email}
+>
+  Add to Cart
+</Button>
+
                 </div>
               </Form>
 
