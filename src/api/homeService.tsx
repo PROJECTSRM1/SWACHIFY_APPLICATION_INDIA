@@ -16,8 +16,10 @@ export interface HomeServiceBookingPayload {
   add_on_id: number | null;
   preferred_date: string;
   time_slot_id: number;
+  service_price:number;
   special_instructions: string;
   payment_type_id: number;
+  payment_done:boolean;
 }
 
 export interface HomeServiceBookingResponse {
