@@ -9,40 +9,31 @@ export const api = axios.create({
   },
 });
 
-// ===================================================
-// 🔐 Attach tokens, BUT skip Authorization for `/api/auth/me`
-// ===================================================
+/* ===================================================
+   🔐 Attach Access Token (Customer OR Freelancer)
+   =================================================== */
 api.interceptors.request.use((config) => {
   const customerToken = localStorage.getItem("accessToken");
   const freelancerToken = localStorage.getItem("freelancerAccessToken");
 
-  // 👉 Backend specifically requires ?token only for `/api/auth/me`
-  if (config.url?.includes("/api/auth/me")) {
-    config.headers.Authorization = ""; // ❗ mandatory
-    return config;
-  }
+  // Priority: customer → freelancer
+  const token = customerToken || freelancerToken;
 
-  // Otherwise attach token normally
-  if (customerToken) {
-    config.headers.Authorization = `Bearer ${customerToken}`;
-  }
-
-  if (freelancerToken) {
-    config.headers.Authorization = `Bearer ${freelancerToken}`;
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
   }
 
   return config;
 });
 
-// ===================================================
-// 🔄 Auto Token Refresh for BOTH roles (if backend supports)
-// ===================================================
+/* ===================================================
+   🚪 Auto Logout / Refresh on 401
+   =================================================== */
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
 
-    // Only on token expiry
     if (error?.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
@@ -51,8 +42,10 @@ api.interceptors.response.use(
 
       const refreshToken = customerRefresh || freelancerRefresh;
 
+      // ❌ No refresh token → logout
       if (!refreshToken) {
         localStorage.clear();
+        window.location.href = "/";
         return Promise.reject(error);
       }
 
@@ -63,21 +56,26 @@ api.interceptors.response.use(
 
         const newAccess = res?.data?.access_token;
 
-        if (newAccess) {
-          if (customerRefresh) {
-            localStorage.setItem("accessToken", newAccess);
-          }
-          if (freelancerRefresh) {
-            localStorage.setItem("freelancerAccessToken", newAccess);
-          }
-
-          // Re-attach new token
-          originalRequest.headers.Authorization = `Bearer ${newAccess}`;
-          return api(originalRequest);
+        if (!newAccess) {
+          throw new Error("No access token returned");
         }
+
+        // Save new token
+        if (customerRefresh) {
+          localStorage.setItem("accessToken", newAccess);
+        }
+        if (freelancerRefresh) {
+          localStorage.setItem("freelancerAccessToken", newAccess);
+        }
+
+        // Retry original request
+        originalRequest.headers.Authorization = `Bearer ${newAccess}`;
+        return api(originalRequest);
       } catch (err) {
-        console.error("Refresh failed:", err);
+        console.error("Token refresh failed:", err);
         localStorage.clear();
+        window.location.href = "/";
+        return Promise.reject(err);
       }
     }
 
