@@ -1,5 +1,5 @@
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect,useMemo, useState } from "react";
 import {
   Card,
   Row,
@@ -14,6 +14,7 @@ import {
   Popover,
   message,
 } from "antd";
+// import { Popover } from "antd";
 
 import {
   HomeOutlined,
@@ -29,6 +30,7 @@ import "./appadmin.css";
 
 import { LogoutOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+
 
 
 const scaleTo300to700 = (value: number) => {
@@ -383,72 +385,33 @@ type Assignee = {
 };
 
 const ASSIGNEES: Assignee[] = [
-  {
-    id: "FR-101",
-    name: "Rahul Verma",
-    pan: "ABCDE1234F",
-    rating: 4.8,
-    type: "Freelancer",
-    phone: "+91 98765 43210",
-    city: "Bengaluru",
-    experience: "5 Years",
-    jobsCompleted: 320,
-  },
-  {
-    id: "VN-201",
-    name: "Shree Logistics Pvt Ltd",
-    pan: "AAECS9988Q",
-    rating: 4.7,
-    type: "Vendor",
-    phone: "+91 99887 66554",
-    city: "Mumbai",
-    experience: "10 Years",
-    jobsCompleted: 1450,
-  },
-  {
-    id: "FR-102",
-    name: "Neha Sharma",
-    pan: "BBDFS7766P",
-    rating: 4.6,
-    type: "Freelancer",
-    phone: "+91 91234 56789",
-    city: "Delhi",
-    experience: "4 Years",
-    jobsCompleted: 210,
-  },
-  {
-    id: "VN-202",
-    name: "QuickMove Services",
-    pan: "CCQMS4455R",
-    rating: 4.5,
-    type: "Vendor",
-    phone: "+91 90909 80808",
-    city: "Hyderabad",
-    experience: "8 Years",
-    jobsCompleted: 980,
-  },
-  {
-    id: "FR-103",
-    name: "Suresh Kumar",
-    pan: "DDKPS8899M",
-    rating: 4.4,
-    type: "Freelancer",
-    phone: "+91 93456 78123",
-    city: "Chennai",
-    experience: "6 Years",
-    jobsCompleted: 410,
-  },
-  {
-    id: "VN-203",
-    name: "SafeHands Facility Services",
-    pan: "EEFAC6677L",
-    rating: 4.3,
-    type: "Vendor",
-    phone: "+91 95555 44433",
-    city: "Pune",
-    experience: "12 Years",
-    jobsCompleted: 2100,
-  },
+  // ================= FREELANCERS =================
+  { id: "FR-101", name: "Rahul Verma", pan: "ABCDE1234F", rating: 4.8, type: "Freelancer", phone: "+91 98765 43210", city: "Bengaluru", experience: "5 Years", jobsCompleted: 320 },
+  { id: "FR-102", name: "Neha Sharma", pan: "BBDFS7766P", rating: 4.6, type: "Freelancer", phone: "+91 91234 56789", city: "Delhi", experience: "4 Years", jobsCompleted: 210 },
+  { id: "FR-103", name: "Suresh Kumar", pan: "DDKPS8899M", rating: 4.4, type: "Freelancer", phone: "+91 93456 78123", city: "Chennai", experience: "6 Years", jobsCompleted: 410 },
+  { id: "FR-104", name: "Arjun Patel", pan: "FFRTP5544A", rating: 4.5, type: "Freelancer", phone: "+91 98712 33445", city: "Ahmedabad", experience: "3 Years", jobsCompleted: 180 },
+  { id: "FR-105", name: "Pooja Nair", pan: "GGHJP8899Q", rating: 4.7, type: "Freelancer", phone: "+91 98111 22334", city: "Kochi", experience: "6 Years", jobsCompleted: 410 },
+  { id: "FR-106", name: "Manoj Singh", pan: "HHKLM3322Z", rating: 4.3, type: "Freelancer", phone: "+91 91222 77889", city: "Jaipur", experience: "4 Years", jobsCompleted: 260 },
+  { id: "FR-107", name: "Sana Khan", pan: "JJQWE9988L", rating: 4.6, type: "Freelancer", phone: "+91 90011 55667", city: "Bhopal", experience: "5 Years", jobsCompleted: 350 },
+  { id: "FR-108", name: "Ritesh Malhotra", pan: "RTHML4455K", rating: 4.2, type: "Freelancer", phone: "+91 98888 11223", city: "Ludhiana", experience: "2 Years", jobsCompleted: 120 },
+  { id: "FR-109", name: "Ayesha Farooq", pan: "AYSFR3322P", rating: 4.5, type: "Freelancer", phone: "+91 90909 44556", city: "Aligarh", experience: "4 Years", jobsCompleted: 240 },
+  { id: "FR-110", name: "Vikram Joshi", pan: "VKJSH8899Q", rating: 4.1, type: "Freelancer", phone: "+91 94444 77665", city: "Udaipur", experience: "3 Years", jobsCompleted: 160 },
+  { id: "FR-111", name: "Sneha Kulkarni", pan: "SNKLR5566H", rating: 4.7, type: "Freelancer", phone: "+91 95555 33221", city: "Kolhapur", experience: "6 Years", jobsCompleted: 480 },
+  { id: "FR-112", name: "Imran Shaikh", pan: "IMSHK6677N", rating: 4.4, type: "Freelancer", phone: "+91 96666 22119", city: "Aurangabad", experience: "5 Years", jobsCompleted: 300 },
+
+  // ================= VENDORS =================
+  { id: "VN-201", name: "Shree Logistics Pvt Ltd", pan: "AAECS9988Q", rating: 4.7, type: "Vendor", phone: "+91 99887 66554", city: "Mumbai", experience: "10 Years", jobsCompleted: 1450 },
+  { id: "VN-202", name: "QuickMove Services", pan: "CCQMS4455R", rating: 4.5, type: "Vendor", phone: "+91 90909 80808", city: "Hyderabad", experience: "8 Years", jobsCompleted: 980 },
+  { id: "VN-203", name: "SafeHands Facility Services", pan: "EEFAC6677L", rating: 4.3, type: "Vendor", phone: "+91 95555 44433", city: "Pune", experience: "12 Years", jobsCompleted: 2100 },
+  { id: "VN-204", name: "PrimeCare Solutions", pan: "PRMCS1234P", rating: 4.6, type: "Vendor", phone: "+91 98777 66554", city: "Indore", experience: "9 Years", jobsCompleted: 890 },
+  { id: "VN-205", name: "UrbanShift Logistics", pan: "URBSH7788T", rating: 4.4, type: "Vendor", phone: "+91 99881 22110", city: "Nagpur", experience: "7 Years", jobsCompleted: 760 },
+  { id: "VN-206", name: "GreenRoute Transport", pan: "GRNRT6655X", rating: 4.8, type: "Vendor", phone: "+91 90909 11223", city: "Coimbatore", experience: "11 Years", jobsCompleted: 1320 },
+  { id: "VN-207", name: "SwiftHands Services", pan: "SWFHS4433M", rating: 4.5, type: "Vendor", phone: "+91 95544 88990", city: "Noida", experience: "6 Years", jobsCompleted: 640 },
+  { id: "VN-208", name: "MetroServe Corp", pan: "METSV2211A", rating: 4.2, type: "Vendor", phone: "+91 91111 77889", city: "Gurgaon", experience: "5 Years", jobsCompleted: 520 },
+  { id: "VN-209", name: "RapidFleet India", pan: "RPDFL8899K", rating: 4.6, type: "Vendor", phone: "+91 92222 33445", city: "Surat", experience: "9 Years", jobsCompleted: 1100 },
+  { id: "VN-210", name: "CityLink Services", pan: "CTYLK5566Q", rating: 4.3, type: "Vendor", phone: "+91 93333 99887", city: "Vadodara", experience: "7 Years", jobsCompleted: 700 },
+  { id: "VN-211", name: "ProBuild Materials", pan: "PRBLD4433H", rating: 4.7, type: "Vendor", phone: "+91 94444 11223", city: "Raipur", experience: "13 Years", jobsCompleted: 1800 },
+  { id: "VN-212", name: "NorthStar Logistics", pan: "NRTHS6677L", rating: 4.5, type: "Vendor", phone: "+91 96666 77889", city: "Dehradun", experience: "8 Years", jobsCompleted: 950 },
 ];
 
 const FREELANCER_SKILLS: ServiceKey[] = [
@@ -460,10 +423,105 @@ const FREELANCER_SKILLS: ServiceKey[] = [
 ];
 
 
+const SkillsCell: React.FC<{ skills: string[] }> = ({ skills }) => {
+  const [open, setOpen] = useState(false);
+
+  const visibleSkills = skills.slice(0, 2);
+  const remainingCount = skills.length - 2;
+
+  const popoverContent = (
+    <div className="skills-popup">
+      <div className="skills-popup-title">Services</div>
+
+      <div className="skills-popup-list">
+        {skills.map((skill) => (
+          <span key={skill} className="skill-popup-tag">
+            {skill}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+
+  return (
+    <Popover
+      content={popoverContent}
+      trigger="click"
+      placement="top"
+      open={open}
+      onOpenChange={setOpen}
+      overlayClassName="skills-popover-overlay"
+    >
+      <div className="skills-cell-wrap">
+        {/* ✅ Show first 2 ONLY when popover is CLOSED */}
+        {!open &&
+          visibleSkills.map((skill) => (
+            <span key={skill} className="skill-tag-premium">
+              {skill}
+            </span>
+          ))}
+
+        {/* View more toggle */}
+        {remainingCount > 0 && !open && (
+          <span className="skill-view-toggle">
+            +{remainingCount} more
+          </span>
+        )}
+
+        {/* When open, show only trigger text (keeps anchor position) */}
+        {open && (
+          <span className="skill-view-toggle active">
+            View services
+          </span>
+        )}
+      </div>
+    </Popover>
+  );
+};
+
+
+
 /* ---------------------- LandingDashboard ---------------------- */
 
 const Appadmin: React.FC = () => {
 const [bookings, setBookings] = useState<BookingRow[]>(generateBookings());
+
+const [pendingFreelancers, setPendingFreelancers] = useState(
+  ASSIGNEES.filter(a => a.type === "Freelancer")
+);
+
+const [pendingVendors, setPendingVendors] = useState(
+  ASSIGNEES.filter(a => a.type === "Vendor")
+);
+
+const [approvedVendors, setApprovedVendors] = useState<
+  typeof ASSIGNEES
+>([]);
+
+const [approvedFreelancers, setApprovedFreelancers] = useState<
+  typeof ASSIGNEES
+>([]);
+
+const approveFreelancer = (id: string) => {
+  setPendingFreelancers(prev => {
+    const selected = prev.find(f => f.id === id);
+    if (!selected) return prev;
+
+    setApprovedFreelancers(appr => [...appr, selected]);
+    return prev.filter(f => f.id !== id);
+  });
+};
+
+const approveVendor = (id: string) => {
+  setPendingVendors(prev => {
+    const selected = prev.find(v => v.id === id);
+    if (!selected) return prev;
+
+    setApprovedVendors(appr => [...appr, selected]);
+    return prev.filter(v => v.id !== id);
+  });
+};
+
 
   const navigate = useNavigate();
 
@@ -477,6 +535,23 @@ const [bookings, setBookings] = useState<BookingRow[]>(generateBookings());
 
 const [openPopup, setOpenPopup] =
   useState<null | "freelancer" | "vendor">(null);
+
+
+  useEffect(() => {
+  if (openPopup === "freelancer") {
+    setPendingFreelancers(
+      ASSIGNEES.filter(a => a.type === "Freelancer")
+    );
+    setApprovedFreelancers([]);
+  }
+
+  if (openPopup === "vendor") {
+    setPendingVendors(
+      ASSIGNEES.filter(a => a.type === "Vendor")
+    );
+    setApprovedVendors([]);
+  }
+}, [openPopup]);
 
 
 const [active, setActive] = useState<"Dashboard" | ServiceKey>("Dashboard");
@@ -1347,104 +1422,188 @@ const filteredBookings = bookings.filter(b => {
       </>
     )}
   </Modal>
+{/* ---------- FREELANCER / VENDOR POPUP ---------- */}
 <Modal
   open={!!openPopup}
-  title={openPopup === "freelancer" ? "Freelancers" : "Vendors"}
   onCancel={() => setOpenPopup(null)}
   footer={null}
-  width="95vw"
-  style={{ top: 20 }}
-  bodyStyle={{ height: "85vh", overflow: "auto" }}
+  width={1200}
   centered
+  bodyStyle={{ maxHeight: "75vh", overflowY: "auto" }}
 >
-  <div className="popup-table-wrap">
+  {/* ================= FREELANCER ================= */}
+  {openPopup === "freelancer" && (
+    <>
+      {/* Pending Freelancers */}
+      <div className="table-section">
+        <div className="table-title">
+          Pending Freelancers ({pendingFreelancers.length})
+        </div>
 
-    {/* ================= FREELANCER TABLE ================= */}
-    {openPopup === "freelancer" && (
-      <table className="popup-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>City</th>
-            <th>Skills</th>
-            <th>PAN</th>
-            <th>Experience</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
+        <div className="table-scroll">
+          <table className="popup-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>City</th>
+                <th>Skills</th>
+                <th>PAN</th>
+                <th>Experience</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
 
-        <tbody>
-          {ASSIGNEES.filter(a => a.type === "Freelancer").map(a => (
-            <tr key={a.id}>
-              <td>{a.name}</td>
-              <td>{a.pan}@email.com</td>
-              <td>{a.city}</td>
+            <tbody>
+              {pendingFreelancers.map(a => (
+                <tr key={a.id}>
+                  <td><strong>{a.name}</strong></td>
+                  <td>{a.pan}@email.com</td>
+                  <td>{a.city}</td>
+                  <td><SkillsCell skills={FREELANCER_SKILLS} /></td>
+                  <td>{a.pan}</td>
+                  <td>{a.experience}</td>
+                  <td className="actions">
+                    <button
+                      className="btn approve"
+                      onClick={() => approveFreelancer(a.id)}
+                    />
+                    <button className="btn reject" />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
 
-            <td>
-              <div className="skill-wrap">
-                {FREELANCER_SKILLS.map(skill => (
-                  <span key={skill} className="skill-chip">
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </td>
+      {/* Total Freelancers */}
+      <div className="table-section">
+        <div className="table-title">
+          Total Freelancers ({approvedFreelancers.length})
+        </div>
 
+        <div className="table-scroll">
+          <table className="popup-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>City</th>
+                <th>Skills</th>
+                <th>PAN</th>
+                <th>Experience</th>
+              </tr>
+            </thead>
 
-              <td><strong>{a.pan}</strong></td>
-              <td>{a.experience}</td>
+            <tbody>
+              {approvedFreelancers.map(a => (
+                <tr key={a.id}>
+                  <td><strong>{a.name}</strong></td>
+                  <td>{a.pan}@email.com</td>
+                  <td>{a.city}</td>
+                  <td><SkillsCell skills={FREELANCER_SKILLS} /></td>
+                  <td>{a.pan}</td>
+                  <td>{a.experience}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </>
+  )}
 
-              <td className="actions">
-                {/* <button className="btn view">👁 View</button> */}
-                <button className="btn approve">✓ Approve</button>
-                <button className="btn reject">✕ Reject</button>
-              </td>
+  {/* ================= VENDOR ================= */}
+  {openPopup === "vendor" && (
+  <>
+    {/* ================= PENDING VENDORS ================= */}
+    <div className="table-section">
+      <div className="table-title">
+        Pending Vendors ({pendingVendors.length})
+      </div>
+
+      <div className="table-scroll">
+        <table className="popup-table">
+          <thead>
+            <tr>
+              <th>Company Name</th>
+              <th>Email</th>
+              <th>City</th>
+              <th>GST</th>
+              <th>PAN</th>
+              <th>Business</th>
+              <th>Experience</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    )}
+          </thead>
 
-    {/* ================= VENDOR TABLE ================= */}
-    {openPopup === "vendor" && (
-      <table className="popup-table">
-        <thead>
-          <tr>
-            <th>Company Name</th>
-            <th>Email</th>
-            <th>City</th>
-            <th>GST Number</th>
-            <th>PAN</th>
-            <th>Business Type</th>
-            <th>Experience</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
+          <tbody>
+            {pendingVendors.map(v => (
+              <tr key={v.id}>
+                <td><strong>{v.name}</strong></td>
+                <td>{v.pan}@company.com</td>
+                <td>{v.city}</td>
+                <td>GST-PENDING</td>
+                <td>{v.pan}</td>
+                <td>Service Provider</td>
+                <td>{v.experience}</td>
 
-        <tbody>
-          {ASSIGNEES.filter(a => a.type === "Vendor").map(v => (
-            <tr key={v.id}>
-              <td><strong>{v.name}</strong></td>
-              <td>{v.pan}@company.com</td>
-              <td>{v.city}</td>
-              <td>GST-PENDING</td>
-              <td><strong>{v.pan}</strong></td>
-              <td>Service Provider</td>
-              <td>{v.experience}</td>
+                <td className="actions">
+                  <button
+                    className="btn approve"
+                    onClick={() => approveVendor(v.id)}
+                  />
+                  <button className="btn reject" />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
 
-              <td className="actions">
-                {/* <button className="btn view">👁 View</button> */}
-                <button className="btn approve">✓ Approve</button>
-                <button className="btn reject">✕ Reject</button>
-              </td>
+    {/* ================= TOTAL VENDORS ================= */}
+    <div className="table-section">
+      <div className="table-title">
+        Total Vendors ({approvedVendors.length})
+      </div>
+
+      <div className="table-scroll">
+        <table className="popup-table">
+          <thead>
+            <tr>
+              <th>Company Name</th>
+              <th>Email</th>
+              <th>City</th>
+              <th>GST</th>
+              <th>PAN</th>
+              <th>Business</th>
+              <th>Experience</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    )}
-  </div>
+          </thead>
+
+          <tbody>
+            {approvedVendors.map(v => (
+              <tr key={v.id}>
+                <td><strong>{v.name}</strong></td>
+                <td>{v.pan}@company.com</td>
+                <td>{v.city}</td>
+                <td>GST-APPROVED</td>
+                <td>{v.pan}</td>
+                <td>Service Provider</td>
+                <td>{v.experience}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </>
+)}
+
 </Modal>
+
 </div>
 );
 };
