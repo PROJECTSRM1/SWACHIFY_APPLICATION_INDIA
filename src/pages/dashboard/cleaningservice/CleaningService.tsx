@@ -1554,7 +1554,7 @@ const processBookingAndAddToCart = async (values: any) => {
     deliveryDate: values.preferredDate,
     deliveryTime: values.timeSlot || "",
     instructions: values.instructions || "",
-    deliveryTime: ""
+    // deliveryTime: ""
   };
 
   addToCart(cartItem);
@@ -1735,7 +1735,7 @@ sub_group_id: getSubModuleId(selectedSubKey),
         address: address,
         instructions: instructions || '', // ← ADD THIS LINE
         email: email,
-        deliveryTime: ""
+        // deliveryTime: ""
       };
       addToCart(cartItem);
       console.log(onSubmitBooking);
