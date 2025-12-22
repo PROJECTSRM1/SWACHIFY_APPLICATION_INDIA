@@ -1,5 +1,5 @@
 
-import React, { useEffect,useMemo, useState } from "react";
+import React, { useMemo, useState,useEffect } from "react";
 import {
   Card,
   Row,
@@ -14,7 +14,9 @@ import {
   Popover,
   message,
 } from "antd";
-// import { Popover } from "antd";
+import { fetchAdminBookings } from "../../api/adminBookings";
+import type { BookingAPIResponse } from "../../api/adminBookings";
+
 
 import {
   HomeOutlined,
@@ -27,7 +29,7 @@ import {
 } from "@ant-design/icons";
 import ReactApexChart from "react-apexcharts";
 import "./appadmin.css";
-//import { useEffect } from "react";
+// import { useEffect } from "react";
 import { getFreelancers } from "../../api/admin";
 
 
@@ -254,6 +256,7 @@ function generateBookings(): BookingRow[] {
     "Rajat Bhatt",
     "Isha Roy",
   ];
+  
   const workers = ["Rahul", "Neha", "Sunil", "Priyanka", "Asha", "Vijay", "Sathya", "Amit"];
   const locations = ["Mumbai", "Bengaluru", "Chennai", "Delhi", "Hyderabad", "Pune", "Kolkata"];
   let counter = 101;
@@ -425,6 +428,14 @@ const FREELANCER_SKILLS: ServiceKey[] = [
   "Raw Materials",
   "Education",
 ];
+const SERVICE_TYPE_MAP: Record<number, ServiceKey> = {
+  1: "Home Service",
+  2: "Transport",
+  3: "Buy/Sale/Rentals",
+  4: "Raw Materials",
+  5: "Education",
+};
+
 
 
 const SkillsCell: React.FC<{ skills: string[] }> = ({ skills }) => {
@@ -488,7 +499,12 @@ const SkillsCell: React.FC<{ skills: string[] }> = ({ skills }) => {
 /* ---------------------- LandingDashboard ---------------------- */
 
 const Appadmin: React.FC = () => {
-const [bookings, setBookings] = useState<BookingRow[]>(generateBookings());
+//const [bookings, setBookings] = useState<BookingRow[]>(generateBookings());
+const [bookings, setBookings] = useState<BookingRow[]>([]);
+const [loadingBookings, setLoadingBookings] = useState(true);
+console.log(generateBookings);
+console.log(loadingBookings);
+console.log(computeBookingStatsFromCount);
 
 const [pendingFreelancers, setPendingFreelancers] = useState(
   ASSIGNEES.filter(a => a.type === "Freelancer")
@@ -621,6 +637,47 @@ const [active, setActive] = useState<"Dashboard" | ServiceKey>("Dashboard");
   // NEW: which preset is active (controls highlight)
   type PresetKey = "today" | "yesterday" | "last7" | "lastMonth" | "custom";
   const [activePreset, setActivePreset] = useState<PresetKey>("last7");
+
+  const mapBookingFromAPI = (b: BookingAPIResponse): BookingRow => ({
+  key: String(b.id),
+  bookingId: `SW-${b.id}`,
+  customerName: b.full_name,
+  serviceType: SERVICE_TYPE_MAP[b.service_type_id] ?? "Home Service",
+  amount: Number(b.service_price ?? 0),
+  date: b.preferred_date,
+  status: b.payment_done === 1 ? "Completed" : "Pending",
+  phone: b.mobile,
+  location: b.address,
+  assigned: "",
+});
+
+
+
+  useEffect(() => {
+  const loadBookings = async () => {
+    try {
+      setLoadingBookings(true);
+
+      const list = await fetchAdminBookings();
+
+      const mapped = list.map(mapBookingFromAPI);
+      setBookings(mapped);
+    } catch (err) {
+      console.error(err);
+      message.error("Failed to load bookings");
+    } finally {
+      setLoadingBookings(false);
+    }
+  };
+
+  loadBookings();
+}, []);
+
+
+
+
+ 
+
 
   
 
@@ -977,7 +1034,16 @@ const filteredBookings = bookings.filter(b => {
     return { total, completed, pending, rejected };
   }
 
-  const bookingStats = computeBookingStatsFromCount(aggregatedDynamic.bookingsCount);
+  //const bookingStats = computeBookingStatsFromCount(aggregatedDynamic.bookingsCount);
+  const bookingStats = useMemo(() => {
+  const total = bookings.length;
+  const completed = bookings.filter(b => b.status === "Completed").length;
+  const pending = bookings.filter(b => b.status === "Pending").length;
+  const rejected = bookings.filter(b => b.status === "Rejected").length;
+
+  return { total, completed, pending, rejected };
+}, [bookings]);
+
 
   const salesOptions = {
     chart: { toolbar: { show: false } },
