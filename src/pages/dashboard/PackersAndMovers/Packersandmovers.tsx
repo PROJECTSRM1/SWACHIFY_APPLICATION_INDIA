@@ -1,12 +1,4 @@
 // Packersandmovers.tsx
-// Toast styling same as service form
-message.config({
-  top: 80,
-  duration: 2,
-  maxCount: 1,
-});
-import dayjs from "dayjs";
-
 import React, { useEffect, useRef, useState } from "react";
 import {
   Row,
@@ -21,7 +13,6 @@ import {
   DatePicker,
   InputNumber,
   Checkbox,
-  message   // <-- ADD THIS
 } from "antd";
 import {
   ShoppingCartOutlined,
@@ -30,6 +21,7 @@ import {
   CloseOutlined,
 } from "@ant-design/icons";
 import "../../../index.css";
+
 // images (update paths as needed)
 import carRentalsImg from "../../../assets/passenger/Car Rentals.jpg";
 import cargoForwardingImg from "../../../assets/passenger/Cargo forwarding.jpg";
@@ -48,6 +40,12 @@ import { useNavigate } from "react-router-dom";
 import { useCart } from "../../../context/CartContext";
 const { Option } = Select;
 const { TextArea } = Input;
+interface Props {
+  searchQuery: string;
+  clearSearch: () => void;
+}
+
+
 /* helper placeholder */
 function makePlaceholder(text: string, bg = "#cfcfcf") {
   const w = 1000;
@@ -63,6 +61,9 @@ function makePlaceholder(text: string, bg = "#cfcfcf") {
   `;
   return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
 }
+const normalize = (s: string) =>
+  s.toLowerCase().replace(/\s+/g, "").replace(/[^a-z0-9]/g, "");
+
 /* Form schema typing */
 type FormField =
   | {
@@ -105,6 +106,7 @@ const cardsData: CardItem[] = [
         formSchema: [
           { name: "pickup", label: "Pickup Address", type: "text", required: true, placeholder: "Pickup address" },
           { name: "dropoff", label: "Drop-off Address", type: "text", required: true, placeholder: "Drop-off address" },
+          { name: "dateTime", label: "Pickup Date & Time", type: "date", required: true },
           { name: "passengers", label: "Passengers", type: "number", required: true },
           { name: "luggage", label: "Luggage Count", type: "number" },
           { name: "needChildSeat", label: "Need Child Seat", type: "checkbox" },
@@ -181,6 +183,7 @@ const cardsData: CardItem[] = [
           { name: "shipmentType", label: "Shipment Type", type: "select", required: true, options: [{ label: "Air", value: "air" }, { label: "Sea", value: "sea" }, { label: "Road", value: "road" }] },
           { name: "weight", label: "Weight (kg)", type: "number", required: true },
           { name: "dimensions", label: "Dimensions (LxWxH)", type: "text" },
+          { name: "pickupDate", label: "Pickup Date", type: "date" },
         ],
       },
     ],
@@ -248,13 +251,16 @@ const cardsData: CardItem[] = [
         formSchema: [
           { name: "hazardType", label: "Hazard Type", type: "select", required: true, options: [{ label: "Chemical", value: "chemical" }, { label: "Battery", value: "battery" }, { label: "Other", value: "other" }] },
           { name: "netWeight", label: "Net Weight (kg)", type: "number", required: true },
+          { name: "pickupDate", label: "Pickup Date", type: "date" },
           { name: "complianceDocs", label: "Attach docs (URL)", type: "text" },
         ],
       },
     ],
   },
 ];
-const Packersandmovers: React.FC = () => {
+const Packersandmovers: React.FC<Props> = ({ searchQuery, clearSearch }) => {
+
+
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [groupIndex, setGroupIndex] = useState<number | null>(null);
   const groupOverlayRef = useRef<HTMLDivElement | null>(null);
@@ -264,13 +270,6 @@ const Packersandmovers: React.FC = () => {
   const [bookingFormsData, setBookingFormsData] = useState<Record<string, any>>({});
   const previouslyFocused = useRef<HTMLElement | null>(null);
   const [form] = Form.useForm();
-  // OTP STATES (correct position)
-const [isOtpSent, setIsOtpSent] = useState(false);
-const [verified, setVerified] = useState(false);
-const [phoneOtp, setPhoneOtp] = useState("");
-const [emailOtp, setEmailOtp] = useState("");
-
-
   // Confirmation popup state (top)
   const [showConfirmTop, setShowConfirmTop] = useState(false);
   const [confirmTextTop, setConfirmTextTop] = useState("");
@@ -279,6 +278,7 @@ const [emailOtp, setEmailOtp] = useState("");
   // <-- ADDED: cart + navigate hooks (keeps your context API unchanged) -->
   const { addToCart } = useCart();
   const navigate = useNavigate();
+ 
   // Keep body scroll locked when either modal is open.
   const lockBodyScroll = () => {
     document.body.style.overflow = "hidden";
@@ -294,33 +294,74 @@ const [emailOtp, setEmailOtp] = useState("");
     lockBodyScroll();
     setTimeout(() => groupOverlayRef.current?.focus(), 50);
   };
-  const closeGroupModal = () => {
-    setGroupIndex(null);
-    // restore body scroll — if bookingOpen is also open we should keep locked,
-    // but group modal is only visible when bookingOpen is false, so it's safe to unlock.
-    if (!bookingOpen) unlockBodyScroll();
-    previouslyFocused.current?.focus();
-  };
+   useEffect(() => {
+  if (!searchQuery) return;
+  if (groupIndex !== null) return;
+
+  const q = normalize(searchQuery);
+
+  // 🚕 Passenger Transport
+  if (
+    q.includes(normalize("taxi")) ||
+    q.includes(normalize("local taxi")) ||
+    q.includes(normalize("local"))||
+    q.includes(normalize("carpol")) ||
+    q.includes(normalize("car pooling")) ||
+    q.includes(normalize("shuttle services")) ||
+    q.includes(normalize("shuttle"))
+  ) {
+    openGroupModal(0);
+    return;
+  }
+
+  // 📦 Logistics & Cargo
+  if (
+    q.includes(normalize("logistics and cargo")) ||
+    q.includes(normalize("goods")) ||
+    q.includes(normalize("goods delivery")) ||
+    q.includes(normalize("intercity")) ||
+    q.includes(normalize("intercity transport")) ||
+    q.includes(normalize("cargo forwarding"))
+  ) {
+    openGroupModal(1);
+    return;
+  }
+
+  // 🚚 Rental Services
+  if (
+    q.includes(normalize("rental services")) ||
+    q.includes(normalize("truck rental")) ||
+    q.includes(normalize("car rental")) ||
+    q.includes(normalize("van rental"))
+  ) {
+    openGroupModal(2);
+    return;
+  }
+
+  // ⚠️ Specialized Transport
+  if (
+    q.includes(normalize("hazardous")) ||
+    q.includes(normalize("temperature")) ||
+    q.includes(normalize("cold"))
+  ) {
+    openGroupModal(3);
+    return;
+  }
+}, [searchQuery, groupIndex]);
+
+
+const closeGroupModal = () => {
+  setGroupIndex(null);
+  if (!bookingOpen) unlockBodyScroll();
+  clearSearch(); // ✅ ADD THIS LINE
+  previouslyFocused.current?.focus();
+};
+
   // open booking form for submodule with groupIndex
   const openBookingForm = (img: CardImage, grpIndex: number) => {
-
-  // ✅ Reset OTP states every time user opens the booking form
-  setVerified(false);
-  setIsOtpSent(false);
-  setPhoneOtp("");
-  setEmailOtp("");
-
-  // Also clear phone+email fields (optional but matches service form behavior)
-  form.setFieldsValue({
-    fullName: "",
-    email: "",
-    mobile: ""
-  });
-
-  const key = `${grpIndex}-${img.title}`;
-  setSelectedKey(key);
-  setSelectedImage(img);
-
+    const key = `${grpIndex}-${img.title}`;
+    setSelectedKey(key);
+    setSelectedImage(img);
     // load saved data if exists
     const saved = bookingFormsData[key];
     if (saved) {
@@ -417,37 +458,22 @@ const [emailOtp, setEmailOtp] = useState("");
       const n = parseFloat(p.replace(/[^0-9.-]+/g, ""));
       return isNaN(n) ? 0 : n;
     })();
-   const cartItem = {
-  id: cartId,
-  title: payload.serviceTitle,
-  image: selectedImage.src || "",
-  quantity: 1,
-  price: String(payload.servicePrice || selectedImage.price || "0"),
-  totalPrice: parsedPrice,
-
-  customerName: payload.fullName || "",
-  email: payload.email || "",
-  contact: payload.mobile || "",
-  address: payload.address || "",
-  instructions: payload.instructions || "",
-
-  deliveryType: "transport",
-
-  deliveryDate: payload.preferredDate
-    ? dayjs(payload.preferredDate).format("YYYY-MM-DD")
-    : "",
-
-  deliveryTime: payload.preferredTime
-    ? payload.preferredTime.split("-")[0]   // ✅ CRITICAL
-    : "",
-
-  // ✅ ADD THESE (THIS IS THE MISSING PART)
-  paymentDone: true,          // payment completed
-  workStatus: "pending" as const,
-      // work not done yet
-};
-
-
+    const cartItem = {
+      id: cartId,
+      title: payload.serviceTitle,
+      image: selectedImage.src || "",
+      quantity: 1,
+      price: String(payload.servicePrice || selectedImage.price || "0"),
+      totalPrice: parsedPrice * 1,
+      customerName: payload.customerName || "",
+      deliveryType: payload.deliveryType || payload.rentalType || "",
+      deliveryDate: payload.date || payload.serviceDate || payload.deliveryDate || "",
+      contact: payload.contact || "",
+      address: payload.address || "",
+      instructions: payload.instructions || "",
+      email: payload.email || "",
+      deliveryTime: payload.deliveryTime || "",
+    };
     try {
       addToCart(cartItem); // uses your existing CartContext API
     } catch (e) {
@@ -666,166 +692,7 @@ const [emailOtp, setEmailOtp] = useState("");
               </div>
               <div className="sw-pm-form-right">
                 <Form form={form} layout="vertical" onFinish={onFinish}>
-
-                {/* USER DETAILS */}
-{/* USER DETAILS - SAME AS SERVICE FORM PAGE */}
-
-<div className="sw-hs-sdform-ant-two-col">
-  <Form.Item
-    label="Full Name"
-    name="fullName"
-    rules={[
-      {
-        validator: (_, value) => {
-          if (!value || !value.trim())
-            return Promise.reject("Full name is required");
-
-          const parts = value.trim().split(/\s+/);
-          if (parts.length < 2)
-            return Promise.reject("Please enter first and last name");
-
-          return Promise.resolve();
-        },
-      },
-    ]}
-  >
-    <Input placeholder="Enter full name" />
-  </Form.Item>
-
-  <Form.Item
-    label="Email"
-    name="email"
-    rules={[
-      { required: true, message: "Email is required" },
-      { type: "email", message: "Enter valid email" },
-    ]}
-  >
-    <Input placeholder="Enter email" suffix={verified ? "✔" : null} />
-  </Form.Item>
-</div>
-
-<div className="sw-hs-sdform-ant-two-col">
-  <Form.Item
-    label="Phone"
-    name="mobile"
-    rules={[
-      { required: true, message: "Phone no is required" },
-      { pattern: /^[0-9]{10}$/, message: "Enter valid 10 digit number" },
-    ]}
-  >
-    <Input
-      prefix="+91 "
-      maxLength={10}
-      placeholder="Enter Phone Number"
-      onChange={(e) => {
-        const onlyDigits = e.target.value.replace(/\D/g, "");
-        form.setFieldsValue({ mobile: onlyDigits });
-      }}
-      suffix={
-        !verified && !isOtpSent ? (
-          <Button
-            type="link"
-            onClick={() => {
-              if (!form.getFieldValue("mobile") || !form.getFieldValue("email")) {
-                message.error("Enter email & mobile first");
-                return;
-              }
-
-              setIsOtpSent(true);
-              message.success("OTP Sent (Demo Mode)");
-            }}
-          >
-            Send OTP
-          </Button>
-        ) : verified ? (
-          "✔"
-        ) : null
-      }
-    />
-  </Form.Item>
-</div>
-
-{/* OTP SECTION (Same as service form) */}
-{isOtpSent && !verified && (
-  <div className="sw-cs-otp-row">
-    <Form.Item label="Phone OTP" className="otp-item">
-      <Input
-        maxLength={4}
-        placeholder="Enter Phone OTP"
-        value={phoneOtp}
-        onChange={(e) => setPhoneOtp(e.target.value.replace(/\D/g, ""))}
-      />
-    </Form.Item>
-
-    <Form.Item label="Email OTP" className="otp-item">
-      <Input
-        maxLength={4}
-        placeholder="Enter Email OTP"
-        value={emailOtp}
-        onChange={(e) => setEmailOtp(e.target.value.replace(/\D/g, ""))}
-      />
-    </Form.Item>
-
-    <div className="sw-cs-otp-verify">
-      <Button
-        type="primary"
-        className="sw-cs-black-btn"
-        style={{ height: 40 }}
-        onClick={() => {
-          if (phoneOtp.length !== 4 || emailOtp.length !== 4) {
-            message.error("OTP must be 4 digits");
-            return;
-          }
-
-          if (phoneOtp === emailOtp) {
-            message.error("Phone OTP & Email OTP must be different");
-            return;
-          }
-
-          message.success("OTP Verified");
-          setVerified(true);
-          setIsOtpSent(false);
-        }}
-      >
-        Verify OTP
-      </Button>
-    </div>
-  </div>
-)}
-
-
-
-
-<Button
-  style={{ marginBottom: 12 }}
-  onClick={() => {
-    if (!navigator.geolocation) return message.error("Location not supported");
-
-    navigator.geolocation.getCurrentPosition(async pos => {
-      const { latitude, longitude } = pos.coords;
-      const res = await fetch(
-        `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
-      );
-      const data = await res.json();
-      if (data.display_name) {
-        form.setFieldsValue({ address: data.display_name });
-        message.success("Location detected");
-       
-      }
-    });
-  }}
->
-  Detect My Current Location
-</Button>
-
-<Form.Item
-  name="address"
-  label="Address"
-  rules={[{ required: true, message: "Enter address" }]}
->
-  <Input placeholder="House No, Street, City" />
-</Form.Item>
-
+                  {/* metadata */}
                   <Form.Item name="serviceGroup" style={{ display: "none" }}>
                     <Input />
                   </Form.Item>
@@ -836,64 +703,15 @@ const [emailOtp, setEmailOtp] = useState("");
                     <Input />
                   </Form.Item>
                   {/* fields */}
-                  {(selectedImage.formSchema || [])
-  .filter((f) => f.type !== "date") // 🚫 REMOVE ALL SERVICE DATES
-  .map((f) => (
-    <div key={f.name}>{renderField(f)}</div>
-))}
-
-                  {/* DATE + TIME SLOT (COMMON FOR ALL SERVICES) */}
-<div className="sw-hs-sdform-ant-two-col">
-  <Form.Item
-    label="Preferred Date"
-    name="preferredDate"
-    rules={[{ required: true, message: "Select a date" }]}
-  >
-    <DatePicker
-      style={{ width: "100%" }}
-      disabledDate={(current) =>
-        current && current < dayjs().startOf("day")
-      }
-    />
-  </Form.Item>
-
-  <Form.Item
-    label="Preferred Time Slot"
-    name="preferredTime"
-    rules={[{ required: true, message: "Select a time slot" }]}
-  >
-    <Select placeholder="Select time slot">
-      <Option value="09:00-11:00">09:00 AM - 11:00 AM</Option>
-      <Option value="11:00-13:00">11:00 AM - 01:00 PM</Option>
-      <Option value="13:00-15:00">01:00 PM - 03:00 PM</Option>
-      <Option value="15:00-17:00">03:00 PM - 05:00 PM</Option>
-      <Option value="17:00-19:00">05:00 PM - 07:00 PM</Option>
-    </Select>
-  </Form.Item>
-</div>
-
-                  <Form.Item
-  name="paymentType"
-  label="Payment Type"
-  rules={[{ required: true, message: "Select payment type" }]}
->
-  <Select placeholder="Choose payment type">
-    <Option value="full">Full Payment</Option>
-    <Option value="partial">Partial Advance</Option>
-  </Select>
-</Form.Item>
-
+                  {(selectedImage.formSchema || []).map((f) => (
+                    <div key={f.name}>{renderField(f)}</div>
+                  ))}
                   {/* actions */}
                   <div className="sw-pm-form-actions">
                     <Button onClick={closeBookingForm} style={{ marginRight: 12 }}>
                       Cancel
                     </Button>
-                    <Button
-  type="primary"
-  htmlType="submit"
-  className="sw-pm-addcart-btn"
-  disabled={!verified}   // ✅ KEY LINE
->
+                    <Button type="primary" htmlType="submit" className="sw-pm-addcart-btn">
                       <ShoppingCartOutlined style={{ marginRight: 8 }} /> Book Service
                     </Button>
                   </div>

@@ -20,12 +20,103 @@ return (
     <p>{machinery.length} services available</p>
   </div>
 
+<<<<<<< HEAD
   <div className="sw-br-machinery-grid">
     {machinery.map((item) => (
       <div className="sw-br-machinery-card" key={item.id}>
         
         <div className="sw-br-card-img">
           <img src={item.img} alt={item.title} />
+=======
+interface FormProps {
+  id?: number;
+  onClose?: () => void;
+}
+
+const MachineryDetails: React.FC<FormProps> = ({ id = 1,
+  onClose }) => {
+  const machine = machinery.find((item) => item.id === id);
+  const { addToCart } = useCart();
+  const formRef = useRef<HTMLFormElement>(null);
+
+  if (!machine) return null;
+
+  const [quantity, setQuantity] = useState(0);
+  const [rentalType, setRentalType] = useState("");
+  const [fuelSupply, setFuelSupply] = useState(false);
+
+  // ✅ OTP STATE (ADDED)
+  const [showOtpFields, setShowOtpFields] = useState(false);
+  const [otpVerified, setOtpVerified] = useState(false);
+  const [phoneOtp, setPhoneOtp] = useState("");
+  const [, setOtpError] = useState("");
+
+
+
+  const basePrice = Number(machine.price) * quantity;
+  const operatorCharge = rentalType === "With Operator" ? 150 : 0;
+  const fuelCharge = fuelSupply ? 200 : 0;
+  const totalPrice = basePrice + operatorCharge + fuelCharge;
+
+  const handleReset = () => {
+    formRef.current?.reset();
+    setQuantity(1);
+    setRentalType("");
+    setFuelSupply(false);
+    setShowOtpFields(false);
+  };
+
+  const handleAddToCart = () => {
+  const form = formRef.current!;
+
+  const preferredDate = (form.elements.namedItem(
+    "preferredDate"
+  ) as HTMLInputElement)?.value;
+
+  const preferredTime = (form.elements.namedItem(
+    "preferredTime"
+  ) as HTMLSelectElement)?.value;
+
+  addToCart({
+    id: Date.now(),
+    title: machine.title,
+    image: machine.img,
+    quantity,
+    price: machine.price,
+    totalPrice,
+
+    basePrice,
+    operatorCharge,
+    fuelCharge,
+
+    customerName: form.customerName.value,
+    email: form.email.value,
+    contact: form.contact.value,
+    address: form.address.value,
+    instructions: form.instructions.value,
+
+    deliveryType: rentalType,
+    deliveryDate: preferredDate,
+    deliveryTime: preferredTime.split("-")[0], // ✅ "09:00"
+
+    // ✅ SAME AS SERVICE FORM
+    paymentDone: true,
+    workStatus: "pending",
+  });
+
+  message.success("Item added to cart");
+  onClose?.();
+}; 
+
+
+  return (
+    <div className="sw-br-mach-details-modal">
+      <div className="sw-br-mach-details-box">
+
+        <div className="sw-br-mach-details-header">
+          <h2>{machine.title}</h2>
+          <button className="sw-br-mach-close-btn" onClick={onClose}>✕</button>
+>>>>>>> main
         </div>
 
         <h3>{item.title}</h3>

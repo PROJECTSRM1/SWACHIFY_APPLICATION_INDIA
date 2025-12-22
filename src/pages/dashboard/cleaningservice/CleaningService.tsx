@@ -1552,7 +1552,9 @@ const processBookingAndAddToCart = async (values: any) => {
 
     deliveryType: values.paymentType,
     deliveryDate: values.preferredDate,
+    deliveryTime: values.timeSlot || "",
     instructions: values.instructions || "",
+    // deliveryTime: ""
   };
 
   addToCart(cartItem);
@@ -1726,12 +1728,14 @@ sub_group_id: getSubModuleId(selectedSubKey),
         // Required CartItem fields from form
         customerName: fullName,
         contact: mobile,
-        deliveryType: 'Cleaning Service',  // or serviceType
+        deliveryType: 'Cleaning Service', // or serviceType
         deliveryDate: preferredDate || new Date().toISOString().split('T')[0],
+        deliveryTime: values.timeSlot || '',
         // Add the 2 missing fields (common for your cart):
         address: address,
-        instructions: instructions || '',  // ← ADD THIS LINE
-        email:email,
+        instructions: instructions || '', // ← ADD THIS LINE
+        email: email,
+        // deliveryTime: ""
       };
       addToCart(cartItem);
       console.log(onSubmitBooking);
