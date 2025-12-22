@@ -24,6 +24,8 @@ const TransportationForm: React.FC<FormProps> = ({ id, onClose }) => {
   const [customerName, setCustomerName] = useState("");
   const [deliveryType, setDeliveryType] = useState("");
   const [deliveryDate, setDeliveryDate] = useState("");
+const [deliveryTime, setDeliveryTime] = useState("");
+
   const [contact, setContact] = useState("");
   const [address, setAddress] = useState("");
   const [instructions, setInstructions] = useState("");
@@ -66,29 +68,40 @@ const [otpError, setOtpError] = useState("");
   };
 
   const handleAddToCart = () => {
-    addToCart({
-      id: material.id,
-      title: material.title,
-      image: material.img,
-      quantity: finalQuantity, 
-      unit,
-      price: material.price,
-      basePrice,
-      deliveryCharge,
-      unloadingCharge,
-      totalPrice,
-      email,
-      customerName,
-      deliveryType,
-      deliveryDate,
-      contact,
-      address,
-      instructions,
-    });
+  addToCart({
+    id: Date.now(),                 // ✅ unique id
+    title: material.title,
+    image: material.img,
 
-    message.success("Item added to cart");
-    onClose();
-  };
+    quantity: finalQuantity,
+    unit,
+    price: material.price,
+    basePrice,
+    deliveryCharge,
+    unloadingCharge,
+    totalPrice,
+
+    customerName,
+    email,
+    contact,
+    address,
+    instructions,
+
+    deliveryType,
+    deliveryDate,                   
+    deliveryTime: deliveryTime
+      ? deliveryTime.split("-")[0]  
+      : "",
+
+    // ✅ SAME AS SERVICE FORM
+    paymentDone: true,
+    workStatus: "pending",
+  });
+
+  message.success("Item added to cart");
+  onClose();
+};
+
 
   return (
     <div className="sw-br-form-wrapper">
@@ -153,35 +166,56 @@ const [otpError, setOtpError] = useState("");
               </div>
             </div>
 
-            <div className="sw-br-grid3">
-              <div className="sw-br-field3">
-                <label>Quantity</label>
+          {/* QUANTITY */}
+<div className="sw-br-grid3">
+  <div className="sw-br-field3">
+    <label>Quantity</label>
+    <div style={{ display: "flex", gap: "8px" }}>
+      <input
+        type="number"
+        min={1}
+        value={quantity}
+        onChange={(e) => setQuantity(Number(e.target.value))}
+      />
+      <select value={unit} onChange={(e) => setUnit(e.target.value)}>
+        <option value="kg">Kg</option>
+        <option value="ton">Tons</option>
+      </select>
+    </div>
+  </div>
+</div>
 
-                <div style={{ display: "flex", gap: "8px" }}>
-                  <input
-                    type="number"
-                    min={1}
-                    value={quantity}
-                    onChange={(e) => setQuantity(Number(e.target.value))}
-                  />
+{/* ✅ PREFERRED DATE + TIME (SAME ROW) */}
+<div className="sw-br-grid3">
+  <div className="sw-br-field3">
+    <label>Preferred Date</label>
+    <input
+      type="date"
+      name="deliveryDate"
+      value={deliveryDate}
+      min={new Date().toISOString().split("T")[0]}
+      onChange={(e) => setDeliveryDate(e.target.value)}
+    />
+  </div>
 
-                  <select value={unit} onChange={(e) => setUnit(e.target.value)}>
-                    <option value="kg">Kg</option>
-                    <option value="ton">Tons</option>
-                  </select>
-                </div>
-              </div>
+  <div className="sw-br-field3">
+    <label>Preferred Time Slot</label>
+    <select
+      name="deliveryTime"
+      value={deliveryTime}
+      onChange={(e) => setDeliveryTime(e.target.value)}
+    >
+      <option value="">Select</option>
+      <option value="09:00-11:00">09:00 AM - 11:00 AM</option>
+      <option value="11:00-13:00">11:00 AM - 01:00 PM</option>
+      <option value="13:00-15:00">01:00 PM - 03:00 PM</option>
+      <option value="15:00-17:00">03:00 PM - 05:00 PM</option>
+      <option value="17:00-19:00">05:00 PM - 07:00 PM</option>
+    </select>
+  </div>
+</div>
 
-              <div className="sw-br-field3">
-                <label>Delivery Date</label>
-                <input type="date" name="deliveryDate"
-                value={deliveryDate}
-                min={new Date().toISOString().split("T")[0]}   
-                onChange={(e) => setDeliveryDate(e.target.value)}
-                />
-              </div>
 
-            </div>
 
             <div className="sw-br-grid3">
 
