@@ -29,7 +29,7 @@ import {
 } from "@ant-design/icons";
 import ReactApexChart from "react-apexcharts";
 import "./appadmin.css";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import { getFreelancers } from "../../api/admin";
 
 
