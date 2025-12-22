@@ -1,5 +1,5 @@
 
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState,useEffect } from "react";
 import {
   Card,
   Row,
@@ -14,6 +14,12 @@ import {
   Popover,
   message,
 } from "antd";
+import { fetchAdminBookings } from "../../api/adminBookings";
+
+import type { Dayjs } from "dayjs"; 
+
+import type { BookingAPIResponse } from "../../api/adminBookings";
+
 
 import {
   HomeOutlined,
@@ -26,9 +32,13 @@ import {
 } from "@ant-design/icons";
 import ReactApexChart from "react-apexcharts";
 import "./appadmin.css";
+// import { useEffect } from "react";
+import { getFreelancers } from "../../api/admin";
+
 
 import { LogoutOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+
 
 
 const scaleTo300to700 = (value: number) => {
@@ -249,6 +259,7 @@ function generateBookings(): BookingRow[] {
     "Rajat Bhatt",
     "Isha Roy",
   ];
+  
   const workers = ["Rahul", "Neha", "Sunil", "Priyanka", "Asha", "Vijay", "Sathya", "Amit"];
   const locations = ["Mumbai", "Bengaluru", "Chennai", "Delhi", "Hyderabad", "Pune", "Kolkata"];
   let counter = 101;
@@ -380,75 +391,37 @@ type Assignee = {
   city: string;
   experience: string;
   jobsCompleted: number;
+  email?: string;
 };
 
 const ASSIGNEES: Assignee[] = [
-  {
-    id: "FR-101",
-    name: "Rahul Verma",
-    pan: "ABCDE1234F",
-    rating: 4.8,
-    type: "Freelancer",
-    phone: "+91 98765 43210",
-    city: "Bengaluru",
-    experience: "5 Years",
-    jobsCompleted: 320,
-  },
-  {
-    id: "VN-201",
-    name: "Shree Logistics Pvt Ltd",
-    pan: "AAECS9988Q",
-    rating: 4.7,
-    type: "Vendor",
-    phone: "+91 99887 66554",
-    city: "Mumbai",
-    experience: "10 Years",
-    jobsCompleted: 1450,
-  },
-  {
-    id: "FR-102",
-    name: "Neha Sharma",
-    pan: "BBDFS7766P",
-    rating: 4.6,
-    type: "Freelancer",
-    phone: "+91 91234 56789",
-    city: "Delhi",
-    experience: "4 Years",
-    jobsCompleted: 210,
-  },
-  {
-    id: "VN-202",
-    name: "QuickMove Services",
-    pan: "CCQMS4455R",
-    rating: 4.5,
-    type: "Vendor",
-    phone: "+91 90909 80808",
-    city: "Hyderabad",
-    experience: "8 Years",
-    jobsCompleted: 980,
-  },
-  {
-    id: "FR-103",
-    name: "Suresh Kumar",
-    pan: "DDKPS8899M",
-    rating: 4.4,
-    type: "Freelancer",
-    phone: "+91 93456 78123",
-    city: "Chennai",
-    experience: "6 Years",
-    jobsCompleted: 410,
-  },
-  {
-    id: "VN-203",
-    name: "SafeHands Facility Services",
-    pan: "EEFAC6677L",
-    rating: 4.3,
-    type: "Vendor",
-    phone: "+91 95555 44433",
-    city: "Pune",
-    experience: "12 Years",
-    jobsCompleted: 2100,
-  },
+  // ================= FREELANCERS =================
+  { id: "FR-101", name: "Rahul Verma", pan: "ABCDE1234F", rating: 4.8, type: "Freelancer", phone: "+91 98765 43210", city: "Bengaluru", experience: "5 Years", jobsCompleted: 320 },
+  { id: "FR-102", name: "Neha Sharma", pan: "BBDFS7766P", rating: 4.6, type: "Freelancer", phone: "+91 91234 56789", city: "Delhi", experience: "4 Years", jobsCompleted: 210 },
+  { id: "FR-103", name: "Suresh Kumar", pan: "DDKPS8899M", rating: 4.4, type: "Freelancer", phone: "+91 93456 78123", city: "Chennai", experience: "6 Years", jobsCompleted: 410 },
+  { id: "FR-104", name: "Arjun Patel", pan: "FFRTP5544A", rating: 4.5, type: "Freelancer", phone: "+91 98712 33445", city: "Ahmedabad", experience: "3 Years", jobsCompleted: 180 },
+  { id: "FR-105", name: "Pooja Nair", pan: "GGHJP8899Q", rating: 4.7, type: "Freelancer", phone: "+91 98111 22334", city: "Kochi", experience: "6 Years", jobsCompleted: 410 },
+  { id: "FR-106", name: "Manoj Singh", pan: "HHKLM3322Z", rating: 4.3, type: "Freelancer", phone: "+91 91222 77889", city: "Jaipur", experience: "4 Years", jobsCompleted: 260 },
+  { id: "FR-107", name: "Sana Khan", pan: "JJQWE9988L", rating: 4.6, type: "Freelancer", phone: "+91 90011 55667", city: "Bhopal", experience: "5 Years", jobsCompleted: 350 },
+  { id: "FR-108", name: "Ritesh Malhotra", pan: "RTHML4455K", rating: 4.2, type: "Freelancer", phone: "+91 98888 11223", city: "Ludhiana", experience: "2 Years", jobsCompleted: 120 },
+  { id: "FR-109", name: "Ayesha Farooq", pan: "AYSFR3322P", rating: 4.5, type: "Freelancer", phone: "+91 90909 44556", city: "Aligarh", experience: "4 Years", jobsCompleted: 240 },
+  { id: "FR-110", name: "Vikram Joshi", pan: "VKJSH8899Q", rating: 4.1, type: "Freelancer", phone: "+91 94444 77665", city: "Udaipur", experience: "3 Years", jobsCompleted: 160 },
+  { id: "FR-111", name: "Sneha Kulkarni", pan: "SNKLR5566H", rating: 4.7, type: "Freelancer", phone: "+91 95555 33221", city: "Kolhapur", experience: "6 Years", jobsCompleted: 480 },
+  { id: "FR-112", name: "Imran Shaikh", pan: "IMSHK6677N", rating: 4.4, type: "Freelancer", phone: "+91 96666 22119", city: "Aurangabad", experience: "5 Years", jobsCompleted: 300 },
+
+  // ================= VENDORS =================
+  { id: "VN-201", name: "Shree Logistics Pvt Ltd", pan: "AAECS9988Q", rating: 4.7, type: "Vendor", phone: "+91 99887 66554", city: "Mumbai", experience: "10 Years", jobsCompleted: 1450 },
+  { id: "VN-202", name: "QuickMove Services", pan: "CCQMS4455R", rating: 4.5, type: "Vendor", phone: "+91 90909 80808", city: "Hyderabad", experience: "8 Years", jobsCompleted: 980 },
+  { id: "VN-203", name: "SafeHands Facility Services", pan: "EEFAC6677L", rating: 4.3, type: "Vendor", phone: "+91 95555 44433", city: "Pune", experience: "12 Years", jobsCompleted: 2100 },
+  { id: "VN-204", name: "PrimeCare Solutions", pan: "PRMCS1234P", rating: 4.6, type: "Vendor", phone: "+91 98777 66554", city: "Indore", experience: "9 Years", jobsCompleted: 890 },
+  { id: "VN-205", name: "UrbanShift Logistics", pan: "URBSH7788T", rating: 4.4, type: "Vendor", phone: "+91 99881 22110", city: "Nagpur", experience: "7 Years", jobsCompleted: 760 },
+  { id: "VN-206", name: "GreenRoute Transport", pan: "GRNRT6655X", rating: 4.8, type: "Vendor", phone: "+91 90909 11223", city: "Coimbatore", experience: "11 Years", jobsCompleted: 1320 },
+  { id: "VN-207", name: "SwiftHands Services", pan: "SWFHS4433M", rating: 4.5, type: "Vendor", phone: "+91 95544 88990", city: "Noida", experience: "6 Years", jobsCompleted: 640 },
+  { id: "VN-208", name: "MetroServe Corp", pan: "METSV2211A", rating: 4.2, type: "Vendor", phone: "+91 91111 77889", city: "Gurgaon", experience: "5 Years", jobsCompleted: 520 },
+  { id: "VN-209", name: "RapidFleet India", pan: "RPDFL8899K", rating: 4.6, type: "Vendor", phone: "+91 92222 33445", city: "Surat", experience: "9 Years", jobsCompleted: 1100 },
+  { id: "VN-210", name: "CityLink Services", pan: "CTYLK5566Q", rating: 4.3, type: "Vendor", phone: "+91 93333 99887", city: "Vadodara", experience: "7 Years", jobsCompleted: 700 },
+  { id: "VN-211", name: "ProBuild Materials", pan: "PRBLD4433H", rating: 4.7, type: "Vendor", phone: "+91 94444 11223", city: "Raipur", experience: "13 Years", jobsCompleted: 1800 },
+  { id: "VN-212", name: "NorthStar Logistics", pan: "NRTHS6677L", rating: 4.5, type: "Vendor", phone: "+91 96666 77889", city: "Dehradun", experience: "8 Years", jobsCompleted: 950 },
 ];
 
 const FREELANCER_SKILLS: ServiceKey[] = [
@@ -458,25 +431,171 @@ const FREELANCER_SKILLS: ServiceKey[] = [
   "Raw Materials",
   "Education",
 ];
+const SERVICE_TYPE_MAP: Record<number, ServiceKey> = {
+  1: "Home Service",
+  2: "Transport",
+  3: "Buy/Sale/Rentals",
+  4: "Raw Materials",
+  5: "Education",
+};
+
+
+
+const SkillsCell: React.FC<{ skills: string[] }> = ({ skills }) => {
+  const [open, setOpen] = useState(false);
+
+  const visibleSkills = skills.slice(0, 2);
+  const remainingCount = skills.length - 2;
+
+  const popoverContent = (
+    <div className="skills-popup">
+      <div className="skills-popup-title">Services</div>
+
+      <div className="skills-popup-list">
+        {skills.map((skill) => (
+          <span key={skill} className="skill-popup-tag">
+            {skill}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+
+  return (
+    <Popover
+      content={popoverContent}
+      trigger="click"
+      placement="top"
+      open={open}
+      onOpenChange={setOpen}
+    >
+      <div className="skills-cell-wrap">
+        {/* ✅ Show first 2 ONLY when popover is CLOSED */}
+        {!open &&
+          visibleSkills.map((skill) => (
+            <span key={skill} className="skill-tag-premium">
+              {skill}
+            </span>
+          ))}
+
+        {/* View more toggle */}
+        {remainingCount > 0 && !open && (
+          <span className="skill-view-toggle">
+            +{remainingCount} more
+          </span>
+        )}
+
+        {/* When open, show only trigger text (keeps anchor position) */}
+        {open && (
+          <span className="skill-view-toggle active">
+            View services
+          </span>
+        )}
+      </div>
+    </Popover>
+  );
+};
+
 
 
 /* ---------------------- LandingDashboard ---------------------- */
 
 const Appadmin: React.FC = () => {
-  const [bookings, setBookings] = useState<BookingRow[]>(generateBookings());
-  const [openPopup, setOpenPopup] = useState<null | "freelancer" | "vendor">(null);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+//const [bookings, setBookings] = useState<BookingRow[]>(generateBookings());
+const [bookings, setBookings] = useState<BookingRow[]>([]);
+const [loadingBookings, setLoadingBookings] = useState(true);
+const [sidebarOpen, setSidebarOpen] = useState(false);
+const [openPopup, setOpenPopup] = useState<"freelancer" | "vendor" | null>(null);
 
+console.log(generateBookings);
+console.log(loadingBookings);
+// console.log(computeBookingStatsFromCount);
 
-  // 👇 PASTE HERE
-  
+const [pendingFreelancers, setPendingFreelancers] = useState(
+  ASSIGNEES.filter(a => a.type === "Freelancer")
+);
 
-  // rest of your code...
+const [pendingVendors, setPendingVendors] = useState(
+  ASSIGNEES.filter(a => a.type === "Vendor")
+);
 
+const [approvedVendors, setApprovedVendors] = useState<
+  typeof ASSIGNEES
+>([]);
 
+const [approvedFreelancers, setApprovedFreelancers] = useState<
+  typeof ASSIGNEES
+>([]);
+
+const approveFreelancer = (id: string) => {
+  setPendingFreelancers(prev => {
+    const selected = prev.find(f => f.id === id);
+    if (!selected) return prev;
+
+    setApprovedFreelancers(appr => [...appr, selected]);
+    return prev.filter(f => f.id !== id);
+  });
+};
+
+const approveVendor = (id: string) => {
+  setPendingVendors(prev => {
+    const selected = prev.find(v => v.id === id);
+    if (!selected) return prev;
+
+    setApprovedVendors(appr => [...appr, selected]);
+    return prev.filter(v => v.id !== id);
+  });
+};
 
 
   const navigate = useNavigate();
+    const [apiAssignees, setApiAssignees] = useState<Assignee[]>([]);
+  const [loadingAssignees, setLoadingAssignees] = useState(false);
+    useEffect(() => {
+    const loadFreelancers = async () => {
+      try {
+        setLoadingAssignees(true);
+
+        const data = await getFreelancers();
+
+
+    const mapped: Assignee[] = data.map((f: any) => {
+  let pan = "NA";
+  try {
+    const gov = f.government_id ? JSON.parse(f.government_id) : null;
+    if (gov?.type === "pan") pan = gov.number;
+  } catch {}
+
+  return {
+    id: `FR-${f.id}`,
+    name: `${f.first_name ?? ""} ${f.last_name ?? ""}`.trim(),
+    email: f.email,
+    phone: f.mobile,
+    city: f.address || "NA",
+    pan,
+
+    rating: 4,
+
+    type: "Freelancer",
+    experience: f.experience_summary || "N/A",
+
+    jobsCompleted: 0, 
+  };
+});
+
+
+        setApiAssignees(mapped);
+      } catch (err) {
+        console.error("Failed to load freelancers", err);
+      } finally {
+        setLoadingAssignees(false);
+      }
+    };
+
+    loadFreelancers();
+  }, []);
+  const MERGED_ASSIGNEES =
+    apiAssignees.length > 0 ? apiAssignees : ASSIGNEES;
 
   const handleLogout = () => {
     localStorage.clear();
@@ -487,6 +606,24 @@ const Appadmin: React.FC = () => {
 
 
 
+
+
+
+useEffect(() => {
+  if (openPopup === "freelancer") {
+    setPendingFreelancers(
+      ASSIGNEES.filter(a => a.type === "Freelancer")
+    );
+    setApprovedFreelancers([]);
+  }
+
+  if (openPopup === "vendor") {
+    setPendingVendors(
+      ASSIGNEES.filter(a => a.type === "Vendor")
+    );
+    setApprovedVendors([]);
+  }
+}, [openPopup]);
 
 
 
@@ -501,11 +638,52 @@ const [active, setActive] = useState<"Dashboard" | ServiceKey>("Dashboard");
   });
 
   const [showCustomPopover, setShowCustomPopover] = useState(false);
-  const [customRange, setCustomRange] = useState<any>([null, null]); // holds RangePicker moments
-
+const [customRange, setCustomRange] =
+  useState<[Dayjs | null, Dayjs | null]>([null, null]);
   // NEW: which preset is active (controls highlight)
   type PresetKey = "today" | "yesterday" | "last7" | "lastMonth" | "custom";
   const [activePreset, setActivePreset] = useState<PresetKey>("last7");
+
+  const mapBookingFromAPI = (b: BookingAPIResponse): BookingRow => ({
+  key: String(b.id),
+  bookingId: `SW-${b.id}`,
+  customerName: b.full_name,
+  serviceType: SERVICE_TYPE_MAP[b.service_type_id] ?? "Home Service",
+  amount: Number(b.service_price ?? 0),
+  date: b.preferred_date,
+  status: b.payment_done === 1 ? "Completed" : "Pending",
+  phone: b.mobile,
+  location: b.address,
+  assigned: "",
+});
+
+
+
+  useEffect(() => {
+  const loadBookings = async () => {
+    try {
+      setLoadingBookings(true);
+
+      const list = await fetchAdminBookings();
+
+      const mapped = list.map(mapBookingFromAPI);
+      setBookings(mapped);
+    } catch (err) {
+      console.error(err);
+      message.error("Failed to load bookings");
+    } finally {
+      setLoadingBookings(false);
+    }
+  };
+
+  loadBookings();
+}, []);
+
+
+
+
+ 
+
 
   
 
@@ -769,24 +947,22 @@ const columns = [
 const [assignOpen, setAssignOpen] = useState(false);
 const [assignRecord, setAssignRecord] = useState<BookingRow | null>(null);
 // ✅ Auto-shortlist assignees based on service type
-const shortlistedAssignees = useMemo(() => {
+const shortlistedAssigneesFromAPI = useMemo(() => {
   if (!assignRecord) return [];
 
   const service = assignRecord.serviceType;
 
-  // Small service → Freelancers
   if (SMALL_SERVICES.includes(service)) {
-    return ASSIGNEES.filter(a => a.type === "Freelancer");
+    return MERGED_ASSIGNEES.filter(a => a.type === "Freelancer");
   }
 
-  // Big service → Vendors
   if (BIG_SERVICES.includes(service)) {
-    return ASSIGNEES.filter(a => a.type === "Vendor");
+    return MERGED_ASSIGNEES.filter(a => a.type === "Vendor");
   }
 
-  // fallback
-  return ASSIGNEES;
-}, [assignRecord]);
+  return MERGED_ASSIGNEES;
+}, [assignRecord, MERGED_ASSIGNEES]);
+
 
 const openAssign = (record: BookingRow) => {
   setAssignRecord(record);
@@ -863,8 +1039,19 @@ const filteredBookings = bookings.filter(b => {
     const rejected = total - completed - pending;
     return { total, completed, pending, rejected };
   }
+  console.log(computeBookingStatsFromCount);
+  
 
-  const bookingStats = computeBookingStatsFromCount(aggregatedDynamic.bookingsCount);
+  //const bookingStats = computeBookingStatsFromCount(aggregatedDynamic.bookingsCount);
+  const bookingStats = useMemo(() => {
+  const total = bookings.length;
+  const completed = bookings.filter(b => b.status === "Completed").length;
+  const pending = bookings.filter(b => b.status === "Pending").length;
+  const rejected = bookings.filter(b => b.status === "Rejected").length;
+
+  return { total, completed, pending, rejected };
+}, [bookings]);
+
 
   const salesOptions = {
     chart: { toolbar: { show: false } },
@@ -1007,12 +1194,18 @@ const filteredBookings = bookings.filter(b => {
               <Popover
                 content={
                   <div style={{ padding: 8, minWidth: 320 }}>
-                    <RangePicker
-                      allowClear
-                      value={customRange}
-                      onChange={(vals) => setCustomRange(vals)}
-                      style={{ width: "100%", marginBottom: 8 }}
-                    />
+                <RangePicker
+                  allowClear
+                  value={customRange}
+                  onChange={(vals) => {
+                    if (!vals) {
+                      setCustomRange([null, null]); // ✅ handle clear
+                    } else {
+                      setCustomRange(vals);
+                    }
+                  }}
+                  style={{ width: "100%", marginBottom: 8 }}
+                />
                     <div style={{ display: "flex", gap: 8, justifyContent: "flex-end" }}>
                       <Button size="small" onClick={() => { setCustomRange([null, null]); setShowCustomPopover(false); }}>Cancel</Button>
                       <Button size="small" type="primary" onClick={onCustomApply}>Apply</Button>
@@ -1022,8 +1215,8 @@ const filteredBookings = bookings.filter(b => {
                 }
                 title="Select custom range"
                 trigger="click"
-                visible={showCustomPopover}
-                onVisibleChange={(vis) => setShowCustomPopover(vis)}
+                open={showCustomPopover}
+                onOpenChange={(vis) => setShowCustomPopover(vis)}
                 placement="bottomLeft"
               >
                 <Button
@@ -1328,166 +1521,256 @@ const filteredBookings = bookings.filter(b => {
           <strong>Customer:</strong> {assignRecord.customerName}
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-          {shortlistedAssignees.map((a) => (
-            <Card
-              key={a.id}
-              hoverable
-              style={{ borderRadius: 12, cursor: "pointer" }}
-            >
-              <Row gutter={16}>
-                <Col span={18}>
-                  <div style={{ fontWeight: 700, fontSize: 16 }}>
-                    {a.name}
-                  </div>
+      <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+  {loadingAssignees && (
+    <div style={{ textAlign: "center", padding: 16 }}>
+      Loading freelancers...
+    </div>
+  )}
 
-                  <div style={{ fontSize: 13, color: "#555", marginTop: 4 }}>
-                    {a.type} • ID: {a.id}
-                  </div>
+  {shortlistedAssigneesFromAPI.map((a) => (
+    <Card
+      key={a.id}
+      hoverable
+      style={{ borderRadius: 12, cursor: "pointer" }}
+    >
+      <Row gutter={16}>
+        <Col span={18}>
+          <div style={{ fontWeight: 700, fontSize: 16 }}>
+            {a.name}
+          </div>
 
-                  <div style={{ fontSize: 13, color: "#555" }}>
-                    PAN: {a.pan}
-                  </div>
+          <div style={{ fontSize: 13, color: "#555", marginTop: 4 }}>
+            {a.type} • ID: {a.id}
+          </div>
 
-                  <div style={{ fontSize: 13, color: "#555", marginTop: 6 }}>
-                    📍 {a.city} | 📞 {a.phone}
-                  </div>
+          <div style={{ fontSize: 13, color: "#555" }}>
+            PAN: {a.pan}
+          </div>
 
-                  <div style={{ fontSize: 13, color: "#555" }}>
-                    Experience: {a.experience} • Jobs: {a.jobsCompleted}
-                  </div>
-                </Col>
+          <div style={{ fontSize: 13, color: "#555", marginTop: 6 }}>
+            📍 {a.city} | 📞 {a.phone}
+          </div>
 
-                <Col span={6} style={{ textAlign: "right" }}>
-                  <div style={{ fontWeight: 700, fontSize: 16 }}>
-                    ⭐ {a.rating}
-                  </div>
+          <div style={{ fontSize: 13, color: "#555" }}>
+            Experience: {a.experience} • Jobs: {a.jobsCompleted}
+          </div>
+        </Col>
 
-                  <div
-                    style={{
-                      marginTop: 8,
-                      fontSize: 12,
-                      fontWeight: 600,
-                      color:
-                        a.type === "Vendor" ? "#1677ff" : "#52c41a",
-                    }}
-                  >
-                    {a.type}
-                  </div>
+        <Col span={6} style={{ textAlign: "right" }}>
+          <div style={{ fontWeight: 700, fontSize: 16 }}>
+            ⭐ {a.rating}
+          </div>
 
-                  <Button
-                    type="primary"
-                    size="small"
-                    style={{ marginTop: 12 }}
-                    onClick={() => handleAssign(a.name)}
-                  >
-                    Assign
-                  </Button>
-                </Col>
-              </Row>
-            </Card>
-          ))}
-        </div>
+          <div
+            style={{
+              marginTop: 8,
+              fontSize: 12,
+              fontWeight: 600,
+              color:
+                a.type === "Vendor" ? "#1677ff" : "#52c41a",
+            }}
+          >
+            {a.type}
+          </div>
+
+          <Button
+            type="primary"
+            size="small"
+            style={{ marginTop: 12 }}
+            onClick={() => handleAssign(a.name)}
+          >
+            Assign
+          </Button>
+        </Col>
+      </Row>
+    </Card>
+  ))}
+</div>
+
       </>
     )}
   </Modal>
+{/* ---------- FREELANCER / VENDOR POPUP ---------- */}
 <Modal
   open={!!openPopup}
-  title={openPopup === "freelancer" ? "Freelancers" : "Vendors"}
   onCancel={() => setOpenPopup(null)}
   footer={null}
-  width="95vw"
-  style={{ top: 20 }}
-  bodyStyle={{ height: "85vh", overflow: "auto" }}
+  width={1200}
   centered
+  bodyStyle={{ maxHeight: "75vh", overflowY: "auto" }}
 >
-  <div className="popup-table-wrap">
+  {/* ================= FREELANCER ================= */}
+  {openPopup === "freelancer" && (
+    <>
+      {/* Pending Freelancers */}
+      <div className="table-section">
+        <div className="table-title">
+          Pending Freelancers ({pendingFreelancers.length})
+        </div>
 
-    {/* ================= FREELANCER TABLE ================= */}
-    {openPopup === "freelancer" && (
-      <table className="popup-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>City</th>
-            <th>Skills</th>
-            <th>PAN</th>
-            <th>Experience</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
+        <div className="table-scroll">
+          <table className="popup-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>City</th>
+                <th>Skills</th>
+                <th>PAN</th>
+                <th>Experience</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
 
-        <tbody>
-          {ASSIGNEES.filter(a => a.type === "Freelancer").map(a => (
-            <tr key={a.id}>
-              <td>{a.name}</td>
-              <td>{a.pan}@email.com</td>
-              <td>{a.city}</td>
+            <tbody>
+              {pendingFreelancers.map(a => (
+                <tr key={a.id}>
+                  <td><strong>{a.name}</strong></td>
+                  <td>{a.pan}@email.com</td>
+                  <td>{a.city}</td>
+                  <td><SkillsCell skills={FREELANCER_SKILLS} /></td>
+                  <td>{a.pan}</td>
+                  <td>{a.experience}</td>
+                  <td className="actions">
+                    <button
+                      className="btn approve"
+                      onClick={() => approveFreelancer(a.id)}
+                    />
+                    <button className="btn reject" />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
 
-            <td>
-              <div className="skill-wrap">
-                {FREELANCER_SKILLS.map(skill => (
-                  <span key={skill} className="skill-chip">
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </td>
+      {/* Total Freelancers */}
+      <div className="table-section">
+        <div className="table-title">
+          Total Freelancers ({approvedFreelancers.length})
+        </div>
 
+        <div className="table-scroll">
+          <table className="popup-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>City</th>
+                <th>Skills</th>
+                <th>PAN</th>
+                <th>Experience</th>
+              </tr>
+            </thead>
 
-              <td><strong>{a.pan}</strong></td>
-              <td>{a.experience}</td>
+            <tbody>
+              {approvedFreelancers.map(a => (
+                <tr key={a.id}>
+                  <td><strong>{a.name}</strong></td>
+                  <td>{a.pan}@email.com</td>
+                  <td>{a.city}</td>
+                  <td><SkillsCell skills={FREELANCER_SKILLS} /></td>
+                  <td>{a.pan}</td>
+                  <td>{a.experience}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </>
+  )}
 
-              <td className="actions">
-                {/* <button className="btn view">👁 View</button> */}
-                <button className="btn approve">✓ Approve</button>
-                <button className="btn reject">✕ Reject</button>
-              </td>
+  {/* ================= VENDOR ================= */}
+  {openPopup === "vendor" && (
+  <>
+    {/* ================= PENDING VENDORS ================= */}
+    <div className="table-section">
+      <div className="table-title">
+        Pending Vendors ({pendingVendors.length})
+      </div>
+
+      <div className="table-scroll">
+        <table className="popup-table">
+          <thead>
+            <tr>
+              <th>Company Name</th>
+              <th>Email</th>
+              <th>City</th>
+              <th>GST</th>
+              <th>PAN</th>
+              <th>Business</th>
+              <th>Experience</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    )}
+          </thead>
 
-    {/* ================= VENDOR TABLE ================= */}
-    {openPopup === "vendor" && (
-      <table className="popup-table">
-        <thead>
-          <tr>
-            <th>Company Name</th>
-            <th>Email</th>
-            <th>City</th>
-            <th>GST Number</th>
-            <th>PAN</th>
-            <th>Business Type</th>
-            <th>Experience</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
+          <tbody>
+            {pendingVendors.map(v => (
+              <tr key={v.id}>
+                <td><strong>{v.name}</strong></td>
+                <td>{v.pan}@company.com</td>
+                <td>{v.city}</td>
+                <td>GST-PENDING</td>
+                <td>{v.pan}</td>
+                <td>Service Provider</td>
+                <td>{v.experience}</td>
+                <td className="actions">
+                  <button
+                    className="btn approve"
+                    onClick={() => approveVendor(v.id)}
+                  >
+                    ✓ Approve
+                  </button>
+                  <button className="btn reject">✕ Reject</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
 
-        <tbody>
-          {ASSIGNEES.filter(a => a.type === "Vendor").map(v => (
-            <tr key={v.id}>
-              <td><strong>{v.name}</strong></td>
-              <td>{v.pan}@company.com</td>
-              <td>{v.city}</td>
-              <td>GST-PENDING</td>
-              <td><strong>{v.pan}</strong></td>
-              <td>Service Provider</td>
-              <td>{v.experience}</td>
+    {/* ================= TOTAL VENDORS ================= */}
+    <div className="table-section">
+      <div className="table-title">
+        Total Vendors ({approvedVendors.length})
+      </div>
 
-              <td className="actions">
-                {/* <button className="btn view">👁 View</button> */}
-                <button className="btn approve">✓ Approve</button>
-                <button className="btn reject">✕ Reject</button>
-              </td>
+      <div className="table-scroll">
+        <table className="popup-table">
+          <thead>
+            <tr>
+              <th>Company Name</th>
+              <th>Email</th>
+              <th>City</th>
+              <th>GST</th>
+              <th>PAN</th>
+              <th>Business</th>
+              <th>Experience</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    )}
-  </div>
+          </thead>
+
+          <tbody>
+            {approvedVendors.map(v => (
+              <tr key={v.id}>
+                <td><strong>{v.name}</strong></td>
+                <td>{v.pan}@company.com</td>
+                <td>{v.city}</td>
+                <td>GST-APPROVED</td>
+                <td>{v.pan}</td>
+                <td>Service Provider</td>
+                <td>{v.experience}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </>
+)}
 </Modal>
 </div>
 );
