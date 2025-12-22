@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
+
 import { Row, Col, Modal } from 'antd';
 // import { HomeOutlined } from '@ant-design/icons';
 import ServiceCard from './ServiceCard';
@@ -22,20 +23,73 @@ interface ListingContext {
   typeId: string;
 }
 
-const ServicesPage: React.FC = () => {
+interface ServicesPageProps {
+  searchQuery?: string;
+  clearSearch?: () => void;
+}
+
+const ServicesPage: React.FC<ServicesPageProps> = ({
+  searchQuery = "",
+  clearSearch,
+}) => {
+
   const [activeModal, setActiveModal] = useState<ServiceModalType>(null);
   const [listingContext, setListingContext] = useState<ListingContext | null>(null);
   const [selectedPropertyId, setSelectedPropertyId] = useState<string | null>(null);
+  const RENTAL_KEYWORDS = {
+  residential: [
+    "house",
+    "apartment",
+    "flat",
+    "independent",
+    "1 bhk",
+    "2 bhk",
+    "3 bhk",
+    "villa",
+  ],
+  commercial: [
+    "commercial",
+    "office",
+    "shop",
+    "warehouse",
+    "startup",
+    "open plot",
+  ],
+};
+
 
   const showTypeModal = !!activeModal && !listingContext;
   const showListingsModal = !!listingContext && !selectedPropertyId;
   const showDetailsModal = !!selectedPropertyId;
 
-  const closeAllModals = () => {
-    setSelectedPropertyId(null);
-    setListingContext(null);
-    setActiveModal(null);
-  };
+ const closeAllModals = () => {
+  setSelectedPropertyId(null);
+  setListingContext(null);
+  setActiveModal(null);
+  clearSearch?.(); // ✅ clear only AFTER closing
+};
+useEffect(() => {
+  if (!searchQuery) return;
+
+  const q = searchQuery.toLowerCase();
+
+  // 🏠 AUTO OPEN RESIDENTIAL RENTAL
+  if (RENTAL_KEYWORDS.residential.some(word => q.includes(word))) {
+    if (activeModal !== "residential") {
+      setActiveModal("residential");
+    }
+    return;
+  }
+
+  // 🏢 AUTO OPEN COMMERCIAL RENTAL
+  if (RENTAL_KEYWORDS.commercial.some(word => q.includes(word))) {
+    if (activeModal !== "commercial") {
+      setActiveModal("commercial");
+    }
+  }
+}, [searchQuery, activeModal]);
+
+
 
   const handleResidentialTypeSelect = (typeId: string) => {
     setListingContext({ category: 'residential', typeId });

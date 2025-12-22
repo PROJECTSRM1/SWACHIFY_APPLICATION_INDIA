@@ -1,5 +1,6 @@
 // src/pages/.../HomeServices.tsx
-import  { useState } from "react";
+import { useState, useEffect } from "react";
+
 import { Card, Button,  Modal } from "antd";
 // import "../../../index.css";
 import { popupData } from "./popupData"; // existing
@@ -24,7 +25,16 @@ import ServiceRequestForm from "./ServiceDetailsForm";
 // If your CleaningService lives elsewhere, fix the path accordingly.
 import CleaningService from "../cleaningservice/CleaningService";
 
-export default function HomeServices() {
+interface HomeServicesProps {
+  searchQuery?: string;
+  clearSearch?: () => void;
+}
+
+export default function HomeServices({
+  searchQuery = "",
+  clearSearch,
+}: HomeServicesProps) {
+
   const [selectedService, setSelectedService] = useState<PopupCategory | null>(null);
   const [selectedSubService, setSelectedSubService] = useState<any>(null);
 
@@ -35,6 +45,78 @@ export default function HomeServices() {
   const [cleaningModalOpen, setCleaningModalOpen] = useState(false);
 
   const [showAll, setShowAll] = useState(false);
+  const SERVICE_KEYWORD_MAP: Record<string, string[]> = {
+  "Cleaning Services": [
+    "clean",
+    "cleaning",
+    "bedroom",
+    "kitchen cleaning",
+    "bathroom cleaning",
+  ],
+  "Electrical Services": [
+    "electrical",
+    "electrician",
+    "wiring",
+    "fan",
+    "circuit",
+    "Switchboard",
+    "Smart Home",
+  ],
+  "Plumbing Service": [
+    "plumbing",
+    "plumber",
+    "pipe",
+    "leak",
+    "geyser installation",
+    "bathroom fitting",
+    "drain",
+    "water",
+  ],
+  "Appliances Repair": [
+    "appliance",
+    "washing machine",
+    "fridge",
+    "refrigerator",
+    "ac",
+    "Microwave",
+    "painting",
+    "tv",
+  ],
+};
+
+ useEffect(() => {
+  if (!searchQuery) return;
+
+  const q = searchQuery.toLowerCase();
+
+  for (const serviceTitle in SERVICE_KEYWORD_MAP) {
+    const keywords = SERVICE_KEYWORD_MAP[serviceTitle];
+
+    const matched = keywords.some(k => q.includes(k));
+
+    if (!matched) continue;
+
+    // 🔹 Cleaning → open Cleaning modal
+    if (serviceTitle === "Cleaning Services") {
+      if (!cleaningModalOpen) {
+        setCleaningModalOpen(true);
+      }
+      return;
+    }
+
+    // 🔹 Other services → open details popup
+    const data = popupData[serviceTitle];
+    if (!data) return;
+
+    setSelectedService(data);
+    setSelectedSubService(null);
+    setDetailsPopupOpen(true);
+    setFormPopupOpen(false);
+
+    return;
+  }
+}, [searchQuery, cleaningModalOpen]);
+
 
   const services = [
     { title: "Cleaning Services", description: "Professional cleaning service", price: "$120", image: cleaningservices },
@@ -154,7 +236,9 @@ export default function HomeServices() {
 
 <Modal
   open={cleaningModalOpen}
-  onCancel={() => setCleaningModalOpen(false)}
+  onCancel={() => {setCleaningModalOpen(false);
+    clearSearch?.();
+  }}
   footer={null}
   width="95%"
   centered

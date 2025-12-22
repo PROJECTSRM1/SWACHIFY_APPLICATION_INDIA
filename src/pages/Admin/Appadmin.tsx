@@ -511,9 +511,8 @@ console.log(generateBookings);
 console.log(loadingBookings);
 // console.log(computeBookingStatsFromCount);
 
-const [pendingFreelancers, setPendingFreelancers] = useState(
-  ASSIGNEES.filter(a => a.type === "Freelancer")
-);
+const [pendingFreelancers, setPendingFreelancers] = useState<Assignee[]>([]);
+
 
 const [pendingVendors, setPendingVendors] = useState(
   ASSIGNEES.filter(a => a.type === "Vendor")
@@ -605,14 +604,10 @@ const approveVendor = (id: string) => {
   };
 
 
-
-
-
-
 useEffect(() => {
   if (openPopup === "freelancer") {
     setPendingFreelancers(
-      ASSIGNEES.filter(a => a.type === "Freelancer")
+      MERGED_ASSIGNEES.filter(a => a.type === "Freelancer")
     );
     setApprovedFreelancers([]);
   }
@@ -623,7 +618,7 @@ useEffect(() => {
     );
     setApprovedVendors([]);
   }
-}, [openPopup]);
+}, [openPopup, MERGED_ASSIGNEES]);
 
 
 
@@ -1626,7 +1621,7 @@ const filteredBookings = bookings.filter(b => {
               {pendingFreelancers.map(a => (
                 <tr key={a.id}>
                   <td><strong>{a.name}</strong></td>
-                  <td>{a.pan}@email.com</td>
+                  <td>{a.email || "NA"}</td>
                   <td>{a.city}</td>
                   <td><SkillsCell skills={FREELANCER_SKILLS} /></td>
                   <td>{a.pan}</td>
@@ -1668,7 +1663,7 @@ const filteredBookings = bookings.filter(b => {
               {approvedFreelancers.map(a => (
                 <tr key={a.id}>
                   <td><strong>{a.name}</strong></td>
-                  <td>{a.pan}@email.com</td>
+                <td>{a.email || "NA"}</td>
                   <td>{a.city}</td>
                   <td><SkillsCell skills={FREELANCER_SKILLS} /></td>
                   <td>{a.pan}</td>
