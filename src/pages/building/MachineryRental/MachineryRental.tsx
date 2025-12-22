@@ -15,11 +15,12 @@ const machinery = [
 ];
 
 interface FormProps {
-  id: number;
-  onClose: () => void;
+  id?: number;
+  onClose?: () => void;
 }
 
-const MachineryDetails: React.FC<FormProps> = ({ id, onClose }) => {
+const MachineryDetails: React.FC<FormProps> = ({ id = 1,
+  onClose }) => {
   const machine = machinery.find((item) => item.id === id);
   const { addToCart } = useCart();
   const formRef = useRef<HTMLFormElement>(null);
@@ -90,7 +91,7 @@ const MachineryDetails: React.FC<FormProps> = ({ id, onClose }) => {
   });
 
   message.success("Item added to cart");
-  onClose();
+  onClose?.();
 }; 
 
 
