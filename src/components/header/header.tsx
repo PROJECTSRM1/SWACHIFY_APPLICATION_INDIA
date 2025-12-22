@@ -24,11 +24,11 @@ type Booking = {
   title: string;
   date: string;
   time: string;
-  status: "Upcoming" | "Completed" | "Expired";
   amount: number;
   image?: string;
   paymentDone: boolean;
 };
+
 
 
 const LS_BOOKINGS_KEY = "bookings";
@@ -300,16 +300,29 @@ const handleLogout = async () => {
         />
 
         {/* RECENT BOOKING OVERLAY */}
-        {showBookingPage && (
-          <div className="sw-booking-page-overlay" onClick={() => setShowBookingPage(false)}>
-            <div className="sw-booking-page-content" onClick={(e) => e.stopPropagation()}>
-              <button className="sw-booking-page-close" onClick={() => setShowBookingPage(false)}>
-                <CloseOutlined />
-              </button>
-              <RecentBookingPage />
-            </div>
-          </div>
-        )}
+        {/* RECENT BOOKING OVERLAY */}
+{showBookingPage && (
+  <div
+    className="sw-booking-page-overlay"
+    onClick={() => setShowBookingPage(false)}
+  >
+    <div
+      className="sw-booking-page-content"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <button
+        className="sw-booking-page-close"
+        onClick={() => setShowBookingPage(false)}
+      >
+        <CloseOutlined />
+      </button>
+
+      {/* ✅ THIS WAS MISSING */}
+      <RecentBookingPage />
+    </div>
+  </div>
+)}
+
 
         {/* PAYMENT OVERLAY */}
        

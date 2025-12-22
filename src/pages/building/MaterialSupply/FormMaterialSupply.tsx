@@ -26,11 +26,14 @@ interface FormProps {
 const EquipmentDetails: React.FC<FormProps> = ({ id, onClose }) => {
   const material = materials.find((item) => item.id === id);
 
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(1);
   const [unit, setUnit] = useState("kg"); 
 
   const [deliveryType, setDeliveryType] = useState("");
   const [unloading, setUnloading] = useState(false);
+  const [preferredDate, setPreferredDate] = useState("");
+const [preferredTime, setPreferredTime] = useState("");
+
 
   const [showOtpFields, setShowOtpFields] = useState(false);
 const [otpVerified, setOtpVerified] = useState(false);
@@ -54,46 +57,84 @@ const [otpError, setOtpError] = useState("");
   const totalPrice = basePrice + deliveryCharge + unloadingCharge;
 
   const { addToCart } = useCart();
+const handleReset = () => {
+  formRef.current?.reset();
+  setQuantity(1);
+  setUnit("kg");
+  setDeliveryType("");
+  setUnloading(false);
+};
 
-  const handleReset = () => {
-    formRef.current?.reset();
-    setQuantity(0);
-    setUnit("kg");
-    setDeliveryType("");
-    setUnloading(false);
-  };
+const handleAddToCart = () => {
 
-  const handleAddToCart = () => {
-    const customerName = (formRef.current?.elements.namedItem("customerName") as HTMLInputElement)?.value;
-    const deliveryDate = (formRef.current?.elements.namedItem("deliveryDate") as HTMLInputElement)?.value;
-    const email = (formRef.current?.elements.namedItem("email") as HTMLInputElement)?.value?.trim(); 
-    const contact = (formRef.current?.elements.namedItem("contact") as HTMLInputElement)?.value;
-    const address = (formRef.current?.elements.namedItem("address") as HTMLTextAreaElement)?.value;
-    const instructions = (formRef.current?.elements.namedItem("instructions") as HTMLTextAreaElement)?.value;
+  if (!deliveryType) {
+  message.error("Please select delivery type (Pick-up or Door Delivery)");
+  return;
+}
 
-    addToCart({
-      id: material.id,
-      title: material.title,
-      image: material.img,
-      quantity: finalQuantity, 
-      price: material.price,
-      basePrice,
-      deliveryCharge,
-      unloadingCharge,
-      totalPrice,
-      unit, 
-      email,
-      customerName,
-      deliveryType,
-      deliveryDate,
-      contact,
-      address,
-      instructions,
-    });
+  if (finalQuantity <= 0) {
+  message.error("Quantity must be at least 1");
+  return;
+}
 
-    message.success("Item added to cart");
-    onClose();
-  };
+  if (!preferredDate || !preferredTime) {
+  message.error("Please select preferred date and time slot");
+  return;
+}
+
+  const customerName = (formRef.current?.elements.namedItem(
+    "customerName"
+  ) as HTMLInputElement)?.value;
+
+  const email = (formRef.current?.elements.namedItem(
+    "email"
+  ) as HTMLInputElement)?.value;
+
+  const contact = (formRef.current?.elements.namedItem(
+    "contact"
+  ) as HTMLInputElement)?.value;
+
+  const address = (formRef.current?.elements.namedItem(
+    "address"
+  ) as HTMLTextAreaElement)?.value;
+
+  const instructions = (formRef.current?.elements.namedItem(
+    "instructions"
+  ) as HTMLTextAreaElement)?.value;
+
+  addToCart({
+    id: Date.now(),
+    title: material.title,
+    image: material.img,
+
+    quantity: finalQuantity,
+    unit,
+    price: material.price,
+    basePrice,
+    deliveryCharge,
+    unloadingCharge,
+    totalPrice,
+
+    customerName,
+    email,
+    contact,
+    address,
+    instructions,
+
+    deliveryType,
+    deliveryDate: preferredDate,
+    deliveryTime: preferredTime.split("-")[0],
+      
+
+   paymentDone: true, // or remove it completely
+workStatus: "pending",
+
+  });
+
+  // ✅ THESE TWO LINES WERE MISSING
+  message.success("Item added to cart");
+  onClose();
+};
 
   return (
     <div className="sw-br-modal">
@@ -160,11 +201,12 @@ const [otpError, setOtpError] = useState("");
                   <label>Quantity</label>
                   <div style={{ display: "flex", gap: "8px" }}>
                     <input
-                      type="number"
-                      min={0}
-                      value={quantity}
-                      onChange={(e) => setQuantity(Number(e.target.value))}
-                    />
+  type="number"
+  min={1}
+  value={quantity}
+  onChange={(e) => setQuantity(Math.max(1, Number(e.target.value)))}
+/>
+
 
                     <select value={unit} onChange={(e) => setUnit(e.target.value)}>
                       <option value="kg">Kg</option>
@@ -172,12 +214,35 @@ const [otpError, setOtpError] = useState("");
                     </select>
                   </div>
                 </div>
+<div className="sw-br-row">
 
-                <div className="sw-br-field">
-                  <label>Delivery Date</label>
-                  <input type="date" name="deliveryDate"
-                  min={new Date().toISOString().split("T")[0]}/>
-                </div>
+  <div className="sw-br-field">
+    <label>Preferred Date</label>
+    <input
+      type="date"
+      value={preferredDate}
+      min={new Date().toISOString().split("T")[0]}
+      onChange={(e) => setPreferredDate(e.target.value)}
+    />
+  </div>
+
+  <div className="sw-br-field">
+    <label>Preferred Time Slot</label>
+    <select
+      value={preferredTime}
+      onChange={(e) => setPreferredTime(e.target.value)}
+    >
+      <option value="">Select</option>
+      <option value="09:00-11:00">09:00 AM - 11:00 AM</option>
+      <option value="11:00-13:00">11:00 AM - 01:00 PM</option>
+      <option value="13:00-15:00">01:00 PM - 03:00 PM</option>
+      <option value="15:00-17:00">03:00 PM - 05:00 PM</option>
+      <option value="17:00-19:00">05:00 PM - 07:00 PM</option>
+    </select>
+  </div>
+
+</div>
+
               </div>
                   {/* EMAIL + CONTACT — SIDE BY SIDE */}
 {/* EMAIL + CONTACT */}

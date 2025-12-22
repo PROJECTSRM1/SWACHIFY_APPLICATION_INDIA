@@ -6,7 +6,7 @@ export interface CartItem {
   title: string;
   image: string;
   quantity: number;
-  price: string|number;
+  price: string | number;
   totalPrice: number;
 
   basePrice?: number;
@@ -16,15 +16,23 @@ export interface CartItem {
   unloadingCharge?: number;
   unit?: string;
 
-
   customerName: string;
-  email?: string; 
+  email: string;
+
   deliveryType: string;
-  deliveryDate: string;
+  deliveryDate: string;     // YYYY-MM-DD
+  deliveryTime: string;     // ✅ ADD THIS (HH:mm or hh:mm A)
+
   contact: string;
   address: string;
   instructions: string;
+
+    // ✅ ADD THESE TWO LINES
+  paymentDone?: boolean;
+  workStatus?: "pending" | "completed";
+
 }
+
 
 
 interface CartContextType {
