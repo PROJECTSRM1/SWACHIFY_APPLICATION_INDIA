@@ -1,4 +1,3 @@
-// src/pages/RecentBookingPage.tsx
 import React, { useEffect, useMemo, useState } from "react";
 import { List, Card, Image, Tag, Row, Col } from "antd";
 import dayjs from "dayjs";
@@ -12,8 +11,8 @@ dayjs.extend(customParseFormat);
 type Booking = {
   id: string;
   title: string;
-  date: string; // YYYY-MM-DD
-  time: string; // "HH:mm" OR "hh:mm A"
+  date: string;      // YYYY-MM-DD
+  time: string;      // HH:mm or hh:mm A
   amount: number;
   image?: string;
   paymentDone: boolean;
@@ -25,6 +24,7 @@ const LS_BOOKINGS_KEY = "bookings";
 
 const STATUS_META = {
   Upcoming: { color: "blue", label: "Upcoming" },
+  InProgress: { color: "gold", label: "In Progress" },
   Completed: { color: "green", label: "Completed" },
   Expired: { color: "red", label: "Expired" },
 } as const;
@@ -33,8 +33,21 @@ const STATUS_META = {
 
 type Status = keyof typeof STATUS_META;
 
+/**
+ * STATUS RULES (EXACTLY AS REQUESTED)
+ *
+ * 1. Paid + slot not over  -> In Progress
+ *    - show Payment Successful
+ *    - show Work Pending
+ *
+ * 2. Paid + slot over      -> Completed
+ *    - hide payment/work blocks
+ *
+ * 3. Unpaid + slot over    -> Expired
+ *
+ * 4. Unpaid + slot future  -> Upcoming
+ */
 const computeStatus = (b: Booking): Status => {
-  // 🔥 STRICT parsing (NO browser Date guessing)
   const slotDateTime = dayjs(
     `${b.date} ${b.time}`,
     ["YYYY-MM-DD HH:mm", "YYYY-MM-DD hh:mm A"],
@@ -43,16 +56,26 @@ const computeStatus = (b: Booking): Status => {
 
   if (!slotDateTime.isValid()) {
     console.error("INVALID SLOT DATETIME:", b.date, b.time);
-    return "Upcoming"; // safe fallback
+    return "Upcoming";
   }
 
   const now = dayjs();
+  const slotOver = now.isAfter(slotDateTime);
 
-  // 🔴 Slot time over → ALWAYS expired
-  if (now.isAfter(slotDateTime)) return "Expired";
+  // ❌ unpaid + slot over
+  if (!b.paymentDone && slotOver) {
+    return "Expired";
+  }
 
-  // 🟢 Slot still valid
-  if (b.paymentDone) return "Completed";
+  // ✅ paid + slot over (auto complete)
+  if (b.paymentDone && slotOver) {
+    return "Completed";
+  }
+
+  // 🟡 paid + slot not over
+  if (b.paymentDone && !slotOver) {
+    return "InProgress";
+  }
 
   return "Upcoming";
 };
@@ -62,7 +85,7 @@ const computeStatus = (b: Booking): Status => {
 const RecentBookingPage: React.FC = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);
 
-  /* Load bookings */
+  /* Load bookings from localStorage */
   useEffect(() => {
     try {
       const raw = localStorage.getItem(LS_BOOKINGS_KEY);
@@ -72,7 +95,7 @@ const RecentBookingPage: React.FC = () => {
     }
   }, []);
 
-  /* ⏱ Re-render every 30 seconds (for expiry) */
+  /* ⏱ Re-render every 30 seconds (auto complete / expiry) */
   useEffect(() => {
     const timer = setInterval(() => {
       setBookings((prev) => [...prev]);
@@ -140,15 +163,28 @@ const RecentBookingPage: React.FC = () => {
                     <div style={{ fontSize: 18, fontWeight: 700 }}>
                       {item.title}
                     </div>
+
                     <div style={{ color: "#6b7280", fontSize: 14 }}>
                       <div>Date: {item.date}</div>
                       <div>Time: {item.time}</div>
                       <div>Amount: ₹{item.amount}</div>
                     </div>
+
+                    {/* ✅ PAYMENT & WORK BLOCK (ONLY IN PROGRESS) */}
+                    {status === "InProgress" && (
+                      <div style={{ marginTop: 6 }}>
+                        <div style={{ color: "green", fontWeight: 500 }}>
+                          Payment: Successful
+                        </div>
+                        <div style={{ color: "#d97706", fontWeight: 500 }}>
+                          Work: Pending
+                        </div>
+                      </div>
+                    )}
                   </Col>
 
-                  {/* STATUS */}
-                  <Col flex="90px">
+                  {/* STATUS BADGE */}
+                  <Col flex="110px">
                     <Tag
                       color={meta.color}
                       style={{ padding: "6px 12px", fontWeight: 600 }}

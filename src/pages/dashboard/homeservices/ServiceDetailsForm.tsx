@@ -67,16 +67,31 @@ export default function ServiceRequestForm({
     const extraPrice = selectedIssue?.price ?? 0;
     const finalPrice = basePrice + extraPrice;
 
-    const payload = {
-      id: Date.now(),
-      title,
-      image,
-      totalPrice: finalPrice,
-      basePrice,
-      issueExtraPrice: extraPrice,
-      ...values,
-      preferredDate: values.preferredDate?.format("YYYY-MM-DD"),
-    };
+   const payload = {
+  id: Date.now(),
+  title,
+  image,
+  quantity: 1,
+  price: finalPrice,
+  totalPrice: finalPrice,
+
+  // ✅ REQUIRED BY CartItem
+  customerName: values.fullName,
+  email: values.email,
+  contact: values.mobile,
+  address: values.locationArea,
+  instructions: values.problemDescription,
+
+  deliveryType: "home",
+
+  // ✅ CRITICAL FIX (THIS IS THE BUG)
+  deliveryDate: values.preferredDate.format("YYYY-MM-DD"),
+  deliveryTime: values.preferredTime.split("-")[0], // "09:00"
+
+
+  basePrice,
+  issueExtraPrice: extraPrice,
+};
 
     addToCart(payload);
     onSubmit(payload);
@@ -399,7 +414,7 @@ export default function ServiceRequestForm({
                   { label: "09:00 AM - 11:00 AM", value: "09:00-11:00" },
                   { label: "11:00 AM - 01:00 PM", value: "11:00-13:00" },
                   { label: "01:00 PM - 03:00 PM", value: "13:00-15:00" },
-                  { label: "03:00 PM - 05:00 PM", value: "15:00-17:00" },
+                  { label: "02:05 PM - 05:00 PM", value: "14:05-17:00" },
                   { label: "05:00 PM - 07:00 PM", value: "17:00-19:00" },
                 ]}
               />

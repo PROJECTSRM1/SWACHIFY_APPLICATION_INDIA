@@ -11,6 +11,10 @@ type CartItemLike = {
   quantity?: number;
   totalPrice?: number;
   image?: string;
+
+  // ✅ REQUIRED FOR BOOKING SLOT
+  deliveryDate?: string;   // YYYY-MM-DD
+  deliveryTime?: string;   // HH:mm or hh:mm A
 };
 
 export type Booking = {
@@ -18,11 +22,11 @@ export type Booking = {
   title: string;
   date: string;
   time: string;
-  status: "Upcoming" | "Completed" | "Expired";
   amount: number;
   image?: string;
   paymentDone: boolean;
 };
+
 
 type Props = {
   open: boolean;
@@ -77,11 +81,11 @@ export default function ConfirmAddressModal({
               response.razorpay_signature
             );
 
-            const completedBooking: Booking = {
-              ...booking,
-              paymentDone: true,
-              status: "Completed",
-            };
+           const completedBooking: Booking = {
+  ...booking,
+  paymentDone: true,   // ✅ ONLY THIS
+};
+
 
             message.success("Payment successful");
 
@@ -108,27 +112,33 @@ export default function ConfirmAddressModal({
   /* ---------- CONFIRM ---------- */
 
   const handleOk = async () => {
-    try {
-      await form.validateFields();
+  try {
+    await form.validateFields();
 
-      const now = new Date();
-      const booking: Booking = {
-        id: `bkg-${Date.now()}`,
-        title: item.title ?? "Service",
-        date: now.toISOString().split("T")[0],
-        time: now.toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit",
-        }),
-        status: "Upcoming",
-        amount: item.totalPrice ?? 0,
-        image: item.image,
-        paymentDone: false,
-      };
+    // ✅ HARD GUARD
+    if (!item.deliveryDate || !item.deliveryTime) {
+      message.error("Please select service date & time");
+      return;
+    }
 
-      handlePayment(booking);
-    } catch {}
-  };
+    const booking: Booking = {
+      id: `bkg-${Date.now()}`,
+      title: item.title ?? "Service",
+
+      // ✅ USER-SELECTED SLOT (ONLY SOURCE OF TRUTH)
+      date: item.deliveryDate,
+      time: item.deliveryTime,
+
+      amount: item.totalPrice ?? 0,
+      image: item.image,
+      paymentDone: false,
+    };
+
+    handlePayment(booking);
+  } catch {}
+};
+
+      
 
   /* ---------- UI ---------- */
 

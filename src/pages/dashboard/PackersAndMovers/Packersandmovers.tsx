@@ -5,6 +5,7 @@ message.config({
   duration: 2,
   maxCount: 1,
 });
+import dayjs from "dayjs";
 
 import React, { useEffect, useRef, useState } from "react";
 import {
@@ -104,7 +105,6 @@ const cardsData: CardItem[] = [
         formSchema: [
           { name: "pickup", label: "Pickup Address", type: "text", required: true, placeholder: "Pickup address" },
           { name: "dropoff", label: "Drop-off Address", type: "text", required: true, placeholder: "Drop-off address" },
-          { name: "dateTime", label: "Pickup Date & Time", type: "date", required: true },
           { name: "passengers", label: "Passengers", type: "number", required: true },
           { name: "luggage", label: "Luggage Count", type: "number" },
           { name: "needChildSeat", label: "Need Child Seat", type: "checkbox" },
@@ -181,7 +181,6 @@ const cardsData: CardItem[] = [
           { name: "shipmentType", label: "Shipment Type", type: "select", required: true, options: [{ label: "Air", value: "air" }, { label: "Sea", value: "sea" }, { label: "Road", value: "road" }] },
           { name: "weight", label: "Weight (kg)", type: "number", required: true },
           { name: "dimensions", label: "Dimensions (LxWxH)", type: "text" },
-          { name: "pickupDate", label: "Pickup Date", type: "date" },
         ],
       },
     ],
@@ -249,7 +248,6 @@ const cardsData: CardItem[] = [
         formSchema: [
           { name: "hazardType", label: "Hazard Type", type: "select", required: true, options: [{ label: "Chemical", value: "chemical" }, { label: "Battery", value: "battery" }, { label: "Other", value: "other" }] },
           { name: "netWeight", label: "Net Weight (kg)", type: "number", required: true },
-          { name: "pickupDate", label: "Pickup Date", type: "date" },
           { name: "complianceDocs", label: "Attach docs (URL)", type: "text" },
         ],
       },
@@ -419,21 +417,37 @@ const [emailOtp, setEmailOtp] = useState("");
       const n = parseFloat(p.replace(/[^0-9.-]+/g, ""));
       return isNaN(n) ? 0 : n;
     })();
-    const cartItem = {
-      id: cartId,
-      title: payload.serviceTitle,
-      image: selectedImage.src || "",
-      quantity: 1,
-      price: String(payload.servicePrice || selectedImage.price || "0"),
-      totalPrice: parsedPrice * 1,
-      customerName: payload.customerName || "",
-      email: payload.email||"",
-      deliveryType: payload.deliveryType || payload.rentalType || "",
-      deliveryDate: payload.date || payload.serviceDate || payload.deliveryDate || "",
-      contact: payload.contact || "",
-      address: payload.address || "",
-      instructions: payload.instructions || "",
-    };
+   const cartItem = {
+  id: cartId,
+  title: payload.serviceTitle,
+  image: selectedImage.src || "",
+  quantity: 1,
+  price: String(payload.servicePrice || selectedImage.price || "0"),
+  totalPrice: parsedPrice,
+
+  customerName: payload.fullName || "",
+  email: payload.email || "",
+  contact: payload.mobile || "",
+  address: payload.address || "",
+  instructions: payload.instructions || "",
+
+  deliveryType: "transport",
+
+  deliveryDate: payload.preferredDate
+    ? dayjs(payload.preferredDate).format("YYYY-MM-DD")
+    : "",
+
+  deliveryTime: payload.preferredTime
+    ? payload.preferredTime.split("-")[0]   // ✅ CRITICAL
+    : "",
+
+  // ✅ ADD THESE (THIS IS THE MISSING PART)
+  paymentDone: true,          // payment completed
+  workStatus: "pending" as const,
+      // work not done yet
+};
+
+
     try {
       addToCart(cartItem); // uses your existing CartContext API
     } catch (e) {
@@ -822,9 +836,42 @@ const [emailOtp, setEmailOtp] = useState("");
                     <Input />
                   </Form.Item>
                   {/* fields */}
-                  {(selectedImage.formSchema || []).map((f) => (
-                    <div key={f.name}>{renderField(f)}</div>
-                  ))}
+                  {(selectedImage.formSchema || [])
+  .filter((f) => f.type !== "date") // 🚫 REMOVE ALL SERVICE DATES
+  .map((f) => (
+    <div key={f.name}>{renderField(f)}</div>
+))}
+
+                  {/* DATE + TIME SLOT (COMMON FOR ALL SERVICES) */}
+<div className="sw-hs-sdform-ant-two-col">
+  <Form.Item
+    label="Preferred Date"
+    name="preferredDate"
+    rules={[{ required: true, message: "Select a date" }]}
+  >
+    <DatePicker
+      style={{ width: "100%" }}
+      disabledDate={(current) =>
+        current && current < dayjs().startOf("day")
+      }
+    />
+  </Form.Item>
+
+  <Form.Item
+    label="Preferred Time Slot"
+    name="preferredTime"
+    rules={[{ required: true, message: "Select a time slot" }]}
+  >
+    <Select placeholder="Select time slot">
+      <Option value="09:00-11:00">09:00 AM - 11:00 AM</Option>
+      <Option value="11:00-13:00">11:00 AM - 01:00 PM</Option>
+      <Option value="13:00-15:00">01:00 PM - 03:00 PM</Option>
+      <Option value="15:00-17:00">03:00 PM - 05:00 PM</Option>
+      <Option value="17:00-19:00">05:00 PM - 07:00 PM</Option>
+    </Select>
+  </Form.Item>
+</div>
+
                   <Form.Item
   name="paymentType"
   label="Payment Type"
