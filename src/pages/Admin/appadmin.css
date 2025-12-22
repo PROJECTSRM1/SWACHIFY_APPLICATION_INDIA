@@ -88,11 +88,7 @@
 .page-title {
   font-size: 24px;
   font-weight: 700;
-<<<<<<< HEAD
-  margin: 0 0 16px 0;   /* ✅ NO PUSH DOWN */
-=======
   margin-top:50px;
->>>>>>> main
 }
 
 
@@ -991,8 +987,6 @@ body {
 }
 
 
-<<<<<<< HEAD
-=======
 /* ---------- Sticky logout ---------- */
 .sidebar-footer {
   padding: 12px 16px;
@@ -1372,4 +1366,3 @@ body {
   z-index: 5;
   background: #f5f3ff;
 }
->>>>>>> main
