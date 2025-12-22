@@ -26,6 +26,9 @@ import {
 } from "@ant-design/icons";
 import ReactApexChart from "react-apexcharts";
 import "./appadmin.css";
+import { useEffect } from "react";
+import { getFreelancers } from "../../api/admin";
+
 
 import { LogoutOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
@@ -380,6 +383,7 @@ type Assignee = {
   city: string;
   experience: string;
   jobsCompleted: number;
+  email?: string;
 };
 
 const ASSIGNEES: Assignee[] = [
@@ -466,6 +470,53 @@ const Appadmin: React.FC = () => {
 const [bookings, setBookings] = useState<BookingRow[]>(generateBookings());
 
   const navigate = useNavigate();
+    const [apiAssignees, setApiAssignees] = useState<Assignee[]>([]);
+  const [loadingAssignees, setLoadingAssignees] = useState(false);
+    useEffect(() => {
+    const loadFreelancers = async () => {
+      try {
+        setLoadingAssignees(true);
+
+        const data = await getFreelancers();
+
+
+    const mapped: Assignee[] = data.map((f: any) => {
+  let pan = "NA";
+  try {
+    const gov = f.government_id ? JSON.parse(f.government_id) : null;
+    if (gov?.type === "pan") pan = gov.number;
+  } catch {}
+
+  return {
+    id: `FR-${f.id}`,
+    name: `${f.first_name ?? ""} ${f.last_name ?? ""}`.trim(),
+    email: f.email,
+    phone: f.mobile,
+    city: f.address || "NA",
+    pan,
+
+    rating: 4,
+
+    type: "Freelancer",
+    experience: f.experience_summary || "N/A",
+
+    jobsCompleted: 0, 
+  };
+});
+
+
+        setApiAssignees(mapped);
+      } catch (err) {
+        console.error("Failed to load freelancers", err);
+      } finally {
+        setLoadingAssignees(false);
+      }
+    };
+
+    loadFreelancers();
+  }, []);
+  const MERGED_ASSIGNEES =
+    apiAssignees.length > 0 ? apiAssignees : ASSIGNEES;
 
   const handleLogout = () => {
     localStorage.clear();
@@ -758,24 +809,22 @@ const columns = [
 const [assignOpen, setAssignOpen] = useState(false);
 const [assignRecord, setAssignRecord] = useState<BookingRow | null>(null);
 // ✅ Auto-shortlist assignees based on service type
-const shortlistedAssignees = useMemo(() => {
+const shortlistedAssigneesFromAPI = useMemo(() => {
   if (!assignRecord) return [];
 
   const service = assignRecord.serviceType;
 
-  // Small service → Freelancers
   if (SMALL_SERVICES.includes(service)) {
-    return ASSIGNEES.filter(a => a.type === "Freelancer");
+    return MERGED_ASSIGNEES.filter(a => a.type === "Freelancer");
   }
 
-  // Big service → Vendors
   if (BIG_SERVICES.includes(service)) {
-    return ASSIGNEES.filter(a => a.type === "Vendor");
+    return MERGED_ASSIGNEES.filter(a => a.type === "Vendor");
   }
 
-  // fallback
-  return ASSIGNEES;
-}, [assignRecord]);
+  return MERGED_ASSIGNEES;
+}, [assignRecord, MERGED_ASSIGNEES]);
+
 
 const openAssign = (record: BookingRow) => {
   setAssignRecord(record);
@@ -1284,66 +1333,73 @@ const filteredBookings = bookings.filter(b => {
           <strong>Customer:</strong> {assignRecord.customerName}
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-          {shortlistedAssignees.map((a) => (
-            <Card
-              key={a.id}
-              hoverable
-              style={{ borderRadius: 12, cursor: "pointer" }}
-            >
-              <Row gutter={16}>
-                <Col span={18}>
-                  <div style={{ fontWeight: 700, fontSize: 16 }}>
-                    {a.name}
-                  </div>
+      <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+  {loadingAssignees && (
+    <div style={{ textAlign: "center", padding: 16 }}>
+      Loading freelancers...
+    </div>
+  )}
 
-                  <div style={{ fontSize: 13, color: "#555", marginTop: 4 }}>
-                    {a.type} • ID: {a.id}
-                  </div>
+  {shortlistedAssigneesFromAPI.map((a) => (
+    <Card
+      key={a.id}
+      hoverable
+      style={{ borderRadius: 12, cursor: "pointer" }}
+    >
+      <Row gutter={16}>
+        <Col span={18}>
+          <div style={{ fontWeight: 700, fontSize: 16 }}>
+            {a.name}
+          </div>
 
-                  <div style={{ fontSize: 13, color: "#555" }}>
-                    PAN: {a.pan}
-                  </div>
+          <div style={{ fontSize: 13, color: "#555", marginTop: 4 }}>
+            {a.type} • ID: {a.id}
+          </div>
 
-                  <div style={{ fontSize: 13, color: "#555", marginTop: 6 }}>
-                    📍 {a.city} | 📞 {a.phone}
-                  </div>
+          <div style={{ fontSize: 13, color: "#555" }}>
+            PAN: {a.pan}
+          </div>
 
-                  <div style={{ fontSize: 13, color: "#555" }}>
-                    Experience: {a.experience} • Jobs: {a.jobsCompleted}
-                  </div>
-                </Col>
+          <div style={{ fontSize: 13, color: "#555", marginTop: 6 }}>
+            📍 {a.city} | 📞 {a.phone}
+          </div>
 
-                <Col span={6} style={{ textAlign: "right" }}>
-                  <div style={{ fontWeight: 700, fontSize: 16 }}>
-                    ⭐ {a.rating}
-                  </div>
+          <div style={{ fontSize: 13, color: "#555" }}>
+            Experience: {a.experience} • Jobs: {a.jobsCompleted}
+          </div>
+        </Col>
 
-                  <div
-                    style={{
-                      marginTop: 8,
-                      fontSize: 12,
-                      fontWeight: 600,
-                      color:
-                        a.type === "Vendor" ? "#1677ff" : "#52c41a",
-                    }}
-                  >
-                    {a.type}
-                  </div>
+        <Col span={6} style={{ textAlign: "right" }}>
+          <div style={{ fontWeight: 700, fontSize: 16 }}>
+            ⭐ {a.rating}
+          </div>
 
-                  <Button
-                    type="primary"
-                    size="small"
-                    style={{ marginTop: 12 }}
-                    onClick={() => handleAssign(a.name)}
-                  >
-                    Assign
-                  </Button>
-                </Col>
-              </Row>
-            </Card>
-          ))}
-        </div>
+          <div
+            style={{
+              marginTop: 8,
+              fontSize: 12,
+              fontWeight: 600,
+              color:
+                a.type === "Vendor" ? "#1677ff" : "#52c41a",
+            }}
+          >
+            {a.type}
+          </div>
+
+          <Button
+            type="primary"
+            size="small"
+            style={{ marginTop: 12 }}
+            onClick={() => handleAssign(a.name)}
+          >
+            Assign
+          </Button>
+        </Col>
+      </Row>
+    </Card>
+  ))}
+</div>
+
       </>
     )}
   </Modal>
@@ -1375,33 +1431,28 @@ const filteredBookings = bookings.filter(b => {
         </thead>
 
         <tbody>
-          {ASSIGNEES.filter(a => a.type === "Freelancer").map(a => (
-            <tr key={a.id}>
-              <td>{a.name}</td>
-              <td>{a.pan}@email.com</td>
-              <td>{a.city}</td>
+      {MERGED_ASSIGNEES.filter(a => a.type === "Freelancer").map(a => (
+  <tr key={a.id}>
+    <td>{a.name}</td>
+    <td>{a.email || "NA"}</td>
 
-            <td>
-              <div className="skill-wrap">
-                {FREELANCER_SKILLS.map(skill => (
-                  <span key={skill} className="skill-chip">
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </td>
+    <td>{a.city}</td>
+    <td>
+      <div className="skill-wrap">
+        {FREELANCER_SKILLS.map(skill => (
+          <span key={skill} className="skill-chip">{skill}</span>
+        ))}
+      </div>
+    </td>
+    <td><strong>{a.pan}</strong></td>
+    <td>{a.experience}</td>
+    <td className="actions">
+      <button className="btn approve">✓ Approve</button>
+      <button className="btn reject">✕ Reject</button>
+    </td>
+  </tr>
+))}
 
-
-              <td><strong>{a.pan}</strong></td>
-              <td>{a.experience}</td>
-
-              <td className="actions">
-                {/* <button className="btn view">👁 View</button> */}
-                <button className="btn approve">✓ Approve</button>
-                <button className="btn reject">✕ Reject</button>
-              </td>
-            </tr>
-          ))}
         </tbody>
       </table>
     )}
