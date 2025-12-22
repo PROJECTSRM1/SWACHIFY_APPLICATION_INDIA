@@ -1,70 +1,29 @@
 import { Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { api } from "../api/client";
 
 export const ProtectedRoutes = ({ children }: any) => {
-  const token = localStorage.getItem("accessToken");
-  const isGuest = localStorage.getItem("isGuest") === "true";
-
   const [loading, setLoading] = useState(true);
-  const [validUser, setValidUser] = useState(false);
-
-  const verifyUser = async () => {
-    try {
-      const res = await api.get("api/auth/me", {
-        params: { token },
-      });
-
-      const rawUser = res?.data?.user || res?.data?.data;
-
-      if (!rawUser) {
-        setValidUser(false);
-        return;
-      }
-
-      const normalizedUser = {
-        id: rawUser?.id || rawUser?.sub,
-        email: rawUser?.email,
-        first_name: rawUser?.first_name,
-        last_name: rawUser?.last_name,
-        mobile: rawUser?.mobile,
-        address: rawUser?.address,
-        gender_id: rawUser?.gender_id,
-      };
-
-      localStorage.setItem("user", JSON.stringify(normalizedUser));
-      setValidUser(true);
-    } catch (error) {
-      console.error("Protected route verify failed", error);
-      setValidUser(false);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const [allowed, setAllowed] = useState(false);
 
   useEffect(() => {
-    
-    if (isGuest) {
-      setValidUser(true);
-      setLoading(false);
-      return;
-    }
+    const token = localStorage.getItem("accessToken");
+    const user = localStorage.getItem("user");
+    const isGuest = localStorage.getItem("isGuest") === "true";
 
    
-    if (!token) {
-      setLoading(false);
-      return;
+    if ((token && user) || isGuest) {
+      setAllowed(true);
+    } else {
+      setAllowed(false);
     }
 
-  
-    const timer = setTimeout(() => verifyUser(), 200);
-    return () => clearTimeout(timer);
-  }, [token, isGuest]);
+    setLoading(false);
+  }, []);
 
   if (loading) return null;
 
- 
-  if (!isGuest && (!token || !validUser)) {
+  
+  if (!allowed) {
     localStorage.clear();
     return <Navigate to="/landing" replace />;
   }

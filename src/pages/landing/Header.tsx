@@ -272,6 +272,10 @@ navigate(redirectTo);
         >
           Sign Up
         </Button>
+
+        
+
+
       </header>
 
       {/* Spacer so content starts below fixed navbar */}
