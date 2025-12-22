@@ -1209,7 +1209,6 @@ const filteredBookings = bookings.filter(b => {
                     <div style={{ display: "flex", gap: 8, justifyContent: "flex-end" }}>
                       <Button size="small" onClick={() => { setCustomRange([null, null]); setShowCustomPopover(false); }}>Cancel</Button>
                       <Button size="small" type="primary" onClick={onCustomApply}>Apply</Button>
-                      {/* <h1>Swachify</h1> */}
                     </div>
                   </div>
                 }
