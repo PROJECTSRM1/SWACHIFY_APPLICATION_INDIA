@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Card, Button } from "antd";
 import type { FC } from "react";
 
@@ -12,54 +12,110 @@ import rentalImg from "../../assets/Building/rental.jpg";
 import transportImg from "../../assets/Building/transportation.jpg";
 import bulkImg from "../../assets/Building/BulkProcurement.jpg";
 
+/* 🔹 PROPS FROM DASHBOARD */
+interface Props {
+  searchQuery: string;
+  clearSearch: () => void;
+}
+
 interface ServiceItem {
   title: string;
   description: string;
   image: string;
-  route?: any;
   key: string;
 }
+
+/* 🔹 NORMALIZER (SAME AS PACKERS) */
+const normalize = (s: string) =>
+  s.toLowerCase().replace(/\s+/g, "").replace(/[^a-z0-9]/g, "");
 
 const services: ServiceItem[] = [
   {
     title: "Material Supply",
     description: "Quality construction materials with verified vendors",
     image: materialImg,
-    route: "/app/material-su~pply",
-    key: "material"
+    key: "material",
   },
   {
     title: "Machinery Rental",
     description: "Rent construction equipment with operator support",
     image: rentalImg,
-    route: "/app/machinery-rental",
-    key: "machinery"
+    key: "machinery",
   },
   {
     title: "Transportation",
     description: "Material pickup and delivery with GPS tracking",
     image: transportImg,
-    route: "/app/Transpotation",
-    key: "transport"
+    key: "transport",
   },
   {
     title: "Bulk Procurement",
     description: "Large-scale orders with vendor management",
     image: bulkImg,
-    route: "/app/bulk-procurement",
-    key: "bulk"
-  }
+    key: "bulk",
+  },
 ];
 
-const ConstructionServices: FC = () => {
+const ConstructionServices: FC<Props> = ({ searchQuery, clearSearch }) => {
   const [selectedService, setSelectedService] = useState<string | null>(null);
+
+  /* 🔹 AUTO OPEN BASED ON SEARCH (KEY PART) */
+  useEffect(() => {
+    if (!searchQuery || selectedService) return;
+
+    const q = normalize(searchQuery);
+
+    // 🧱 Material Supply
+    if (
+      q.includes(normalize("cement")) ||
+      q.includes(normalize("steel")) ||
+      q.includes(normalize("sand")) ||
+      q.includes(normalize("tmt bars")) ||
+      q.includes(normalize("steel")) ||
+      q.includes(normalize("bricks")) ||
+      q.includes(normalize("pipes")) ||
+      q.includes(normalize("marble")) ||
+      q.includes(normalize("tiles")) ||
+      q.includes(normalize("material"))
+
+    ) {
+      setSelectedService("material");
+      return;
+    }
+
+    // 🚜 Machinery Rental
+    if (q.includes(normalize("machinery"))
+    ) {
+      setSelectedService("machinery");
+      return;
+    }
+
+    // 🚚 Transportation
+    if (
+      q.includes(normalize("transport")) ||
+      q.includes(normalize("construction transport"))
+    ) {
+      setSelectedService("transport");
+      return;
+    }
+
+    // 📦 Bulk
+    if (q.includes(normalize("bulk"))) {
+      setSelectedService("bulk");
+    }
+  }, [searchQuery, selectedService]);
+
+  const closeModal = () => {
+    setSelectedService(null);
+    clearSearch(); // ✅ SAME AS PACKERS & MOVERS
+  };
 
   const renderPopupContent = () => {
     switch (selectedService) {
       case "material":
         return <MaterialSupply />;
       case "machinery":
-        return <MachineryRental />;
+        return <MachineryRental id={1} onClose={closeModal} />;
       case "transport":
         return <Transpotation />;
       case "bulk":
@@ -71,16 +127,20 @@ const ConstructionServices: FC = () => {
 
   return (
     <div className="sw-br-bc-wrapper">
-
       <div className="sw-br-bc-header">
-        <span className="sw-br-bc-title">Building & Construction Raw Materials</span>
-        <span className="sw-br-bc-subtitle">{services.length} services available</span>
+        <span className="sw-br-bc-title">
+          Building & Construction Raw Materials
+        </span>
+        <span className="sw-br-bc-subtitle">
+          {services.length} services available
+        </span>
       </div>
 
+      {/* GRID */}
       <div className="sw-br-bc-grid">
-        {services.map((service, index) => (
+        {services.map((service) => (
           <Card
-            key={index}
+            key={service.key}
             hoverable
             className="sw-br-bc-card"
             cover={
@@ -105,12 +165,12 @@ const ConstructionServices: FC = () => {
         ))}
       </div>
 
+      {/* MODAL */}
       {selectedService && (
-        <ModalWrapper onClose={() => setSelectedService(null)}>
+        <ModalWrapper onClose={closeModal}>
           {renderPopupContent()}
         </ModalWrapper>
       )}
-
     </div>
   );
 };
