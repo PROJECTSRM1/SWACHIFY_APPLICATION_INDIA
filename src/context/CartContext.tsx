@@ -20,8 +20,9 @@ export interface CartItem {
   email: string;
 
   deliveryType: string;
-  deliveryDate: string;     // YYYY-MM-DD
-  deliveryTime: string;     // ✅ ADD THIS (HH:mm or hh:mm A)
+
+  deliveryDate: string;     
+  deliveryTime: string; 
 
   contact: string;
   address: string;

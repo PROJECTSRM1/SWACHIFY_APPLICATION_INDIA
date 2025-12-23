@@ -26,7 +26,7 @@ const MachineryDetails: React.FC<FormProps> = ({ id, onClose }) => {
 
   if (!machine) return null;
 
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(1);
   const [rentalType, setRentalType] = useState("");
   const [fuelSupply, setFuelSupply] = useState(false);
 
@@ -35,6 +35,10 @@ const MachineryDetails: React.FC<FormProps> = ({ id, onClose }) => {
   const [otpVerified, setOtpVerified] = useState(false);
   const [phoneOtp, setPhoneOtp] = useState("");
   const [, setOtpError] = useState("");
+  const [emailOtp, setEmailOtp] = useState("");
+  const [preferredTime, setPreferredTime] = useState("");
+
+
 
 
 
@@ -63,6 +67,8 @@ const MachineryDetails: React.FC<FormProps> = ({ id, onClose }) => {
       fuelCharge,
       totalPrice,
       price: machine.price,
+      deliveryTime: preferredTime,
+
       customerName: form.customerName.value,
       deliveryType: rentalType,
       deliveryDate: form.rentalDate.value,
@@ -151,49 +157,42 @@ const MachineryDetails: React.FC<FormProps> = ({ id, onClose }) => {
                     min={new Date().toISOString().split("T")[0]}
                   />
                 </div>
+                
               </div>
+              <div className="sw-br-field">
+                <label>Preferred Time Slot</label>
+                <select value={preferredTime} onChange={(e) => setPreferredTime(e.target.value)}>
+                  <option value="">Select</option>
+                  <option value="09:00-11:00">09:00 AM - 11:00 AM</option>
+                  <option value="11:00-13:00">11:00 AM - 01:00 PM</option>
+                  <option value="13:00-15:00">01:00 PM - 03:00 PM</option>
+                  <option value="15:00-17:00">03:00 PM - 05:00 PM</option>
+                  <option value="17:00-19:00">05:00 PM - 07:00 PM</option>
+                  </select>
+                  </div>
 
               {/* CONTACT + EMAIL */}
               <div className="sw-br-mach-row">
-
-  {/* EMAIL — FIRST */}
-  <div className="sw-br-mach-form-item">
-    <label>Email</label>
-    <div className="sw-br-otp-input">
-      <input
-        type="email"
-        name="email"
-        placeholder="Enter email address"
-      />
-      {otpVerified && <span className="sw-br-otp-verified">✓</span>}
-    </div>
-  </div>
-
-  {/* CONTACT NUMBER — SECOND (Send OTP here) */}
-  <div className="sw-br-mach-form-item">
-    <label>Contact Number</label>
-    <div className="sw-br-otp-input">
-      <input
-        type="text"
-        name="contact"
-        placeholder="Contact number"
-      />
-
-      {!otpVerified && !showOtpFields && (
-        <span
-          className="sw-br-send-otp"
-          onClick={() => setShowOtpFields(true)}
-        >
-          
-          Send OTP
-        </span>
-      )}
-
-      {otpVerified && <span className="sw-br-otp-verified">✓</span>}
-    </div>
-  </div>
-
-</div>
+                <div className="sw-br-mach-form-item">
+                   <label>Email</label>
+                   <div className="sw-br-otp-input">
+                    <input type="email" name="email" placeholder="Enter email address" />
+                    {otpVerified && <span className="sw-br-otp-verified">✓</span>}
+                    </div>
+                  </div>
+                  {/* CONTACT NUMBER — SECOND (Send OTP here) */}
+                  <div className="sw-br-mach-form-item">
+                      <label>Contact Number</label>
+                      <div className="sw-br-otp-input">
+                        <input type="text" name="contact" placeholder="Contact number" />
+                      {!otpVerified && !showOtpFields && (
+                        <span className="sw-br-send-otp" onClick={() => setShowOtpFields(true)}>
+                          Send OTP
+                        </span>)}
+                        {otpVerified && <span className="sw-br-otp-verified">✓</span>}
+                        </div>
+                      </div>
+                  </div>
 
 
               {/* OTP FIELDS */}
@@ -201,38 +200,49 @@ const MachineryDetails: React.FC<FormProps> = ({ id, onClose }) => {
                 <div className="sw-br-mach-row">
                   <div className="sw-br-mach-form-item">
                     <label>Phone OTP</label>
-<input
-  type="text"
-  placeholder="Enter Phone OTP"
-  value={phoneOtp}
-  maxLength={4}
-  onChange={(e) => {
-    const value = e.target.value.replace(/\D/g, ""); // numbers only
-    if (value.length <= 4) {
-      setPhoneOtp(value);
-      setOtpError("");
-    }
-  }}
-/>
+                    <input type="text" placeholder="Enter 4-digit OTP" value={phoneOtp} inputMode="numeric" autoComplete="one-time-code" 
+                    onChange={(e) => { const value = e.target.value.replace(/\D/g, "").slice(0, 4);
+                    setPhoneOtp(value); 
+                    setOtpError(""); }}
+                    onPaste={(e) => {  
+                      e.preventDefault();
+                      const pasted = e.clipboardData .getData("text")
+                      .replace(/\D/g, "")
+                      .slice(0, 4);
+                      setPhoneOtp(pasted); }} />
                   </div>
-
-                  <div className="sw-br-mach-form-item">
-                    <label>Email OTP</label>
-                    <input type="text" placeholder="Enter Email OTP" />
+                <div className="sw-br-mach-form-item">
+                <label>Email OTP</label>
+                <input type="text" placeholder="Enter 4-digit Email OTP" value={emailOtp} inputMode="numeric" autoComplete="one-time-code"
+                onChange={(e) => { 
+                  const value = e.target.value.replace(/\D/g, "").slice(0, 4);
+                  setEmailOtp(value);
+                  }}
+                  onPaste={(e) => {
+                    e.preventDefault();
+                    const pasted = e.clipboardData
+                    .getData("text")
+                    .replace(/\D/g, "")
+                    .slice(0, 4);
+                    setEmailOtp(pasted);
+                    }} />
                   </div>
 
                   <div className="sw-br-mach-form-item">
                     <button type="button" className="sw-br-mach-otp-btn" style={{ marginTop: "22px" }}
                    onClick={() => {
-                    setOtpVerified(true);
-                    setShowOtpFields(false);
-                    message.success("OTP Verified"); }} >
+                    if (phoneOtp.length !== 4 || emailOtp.length !== 4) {
+                      message.error("Please enter valid 4-digit OTPs");
+                      return;
+                      }
+                      setOtpVerified(true);
+                      setShowOtpFields(false);
+                      message.success("OTP Verified");
+                      }} >
                       Verify OTP </button>
-
-                  </div>
-                </div>
-              )}
-
+                      </div>
+                  </div> 
+                  )}
               <div className="sw-br-mach-form-item full-width">
                 <label>Site Address</label>
                 <textarea name="address"></textarea>
@@ -264,19 +274,16 @@ const MachineryDetails: React.FC<FormProps> = ({ id, onClose }) => {
                 >
                   Cancel
                 </button>
-
-                <button
-                  type="button"
-                  className="sw-br-mach-add-btn"
-                  onClick={handleAddToCart}
-                >
+               <button type="button" className="sw-br-add" onClick={handleAddToCart} disabled={!otpVerified}
+               style={{
+                background: otpVerified ? "black" : "#9ca3af",
+                cursor: otpVerified ? "pointer" : "not-allowed",
+                }} >
                   Add to Cart
-                </button>
-              </div>
-
-            </div>
-          </form>
-
+                  </button>
+                  </div>
+                </div>
+              </form>
         </div>
       </div>
     </div>
