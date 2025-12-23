@@ -21,6 +21,9 @@ import {
   CloseOutlined,
 } from "@ant-design/icons";
 import "../../../index.css";
+import { App } from "antd";
+
+
 
 // images (update paths as needed)
 import carRentalsImg from "../../../assets/passenger/Car Rentals.jpg";
@@ -40,6 +43,9 @@ import { useNavigate } from "react-router-dom";
 import { useCart } from "../../../context/CartContext";
 const { Option } = Select;
 const { TextArea } = Input;
+
+
+
 interface Props {
   searchQuery?: string;
   clearSearch?: () => void;
@@ -106,7 +112,6 @@ const cardsData: CardItem[] = [
         formSchema: [
           { name: "pickup", label: "Pickup Address", type: "text", required: true, placeholder: "Pickup address" },
           { name: "dropoff", label: "Drop-off Address", type: "text", required: true, placeholder: "Drop-off address" },
-          { name: "dateTime", label: "Pickup Date & Time", type: "date", required: true },
           { name: "passengers", label: "Passengers", type: "number", required: true },
           { name: "luggage", label: "Luggage Count", type: "number" },
           { name: "needChildSeat", label: "Need Child Seat", type: "checkbox" },
@@ -259,6 +264,14 @@ const cardsData: CardItem[] = [
   },
 ];
 const Packersandmovers: React.FC<Props> = ({ searchQuery, clearSearch }) => {
+  const { message } = App.useApp();
+
+    const [otpSent, setOtpSent] = useState(false);
+  const [otpVerified, setOtpVerified] = useState({
+    phone: false,
+    email: false,
+  });
+
 
 
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -349,6 +362,56 @@ const Packersandmovers: React.FC<Props> = ({ searchQuery, clearSearch }) => {
   }
 }, [searchQuery, groupIndex]);
 
+const handleSendOtp = () => {
+  const email = form.getFieldValue("email");
+  const mobile = form.getFieldValue("mobile");
+
+  if (!email || !mobile) {
+    message.error("Enter email & mobile first");
+    return;
+  }
+
+  if (!/^[0-9]{10}$/.test(mobile)) {
+    message.error("Enter valid 10-digit mobile number");
+    return;
+  }
+
+  setOtpSent(true);
+  message.success("OTP sent successfully");
+};
+
+
+const handleVerifyOtp = () => {
+  const phoneOtp = form.getFieldValue("phoneOtp");
+  const emailOtp = form.getFieldValue("emailOtp");
+
+  if (!phoneOtp || !emailOtp) {
+    message.error("Please enter both OTPs");
+    return;
+  }
+
+  if (phoneOtp.length !== 4 || emailOtp.length !== 4) {
+    message.error("OTP must be 4 digits");
+    return;
+  }
+
+  if (phoneOtp === emailOtp) {
+    message.error("Phone OTP & Email OTP must be different");
+    return;
+  }
+
+  setOtpVerified({ phone: true, email: true });
+  setOtpSent(false);
+
+  message.success("OTP verified successfully");
+
+
+
+  setOtpVerified({ phone: true, email: true });
+  setOtpSent(false);
+};
+
+
 
 const closeGroupModal = () => {
   setGroupIndex(null);
@@ -386,20 +449,22 @@ const closeGroupModal = () => {
   };
   // Close booking form and reset fields
   const closeBookingForm = () => {
-    // reset visible form fields whenever the booking modal is closed
-    try {
-      form.resetFields();
-    } catch (e) {
-      // ignore if form not yet mounted
-    }
-    setBookingOpen(false);
-    setSelectedImage(null);
-    setSelectedKey(null);
-    // restore body scrolling - only restore if no other overlay/modal needs it.
-    // In our UI group modal is hidden when bookingOpen is true; so it's safe to unlock.
-    unlockBodyScroll();
-  };
-  // ESC / click-outside behavior
+  try {
+    form.resetFields();
+  } catch {}
+
+  // ✅ RESET OTP STATE
+  setOtpSent(false);
+  setOtpVerified({
+    phone: false,
+    email: false,
+  });
+
+  setBookingOpen(false);
+  setSelectedImage(null);
+  setSelectedKey(null);
+  unlockBodyScroll();
+};
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       if (e.key === "Escape") {
@@ -435,6 +500,20 @@ const closeGroupModal = () => {
     };
   }, []);
   // submit - save per-submodule (but clear draft so next open is empty)
+  const resolveAddress = (values: any) => {
+  return (
+    values.pickup ||
+    values.pickupAddress ||
+    values.pickupPoint ||
+    values.pickupLocation ||
+    values.delivery ||
+    values.deliveryAddress ||
+    values.dropoff ||
+    values.dropPoint ||
+    ""
+  );
+};
+
   const onFinish = (values: any) => {
     if (!selectedKey || !selectedImage) return;
     const payload = {
@@ -465,14 +544,21 @@ const closeGroupModal = () => {
       quantity: 1,
       price: String(payload.servicePrice || selectedImage.price || "0"),
       totalPrice: parsedPrice * 1,
-      customerName: payload.customerName || "",
+      customerName: payload.fullName || "",
+contact: payload.mobile || "",
+address: resolveAddress(payload),
+
+
       deliveryType: payload.deliveryType || payload.rentalType || "",
-      deliveryDate: payload.date || payload.serviceDate || payload.deliveryDate || "",
-      contact: payload.contact || "",
-      address: payload.address || "",
+      deliveryDate: payload.preferredDate.format("YYYY-MM-DD"),
+
+
+deliveryTime: payload.deliveryTime.split("-")[0],
+
+
+
       instructions: payload.instructions || "",
       email: payload.email || "",
-      deliveryTime: payload.deliveryTime || "",
     };
     try {
       addToCart(cartItem); // uses your existing CartContext API
@@ -691,31 +777,182 @@ const closeGroupModal = () => {
                 </div>
               </div>
               <div className="sw-pm-form-right">
-                <Form form={form} layout="vertical" onFinish={onFinish}>
-                  {/* metadata */}
-                  <Form.Item name="serviceGroup" style={{ display: "none" }}>
-                    <Input />
-                  </Form.Item>
-                  <Form.Item name="serviceTitle" style={{ display: "none" }}>
-                    <Input />
-                  </Form.Item>
-                  <Form.Item name="servicePrice" style={{ display: "none" }}>
-                    <Input />
-                  </Form.Item>
-                  {/* fields */}
-                  {(selectedImage.formSchema || []).map((f) => (
-                    <div key={f.name}>{renderField(f)}</div>
-                  ))}
-                  {/* actions */}
-                  <div className="sw-pm-form-actions">
-                    <Button onClick={closeBookingForm} style={{ marginRight: 12 }}>
-                      Cancel
-                    </Button>
-                    <Button type="primary" htmlType="submit" className="sw-pm-addcart-btn">
-                      <ShoppingCartOutlined style={{ marginRight: 8 }} /> Book Service
-                    </Button>
-                  </div>
-                </Form>
+               <Form form={form} layout="vertical" onFinish={onFinish}>
+  <Row gutter={16}>
+
+
+
+    {/* Full Name */}
+    <Col xs={24} md={12}>
+      <Form.Item
+        name="fullName"
+        label="Full Name"
+        rules={[{ required: true, message: "Enter full name" }]}
+      >
+        <Input placeholder="John Doe" />
+      </Form.Item>
+    </Col>
+
+    {/* Email */}
+    <Col xs={24} md={12}>
+      <Form.Item
+        name="email"
+        label="Email"
+        rules={[{ required: true, message: "Enter email" }]}
+      >
+        <Input
+          placeholder="example@gmail.com"
+          disabled={otpVerified.email}
+          suffix={otpVerified.email && <span style={{ color: "green" }}>✔</span>}
+        />
+      </Form.Item>
+    </Col>
+
+    {/* Mobile */}
+    <Col xs={24} md={12}>
+      <Form.Item
+  name="mobile"
+  label="Mobile Number"
+  rules={[
+    { required: true, message: "Enter mobile number" },
+    { pattern: /^[0-9]{10}$/, message: "Enter valid 10-digit number" },
+  ]}
+>
+  <Input
+    maxLength={10}
+    placeholder="9876543210"
+    disabled={otpVerified.phone}
+    prefix={<span className="sw-lpm-prefix">+91</span>}
+    suffix={
+      <span
+        className={`sw-lpm-otp-suffix ${
+          otpVerified.phone ? "sw-lpm-verified" : ""
+        }`}
+        onClick={!otpVerified.phone ? handleSendOtp : undefined}
+      >
+        {otpVerified.phone ? "✔" : "Send OTP"}
+      </span>
+    }
+  />
+</Form.Item>
+
+    </Col>
+
+    {/* Preferred Date */}
+      </Row>
+
+
+    {/* OTP Fields */}
+   {otpSent && (
+  <Row gutter={16} align="bottom" className="sw-cs-otp-row">
+    {/* Phone OTP */}
+    <Col xs={24} md={8}>
+      <Form.Item
+        name="phoneOtp"
+        label="Phone OTP"
+        rules={[{ required: true, message: "Enter phone OTP" }]}
+      >
+        <Input maxLength={4} placeholder=" " />
+      </Form.Item>
+    </Col>
+
+    {/* Email OTP */}
+    <Col xs={24} md={8}>
+      <Form.Item
+        name="emailOtp"
+        label="Email OTP"
+        rules={[{ required: true, message: "Enter email OTP" }]}
+      >
+        <Input maxLength={4} placeholder=" " />
+      </Form.Item>
+    </Col>
+
+    {/* Verify Button */}
+    <Col xs={24} md={8} className="sw-cs-otp-verify">
+      <Form.Item label=" " colon={false}>
+        <Button
+          type="primary"
+          className="sw-cs-otp-btn"
+          onClick={handleVerifyOtp}
+          block
+        >
+          Verify OTP
+        </Button>
+      </Form.Item>
+    </Col>
+  </Row>
+)}
+
+<Row gutter={16}>
+  {/* Preferred Date */}
+  <Col xs={24} md={12}>
+    <Form.Item
+      name="preferredDate"
+      label="Preferred Date"
+      rules={[{ required: true, message: "Select preferred date" }]}
+    >
+      <DatePicker style={{ width: "100%" }} />
+    </Form.Item>
+  </Col>
+
+  {/* Preferred Time Slot */}
+  <Col xs={24} md={12}>
+    <Form.Item
+      name="deliveryTime"
+      label="Preferred Time Slot"
+      rules={[{ required: true, message: "Select time slot" }]}
+    >
+      <Select placeholder="Select time slot">
+        <Option value="9am-11am">9:00 AM – 11:00 AM</Option>
+        <Option value="11am-1pm">11:00 AM – 1:00 PM</Option>
+        <Option value="1pm-3pm">1:00 PM – 3:00 PM</Option>
+        <Option value="3pm-5pm">3:00 PM – 5:00 PM</Option>
+        <Option value="5pm-7pm">5:00 PM – 7:00 PM</Option>
+      </Select>
+    </Form.Item>
+  </Col>
+</Row>
+
+    
+
+  {/* Service-specific dynamic fields stay SAME */}
+  {(selectedImage.formSchema || []).map((f) => (
+    <div key={f.name}>{renderField(f)}</div>
+  ))}
+  <Row gutter={16}>
+  <Col xs={24} md={12}>
+    <Form.Item
+      name="paymentType"
+      label="Payment Type"
+      rules={[{ required: true, message: "Select payment type" }]}
+    >
+      <Select placeholder="Choose payment option">
+        <Option value="full">Full Payment</Option>
+        <Option value="partial">Partial Payment</Option>
+      </Select>
+    </Form.Item>
+  </Col>
+</Row>
+
+
+  {/* Actions */}
+  <div className="sw-pm-form-actions">
+    <Button onClick={closeBookingForm}>Cancel</Button>
+    <Button
+      type="primary"
+      htmlType="submit"
+      disabled={!otpVerified.phone || !otpVerified.email}
+      
+      
+    >
+      <ShoppingCartOutlined /> Book Service
+    </Button>
+  </div>
+</Form>
+
+
+                  
+                
               </div>
             </div>
             {/* TOP confirmation popup */}

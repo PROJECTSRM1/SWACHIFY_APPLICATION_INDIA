@@ -1169,11 +1169,11 @@ const bookingStats = useMemo(() => {
       {/* RIGHT: main content + footer */}
       <div className="dashboard-right-wrapper">
         <main className="dashboard-main">
-          <h2 className="page-title">Service Operations Dashboard</h2>
+  <div className="sticky-stack">
+    <h2 className="page-title">Service Operations Dashboard</h2>
 
-          {/* DATE FILTER BAR (premium) */}
-          <div className="date-filter-bar sticky-date-bar">
-            <div className="date-nav">
+    <div className="date-filter-bar">
+      <div className="date-nav">
 
               <Button
                 className={activePreset === "today" ? "df-active" : ""}
@@ -1252,6 +1252,7 @@ const bookingStats = useMemo(() => {
 
           {/* SUMMARY */}
 {/* SUMMARY */}
+ <div className="dashboard-scroll">
               <Card
                 className="big-card"
                 title={`Order Summary — ${active}`}
@@ -1455,6 +1456,8 @@ const bookingStats = useMemo(() => {
               </div>
             ))}
           </Card>
+          </div>
+          </div>
         </main>
        </div>
 
