@@ -476,6 +476,7 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({ propertyId, o
     email: values.email,
     deliveryType: '',
     deliveryDate: values.moveInDate ? String(values.moveInDate) : '',
+    deliveryTime: '',
     contact: values.phone || '',
     address: '',
     instructions: values.message || '',
