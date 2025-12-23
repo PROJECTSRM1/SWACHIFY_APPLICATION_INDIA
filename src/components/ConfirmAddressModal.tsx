@@ -18,7 +18,7 @@ type CartItemLike = {
 };
 
 export type Booking = {
-  id: string;
+  id: number;  
   title: string;
   date: string;
   time: string;
@@ -78,7 +78,9 @@ export default function ConfirmAddressModal({
             await PaymentsAPI.verifyPayment(
               order.id,
               response.razorpay_payment_id,
-              response.razorpay_signature
+              response.razorpay_signature,
+               Number(item.id),
+              
             );
 
            const completedBooking: Booking = {
@@ -122,7 +124,7 @@ export default function ConfirmAddressModal({
     }
 
     const booking: Booking = {
-      id: `bkg-${Date.now()}`,
+      id: Number(item.id), 
       title: item.title ?? "Service",
 
       // ✅ USER-SELECTED SLOT (ONLY SOURCE OF TRUTH)

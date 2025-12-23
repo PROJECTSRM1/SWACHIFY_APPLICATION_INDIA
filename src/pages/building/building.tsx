@@ -14,8 +14,8 @@ import bulkImg from "../../assets/Building/BulkProcurement.jpg";
 
 /* 🔹 PROPS FROM DASHBOARD */
 interface Props {
-  searchQuery: string;
-  clearSearch: () => void;
+  searchQuery?: string;
+  clearSearch?: () => void;
 }
 
 interface ServiceItem {
@@ -107,7 +107,7 @@ const ConstructionServices: FC<Props> = ({ searchQuery, clearSearch }) => {
 
   const closeModal = () => {
     setSelectedService(null);
-    clearSearch(); // ✅ SAME AS PACKERS & MOVERS
+    clearSearch?.(); // ✅ SAME AS PACKERS & MOVERS
   };
 
   const renderPopupContent = () => {

@@ -41,8 +41,8 @@ import { useCart } from "../../../context/CartContext";
 const { Option } = Select;
 const { TextArea } = Input;
 interface Props {
-  searchQuery: string;
-  clearSearch: () => void;
+  searchQuery?: string;
+  clearSearch?: () => void;
 }
 
 
@@ -353,7 +353,7 @@ const Packersandmovers: React.FC<Props> = ({ searchQuery, clearSearch }) => {
 const closeGroupModal = () => {
   setGroupIndex(null);
   if (!bookingOpen) unlockBodyScroll();
-  clearSearch(); // ✅ ADD THIS LINE
+  clearSearch?.(); // ✅ ADD THIS LINE
   previouslyFocused.current?.focus();
 };
 
