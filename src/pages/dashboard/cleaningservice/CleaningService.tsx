@@ -1756,9 +1756,27 @@ sub_group_id: getSubModuleId(selectedSubKey),
 
 
   const handleDetailsCancel = () => {
-    setIsDetailsModalOpen(false);
-    if (selectedSubKey) setIsModulesModalOpen(true);
-  };
+  // ✅ reset all form fields
+  form.resetFields();
+
+  // ✅ reset OTP states
+  setOtpSent(false);
+  setOtpVerified({
+    phone: false,
+    email: false,
+  });
+
+  // ✅ reset computed price
+  setComputedPrice(null);
+
+  // close modal
+  setIsDetailsModalOpen(false);
+
+  if (selectedSubKey) {
+    setIsModulesModalOpen(true);
+  }
+};
+
 
   const visibleCategories = categories;
   const modulesForSelected = modulesBySubKey[selectedSubKey] || [];
