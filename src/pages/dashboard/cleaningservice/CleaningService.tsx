@@ -1535,10 +1535,10 @@ const processBookingAndAddToCart = async (values: any) => {
   if (!selectedModule) return;
 
   const payload = buildBookingPayload(values);
-  await bookHomeService(payload);
+  const bookingRes = await bookHomeService(payload);
 
   const cartItem: CartItem = {
-    id: Date.now(),
+    id: bookingRes.id,  
     title: selectedModule.title,
     image: selectedModule.image,
     quantity: 1,
