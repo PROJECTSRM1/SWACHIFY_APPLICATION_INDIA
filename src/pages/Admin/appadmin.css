@@ -2,11 +2,11 @@
 /* ------------ LAYOUT ------------ */
 
 .layout-container {
+  display: flex;
   width: 100%;
   min-height: 100vh;
   background: #f4f5f7;
 }
-
 
 /* ------------ SIDEBAR ------------ */
 
@@ -66,22 +66,17 @@
 }
 
 /* right wrapper that contains main + footer */
-/* right wrapper that contains main + footer */
 .dashboard-right-wrapper {
-  margin-left: 240px;
   width: calc(100% - 240px);
-  min-width: 0;
+  margin-left: 240px;
   display: flex;
   flex-direction: column;
 }
-
-
 
 /* ------------ MAIN CONTENT ------------ */
 
 .dashboard-main {
   padding: 20px;
-  width:100%;
   /* don't set min-height here so footer sits below naturally */
 }
 
@@ -91,28 +86,15 @@
   margin-top:50px;
 }
 
-
 /* ------------ DATE FILTER BAR ------------ */
 
-/* ===== DESKTOP DATE BAR LAYOUT ===== */
 .date-filter-bar {
-  width: 100%;
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 12px 20px;
-  box-sizing: border-box;
+  gap: 12px;
+  margin-bottom: 14px;
+  padding: 8px 0;
 }
-
-
-.date-nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  align-items: center;
-}
-
-
 
 .date-filter-bar .ant-btn {
   border-radius: 8px;
@@ -191,7 +173,7 @@
 
 /* small extra row inside sales card */
 .sales-extra {
-  padding: 10px 15px;
+  padding: 2px 15px;
   font-size: 13px;
   color: rgba(11,23,36,0.6);
 }
@@ -206,6 +188,7 @@
   display: flex;
   justify-content: space-between;
   padding: 6px 0;
+  margin-left: 15px;
 }
 
 .vat-amount {
@@ -259,150 +242,39 @@
 
 /* ------------ RESPONSIVE ------------ */
 
-
-
-
-/* =========================================================
-   🔥 MOBILE HAMBURGER + SIDEBAR (FINAL)
-   ========================================================= */
-
-@media (max-width: 768px) {
-
-  /* ---------- GLOBAL ---------- */
-  html, body {
-    overflow-x: hidden !important;
-  }
-
-  .layout-container {
-    width: 100%;
-    overflow-x: hidden;
-  }
-
-  /* ---------- HAMBURGER ICON ---------- */
-  .hamburger {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    width: 26px;
-    cursor: pointer;
-  }
-
-  .hamburger span {
-    height: 3px;
-    width: 100%;
-    background: #000;
-    border-radius: 3px;
-    transition: 0.3s ease;
-  }
-
-  /* ---------- MOBILE TOP BAR ---------- */
-  .mobile-topbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 52px;
-    background: #ffffff;
-    border-bottom: 1px solid #e6e6e6;
-    z-index: 6000;
-    display: flex;
-    align-items: center;
-    padding: 0 14px;
-    gap: 14px;
-  }
-
-  .mobile-title {
-    font-size: 16px;
-    font-weight: 700;
-  }
-
-  /* ---------- SIDEBAR ---------- */
+@media (max-width: 900px) {
   .sidebar {
-    position: fixed;
-    top: 0;
-    left: -260px;              /* hidden */
-    width: 240px;
-    height: 100vh;
-    background: #fff;
-    z-index: 7000;
-    transition: left 0.3s ease;
+    width: 200px;
   }
-
-  .sidebar.open {
-    left: 0;
-  }
-
-  /* ---------- OVERLAY ---------- */
-  .sidebar-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.45);
-    z-index: 6500;
-  }
-
-  /* ---------- MAIN CONTENT ---------- */
   .dashboard-right-wrapper {
-    margin-left: 0 !important;
-    width: 100% !important;
-  }
-
-  .dashboard-main {
-    margin-top: 52px; /* mobile topbar height */
-    padding: 14px !important;
-  }
-
-
-
-  .date-nav::-webkit-scrollbar {
-    display: none;
-  }
-
-  /* ---------- ALL CARDS STACK ---------- */
-  .ant-row {
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-  }
-
-  .ant-col {
-    width: 100% !important;
-    max-width: 100% !important;
-  }
-
-  .big-card,
-  .summary-card,
-  .panel-card,
-  .mini-stat-card,
-  .ageing-card {
-    width: 100% !important;
-    margin-bottom: 16px;
-  }
-
-  .mini-stat-card {
-    height: auto;
-  }
-
-  /* ---------- TABLES ---------- */
-  .ant-table-wrapper {
-    overflow-x: auto;
-  }
-
-  .ant-table {
-    min-width: 900px;
-  }
-
-  /* ---------- MODALS ---------- */
-  .ant-modal {
-    width: 100% !important;
-    margin: 0 !important;
-    top: 0 !important;
-  }
-
-  .ant-modal-content {
-    height: 100vh;
-    border-radius: 0 !important;
+    margin-left: 200px;
+    width: calc(100% - 200px);
   }
 }
 
+@media (max-width: 768px) {
+  .sidebar {
+    position: absolute;
+    width: 180px;
+    z-index: 999;
+  }
+  .dashboard-right-wrapper {
+    margin-left: 180px;
+    width: calc(100% - 180px);
+  }
+}
+
+@media (max-width: 600px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  .dashboard-right-wrapper {
+    margin-left: 0;
+    width: 100%;
+  }
+}
 
 /* ---- VAT SAME HEIGHT AS CHARTS ---- */
 .vat-card {
@@ -414,7 +286,6 @@
   height: 210px;
   overflow-y: auto;
   padding-right: 6px;
-  width: 271px;
 }
 
 .vat-scroll::-webkit-scrollbar {
@@ -611,17 +482,54 @@
 
 /* keep existing color theme intact for the rest of the UI */
 /* ---------- STICKY NAVBAR FOR DATE FILTER ---------- */
-/* ===== DESKTOP STICKY DATE BAR (FIXED) ===== */
 .sticky-date-bar {
-  position: static;
   top: 0;
-  z-index: 2000;
+  z-index: 999;
   background: #ffffff;
+  padding: 0px 0px;
   border-bottom: 1px solid #e6e6e6;
 }
 
+/* FIXED TOP NAVBAR FOR DATE BUTTONS */
+/* ================= STICKY HEADER STACK ================= */
 
+.dashboard-main {
+  height: calc(100vh - 0px);
+  padding-top: 0;
+}
 
+/* wrapper for title + date bar */
+.sticky-stack {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: #f4f5f7;
+}
+
+/* TITLE */
+.page-title {
+  margin: 0;
+  padding: 16px 20px;
+  font-size: 24px;
+  font-weight: 700;
+  background: #f4f5f7;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* DATE BAR */
+.date-filter-bar {
+  background: #ffffff;
+  padding: 12px 20px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* buttons row */
+.date-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
 
 
 
@@ -633,8 +541,6 @@
   font-weight: 600;
   border: 1px solid #ddd;
   transition: 0.2s ease;
-
-
 }
 
 .date-nav .ant-btn:hover {
@@ -650,15 +556,13 @@
 
 /* Date range chip */
 .date-range-label {
-  margin-left: -1px;
+  margin-left: 10px;
   padding: 4px 10px;
   background: #fafafa;
   border-radius: 6px;
   border: 1px solid #e3e3e3;
   font-weight: 600;
   font-size: 13px;
-    display: inline-block;
-
 }
 
 
@@ -670,11 +574,10 @@ body {
 
 /* stop row overflow */
 .dashboard-main {
+   height: 100vh;
+  display: flex;
+  flex-direction: column;
   overflow-x: hidden;
-  margin-top: -10px;
-  /* margin-top:auto; */
-
-  
 }
 
 /* fix Ant Row negative margin issue */
@@ -690,7 +593,10 @@ body {
 }
 
 /* fixed date navbar should not overflow */
-
+.date-nav {
+  box-sizing: border-box;
+  max-width: calc(100% - 240px);
+}
 
 
 
@@ -810,11 +716,6 @@ body {
   pointer-events: auto;
 }
 
-
-.assignee-toggle {
-  display: flex;
-  gap: 8px;
-}
 .date-filter-bar * {
   pointer-events: auto;
 }
@@ -936,56 +837,15 @@ body {
   font-size: 20px;
 }
 
-
-
-/* ================= FINAL CONTAINMENT FIX ================= */
-
-/* Ensure dashboard content never exceeds layout width */
-.dashboard-right-wrapper {
-  overflow-x: hidden;
-}
-
-/* Force Ant Design rows to stay inside container */
-.dashboard-main {
-  max-width: 100%;
-  overflow-x: hidden;
-  margin-top: -18px;
-}
-
-/* Kill Ant Design negative margin overflow */
-.dashboard-main .ant-row {
-  margin-left: 0 !important;
-  margin-right: 0 !important;
-}
-
-/* Force all Ant columns to respect container */
-.dashboard-main .ant-col {
-  max-width: 100%;
-}
-
-/* Cards must not exceed their parent */
-.big-card,
-.summary-card,
-.panel-card,
-.mini-stat-card,
-.ageing-card {
-  max-width: 100%;
-  box-sizing: border-box;
-}
-
-/* Mobile sidebar overlay */
-.sidebar-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.35);
-  z-index: 998;
-}
-
-/* Sidebar above overlay */
 .sidebar {
-  z-index: 999;
+  display: flex;
+  flex-direction: column;
 }
 
+.sidebar-menu {
+  flex: 1;
+  overflow-y: auto;
+}
 
 /* ---------- Sticky logout ---------- */
 .sidebar-footer {
@@ -1365,4 +1225,11 @@ body {
   top: 0;
   z-index: 5;
   background: #f5f3ff;
+}
+
+
+.dashboard-scroll {
+  height: calc(100vh - 140px); /* ✅ KEY FIX */
+  overflow-y: auto;
+  padding: 20px;
 }

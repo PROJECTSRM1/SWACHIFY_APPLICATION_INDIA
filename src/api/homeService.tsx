@@ -23,6 +23,7 @@ export interface HomeServiceBookingPayload {
 }
 
 export interface HomeServiceBookingResponse {
+  id: number;   
   message: string;
   order_id?: string;
 }
