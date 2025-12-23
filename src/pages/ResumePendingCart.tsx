@@ -48,6 +48,7 @@ const ResumePendingCart = () => {
           address: values.address,
           deliveryDate: values.preferredDate,
           deliveryType: values.paymentType,
+          deliveryTime:'',
           instructions: values.instructions || "",
         });
         console.log("RESUME PAYLOAD", payload);
