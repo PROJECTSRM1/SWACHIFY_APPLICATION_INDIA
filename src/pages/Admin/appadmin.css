@@ -242,39 +242,6 @@
 
 /* ------------ RESPONSIVE ------------ */
 
-@media (max-width: 900px) {
-  .sidebar {
-    width: 200px;
-  }
-  .dashboard-right-wrapper {
-    margin-left: 200px;
-    width: calc(100% - 200px);
-  }
-}
-
-@media (max-width: 768px) {
-  .sidebar {
-    position: absolute;
-    width: 180px;
-    z-index: 999;
-  }
-  .dashboard-right-wrapper {
-    margin-left: 180px;
-    width: calc(100% - 180px);
-  }
-}
-
-@media (max-width: 600px) {
-  .sidebar {
-    width: 100%;
-    height: auto;
-    position: relative;
-  }
-  .dashboard-right-wrapper {
-    margin-left: 0;
-    width: 100%;
-  }
-}
 
 /* ---- VAT SAME HEIGHT AS CHARTS ---- */
 .vat-card {
@@ -378,8 +345,8 @@
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 18px 60px rgba(15, 23, 42, 0.18);
-  left: 75px;
-  bottom: 10px;
+  left: 0px;
+  bottom: -55px;
 }
 
 /* ensure header has right padding to avoid popover / reset overlap with close X */
@@ -1232,4 +1199,307 @@ body {
   height: calc(100vh - 140px); /* ✅ KEY FIX */
   overflow-y: auto;
   padding: 20px;
+}
+
+
+
+
+/* ================= DESKTOP / LAPTOP ================= */
+@media (min-width: 1024px) {
+  .mobile-topbar {
+    display: none;
+  }
+
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    transform: none !important;
+  }
+
+  .dashboard-right-wrapper {
+    margin-left: 240px;
+    width: calc(100% - 240px);
+  }
+
+  .sidebar-overlay {
+    display: none;
+  }
+}
+
+
+@media (max-width: 1023px) {
+  .sidebar {
+    position: fixed;
+    top: 0;                       /* 🔥 FIX */
+    left: 0;
+    height: 100vh;                /* 🔥 FIX */
+    width: 240px;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 1100;
+    background: #ffffff;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+}
+
+
+/* ================= MOBILE ================= */
+@media (max-width: 1023px) {
+  .sidebar {
+    position: fixed;
+    top: 0;                       /* 🔥 FIX */
+    left: 0;
+    height: 100vh;                /* 🔥 FIX */
+    width: 240px;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 1100;
+    background: #ffffff;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+}
+
+/* ================= HAMBURGER ================= */
+.hamburger {
+  width: 26px;
+  height: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.hamburger span {
+  height: 3px;
+  width: 100%;
+  background: #ffffff;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+/* cross animation */
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+
+/* =========================================================
+   ✅ FINAL HAMBURGER + SIDEBAR FIX (AUTHORITATIVE)
+   ========================================================= */
+
+/* hide sidebar title on mobile/tablet */
+@media (max-width: 1023px) {
+  .sidebar-user {
+    display: none;
+  }
+}
+
+/* mobile topbar */
+.mobile-topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 56px;
+  background: #5c2e91;
+  color: #ffffff;
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+}
+
+.mobile-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-left: 12px;
+}
+
+/* sidebar overlay behavior */
+@media (max-width: 1023px) {
+  .sidebar {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    height: 100vh !important;
+    width: 240px !important;
+    transform: translateX(-100%) !important;
+    transition: transform 0.3s ease;
+    z-index: 1100;
+    background: #ffffff;
+  }
+
+  .sidebar.open {
+    transform: translateX(0) !important;
+  }
+
+  .dashboard-right-wrapper {
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+
+  .dashboard-main {
+    padding-top: 56px;
+  }
+}
+
+/* desktop untouched */
+@media (min-width: 1024px) {
+  .mobile-topbar {
+    display: none;
+  }
+
+  .sidebar {
+    transform: none !important;
+  }
+
+  .dashboard-right-wrapper {
+    margin-left: 240px;
+    width: calc(100% - 240px);
+  }
+}
+
+/* =====================================================
+   MOBILE FIX: STACK GRAPHS / CARDS VERTICALLY
+   ===================================================== */
+
+@media (max-width: 768px) {
+  /* Force AntD columns to be full width */
+  .dashboard-main .ant-col {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 0 0 100% !important;
+  }
+
+  /* Remove horizontal row spacing issues */
+  .dashboard-main .ant-row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    row-gap: 16px; /* spacing between stacked cards */
+  }
+}
+
+@media (max-width: 768px) {
+  .panel-card,
+  .big-card,
+  .summary-card,
+  .vat-card {
+    width: 100% !important;
+    overflow-x: hidden;
+  }
+}
+
+@media (max-width: 768px) {
+  .apexcharts-canvas,
+  .apexcharts-svg {
+    max-width: 100% !important;
+  }
+}
+@media (max-width: 600px) {
+  .mini-stat-card {
+    width: 100% !important;
+  }
+}
+
+/* =====================================================
+   MOBILE TABLE FIX — SHOW FULL DATA INSIDE CARD
+   ===================================================== */
+
+@media (max-width: 600px) {
+
+  /* Reduce overall table font size */
+  .bookings-modal .ant-table {
+    font-size: 11.5px;
+  }
+
+  /* Reduce header font size */
+  .bookings-modal .ant-table-thead > tr > th {
+    font-size: 11px !important;
+    padding: 6px 6px !important;
+    white-space: normal !important;
+  }
+
+  /* Reduce body cell padding + allow wrapping */
+  .bookings-modal .ant-table-tbody > tr > td {
+    padding: 6px 6px !important;
+    font-size: 11.5px !important;
+    white-space: normal !important;
+    word-break: break-word;
+    line-height: 1.35;
+  }
+
+  /* Booking ID should not overflow */
+  .bookings-modal td strong {
+    font-size: 11.5px;
+  }
+
+  /* Location / customer name wrapping fix */
+  .bookings-modal td {
+    max-width: 120px;
+  }
+
+  /* Search + reset alignment */
+  .modal-actions {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .modal-actions .ant-input {
+    width: 140px !important;
+  }
+
+  /* Prevent modal overflow */
+  .bookings-modal .ant-modal-body {
+    overflow-x: hidden !important;
+  }
+}
+/* =====================================================
+   MOBILE TABLE — HORIZONTAL SCROLL ENABLE
+   ===================================================== */
+
+@media (max-width: 768px) {
+
+  /* Make modal body allow horizontal scroll */
+  .bookings-modal .ant-modal-body {
+    overflow-x: auto !important;
+    overflow-y: hidden;
+  }
+
+  /* Table wrapper becomes scroll container */
+  .bookings-modal .ant-table-wrapper {
+    overflow-x: auto;
+  }
+
+  /* Force table to keep its full width */
+  .bookings-modal .ant-table {
+    min-width: 900px; /* 🔥 adjust if you add more columns */
+  }
+
+  /* Keep header + body aligned */
+  .bookings-modal .ant-table-container {
+    overflow-x: visible;
+  }
+
+  /* Slightly compact font for mobile (optional but recommended) */
+  .bookings-modal .ant-table-thead > tr > th,
+  .bookings-modal .ant-table-tbody > tr > td {
+    font-size: 12px;
+    padding: 8px 10px;
+    white-space: nowrap; /* IMPORTANT */
+  }
 }
