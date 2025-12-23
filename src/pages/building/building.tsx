@@ -115,7 +115,7 @@ const ConstructionServices: FC<Props> = ({ searchQuery, clearSearch }) => {
       case "material":
         return <MaterialSupply />;
       case "machinery":
-        return <MachineryRental id={1} onClose={closeModal} />;
+        return <MachineryRental />;
       case "transport":
         return <Transpotation />;
       case "bulk":

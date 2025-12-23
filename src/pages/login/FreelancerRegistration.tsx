@@ -319,7 +319,7 @@ export default function Registration() {
   setPayLoading(true);
 
   // Create a dummy booking for Razorpay ID purposes
-  const bookingId = "freelancer-" + Date.now();
+  const bookingId = Date.now();
 
   try {
     // 1️⃣ Create Razorpay order
@@ -345,7 +345,8 @@ export default function Registration() {
           await PaymentsAPI.verifyPayment(
             order.id,
             response.razorpay_payment_id,
-            response.razorpay_signature
+            response.razorpay_signature,
+            bookingId
           );
 
           setPaymentCompleted(true);

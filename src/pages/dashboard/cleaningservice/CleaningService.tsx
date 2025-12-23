@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { getLoggedInUserId } from "../../../api/customerAuth";
 import {
   Card,
   Typography,
@@ -1525,6 +1526,7 @@ const buildBookingPayload = (
     special_instructions: values.instructions || "",
     service_price:computedPrice ?? 0,
     payment_done:false,
+    created_by:getLoggedInUserId(),
   };
 };
 
@@ -1706,6 +1708,7 @@ sub_group_id: getSubModuleId(selectedSubKey),
       special_instructions: instructions || "",
       service_price:computedPrice ?? 0,
       payment_done:false,
+      created_by:getLoggedInUserId(),
     };
 
     // --- 2. API Submission ---
@@ -1756,9 +1759,27 @@ sub_group_id: getSubModuleId(selectedSubKey),
 
 
   const handleDetailsCancel = () => {
-    setIsDetailsModalOpen(false);
-    if (selectedSubKey) setIsModulesModalOpen(true);
-  };
+  // ✅ reset all form fields
+  form.resetFields();
+
+  // ✅ reset OTP states
+  setOtpSent(false);
+  setOtpVerified({
+    phone: false,
+    email: false,
+  });
+
+  // ✅ reset computed price
+  setComputedPrice(null);
+
+  // close modal
+  setIsDetailsModalOpen(false);
+
+  if (selectedSubKey) {
+    setIsModulesModalOpen(true);
+  }
+};
+
 
   const visibleCategories = categories;
   const modulesForSelected = modulesBySubKey[selectedSubKey] || [];
