@@ -1686,6 +1686,8 @@ const bookingStats = useMemo(() => {
               ))}
             </tbody>
           </table>
+
+          
         </div>
       </div>
     </>
