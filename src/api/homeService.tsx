@@ -20,6 +20,8 @@ export interface HomeServiceBookingPayload {
   special_instructions: string;
   payment_type_id: number;
   payment_done:boolean;
+  created_by:number;
+   status_id: number
 }
 
 export interface HomeServiceBookingResponse {
