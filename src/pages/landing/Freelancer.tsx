@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useEffect } from "react";
 
 import {
   EnvironmentOutlined,
@@ -25,7 +26,6 @@ import {
   Row,
   Col,
   Card,
-  Tag,
   Statistic,
   Modal,
   Tabs,
@@ -48,38 +48,7 @@ const serviceCategories = [
 ];
 
 
-const liveRequests = [
-  {
-    id: 1,
-    title: "House Shifting - Packing",
-    location: "Gachibowli, Hyderabad",
-    price: "₹1200",
-    timeAgo: "10 min ago",
-    urgency: "high",
-    category: "Moving",
-    description: "Need help packing and loading luggage for a 2BHK.",
-  },
-  {
-    id: 2,
-    title: "Deep Cleaning - Apartment",
-    location: "Banjara Hills, Hyderabad",
-    price: "₹1200",
-    timeAgo: "35 min ago",
-    urgency: "medium",
-    category: "Cleaning",
-    description: "Deep cleaning required for 3BHK apartment.",
-  },
-  {
-    id: 3,
-    title: "Truck Needed",
-    location: "Miyapur",
-    price: "₹1500",
-    timeAgo: "1 hour ago",
-    urgency: "high",
-    category: "Transport",
-    description: "Transport furniture from Ameerpet to Kukatpally",
-  },
-];
+
 
 const stats = [
   { icon: <RiseOutlined />, label: "Active Tasks", value: "2,456+" },
@@ -90,6 +59,45 @@ const stats = [
 
 export default function Freelancer() {
   const navigate = useNavigate();
+
+type BookingRequest = {
+  id: number;
+  full_name: string;
+  property_size_sqft: string;
+  preferred_date: string;
+};
+
+const [liveRequests, setLiveRequests] = useState<BookingRequest[]>([]);
+const [loading, setLoading] = useState(false);
+
+
+useEffect(() => {
+  const fetchLiveRequests = async () => {
+    try {
+      setLoading(true);
+
+      const res = await fetch(
+        "https://swachify-india-be-1-mcrb.onrender.com/api/home-service"
+      );
+
+      const data = await res.json();
+
+      console.log("FULL API RESPONSE 👉", data);
+
+      setLiveRequests(Array.isArray(data) ? data : []);
+    } catch (error) {
+      message.error("Failed to load live requests");
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchLiveRequests();
+}, []);
+
+
+
 
   const [authModalVisible, setAuthModalVisible] = useState(false);
   const [activeTab, setActiveTab] = useState("login");
@@ -111,9 +119,7 @@ export default function Freelancer() {
   };
 
 
-  const filteredRequests = !selectedCodes
-    ? liveRequests
-    : liveRequests.filter((req) => selectedCodes.includes(req.category));
+ const filteredRequests = liveRequests;
 
 
   
@@ -165,7 +171,7 @@ export default function Freelancer() {
         onCancel={() => setAuthModalVisible(false)}
         width={420}
       >
-        <Tabs activeKey={activeTab} onChange={(k) => setActiveTab(k)}>
+<Tabs activeKey={activeTab} onChange={(k) => setActiveTab(k)}>
           <TabPane tab="Login" key="login">
             <Form form={loginForm} layout="vertical" onFinish={onLoginFinish}>
               <Form.Item name="identifier" label="Email or Phone" rules={[{ required: true }]}>
@@ -297,51 +303,43 @@ export default function Freelancer() {
           </Button>
         </div>
 
-        <Row gutter={[20, 20]}>
-          {filteredRequests.map((req) => (
-            <Col xs={24} md={12} lg={8} key={req.id}>
-              <Card hoverable className="sw-fr-request-card">
-                <Tag
-                  color={
-                    req.urgency === "high"
-                      ? "red"
-                      : req.urgency === "medium"
-                        ? "gold"
-                        : "green"
-                  }
-                  className="sw-fr-urgency-tag"
-                >
-                  {req.urgency === "high" ? "Urgent" : req.category}
-                </Tag>
+<Row gutter={[20, 20]}>
+  {filteredRequests.map((req) => (
+    <Col xs={24} md={12} lg={8} key={req.id}>
+<Card hoverable className="sw-fr-request-card" loading={loading}>
+  <h3 className="sw-fr-request-title">
+    Cleaning Request — {req.full_name}
+  </h3>
 
-                <h3 className="sw-fr-request-title">{req.title}</h3>
-                <p className="sw-fr-request-desc">{req.description}</p>
+  <p className="sw-fr-request-desc">
+    Property Size: {req.property_size_sqft} sqft
+  </p>
 
-                <div className="sw-fr-request-info">
-                  <p>
-                    <EnvironmentOutlined /> {req.location}
-                  </p>
-                  <p>
-                    <ClockCircleOutlined /> {req.timeAgo}
-                  </p>
-                </div>
+  <p>
+    <ClockCircleOutlined /> Preferred Date:{" "}
+    {new Date(req.preferred_date).toLocaleDateString()}
+  </p>
 
-                <div className="sw-fr-request-bottom">
-                  <span className="sw-fr-price">
-                    <DollarCircleOutlined /> {req.price}
-                  </span>
+  {/* ✅ ONLY ONE PRICE + ACCEPT */}
+  <div className="sw-fr-request-bottom">
+    <span className="sw-fr-price">
+      <DollarCircleOutlined /> Price on Visit
+    </span>
 
-                  <div className="sw-fr-request-actions">
-                    <Button onClick={() => navigate("/freelancerregistration")} type="primary" shape="round">
-                      Accept
-                    </Button>
-                   
-                  </div>
-                </div>
-              </Card>
-            </Col>
-          ))}
-        </Row>
+    <Button
+      type="primary"
+      shape="round"
+      onClick={() => navigate("/freelancerregistration")}
+    >
+      Accept
+    </Button>
+  </div>
+</Card>
+
+    </Col>
+  ))}
+</Row>
+
       </Content>
 
       {/* Footer */}
