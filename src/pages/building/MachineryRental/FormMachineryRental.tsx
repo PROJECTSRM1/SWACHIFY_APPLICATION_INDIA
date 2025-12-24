@@ -30,13 +30,14 @@ const MachineryDetails: React.FC<FormProps> = ({ id, onClose }) => {
   const [rentalType, setRentalType] = useState("");
   const [fuelSupply, setFuelSupply] = useState(false);
 
-  // ✅ OTP STATE (ADDED)
   const [showOtpFields, setShowOtpFields] = useState(false);
   const [otpVerified, setOtpVerified] = useState(false);
   const [phoneOtp, setPhoneOtp] = useState("");
   const [, setOtpError] = useState("");
   const [emailOtp, setEmailOtp] = useState("");
   const [preferredTime, setPreferredTime] = useState("");
+  const [contactValue, setContactValue] = useState("+91 ");
+
 
 
 
@@ -184,7 +185,15 @@ const MachineryDetails: React.FC<FormProps> = ({ id, onClose }) => {
                   <div className="sw-br-mach-form-item">
                       <label>Contact Number</label>
                       <div className="sw-br-otp-input">
-                        <input type="text" name="contact" placeholder="Contact number" />
+                        <input type="text" name="contact" value={contactValue} placeholder="Contact number"
+                        onChange={(e) => {
+                          let value = e.target.value;
+                          if (!value.startsWith("+91 ")) {
+                            value = "+91 ";
+                            }
+                            const digits = value.slice(4).replace(/\D/g, "");
+                            setContactValue("+91 " + digits.slice(0, 10));
+                            }} />
                       {!otpVerified && !showOtpFields && (
                         <span className="sw-br-send-otp" onClick={() => setShowOtpFields(true)}>
                           Send OTP
