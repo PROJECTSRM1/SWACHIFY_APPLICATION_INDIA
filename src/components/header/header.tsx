@@ -20,7 +20,7 @@ import RecentBookingPage from "../../pages/RecentBookingPage";
 import ConfirmBookingModal from "../ConfirmAddressModal";
 
 type Booking = {
-  id: string;
+  id: number;
   title: string;
   date: string;
   time: string;

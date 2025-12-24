@@ -6,6 +6,7 @@ import { useCart } from "../context/CartContext";
 /* ---------------- TYPES ---------------- */
 
 type CartItemLike = {
+  address: string;
   id?: number | string;
   title?: string;
   quantity?: number;
@@ -46,13 +47,15 @@ export default function ConfirmAddressModal({
   const [form] = Form.useForm();
   const { removeFromCart } = useCart();
 
-  useEffect(() => {
-    if (item) {
-      form.setFieldsValue({ address: "" });
-    } else {
-      form.resetFields();
-    }
-  }, [item, form]);
+   useEffect(() => {
+  if (item) {
+    form.setFieldsValue({
+      address: item.address || "", 
+    });
+  } else {
+    form.resetFields();
+  }
+}, [item, form]);
 
   if (!item) return null;
 

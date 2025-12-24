@@ -4531,6 +4531,10 @@ body,
   max-height: 90vh;
   /* keep modal inside viewport */
 }
+.swc-fr-step-content{
+  color: #000 !important;
+}
+
 
 .swc-bs-subservice-modal .ant-modal-header {
   flex: 0 0 auto;
