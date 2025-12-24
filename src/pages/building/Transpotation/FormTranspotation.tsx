@@ -26,7 +26,7 @@ const TransportationForm: React.FC<FormProps> = ({ id, onClose }) => {
   const [deliveryDate, setDeliveryDate] = useState("");
 const [deliveryTime, setDeliveryTime] = useState("");
 
-  const [contact, setContact] = useState("");
+  const [contact, setContact] = useState("+91");
   const [address, setAddress] = useState("");
   const [instructions, setInstructions] = useState("");
 
@@ -39,6 +39,7 @@ const [otpVerified, setOtpVerified] = useState(false);
 const [phoneOtp, setPhoneOtp] = useState("");
 const [emailOtp, setEmailOtp] = useState("");
 const [otpError, setOtpError] = useState("");
+
 
 
   const formRef = useRef<HTMLFormElement>(null);
@@ -144,9 +145,10 @@ const [otpError, setOtpError] = useState("");
             <div className="sw-br-grid3">
               <div className="sw-br-field3">
                 <label>Customer Name</label>
-                <input
+                <input 
                   type="text"
                   name="customerName"
+                  placeholder="Enter Customer Name"
                   value={customerName}
                   onChange={(e) => setCustomerName(e.target.value)}
                 />
@@ -214,10 +216,7 @@ const [otpError, setOtpError] = useState("");
     </select>
   </div>
 </div>
-
-
-
-            <div className="sw-br-grid3">
+<div className="sw-br-grid3">
 
   {/* EMAIL FIRST */}
   <div className="sw-br-field3">
@@ -243,9 +242,15 @@ const [otpError, setOtpError] = useState("");
         name="contact"
         value={contact}
         placeholder="Contact number"
-        onChange={(e) => setContact(e.target.value)}
-      />
-
+        onChange={(e) => {
+    let value = e.target.value;  
+    if (!value.startsWith("+91 ")) {
+      value = "+91 ";
+    }
+    const digits = value.slice(4).replace(/\D/g, "");
+    setContact("+91 " + digits.slice(0, 10));
+  }}
+/>
       {!otpVerified && !showOtpFields && (
         <span
           className="sw-br-send-otp"
