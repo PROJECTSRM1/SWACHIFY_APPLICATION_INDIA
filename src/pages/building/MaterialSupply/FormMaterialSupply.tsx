@@ -40,6 +40,14 @@ const [otpVerified, setOtpVerified] = useState(false);
 const [phoneOtp, setPhoneOtp] = useState("");
 const [emailOtp, setEmailOtp] = useState("");
 const [otpError, setOtpError] = useState("");
+const [contactValue, setContactValue] = useState("+91 ");
+const isValidEmail = (email: string) =>
+  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+const isValidMobile = (mobile: string) =>
+  /^\+91\s\d{10}$/.test(mobile);
+
+
 
 
   const formRef = useRef<HTMLFormElement>(null);
@@ -90,9 +98,7 @@ const handleAddToCart = () => {
     "email"
   ) as HTMLInputElement)?.value;
 
-  const contact = (formRef.current?.elements.namedItem(
-    "contact"
-  ) as HTMLInputElement)?.value;
+  const contact = contactValue;
 
   const address = (formRef.current?.elements.namedItem(
     "address"
@@ -198,24 +204,34 @@ workStatus: "pending",
 
               <div className="sw-br-row">
                 <div className="sw-br-field">
-                  <label>Quantity</label>
-                  <div style={{ display: "flex", gap: "8px" }}>
-                    <input
-  type="number"
-  min={1}
-  value={quantity}
-  onChange={(e) => setQuantity(Math.max(1, Number(e.target.value)))}
-/>
-
-
-                    <select value={unit} onChange={(e) => setUnit(e.target.value)}>
-                      <option value="kg">Kg</option>
-                      <option value="ton">Ton</option>
-                    </select>
-                  </div>
-                </div>
+                  {/* ROW 2 — Quantity | EMPTY */}
 <div className="sw-br-row">
+  <div className="sw-br-field">
+    <label>Quantity</label>
+    <div className="sw-br-qty-group">
+  <input
+    type="number"
+    min={1}
+    value={quantity}
+    onChange={(e) =>
+      setQuantity(Math.max(1, Number(e.target.value)))
+    }
+  />
 
+  <select value={unit} onChange={(e) => setUnit(e.target.value)}>
+    <option value="kg">Kg</option>
+    <option value="ton">Ton</option>
+  </select>
+</div>
+
+  </div>
+
+  {/* EMPTY COLUMN */}
+  <div className="sw-br-field"></div>
+</div>
+
+{/* ROW 3 — Preferred Date | Preferred Time Slot */}
+<div className="sw-br-row">
   <div className="sw-br-field">
     <label>Preferred Date</label>
     <input
@@ -240,6 +256,7 @@ workStatus: "pending",
       <option value="17:00-19:00">05:00 PM - 07:00 PM</option>
     </select>
   </div>
+  </div>
 
 </div>
 
@@ -248,7 +265,6 @@ workStatus: "pending",
 {/* EMAIL + CONTACT */}
 <div className="sw-br-row">
 
-  {/* EMAIL — FIRST */}
   <div className="sw-br-field">
     <label>Email</label>
     <div className="sw-br-otp-input">
@@ -266,15 +282,40 @@ workStatus: "pending",
     <label>Contact Number</label>
     <div className="sw-br-otp-input">
       <input
-        type="text"
-        name="contact"
-        placeholder="Contact number"
-      />
-
+  type="text"
+  name="contact"
+  value={contactValue}
+  placeholder="Contact number"
+  onChange={(e) => {
+    let value = e.target.value;  
+    if (!value.startsWith("+91 ")) {
+      value = "+91 ";
+    }
+    const digits = value.slice(4).replace(/\D/g, "");
+    setContactValue("+91 " + digits.slice(0, 10));
+  }}
+/>
       {!otpVerified && !showOtpFields && (
         <span
           className="sw-br-send-otp"
-          onClick={() => setShowOtpFields(true)}
+onClick={() => {
+  const emailInput = (formRef.current?.elements.namedItem(
+    "email"
+  ) as HTMLInputElement)?.value;
+
+  if (!emailInput || !isValidEmail(emailInput)) {
+    message.error("Please enter a valid email address");
+    return;
+  }
+
+  if (!isValidMobile(contactValue)) {
+    message.error("Please enter a valid 10-digit mobile number");
+    return;
+  }
+
+  setShowOtpFields(true);
+  message.success("OTP sent successfully");
+}}
         >
           Send OTP
         </span>

@@ -15211,7 +15211,7 @@ body {
 }
 
 .sw-br-form {
-  width: 60%;
+  width: 70%;
 }
 
 
@@ -15258,6 +15258,7 @@ body {
   padding: 15px;
   border: 1px solid #e5e7eb;
   border-radius: 12px;
+  width: 439px;
 }
 
 .sw-br-form-title {
@@ -15268,24 +15269,54 @@ body {
 
 .sw-br-row {
   display: flex;
-  gap: 2px;
-  margin-bottom: 12px;
+  gap: 14px;
+  margin-bottom: 14px;
 }
+.sw-br-field:empty {
+  min-height: 38px;
+}
+
 
 .sw-br-field {
   width: 50%;
   display: flex;
   flex-direction: column;
-  gap: 0px;
-  font-size: 11px;
-  font-weight: 600;
-  margin-top: 5px;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 550;
+}
+.sw-br-qty-group {
+  display: flex;
+  gap: 10px;
+}
+
+.sw-br-qty-group input,
+.sw-br-qty-group select {
+  height: 38px;
+}
+
+
+
+.sw-br-field input,
+.sw-br-field select,
+.sw-br-field textarea {
+  height: 30px;
+  padding: 6px 10px;
+  font-size: 12px;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.sw-br-field textarea {
+  height: 70px;
 }
 
 /* ✅ Ensure Email + Contact always stay side by side */
 .sw-br-row > .sw-br-field {
   flex: 1;
   min-width: 0;
+  margin-top: -5px;
+
 }
 
 
@@ -15324,6 +15355,8 @@ textarea {
   white-space: nowrap;
   font-size: 12px;
   cursor: pointer;
+  margin-top: -11px;
+
 }
 
 .sw-br-check-grid input[type="checkbox"] {
@@ -15359,7 +15392,8 @@ textarea {
 }
 
 .sw-br-otp-input input {
-  padding-right: 1px;
+  height: 32px;
+  padding-right: 0px;
 }
 
 .sw-br-mach-otp-btn{
@@ -15375,6 +15409,12 @@ textarea {
 .sw-br-mach-otp-btn-wrap {
   display: flex;
   align-items: flex-end;
+}
+
+.sw-br-send-otp,
+.sw-br-otp-verified {
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .sw-br-send-otp {
@@ -15626,7 +15666,7 @@ textarea {
 }
 
 .sw-br-mach-left-side {
-  width: 40%;
+  width: 32%;
 }
 
 .sw-br-mach-image-box {
@@ -15684,6 +15724,7 @@ textarea {
   border: 1px solid #e2e8f0;
   padding: 15px;
   border-radius: 10px;
+  margin-right: -25px;
 }
 
 .sw-br-mach-section-title {
@@ -15695,7 +15736,7 @@ textarea {
 .sw-br-mach-row {
   display: flex;
   gap: 16px;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
   width: 100%;
 }
 
@@ -15705,7 +15746,7 @@ textarea {
   flex-direction: column;
   font-size: 11px;
   font-weight: 600;
-  margin-top: 5px;
+  margin-top: 7px;
   flex: 1;
 }
 
@@ -15971,8 +16012,8 @@ textarea {
 }
 
 .sw-br-form-left {
-  width: 42%;
-}
+  width: 33%;
+  margin-left: -30px;}
 
 .sw-br-form-image {
   width: 100%;
@@ -16062,7 +16103,7 @@ textarea {
 
 .sw-br-modal-content {
   width: 60%;
-  max-width: 850px;
+  max-width: 800px;
   background: white;
   border-radius: 16px;
   padding: 20px;
@@ -16074,8 +16115,8 @@ textarea {
 .sw-br-grid3 {
   width: 100% !important;
   display: grid !important;
-  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-  gap: 18px !important;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px 18px; /* row gap | column gap */
   padding-left: 0 !important;
   padding-right: 0 !important;
   box-sizing: border-box !important;
@@ -16090,23 +16131,27 @@ textarea {
 }
 
 .sw-br-field3 label {
-  font-size: 11px;
-  font-weight: 550;
-  margin-bottom: 2px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 6px;
   color: #1e293b;
-  margin-top: 2px;
 }
 
+
 .sw-br-field3 input,
-.sw-br-field3 select,
-.sw-br-field3 textarea {
-  padding: 5px 2px;
-  border: 1px solid #cbd5e1;
-  border-radius: 10px;
+.sw-br-field3 select {
+  height: 31px;
+  padding: 6px 10px;
   font-size: 13px;
-  outline: none;
-  width: 99%;
-  transition: border 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 10px;
+  box-sizing: border-box;
+  margin-bottom: 5px;
+}
+
+
+.sw-br-field3 textarea {
+  height: 90px;
+  padding: 8px 10px;
 }
 
 .sw-br-field3 input:focus,
