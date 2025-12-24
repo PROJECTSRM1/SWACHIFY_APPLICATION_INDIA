@@ -3,8 +3,15 @@ import { List, Card, Image, Tag, Row, Col } from "antd";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import "../index.css";
+import cleaningservices from "../assets/HomeServices/cleaningservices.jpg";
+import electricalservices from "../assets/HomeServices/electricalservices.jpg";
+import plumbingservices from "../assets/HomeServices/plumbingservices.jpg";
+
 
 dayjs.extend(customParseFormat);
+const API_ENDPOINT = "https://swachify-india-be-1-mcrb.onrender.com/api/home-service";
+
+
 
 /* ---------------- TYPES ---------------- */
 
@@ -18,7 +25,7 @@ type Booking = {
   paymentDone: boolean;
 };
 
-const LS_BOOKINGS_KEY = "bookings";
+// const LS_BOOKINGS_KEY = "bookings";
 
 /* ---------------- STATUS UI ---------------- */
 
@@ -61,6 +68,7 @@ const computeStatus = (b: Booking): Status => {
 
   const now = dayjs();
   const slotOver = now.isAfter(slotDateTime);
+  
 
   // ❌ unpaid + slot over
   if (!b.paymentDone && slotOver) {
@@ -86,14 +94,37 @@ const RecentBookingPage: React.FC = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);
 
   /* Load bookings from localStorage */
-  useEffect(() => {
+  /* Load bookings from GET API instead of localStorage */
+useEffect(() => {
+  const fetchBookings = async () => {
     try {
-      const raw = localStorage.getItem(LS_BOOKINGS_KEY);
-      if (raw) setBookings(JSON.parse(raw));
+      const res = await fetch(API_ENDPOINT);
+      const data = await res.json();
+const mapped: Booking[] = data.map((b: any) => ({
+  id: String(b.id),
+  title: b.full_name,
+  date: b.preferred_date,
+  time: `Slot ID: ${b.time_slot_id}`,  // show slot id as time since API has no time string
+  amount: b.service_price ?? 0,
+  paymentDone: b.payment_done === true,
+  image: (() => {
+    if (b.service_id === 1) return cleaningservices;
+    if (b.service_id === 2) return electricalservices;
+    if (b.service_id === 3) return plumbingservices;
+    return undefined;
+  })(),
+}));
+
+
+      setBookings(mapped);
     } catch (err) {
-      console.error(err);
+      console.error("API GET Error:", err);
     }
-  }, []);
+  };
+
+  fetchBookings();
+}, []);
+
 
   /* ⏱ Re-render every 30 seconds (auto complete / expiry) */
   useEffect(() => {
