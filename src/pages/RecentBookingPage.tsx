@@ -3,27 +3,46 @@ import { List, Card, Image, Tag, Row, Col } from "antd";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import "../index.css";
-import cleaningservices from "../assets/HomeServices/cleaningservices.jpg";
-import electricalservices from "../assets/HomeServices/electricalservices.jpg";
-import plumbingservices from "../assets/HomeServices/plumbingservices.jpg";
 
+import cleaningImg from "../assets/HomeServices/cleaningservices.jpg";
+import electricalImg from "../assets/HomeServices/electricalservices.jpg";
+import plumbingImg from "../assets/HomeServices/plumbingservices.jpg";
+import { getLoggedInUserIdSafe } from "../api/customerAuth";
+
+
+import { api } from "../api/client";
+
+const SERVICE_IMAGE_MAP: Record<number, string> = {
+  1: cleaningImg,     // Cleaning
+  2: electricalImg,   // Electrical
+  3: plumbingImg,     // Plumbing
+};
+
+const DEFAULT_IMAGE = cleaningImg;
+
+
+const TIME_SLOT_LABELS: Record<number, string> = {
+  1: "09:00",
+  2: "11:00",
+  3: "13:00",
+  4: "15:00",
+  5: "17:00",
+};
 
 dayjs.extend(customParseFormat);
-const API_ENDPOINT = "https://swachify-india-be-1-mcrb.onrender.com/api/home-service";
-
-
 
 /* ---------------- TYPES ---------------- */
 
 type Booking = {
-  id: string;
+  id: number;
   title: string;
-  date: string;      // YYYY-MM-DD
-  time: string;      // HH:mm or hh:mm A
+  date: string;
+  time: string;
   amount: number;
   image?: string;
   paymentDone: boolean;
 };
+
 
 // const LS_BOOKINGS_KEY = "bookings";
 
@@ -68,7 +87,6 @@ const computeStatus = (b: Booking): Status => {
 
   const now = dayjs();
   const slotOver = now.isAfter(slotDateTime);
-  
 
   // ❌ unpaid + slot over
   if (!b.paymentDone && slotOver) {
@@ -94,37 +112,53 @@ const RecentBookingPage: React.FC = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);
 
   /* Load bookings from localStorage */
-  /* Load bookings from GET API instead of localStorage */
+  // useEffect(() => {
+  //   try {
+  //     const raw = localStorage.getItem(LS_BOOKINGS_KEY);
+  //     if (raw) setBookings(JSON.parse(raw));
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // }, []);
 useEffect(() => {
-  const fetchBookings = async () => {
-    try {
-      const res = await fetch(API_ENDPOINT);
-      const data = await res.json();
-const mapped: Booking[] = data.map((b: any) => ({
-  id: String(b.id),
-  title: b.full_name,
-  date: b.preferred_date,
-  time: `Slot ID: ${b.time_slot_id}`,  // show slot id as time since API has no time string
-  amount: b.service_price ?? 0,
-  paymentDone: b.payment_done === true,
-  image: (() => {
-    if (b.service_id === 1) return cleaningservices;
-    if (b.service_id === 2) return electricalservices;
-    if (b.service_id === 3) return plumbingservices;
-    return undefined;
-  })(),
-}));
+  const fetchRecentBookings = async () => {
+    const userId = getLoggedInUserIdSafe();
 
+    // 🚫 Guest user
+    if (!userId) {
+      setBookings([]);
+      return;
+    }
+
+    try {
+      const res = await api.post(
+        "api/admin/by-user",
+        {
+          created_by: userId,
+          payment_done: true
+        }
+      );
+
+      const data = res.data;
+
+      const mapped: Booking[] = data.map((b: any) => ({
+        id: b.id,
+        title: b.full_name || "Home Service",
+        date: b.preferred_date,
+        time: TIME_SLOT_LABELS[b.time_slot_id] || "09:00",
+        amount: b.service_price,
+        paymentDone: b.payment_done,
+        image: SERVICE_IMAGE_MAP[b.service_id] || DEFAULT_IMAGE,
+      }));
 
       setBookings(mapped);
     } catch (err) {
-      console.error("API GET Error:", err);
+      console.error("Failed to fetch recent bookings", err);
     }
   };
 
-  fetchBookings();
+  fetchRecentBookings();
 }, []);
-
 
   /* ⏱ Re-render every 30 seconds (auto complete / expiry) */
   useEffect(() => {
