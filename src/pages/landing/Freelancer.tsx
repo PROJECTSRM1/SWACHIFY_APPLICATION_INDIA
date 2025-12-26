@@ -119,7 +119,7 @@ useEffect(() => {
   };
 
 
- const filteredRequests = liveRequests;
+const previewRequests = liveRequests.slice(0, 3);
 
 
   
@@ -304,41 +304,40 @@ useEffect(() => {
         </div>
 
 <Row gutter={[20, 20]}>
-  {filteredRequests.map((req) => (
+  {previewRequests.map((req) => (
     <Col xs={24} md={12} lg={8} key={req.id}>
-<Card hoverable className="sw-fr-request-card" loading={loading}>
-  <h3 className="sw-fr-request-title">
-    Cleaning Request — {req.full_name}
-  </h3>
+      <Card hoverable className="sw-fr-request-card" loading={loading}>
+        <h3 className="sw-fr-request-title">
+          Cleaning Request — {req.full_name}
+        </h3>
 
-  <p className="sw-fr-request-desc">
-    Property Size: {req.property_size_sqft} sqft
-  </p>
+        <p className="sw-fr-request-desc">
+          Property Size: {req.property_size_sqft} sqft
+        </p>
 
-  <p>
-    <ClockCircleOutlined /> Preferred Date:{" "}
-    {new Date(req.preferred_date).toLocaleDateString()}
-  </p>
+        <p>
+          <ClockCircleOutlined /> Preferred Date:{" "}
+          {new Date(req.preferred_date).toLocaleDateString()}
+        </p>
 
-  {/* ✅ ONLY ONE PRICE + ACCEPT */}
-  <div className="sw-fr-request-bottom">
-    <span className="sw-fr-price">
-      <DollarCircleOutlined /> Price on Visit
-    </span>
+        <div className="sw-fr-request-bottom">
+          <span className="sw-fr-price">
+            <DollarCircleOutlined /> Price on Visit
+          </span>
 
-    <Button
-      type="primary"
-      shape="round"
-      onClick={() => navigate("/freelancerregistration")}
-    >
-      Accept
-    </Button>
-  </div>
-</Card>
-
+          <Button
+            type="primary"
+            shape="round"
+            onClick={() => navigate("/freelancerregistration")}
+          >
+            Accept
+          </Button>
+        </div>
+      </Card>
     </Col>
   ))}
 </Row>
+
 
       </Content>
 
