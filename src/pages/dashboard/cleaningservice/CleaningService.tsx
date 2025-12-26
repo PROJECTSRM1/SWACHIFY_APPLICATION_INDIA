@@ -1527,6 +1527,7 @@ const buildBookingPayload = (
     service_price:computedPrice ?? 0,
     payment_done:false,
     created_by:getLoggedInUserId(),
+     status_id: 1,
   };
 };
 
@@ -1709,6 +1710,7 @@ sub_group_id: getSubModuleId(selectedSubKey),
       service_price:computedPrice ?? 0,
       payment_done:false,
       created_by:getLoggedInUserId(),
+       status_id: 1,
     };
 
     // --- 2. API Submission ---

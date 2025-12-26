@@ -15,6 +15,9 @@ import {
   message,
 } from "antd";
 import { fetchAdminBookings } from "../../api/adminBookings";
+
+import type { Dayjs } from "dayjs"; 
+
 import type { BookingAPIResponse } from "../../api/adminBookings";
 
 
@@ -465,7 +468,6 @@ const SkillsCell: React.FC<{ skills: string[] }> = ({ skills }) => {
       placement="top"
       open={open}
       onOpenChange={setOpen}
-      overlayClassName="skills-popover-overlay"
     >
       <div className="skills-cell-wrap">
         {/* ✅ Show first 2 ONLY when popover is CLOSED */}
@@ -502,9 +504,12 @@ const Appadmin: React.FC = () => {
 //const [bookings, setBookings] = useState<BookingRow[]>(generateBookings());
 const [bookings, setBookings] = useState<BookingRow[]>([]);
 const [loadingBookings, setLoadingBookings] = useState(true);
+const [sidebarOpen, setSidebarOpen] = useState(false);
+const [openPopup, setOpenPopup] = useState<"freelancer" | "vendor" | null>(null);
+
 console.log(generateBookings);
 console.log(loadingBookings);
-console.log(computeBookingStatsFromCount);
+// console.log(computeBookingStatsFromCount);
 
 const [pendingFreelancers, setPendingFreelancers] = useState<Assignee[]>([]);
 
@@ -599,10 +604,6 @@ const approveVendor = (id: string) => {
   };
 
 
-const [openPopup, setOpenPopup] =
-  useState<null | "freelancer" | "vendor">(null);
-
-
 useEffect(() => {
   if (openPopup === "freelancer") {
     setPendingFreelancers(
@@ -620,6 +621,7 @@ useEffect(() => {
 }, [openPopup, MERGED_ASSIGNEES]);
 
 
+
 const [active, setActive] = useState<"Dashboard" | ServiceKey>("Dashboard");
 
   // DATE FILTER state (default: Last 7 Days)
@@ -631,8 +633,8 @@ const [active, setActive] = useState<"Dashboard" | ServiceKey>("Dashboard");
   });
 
   const [showCustomPopover, setShowCustomPopover] = useState(false);
-  const [customRange, setCustomRange] = useState<any>([null, null]); // holds RangePicker moments
-
+const [customRange, setCustomRange] =
+  useState<[Dayjs | null, Dayjs | null]>([null, null]);
   // NEW: which preset is active (controls highlight)
   type PresetKey = "today" | "yesterday" | "last7" | "lastMonth" | "custom";
   const [activePreset, setActivePreset] = useState<PresetKey>("last7");
@@ -1033,6 +1035,8 @@ const filteredBookings = bookings.filter(b => {
     const rejected = total - completed - pending;
     return { total, completed, pending, rejected };
   }
+  console.log(computeBookingStatsFromCount);
+  
 
   //const bookingStats = computeBookingStatsFromCount(aggregatedDynamic.bookingsCount);
 //   const bookingStats = useMemo(() => {
@@ -1117,18 +1121,43 @@ const bookingStats = useMemo(() => {
 
   return (
     <div className="layout-container">
+      <div className="mobile-topbar">
+<div
+  className={`hamburger ${sidebarOpen ? "active" : ""}`}
+  onClick={() => setSidebarOpen(prev => !prev)}
+>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <div className="mobile-title">Swachify India</div>
+</div>
+
       {/* SIDEBAR */}
-      <aside className="sidebar">
+<aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
         <div className="sidebar-user">Swachify India</div>
 
         <ul className="sidebar-menu">
-          <li className={active === "Dashboard" ? "active" : ""} onClick={() => setActive("Dashboard")}>
+<li
+  className={active === "Dashboard" ? "active" : ""}
+  onClick={() => {
+    setActive("Dashboard");
+    setSidebarOpen(false); // ✅ CLOSE
+  }}
+>
             <HomeOutlined />
             <span>Dashboard (All)</span>
           </li>
 
           {SERVICE_KEYS.map((k) => (
-            <li key={k} className={active === k ? "active" : ""} onClick={() => setActive(k)}>
+<li
+  key={k}
+  className={active === k ? "active" : ""}
+  onClick={() => {
+    setActive(k);
+    setSidebarOpen(false); // ✅ CLOSE
+  }}
+>
               {k === "Home Service" && <ShoppingCartOutlined />}
               {k === "Transport" && <CarOutlined />}
               {k === "Buy/Sale/Rentals" && <ThunderboltOutlined />}
@@ -1151,6 +1180,13 @@ const bookingStats = useMemo(() => {
     </Button>
   </div>
       </aside>
+      {sidebarOpen && (
+  <div
+    className="sidebar-overlay"
+    onClick={() => setSidebarOpen(false)}
+  />
+)}
+
 
       {/* RIGHT: main content + footer */}
       <div className="dashboard-right-wrapper">
@@ -1192,12 +1228,18 @@ const bookingStats = useMemo(() => {
               <Popover
                 content={
                   <div style={{ padding: 8, minWidth: 320 }}>
-                    <RangePicker
-                      allowClear
-                      value={customRange}
-                      onChange={(vals) => setCustomRange(vals)}
-                      style={{ width: "100%", marginBottom: 8 }}
-                    />
+                <RangePicker
+                  allowClear
+                  value={customRange}
+                  onChange={(vals) => {
+                    if (!vals) {
+                      setCustomRange([null, null]); // ✅ handle clear
+                    } else {
+                      setCustomRange(vals);
+                    }
+                  }}
+                  style={{ width: "100%", marginBottom: 8 }}
+                />
                     <div style={{ display: "flex", gap: 8, justifyContent: "flex-end" }}>
                       <Button size="small" onClick={() => { setCustomRange([null, null]); setShowCustomPopover(false); }}>Cancel</Button>
                       <Button size="small" type="primary" onClick={onCustomApply}>Apply</Button>
@@ -1206,8 +1248,8 @@ const bookingStats = useMemo(() => {
                 }
                 title="Select custom range"
                 trigger="click"
-                visible={showCustomPopover}
-                onVisibleChange={(vis) => setShowCustomPopover(vis)}
+                open={showCustomPopover}
+                onOpenChange={(vis) => setShowCustomPopover(vis)}
                 placement="bottomLeft"
               >
                 <Button
@@ -1241,7 +1283,7 @@ const bookingStats = useMemo(() => {
  <div className="dashboard-scroll">
               <Card
                 className="big-card"
-                title={`Order Summary — ${active}`}
+                title={`Order Summary  ${active}`}
                 bordered={false}
               >
                 <Row gutter={20}>
@@ -1771,3 +1813,6 @@ const bookingStats = useMemo(() => {
 };
 
 export default Appadmin;
+
+
+
