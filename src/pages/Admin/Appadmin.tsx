@@ -1244,7 +1244,7 @@ const filteredBookings = bookings.filter(b => {
  <div className="dashboard-scroll">
               <Card
                 className="big-card"
-                title={`Order Summary — ${active}`}
+                title={`Order Summary  ${active}`}
                 bordered={false}
               >
                 <Row gutter={20}>
@@ -1774,3 +1774,6 @@ const filteredBookings = bookings.filter(b => {
 };
 
 export default Appadmin;
+
+
+
