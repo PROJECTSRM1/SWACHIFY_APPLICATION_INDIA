@@ -643,7 +643,8 @@ const [customRange, setCustomRange] =
   key: String(b.id),
   bookingId: `SW-${b.id}`,
   customerName: b.full_name,
-  serviceType: SERVICE_TYPE_MAP[b.service_type_id] ?? "Home Service",
+  // serviceType: SERVICE_TYPE_MAP[b.service_type_id] ?? "Home Service",
+    serviceType: "Home Service",
   amount: Number(b.service_price ?? 0),
   date: b.preferred_date,
   status: b.payment_done === 1 ? "Completed" : "Pending",
@@ -1038,14 +1039,52 @@ const filteredBookings = bookings.filter(b => {
   
 
   //const bookingStats = computeBookingStatsFromCount(aggregatedDynamic.bookingsCount);
-  const bookingStats = useMemo(() => {
-  const total = bookings.length;
-  const completed = bookings.filter(b => b.status === "Completed").length;
-  const pending = bookings.filter(b => b.status === "Pending").length;
-  const rejected = bookings.filter(b => b.status === "Rejected").length;
+//   const bookingStats = useMemo(() => {
+//   const total = bookings.length;
+//   const completed = bookings.filter(b => b.status === "Completed").length;
+//   const pending = bookings.filter(b => b.status === "Pending").length;
+//   const rejected = bookings.filter(b => b.status === "Rejected").length;
 
-  return { total, completed, pending, rejected };
-}, [bookings]);
+//   return { total, completed, pending, rejected };
+// }, [bookings]);
+
+const API_SUPPORTED_SERVICES: ServiceKey[] = [
+  "Home Service",
+  "Transport",
+  "Buy/Sale/Rentals",
+  "Raw Materials",
+  "Education",
+];
+
+
+const bookingStats = useMemo(() => {
+  if (active !== "Dashboard" && !API_SUPPORTED_SERVICES.includes(active)) {
+    return { total: 0, completed: 0, pending: 0, rejected: 0 };
+  }
+
+  const filtered = bookings.filter(b => {
+    const serviceMatch =
+      active === "Dashboard"
+        ? API_SUPPORTED_SERVICES.includes(b.serviceType)
+        : b.serviceType === active;
+
+    if (!serviceMatch) return false;
+
+    const dt = dateFromISO(b.date);
+    const from = new Date(range.from); from.setHours(0,0,0,0);
+    const to = new Date(range.to); to.setHours(23,59,59,999);
+
+    return dt >= from && dt <= to;
+  });
+
+  return {
+    total: filtered.length,
+    completed: filtered.filter(b => b.status === "Completed").length,
+    pending: filtered.filter(b => b.status === "Pending").length,
+    rejected: filtered.filter(b => b.status === "Rejected").length,
+  };
+}, [bookings, active, range]);
+
 
 
   const salesOptions = {
