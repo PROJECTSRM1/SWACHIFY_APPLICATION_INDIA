@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect} from "react";
 import {
   Row,
   Col,
@@ -39,49 +39,11 @@ type Request = {
   timeAgo: string;
   price: string;
   rating: number;
+  name: string;
   urgentFlag?: boolean;
 };
 
-const initialData: Request[] = [
-  {
-    id: 1,
-    title: "House Shifting - Packing",
-    desc: "Need help packing and loading luggage for a 2BHK.",
-    category: "Moving",
-    urgency: "high",
-    distanceKm: 2.5,
-    place: "Gachibowli, Hyderabad",
-    timeAgo: "10 min ago",
-    price: "₹1200",
-    rating: 4.8,
-    urgentFlag: true,
-  },
-  {
-    id: 2,
-    title: "Deep Cleaning - Apartment",
-    desc: "Deep cleaning required for 3BHK apartment.",
-    category: "Cleaning",
-    urgency: "medium",
-    distanceKm: 3.8,
-    place: "Banjara Hills, Hyderabad",
-    timeAgo: "35 min ago",
-    price: "₹1200",
-    rating: 4.9,
-  },
-  {
-    id: 3,
-    title: "Plumbing Repair",
-    desc: "Fix leaking kitchen tap.",
-    category: "Repair",
-    urgency: "high",
-    distanceKm: 1.2,
-    place: "Madhapur, Hyderabad",
-    timeAgo: "1 hour ago",
-    price: "800",
-    rating: 4.7,
-    urgentFlag: true,
-  },
-];
+
 
 const CATEGORIES = [
   "All",
@@ -103,6 +65,8 @@ export default function ServiceRequest() {
   const [activeCategory, setActiveCategory] = useState<string>("All");
   const [activeUrgency, setActiveUrgency] = useState<string>("All");
   const [searchText, setSearchText] = useState<string>("");
+    const [requests, setRequests] = useState<Request[]>([]);
+const [loading, setLoading] = useState<boolean>(false);
 
   // Header / Auth modal states
   const navigate = useNavigate();
@@ -121,6 +85,44 @@ export default function ServiceRequest() {
   //   setAuthModalVisible(false);
   // };
 
+useEffect(() => {
+  const fetchRequests = async () => {
+    try {
+      setLoading(true);
+      const res = await fetch(
+        "https://swachify-india-be-1-mcrb.onrender.com/api/home-service"
+      );
+      const data = await res.json();
+const mapped: Request[] = Array.isArray(data)
+  ? data.map((item: any, index: number) => ({
+      id: item.id ?? index,
+      name: item.full_name ?? "Customer",   // ✅ DYNAMIC
+      title: "Cleaning Request",
+      desc: `Property size: ${item.property_size_sqft} sqft`,
+      category: "Cleaning",
+      urgency: "medium",
+      distanceKm: 2.5,
+      place: item.address ?? "Nearby",
+      timeAgo: new Date(item.preferred_date).toLocaleDateString(),
+      price: "Price on visit",
+      rating: 4.5,
+      urgentFlag: false,
+    }))
+  : [];
+
+setRequests(mapped);
+
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchRequests();
+}, []);
+
+
   const toggleCategory = (cat: string) => {
     setActiveCategory((prev) => (prev === cat ? "All" : cat));
   };
@@ -130,7 +132,7 @@ export default function ServiceRequest() {
   };
 
   const filtered = useMemo(() => {
-    return initialData.filter((d) => {
+   return requests.filter((d) => {
       if (activeCategory !== "All" && d.category !== activeCategory) return false;
       if (activeUrgency !== "All" && d.urgency !== activeUrgency) return false;
       if (searchText.trim()) {
@@ -146,7 +148,7 @@ export default function ServiceRequest() {
       }
       return true;
     });
-  }, [activeCategory, activeUrgency, searchText]);
+}, [requests, activeCategory, activeUrgency, searchText]);
 
   // Align start when 1..3 cards present, otherwise center
   const rowJustify = filtered.length > 0 && filtered.length <= 3 ? "start" : "center";
@@ -258,9 +260,12 @@ export default function ServiceRequest() {
 
                       <div className="sw-fr-sr-meta-row compact">
                         <div className="sw-fr-sr-meta-left-group">
+                        <div className="sw-fr-sr-meta-left">
+                        <span className="sw-fr-sr-customer-name">👤 {r.name}</span>
                           <div className="sw-fr-sr-meta-left">
                             <EnvironmentOutlined className="sw-fr-sr-meta-icon" />
                             <span className="sw-fr-sr-meta-text">{r.place}</span>
+                          </div>
                           </div>
 
                           <div className="sw-fr-sr-meta-middle">

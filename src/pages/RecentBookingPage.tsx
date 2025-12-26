@@ -4,21 +4,47 @@ import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import "../index.css";
 
+import cleaningImg from "../assets/HomeServices/cleaningservices.jpg";
+import electricalImg from "../assets/HomeServices/electricalservices.jpg";
+import plumbingImg from "../assets/HomeServices/plumbingservices.jpg";
+import { getLoggedInUserIdSafe } from "../api/customerAuth";
+
+
+import { api } from "../api/client";
+
+const SERVICE_IMAGE_MAP: Record<number, string> = {
+  1: cleaningImg,     // Cleaning
+  2: electricalImg,   // Electrical
+  3: plumbingImg,     // Plumbing
+};
+
+const DEFAULT_IMAGE = cleaningImg;
+
+
+const TIME_SLOT_LABELS: Record<number, string> = {
+  1: "09:00",
+  2: "11:00",
+  3: "13:00",
+  4: "15:00",
+  5: "17:00",
+};
+
 dayjs.extend(customParseFormat);
 
 /* ---------------- TYPES ---------------- */
 
 type Booking = {
-  id: string;
+  id: number;
   title: string;
-  date: string;      // YYYY-MM-DD
-  time: string;      // HH:mm or hh:mm A
+  date: string;
+  time: string;
   amount: number;
   image?: string;
   paymentDone: boolean;
 };
 
-const LS_BOOKINGS_KEY = "bookings";
+
+// const LS_BOOKINGS_KEY = "bookings";
 
 /* ---------------- STATUS UI ---------------- */
 
@@ -86,14 +112,53 @@ const RecentBookingPage: React.FC = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);
 
   /* Load bookings from localStorage */
-  useEffect(() => {
-    try {
-      const raw = localStorage.getItem(LS_BOOKINGS_KEY);
-      if (raw) setBookings(JSON.parse(raw));
-    } catch (err) {
-      console.error(err);
+  // useEffect(() => {
+  //   try {
+  //     const raw = localStorage.getItem(LS_BOOKINGS_KEY);
+  //     if (raw) setBookings(JSON.parse(raw));
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // }, []);
+useEffect(() => {
+  const fetchRecentBookings = async () => {
+    const userId = getLoggedInUserIdSafe();
+
+    // 🚫 Guest user
+    if (!userId) {
+      setBookings([]);
+      return;
     }
-  }, []);
+
+    try {
+      const res = await api.post(
+        "api/admin/by-user",
+        {
+          created_by: userId,
+          payment_done: true
+        }
+      );
+
+      const data = res.data;
+
+      const mapped: Booking[] = data.map((b: any) => ({
+        id: b.id,
+        title: b.full_name || "Home Service",
+        date: b.preferred_date,
+        time: TIME_SLOT_LABELS[b.time_slot_id] || "09:00",
+        amount: b.service_price,
+        paymentDone: b.payment_done,
+        image: SERVICE_IMAGE_MAP[b.service_id] || DEFAULT_IMAGE,
+      }));
+
+      setBookings(mapped);
+    } catch (err) {
+      console.error("Failed to fetch recent bookings", err);
+    }
+  };
+
+  fetchRecentBookings();
+}, []);
 
   /* ⏱ Re-render every 30 seconds (auto complete / expiry) */
   useEffect(() => {
