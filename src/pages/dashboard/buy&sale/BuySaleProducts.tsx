@@ -1269,6 +1269,7 @@ export function BuySaleProducts({
   const [currentService, setCurrentService] = useState<Service | null>(null);
   const [currentSubservice, setCurrentSubservice] = useState<Subservice | null>(null);
   const [selectedProperty, setSelectedProperty] = useState<PropertyListing | null>(null);
+  console.log(hidenRentalSection);
 
    // ✅ Narendra added
   const normalize = (s: string) =>

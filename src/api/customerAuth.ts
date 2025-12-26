@@ -20,6 +20,7 @@ export interface LoginResponse {
   access_token: string;
   refresh_token?: string;
   token_type: string;
+  id: number;
   user: {
     sub: number;
     id: number;
@@ -45,11 +46,13 @@ export const customerRegister = async (data: CustomerRegisterPayload) => {
 export const customerLogin = async (data: CustomerLoginPayload) => {
   const res = await api.post<LoginResponse>("api/auth/login", data);
 
-  const { access_token, refresh_token, user } = res.data;
+  const { access_token, refresh_token, user,id } = res.data;
 
   // Save tokens
   if (access_token) localStorage.setItem("accessToken", access_token);
   if (refresh_token) localStorage.setItem("refreshToken", refresh_token);
+   localStorage.setItem("userId", String(id));
+
 
   // Backend gives user with `sub` not `id`
   const normalizedUser = {
@@ -66,6 +69,16 @@ export const customerLogin = async (data: CustomerLoginPayload) => {
 
   return res.data;
 };
+export const getLoggedInUserId = (): number => {
+  const id = localStorage.getItem("userId");
+
+  if (!id) {
+    throw new Error("User ID not found. User is not logged in.");
+  }
+
+  return Number(id);
+};
+
 
 
 // =====================================================
@@ -94,7 +107,7 @@ export const customerLogout = async () => {
 
 export const PaymentsAPI = {
   
-  createOrder: async (bookingId: string, amount: number) => {
+  createOrder: async (bookingId: number, amount: number) => {
     const res = await api.post("api/payments/create-order", {
       bookingId,
       amount,
@@ -106,16 +119,23 @@ export const PaymentsAPI = {
   verifyPayment: async (
     orderId: string,
     paymentId: string,
-    signature: string
+    signature: string,
+    home_service_id:number
   ) => {
     const res = await api.post("api/payments/verify-payment", {
       order_id: orderId,
       payment_id: paymentId,
       signature,
+      home_service_id
     });
     return res.data;
   },
 };
 
 
-
+// ✅ SAFE VERSION (for UI pages like RecentBookings)
+export const getLoggedInUserIdSafe = (): number | null => {
+  const id = localStorage.getItem("userId");
+  if (!id) return null;
+  return Number(id);
+};

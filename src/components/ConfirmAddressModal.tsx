@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Modal, Button, Form, Input, message } from "antd";
 import { PaymentsAPI } from "../api/customerAuth";
 import { useCart } from "../context/CartContext";
@@ -6,6 +6,7 @@ import { useCart } from "../context/CartContext";
 /* ---------------- TYPES ---------------- */
 
 type CartItemLike = {
+  address: string;
   id?: number | string;
   title?: string;
   quantity?: number;
@@ -18,7 +19,7 @@ type CartItemLike = {
 };
 
 export type Booking = {
-  id: string;
+  id: number;  
   title: string;
   date: string;
   time: string;
@@ -45,14 +46,18 @@ export default function ConfirmAddressModal({
 }: Props) {
   const [form] = Form.useForm();
   const { removeFromCart } = useCart();
+  const [isEditing, setIsEditing] = useState(false);
 
-  useEffect(() => {
-    if (item) {
-      form.setFieldsValue({ address: "" });
-    } else {
-      form.resetFields();
-    }
-  }, [item, form]);
+   useEffect(() => {
+  if (item) {
+    form.setFieldsValue({
+      address: item.address || "", 
+    });
+      setIsEditing(false);
+  } else {
+    form.resetFields();
+  }
+}, [item, form]);
 
   if (!item) return null;
 
@@ -78,7 +83,9 @@ export default function ConfirmAddressModal({
             await PaymentsAPI.verifyPayment(
               order.id,
               response.razorpay_payment_id,
-              response.razorpay_signature
+              response.razorpay_signature,
+               Number(item.id),
+              
             );
 
            const completedBooking: Booking = {
@@ -122,7 +129,7 @@ export default function ConfirmAddressModal({
     }
 
     const booking: Booking = {
-      id: `bkg-${Date.now()}`,
+      id: Number(item.id), 
       title: item.title ?? "Service",
 
       // ✅ USER-SELECTED SLOT (ONLY SOURCE OF TRUTH)
@@ -143,13 +150,7 @@ export default function ConfirmAddressModal({
   /* ---------- UI ---------- */
 
   return (
-    <Modal
-      open={open}
-      onCancel={onClose}
-      footer={null}
-      centered
-      width={640}
-    >
+    <Modal open={open} onCancel={onClose} footer={null} centered width={640}>
       <div style={{ display: "flex", gap: 16 }}>
         <div style={{ flex: 1 }}>
           <h3>{item.title}</h3>
@@ -158,10 +159,21 @@ export default function ConfirmAddressModal({
           <Form form={form} layout="vertical">
             <Form.Item
               name="address"
-              label="Delivery Address"
+              label={
+                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                  <span>Delivery Address</span>
+                  <Button
+                    type="link"
+                    size="small"
+                    onClick={() => setIsEditing(!isEditing)}
+                  >
+                    {isEditing ? "Save" : "Edit"}
+                  </Button>
+                </div>
+              }
               rules={[{ required: true }]}
             >
-              <Input.TextArea rows={3} />
+              <Input.TextArea rows={3} disabled={!isEditing} />
             </Form.Item>
           </Form>
 
