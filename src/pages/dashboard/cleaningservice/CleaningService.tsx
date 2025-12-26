@@ -963,8 +963,12 @@ const formatINR = (value: number | null) => {
   if (value == null || !isFinite(value) || value <= 0) return "—";
   return `₹ ${value.toLocaleString("en-IN")}`;
 };
+const normalize = (str: string) =>
+  str.toLowerCase().replace(/\s+/g, "").replace(/[^a-z0-9]/g, "");
 
-const CleaningService: React.FC = () => {
+
+const CleaningService: React.FC<{ searchQuery?: string }> = ({ searchQuery }) => {
+
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
   const [isModulesModalOpen, setIsModulesModalOpen] = useState(false);
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
@@ -1018,6 +1022,78 @@ const handleVerifyOtp = () => {
   const [selectedMainKey, setSelectedMainKey] = useState<string>("");
   const [selectedSubKey, setSelectedSubKey] = useState<string>("");
   const [selectedModule, setSelectedModule] = useState<Module | null>(null);
+useEffect(() => {
+  if (!searchQuery) return;
+
+  const q = normalize(searchQuery);
+
+  // 1️⃣ CATEGORY SEARCH FIRST
+  if (q.includes("residential")) {
+    setSelectedSubKey("");
+    setIsModulesModalOpen(false);
+    setSelectedMainKey("residential");
+    setIsCategoryModalOpen(true);
+    return;
+  }
+
+  if (q.includes("commercial")) {
+    setSelectedSubKey("");
+    setIsModulesModalOpen(false);
+    setSelectedMainKey("commercial");
+    setIsCategoryModalOpen(true);
+    return;
+  }
+
+  if (q.includes("specialized")) {
+    setSelectedSubKey("");
+    setIsModulesModalOpen(false);
+    setSelectedMainKey("specialized");
+    setIsCategoryModalOpen(true);
+    return;
+  }
+
+  if (q.includes("industrial")) {
+    setSelectedSubKey("");
+    setIsModulesModalOpen(false);
+    setSelectedMainKey("industrial");
+    setIsCategoryModalOpen(true);
+    return;
+  }
+
+  if (q.includes("post")) {
+    setSelectedSubKey("");
+    setIsModulesModalOpen(false);
+    setSelectedMainKey("post");
+    setIsCategoryModalOpen(true);
+    return;
+  }
+
+  setSelectedMainKey("");
+setSelectedSubKey("");
+setIsCategoryModalOpen(false);
+setIsModulesModalOpen(false);
+
+  // 2️⃣ SUB-SERVICE SEARCH
+  const match = SEARCH_MAP.find(item =>
+   item.keywords.some(k => {
+  const nk = normalize(k);
+  return nk === q || nk.includes(q + "cleaning");
+})
+
+  );
+
+  if (!match) return;
+
+  setSelectedMainKey(match.main);
+  setIsCategoryModalOpen(true);
+
+  setTimeout(() => {
+    setSelectedSubKey(match.sub);
+    setIsCategoryModalOpen(false);
+    setIsModulesModalOpen(true);
+  }, 300);
+}, [searchQuery]);
+
 
   const [computedPrice, setComputedPrice] = useState<number | null>(null);
 
@@ -1246,6 +1322,163 @@ const handleVerifyOtp = () => {
       { key: "waste", title: "Waste Handling", image: wasteImg },
     ],
   };
+ const SEARCH_MAP: {
+  keywords: string[];
+  main: string;
+  sub: string;
+  module?: string;
+}[] = [
+  // ===== RESIDENTIAL =====
+
+  {// homes
+    keywords: [
+      "homes",
+      "Home cleaning",
+      "Living room cleaning",
+      "bathroom cleaning",
+      "Kitchen cleaning",
+      "bedroom cleaning",
+    "All services cleaning"], 
+    main: "residential",
+    sub: "homes",
+  },
+ 
+
+  // ===== APARTMENTS =====
+  {
+    keywords: ["apartment cleaning","appartment",
+      "apartments",
+      "studio cleaning",
+      "1bhk cleaning","2bhk cleaning","3bhk"],
+    main: "residential",
+    sub: "apartments",
+  },
+
+  // ===== VILLAS =====
+  {
+    keywords: ["villa cleaning",
+      "villa services",
+      "small villas cleaning",
+      "duplex villas cleaning",
+      "luxury villas cleaning",
+    ],
+    main: "residential",
+    sub: "villas",
+  },
+
+  // COMMERCIAL =====
+  {
+    keywords: ["office cleaning",
+      "cabin cleaning",
+      "workstation cleaning",
+      "conference hall cleaning"],
+    main: "commercial",
+    sub: "offices",
+  },
+  {
+    keywords: ["shops cleaning", 
+      "mall cleaning",
+      "showroom cleaning"],
+    main: "commercial",
+    sub: "shops",
+  },
+   {
+    keywords: ["laboratory cleaning","clinics",
+      "clinic cleaning","diagnostic"],
+    main: "commercial",
+    sub: "clinics",
+  },
+  {
+    keywords: ["schools cleaning",
+      "classroom",
+      "school laboratory ",
+      "library cleaning"
+    ],
+    main: "commercial",
+    sub: "schools",
+  },
+  
+
+  // ===== SPECIALIZED =====
+  {
+    keywords: [ "furniture cleaning","furniture",
+                "sofa",
+                "chair",
+                "wooden furniture",],
+    main: "specialized",
+    sub: "furniture",
+  },
+  {
+    keywords: [ "floor cleaning","floors",
+                "marble",
+                "tile",
+                "granite"],
+    main: "specialized",
+    sub: "floors",
+  },
+  {
+    keywords: ["glass cleaning","window cleaning",
+                "outdoor glass",
+                "high rise glass",
+                "indoor glass",
+                "home sanitization",
+                "office sanitization",
+                "commercial sanitization",],
+    main: "specialized",
+    sub: "glass",
+  },
+
+  // ===== INDUSTRIAL =====
+  {
+    keywords: [ //assembaly area
+            "assembly services","assembly areas",
+            "production line",
+
+        // production services
+           "production services",
+           "warehouse rack",
+           "warehouse floor",
+        //Waste handling
+          "waste handing","waste services",
+            "heavy equipment",
+            "precision tools",
+            "chemical waste",
+            "solid waste"],
+    main: "industrial",
+    sub: "production",
+  },
+   {
+    keywords: [
+      //marble and granite 
+          "pmarble ","pgranite",
+    ],
+    main: "post",
+    sub: "marble",
+  },
+
+
+  //dust removal
+  {
+    keywords: [
+       "dust",
+          "indoor dust",
+          "outdoor dust",
+    ],
+    main: "post",
+    sub: "dustremoval",
+  },
+   {
+    keywords: [
+       // paint stain removal
+          "paint stain tiles",
+          "paint stain windows"
+    ],
+    main: "post",
+    sub: "paintstain",
+  },
+         
+];
+
 
   const modulesBySubKey: Record<string, Module[]> = {
     homes: [

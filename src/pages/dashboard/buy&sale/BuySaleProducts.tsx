@@ -1137,7 +1137,7 @@ const SERVICES_DATA: Service[] = [
     "property sale",
     "real estate sale",
     "commercial plot",
-    "industrial plot",
+    //"industrial plot",
     "office plot",
     "land for sale"],
       },
