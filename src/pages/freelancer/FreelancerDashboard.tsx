@@ -1,4 +1,7 @@
 import React, { useState, useMemo, useEffect, useRef, useCallback } from 'react';
+import { fetchHomeServiceRequests } from "../../api/homeServiceApi";
+import type { Job } from "../../api/homeServiceApi";
+
 
 import {
   Layout,
@@ -47,25 +50,25 @@ const { Title, Text } = Typography;
 const { Option } = Select;
 
 // --- TYPES ---
-interface Job {
-  ticketId: string;
-  title: string;
-  category: string;
-  status: 'Approval Pending' | 'In Progress' | 'Completed';
-  location: string;
-  date: string;
-  price: number;
+// interface Job {
+//   ticketId: string;
+//   title: string;
+//   category: string;
+//   status: 'Approval Pending' | 'In Progress' | 'Completed';
+//   location: string;
+//   date: string;
+//   price: number;
 
-  customer?: string;
-  description?: string;
-  estimatedPrice?: number;
+//   customer?: string;
+//   description?: string;
+//   estimatedPrice?: number;
 
-  // NEW customer details for active card
-  customerName?: string;
-  customerPhone?: string;
-  customerEmail?: string;
-  customerAddress?: string;
-}
+//   // NEW customer details for active card
+//   customerName?: string;
+//   customerPhone?: string;
+//   customerEmail?: string;
+//   customerAddress?: string;
+// }
 
 type ServiceStepIndex = 0 | 1 | 2 | 3;
 
@@ -88,333 +91,333 @@ const SERVICE_FLOW_DESCRIPTIONS: string[] = [
 const IMAGE_REQUIRED_STEPS: ServiceStepIndex[] = [2, 3];
 
 // --- MOCK DATA (ONLY AVAILABLE REQUESTS TO START) ---
-const INITIAL_AVAILABLE_REQUESTS: Job[] = [
-  {
-    ticketId: 'TKT001',
-    title: 'Cleaning - Deep Cleaning',
-    category: 'Cleaning',
-    status: 'In Progress',
-    location: 'MG Road, Bangalore',
-    date: '2025-11-28 at 10:00 AM',
-    customer: 'Rajesh Kumar',
-    customerName: 'Rajesh Kumar',
-    customerPhone: '+91 98765 00001',
-    customerEmail: 'rajesh.kumar@example.com',
-    customerAddress: 'Flat 304, Sunrise Apartments, MG Road, Bangalore',
-    description: '3BHK apartment deep cleaning required',
-    estimatedPrice: 3000,
-    price: 3000,
-  },
-  {
-    ticketId: 'TKT004',
-    title: 'Home Services - Plumbing',
-    category: 'Plumbing',
-    status: 'In Progress',
-    location: 'Koramangala, Bangalore',
-    date: '2025-11-29 at 2:00 PM',
-    customer: 'Priya Sharma',
-    customerName: 'Priya Sharma',
-    customerPhone: '+91 98765 00002',
-    customerEmail: 'priya.sharma@example.com',
-    customerAddress: 'Flat 102, Green Meadows, Koramangala, Bangalore',
-    description: 'Bathroom tap leaking issue',
-    estimatedPrice: 500,
-    price: 500,
-  },
-  {
-    ticketId: 'TKT005',
-    title: 'Home Services - Electrical',
-    category: 'Electrical',
-    status: 'In Progress',
-    location: 'Whitefield, Bangalore',
-    date: '2025-11-29 at 4:00 PM',
-    customer: 'Amit Singh',
-    customerName: 'Amit Singh',
-    customerPhone: '+91 98765 00003',
-    customerEmail: 'amit.singh@example.com',
-    customerAddress: 'Flat 501, Oakwood Residency, Whitefield, Bangalore',
-    description: 'Install new ceiling fan in living room.',
-    estimatedPrice: 1200,
-    price: 1200,
-  },
-  {
-    ticketId: 'TKT006',
-    title: 'Home Services - Repairs',
-    category: 'House Repairs',
-    status: 'In Progress',
-    location: 'Whitefield, Bangalore',
-    date: '2025-11-29 at 4:00 PM',
-    customer: 'Sarkaar Singh',
-    customerName: 'Sarkaar Singh',
-    customerPhone: '+91 98765 00003',
-    customerEmail: 'sarkaar.singh@example.com',
-    customerAddress: 'Flat 501, Oakwood Residency, Whitefield, Bangalore',
-    description: 'Install new AC in living room.',
-    estimatedPrice: 12000,
-    price: 12000,
-  },
-  {
-  ticketId: 'TKT007',
-  title: 'Cleaning - Basic House Cleaning',
-  category: 'Cleaning',
-  status: 'In Progress',
-  location: 'Indiranagar, Bangalore',
-  date: '2025-12-01 at 9:30 AM',
-  customer: 'Neha Verma',
-  customerName: 'Neha Verma',
-  customerPhone: '+91 98765 10001',
-  customerEmail: 'neha.verma@example.com',
-  customerAddress: 'Villa 12, Palm Meadows, Indiranagar',
-  description: 'Full house cleaning including dusting, mopping, and sanitizing.',
-  estimatedPrice: 1500,
-  price: 1500,
-},  
-{
-  ticketId: 'TKT008',
-  title: 'Home Services - Carpenter',
-  category: 'Home Services',
-  status: 'In Progress',
-  location: 'HSR Layout, Bangalore',
-  date: '2025-12-01 at 11:00 AM',
-  customer: 'Rohit Malhotra',
-  customerName: 'Rohit Malhotra',
-  customerPhone: '+91 98765 20002',
-  customerEmail: 'rohit.malhotra@example.com',
-  customerAddress: 'Flat 45B, LakeView Residency, HSR Layout',
-  description: 'Wooden door alignment and drawer repair work.',
-  estimatedPrice: 800,
-  price: 800,
-},
-{
-  ticketId: 'TKT009',
-  title: 'Home Services - Plumbing',
-  category: 'Plumbing',
-  status: 'In Progress',
-  location: 'BTM Layout, Bangalore',
-  date: '2025-12-02 at 10:00 AM',
-  customer: 'Ayesha Khan',
-  customerName: 'Ayesha Khan',
-  customerPhone: '+91 98765 30003',
-  customerEmail: 'ayesha.khan@example.com',
-  customerAddress: 'House 78, Pearl Residency, BTM Layout',
-  description: 'Kitchen sink drainage blocked; requires cleaning.',
-  estimatedPrice: 600,
-  price: 600,
-},
-{
-  ticketId: 'TKT010',
-  title: 'Home Services - Electrical',
-  category: 'Electrical',
-  status: 'In Progress',
-  location: 'Jayanagar, Bangalore',
-  date: '2025-12-02 at 3:00 PM',
-  customer: 'Manish Reddy',
-  customerName: 'Manish Reddy',
-  customerPhone: '+91 98765 40004',
-  customerEmail: 'manish.reddy@example.com',
-  customerAddress: 'Plot 21, Green Park Homes, Jayanagar',
-  description: 'Geyser not heating; requires inspection and repair.',
-  estimatedPrice: 900,
-  price: 900,
-},
-{
-  ticketId: 'TKT011',
-  title: 'Cleaning - Sofa Shampooing',
-  category: 'Cleaning',
-  status: 'In Progress',
-  location: 'Malleshwaram, Bangalore',
-  date: '2025-12-03 at 12:00 PM',
-  customer: 'Shruti Desai',
-  customerName: 'Shruti Desai',
-  customerPhone: '+91 98765 50005',
-  customerEmail: 'shruti.desai@example.com',
-  customerAddress: 'Block C, Sapphire Heights, Malleshwaram',
-  description: '6-seater sofa deep shampoo and vacuum cleaning.',
-  estimatedPrice: 1800,
-  price: 1800,
-},
-{
-  ticketId: 'TKT012',
-  title: 'Home Services - Electrical Wiring',
-  category: 'Electrical',
-  status: 'In Progress',
-  location: 'Banashankari, Bangalore',
-  date: '2025-12-03 at 4:30 PM',
-  customer: 'Gaurav Sinha',
-  customerName: 'Gaurav Sinha',
-  customerPhone: '+91 98765 60006',
-  customerEmail: 'gaurav.sinha@example.com',
-  customerAddress: 'Flat 22, Royal Enclave, Banashankari',
-  description: 'Electrical wiring replacement required in bedroom.',
-  estimatedPrice: 2200,
-  price: 2200,
-},
+// const INITIAL_AVAILABLE_REQUESTS: Job[] = [
+//   {
+//     ticketId: 'TKT001',
+//     title: 'Cleaning - Deep Cleaning',
+//     category: 'Cleaning',
+//     status: 'In Progress',
+//     location: 'MG Road, Bangalore',
+//     date: '2025-11-28 at 10:00 AM',
+//     customer: 'Rajesh Kumar',
+//     customerName: 'Rajesh Kumar',
+//     customerPhone: '+91 98765 00001',
+//     customerEmail: 'rajesh.kumar@example.com',
+//     customerAddress: 'Flat 304, Sunrise Apartments, MG Road, Bangalore',
+//     description: '3BHK apartment deep cleaning required',
+//     estimatedPrice: 3000,
+//     price: 3000,
+//   },
+//   {
+//     ticketId: 'TKT004',
+//     title: 'Home Services - Plumbing',
+//     category: 'Plumbing',
+//     status: 'In Progress',
+//     location: 'Koramangala, Bangalore',
+//     date: '2025-11-29 at 2:00 PM',
+//     customer: 'Priya Sharma',
+//     customerName: 'Priya Sharma',
+//     customerPhone: '+91 98765 00002',
+//     customerEmail: 'priya.sharma@example.com',
+//     customerAddress: 'Flat 102, Green Meadows, Koramangala, Bangalore',
+//     description: 'Bathroom tap leaking issue',
+//     estimatedPrice: 500,
+//     price: 500,
+//   },
+//   {
+//     ticketId: 'TKT005',
+//     title: 'Home Services - Electrical',
+//     category: 'Electrical',
+//     status: 'In Progress',
+//     location: 'Whitefield, Bangalore',
+//     date: '2025-11-29 at 4:00 PM',
+//     customer: 'Amit Singh',
+//     customerName: 'Amit Singh',
+//     customerPhone: '+91 98765 00003',
+//     customerEmail: 'amit.singh@example.com',
+//     customerAddress: 'Flat 501, Oakwood Residency, Whitefield, Bangalore',
+//     description: 'Install new ceiling fan in living room.',
+//     estimatedPrice: 1200,
+//     price: 1200,
+//   },
+//   {
+//     ticketId: 'TKT006',
+//     title: 'Home Services - Repairs',
+//     category: 'House Repairs',
+//     status: 'In Progress',
+//     location: 'Whitefield, Bangalore',
+//     date: '2025-11-29 at 4:00 PM',
+//     customer: 'Sarkaar Singh',
+//     customerName: 'Sarkaar Singh',
+//     customerPhone: '+91 98765 00003',
+//     customerEmail: 'sarkaar.singh@example.com',
+//     customerAddress: 'Flat 501, Oakwood Residency, Whitefield, Bangalore',
+//     description: 'Install new AC in living room.',
+//     estimatedPrice: 12000,
+//     price: 12000,
+//   },
+//   {
+//   ticketId: 'TKT007',
+//   title: 'Cleaning - Basic House Cleaning',
+//   category: 'Cleaning',
+//   status: 'In Progress',
+//   location: 'Indiranagar, Bangalore',
+//   date: '2025-12-01 at 9:30 AM',
+//   customer: 'Neha Verma',
+//   customerName: 'Neha Verma',
+//   customerPhone: '+91 98765 10001',
+//   customerEmail: 'neha.verma@example.com',
+//   customerAddress: 'Villa 12, Palm Meadows, Indiranagar',
+//   description: 'Full house cleaning including dusting, mopping, and sanitizing.',
+//   estimatedPrice: 1500,
+//   price: 1500,
+// },  
+// {
+//   ticketId: 'TKT008',
+//   title: 'Home Services - Carpenter',
+//   category: 'Home Services',
+//   status: 'In Progress',
+//   location: 'HSR Layout, Bangalore',
+//   date: '2025-12-01 at 11:00 AM',
+//   customer: 'Rohit Malhotra',
+//   customerName: 'Rohit Malhotra',
+//   customerPhone: '+91 98765 20002',
+//   customerEmail: 'rohit.malhotra@example.com',
+//   customerAddress: 'Flat 45B, LakeView Residency, HSR Layout',
+//   description: 'Wooden door alignment and drawer repair work.',
+//   estimatedPrice: 800,
+//   price: 800,
+// },
+// {
+//   ticketId: 'TKT009',
+//   title: 'Home Services - Plumbing',
+//   category: 'Plumbing',
+//   status: 'In Progress',
+//   location: 'BTM Layout, Bangalore',
+//   date: '2025-12-02 at 10:00 AM',
+//   customer: 'Ayesha Khan',
+//   customerName: 'Ayesha Khan',
+//   customerPhone: '+91 98765 30003',
+//   customerEmail: 'ayesha.khan@example.com',
+//   customerAddress: 'House 78, Pearl Residency, BTM Layout',
+//   description: 'Kitchen sink drainage blocked; requires cleaning.',
+//   estimatedPrice: 600,
+//   price: 600,
+// },
+// {
+//   ticketId: 'TKT010',
+//   title: 'Home Services - Electrical',
+//   category: 'Electrical',
+//   status: 'In Progress',
+//   location: 'Jayanagar, Bangalore',
+//   date: '2025-12-02 at 3:00 PM',
+//   customer: 'Manish Reddy',
+//   customerName: 'Manish Reddy',
+//   customerPhone: '+91 98765 40004',
+//   customerEmail: 'manish.reddy@example.com',
+//   customerAddress: 'Plot 21, Green Park Homes, Jayanagar',
+//   description: 'Geyser not heating; requires inspection and repair.',
+//   estimatedPrice: 900,
+//   price: 900,
+// },
+// {
+//   ticketId: 'TKT011',
+//   title: 'Cleaning - Sofa Shampooing',
+//   category: 'Cleaning',
+//   status: 'In Progress',
+//   location: 'Malleshwaram, Bangalore',
+//   date: '2025-12-03 at 12:00 PM',
+//   customer: 'Shruti Desai',
+//   customerName: 'Shruti Desai',
+//   customerPhone: '+91 98765 50005',
+//   customerEmail: 'shruti.desai@example.com',
+//   customerAddress: 'Block C, Sapphire Heights, Malleshwaram',
+//   description: '6-seater sofa deep shampoo and vacuum cleaning.',
+//   estimatedPrice: 1800,
+//   price: 1800,
+// },
+// {
+//   ticketId: 'TKT012',
+//   title: 'Home Services - Electrical Wiring',
+//   category: 'Electrical',
+//   status: 'In Progress',
+//   location: 'Banashankari, Bangalore',
+//   date: '2025-12-03 at 4:30 PM',
+//   customer: 'Gaurav Sinha',
+//   customerName: 'Gaurav Sinha',
+//   customerPhone: '+91 98765 60006',
+//   customerEmail: 'gaurav.sinha@example.com',
+//   customerAddress: 'Flat 22, Royal Enclave, Banashankari',
+//   description: 'Electrical wiring replacement required in bedroom.',
+//   estimatedPrice: 2200,
+//   price: 2200,
+// },
 
 
-{
-  ticketId: 'TKT013',
-  title: 'Cleaning - Bathroom Deep Cleaning',
-  category: 'Cleaning',
-  status: 'In Progress',
-  location: 'RT Nagar, Bangalore',
-  date: '2025-12-04 at 10:00 AM',
-  customer: 'Vishal R',
-  customerName: 'Vishal R',
-  customerPhone: '+91 98765 70001',
-  customerEmail: 'vishal.r@example.com',
-  customerAddress: 'House 12, RT Nagar Main Road, Bangalore',
-  description: '2 bathrooms deep cleaning including descaling and sanitizing.',
-  estimatedPrice: 1200,
-  price: 1200,
-},
-{
-  ticketId: 'TKT014',
-  title: 'Home Services - AC Gas Refill',
-  category: 'Home Services',
-  status: 'In Progress',
-  location: 'Hebbal, Bangalore',
-  date: '2025-12-04 at 1:00 PM',
-  customer: 'Karthik Menon',
-  customerName: 'Karthik Menon',
-  customerPhone: '+91 98765 70002',
-  customerEmail: 'karthik.menon@example.com',
-  customerAddress: 'LakeView Towers, Hebbal',
-  description: '1.5-ton AC gas refill and cooling performance check.',
-  estimatedPrice: 1800,
-  price: 1800,
-},
-{
-  ticketId: 'TKT015',
-  title: 'Plumbing - Tap Replacement',
-  category: 'Plumbing',
-  status: 'In Progress',
-  location: 'Yelahanka, Bangalore',
-  date: '2025-12-04 at 3:30 PM',
-  customer: 'Anita Bose',
-  customerName: 'Anita Bose',
-  customerPhone: '+91 98765 70003',
-  customerEmail: 'anita.bose@example.com',
-  customerAddress: 'Flat 8B, Orchid Greens, Yelahanka',
-  description: 'Kitchen tap broken; requires full replacement.',
-  estimatedPrice: 450,
-  price: 450,
-},
-{
-  ticketId: 'TKT016',
-  title: 'Electrical - Switchboard Replacement',
-  category: 'Electrical',
-  status: 'In Progress',
-  location: 'Basavanagudi, Bangalore',
-  date: '2025-12-05 at 11:00 AM',
-  customer: 'Harish Gowda',
-  customerName: 'Harish Gowda',
-  customerPhone: '+91 98765 70004',
-  customerEmail: 'harish.g@example.com',
-  customerAddress: 'House 52, Gandhi Bazaar, Basavanagudi',
-  description: 'Replace damaged switchboard and fix loose wiring.',
-  estimatedPrice: 700,
-  price: 700,
-},
-{
-  ticketId: 'TKT017',
-  title: 'Cleaning - Kitchen Deep Cleaning',
-  category: 'Cleaning',
-  status: 'In Progress',
-  location: 'Jeevan Bima Nagar, Bangalore',
-  date: '2025-12-05 at 2:00 PM',
-  customer: 'Meenakshi Prasad',
-  customerName: 'Meenakshi Prasad',
-  customerPhone: '+91 98765 70005',
-  customerEmail: 'meenakshi.p@example.com',
-  customerAddress: 'Flat 3C, Garden Homes, Jeevan Bima Nagar',
-  description: 'Full kitchen deep cleaning including chimney and tiles.',
-  estimatedPrice: 2000,
-  price: 2000,
-},
-{
-  ticketId: 'TKT018',
-  title: 'Home Services - Door Lock Repair',
-  category: 'Home Services',
-  status: 'In Progress',
-  location: 'Ulsoor, Bangalore',
-  date: '2025-12-06 at 9:00 AM',
-  customer: 'Divya Rao',
-  customerName: 'Divya Rao',
-  customerPhone: '+91 98765 70006',
-  customerEmail: 'divya.rao@example.com',
-  customerAddress: 'Flat 22B, Lakeside Residency, Ulsoor',
-  description: 'Main door lock jammed, requires adjustment or replacement.',
-  estimatedPrice: 650,
-  price: 650,
-},
-{
-  ticketId: 'TKT019',
-  title: 'Plumbing - Water Motor Issue',
-  category: 'Plumbing',
-  status: 'In Progress',
-  location: 'Banerghatta Road, Bangalore',
-  date: '2025-12-06 at 12:00 PM',
-  customer: 'Arun Shankar',
-  customerName: 'Arun Shankar',
-  customerPhone: '+91 98765 70007',
-  customerEmail: 'arun.shankar@example.com',
-  customerAddress: 'Sai Residency, Bannerghatta Road',
-  description: 'Water motor not pulling water; needs inspection.',
-  estimatedPrice: 900,
-  price: 900,
-},
-{
-  ticketId: 'TKT020',
-  title: 'Electrical - Tube Light Fitting',
-  category: 'Electrical',
-  status: 'In Progress',
-  location: 'Richmond Town, Bangalore',
-  date: '2025-12-06 at 4:00 PM',
-  customer: 'Sameer Shaikh',
-  customerName: 'Sameer Shaikh',
-  customerPhone: '+91 98765 70008',
-  customerEmail: 'sameer.shaikh@example.com',
-  customerAddress: 'Block 14, Rivera Apartments, Richmond Town',
-  description: 'Install new LED tube light in living room.',
-  estimatedPrice: 350,
-  price: 350,
-},
-{
-  ticketId: 'TKT021',
-  title: 'Cleaning - Balcony Cleaning',
-  category: 'Cleaning',
-  status: 'In Progress',
-  location: 'Kengeri, Bangalore',
-  date: '2025-12-07 at 10:30 AM',
-  customer: 'Lokesh N',
-  customerName: 'Lokesh N',
-  customerPhone: '+91 98765 70009',
-  customerEmail: 'lokesh.n@example.com',
-  customerAddress: 'Plot 26, Shanti Layout, Kengeri',
-  description: 'Balcony cleaning with moss removal and pressure wash.',
-  estimatedPrice: 900,
-  price: 900,
-},
-{
-  ticketId: 'TKT022',
-  title: 'Home Services - Curtain Rod Installation',
-  category: 'Home Services',
-  status: 'In Progress',
-  location: 'HSR Layout, Bangalore',
-  date: '2025-12-07 at 1:30 PM',
-  customer: 'Preeti Shetty',
-  customerName: 'Preeti Shetty',
-  customerPhone: '+91 98765 70010',
-  customerEmail: 'preeti.shetty@example.com',
-  customerAddress: 'Flat 7A, Sunshine Apartments, HSR Layout',
-  description: 'Install 2 curtain rods including drilling and fitting.',
-  estimatedPrice: 500,
-  price: 500,
-},
+// {
+//   ticketId: 'TKT013',
+//   title: 'Cleaning - Bathroom Deep Cleaning',
+//   category: 'Cleaning',
+//   status: 'In Progress',
+//   location: 'RT Nagar, Bangalore',
+//   date: '2025-12-04 at 10:00 AM',
+//   customer: 'Vishal R',
+//   customerName: 'Vishal R',
+//   customerPhone: '+91 98765 70001',
+//   customerEmail: 'vishal.r@example.com',
+//   customerAddress: 'House 12, RT Nagar Main Road, Bangalore',
+//   description: '2 bathrooms deep cleaning including descaling and sanitizing.',
+//   estimatedPrice: 1200,
+//   price: 1200,
+// },
+// {
+//   ticketId: 'TKT014',
+//   title: 'Home Services - AC Gas Refill',
+//   category: 'Home Services',
+//   status: 'In Progress',
+//   location: 'Hebbal, Bangalore',
+//   date: '2025-12-04 at 1:00 PM',
+//   customer: 'Karthik Menon',
+//   customerName: 'Karthik Menon',
+//   customerPhone: '+91 98765 70002',
+//   customerEmail: 'karthik.menon@example.com',
+//   customerAddress: 'LakeView Towers, Hebbal',
+//   description: '1.5-ton AC gas refill and cooling performance check.',
+//   estimatedPrice: 1800,
+//   price: 1800,
+// },
+// {
+//   ticketId: 'TKT015',
+//   title: 'Plumbing - Tap Replacement',
+//   category: 'Plumbing',
+//   status: 'In Progress',
+//   location: 'Yelahanka, Bangalore',
+//   date: '2025-12-04 at 3:30 PM',
+//   customer: 'Anita Bose',
+//   customerName: 'Anita Bose',
+//   customerPhone: '+91 98765 70003',
+//   customerEmail: 'anita.bose@example.com',
+//   customerAddress: 'Flat 8B, Orchid Greens, Yelahanka',
+//   description: 'Kitchen tap broken; requires full replacement.',
+//   estimatedPrice: 450,
+//   price: 450,
+// },
+// {
+//   ticketId: 'TKT016',
+//   title: 'Electrical - Switchboard Replacement',
+//   category: 'Electrical',
+//   status: 'In Progress',
+//   location: 'Basavanagudi, Bangalore',
+//   date: '2025-12-05 at 11:00 AM',
+//   customer: 'Harish Gowda',
+//   customerName: 'Harish Gowda',
+//   customerPhone: '+91 98765 70004',
+//   customerEmail: 'harish.g@example.com',
+//   customerAddress: 'House 52, Gandhi Bazaar, Basavanagudi',
+//   description: 'Replace damaged switchboard and fix loose wiring.',
+//   estimatedPrice: 700,
+//   price: 700,
+// },
+// {
+//   ticketId: 'TKT017',
+//   title: 'Cleaning - Kitchen Deep Cleaning',
+//   category: 'Cleaning',
+//   status: 'In Progress',
+//   location: 'Jeevan Bima Nagar, Bangalore',
+//   date: '2025-12-05 at 2:00 PM',
+//   customer: 'Meenakshi Prasad',
+//   customerName: 'Meenakshi Prasad',
+//   customerPhone: '+91 98765 70005',
+//   customerEmail: 'meenakshi.p@example.com',
+//   customerAddress: 'Flat 3C, Garden Homes, Jeevan Bima Nagar',
+//   description: 'Full kitchen deep cleaning including chimney and tiles.',
+//   estimatedPrice: 2000,
+//   price: 2000,
+// },
+// {
+//   ticketId: 'TKT018',
+//   title: 'Home Services - Door Lock Repair',
+//   category: 'Home Services',
+//   status: 'In Progress',
+//   location: 'Ulsoor, Bangalore',
+//   date: '2025-12-06 at 9:00 AM',
+//   customer: 'Divya Rao',
+//   customerName: 'Divya Rao',
+//   customerPhone: '+91 98765 70006',
+//   customerEmail: 'divya.rao@example.com',
+//   customerAddress: 'Flat 22B, Lakeside Residency, Ulsoor',
+//   description: 'Main door lock jammed, requires adjustment or replacement.',
+//   estimatedPrice: 650,
+//   price: 650,
+// },
+// {
+//   ticketId: 'TKT019',
+//   title: 'Plumbing - Water Motor Issue',
+//   category: 'Plumbing',
+//   status: 'In Progress',
+//   location: 'Banerghatta Road, Bangalore',
+//   date: '2025-12-06 at 12:00 PM',
+//   customer: 'Arun Shankar',
+//   customerName: 'Arun Shankar',
+//   customerPhone: '+91 98765 70007',
+//   customerEmail: 'arun.shankar@example.com',
+//   customerAddress: 'Sai Residency, Bannerghatta Road',
+//   description: 'Water motor not pulling water; needs inspection.',
+//   estimatedPrice: 900,
+//   price: 900,
+// },
+// {
+//   ticketId: 'TKT020',
+//   title: 'Electrical - Tube Light Fitting',
+//   category: 'Electrical',
+//   status: 'In Progress',
+//   location: 'Richmond Town, Bangalore',
+//   date: '2025-12-06 at 4:00 PM',
+//   customer: 'Sameer Shaikh',
+//   customerName: 'Sameer Shaikh',
+//   customerPhone: '+91 98765 70008',
+//   customerEmail: 'sameer.shaikh@example.com',
+//   customerAddress: 'Block 14, Rivera Apartments, Richmond Town',
+//   description: 'Install new LED tube light in living room.',
+//   estimatedPrice: 350,
+//   price: 350,
+// },
+// {
+//   ticketId: 'TKT021',
+//   title: 'Cleaning - Balcony Cleaning',
+//   category: 'Cleaning',
+//   status: 'In Progress',
+//   location: 'Kengeri, Bangalore',
+//   date: '2025-12-07 at 10:30 AM',
+//   customer: 'Lokesh N',
+//   customerName: 'Lokesh N',
+//   customerPhone: '+91 98765 70009',
+//   customerEmail: 'lokesh.n@example.com',
+//   customerAddress: 'Plot 26, Shanti Layout, Kengeri',
+//   description: 'Balcony cleaning with moss removal and pressure wash.',
+//   estimatedPrice: 900,
+//   price: 900,
+// },
+// {
+//   ticketId: 'TKT022',
+//   title: 'Home Services - Curtain Rod Installation',
+//   category: 'Home Services',
+//   status: 'In Progress',
+//   location: 'HSR Layout, Bangalore',
+//   date: '2025-12-07 at 1:30 PM',
+//   customer: 'Preeti Shetty',
+//   customerName: 'Preeti Shetty',
+//   customerPhone: '+91 98765 70010',
+//   customerEmail: 'preeti.shetty@example.com',
+//   customerAddress: 'Flat 7A, Sunshine Apartments, HSR Layout',
+//   description: 'Install 2 curtain rods including drilling and fitting.',
+//   estimatedPrice: 500,
+//   price: 500,
+// },
 
 
 
-];
+// ];
 
 // Utility to fetch user name from registration data (MOCK)
 const getMockUserName = () => {
@@ -1052,8 +1055,26 @@ const FreelancerDashboard: React.FC = () => {
 
   const [activeJobs, setActiveJobs] = useState<Job[]>([]);
   const [pendingJobs, setPendingJobs] = useState<Job[]>([]);
-  const [availableRequests, setAvailableRequests] =
-    useState<Job[]>(INITIAL_AVAILABLE_REQUESTS);
+const [availableRequests, setAvailableRequests] = useState<Job[]>([]);
+const [loadingRequests, setLoadingRequests] = useState(false);
+useEffect(() => {
+  const loadRequests = async () => {
+    try {
+      setLoadingRequests(true);
+      const jobs = await fetchHomeServiceRequests();
+      setAvailableRequests(jobs);
+    } catch (error) {
+      console.error(error);
+      message.error("Failed to load available requests");
+    } finally {
+      setLoadingRequests(false);
+    }
+  };
+
+  loadRequests();
+}, []);
+
+
 
   // const [requestFilter, setRequestFilter] = useState<
   //   'All Requests' | 'Matched to My Skills'
@@ -1630,9 +1651,19 @@ useEffect(() => {
         />
       )}
 
-      {visibleRequests.map((req) => (
-        <RequestCard key={req.ticketId} request={req} onAccept={handleAcceptRequest} />
-      ))}
+    {loadingRequests ? (
+  <div style={{ textAlign: "center", padding: 24 }}>
+    Loading requests...
+  </div>
+) : (
+  visibleRequests.map((req) => (
+    <RequestCard
+      key={req.ticketId}
+      request={req}
+      onAccept={handleAcceptRequest}
+    />
+  ))
+)}
 
       {/* Sentinel observed by IntersectionObserver */}
       <div ref={sentinelRef} style={{ height: 1 }} />
