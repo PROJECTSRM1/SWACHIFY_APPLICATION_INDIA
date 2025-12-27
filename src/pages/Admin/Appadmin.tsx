@@ -15,6 +15,9 @@ import {
   message,
 } from "antd";
 import { fetchAdminBookings } from "../../api/adminBookings";
+
+import type { Dayjs } from "dayjs"; 
+
 import type { BookingAPIResponse } from "../../api/adminBookings";
 
 
@@ -467,7 +470,6 @@ const SkillsCell: React.FC<{ skills: string[] }> = ({ skills }) => {
       placement="top"
       open={open}
       onOpenChange={setOpen}
-      overlayClassName="skills-popover-overlay"
     >
       <div className="skills-cell-wrap">
         {/* ✅ Show first 2 ONLY when popover is CLOSED */}
@@ -504,9 +506,12 @@ const Appadmin: React.FC = () => {
 //const [bookings, setBookings] = useState<BookingRow[]>(generateBookings());
 const [bookings, setBookings] = useState<BookingRow[]>([]);
 const [loadingBookings, setLoadingBookings] = useState(true);
+const [sidebarOpen, setSidebarOpen] = useState(false);
+const [openPopup, setOpenPopup] = useState<"freelancer" | "vendor" | null>(null);
+
 console.log(generateBookings);
 console.log(loadingBookings);
-console.log(computeBookingStatsFromCount);
+// console.log(computeBookingStatsFromCount);
 
 const [pendingFreelancers, setPendingFreelancers] = useState<Assignee[]>([]);
 
@@ -601,10 +606,6 @@ const approveVendor = (id: string) => {
   };
 
 
-const [openPopup, setOpenPopup] =
-  useState<null | "freelancer" | "vendor">(null);
-
-
 useEffect(() => {
   if (openPopup === "freelancer") {
     setPendingFreelancers(
@@ -622,6 +623,7 @@ useEffect(() => {
 }, [openPopup, MERGED_ASSIGNEES]);
 
 
+
 const [active, setActive] = useState<"Dashboard" | ServiceKey>("Dashboard");
 
   // DATE FILTER state (default: Last 7 Days)
@@ -633,8 +635,8 @@ const [active, setActive] = useState<"Dashboard" | ServiceKey>("Dashboard");
   });
 
   const [showCustomPopover, setShowCustomPopover] = useState(false);
-  const [customRange, setCustomRange] = useState<any>([null, null]); // holds RangePicker moments
-
+const [customRange, setCustomRange] =
+  useState<[Dayjs | null, Dayjs | null]>([null, null]);
   // NEW: which preset is active (controls highlight)
   type PresetKey = "today" | "yesterday" | "last7" | "lastMonth" | "custom";
   const [activePreset, setActivePreset] = useState<PresetKey>("last7");
@@ -643,7 +645,8 @@ const [active, setActive] = useState<"Dashboard" | ServiceKey>("Dashboard");
   key: String(b.id),
   bookingId: `SW-${b.id}`,
   customerName: b.full_name,
-  serviceType: SERVICE_TYPE_MAP[b.service_type_id] ?? "Home Service",
+  // serviceType: SERVICE_TYPE_MAP[b.service_type_id] ?? "Home Service",
+    serviceType: "Home Service",
   amount: Number(b.service_price ?? 0),
   date: b.preferred_date,
   status: b.status_id==1 ? "Pending" : "Completed",
@@ -1031,16 +1034,56 @@ const filteredBookings = bookings.filter(b => {
     const rejected = total - completed - pending;
     return { total, completed, pending, rejected };
   }
+  console.log(computeBookingStatsFromCount);
+  
 
   //const bookingStats = computeBookingStatsFromCount(aggregatedDynamic.bookingsCount);
-  const bookingStats = useMemo(() => {
-  const total = bookings.length;
-  const completed = bookings.filter(b => b.status === "Completed").length;
-  const pending = bookings.filter(b => b.status === "Pending").length;
-  const rejected = bookings.filter(b => b.status === "Rejected").length;
+//   const bookingStats = useMemo(() => {
+//   const total = bookings.length;
+//   const completed = bookings.filter(b => b.status === "Completed").length;
+//   const pending = bookings.filter(b => b.status === "Pending").length;
+//   const rejected = bookings.filter(b => b.status === "Rejected").length;
 
-  return { total, completed, pending, rejected };
-}, [bookings]);
+//   return { total, completed, pending, rejected };
+// }, [bookings]);
+
+const API_SUPPORTED_SERVICES: ServiceKey[] = [
+  "Home Service",
+  "Transport",
+  "Buy/Sale/Rentals",
+  "Raw Materials",
+  "Education",
+];
+
+
+const bookingStats = useMemo(() => {
+  if (active !== "Dashboard" && !API_SUPPORTED_SERVICES.includes(active)) {
+    return { total: 0, completed: 0, pending: 0, rejected: 0 };
+  }
+
+  const filtered = bookings.filter(b => {
+    const serviceMatch =
+      active === "Dashboard"
+        ? API_SUPPORTED_SERVICES.includes(b.serviceType)
+        : b.serviceType === active;
+
+    if (!serviceMatch) return false;
+
+    const dt = dateFromISO(b.date);
+    const from = new Date(range.from); from.setHours(0,0,0,0);
+    const to = new Date(range.to); to.setHours(23,59,59,999);
+
+    return dt >= from && dt <= to;
+  });
+
+  return {
+    total: filtered.length,
+    completed: filtered.filter(b => b.status === "Completed").length,
+    pending: filtered.filter(b => b.status === "Pending").length,
+    rejected: filtered.filter(b => b.status === "Rejected").length,
+  };
+}, [bookings, active, range]);
+
 
 
   const salesOptions = {
@@ -1077,18 +1120,43 @@ const filteredBookings = bookings.filter(b => {
 
   return (
     <div className="layout-container">
+      <div className="mobile-topbar">
+<div
+  className={`hamburger ${sidebarOpen ? "active" : ""}`}
+  onClick={() => setSidebarOpen(prev => !prev)}
+>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <div className="mobile-title">Swachify India</div>
+</div>
+
       {/* SIDEBAR */}
-      <aside className="sidebar">
+<aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
         <div className="sidebar-user">Swachify India</div>
 
         <ul className="sidebar-menu">
-          <li className={active === "Dashboard" ? "active" : ""} onClick={() => setActive("Dashboard")}>
+<li
+  className={active === "Dashboard" ? "active" : ""}
+  onClick={() => {
+    setActive("Dashboard");
+    setSidebarOpen(false); // ✅ CLOSE
+  }}
+>
             <HomeOutlined />
             <span>Dashboard (All)</span>
           </li>
 
           {SERVICE_KEYS.map((k) => (
-            <li key={k} className={active === k ? "active" : ""} onClick={() => setActive(k)}>
+<li
+  key={k}
+  className={active === k ? "active" : ""}
+  onClick={() => {
+    setActive(k);
+    setSidebarOpen(false); // ✅ CLOSE
+  }}
+>
               {k === "Home Service" && <ShoppingCartOutlined />}
               {k === "Transport" && <CarOutlined />}
               {k === "Buy/Sale/Rentals" && <ThunderboltOutlined />}
@@ -1111,6 +1179,13 @@ const filteredBookings = bookings.filter(b => {
     </Button>
   </div>
       </aside>
+      {sidebarOpen && (
+  <div
+    className="sidebar-overlay"
+    onClick={() => setSidebarOpen(false)}
+  />
+)}
+
 
       {/* RIGHT: main content + footer */}
       <div className="dashboard-right-wrapper">
@@ -1152,12 +1227,18 @@ const filteredBookings = bookings.filter(b => {
               <Popover
                 content={
                   <div style={{ padding: 8, minWidth: 320 }}>
-                    <RangePicker
-                      allowClear
-                      value={customRange}
-                      onChange={(vals) => setCustomRange(vals)}
-                      style={{ width: "100%", marginBottom: 8 }}
-                    />
+                <RangePicker
+                  allowClear
+                  value={customRange}
+                  onChange={(vals) => {
+                    if (!vals) {
+                      setCustomRange([null, null]); // ✅ handle clear
+                    } else {
+                      setCustomRange(vals);
+                    }
+                  }}
+                  style={{ width: "100%", marginBottom: 8 }}
+                />
                     <div style={{ display: "flex", gap: 8, justifyContent: "flex-end" }}>
                       <Button size="small" onClick={() => { setCustomRange([null, null]); setShowCustomPopover(false); }}>Cancel</Button>
                       <Button size="small" type="primary" onClick={onCustomApply}>Apply</Button>
@@ -1166,8 +1247,8 @@ const filteredBookings = bookings.filter(b => {
                 }
                 title="Select custom range"
                 trigger="click"
-                visible={showCustomPopover}
-                onVisibleChange={(vis) => setShowCustomPopover(vis)}
+                open={showCustomPopover}
+                onOpenChange={(vis) => setShowCustomPopover(vis)}
                 placement="bottomLeft"
               >
                 <Button
@@ -1201,7 +1282,7 @@ const filteredBookings = bookings.filter(b => {
  <div className="dashboard-scroll">
               <Card
                 className="big-card"
-                title={`Order Summary — ${active}`}
+                title={`Order Summary  ${active}`}
                 bordered={false}
               >
                 <Row gutter={20}>
@@ -1731,3 +1812,6 @@ const filteredBookings = bookings.filter(b => {
 };
 
 export default Appadmin;
+
+
+

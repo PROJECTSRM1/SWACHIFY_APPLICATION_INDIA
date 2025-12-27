@@ -131,4 +131,9 @@ export const PaymentsAPI = {
 };
 
 
-
+// ✅ SAFE VERSION (for UI pages like RecentBookings)
+export const getLoggedInUserIdSafe = (): number | null => {
+  const id = localStorage.getItem("userId");
+  if (!id) return null;
+  return Number(id);
+};
