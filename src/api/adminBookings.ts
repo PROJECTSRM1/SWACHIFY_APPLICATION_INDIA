@@ -9,6 +9,8 @@ export interface BookingAPIResponse {
   payment_done: number | null;
   mobile: string;
   address: string;
+  status_id:string|number;
+  assigned_to:number|null;
 }
 
 export const fetchAdminBookings = async (): Promise<BookingAPIResponse[]> => {

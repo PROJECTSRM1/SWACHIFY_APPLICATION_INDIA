@@ -88,6 +88,7 @@ type BookingRow = {
   status: BookingStatus;
   phone: string;
   location: string;
+  paymentDone: boolean;
   assigned: string;
 };
 
@@ -288,6 +289,7 @@ function generateBookings(): BookingRow[] {
         phone: `+91-9${Math.floor(100000000 + (counter * 7) % 900000000)}`,
         location: locations[(counter + i) % locations.length],
         assigned: status === "Pending" ? "" : workers[(counter + i) % workers.length],
+        paymentDone: status === "Completed",
       });
     }
   };
@@ -644,10 +646,12 @@ const [active, setActive] = useState<"Dashboard" | ServiceKey>("Dashboard");
   serviceType: SERVICE_TYPE_MAP[b.service_type_id] ?? "Home Service",
   amount: Number(b.service_price ?? 0),
   date: b.preferred_date,
-  status: b.payment_done === 1 ? "Completed" : "Pending",
+  status: b.status_id==1 ? "Pending" : "Completed",
   phone: b.mobile,
   location: b.address,
+  paymentDone: Boolean(b.payment_done),
   assigned: "",
+  
 });
 
 
@@ -880,19 +884,14 @@ const columns = [
   key: "paymentStatus",
   width: 160,
   render: (_: any, record: BookingRow) => {
-    const lastDigit = Number(
-      record.bookingId.replace(/\D/g, "").slice(-1)
-    );
-
-    const isPaid = lastDigit % 2 === 0;
-
     return (
-      <Tag color={isPaid ? "green" : "red"}>
-        {isPaid ? "Paid" : "Unpaid"}
+      <Tag color={record.paymentDone ? "green" : "red"}>
+        {record.paymentDone ? "Paid" : "Unpaid"}
       </Tag>
     );
   },
 },
+
 
 
 
