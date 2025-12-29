@@ -1,5 +1,6 @@
 
 import React, { useMemo, useState,useEffect } from "react";
+import { assignfreelancer } from "../../api/adminBookings";
 import {
   Card,
   Row,
@@ -80,7 +81,7 @@ type ServiceData = {
   ageing: AgeItem[];
 };
 
-type BookingStatus = "Completed" | "Pending" | "Rejected";
+type BookingStatus = "Pending" | "In-Progress" | "Completed" | "Rejected";
 type BookingRow = {
   key: string;
   bookingId: string;
@@ -91,7 +92,9 @@ type BookingRow = {
   status: BookingStatus;
   phone: string;
   location: string;
+  paymentDone: boolean;
   assigned: string;
+  assignedId:string|number|null;
 };
 
 type Txn = {
@@ -291,6 +294,8 @@ function generateBookings(): BookingRow[] {
         phone: `+91-9${Math.floor(100000000 + (counter * 7) % 900000000)}`,
         location: locations[(counter + i) % locations.length],
         assigned: status === "Pending" ? "" : workers[(counter + i) % workers.length],
+        paymentDone: status === "Completed",
+        assignedId: status === "Pending" ? null : `FR-${(counter+i)%20}`,
       });
     }
   };
@@ -555,10 +560,12 @@ const approveVendor = (id: string) => {
       try {
         setLoadingAssignees(true);
 
-        const data = await getFreelancers();
+const data = await getFreelancers();
 
+// keep only status_id === 1
+const activeOnly = data.filter((f: any) => f.status_id === 1);
 
-    const mapped: Assignee[] = data.map((f: any) => {
+const mapped: Assignee[] = activeOnly.map((f: any) => {
   let pan = "NA";
   try {
     const gov = f.government_id ? JSON.parse(f.government_id) : null;
@@ -572,15 +579,13 @@ const approveVendor = (id: string) => {
     phone: f.mobile,
     city: f.address || "NA",
     pan,
-
     rating: 4,
-
     type: "Freelancer",
     experience: f.experience_summary || "N/A",
-
-    jobsCompleted: 0, 
+    jobsCompleted: 0,
   };
 });
+
 
 
         setApiAssignees(mapped);
@@ -595,6 +600,21 @@ const approveVendor = (id: string) => {
   }, []);
   const MERGED_ASSIGNEES =
     apiAssignees.length > 0 ? apiAssignees : ASSIGNEES;
+
+const assigneeMap = useMemo(() => {
+  const map = new Map<number, Assignee>();
+
+  MERGED_ASSIGNEES.forEach(a => {
+    // strip ALL letters & hyphen
+    const num = parseInt(a.id.replace(/[^0-9]/g, ""), 10);
+    if (!isNaN(num)) map.set(num, a);
+  });
+
+  return map;
+}, [MERGED_ASSIGNEES]);
+console.log(assigneeMap);
+console.log(SERVICE_TYPE_MAP);
+
 
   const handleLogout = () => {
     localStorage.clear();
@@ -647,10 +667,20 @@ const [customRange, setCustomRange] =
     serviceType: "Home Service",
   amount: Number(b.service_price ?? 0),
   date: b.preferred_date,
-  status: b.payment_done === 1 ? "Completed" : "Pending",
+  status:
+    b.status_id === 1
+      ? "Pending"
+      : b.status_id === 2
+      ? "In-Progress"
+      : b.status_id === 3
+      ? "Completed"
+      : "Rejected",
   phone: b.mobile,
   location: b.address,
-  assigned: "",
+  paymentDone: Boolean(b.payment_done),
+  assigned:"",
+  assignedId: b.assigned_to ?? null,
+  
 });
 
 
@@ -883,19 +913,14 @@ const columns = [
   key: "paymentStatus",
   width: 160,
   render: (_: any, record: BookingRow) => {
-    const lastDigit = Number(
-      record.bookingId.replace(/\D/g, "").slice(-1)
-    );
-
-    const isPaid = lastDigit % 2 === 0;
-
     return (
-      <Tag color={isPaid ? "green" : "red"}>
-        {isPaid ? "Paid" : "Unpaid"}
+      <Tag color={record.paymentDone ? "green" : "red"}>
+        {record.paymentDone ? "Paid" : "Unpaid"}
       </Tag>
     );
   },
 },
+
 
 
 
@@ -904,13 +929,19 @@ const columns = [
   key: "workStatus",
   width: 260,
   render: (_: any, record: BookingRow) => {
-    // ✅ If assigned → show Assigned
-    if (record.assigned && record.assigned.trim() !== "") {
-      return <Tag color="blue">Assigned</Tag>;
+
+    // 🔵 Show In-Progress
+    if (record.status === "In-Progress") {
+      return <Tag color="blue">In-Progress</Tag>;
     }
 
-    // ✅ If not assigned → show Pending button
-    if (record.status === "Pending") {
+    // 🟢 Completed
+    if (record.status === "Completed") {
+      return <Tag color="green">Completed</Tag>;
+    }
+
+    // 🟠 Pending but NOT assigned → show button
+    if (record.status === "Pending" && !record.assignedId) {
       return (
         <Button
           size="small"
@@ -922,20 +953,42 @@ const columns = [
       );
     }
 
-    // fallback
+    // 🟡 Pending but already assigned → Assigned (not started)
+    if (record.status === "Pending" && record.assignedId) {
+      return <Tag color="gold">Assigned</Tag>;
+    }
+
+    // 🔴 Rejected — if you use it
+    if (record.status === "Rejected") {
+      return <Tag color="red">Rejected</Tag>;
+    }
+
     return null;
   },
 },
 
+
 {
   title: "Assigned To",
-  dataIndex: "assigned",
+  key: "assigned",
   width: 220,
-  render: (val: string) =>
-    val && val.trim() !== ""
-      ? <Tag color="blue">{val}</Tag>
-      : <Tag color="orange">Not Assigned</Tag>,
-},
+  render: (_: any, r: BookingRow) => {
+    if (!r.assignedId)
+      return <Tag color="orange">Not Assigned</Tag>;
+
+    const assignee = MERGED_ASSIGNEES.find(a =>
+      Number(a.id.replace("FR-","").replace("VN-","")) === Number(r.assignedId)
+    );
+
+    return (
+      <Tag color="blue">
+        {assignee?.name || r.assignedId}
+      </Tag>
+    );
+  },
+}
+
+
 
 
 
@@ -965,23 +1018,44 @@ const openAssign = (record: BookingRow) => {
   setAssignOpen(true);
 };
 
-const handleAssign = (assigneeName: string) => {
+
+const [assignLoading, setAssignLoading] = useState(false);
+
+const handleAssign = async (assignee: Assignee) => {
   if (!assignRecord) return;
 
-  setBookings(prev =>
-    prev.map(b =>
-      b.key === assignRecord.key
-        ? {
-            ...b,
-            assigned: assigneeName, // ✅ fill Assigned To
-          }
-        : b
-    )
-  );
+  try {
+    setAssignLoading(true);
 
-  message.success(`Assigned to ${assigneeName}`);
-  setAssignOpen(false);
+    await assignfreelancer(
+      Number(assignRecord.key),             // booking id
+      Number(assignee.id.replace("FR-","")) // freelancer id
+    );
+
+    // 🔵 Update UI after success
+    setBookings(prev =>
+      prev.map(b =>
+        b.key === assignRecord.key
+          ? {
+              ...b,
+              assignedId: Number(assignee.id.replace("FR-","")),
+              assigned: assignee.name,
+              status: "Pending", // keep status or make In-Progress if you want
+            }
+          : b
+      )
+    );
+
+    message.success(`Assigned to ${assignee.name}`);
+    setAssignOpen(false);
+  } catch (e) {
+    console.error(e);
+    message.error("Assignment failed");
+  } finally {
+    setAssignLoading(false);
+  }
 };
+
 
 
 
@@ -1610,14 +1684,16 @@ const bookingStats = useMemo(() => {
             {a.type}
           </div>
 
-          <Button
-            type="primary"
-            size="small"
-            style={{ marginTop: 12 }}
-            onClick={() => handleAssign(a.name)}
-          >
-            Assign
-          </Button>
+         <Button
+  type="primary"
+  size="small"
+  style={{ marginTop: 12 }}
+  loading={assignLoading}
+  onClick={() => handleAssign(a)}
+>
+  Assign
+</Button>
+
         </Col>
       </Row>
     </Card>

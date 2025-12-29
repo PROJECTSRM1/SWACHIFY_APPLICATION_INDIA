@@ -81,9 +81,7 @@ export const getLoggedInUserId = (): number => {
 
 
 
-// =====================================================
-// 🚨 CUSTOMER LOGOUT API
-// =====================================================
+
 export const customerLogout = async () => {
   const raw = localStorage.getItem("user");
   let parsed;
