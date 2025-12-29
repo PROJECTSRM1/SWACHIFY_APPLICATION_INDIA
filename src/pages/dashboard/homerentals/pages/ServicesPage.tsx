@@ -38,19 +38,17 @@ const ServicesPage: React.FC<ServicesPageProps> = ({
   const [selectedPropertyId, setSelectedPropertyId] = useState<string | null>(null);
   const RENTAL_KEYWORDS = {
   residential: [
-    "house",
-    "apartment",
+    "house rental",
+    //"apartment",
     "flat",
     "independent",
-    "1 bhk",
-    "2 bhk",
-    "3 bhk",
-    "villa",
+    //"r1bhk",
+    //"r2bhk",
+    //"r3bhk",
+    //"rvilla",
   ],
   commercial: [
-    "commercial",
-    "office",
-    "shop",
+    //"commercial rental",
     "warehouse",
     "startup",
     "open plot",
