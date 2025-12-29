@@ -1017,6 +1017,13 @@ body {
   vertical-align: middle;
 }
 
+.in-progress {
+  background: #fdf2ff;              /* pink-violet pastel */
+  border-left: 4px solid #d946ef !important;
+}
+
+
+
 
 /* =========================================================
    VENDOR DATA ROW HIGHLIGHT (NO TSX CHANGE, NO HEADER TOUCH)
@@ -1205,7 +1212,6 @@ body {
 }
 
 
-<<<<<<< HEAD
 /* new responsive code for freelancer.tsx */
 
 
@@ -1309,7 +1315,6 @@ body {
     height: 28px;
   }
 }
-=======
 
 
 /* ================= DESKTOP / LAPTOP ================= */
@@ -1700,4 +1705,3 @@ font-size: 13px;
 padding: 12px 14px;
 text-align: center;
 }
->>>>>>> main
