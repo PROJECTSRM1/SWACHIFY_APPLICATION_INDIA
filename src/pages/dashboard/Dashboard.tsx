@@ -15,6 +15,7 @@ const Dashboard: React.FC = () => {
   const normalize = (str: string) =>
     str.toLowerCase().replace(/\s+/g, "").replace(/[^a-z0-9]/g, "");
 
+
   /* 🔹 MAIN SERVICES + SUBSERVICE KEYWORDS */
   const servicesList = [
     {
@@ -58,43 +59,131 @@ const Dashboard: React.FC = () => {
 ),
 
     },
-   {
+  {
   name: "Home Services",
   keywords: [
-    //"cleaning services",
+    //main services
+    "cleaning services",
+    "residential cleaning",
+    "commercial cleaning",
+    "specialized cleaning",
+    "post",
+    "industrial cleaning",
+   
+ //residential cleaning
+    // Homes 
+       "homes","home cleaning","home services",
+              "living room",
+              "bedroom",
+              "kitchen",
+              "bathroom",
+              "all services", 
+    // apartments
+       "apartment services","appartment","apartments","apartment cleaning",
+           "studio",
+           "1bhk",
+           "2bhk",
+           "3bhk",
+    // villas
+       "villa services","villas","villa cleaning",
+           "small villas", 
+           "duplex villas",
+           "luxury villas",
+    // commercial cleaning 
+    // offices  
+        "office","offices services","office cleaning",
+            "cabin",
+            "workstation",
+            "conference hall",
+    // shops and malls        
+        "shop cleaning","shop services","shops",
+        "mall cleaning","malls", "mall services",
+             "shop cleaning",
+             "mall cleaning",
+             "showroom",
+    // clinics and labs
+        "clinic cleaning","clinics","clinic services",
+        "lab cleaning","labs","lab services",
+              "clinic cleaning",
+              "laboratory",
+              "diagnostic",   
+    // schools
+        "school cleaning","schools","school services",
+             "classroom",
+             "school laboratory",
+              "library",
+    // specialized cleaning
+        // furniture cleaning
+        "furniture cleaning","furniture",
+                "sofa",
+                "chair",
+                "wooden furniture",
+       // floor cleaning
+        "floor cleaning","floors",
+                "marble",
+                "tile",
+                "granite",
+       // glass cleaning
+        "glass cleaning","window cleaning",
+                "outdoor glass",
+                "high rise glass",
+                "indoor glass",
+                "home sanitization",
+                "office sanitization",
+                "commercial sanitization",
+    //industrial cleaning
+        //assembaly area
+            "assembly services","assembly areas",
+            "production line",
 
+        // production services
+           "production services",
+           "warehouse rack",
+           "warehouse floor",
+        //Waste handling
+          "waste handing","waste services",
+            "heavy equipment",
+            "precision tools",
+            "chemical waste",
+            "solid waste",
+    //post construction
+        //marble and granite 
+          "pmarble","pgranite",
+         
+        //dust removal
+          "dust",
+          "indoor dust",
+          "outdoor dust",
+        // paint stain removal
+          "paint stain tiles",
+          "paint stain windows",
+
+             
+  
+  // plumbing
     "plumbing services",
-    "bathroom cleaning",
-    "Residential cleaning",
-    
-    //"electrical services",
-    "electrical services",
-    "Wiring",
-    "fan",
-    "circuit",
-    "switchboard",
-    "Smart Home",
-
-    //Plumbing
-    "Leak",
+    "leak",
     "pipe",
     "geyser installation",
-    "Bathroom fitting",
+    "bathroom fitting",
     "water tank",
     "drain cleaning",
 
-    //Appliances repair
+    // electrical
+    "electrical services",
+    "wiring",
+    "fan",
+    "circuit",
+    "switchboard",
+    "smart home",
+
+    // appliances
     "ac service",
-    "ac",
     "washing machine",
-    "Microwave servicing",
-    "Microwave",
+    "microwave servicing",
     "tv servicing",
-    "Regular Maintenace",
-    "Spare parts",
     "refrigerator",
     "appliances repair",
-    
   ],
   component: (
     <HomeServices
@@ -103,6 +192,7 @@ const Dashboard: React.FC = () => {
     />
   ),
 },
+
 
     {
       name: "Building & Construction Raw Materials",
@@ -135,7 +225,7 @@ const Dashboard: React.FC = () => {
     "Property Listing for sale",
     "Property listing for Purchase",
     "Prime commercial plot",
-    "Industrial plot",
+    //"Industrial plot",
     "Office complex",
     "Boutique hotel development land",
     "luxury Hillside villa",
@@ -177,21 +267,20 @@ const Dashboard: React.FC = () => {
   name: "House & Commercial Rentals",
   keywords: [
     // residential
-    "house",
-    "apartment",
-    "apartments",
+    "house rental",
+    //"apartment",
+    //"apartments",
     "independent house",
     "independent",
     "flat",
-    "1 bhk",
-    "2 bhk",
-    "3 bhk",
-    "villa",
+    //"r1bhk",
+    //"r2bhk",
+    //"r3bhk",
+    //"rvilla",
 
     // commercial
     "commercial",
-    "office",
-    "shop",
+   // "office",
     "warehouse",
     "startup",
     "open plot",
@@ -208,24 +297,25 @@ const Dashboard: React.FC = () => {
   ];
 
   /* 🔹 FILTER LOGIC (MAIN FIX) */
-  const filteredServices = servicesList.filter((service) => {
-  // 🔥 Hide Rentals when there is NO search
-  if (service.name === "House & Commercial Rentals") {
-    if (!searchQuery) return false;
+ const filteredServices = servicesList.filter((service) => {
+  if (!searchQuery) {
+    // hide rentals by default
+    if (service.name === "House & Commercial Rentals") return false;
+    return true;
   }
+const query = searchQuery;
+const mode = "cleaning";
 
-  // Show all other services when no search
-  if (!searchQuery) return true;
+  const normalizedQuery = normalize(query);
 
-  const query = normalize(searchQuery);
-  const serviceNameMatch = normalize(service.name).includes(query);
-
-  const subServiceMatch = service.keywords.some((key) =>
-    normalize(key).includes(query)
+  const serviceMatch = normalize(service.name).includes(normalizedQuery);
+  const keywordMatch = service.keywords.some((k) =>
+    normalize(k).includes(normalizedQuery)
   );
 
-  return serviceNameMatch || subServiceMatch;
+  return serviceMatch || keywordMatch;
 });
+
 
 
   return (

@@ -47,12 +47,102 @@ export default function HomeServices({
   const [showAll, setShowAll] = useState(false);
   const SERVICE_KEYWORD_MAP: Record<string, string[]> = {
   "Cleaning Services": [
-    "clean",
-    "cleaning",
-    "bedroom",
-    "kitchen cleaning",
-    "bathroom cleaning",
-  ],
+    //main services
+    "cleaning services",
+    "residential cleaning",
+    "commercial cleaning",
+    "specialized cleaning",
+    "post",
+    "industrial cleaning",
+   
+ //residential cleaning
+    // Homes 
+       "homes","home cleaning","home services",
+              "living room",
+              "bedroom",
+              "kitchen",
+              "bathroom",
+              "all services", 
+    // apartments
+       "apartment services","apartments","apartment cleaning","appartment",
+           "studio",
+           "1bhk",
+           "2bhk",
+           "3bhk",
+    // villas
+       "villa services","villas","villa cleaning",
+           "small villas", 
+           "duplex villas",
+           "luxury villas",
+    // commercial cleaning 
+    // offices  
+        "office","offices services","office cleaning",
+            "cabin",
+            "workstation",
+            "conference hall",
+    // shops and malls        
+        "shop cleaning","shop services","shops",
+        "mall cleaning","malls", "mall services",
+             "shop cleaning",
+             "mall cleaning",
+             "showroom",
+    // clinics and labs
+        "clinic cleaning","clinics","clinic services",
+        "lab cleaning","labs","lab services",
+              "clinic cleaning",
+              "laboratory",
+              "diagnostic",   
+    // schools
+        "school cleaning","schools","school services",
+             "classroom",
+             "school laboratory",
+              "library",
+    // specialized cleaning
+        // furniture cleaning
+        "furniture cleaning","furniture",
+                "sofa",
+                "chair",
+                "wooden furniture",
+       // floor cleaning
+        "floor cleaning","floors",
+                "marble",
+                "tile",
+                "granite",
+       // glass cleaning
+        "glass cleaning","window cleaning",
+                "outdoor glass",
+                "high rise glass",
+                "indoor glass",
+                "home sanitization",
+                "office sanitization",
+                "commercial sanitization",
+    //industrial cleaning
+        //assembaly area
+            "assembly services","assembly areas",
+            "production line",
+
+        // production services
+           "production services",
+           "warehouse rack",
+           "warehouse floor",
+        //Waste handling
+          "waste handing","waste services",
+            "heavy equipment",
+            "precision tools",
+            "chemical waste",
+            "solid waste",
+    //post construction
+        //marble and granite 
+          "pmarble","pgranite",
+        //dust removal
+          "dust",
+          "indoor dust",
+          "outdoor dust",
+        // paint stain removal
+          "paint stain tiles",
+          "paint stain windows",
+  ], 
+  // Electrical services
   "Electrical Services": [
     "electrical",
     "electrician",
@@ -62,6 +152,8 @@ export default function HomeServices({
     "Switchboard",
     "Smart Home",
   ],
+
+  // plumbing services
   "Plumbing Service": [
     "plumbing",
     "plumber",
@@ -72,6 +164,8 @@ export default function HomeServices({
     "drain",
     "water",
   ],
+
+  //Appliance repair
   "Appliances Repair": [
     "appliance",
     "washing machine",
@@ -254,7 +348,8 @@ export default function HomeServices({
 >
   {/* NOTE: removed the manual 'Close' button so only the modal's X icon will close it */}
   <div className="sw-hs-cleaning-embed" style={{ padding: 12 }}>
-    <CleaningService />
+    <CleaningService searchQuery={searchQuery} />
+
   </div>
 </Modal>
 
