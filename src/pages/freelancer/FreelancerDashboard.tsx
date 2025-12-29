@@ -1076,6 +1076,31 @@ useEffect(() => {
 
 
 
+useEffect(() => {
+  const loadMyActiveJobs = async () => {
+    try {
+      const allJobs = await fetchHomeServiceRequests();
+const freelancer = JSON.parse(
+  localStorage.getItem("freelancer") || "{}"
+);
+
+const myActiveJobs = allJobs.filter(
+  (job) =>
+    job.status === "In Progress" &&
+    job.freelancer_id === freelancer.id
+);
+      setActiveJobs(myActiveJobs);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  loadMyActiveJobs();
+}, []);
+
+
+
+
   // const [requestFilter, setRequestFilter] = useState<
   //   'All Requests' | 'Matched to My Skills'
   // >('All Requests');
