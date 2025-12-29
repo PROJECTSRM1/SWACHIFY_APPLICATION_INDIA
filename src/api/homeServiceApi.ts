@@ -26,6 +26,8 @@ export interface HomeServiceApiResponse {
   preferred_date: string;
   time_slot_id: number;
   property_size_sqft?: string;
+   freelancer_id?: number;
+  status?: "In Progress" | "Approval Pending" | "Completed";
 }
 
 /* ===============================
@@ -40,6 +42,9 @@ export interface Job {
   date: string;
   price: number;
   estimatedPrice?: number;
+
+   freelancer_id?: number;
+
 
   customer?: string;
   customerName?: string;
@@ -95,7 +100,9 @@ export const fetchHomeServiceRequests = async (): Promise<Job[]> => {
     ticketId: `TKT${item.id}`,
     title: getServiceTitle(item),
     category: getCategory(item),
-    status: "In Progress",
+    status: item.status || "In Progress",
+
+     freelancer_id: item.freelancer_id,
 
     customer: item.full_name,
     customerName: item.full_name,
