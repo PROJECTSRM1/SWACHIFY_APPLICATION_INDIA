@@ -1079,7 +1079,8 @@ useEffect(() => {
 useEffect(() => {
   const loadMyActiveJobs = async () => {
     try {
-      const allJobs = await fetchHomeServiceRequests();
+     const allJobs = await fetchHomeServiceRequests(); // correct function
+
 const freelancer = JSON.parse(
   localStorage.getItem("freelancer") || "{}"
 );
@@ -1127,7 +1128,7 @@ const [selectedSkill, setSelectedSkill] = useState<string>('All Skills');
     3: [],
   });
 
-  const { skills } = MOCK_USER;
+  
 
   // --- METRICS / KPIs ---
   const activeJobsInProgress = useMemo(
@@ -1429,7 +1430,8 @@ useEffect(() => {
             </section>
 
             {/* SKILLS */}
-            <UserSkills skills={skills} />
+          <UserSkills skills={MOCK_USER.skills} />
+
 
             {/* APPROVAL PENDING */}
             <section className="sw-frd-section">
