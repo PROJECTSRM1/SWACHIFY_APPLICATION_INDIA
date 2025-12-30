@@ -852,6 +852,7 @@ body {
   gap: 8px;
   align-items: center;
   cursor: pointer;
+  width: 126px;
 }
 
 /* inline premium tags */
@@ -1071,6 +1072,8 @@ body {
 /* ACTION buttons alignment */
 .popup-table tbody tr td.actions {
   justify-content: center;
+  margin-top: 25px;
+  margin-bottom: -1px;
 }
 
 /* PREMIUM HOVER EFFECT (this makes it pop) */

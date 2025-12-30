@@ -26,6 +26,14 @@ export interface HomeServiceApiResponse {
   preferred_date: string;
   time_slot_id: number;
   property_size_sqft?: string;
+  freelancer_id?: number;
+  status?: "In Progress" | "Approval Pending" | "Completed";
+
+  // ✅ Add these dynamic fields expected from backend
+  service_name?: string;
+  category_name?: string;
+  time_slot?: string;
+  service_price?: number;
 }
 
 /* ===============================
@@ -41,6 +49,9 @@ export interface Job {
   price: number;
   estimatedPrice?: number;
 
+   freelancer_id?: number;
+
+
   customer?: string;
   customerName?: string;
   customerPhone?: string;
@@ -49,53 +60,21 @@ export interface Job {
   description?: string;
 }
 
-/* ===============================
-   HELPERS (MAPPING LOGIC)
-================================ */
-const getServiceTitle = (item: HomeServiceApiResponse): string => {
-  if (item.module_id === 1) return "Cleaning - Deep Cleaning";
-  if (item.service_id === 2) return "Home Services - Plumbing";
-  if (item.service_id === 3) return "Home Services - Electrical";
-  return "Home Services";
-};
 
-const getCategory = (item: HomeServiceApiResponse): string => {
-  if (item.module_id === 1) return "Cleaning";
-  if (item.service_id === 2) return "Plumbing";
-  if (item.service_id === 3) return "Electrical";
-  return "Home Services";
-};
-
-const getTimeSlot = (id: number): string => {
-  const slots: Record<number, string> = {
-    1: "10:00 AM",
-    2: "12:00 PM",
-    3: "2:00 PM",
-    4: "4:00 PM",
-  };
-  return slots[id] || "10:00 AM";
-};
-
-const getEstimatedPrice = (item: HomeServiceApiResponse): number => {
-  if (item.module_id === 1) return 3000;
-  if (item.service_id === 2) return 500;
-  if (item.service_id === 3) return 1200;
-  return 1000;
-};
 
 /* ===============================
    API FUNCTION
 ================================ */
 export const fetchHomeServiceRequests = async (): Promise<Job[]> => {
-  const res = await API.get<HomeServiceApiResponse[]>(
-    "/api/home-service"
-  );
+  const res = await API.get<HomeServiceApiResponse[]>("/api/home-service");
 
   return res.data.map((item) => ({
     ticketId: `TKT${item.id}`,
-    title: getServiceTitle(item),
-    category: getCategory(item),
-    status: "In Progress",
+    title: item.service_name || "Home Service", 
+    category: item.category_name || "General", 
+    status: item.status || "In Progress",
+    freelancer_id: item.freelancer_id,
+    
 
     customer: item.full_name,
     customerName: item.full_name,
@@ -105,9 +84,11 @@ export const fetchHomeServiceRequests = async (): Promise<Job[]> => {
 
     description: item.problem_description,
     location: item.address,
-    date: `${item.preferred_date} at ${getTimeSlot(item.time_slot_id)}`,
+    date: `${item.preferred_date} at ${item.time_slot}`, 
 
-    estimatedPrice: getEstimatedPrice(item),
-    price: getEstimatedPrice(item),
+   price: item.service_price || 0,
+estimatedPrice: item.service_price || 0,
+
   }));
 };
+

@@ -1076,6 +1076,32 @@ useEffect(() => {
 
 
 
+useEffect(() => {
+  const loadMyActiveJobs = async () => {
+    try {
+     const allJobs = await fetchHomeServiceRequests(); // correct function
+
+const freelancer = JSON.parse(
+  localStorage.getItem("freelancer") || "{}"
+);
+
+const myActiveJobs = allJobs.filter(
+  (job) =>
+    job.status === "In Progress" &&
+    job.freelancer_id === freelancer.id
+);
+      setActiveJobs(myActiveJobs);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  loadMyActiveJobs();
+}, []);
+
+
+
+
   // const [requestFilter, setRequestFilter] = useState<
   //   'All Requests' | 'Matched to My Skills'
   // >('All Requests');
@@ -1102,7 +1128,7 @@ const [selectedSkill, setSelectedSkill] = useState<string>('All Skills');
     3: [],
   });
 
-  const { skills } = MOCK_USER;
+  
 
   // --- METRICS / KPIs ---
   const activeJobsInProgress = useMemo(
@@ -1404,7 +1430,8 @@ useEffect(() => {
             </section>
 
             {/* SKILLS */}
-            <UserSkills skills={skills} />
+          <UserSkills skills={MOCK_USER.skills} />
+
 
             {/* APPROVAL PENDING */}
             <section className="sw-frd-section">

@@ -1020,6 +1020,8 @@ with prefix */
   padding: 60px 40px;
   margin-top: 50px;
   margin-bottom: -44px;
+  margin-top: -22px;
+
 }
 
 .sw-lp-classname-services-section .sw-lp-classname-section-title {
@@ -16490,6 +16492,10 @@ textarea {
   min-width: 0;
   padding: 0 12px;
   overflow: visible; /* allow wrapping to be visible */
+  width: 500px;
+  margin-left: 350px;
+
+
 }
 
 /* AntD Menu base */
@@ -16582,6 +16588,17 @@ textarea {
 .sw-header-icon-cart {
   font-size: 20px;
 }
+
+.desktop-only {
+  display: flex;
+}
+
+@media (max-width: 768px) {
+  .desktop-only {
+    display: none;
+  }
+}
+
 
 /* Profile */
 .sw-header-item-profile {
@@ -19603,6 +19620,8 @@ body {
   margin-top: 50px;
   margin-bottom: -44px;
   margin-top: 1px;
+  margin-bottom: -78px;
+
 }
 
 .sw-ep-classname-services-section .sw-ep-classname-section-title {
