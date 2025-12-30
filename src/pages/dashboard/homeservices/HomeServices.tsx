@@ -126,7 +126,7 @@ export default function HomeServices({
            "warehouse rack",
            "warehouse floor",
         //Waste handling
-          "waste handing","waste services",
+          "waste handling","waste services",
             "heavy equipment",
             "precision tools",
             "chemical waste",

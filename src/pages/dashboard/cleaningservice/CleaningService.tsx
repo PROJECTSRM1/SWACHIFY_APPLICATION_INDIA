@@ -1433,21 +1433,49 @@ setIsModulesModalOpen(false);
   {
     keywords: [ //assembaly area
             "assembly services","assembly areas",
-            "production line",
+            "production line"],
+    main: "industrial",
+    sub: "assembly",
+  },
 
-        // production services
-           "production services",
+{
+    keywords:  // production services
+           ["production services",
            "warehouse rack",
-           "warehouse floor",
-        //Waste handling
-          "waste handing","waste services",
+           "warehouse floor"],
+    main: "industrial",
+    sub: "production",
+  },
+
+
+  
+{
+    keywords:
+           [ //Waste handling
+          "waste handling","waste services",
             "heavy equipment",
             "precision tools",
             "chemical waste",
             "solid waste"],
     main: "industrial",
-    sub: "production",
+    sub: "waste",
   },
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
    {
     keywords: [
       //marble and granite 

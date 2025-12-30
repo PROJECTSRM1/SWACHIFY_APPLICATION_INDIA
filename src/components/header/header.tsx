@@ -12,12 +12,13 @@ import { Menu, message, Button, Dropdown, Badge, Avatar, Modal } from "antd";
 import { useNavigate } from "react-router-dom";
 
 import { customerLogout } from "../../api/customerAuth";
-
 import "../../index.css";
 import { useCart } from "../../context/CartContext";
 import RecentBookingPage from "../../pages/RecentBookingPage";
 //import PaymentPage from "../../pages/PaymentPage";
 import ConfirmBookingModal from "../ConfirmAddressModal";
+import { Input } from "antd";
+
 
 type Booking = {
   id: number;
@@ -32,6 +33,7 @@ type Booking = {
 
 
 const LS_BOOKINGS_KEY = "bookings";
+
 
 const Header: React.FC = () => {
   const [notificationOpen] = useState(false); // kept for parity; not used visibly
@@ -64,11 +66,21 @@ const handleLogout = async () => {
   message.success("Logout successful");
   navigate("/landing", { replace: true });
 };
+const [headerSearch, setHeaderSearch] = useState("");
+useEffect(() => {
+  const timer = setTimeout(() => {
+    if (headerSearch.trim()) {
+      navigate(`/app/dashboard?q=${encodeURIComponent(headerSearch)}`);
+    } else {
+      navigate("/app/dashboard");
+    }
+  }, 400); // ⏱ debounce delay
+
+  return () => clearTimeout(timer);
+}, [headerSearch, navigate]);
 
 
-
-
-  const handleNavigate = (key: string) => {
+ const handleNavigate = (key: string) => {
     if (key === "packers") navigate("/app/dashboard/packers");
     else if (key === "homeservices") navigate("/app/dashboard/homeservices");
     else if (key === "rentals") navigate("/app/dashboard/rentals");
@@ -180,25 +192,26 @@ const handleLogout = async () => {
       </div>
 
       {/* CENTER */}
-      <div className="sw-header-center">
-        <Menu
-          mode="horizontal"
-          items={centerMenu}
-          selectable={false}
-          className="sw-header-menu"
-          onClick={(info: any) => handleNavigate(info.key)}
-        />
-      </div>
-
+      {/* CENTER (Desktop search) */}
+<div className="sw-header-center">
+  <Input
+  allowClear
+  size="large"
+  placeholder="Search services..."
+  value={headerSearch}
+  onChange={(e) => setHeaderSearch(e.target.value)}
+/>
+</div>
       {/* RIGHT */}
       <div className="sw-header-right">
+        
         <Dropdown overlay={notificationMenu} trigger={["click"]}>
           <span className="sw-header-item-notif" role="button" tabIndex={0}>
             <Badge count={cart.length}>
               <BellOutlined className="sw-header-icon-cart" />
             </Badge>
           </span>
-        </Dropdown>
+        </Dropdown>     
 
         <Dropdown overlay={profileMenu} trigger={["click"]}>
           <span className="sw-header-item-profile" role="button" tabIndex={0}>
@@ -327,6 +340,8 @@ const handleLogout = async () => {
         {/* PAYMENT OVERLAY */}
        
       </div>
+      
+
     </div>
   );
 };
