@@ -1072,7 +1072,7 @@ body {
 /* ACTION buttons alignment */
 .popup-table tbody tr td.actions {
   justify-content: center;
-  margin-top: 50px;
+  margin-top: 25px;
   margin-bottom: -1px;
 }
 
