@@ -557,51 +557,55 @@ const approveVendor = (id: string) => {
   const navigate = useNavigate();
     // const [apiAssignees, setApiAssignees] = useState<Assignee[]>([]);
   const [loadingAssignees, setLoadingAssignees] = useState(false);
-    useEffect(() => {
-    const loadFreelancers = async () => {
-      try {
-        setLoadingAssignees(true);
+ useEffect(() => {
+  const loadFreelancers = async () => {
+    try {
+      setLoadingAssignees(true);
 
-const data = await getFreelancers();
+      const data = await getFreelancers();
 
-// keep only status_id === 1
-// const activeOnly = data.filter((f: any) => f.status_id === 1);
+      const mapped: Assignee[] = data.map((f: any) => {
+        let pan = "NA";
+        try {
+          const gov = f.government_id ? JSON.parse(f.government_id) : null;
+          if (gov?.type === "pan") pan = gov.number;
+        } catch {}
 
-const mapped: Assignee[] = data.map((f: any) => {
-  let pan = "NA";
-  try {
-    const gov = f.government_id ? JSON.parse(f.government_id) : null;
-    if (gov?.type === "pan") pan = gov.number;
-  } catch {}
+        return {
+          id: `FR-${f.id}`,
+          name: `${f.first_name ?? ""} ${f.last_name ?? ""}`.trim(),
+          email: f.email,
+          phone: f.mobile,
+          city: f.address || "NA",
+          pan,
+          rating: 4,
+          type: "Freelancer",
+          experience: f.experience_summary || "N/A",
+          jobsCompleted: 0,
+        };
+      });
 
-  return {
-    id: `FR-${f.id}`,
-    name: `${f.first_name ?? ""} ${f.last_name ?? ""}`.trim(),
-    email: f.email,
-    phone: f.mobile,
-    city: f.address || "NA",
-    pan,
-    rating: 4,
-    type: "Freelancer",
-    experience: f.experience_summary || "N/A",
-    jobsCompleted: 0,
+      // ✅ NOT APPROVED (Pending)
+      const pending = mapped.filter(
+        (_, index) => data[index].status_id === 2
+      );
+
+      // ✅ ALL freelancers (approved + pending + rejected)
+      setTotalFreelancers(mapped);
+
+      // ✅ ONLY pending (status_id === 2)
+      setPendingFreelancers(pending);
+
+    } catch (err) {
+      console.error("Failed to load freelancers", err);
+    } finally {
+      setLoadingAssignees(false);
+    }
   };
-});
 
+  loadFreelancers();
+}, []);
 
-
-
-        setTotalFreelancers(mapped);
-
-      } catch (err) {
-        console.error("Failed to load freelancers", err);
-      } finally {
-        setLoadingAssignees(false);
-      }
-    };
-
-    loadFreelancers();
-  }, []);
  const MERGED_ASSIGNEES = totalFreelancers.length > 0
   ? totalFreelancers
   : ASSIGNEES;
@@ -632,7 +636,7 @@ console.log(SERVICE_TYPE_MAP);
 
 useEffect(() => {
 if (openPopup === "freelancer") {
-  setPendingFreelancers([]); // 🔥 LEAVE EMPTY
+  // setPendingFreelancers([]); 
 }
 
 
@@ -1748,9 +1752,10 @@ const bookingStats = useMemo(() => {
                   <td><SkillsCell skills={FREELANCER_SKILLS} /></td>
                   <td>{a.pan}</td>
                   <td>{a.experience}</td>
-                  <td className="actions">
-                    <td className="actions">—</td>
-
+                 <td className="actions">
+                    <button
+                      className="btn approve"
+                    />
                     <button className="btn reject" />
                   </td>
                 </tr>
