@@ -178,50 +178,60 @@ useEffect(() => {
     return () => document.removeEventListener("keydown", handler);
   }, []);
 
-  return (
-    <div className="sw-header-container">
-      {/* LEFT */}
-      <div
-        className="sw-header-left"
-        onClick={() => navigate("/app/dashboard")}
-        role="button"
-        tabIndex={0}
-      >
-        <HomeOutlined className="sw-logo-icon" />
-        <span className="sw-logo-text">Home</span>
+ return (
+  <>
+  {/* ===== FIXED HEADER ===== */}
+  <div className="sw-header-container">
+    {/* LEFT */}
+    <div
+      className="sw-header-left"
+      onClick={() => navigate("/app/dashboard")}
+    >
+      <HomeOutlined className="sw-logo-icon" />
+      <span className="sw-logo-text">Home</span>
+    </div>
+
+    {/* DESKTOP SEARCH ONLY */}
+    <div className="sw-header-center desktop-search">
+      <Input
+        allowClear
+        size="large"
+        placeholder="Search services..."
+        value={headerSearch}
+        onChange={(e) => setHeaderSearch(e.target.value)}
+      />
+    </div>
+    
+
+    {/* ✅ RIGHT ICONS — MUST BE INSIDE HEADER */}
+    <div className="sw-header-right">
+      <Dropdown overlay={notificationMenu} trigger={["click"]}>
+        <span className="sw-header-item-notif">
+          <Badge count={cart.length}>
+            <BellOutlined className="sw-header-icon-cart" />
+          </Badge>
+        </span>
+      </Dropdown>
+
+      <Dropdown overlay={profileMenu} trigger={["click"]}>
+        <span className="sw-header-item-profile">
+          <Avatar size="small" icon={<UserOutlined />} />
+          <span className="sw-profile-text">Profile</span>
+        </span>
+      </Dropdown>
       </div>
-
-      {/* CENTER */}
-      {/* CENTER (Desktop search) */}
-<div className="sw-header-center">
-  <Input
-  allowClear
-  size="large"
-  placeholder="Search services..."
-  value={headerSearch}
-  onChange={(e) => setHeaderSearch(e.target.value)}
-/>
-</div>
-      {/* RIGHT */}
-      <div className="sw-header-right">
-        
-        <Dropdown overlay={notificationMenu} trigger={["click"]}>
-          <span className="sw-header-item-notif" role="button" tabIndex={0}>
-            <Badge count={cart.length}>
-              <BellOutlined className="sw-header-icon-cart" />
-            </Badge>
-          </span>
-        </Dropdown>     
-
-        <Dropdown overlay={profileMenu} trigger={["click"]}>
-          <span className="sw-header-item-profile" role="button" tabIndex={0}>
-            <Avatar size="small" icon={<UserOutlined />} />
-            <span className="sw-profile-text">Profile</span>
-          </span>
-        </Dropdown>
-
-        {/* CART DRAWER */}
-       <Modal
+    </div>
+      <div className="mobile-search">
+    <Input
+      allowClear
+      size="large"
+      placeholder="Search services..."
+      value={headerSearch}
+      onChange={(e) => setHeaderSearch(e.target.value)}
+    />
+  </div>   
+    
+      <Modal
   open={cartOpen}
   footer={null}
   centered
@@ -245,6 +255,7 @@ useEffect(() => {
       />
     </div>
 
+
     {/* ITEMS (ONLY SCROLL) */}
 <div className="cart-items-scroll">
   {cart.length === 0 ? (
@@ -257,6 +268,7 @@ useEffect(() => {
       <div key={i} className="cart-item">
         <img src={item.image} alt={item.title} />
 
+
         <div className="cart-info">
           <strong>{item.title}</strong>
           <span>Qty: {item.quantity}</span>
@@ -268,11 +280,13 @@ useEffect(() => {
           </span>
         </div>
 
+
         <div className="cart-price">₹{item.totalPrice}</div>
       </div>
     ))
   )}
 </div>
+
 
 
     {/* FOOTER */}
@@ -286,6 +300,7 @@ useEffect(() => {
           )}
         </strong>
       </div>
+
 
       <Button
         type="primary"
@@ -301,6 +316,7 @@ useEffect(() => {
 </Modal>
 
 
+
         {/* CONFIRM ADDRESS MODAL */}
         <ConfirmBookingModal
           open={confirmModalOpen}
@@ -311,6 +327,7 @@ useEffect(() => {
           }}
           onConfirm={(bookingData: Booking) => handleBookingConfirmed(bookingData)}
         />
+
 
         {/* RECENT BOOKING OVERLAY */}
         {/* RECENT BOOKING OVERLAY */}
@@ -330,6 +347,7 @@ useEffect(() => {
         <CloseOutlined />
       </button>
 
+
       {/* ✅ THIS WAS MISSING */}
       <RecentBookingPage />
     </div>
@@ -337,13 +355,14 @@ useEffect(() => {
 )}
 
 
+
         {/* PAYMENT OVERLAY */}
        
-      </div>
-      
+       </>
+);
 
-    </div>
-  );
 };
+
+
 
 export default Header;
