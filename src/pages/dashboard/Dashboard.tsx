@@ -1,5 +1,6 @@
-import React, { useState } from "react";
 import "./Dashboard.css";
+import { useEffect } from "react";
+
 
 import ConstructionServices from "../building/building";
 import Packersandmovers from "./PackersAndMovers/Packersandmovers";
@@ -7,13 +8,24 @@ import BuySaleProducts from "./buy&sale/BuySaleProducts";
 import HomeServices from "./homeservices/HomeServices";
 import ServicesPage from "./homerentals/pages/ServicesPage";
 
+import { useSearchParams, useNavigate } from "react-router-dom";
+
+
+
 
 const Dashboard: React.FC = () => {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
 
-  /* 🔹 Normalizer for search */
+  const searchQuery = searchParams.get("q") || "";
+  useEffect(() => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}, [searchQuery]);
+
+
   const normalize = (str: string) =>
     str.toLowerCase().replace(/\s+/g, "").replace(/[^a-z0-9]/g, "");
+
 
 
   /* 🔹 MAIN SERVICES + SUBSERVICE KEYWORDS */
@@ -54,7 +66,8 @@ const Dashboard: React.FC = () => {
       component: (
   <Packersandmovers
     searchQuery={searchQuery}
-    clearSearch={() => setSearchQuery("")}
+    clearSearch={() => navigate("/app/dashboard")}
+
   />
 ),
 
@@ -141,7 +154,7 @@ const Dashboard: React.FC = () => {
            "warehouse rack",
            "warehouse floor",
         //Waste handling
-          "waste handing","waste services",
+          "waste handling","waste services",
             "heavy equipment",
             "precision tools",
             "chemical waste",
@@ -188,7 +201,7 @@ const Dashboard: React.FC = () => {
   component: (
     <HomeServices
       searchQuery={searchQuery}
-      clearSearch={() => setSearchQuery("")}
+      clearSearch={() => navigate("/app/dashboard")}
     />
   ),
 },
@@ -213,7 +226,8 @@ const Dashboard: React.FC = () => {
       component: (
     <ConstructionServices
       searchQuery={searchQuery}
-      clearSearch={() => setSearchQuery("")}
+        clearSearch={() => navigate("/app/dashboard")}
+
     />
   ),
     },
@@ -259,7 +273,8 @@ const Dashboard: React.FC = () => {
   component: (
     <BuySaleProducts
       searchQuery={searchQuery}
-      clearSearch={() => setSearchQuery("")}
+        clearSearch={() => navigate("/app/dashboard")}
+
     />
   ),
 },
@@ -288,7 +303,8 @@ const Dashboard: React.FC = () => {
   component: (
     <ServicesPage
       searchQuery={searchQuery}
-      clearSearch={() => setSearchQuery("")}
+      clearSearch={() => navigate("/app/dashboard")}
+
     />
   ),
 },
@@ -297,24 +313,31 @@ const Dashboard: React.FC = () => {
   ];
 
   /* 🔹 FILTER LOGIC (MAIN FIX) */
- const filteredServices = servicesList.filter((service) => {
-  if (!searchQuery) {
-    // hide rentals by default
-    if (service.name === "House & Commercial Rentals") return false;
-    return true;
-  }
-const query = searchQuery;
-const mode = "cleaning";
+ const filteredServices = servicesList
+  .map((service) => {
+    if (!searchQuery) {
+      return {
+        service,
+        matchScore: service.name === "House & Commercial Rentals" ? -1 : 0,
+      };
+    }
 
-  const normalizedQuery = normalize(query);
+    const normalizedQuery = normalize(searchQuery);
 
-  const serviceMatch = normalize(service.name).includes(normalizedQuery);
-  const keywordMatch = service.keywords.some((k) =>
-    normalize(k).includes(normalizedQuery)
-  );
+    const serviceMatch = normalize(service.name).includes(normalizedQuery);
+    const keywordMatch = service.keywords.some((k) =>
+      normalize(k).includes(normalizedQuery)
+    );
 
-  return serviceMatch || keywordMatch;
-});
+    return {
+      service,
+      matchScore: serviceMatch ? 2 : keywordMatch ? 1 : -1,
+    };
+  })
+  .filter((item) => item.matchScore >= 0)
+  .sort((a, b) => b.matchScore - a.matchScore)
+  .map((item) => item.service);
+
 
 
 
@@ -324,7 +347,7 @@ const mode = "cleaning";
       <div className="services-section">
         <h1 className="services-title">Our Services</h1>
 
-        <div className="services-search">
+        {/*<div className="services-search">
           <input
             type="text"
             placeholder="Search services..."
@@ -332,7 +355,7 @@ const mode = "cleaning";
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-        </div>
+        </div>*/}
       </div>
 
       {/* Render filtered services */}
