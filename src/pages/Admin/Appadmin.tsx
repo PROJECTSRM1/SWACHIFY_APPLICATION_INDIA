@@ -449,8 +449,8 @@ const SERVICE_TYPE_MAP: Record<number, ServiceKey> = {
 const SkillsCell: React.FC<{ skills: string[] }> = ({ skills }) => {
   const [open, setOpen] = useState(false);
 
-  const visibleSkills = skills.slice(0, 2);
-  const remainingCount = skills.length - 2;
+  const visibleSkills = skills.slice(0, 1);
+  const remainingCount = skills.length - 1;
 
   const popoverContent = (
     <div className="skills-popup">
@@ -517,6 +517,8 @@ console.log(loadingBookings);
 // console.log(computeBookingStatsFromCount);
 
 const [pendingFreelancers, setPendingFreelancers] = useState<Assignee[]>([]);
+const [totalFreelancers, setTotalFreelancers] = useState<Assignee[]>([]);
+
 
 
 const [pendingVendors, setPendingVendors] = useState(
@@ -527,19 +529,19 @@ const [approvedVendors, setApprovedVendors] = useState<
   typeof ASSIGNEES
 >([]);
 
-const [approvedFreelancers, setApprovedFreelancers] = useState<
-  typeof ASSIGNEES
->([]);
+// const [approvedFreelancers, setApprovedFreelancers] = useState<
+//   typeof ASSIGNEES
+// >([]);
 
-const approveFreelancer = (id: string) => {
-  setPendingFreelancers(prev => {
-    const selected = prev.find(f => f.id === id);
-    if (!selected) return prev;
+// const approveFreelancer = (id: string) => {
+//   setPendingFreelancers(prev => {
+//     const selected = prev.find(f => f.id === id);
+//     if (!selected) return prev;
 
-    setApprovedFreelancers(appr => [...appr, selected]);
-    return prev.filter(f => f.id !== id);
-  });
-};
+//     setApprovedFreelancers(appr => [...appr, selected]);
+//     return prev.filter(f => f.id !== id);
+//   });
+// };
 
 const approveVendor = (id: string) => {
   setPendingVendors(prev => {
@@ -553,53 +555,61 @@ const approveVendor = (id: string) => {
 
 
   const navigate = useNavigate();
-    const [apiAssignees, setApiAssignees] = useState<Assignee[]>([]);
+    // const [apiAssignees, setApiAssignees] = useState<Assignee[]>([]);
   const [loadingAssignees, setLoadingAssignees] = useState(false);
-    useEffect(() => {
-    const loadFreelancers = async () => {
-      try {
-        setLoadingAssignees(true);
+ useEffect(() => {
+  const loadFreelancers = async () => {
+    try {
+      setLoadingAssignees(true);
 
-const data = await getFreelancers();
+      const data = await getFreelancers();
 
-// keep only status_id === 1
-const activeOnly = data.filter((f: any) => f.status_id === 1);
+      const mapped: Assignee[] = data.map((f: any) => {
+        let pan = "NA";
+        try {
+          const gov = f.government_id ? JSON.parse(f.government_id) : null;
+          if (gov?.type === "pan") pan = gov.number;
+        } catch {}
 
-const mapped: Assignee[] = activeOnly.map((f: any) => {
-  let pan = "NA";
-  try {
-    const gov = f.government_id ? JSON.parse(f.government_id) : null;
-    if (gov?.type === "pan") pan = gov.number;
-  } catch {}
+        return {
+          id: `FR-${f.id}`,
+          name: `${f.first_name ?? ""} ${f.last_name ?? ""}`.trim(),
+          email: f.email,
+          phone: f.mobile,
+          city: f.address || "NA",
+          pan,
+          rating: 4,
+          type: "Freelancer",
+          experience: f.experience_summary || "N/A",
+          jobsCompleted: 0,
+        };
+      });
 
-  return {
-    id: `FR-${f.id}`,
-    name: `${f.first_name ?? ""} ${f.last_name ?? ""}`.trim(),
-    email: f.email,
-    phone: f.mobile,
-    city: f.address || "NA",
-    pan,
-    rating: 4,
-    type: "Freelancer",
-    experience: f.experience_summary || "N/A",
-    jobsCompleted: 0,
+      // ✅ NOT APPROVED (Pending)
+      const pending = mapped.filter(
+        (_, index) => data[index].status_id === 2
+      );
+
+      // ✅ ALL freelancers (approved + pending + rejected)
+      setTotalFreelancers(mapped);
+
+      // ✅ ONLY pending (status_id === 2)
+      setPendingFreelancers(pending);
+
+    } catch (err) {
+      console.error("Failed to load freelancers", err);
+    } finally {
+      setLoadingAssignees(false);
+    }
   };
-});
 
+  loadFreelancers();
+}, []);
 
+ const MERGED_ASSIGNEES = totalFreelancers.length > 0
+  ? totalFreelancers
+  : ASSIGNEES;
 
-        setApiAssignees(mapped);
-      } catch (err) {
-        console.error("Failed to load freelancers", err);
-      } finally {
-        setLoadingAssignees(false);
-      }
-    };
-
-    loadFreelancers();
-  }, []);
-  const MERGED_ASSIGNEES =
-    apiAssignees.length > 0 ? apiAssignees : ASSIGNEES;
 
 const assigneeMap = useMemo(() => {
   const map = new Map<number, Assignee>();
@@ -625,12 +635,10 @@ console.log(SERVICE_TYPE_MAP);
 
 
 useEffect(() => {
-  if (openPopup === "freelancer") {
-    setPendingFreelancers(
-      MERGED_ASSIGNEES.filter(a => a.type === "Freelancer")
-    );
-    setApprovedFreelancers([]);
-  }
+if (openPopup === "freelancer") {
+  // setPendingFreelancers([]); 
+}
+
 
   if (openPopup === "vendor") {
     setPendingVendors(
@@ -1151,14 +1159,12 @@ const bookingStats = useMemo(() => {
     return dt >= from && dt <= to;
   });
 
-return {
-  total: filtered.length,
-  completed: filtered.filter(b => b.status === "Completed").length,
-  pending: filtered.filter(b => b.status === "Pending").length,
-  rejected: filtered.filter(b => b.status === "Rejected").length,
-  inProgress: filtered.filter(b => b.status === "In-Progress").length, // ✅ NEW
-};
-
+  return {
+    total: filtered.length,
+    completed: filtered.filter(b => b.status === "Completed").length,
+    pending: filtered.filter(b => b.status === "Pending").length,
+    rejected: filtered.filter(b => b.status === "Rejected").length,
+  };
 }, [bookings, active, range]);
 
 
@@ -1468,90 +1474,87 @@ return {
           </Row>
 
           {/* ----- 4 Compact Booking Cards (dynamic counts) ----- */}
-<Row gutter={20} style={{ marginTop: 18 }}>
-  <Col xs={24} sm={12} md={8}>
-    {/* Total */}
-    <Card
-      className="mini-stat-card total-bookings clickable-card"
-      bordered={false}
-      onClick={() => openBookingsModal("Total")}
-    >
-      <div className="mini-title">Total Bookings</div>
-      <div className="stat-number">{bookingStats.total}</div>
-      <div className="mini-card-footer">
-        <span>View all bookings</span>
-        <PlusOutlined />
-      </div>
-    </Card>
-  </Col>
+          <Row gutter={20} style={{ marginTop: 18 }}>
+            <Col xs={24} sm={12} md={6}>
+              <Card
+                className="mini-stat-card total-bookings clickable-card"
+                bordered={false}
+                onClick={() => openBookingsModal("Total")}
+                role="button"
+                tabIndex={0}
+                aria-label="Open total bookings"
+              >
+                <div className="mini-title">Total Bookings</div>
+                <div className="stat-number">{bookingStats.total}</div>
+                <div className="mini-card-footer">
+                  <span>View all bookings</span>
+                  <Tooltip title="Open bookings table">
+                    <PlusOutlined />
+                  </Tooltip>
+                </div>
+              </Card>
+            </Col>
 
-  <Col xs={24} sm={12} md={8}>
-    {/* Completed */}
-    <Card
-      className="mini-stat-card completed clickable-card"
-      bordered={false}
-      onClick={() => openBookingsModal("Completed")}
-    >
-      <div className="mini-title">Completed</div>
-      <div className="stat-number">{bookingStats.completed}</div>
-      <div className="mini-card-footer">
-        <span>View completed</span>
-        <PlusOutlined />
-      </div>
-    </Card>
-  </Col>
+            <Col xs={24} sm={12} md={6}>
+              <Card
+                className="mini-stat-card completed clickable-card"
+                bordered={false}
+                onClick={() => openBookingsModal("Completed")}
+                role="button"
+                tabIndex={0}
+                aria-label="Open completed bookings"
+              >
+                <div className="mini-title">Completed</div>
+                <div className="stat-number">{bookingStats.completed}</div>
+                <div className="mini-card-footer">
+                  <span>View completed</span>
+                  <Tooltip title="Open bookings table">
+                    <PlusOutlined />
+                  </Tooltip>
+                </div>
+              </Card>
+            </Col>
 
-  <Col xs={24} sm={12} md={8}>
-    {/* Rejected */}
-    <Card
-      className="mini-stat-card rejected clickable-card"
-      bordered={false}
-      onClick={() => openBookingsModal("Rejected")}
-    >
-      <div className="mini-title">Rejected</div>
-      <div className="stat-number">{bookingStats.rejected}</div>
-      <div className="mini-card-footer">
-        <span>View rejected</span>
-        <PlusOutlined />
-      </div>
-    </Card>
-  </Col>
-</Row>
+            <Col xs={24} sm={12} md={6}>
+              <Card
+                className="mini-stat-card pending clickable-card"
+                bordered={false}
+                onClick={() => openBookingsModal("Pending")}
+                role="button"
+                tabIndex={0}
+                aria-label="Open pending bookings"
+              >
+                <div className="mini-title">Pending</div>
+                <div className="stat-number">{bookingStats.pending}</div>
+                <div className="mini-card-footer">
+                  <span>View pending</span>
+                  <Tooltip title="Open bookings table">
+                    <PlusOutlined />
+                  </Tooltip>
+                </div>
+              </Card>
+            </Col>
 
-{/* ROW 2 : LIVE OPERATIONS */}
-<Row gutter={20} style={{ marginTop: 18 }}>
-  <Col xs={24} sm={12} md={12}>
-    {/* Pending */}
-    <Card
-      className="mini-stat-card pending clickable-card"
-      bordered={false}
-      onClick={() => openBookingsModal("Pending")}
-    >
-      <div className="mini-title">Pending</div>
-      <div className="stat-number">{bookingStats.pending}</div>
-      <div className="mini-card-footer">
-        <span>View pending</span>
-        <PlusOutlined />
-      </div>
-    </Card>
-  </Col>
-
-  <Col xs={24} sm={12} md={12}>
-    {/* In-Progress */}
-    <Card
-      className="mini-stat-card in-progress clickable-card"
-      bordered={false}
-      onClick={() => openBookingsModal("In-Progress")}
-    >
-      <div className="mini-title">In-Progress</div>
-      <div className="stat-number">{bookingStats.inProgress}</div>
-      <div className="mini-card-footer">
-        <span>View in-progress</span>
-        <PlusOutlined />
-      </div>
-    </Card>
-  </Col>
-</Row>
+            <Col xs={24} sm={12} md={6}>
+              <Card
+                className="mini-stat-card rejected clickable-card"
+                bordered={false}
+                onClick={() => openBookingsModal("Rejected")}
+                role="button"
+                tabIndex={0}
+                aria-label="Open rejected bookings"
+              >
+                <div className="mini-title">Rejected</div>
+                <div className="stat-number">{bookingStats.rejected}</div>
+                <div className="mini-card-footer">
+                  <span>View rejected</span>
+                  <Tooltip title="Open bookings table">
+                    <PlusOutlined />
+                  </Tooltip>
+                </div>
+              </Card>
+            </Col>
+          </Row>
 
           {/* AGEING (STATIC: not filtered) */}
             <Card title="Order Ageing Summary" className="panel-card ageing-card" style={{ marginTop: 20 }}>
@@ -1563,7 +1566,6 @@ return {
               </div>
             ))}
           </Card>
-          
           </div>
           </div>
         </main>
@@ -1750,10 +1752,9 @@ return {
                   <td><SkillsCell skills={FREELANCER_SKILLS} /></td>
                   <td>{a.pan}</td>
                   <td>{a.experience}</td>
-                  <td className="actions">
+                 <td className="actions">
                     <button
                       className="btn approve"
-                      onClick={() => approveFreelancer(a.id)}
                     />
                     <button className="btn reject" />
                   </td>
@@ -1767,7 +1768,7 @@ return {
       {/* Total Freelancers */}
       <div className="table-section">
         <div className="table-title">
-          Total Freelancers ({approvedFreelancers.length})
+          Total Freelancers ({totalFreelancers.length})
         </div>
 
         <div className="table-scroll">
@@ -1784,7 +1785,7 @@ return {
             </thead>
 
             <tbody>
-              {approvedFreelancers.map(a => (
+              {totalFreelancers.map(a => (
                 <tr key={a.id}>
                   <td><strong>{a.name}</strong></td>
                 <td>{a.email || "NA"}</td>
