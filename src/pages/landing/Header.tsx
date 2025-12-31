@@ -14,12 +14,18 @@ import {
   message,
   //Radio,
 } from "antd";
+
+import { Select } from "antd";
+
 import {
   EyeInvisibleOutlined,
   EyeTwoTone,
   MenuOutlined,
   CloseOutlined,
 } from "@ant-design/icons";
+
+import axios from "axios";
+
 
 import { customerRegister, customerLogin } from "../../api/customerAuth";
 
@@ -41,18 +47,36 @@ const navItems = [
 
 const { TabPane } = Tabs;
 
+const adminRegister = async (payload: any) => {
+  return axios.post(
+    "https://swachify-india-be-1-mcrb.onrender.com/api/admin/register",
+    payload
+  );
+};
+
+console.log(adminRegister)
+
+
 const CommonHeader: React.FC<{ selectedKey?: string }> = ({
   selectedKey = "home",
 }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [authModalVisible, setAuthModalVisible] = useState(false);
-
   const [forgotModalVisible, setForgotModalVisible] = useState(false);
   const [vendorModalVisible, setVendorModalVisible] = useState(false);
+  type RoleType = "vendor" | "admin";
+const [roleType, setRoleType] = useState<RoleType>("vendor");
+const [showRegisterHint, setShowRegisterHint] = useState<"vendor" | "admin" | null>(null);
+
+
 
   const [activeAuthTab, setActiveAuthTab] = useState<"login" | "register">(
   "login"
 );
+
+const [vendorActiveTab, setVendorActiveTab] = useState<
+  "login" | "vendor_register" | "admin_register"
+>("login");
 
 
   const [authLoading, setAuthLoading] = useState(false); 
@@ -99,69 +123,91 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
   // ==========================
   // CUSTOMER LOGIN (BACKEND)
   // ==========================
-  const onLogin = async (values: any) => {
-    try {
-      const identifier = values.identifier?.toString().trim();
-      const password = values.password;
+const onLogin = async (values: any) => {
+  try {
+    setAuthLoading(true);
 
-      // Admin (local) – keep
-      if (identifier === "admin@gmail.com" && password === "1234") {
-        message.success("Admin login successful");
-        closeAuthModal();
-        navigate("/adminshell/dashboard");
-        return;
-      }
-
-      const loginPayload = {
-        email_or_phone: identifier,
-        password,
-      };
-
-      setAuthLoading(true);
-
-      const res: any = await customerLogin(loginPayload);
-
-      if (res?.access_token) {
-        localStorage.setItem("accessToken", res.access_token);
-      }
-
-      if (res?.user) {
-        localStorage.setItem("user", JSON.stringify(res.user));
-      }
-
-      // remove guest mode
-localStorage.removeItem("isGuest");
-
-const loginSource = localStorage.getItem("loginSource");
-
-if (loginSource !== "addToCart") {
-  message.success("Login successful");
-}
-
-localStorage.removeItem("loginSource");
-
-closeAuthModal();
-
-
-// redirect user back to intended page
-const redirectTo =
-  localStorage.getItem("postLoginRedirect") || "/app/dashboard";
-
-localStorage.removeItem("postLoginRedirect");
-
-navigate(redirectTo);
-
-    } catch (err: any) {
-      console.error("Login error", err);
-      message.error(
-        err?.response?.data?.detail ||
-          err?.response?.data?.message ||
-          "Invalid login credentials"
-      );
-    } finally {
-      setAuthLoading(false);
+    // ================= ADMIN LOGIN =================
+if (roleType === "admin") {
+  const res = await axios.post(
+    "https://swachify-india-be-1-mcrb.onrender.com/api/admin/login",
+    {
+      username_or_email: values.username.trim(),
+      password: values.password,
     }
-  };
+  );
+
+
+console.log("ADMIN LOGIN RESPONSE:", res.data);
+
+localStorage.setItem("token", res.data.access_token);
+
+
+
+      message.success("Admin login successful");
+      setVendorModalVisible(false);
+      navigate("/adminshell/dashboard");
+      return;
+    }
+
+    // ================= CUSTOMER LOGIN =================
+    const res: any = await customerLogin({
+      email_or_phone: values.identifier,
+      password: values.password,
+    });
+
+    localStorage.setItem("accessToken", res.access_token);
+    localStorage.setItem("user", JSON.stringify(res.user));
+
+    closeAuthModal();
+    navigate("/app/dashboard");
+  } catch (err: any) {
+    message.error(
+      err?.response?.data?.message || "Invalid login credentials"
+    );
+  } finally {
+    setAuthLoading(false);
+  }
+};const onAdminLogin = async (values: any) => {
+  try {
+    setAuthLoading(true);
+
+    const res = await axios.post(
+      "https://swachify-india-be-1-mcrb.onrender.com/api/admin/login",
+      {
+        username_or_email: values.username.trim(),
+        password: values.password,
+      }
+    );
+
+    console.log("ADMIN LOGIN RESPONSE:", res.data);
+
+    const token =
+      res.data?.access_token ||
+      res.data?.token ||
+      res.data?.accessToken;
+
+    if (!token) {
+      message.error("Admin token not received");
+      return;
+    }
+
+    localStorage.setItem("token", token);
+
+    message.success("Admin login successful");
+    setVendorModalVisible(false);
+    navigate("/adminshell/dashboard");
+  } catch (err: any) {
+    message.error(
+      err?.response?.data?.message || "Admin login failed"
+    );
+  } finally {
+    setAuthLoading(false);
+  }
+};
+
+
+
   const handleSkipLogin = () => {
   localStorage.setItem("isGuest", "true");
   
@@ -173,6 +219,9 @@ navigate(redirectTo);
  
   navigate("/app/dashboard");
 };
+
+
+
 
 
 
@@ -188,59 +237,80 @@ navigate(redirectTo);
     message.success("Vendor Login Successful!");
   };
 
-  // ==========================
-  // CUSTOMER REGISTER (BACKEND)
-  // ==========================
-  const onRegister = async (values: any) => {
-    try {
-      const {
-        firstName,
-        lastName,
-        email,
-        phone,
-        password,
-        confirm,
-        address,
-        gender,
-      } = values;
 
-      const genderMap: any = {
-        male: 1,
-        female: 2,
-        other: 3,
-      };
 
-      const payload = {
-        first_name: firstName,
-        last_name: lastName,
-        email,
-        mobile: phone,
-        password,
-        confirm_password: confirm,
-        gender_id: genderMap[gender], // backend expects number
-        address,
-      };
+const onRegister = async (values: any) => {
+  try {
+    setAuthLoading(true);
 
-      setAuthLoading(true);
-
-      const res: any = await customerRegister(payload);
-
-      message.success(
-        res?.message || "Registration successful. Check your email."
-      );
-
-      setActiveAuthTab("login");
-    } catch (err: any) {
-      console.error("Registration error", err);
-      message.error(
-        err?.response?.data?.detail ||
-          err?.response?.data?.message ||
-          "Registration failed"
-      );
-    } finally {
-      setAuthLoading(false);
+if (roleType === "admin") {
+  const res = await axios.post(
+    "https://swachify-india-be-1-mcrb.onrender.com/api/admin/login",
+    {
+      username_or_email: values.username?.trim(),
+      password: values.password,
     }
-  };
+  );
+
+  // 🔍 SEE REAL RESPONSE
+  console.log("ADMIN LOGIN RESPONSE:", res.data);
+
+  // ✅ EXTRACT TOKEN SAFELY
+  const token =
+    res.data?.access_token ||
+    res.data?.token ||
+    res.data?.accessToken;
+
+  if (!token) {
+    message.error("Admin token not received from backend");
+    return;
+  }
+
+  // ✅ STORE TOKEN USING CORRECT KEY
+  localStorage.setItem("token", token);
+
+  message.success("Admin login successful");
+  setVendorModalVisible(false);
+  navigate("/adminshell/dashboard");
+  return;
+}
+
+
+
+
+
+    // ================= CUSTOMER REGISTER =================
+  const payload = {
+  first_name: values.firstName,
+  last_name: values.lastName,
+  email: values.email,
+  mobile: values.phone,
+  password: values.password,
+  confirm_password: values.confirm,
+  gender_id: values.gender, // ✅ DIRECT NUMBER
+  address: values.address ?? "",
+};
+
+
+    await customerRegister(payload);
+
+    message.success("Registration successful");
+    setActiveAuthTab("login");
+  } catch (err: any) {
+  console.error("ADMIN REGISTER ERROR FULL:", err.response);
+  message.error(
+    err.response?.data?.message ||
+    err.response?.data?.error ||
+    "Admin registration failed"
+  );
+}
+  finally {
+    setAuthLoading(false);
+  }
+};
+
+
+
 
   return (
     <>
@@ -365,6 +435,10 @@ navigate(redirectTo);
                   Login
                 </Button>
               </Form.Item>
+
+
+
+
              {!hideSkipLogin && (
   <Form.Item>
     <Button block type="default" onClick={handleSkipLogin}>
@@ -372,6 +446,34 @@ navigate(redirectTo);
     </Button>
   </Form.Item>
 )}
+{/* Vendor / Admin links */}
+<Form.Item>
+  <div style={{ display: "flex", justifyContent: "space-between" }}>
+    <a
+      onClick={() => {
+        setAuthModalVisible(false);
+        setRoleType("vendor");
+        setVendorActiveTab("login");
+        setShowRegisterHint("vendor");
+        setVendorModalVisible(true);
+      }}
+    >
+      Are you a vendor?
+    </a>
+
+    <a
+      onClick={() => {
+        setAuthModalVisible(false);
+        setRoleType("admin");
+        setVendorActiveTab("login");
+        setShowRegisterHint("admin"); 
+        setVendorModalVisible(true);
+      }}
+    >
+      Are you an admin?
+    </a>
+  </div>
+</Form.Item>
 
 
             </Form>
@@ -438,17 +540,19 @@ navigate(redirectTo);
               >
                 <Input maxLength={10} />
               </Form.Item>
-              {/* <Form.Item
-                label="Gender"
-                name="gender"
-                rules={[{ required: true, message: "Please select your gender" }]}
-              >
-                <Radio.Group>
-                  <Radio value="male">Male</Radio>
-                  <Radio value="female">Female</Radio>
-                  <Radio value="other">Other</Radio>
-                </Radio.Group>
-              </Form.Item> */}
+<Form.Item
+  label="Gender"
+  name="gender"
+  rules={[{ required: true, message: "Please select gender" }]}
+>
+  <Select placeholder="Select Gender">
+    <Select.Option value={1}>Male</Select.Option>
+    <Select.Option value={2}>Female</Select.Option>
+    <Select.Option value={3}>Other</Select.Option>
+  </Select>
+</Form.Item>
+
+
 
               <Form.Item
                 label="Password"
@@ -501,17 +605,6 @@ navigate(redirectTo);
                 <Button block htmlType="submit" loading={authLoading}>
                   Register
                 </Button>
-              </Form.Item>
-
-              <Form.Item style={{ marginTop: -10 }}>
-                <a
-                  onClick={() => {
-                    setAuthModalVisible(false);
-                    setVendorModalVisible(true);
-                  }}
-                >
-                  Are you a vendor?
-                </a>
               </Form.Item>
             </Form>
           </TabPane>
@@ -845,139 +938,261 @@ navigate(redirectTo);
         centered
         width={550}
         destroyOnClose
-        title="Vendor Authentication"
+title={roleType === "vendor" ? "Vendor Authentication" : "Admin Authentication"}
         bodyStyle={{
           maxHeight: "65vh",
           overflowY: "auto",
         }}
       >
         {/* VENDOR LOGIN TAB */}
-        <Tabs defaultActiveKey="vendor_register" centered>
-          <Tabs.TabPane tab="Login" key="vendor_login">
-            <Form layout="vertical" onFinish={onVendorLogin}>
-              <Form.Item
-                label="Email / Phone"
-                name="identifier"
-                rules={[{ required: true }]}
-              >
-                <Input placeholder="Enter email or phone" />
-              </Form.Item>
-              <Form.Item
-                label="Password"
-                name="password"
-                rules={[{ required: true }]}
-              >
-                <Input.Password />
-              </Form.Item>
+<Tabs
+  activeKey={vendorActiveTab}
+  onChange={(key) => setVendorActiveTab(key as any)}
+  centered
+>
 
-              <div style={{ textAlign: "right", marginBottom: 12 }}>
-                <a
-                  onClick={() => {
-                    setVendorModalVisible(false);
-                    setVendorForgotModalVisible(true);
-                  }}
-                >
-                  Forgot Password?
-                </a>
-              </div>
 
-              <Form.Item>
-                <Button type="primary" block htmlType="submit">
-                  Login as Vendor
-                </Button>
-              </Form.Item>
-            </Form>
-          </Tabs.TabPane>
+{/* LOGIN TAB */}
+<Tabs.TabPane tab="Login" key="login">
 
-          {/* VENDOR REGISTER TAB */}
-          <Tabs.TabPane tab="Register" key="vendor_register">
-            <Form
-              layout="vertical"
-              onFinish={(values) =>
-                console.log("Vendor Register:", values)
-              }
-            >
-              <Form.Item
-                label="Business Name"
-                name="businessName"
-                rules={[{ required: true }]}
-              >
-                <Input />
-              </Form.Item>
+  {/* VENDOR LOGIN */}
+  {roleType === "vendor" && (
+    <Form layout="vertical" onFinish={onVendorLogin}>
+      
 
-              <Form.Item
-                label="Owner Name"
-                name="ownerName"
-                rules={[{ required: true }]}
-              >
-                <Input />
-              </Form.Item>
 
-              <Form.Item
-                label="Email"
-                name="email"
-                rules={[{ required: true, type: "email" }]}
-              >
-                <Input />
-              </Form.Item>
+      <Form.Item
+        label="Email / Phone"
+        name="identifier"
+        rules={[{ required: true }]}
+      >
+        <Input placeholder="Enter email or phone" />
+      </Form.Item>
 
-              <Form.Item
-                label="Phone"
-                name="phone"
-                rules={[{ required: true }]}
-              >
-                <Input />
-              </Form.Item>
+      <Form.Item
+        label="Password"
+        name="password"
+        rules={[{ required: true }]}
+      >
+        <Input.Password />
+      </Form.Item>
 
-              <Form.Item
-                label="PAN"
-                name="pan"
-                rules={[{ required: true }]}
-              >
-                <Input />
-              </Form.Item>
+      <div style={{ textAlign: "right", marginBottom: 12 }}>
+        <a
+          onClick={() => {
+            setVendorModalVisible(false);
+            setVendorForgotModalVisible(true);
+          }}
+        >
+          Forgot Password?
+        </a>
+      </div>
 
-              <Form.Item
-                label="TAN/GSTIN"
-                name="tan/gstin"
-                rules={[{ required: true }]}
-              >
-                <Input />
-              </Form.Item>
+      <Button type="primary" block htmlType="submit">
+        Login as Vendor
+      </Button>
+      {showRegisterHint === "vendor" && (
+  <div style={{ marginTop: 12, textAlign: "center" }}>
+    <span>Not registered? </span>
+    <a
+      onClick={() => {
+        setVendorActiveTab("vendor_register");
+        setShowRegisterHint(null);
+      }}
+      style={{ fontWeight: 500 }}
+    >
+      Register as Vendor
+    </a>
+  </div>
+)}
 
-              <Form.Item
-                label="Service Category"
-                name="category"
-                rules={[{ required: true }]}
-              >
-                <Input placeholder="Cleaning / Transport / Plumbing..." />
-              </Form.Item>
 
-              <Form.Item
-                label="Business Address"
-                name="address"
-                rules={[{ required: true }]}
-              >
-                <Input.TextArea rows={3} />
-              </Form.Item>
+    </Form>
+  )}
 
-              <Form.Item
-                label="Password"
-                name="password"
-                rules={[{ required: true }]}
-              >
-                <Input.Password />
-              </Form.Item>
+  {/* ADMIN LOGIN */}
+{roleType === "admin" && (
+  <Form layout="vertical" onFinish={onAdminLogin}>
 
-              <Form.Item>
-                <Button type="primary" block htmlType="submit">
-                  Register as Vendor
-                </Button>
-              </Form.Item>
-            </Form>
-          </Tabs.TabPane>
+
+
+<Form.Item
+  label="Email"
+  name="username"
+  rules={[
+    { required: true, message: "Enter admin email" },
+    { type: "email", message: "Enter valid email" },
+  ]}
+>
+  <Input placeholder="admin@swachify.com" />
+</Form.Item>
+
+
+      <Form.Item
+        label="Password"
+        name="password"
+        rules={[{ required: true }]}
+      >
+        <Input.Password />
+      </Form.Item>
+
+      <Button type="primary" danger block htmlType="submit">
+        Login as Admin
+      </Button>
+      {showRegisterHint === "admin" && (
+  <div style={{ marginTop: 12, textAlign: "center" }}>
+    <span>Not registered? </span>
+    <a
+      onClick={() => {
+        setVendorActiveTab("admin_register");
+        setShowRegisterHint(null);
+      }}
+      style={{ fontWeight: 500 }}
+    >
+      Register as Admin
+    </a>
+  </div>
+)}
+
+
+    </Form>
+  )}
+
+</Tabs.TabPane>
+
+
+{/* VENDOR REGISTER TAB (UNCHANGED) */}
+{roleType === "vendor" && (
+  <Tabs.TabPane tab="Register" key="vendor_register">
+    <Form
+      layout="vertical"
+      onFinish={(values) => console.log("Vendor Register:", values)}
+    >
+      <Form.Item label="Business Name" name="businessName" rules={[{ required: true }]}>
+        <Input />
+      </Form.Item>
+
+      <Form.Item label="Owner Name" name="ownerName" rules={[{ required: true }]}>
+        <Input />
+      </Form.Item>
+
+      <Form.Item label="Email" name="email" rules={[{ required: true, type: "email" }]}>
+        <Input />
+      </Form.Item>
+
+      <Form.Item label="Phone" name="phone" rules={[{ required: true }]}>
+        <Input />
+      </Form.Item>
+
+      <Form.Item label="PAN" name="pan" rules={[{ required: true }]}>
+        <Input />
+      </Form.Item>
+
+      <Form.Item label="TAN/GSTIN" name="tan/gstin" rules={[{ required: true }]}>
+        <Input />
+      </Form.Item>
+
+      <Form.Item label="Service Category" name="category" rules={[{ required: true }]}>
+        <Input />
+      </Form.Item>
+
+      <Form.Item label="Business Address" name="address" rules={[{ required: true }]}>
+        <Input.TextArea rows={3} />
+      </Form.Item>
+
+      <Form.Item label="Password" name="password" rules={[{ required: true }]}>
+        <Input.Password />
+      </Form.Item>
+
+      <Button type="primary" block htmlType="submit">
+        Register as Vendor
+      </Button>
+    </Form>
+  </Tabs.TabPane>
+)}
+{/* ADMIN REGISTER TAB */}
+{roleType === "admin" && (
+<Tabs.TabPane tab="Register" key="admin_register">
+    <Form layout="vertical" onFinish={onRegister} preserve={false}>
+
+      <Form.Item label="First Name" name="first_name" rules={[{ required: true }]}>
+        <Input />
+      </Form.Item>
+
+      <Form.Item label="Last Name" name="last_name" rules={[{ required: true }]}>
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        label="Email"
+        name="email"
+        rules={[{ required: true, type: "email" }]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        label="Mobile"
+        name="mobile"
+        rules={[
+          { required: true },
+          { pattern: /^[0-9]{10}$/, message: "Enter valid 10-digit number" },
+        ]}
+      >
+        <Input maxLength={10} />
+      </Form.Item>
+
+<Form.Item
+  label="Gender"
+  name="gender"
+  rules={[{ required: true, message: "Please select gender" }]}
+>
+  <Select placeholder="Select Gender">
+    <Select.Option value={1}>Male</Select.Option>
+    <Select.Option value={2}>Female</Select.Option>
+    <Select.Option value={3}>Other</Select.Option>
+  </Select>
+</Form.Item>
+
+
+
+      <Form.Item label="Address" name="address" rules={[{ required: true }]}>
+        <Input.TextArea rows={3} />
+      </Form.Item>
+
+      <Form.Item label="Password" name="password" rules={[{ required: true }]}>
+        <Input.Password />
+      </Form.Item>
+
+      <Form.Item
+        label="Confirm Password"
+        name="confirm_password"
+        dependencies={["password"]}
+        rules={[
+          { required: true },
+          ({ getFieldValue }) => ({
+            validator(_, value) {
+              return !value || getFieldValue("password") === value
+                ? Promise.resolve()
+                : Promise.reject("Passwords do not match");
+            },
+          }),
+        ]}
+      >
+        <Input.Password />
+      </Form.Item>
+
+      <Button type="primary" block htmlType="submit" loading={authLoading}>
+        Register as Admin
+      </Button>
+
+    </Form>
+  </Tabs.TabPane>
+)}
+
         </Tabs>
       </Modal>
+      
     </>
   );
 };
