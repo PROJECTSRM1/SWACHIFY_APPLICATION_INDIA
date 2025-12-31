@@ -14,7 +14,9 @@ import {
   DatePicker,
   Popover,
   message,
+  Select,
 } from "antd";
+
 import { fetchAdminBookings } from "../../api/adminBookings";
 
 import type { Dayjs } from "dayjs"; 
@@ -25,6 +27,7 @@ import {
   rejectFreelancer
 } from "../../api/admin";
 
+import type { ColumnsType } from 'antd/es/table';
 
 import type { BookingAPIResponse } from "../../api/adminBookings";
 
@@ -672,8 +675,8 @@ const [active, setActive] = useState<"Dashboard" | ServiceKey>("Dashboard");
 const [customRange, setCustomRange] =
   useState<[Dayjs | null, Dayjs | null]>([null, null]);
   // NEW: which preset is active (controls highlight)
-  type PresetKey = "today" | "yesterday" | "last7" | "lastMonth" | "custom";
-  const [activePreset, setActivePreset] = useState<PresetKey>("last7");
+type PresetKey = | "all" | "today"| "yesterday" | "last7"|"lastMonth" | "custom"| "freelancer"| "vendor";
+  const [activePreset, setActivePreset] = useState<PresetKey>("all");
 
   const mapBookingFromAPI = (b: BookingAPIResponse): BookingRow => ({
   key: String(b.id),
@@ -898,23 +901,28 @@ const handleRejectFreelancer = async (freelancer: Assignee) => {
   }
 
   // UPDATED applyPreset: sets activePreset to keep highlight in sync
-const applyPreset = (which: "today" | "yesterday" | "last7" | "lastMonth") => {
-  let newRange;
+const applyPreset = (
+  which: "all" | "today" | "yesterday" | "last7" | "lastMonth"
+) => {
+  if (which === "all") {
+    setActivePreset("all");
+    return; // 👈 IMPORTANT: no date filtering
+  }
 
+  let newRange;
   if (which === "today") newRange = setRangeToday();
   if (which === "yesterday") newRange = setRangeYesterday();
   if (which === "last7") newRange = setRangeLast7();
   if (which === "lastMonth") newRange = setRangeLastMonth();
 
   if (newRange) {
-    // 🔥 force NEW object reference
     setRange({
       from: new Date(newRange.from),
       to: new Date(newRange.to),
     });
     setActivePreset(which);
   }
-
+  
   setShowCustomPopover(false);
 };
 
@@ -938,42 +946,44 @@ const applyPreset = (which: "today" | "yesterday" | "last7" | "lastMonth") => {
   };
   const closeBookingsModal = () => setModalVisible(false);
 
-const columns = [
+const columns: ColumnsType<BookingRow> = [
   {
     title: "Booking ID",
     dataIndex: "bookingId",
-    width: 130,
+    width: 110,
+      align: "center",
     render: (t: string) => <strong>{t}</strong>,
   },
   {
     title: "Customer Name",
     dataIndex: "customerName",
-    width: 180,
-  },
-   {
-    title: "Location",          // ✅ NEW
-    dataIndex: "location",      // ✅ NEW
     width: 160,
+    align: "left",
   },
+  {
+  title: "Location",
+  dataIndex: "location",
+  width: 180,
+  render: (text: string) => (
+    <div className="location-cell" title={text}>
+      {text}
+    </div>
+  ),
+}
+,
   {
     title: "Service Type",
     dataIndex: "serviceType",
-    width: 160,
+    width: 150,
+    align: "center",
     // history:10,
   },
-  {
-    title: "Amount",
-    dataIndex: "amount",
-    width: 140,
-    align: "right" as const,
-    render: (amt: number) => (
-      <span className="table-amount">{inr.format(amt)}</span>
-    ),
-  },
+  
 {
   title: "Payment Status",
   key: "paymentStatus",
-  width: 160,
+  align: "center",
+  width: 140,
   render: (_: any, record: BookingRow) => {
     return (
       <Tag color={record.paymentDone ? "green" : "red"}>
@@ -982,14 +992,11 @@ const columns = [
     );
   },
 },
-
-
-
-
 {
   title: "Work Status",
   key: "workStatus",
-  width: 260,
+  align: "center",
+  width: 120,
   render: (_: any, record: BookingRow) => {
 
     // 🔵 Show In-Progress
@@ -1025,6 +1032,8 @@ const columns = [
       return <Tag color="red">Rejected</Tag>;
     }
 
+    
+
     return null;
   },
 },
@@ -1033,7 +1042,8 @@ const columns = [
 {
   title: "Assigned To",
   key: "assigned",
-  width: 220,
+  align: "center",
+  width: 180,
   render: (_: any, r: BookingRow) => {
     if (!r.assignedId)
       return <Tag color="orange">Not Assigned</Tag>;
@@ -1048,11 +1058,18 @@ const columns = [
       </Tag>
     );
   },
-}
+},
 
-
-
-
+{
+    title: "Amount",
+    dataIndex: "amount",
+    width: 120,
+    align: "center",
+    
+    render: (amt: number) => (
+      <span className="table-amount">{inr.format(amt)}</span>
+    ),
+  },
 
 ];
 const [assignOpen, setAssignOpen] = useState(false);
@@ -1253,7 +1270,6 @@ const bookingStats = useMemo(() => {
     return `${a} → ${b}`;
   };
 
-  const rangeLabel = friendlyRange(range);
 
   return (
     <div className="layout-container">
@@ -1330,98 +1346,92 @@ const bookingStats = useMemo(() => {
   <div className="sticky-stack">
     <h2 className="page-title">Service Operations Dashboard</h2>
 
-    <div className="date-filter-bar">
-      <div className="date-nav">
-
-              <Button
-                className={activePreset === "today" ? "df-active" : ""}
-                onClick={() => applyPreset("today")}
-              >
-                Today
-              </Button>
-
-              <Button
-                className={activePreset === "yesterday" ? "df-active" : ""}
-                onClick={() => applyPreset("yesterday")}
-              >
-                Yesterday
-              </Button>
-
-              <Button
-                className={activePreset === "last7" ? "df-active" : ""}
-                onClick={() => applyPreset("last7")}
-              >
-                Last 7 Days
-              </Button>
-
-              <Button
-                className={activePreset === "lastMonth" ? "df-active" : ""}
-                onClick={() => applyPreset("lastMonth")}
-              >
-                Last Month
-              </Button>
-
-              <Popover
-                content={
-                  <div style={{ padding: 8, minWidth: 320 }}>
-                <RangePicker
-                  allowClear
-                  value={customRange}
-                  onChange={(vals) => {
-                    if (!vals) {
-                      setCustomRange([null, null]); // ✅ handle clear
-                    } else {
-                      setCustomRange(vals);
-                    }
-                  }}
-                  style={{ width: "100%", marginBottom: 8 }}
-                />
-                    <div style={{ display: "flex", gap: 8, justifyContent: "flex-end" }}>
-                      <Button size="small" onClick={() => { setCustomRange([null, null]); setShowCustomPopover(false); }}>Cancel</Button>
-                      <Button size="small" type="primary" onClick={onCustomApply}>Apply</Button>
-                    </div>
-                  </div>
-                }
-                title="Select custom range"
-                trigger="click"
-                open={showCustomPopover}
-                onOpenChange={(vis) => setShowCustomPopover(vis)}
-                placement="bottomLeft"
-              >
-                <Button
-                  className={activePreset === "custom" ? "df-active" : ""}
-                  onClick={() => setShowCustomPopover(true)}
-                >
-                  Custom Range ⬇
-                </Button>
-              </Popover>
-
-              <div className="date-range-label">{rangeLabel}</div>
-              <div
-  className="assignee-toggle"
-  style={{ display: "flex", gap: 8, marginLeft: 12 }}
-  >
-<Button onClick={() => setOpenPopup("freelancer")}>
-  Freelancer
-</Button>
-
-<Button onClick={() => setOpenPopup("vendor")}>
-  Vendor
-</Button>
-
-</div>
-
-  </div>
-          </div>
-
-          {/* SUMMARY */}
-{/* SUMMARY */}
  <div className="dashboard-scroll">
               <Card
-                className="big-card"
-                title={`Order Summary  ${active}`}
-                bordered={false}
-              >
+  className="big-card"
+  title={
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        width: "100%",
+      }}
+    >
+      <span>Order Summary Dashboard</span>
+
+      {/* RIGHT SIDE CONTROLS */}
+      <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+        {/* DROPDOWN */}
+        <Select
+        className="dashboard-filter-select"
+          value={activePreset}
+          style={{ width: 160 }}
+          onChange={(value) => {
+            if (value === "freelancer") {
+              setOpenPopup("freelancer");
+              setActivePreset("freelancer");
+              return;
+            }
+
+            if (value === "vendor") {
+              setOpenPopup("vendor");
+              setActivePreset("vendor");
+              return;
+            }
+
+            applyPreset(value as any);
+          }}
+          options={[
+            { label: "All", value: "all" },
+            { label: "Today", value: "today" },
+            { label: "Yesterday", value: "yesterday" },
+            { label: "Last 7 Days", value: "last7" },
+            { label: "Last Month", value: "lastMonth" },
+            { label: "Freelancer", value: "freelancer" },
+            { label: "Vendor", value: "vendor" },
+          ]}
+        />
+
+        {/* CUSTOM RANGE */}
+        <Popover
+          content={
+            <div style={{ padding: 8, minWidth: 320 }}>
+              <RangePicker
+                value={customRange}
+                onChange={(vals) => setCustomRange(vals ?? [null, null])}
+                style={{ width: "100%", marginBottom: 8 }}
+              />
+              <div style={{ display: "flex", justifyContent: "flex-end", gap: 8 }}>
+                <Button
+                  size="small"
+                  onClick={() => setShowCustomPopover(false)}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  size="small"
+                  type="primary"
+                  onClick={onCustomApply}
+                >
+                  Apply
+                </Button>
+              </div>
+            </div>
+          }
+          trigger="click"
+          open={showCustomPopover}
+          onOpenChange={setShowCustomPopover}
+        >
+          <Button>
+            Custom Range
+          </Button>
+        </Popover>
+      </div>
+    </div>
+  }
+>
+
                 <Row gutter={20}>
 
               {/* SALES CARD (dynamic) */}
@@ -1655,7 +1665,9 @@ const bookingStats = useMemo(() => {
         Close
       </Button>,
     ]}
-    bodyStyle={{ padding: 0 }}
+    bodyStyle={{ padding: 0,
+         
+     }}
     className="bookings-modal"
     centered
   >
@@ -1665,8 +1677,9 @@ const bookingStats = useMemo(() => {
         dataSource={filteredBookings}
         pagination={{ pageSize: 10 }}
         rowKey="key"
-        size="middle"
+        size="small"
         bordered
+        scroll={{ y: '60vh' }}
       />
     </div>
   </Modal>
@@ -1687,7 +1700,7 @@ const bookingStats = useMemo(() => {
   >
     {assignRecord && (
       <>
-        <div style={{ marginBottom: 16 }}>
+        <div style={{ marginBottom: 16 }} className="assign-modal-header">
           <strong>Booking ID:</strong> {assignRecord.bookingId}
           <br />
           <strong>Customer:</strong> {assignRecord.customerName}

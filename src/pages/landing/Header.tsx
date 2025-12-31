@@ -54,7 +54,7 @@ const adminRegister = async (payload: any) => {
   );
 };
 
-
+console.log(adminRegister)
 
 
 const CommonHeader: React.FC<{ selectedKey?: string }> = ({

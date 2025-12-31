@@ -3142,20 +3142,23 @@ readability */
 
 /* ---------- hero ---------- */
 .sw-pm-hero {
-  margin-left: 52px;
-  margin-right: 52px;
+  margin-left: 22px;
+  margin-right: 25px;
 }
 
 .sw-pm-hero-inner {
   display: flex;
   align-items: center;
+  width: 100%;
   justify-content: space-between;
-  padding: 18px;
+  padding: 22px 28px ;
   background: #005cfa;
-  border-radius: 6px;
+  border-radius: 12px;
   /* reduced radius (smaller) */
   color: #fff;
-  margin-top: 70px;
+  gap: 10px;
+  margin-top: 65px;
+  margin-bottom: 24px;
 }
 
 .sw-pm-hero-title {
@@ -3762,6 +3765,7 @@ readability */
     max-width: 100%;
     display: flex;
     flex-direction: column;
+    margin-left: -25px;
   }
 
   .sw-pm-card-image {
@@ -4412,9 +4416,10 @@ body,
 
   .swc-bs-header-banner {
     border-radius: 22;
-    margin-left: -2px;
-    margin-right: -2px;
-    padding: 20px 16px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+    margin-top: 20px;
   }
 
   .swc-bs-banner-title {
@@ -16448,6 +16453,45 @@ textarea {
 /* /////////surya header css////// */
 
 /* ----------------------------- Header / Layout ----------------------------- */
+/* Desktop only */
+.desktop-search {
+  display: flex;
+}
+
+/* Mobile search hidden by default */
+.mobile-search {
+  display: none;
+  width: 100%;
+  padding: 10px 12px;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+}
+
+/* Mobile view */
+@media (max-width: 900px) {
+  .desktop-search {
+    display: none; /* hide desktop search */
+  }
+
+  .mobile-search {
+display: block;
+    position: sticky;
+    top: 64px; /* header height */
+    z-index: 999;
+    background: #fff;
+    padding: 10px 12px;
+    border-bottom: 1px solid #eee;
+    }
+
+  .mobile-search .ant-input {
+    height: 18px;
+    font-size: 15px;
+    border-radius: 10px;
+  }
+}
+
+
+
 .sw-header-container {
   position: fixed;
   top: 0;
@@ -16759,7 +16803,7 @@ textarea {
 /* Responsive tweaks */
 @media (max-width: 1200px) {
   .sw-header-container {
-    padding: 10px 14px;
+    padding: 21px 14px;
   }
   .sw-header-menu .ant-menu-item {
     margin: 0 6px;
@@ -16767,30 +16811,31 @@ textarea {
   }
 }
 
+/* ================= MOBILE HEADER FIX ================= */
 @media (max-width: 900px) {
-  .sw-header-container {
-    grid-template-columns: auto auto auto; /* left | center-hidden | right */
-    padding: 10px 12px !important;
-    overflow-x: hidden !important;
-  }
   .sw-header-center {
-    display: none; /* hide large menu in favor of drawer */
+    display: none !important;
+    width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
-  .sw-profile-text {
-    display: none;
+
+  .sw-header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
-  .sw-mobile-menu-btn {
-    display: block;
-    justify-self: center;
+
+  .sw-header-left {
+    flex: 0 0 auto;
   }
-  .sw-logo-text {
-    font-size: 18px;
-  }
+
+ 
 }
 
 @media (max-width: 500px) {
   .sw-header-container {
-    padding: 10px 10px !important;
+    padding: 21px 10px !important;
   }
   .sw-logo-text {
     font-size: 16px;
@@ -16814,7 +16859,6 @@ textarea {
   }
 }
 
-/* Accessibility / global box sizing */
 * {
   box-sizing: border-box;
 }
@@ -16835,10 +16879,6 @@ body {
   overflow-y: hidden !important;
 }
  /* ///// surya header css////// */
-
-
-
- /* ---  Tejesh  Freelancer Dashboard Styles (sw-frd) --- */
 
 /* ---  Tejesh  Freelancer Dashboard Styles (sw-frd) --- */
 
