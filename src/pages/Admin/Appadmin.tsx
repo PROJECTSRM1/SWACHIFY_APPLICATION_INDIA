@@ -21,6 +21,12 @@ import { fetchAdminBookings } from "../../api/adminBookings";
 
 import type { Dayjs } from "dayjs"; 
 
+import {
+  getFreelancers,
+  approveFreelancer,
+  rejectFreelancer
+} from "../../api/admin";
+
 import type { ColumnsType } from 'antd/es/table';
 
 import type { BookingAPIResponse } from "../../api/adminBookings";
@@ -38,7 +44,6 @@ import {
 import ReactApexChart from "react-apexcharts";
 import "./appadmin.css";
 // import { useEffect } from "react";
-import { getFreelancers } from "../../api/admin";
 
 
 import { LogoutOutlined } from "@ant-design/icons";
@@ -568,6 +573,8 @@ const approveVendor = (id: string) => {
 
       const data = await getFreelancers();
 
+      
+
       const mapped: Assignee[] = data.map((f: any) => {
         let pan = "NA";
         try {
@@ -717,6 +724,52 @@ type PresetKey = | "all" | "today"| "yesterday" | "last7"|"lastMonth" | "custom"
   loadBookings();
 }, []);
 
+
+
+
+const handleApproveFreelancer = async (freelancer: Assignee) => {
+  try {
+    const freelancerId = Number(
+      freelancer.id.replace("FR-", "")
+    );
+
+    await approveFreelancer(freelancerId);
+
+    message.success(`${freelancer.name} approved`);
+
+    // remove from pending
+    setPendingFreelancers(prev =>
+      prev.filter(f => f.id !== freelancer.id)
+    );
+
+    // add to total list
+    setTotalFreelancers(prev => [...prev, freelancer]);
+
+  } catch (err) {
+    console.error(err);
+    message.error("Approve failed");
+  }
+};
+
+const handleRejectFreelancer = async (freelancer: Assignee) => {
+  try {
+    const freelancerId = Number(
+      freelancer.id.replace("FR-", "")
+    );
+
+    await rejectFreelancer(freelancerId);
+
+    message.success(`${freelancer.name} rejected`);
+
+    setPendingFreelancers(prev =>
+      prev.filter(f => f.id !== freelancer.id)
+    );
+
+  } catch (err) {
+    console.error(err);
+    message.error("Reject failed");
+  }
+};
 
 
 
@@ -1766,12 +1819,22 @@ const bookingStats = useMemo(() => {
                   <td><SkillsCell skills={FREELANCER_SKILLS} /></td>
                   <td>{a.pan}</td>
                   <td>{a.experience}</td>
-                 <td className="actions">
-                    <button
-                      className="btn approve"
-                    />
-                    <button className="btn reject" />
-                  </td>
+<td className="actions">
+  <button
+    className="btn approve"
+    onClick={() => handleApproveFreelancer(a)}
+  >
+    ✓ Approve
+  </button>
+
+  <button
+    className="btn reject"
+    onClick={() => handleRejectFreelancer(a)}
+  >
+    ✕ Reject
+  </button>
+</td>
+
                 </tr>
               ))}
             </tbody>
