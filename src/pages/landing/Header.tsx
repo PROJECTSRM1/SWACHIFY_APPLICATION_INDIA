@@ -136,9 +136,11 @@ if (roleType === "admin") {
   );
 
 
-      if (res.data?.access_token) {
-        localStorage.setItem("adminToken", res.data.access_token);
-      }
+console.log("ADMIN LOGIN RESPONSE:", res.data);
+
+localStorage.setItem("token", res.data.access_token);
+
+
 
       message.success("Admin login successful");
       setVendorModalVisible(false);
@@ -164,7 +166,44 @@ if (roleType === "admin") {
   } finally {
     setAuthLoading(false);
   }
+};const onAdminLogin = async (values: any) => {
+  try {
+    setAuthLoading(true);
+
+    const res = await axios.post(
+      "https://swachify-india-be-1-mcrb.onrender.com/api/admin/login",
+      {
+        username_or_email: values.username.trim(),
+        password: values.password,
+      }
+    );
+
+    console.log("ADMIN LOGIN RESPONSE:", res.data);
+
+    const token =
+      res.data?.access_token ||
+      res.data?.token ||
+      res.data?.accessToken;
+
+    if (!token) {
+      message.error("Admin token not received");
+      return;
+    }
+
+    localStorage.setItem("token", token);
+
+    message.success("Admin login successful");
+    setVendorModalVisible(false);
+    navigate("/adminshell/dashboard");
+  } catch (err: any) {
+    message.error(
+      err?.response?.data?.message || "Admin login failed"
+    );
+  } finally {
+    setAuthLoading(false);
+  }
 };
+
 
 
   const handleSkipLogin = () => {
@@ -203,27 +242,37 @@ const onRegister = async (values: any) => {
     setAuthLoading(true);
 
 if (roleType === "admin") {
-  const payload = {
-    first_name: values.first_name.trim(),
-    last_name: values.last_name.trim(),
-    email: values.email.trim(),
-    mobile: values.mobile,
-    gender_id: values.gender,
-    address: values.address.trim(),
-    password: values.password,
-    confirm_password: values.confirm_password,
-  };
+  const res = await axios.post(
+    "https://swachify-india-be-1-mcrb.onrender.com/api/admin/login",
+    {
+      username_or_email: values.username?.trim(),
+      password: values.password,
+    }
+  );
 
-  // ✅ ONLY REGISTER
-  await adminRegister(payload);
+  // 🔍 SEE REAL RESPONSE
+  console.log("ADMIN LOGIN RESPONSE:", res.data);
 
-  message.success("Registration successful. Please login.");
+  // ✅ EXTRACT TOKEN SAFELY
+  const token =
+    res.data?.access_token ||
+    res.data?.token ||
+    res.data?.accessToken;
 
-  // ✅ SWITCH TO LOGIN TAB
-  setVendorActiveTab("login");
+  if (!token) {
+    message.error("Admin token not received from backend");
+    return;
+  }
 
+  // ✅ STORE TOKEN USING CORRECT KEY
+  localStorage.setItem("token", token);
+
+  message.success("Admin login successful");
+  setVendorModalVisible(false);
+  navigate("/adminshell/dashboard");
   return;
 }
+
 
 
 
@@ -942,8 +991,9 @@ title={roleType === "vendor" ? "Vendor Authentication" : "Admin Authentication"}
   )}
 
   {/* ADMIN LOGIN */}
-  {roleType === "admin" && (
-    <Form layout="vertical" onFinish={onLogin}>
+{roleType === "admin" && (
+  <Form layout="vertical" onFinish={onAdminLogin}>
+
 
 <Form.Item
   label="Email"
