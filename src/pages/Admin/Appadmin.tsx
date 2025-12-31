@@ -14,7 +14,9 @@ import {
   DatePicker,
   Popover,
   message,
+  Select,
 } from "antd";
+
 import { fetchAdminBookings } from "../../api/adminBookings";
 
 import type { Dayjs } from "dayjs"; 
@@ -666,8 +668,8 @@ const [active, setActive] = useState<"Dashboard" | ServiceKey>("Dashboard");
 const [customRange, setCustomRange] =
   useState<[Dayjs | null, Dayjs | null]>([null, null]);
   // NEW: which preset is active (controls highlight)
-  type PresetKey = "today" | "yesterday" | "last7" | "lastMonth" | "custom";
-  const [activePreset, setActivePreset] = useState<PresetKey>("last7");
+type PresetKey = | "all" | "today"| "yesterday" | "last7"|"lastMonth" | "custom"| "freelancer"| "vendor";
+  const [activePreset, setActivePreset] = useState<PresetKey>("all");
 
   const mapBookingFromAPI = (b: BookingAPIResponse): BookingRow => ({
   key: String(b.id),
@@ -846,23 +848,28 @@ const [customRange, setCustomRange] =
   }
 
   // UPDATED applyPreset: sets activePreset to keep highlight in sync
-const applyPreset = (which: "today" | "yesterday" | "last7" | "lastMonth") => {
-  let newRange;
+const applyPreset = (
+  which: "all" | "today" | "yesterday" | "last7" | "lastMonth"
+) => {
+  if (which === "all") {
+    setActivePreset("all");
+    return; // 👈 IMPORTANT: no date filtering
+  }
 
+  let newRange;
   if (which === "today") newRange = setRangeToday();
   if (which === "yesterday") newRange = setRangeYesterday();
   if (which === "last7") newRange = setRangeLast7();
   if (which === "lastMonth") newRange = setRangeLastMonth();
 
   if (newRange) {
-    // 🔥 force NEW object reference
     setRange({
       from: new Date(newRange.from),
       to: new Date(newRange.to),
     });
     setActivePreset(which);
   }
-
+  
   setShowCustomPopover(false);
 };
 
@@ -1210,7 +1217,6 @@ const bookingStats = useMemo(() => {
     return `${a} → ${b}`;
   };
 
-  const rangeLabel = friendlyRange(range);
 
   return (
     <div className="layout-container">
@@ -1287,98 +1293,92 @@ const bookingStats = useMemo(() => {
   <div className="sticky-stack">
     <h2 className="page-title">Service Operations Dashboard</h2>
 
-    <div className="date-filter-bar">
-      <div className="date-nav">
-
-              <Button
-                className={activePreset === "today" ? "df-active" : ""}
-                onClick={() => applyPreset("today")}
-              >
-                Today
-              </Button>
-
-              <Button
-                className={activePreset === "yesterday" ? "df-active" : ""}
-                onClick={() => applyPreset("yesterday")}
-              >
-                Yesterday
-              </Button>
-
-              <Button
-                className={activePreset === "last7" ? "df-active" : ""}
-                onClick={() => applyPreset("last7")}
-              >
-                Last 7 Days
-              </Button>
-
-              <Button
-                className={activePreset === "lastMonth" ? "df-active" : ""}
-                onClick={() => applyPreset("lastMonth")}
-              >
-                Last Month
-              </Button>
-
-              <Popover
-                content={
-                  <div style={{ padding: 8, minWidth: 320 }}>
-                <RangePicker
-                  allowClear
-                  value={customRange}
-                  onChange={(vals) => {
-                    if (!vals) {
-                      setCustomRange([null, null]); // ✅ handle clear
-                    } else {
-                      setCustomRange(vals);
-                    }
-                  }}
-                  style={{ width: "100%", marginBottom: 8 }}
-                />
-                    <div style={{ display: "flex", gap: 8, justifyContent: "flex-end" }}>
-                      <Button size="small" onClick={() => { setCustomRange([null, null]); setShowCustomPopover(false); }}>Cancel</Button>
-                      <Button size="small" type="primary" onClick={onCustomApply}>Apply</Button>
-                    </div>
-                  </div>
-                }
-                title="Select custom range"
-                trigger="click"
-                open={showCustomPopover}
-                onOpenChange={(vis) => setShowCustomPopover(vis)}
-                placement="bottomLeft"
-              >
-                <Button
-                  className={activePreset === "custom" ? "df-active" : ""}
-                  onClick={() => setShowCustomPopover(true)}
-                >
-                  Custom Range ⬇
-                </Button>
-              </Popover>
-
-              <div className="date-range-label">{rangeLabel}</div>
-              <div
-  className="assignee-toggle"
-  style={{ display: "flex", gap: 8, marginLeft: 12 }}
-  >
-<Button onClick={() => setOpenPopup("freelancer")}>
-  Freelancer
-</Button>
-
-<Button onClick={() => setOpenPopup("vendor")}>
-  Vendor
-</Button>
-
-</div>
-
-  </div>
-          </div>
-
-          {/* SUMMARY */}
-{/* SUMMARY */}
  <div className="dashboard-scroll">
               <Card
-                className="big-card"
-                title={`Order Summary  ${active}`}
-                bordered={false}
-              >
+  className="big-card"
+  title={
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        width: "100%",
+      }}
+    >
+      <span>Order Summary Dashboard</span>
+
+      {/* RIGHT SIDE CONTROLS */}
+      <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+        {/* DROPDOWN */}
+        <Select
+        className="dashboard-filter-select"
+          value={activePreset}
+          style={{ width: 160 }}
+          onChange={(value) => {
+            if (value === "freelancer") {
+              setOpenPopup("freelancer");
+              setActivePreset("freelancer");
+              return;
+            }
+
+            if (value === "vendor") {
+              setOpenPopup("vendor");
+              setActivePreset("vendor");
+              return;
+            }
+
+            applyPreset(value as any);
+          }}
+          options={[
+            { label: "All", value: "all" },
+            { label: "Today", value: "today" },
+            { label: "Yesterday", value: "yesterday" },
+            { label: "Last 7 Days", value: "last7" },
+            { label: "Last Month", value: "lastMonth" },
+            { label: "Freelancer", value: "freelancer" },
+            { label: "Vendor", value: "vendor" },
+          ]}
+        />
+
+        {/* CUSTOM RANGE */}
+        <Popover
+          content={
+            <div style={{ padding: 8, minWidth: 320 }}>
+              <RangePicker
+                value={customRange}
+                onChange={(vals) => setCustomRange(vals ?? [null, null])}
+                style={{ width: "100%", marginBottom: 8 }}
+              />
+              <div style={{ display: "flex", justifyContent: "flex-end", gap: 8 }}>
+                <Button
+                  size="small"
+                  onClick={() => setShowCustomPopover(false)}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  size="small"
+                  type="primary"
+                  onClick={onCustomApply}
+                >
+                  Apply
+                </Button>
+              </div>
+            </div>
+          }
+          trigger="click"
+          open={showCustomPopover}
+          onOpenChange={setShowCustomPopover}
+        >
+          <Button>
+            Custom Range
+          </Button>
+        </Popover>
+      </div>
+    </div>
+  }
+>
+
                 <Row gutter={20}>
 
               {/* SALES CARD (dynamic) */}

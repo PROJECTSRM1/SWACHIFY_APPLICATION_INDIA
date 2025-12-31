@@ -1316,6 +1316,8 @@ body {
   height: calc(100vh - 140px); /* ✅ KEY FIX */
   overflow-y: auto;
   padding: 20px;
+      margin-top: -13px;
+
 }
 
 
@@ -1813,6 +1815,115 @@ padding: 12px 14px;
 text-align: center;
 }
 
+/* filters css */
+
+
+.dashboard-filter-select {
+  width: 30px;
+
+}
+
+/* Select box */
+/* 🔽 SMALLER ALL BUTTON */
+.dashboard-filter-select .ant-select-selector {
+  height: 32px !important;        /* 🔥 reduced height */
+  padding: 0 10px !important;     /* 🔥 reduced padding */
+  border-radius: 6px !important;  /* slightly tighter */
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  border: 1px solid #d9d9d9 !important;
+}
+
+
+/* Hover */
+.dashboard-filter-select .ant-select-selector:hover {
+  border-color: #6a2dff !important;
+}
+
+/* Focus */
+.dashboard-filter-select.ant-select-focused .ant-select-selector {
+  border-color: #6a2dff !important;
+  box-shadow: 0 0 0 2px rgba(106, 45, 255, 0.15);
+}
+
+/* Smaller text inside All */
+.dashboard-filter-select .ant-select-selection-item {
+  font-size: 13px;   /* 🔥 reduced */
+  line-height: 1;
+}
+
+
+/* Dropdown menu */
+.ant-select-dropdown {
+  border-radius: 10px;
+  padding: 6px 0;
+}
+
+/* Dropdown options */
+.ant-select-item {
+  font-size: 14px;
+  padding: 8px 14px;
+}
+
+/* Hover option */
+.ant-select-item-option-active {
+  background: #f3f0ff !important;
+}
+
+/* Selected option */
+.ant-select-item-option-selected {
+  background: #ede9fe !important;
+  color: #4c1d95 !important;
+  font-weight: 600;
+}
+
+/* ===============================
+   MOBILE OPTIMIZATION
+   =============================== */
+@media (max-width: 768px) {
+  .dashboard-filter-select {
+    width: 100% !important;
+  }
+
+  .dashboard-filter-select .ant-select-selector {
+    height: 40px !important;
+  }
+}
+/* ================= FIX DASHBOARD HEADER FILTER CLIPPING ================= */
+
+/* Allow header content to show fully */
+.ant-card-head {
+  overflow: visible !important;
+}
+
+/* Ensure title + actions align properly */
+.ant-card-head-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Prevent right-side controls from wrapping or cutting */
+.ant-card-extra {
+  overflow: visible !important;
+}
+
+
+.dashboard-custom-btn {
+  height: 38px !important;
+  min-height: 38px !important;
+  border-radius: 8px !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 14px;
+  font-weight: 600;
+}
+
+.dashboard-filter-select,
+.dashboard-custom-btn {
+  box-sizing: border-box;
 
 
 /* Date range and custom range fix */
@@ -1901,4 +2012,5 @@ text-align: center;
   z-index: 10; /* stay above scrolling content */
   padding: 16px 0; /* spacing */
   border-bottom: 1px solid #f0f0f0; /* optional separator line */
+}
 }
