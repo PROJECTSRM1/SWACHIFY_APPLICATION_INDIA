@@ -66,6 +66,8 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
   const [vendorModalVisible, setVendorModalVisible] = useState(false);
   type RoleType = "vendor" | "admin";
 const [roleType, setRoleType] = useState<RoleType>("vendor");
+const [showRegisterHint, setShowRegisterHint] = useState<"vendor" | "admin" | null>(null);
+
 
 
   const [activeAuthTab, setActiveAuthTab] = useState<"login" | "register">(
@@ -433,6 +435,10 @@ if (roleType === "admin") {
                   Login
                 </Button>
               </Form.Item>
+
+
+
+
              {!hideSkipLogin && (
   <Form.Item>
     <Button block type="default" onClick={handleSkipLogin}>
@@ -440,6 +446,34 @@ if (roleType === "admin") {
     </Button>
   </Form.Item>
 )}
+{/* Vendor / Admin links */}
+<Form.Item>
+  <div style={{ display: "flex", justifyContent: "space-between" }}>
+    <a
+      onClick={() => {
+        setAuthModalVisible(false);
+        setRoleType("vendor");
+        setVendorActiveTab("login");
+        setShowRegisterHint("vendor");
+        setVendorModalVisible(true);
+      }}
+    >
+      Are you a vendor?
+    </a>
+
+    <a
+      onClick={() => {
+        setAuthModalVisible(false);
+        setRoleType("admin");
+        setVendorActiveTab("login");
+        setShowRegisterHint("admin"); 
+        setVendorModalVisible(true);
+      }}
+    >
+      Are you an admin?
+    </a>
+  </div>
+</Form.Item>
 
 
             </Form>
@@ -572,37 +606,6 @@ if (roleType === "admin") {
                   Register
                 </Button>
               </Form.Item>
-
-<Form.Item style={{ marginTop: -10, textAlign: "center" }}>
-  <div style={{ display: "flex", justifyContent: "space-between" }}>
-<a
-  onClick={() => {
-    setAuthModalVisible(false);
-    setRoleType("vendor");
-    setVendorModalVisible(true);
-  }}
->
-  Are you a vendor?
-</a>
-
-
-<a
-  onClick={() => {
-    setAuthModalVisible(false);
-setRoleType("admin");
-setVendorActiveTab("admin_register");
-setVendorModalVisible(true);
-
-  }}
-  style={{ fontWeight: 500 }}
->
-  Are you an admin?
-</a>
-
-
-  </div>
-</Form.Item>
-
             </Form>
           </TabPane>
         </Tabs>
@@ -955,6 +958,8 @@ title={roleType === "vendor" ? "Vendor Authentication" : "Admin Authentication"}
   {/* VENDOR LOGIN */}
   {roleType === "vendor" && (
     <Form layout="vertical" onFinish={onVendorLogin}>
+      
+
 
       <Form.Item
         label="Email / Phone"
@@ -986,6 +991,21 @@ title={roleType === "vendor" ? "Vendor Authentication" : "Admin Authentication"}
       <Button type="primary" block htmlType="submit">
         Login as Vendor
       </Button>
+      {showRegisterHint === "vendor" && (
+  <div style={{ marginTop: 12, textAlign: "center" }}>
+    <span>Not registered? </span>
+    <a
+      onClick={() => {
+        setVendorActiveTab("vendor_register");
+        setShowRegisterHint(null);
+      }}
+      style={{ fontWeight: 500 }}
+    >
+      Register as Vendor
+    </a>
+  </div>
+)}
+
 
     </Form>
   )}
@@ -993,6 +1013,7 @@ title={roleType === "vendor" ? "Vendor Authentication" : "Admin Authentication"}
   {/* ADMIN LOGIN */}
 {roleType === "admin" && (
   <Form layout="vertical" onFinish={onAdminLogin}>
+
 
 
 <Form.Item
@@ -1018,6 +1039,21 @@ title={roleType === "vendor" ? "Vendor Authentication" : "Admin Authentication"}
       <Button type="primary" danger block htmlType="submit">
         Login as Admin
       </Button>
+      {showRegisterHint === "admin" && (
+  <div style={{ marginTop: 12, textAlign: "center" }}>
+    <span>Not registered? </span>
+    <a
+      onClick={() => {
+        setVendorActiveTab("admin_register");
+        setShowRegisterHint(null);
+      }}
+      style={{ fontWeight: 500 }}
+    >
+      Register as Admin
+    </a>
+  </div>
+)}
+
 
     </Form>
   )}
