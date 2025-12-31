@@ -248,3 +248,7 @@
     padding-right: 58px !important;
   }
 }
+/* Reduce space between Email and Password in modal forms */
+.ant-modal .ant-form-item {
+  margin-bottom: 12px; /* default is 24px */
+}

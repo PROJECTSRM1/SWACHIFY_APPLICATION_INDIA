@@ -54,7 +54,7 @@ const adminRegister = async (payload: any) => {
   );
 };
 
-
+console.log(adminRegister)
 
 
 const CommonHeader: React.FC<{ selectedKey?: string }> = ({
@@ -66,6 +66,8 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
   const [vendorModalVisible, setVendorModalVisible] = useState(false);
   type RoleType = "vendor" | "admin";
 const [roleType, setRoleType] = useState<RoleType>("vendor");
+const [showRegisterHint, setShowRegisterHint] = useState<"vendor" | "admin" | null>(null);
+
 
 
   const [activeAuthTab, setActiveAuthTab] = useState<"login" | "register">(
@@ -136,9 +138,11 @@ if (roleType === "admin") {
   );
 
 
-      if (res.data?.access_token) {
-        localStorage.setItem("adminToken", res.data.access_token);
-      }
+console.log("ADMIN LOGIN RESPONSE:", res.data);
+
+localStorage.setItem("token", res.data.access_token);
+
+
 
       message.success("Admin login successful");
       setVendorModalVisible(false);
@@ -164,7 +168,44 @@ if (roleType === "admin") {
   } finally {
     setAuthLoading(false);
   }
+};const onAdminLogin = async (values: any) => {
+  try {
+    setAuthLoading(true);
+
+    const res = await axios.post(
+      "https://swachify-india-be-1-mcrb.onrender.com/api/admin/login",
+      {
+        username_or_email: values.username.trim(),
+        password: values.password,
+      }
+    );
+
+    console.log("ADMIN LOGIN RESPONSE:", res.data);
+
+    const token =
+      res.data?.access_token ||
+      res.data?.token ||
+      res.data?.accessToken;
+
+    if (!token) {
+      message.error("Admin token not received");
+      return;
+    }
+
+    localStorage.setItem("token", token);
+
+    message.success("Admin login successful");
+    setVendorModalVisible(false);
+    navigate("/adminshell/dashboard");
+  } catch (err: any) {
+    message.error(
+      err?.response?.data?.message || "Admin login failed"
+    );
+  } finally {
+    setAuthLoading(false);
+  }
 };
+
 
 
   const handleSkipLogin = () => {
@@ -203,27 +244,37 @@ const onRegister = async (values: any) => {
     setAuthLoading(true);
 
 if (roleType === "admin") {
-  const payload = {
-    first_name: values.first_name.trim(),
-    last_name: values.last_name.trim(),
-    email: values.email.trim(),
-    mobile: values.mobile,
-    gender_id: values.gender,
-    address: values.address.trim(),
-    password: values.password,
-    confirm_password: values.confirm_password,
-  };
+  const res = await axios.post(
+    "https://swachify-india-be-1-mcrb.onrender.com/api/admin/login",
+    {
+      username_or_email: values.username?.trim(),
+      password: values.password,
+    }
+  );
 
-  // ✅ ONLY REGISTER
-  await adminRegister(payload);
+  // 🔍 SEE REAL RESPONSE
+  console.log("ADMIN LOGIN RESPONSE:", res.data);
 
-  message.success("Registration successful. Please login.");
+  // ✅ EXTRACT TOKEN SAFELY
+  const token =
+    res.data?.access_token ||
+    res.data?.token ||
+    res.data?.accessToken;
 
-  // ✅ SWITCH TO LOGIN TAB
-  setVendorActiveTab("login");
+  if (!token) {
+    message.error("Admin token not received from backend");
+    return;
+  }
 
+  // ✅ STORE TOKEN USING CORRECT KEY
+  localStorage.setItem("token", token);
+
+  message.success("Admin login successful");
+  setVendorModalVisible(false);
+  navigate("/adminshell/dashboard");
   return;
 }
+
 
 
 
@@ -384,6 +435,10 @@ if (roleType === "admin") {
                   Login
                 </Button>
               </Form.Item>
+
+
+
+
              {!hideSkipLogin && (
   <Form.Item>
     <Button block type="default" onClick={handleSkipLogin}>
@@ -391,6 +446,34 @@ if (roleType === "admin") {
     </Button>
   </Form.Item>
 )}
+{/* Vendor / Admin links */}
+<Form.Item>
+  <div style={{ display: "flex", justifyContent: "space-between" }}>
+    <a
+      onClick={() => {
+        setAuthModalVisible(false);
+        setRoleType("vendor");
+        setVendorActiveTab("login");
+        setShowRegisterHint("vendor");
+        setVendorModalVisible(true);
+      }}
+    >
+      Are you a vendor?
+    </a>
+
+    <a
+      onClick={() => {
+        setAuthModalVisible(false);
+        setRoleType("admin");
+        setVendorActiveTab("login");
+        setShowRegisterHint("admin"); 
+        setVendorModalVisible(true);
+      }}
+    >
+      Are you an admin?
+    </a>
+  </div>
+</Form.Item>
 
 
             </Form>
@@ -523,37 +606,6 @@ if (roleType === "admin") {
                   Register
                 </Button>
               </Form.Item>
-
-<Form.Item style={{ marginTop: -10, textAlign: "center" }}>
-  <div style={{ display: "flex", justifyContent: "space-between" }}>
-<a
-  onClick={() => {
-    setAuthModalVisible(false);
-    setRoleType("vendor");
-    setVendorModalVisible(true);
-  }}
->
-  Are you a vendor?
-</a>
-
-
-<a
-  onClick={() => {
-    setAuthModalVisible(false);
-setRoleType("admin");
-setVendorActiveTab("admin_register");
-setVendorModalVisible(true);
-
-  }}
-  style={{ fontWeight: 500 }}
->
-  Are you an admin?
-</a>
-
-
-  </div>
-</Form.Item>
-
             </Form>
           </TabPane>
         </Tabs>
@@ -906,6 +958,8 @@ title={roleType === "vendor" ? "Vendor Authentication" : "Admin Authentication"}
   {/* VENDOR LOGIN */}
   {roleType === "vendor" && (
     <Form layout="vertical" onFinish={onVendorLogin}>
+      
+
 
       <Form.Item
         label="Email / Phone"
@@ -937,13 +991,30 @@ title={roleType === "vendor" ? "Vendor Authentication" : "Admin Authentication"}
       <Button type="primary" block htmlType="submit">
         Login as Vendor
       </Button>
+      {showRegisterHint === "vendor" && (
+  <div style={{ marginTop: 12, textAlign: "center" }}>
+    <span>Not registered? </span>
+    <a
+      onClick={() => {
+        setVendorActiveTab("vendor_register");
+        setShowRegisterHint(null);
+      }}
+      style={{ fontWeight: 500 }}
+    >
+      Register as Vendor
+    </a>
+  </div>
+)}
+
 
     </Form>
   )}
 
   {/* ADMIN LOGIN */}
-  {roleType === "admin" && (
-    <Form layout="vertical" onFinish={onLogin}>
+{roleType === "admin" && (
+  <Form layout="vertical" onFinish={onAdminLogin}>
+
+
 
 <Form.Item
   label="Email"
@@ -968,6 +1039,21 @@ title={roleType === "vendor" ? "Vendor Authentication" : "Admin Authentication"}
       <Button type="primary" danger block htmlType="submit">
         Login as Admin
       </Button>
+      {showRegisterHint === "admin" && (
+  <div style={{ marginTop: 12, textAlign: "center" }}>
+    <span>Not registered? </span>
+    <a
+      onClick={() => {
+        setVendorActiveTab("admin_register");
+        setShowRegisterHint(null);
+      }}
+      style={{ fontWeight: 500 }}
+    >
+      Register as Admin
+    </a>
+  </div>
+)}
+
 
     </Form>
   )}
