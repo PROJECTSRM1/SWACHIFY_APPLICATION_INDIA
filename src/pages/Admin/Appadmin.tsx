@@ -21,6 +21,8 @@ import { fetchAdminBookings } from "../../api/adminBookings";
 
 import type { Dayjs } from "dayjs"; 
 
+import type { ColumnsType } from 'antd/es/table';
+
 import type { BookingAPIResponse } from "../../api/adminBookings";
 
 
@@ -891,42 +893,44 @@ const applyPreset = (
   };
   const closeBookingsModal = () => setModalVisible(false);
 
-const columns = [
+const columns: ColumnsType<BookingRow> = [
   {
     title: "Booking ID",
     dataIndex: "bookingId",
-    width: 130,
+    width: 110,
+      align: "center",
     render: (t: string) => <strong>{t}</strong>,
   },
   {
     title: "Customer Name",
     dataIndex: "customerName",
-    width: 180,
-  },
-   {
-    title: "Location",          // ✅ NEW
-    dataIndex: "location",      // ✅ NEW
     width: 160,
+    align: "left",
   },
+  {
+  title: "Location",
+  dataIndex: "location",
+  width: 180,
+  render: (text: string) => (
+    <div className="location-cell" title={text}>
+      {text}
+    </div>
+  ),
+}
+,
   {
     title: "Service Type",
     dataIndex: "serviceType",
-    width: 160,
+    width: 150,
+    align: "center",
     // history:10,
   },
-  {
-    title: "Amount",
-    dataIndex: "amount",
-    width: 140,
-    align: "right" as const,
-    render: (amt: number) => (
-      <span className="table-amount">{inr.format(amt)}</span>
-    ),
-  },
+  
 {
   title: "Payment Status",
   key: "paymentStatus",
-  width: 160,
+  align: "center",
+  width: 140,
   render: (_: any, record: BookingRow) => {
     return (
       <Tag color={record.paymentDone ? "green" : "red"}>
@@ -935,14 +939,11 @@ const columns = [
     );
   },
 },
-
-
-
-
 {
   title: "Work Status",
   key: "workStatus",
-  width: 260,
+  align: "center",
+  width: 120,
   render: (_: any, record: BookingRow) => {
 
     // 🔵 Show In-Progress
@@ -978,6 +979,8 @@ const columns = [
       return <Tag color="red">Rejected</Tag>;
     }
 
+    
+
     return null;
   },
 },
@@ -986,7 +989,8 @@ const columns = [
 {
   title: "Assigned To",
   key: "assigned",
-  width: 220,
+  align: "center",
+  width: 180,
   render: (_: any, r: BookingRow) => {
     if (!r.assignedId)
       return <Tag color="orange">Not Assigned</Tag>;
@@ -1001,11 +1005,18 @@ const columns = [
       </Tag>
     );
   },
-}
+},
 
-
-
-
+{
+    title: "Amount",
+    dataIndex: "amount",
+    width: 120,
+    align: "center",
+    
+    render: (amt: number) => (
+      <span className="table-amount">{inr.format(amt)}</span>
+    ),
+  },
 
 ];
 const [assignOpen, setAssignOpen] = useState(false);
@@ -1601,7 +1612,9 @@ const bookingStats = useMemo(() => {
         Close
       </Button>,
     ]}
-    bodyStyle={{ padding: 0 }}
+    bodyStyle={{ padding: 0,
+         
+     }}
     className="bookings-modal"
     centered
   >
@@ -1611,8 +1624,9 @@ const bookingStats = useMemo(() => {
         dataSource={filteredBookings}
         pagination={{ pageSize: 10 }}
         rowKey="key"
-        size="middle"
+        size="small"
         bordered
+        scroll={{ y: '60vh' }}
       />
     </div>
   </Modal>
@@ -1633,7 +1647,7 @@ const bookingStats = useMemo(() => {
   >
     {assignRecord && (
       <>
-        <div style={{ marginBottom: 16 }}>
+        <div style={{ marginBottom: 16 }} className="assign-modal-header">
           <strong>Booking ID:</strong> {assignRecord.bookingId}
           <br />
           <strong>Customer:</strong> {assignRecord.customerName}
