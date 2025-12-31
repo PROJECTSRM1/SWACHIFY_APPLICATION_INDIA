@@ -1,3 +1,4 @@
+
 /* Header.css - EXACT COPY OF YOUR FILE + STICKY/FIXED NAVBAR */
 
 /* =================== BASE NAV =================== */
@@ -247,4 +248,206 @@
   .ant-modal .ant-modal-body {
     padding-right: 58px !important;
   }
+}
+/* =========================================================
+   AUTH MODAL – PREMIUM GOLD UI (REFERENCE 3 & 4)
+   ========================================================= */
+
+/* Modal overlay blur */
+.ant-modal-mask {
+  backdrop-filter: blur(6px);
+  background: rgba(0, 0, 0, 0.55) !important;
+}
+
+/* Modal card */
+.ant-modal-content {
+  border-radius: 16px !important;
+  padding: 28px 26px !important;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+}
+
+/* Close icon */
+.ant-modal-close {
+  top: 18px !important;
+  right: 18px !important;
+}
+.ant-modal-close button {
+  background: #f5f5f5;
+}
+
+/* =========================================================
+   TABS – LOGIN / REGISTER
+   ========================================================= */
+
+.ant-tabs-nav::before {
+  border-bottom: none !important;
+}
+
+.ant-tabs-tab {
+  font-size: 16px;
+  font-weight: 600;
+  color: #999 !important;
+  padding: 8px 0;
+}
+
+.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: #c9a46b !important;
+}
+
+.ant-tabs-ink-bar {
+  background: #c9a46b !important;
+  height: 3px;
+  border-radius: 2px;
+}
+
+/* =========================================================
+   HEADINGS INSIDE MODAL
+   ========================================================= */
+
+.ant-modal-body h3,
+.ant-modal-body h2 {
+  text-align: center;
+  font-weight: 700;
+  font-size: 22px;
+  margin-bottom: 6px;
+  color: #222;
+}
+
+/* Subheading look */
+.ant-modal-body p {
+  text-align: center;
+  color: #777;
+  font-size: 14px;
+  margin-bottom: 22px;
+}
+
+/* =========================================================
+   FORM LABELS
+   ========================================================= */
+
+.ant-form-item-label > label {
+  font-weight: 500;
+  color: #444;
+}
+
+/* =========================================================
+   INPUTS
+   ========================================================= */
+
+.ant-input,
+.ant-input-password {
+  height: 44px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+
+.ant-input::placeholder {
+  color: #aaa;
+}
+
+.ant-input-password-icon {
+  color: #999;
+}
+
+/* Focus state */
+.ant-input:focus,
+.ant-input-focused,
+.ant-input-password:focus {
+  border-color: #c9a46b !important;
+  box-shadow: 0 0 0 2px rgba(201, 164, 107, 0.15);
+}
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+/* Primary buttons (Login / Register / Sign In) */
+.ant-btn-primary,
+.ant-btn[type="submit"] {
+  height: 46px;
+  border-radius: 12px;
+  background: #c9a46b !important;
+  border-color: #c9a46b !important;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.ant-btn-primary:hover {
+  background: #b8945f !important;
+  border-color: #b8945f !important;
+}
+
+/* Secondary buttons (Skip Login) */
+.ant-btn-default {
+  height: 44px;
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+/* =========================================================
+   CHECKBOX & LINKS
+   ========================================================= */
+
+.ant-checkbox-checked .ant-checkbox-inner {
+  background-color: #c9a46b !important;
+  border-color: #c9a46b !important;
+}
+
+.swl-forgot-password-text,
+.ant-modal-body a {
+  color: #c9a46b !important;
+  font-weight: 500;
+}
+
+/* =========================================================
+   SPACING CLEANUP
+   ========================================================= */
+
+.ant-form-item {
+  margin-bottom: 18px;
+}
+
+/* =========================================================
+   MOBILE POLISH
+   ========================================================= */
+
+@media (max-width: 480px) {
+  .ant-modal-content {
+    padding: 22px 18px !important;
+  }
+
+  .ant-input,
+  .ant-input-password {
+    height: 42px;
+  }
+
+  .ant-btn-primary {
+    height: 44px;
+  }
+}
+/* =========================================================
+   REGISTER – CREATE YOUR ACCOUNT TITLE
+   ========================================================= */
+.swl-register-title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 12px; /* space before tabs */
+}
+/* =========================================================
+   LOGIN ICON ABOVE WELCOME BACK
+   ========================================================= */
+
+.swl-login-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.swl-login-icon {
+  font-size: 36px;
+  color: #c9a46b; /* same gold theme */
+  margin-bottom: 6px;
 }
