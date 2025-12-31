@@ -1924,83 +1924,9 @@ text-align: center;
 .dashboard-filter-select,
 .dashboard-custom-btn {
   box-sizing: border-box;
-
+}
 
 /* Date range and custom range fix */
-
-@media (max-width: 600px) {
-  /* Keep everything in one horizontal row */
-  .date-filter-bar {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .date-filter-bar::-webkit-scrollbar {
-    display: none;
-  }
-
-  /* Prevent Custom Range button text wrapping */
-  .date-filter-bar .ant-btn {
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-
-  /* Force date range label into single line */
-  .date-range-label {
-    white-space: nowrap;
-    flex-shrink: 0;
-    font-size: 12px;
-  }
-
-  /* Prevent Freelancer / Vendor from squeezing others */
-  .assignee-toggle {
-    flex-shrink: 0;
-  }
-}
-
-
-
-/* 1️⃣ Restore table behavior on action cell */
-.popup-table td.actions {
-  display: table-cell !important;
-  vertical-align: middle !important;
-  text-align: center;
-  display: flex;
-  align-items: center;     /* vertical center */
-  justify-content: center; /* horizontal center */
-  gap: 8px;
-  height: 100%;
-}
-
-/* 2️⃣ Center buttons INSIDE the cell */
-.popup-table td.actions .actions {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-
-/* 3️⃣ Normalize button height */
-.popup-table td.actions .btn {
-  line-height: 1;
-}
-
-/* ===== FINAL OVERRIDE — ACTION ICONS HORIZONTAL & CENTERED ===== */
-
-.popup-table td.actions {
-  display: table-cell !important;   /* restore table behavior */
-  vertical-align: middle !important;
-  text-align: center !important;
-  white-space: nowrap !important;
-}
-
-.popup-table td.actions .btn {
-  display: inline-flex !important;  /* force horizontal */
-  align-items: center;
-  justify-content: center;
-  margin: 0 6px;                    /* spacing between icons */
-}
 
 
 /* Assign modal */
@@ -2012,5 +1938,4 @@ text-align: center;
   z-index: 10; /* stay above scrolling content */
   padding: 16px 0; /* spacing */
   border-bottom: 1px solid #f0f0f0; /* optional separator line */
-}
 }
