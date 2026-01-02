@@ -1232,13 +1232,13 @@ const filteredBookings = bookings.filter(b => {
 //   return { total, completed, pending, rejected };
 // }, [bookings]);
 
-const API_SUPPORTED_SERVICES: ServiceKey[] = [
-  "Home Service",
-  "Transport",
-  "Buy/Sale/Rentals",
-  "Raw Materials",
-  "Education",
-];
+// const API_SUPPORTED_SERVICES: ServiceKey[] = [
+//   "Home Service",
+//   "Transport",
+//   "Buy/Sale/Rentals",
+//   "Raw Materials",
+//   "Education",
+// ];
 
 
 const bookingStats = useMemo(() => {
