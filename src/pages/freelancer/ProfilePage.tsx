@@ -14,7 +14,7 @@ import {
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 
-const { Title, Text } = Typography;
+const { Title, } = Typography;
 
 const getStoredProfile = () => {
   try {
