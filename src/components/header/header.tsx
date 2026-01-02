@@ -80,27 +80,27 @@ useEffect(() => {
 }, [headerSearch, navigate]);
 
 
- const handleNavigate = (key: string) => {
-    if (key === "packers") navigate("/app/dashboard/packers");
-    else if (key === "homeservices") navigate("/app/dashboard/homeservices");
-    else if (key === "rentals") navigate("/app/dashboard/rentals");
-    else if (key === "commercial") navigate("/app/dashboard/commercials");
-    else if (key === "construction") navigate("/app/dashboard/constructions");
-    else if (key === "swachify_products") navigate("/app/dashboard/swachify_products");
-    else if (key === "education") navigate("/app/dashboard/education");
-    else if (key === "bookings") setShowBookingPage(true);
-    else if (key === "cart") setCartOpen(true);
-    else navigate(`/app/dashboard/${key}`);
-  };
+//  const handleNavigate = (key: string) => {
+//     if (key === "packers") navigate("/app/dashboard/packers");
+//     else if (key === "homeservices") navigate("/app/dashboard/homeservices");
+//     else if (key === "rentals") navigate("/app/dashboard/rentals");
+//     else if (key === "commercial") navigate("/app/dashboard/commercials");
+//     else if (key === "construction") navigate("/app/dashboard/constructions");
+//     else if (key === "swachify_products") navigate("/app/dashboard/swachify_products");
+//     else if (key === "education") navigate("/app/dashboard/education");
+//     else if (key === "bookings") setShowBookingPage(true);
+//     else if (key === "cart") setCartOpen(true);
+//     else navigate(`/app/dashboard/${key}`);
+//   };
 
-  const centerMenu = [
-    { key: "packers", label: <span className="sw-menu-item">Transport</span> },
-    { key: "homeservices", label: <span className="sw-menu-item">Home & Cleaning Services</span> },
-    { key: "commercial", label: <span className="sw-menu-item">Buy/Sale/Rentals</span> },
-    { key: "construction", label: <span className="sw-menu-item">Construction Raw Materials</span> },
-    { key: "swachify_products", label: <span className="sw-menu-item">Swachify Products</span> },
-    { key: "education", label: <span className="sw-menu-item">Education</span> },
-  ];
+  // const centerMenu = [
+  //   { key: "packers", label: <span className="sw-menu-item">Transport</span> },
+  //   { key: "homeservices", label: <span className="sw-menu-item">Home & Cleaning Services</span> },
+  //   { key: "commercial", label: <span className="sw-menu-item">Buy/Sale/Rentals</span> },
+  //   { key: "construction", label: <span className="sw-menu-item">Construction Raw Materials</span> },
+  //   { key: "swachify_products", label: <span className="sw-menu-item">Swachify Products</span> },
+  //   { key: "education", label: <span className="sw-menu-item">Education</span> },
+  // ];
 
   const notificationMenu = (
     <Menu

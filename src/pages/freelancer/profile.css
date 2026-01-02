@@ -1,0 +1,325 @@
+.profile-container {
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(110deg, #e6f7ff 45%, #ffffff 45%);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 90px;
+}
+
+.profile-row {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  width: 100%;
+  max-width: 1300px;
+  flex-wrap: wrap;
+  transform: translateX(120px);
+}
+
+/* Card style */
+.profile-card {
+  border-radius: 20px;
+  background: #ffffff;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+}
+
+/* Personal details (Left card) */
+.profile-personal-card {
+  width: 330px;
+  height: 450px !important;
+  margin-left: -220px; /* shift left */
+  padding: 26px;
+}
+
+/* Bank details (Right card) */
+.profile-bank-card {
+  width: 800px;
+  height: 450px; /* increased height */
+  padding: 30px 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Icon circles */
+.profile-icon-wrapper, .bank-icon-wrapper {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #b68a4f;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 14px;
+}
+
+.profile-icon {
+  font-size: 32px;
+  color: white;
+}
+
+.detail-icon {
+  font-size: 20px;
+  color: #b68a4f;
+}
+
+.bank-icon {
+  font-size: 26px;
+  color: white;
+}
+
+.card-header {
+  text-align: center;
+  font-size: 21px;
+  font-weight: 700;
+  margin-bottom: 22px;
+  color: #102030;
+  font-family: serif;
+}
+
+/* Personal detail lines */
+.profile-detail-line {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 16px;
+  color: #222;
+  padding-left: 14px;
+}
+
+/* Bank grid */
+.bank-info-grid {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 18px;
+  gap: 50px;
+}
+
+.bank-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* Bank labels */
+.bank-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #888;
+  letter-spacing: 0.7px;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.bank-value {
+  font-size: 17px;
+  font-weight: 700;
+  color: #102030;
+}
+
+/* Support text */
+.bank-support-text {
+  margin-top: 24px;
+  font-size: 15px;
+  color: #555;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.support-email, .support-email span, .support-email {
+  font-weight: 700;
+  font-size: 16px;
+  color: #b68a4f;
+  cursor: pointer;
+}
+
+
+.dashboard-nav-block {
+  position: absolute;
+  top: -70px;
+    /* ✅ keeps it at the top */
+  left: -50px; /* stays on left corner */
+  background: #b68a4f;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+
+.dashboard-nav-block:hover {
+  opacity: 0.88;
+}
+
+.dashboard-nav-block .anticon {
+  font-size: 20px;
+}
+
+
+.support-link {
+  color: #b68a4f;
+  cursor: pointer;
+}
+
+.support-link:hover {
+  text-decoration: underline;
+  opacity: 0.9;
+}
+
+
+/* 📱 Mobile Phones */
+@media (max-width: 600px) {
+  .profile-row {
+    flex-direction: column;
+    transform: translateX(0);
+    flex-wrap: nowrap;
+  }
+  .profile-personal-card,
+  .profile-bank-card {
+    width: 90%;
+    height: auto;
+    margin-left: 0;
+    padding: 20px;
+  }
+  .dashboard-nav-block {
+    top: 16px;
+    left: 16px;
+    font-size: 14px;
+    padding: 8px 14px;
+  }
+}
+
+/* ===== 📱 MOBILE PHONES ===== */
+@media (max-width: 600px) {
+  .profile-container {
+    padding-top: 80px;
+    align-items: center;
+  }
+
+  .profile-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+    width: 100%;
+    max-width: 100%;
+    transform: none;
+    flex-wrap: nowrap;
+    overflow-x: hidden;
+  }
+
+  .profile-personal-card,
+  .profile-bank-card {
+    width: 92%;
+    max-width: 500px;
+    height: auto;
+    margin-left: 0;
+    padding: 22px;
+  }
+
+  @media (max-width: 900px) {
+  .profile-bank-card {
+    width: 90% !important;
+    height: auto !important;
+    padding: 20px;
+  }
+
+  .bank-info-grid {
+    flex-direction: column; /* makes items go top to bottom */
+    align-items: center;
+    gap: 24px;
+  }
+}
+
+
+  .dashboard-nav-block {
+    top: 16px;
+    left: 16px;
+    font-size: 15px;
+    padding: 8px 15px;
+    z-index: 999;
+  }
+}
+
+/* ===== 📟 TABLETS ===== */
+/* ===== 📟 TABLETS ===== */
+@media (min-width: 601px) and (max-width: 900px) {
+  .profile-container {
+    padding-top: 85px;
+    align-items: center;
+  }
+
+  .profile-row {
+    display: flex;
+    flex-direction: column; /* ✅ STACK CARDS DOWN BY DOWN */
+    align-items: center;
+    justify-content: flex-start;
+    gap: 32px;
+    width: 100%;
+    max-width: 100%;
+    transform: none;
+    flex-wrap: nowrap;
+    overflow: hidden;
+  }
+
+  .profile-personal-card {
+    width: 90%; /* fits screen without cutting */
+    max-width: 330px;
+    height: auto;
+    padding: 24px;
+  }
+
+  .profile-bank-card {
+    width: 90%;
+    max-width: 700px;
+    height: auto;
+    min-height: 500px; /* ensures content fits without cutting */
+    padding: 28px 36px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .dashboard-nav-block {
+    position: absolute;
+    top: 18px;
+    left: 18px;
+    font-size: 16px;
+    padding: 9px 16px;
+    z-index: 999;
+  }
+}
+
+@media (max-width: 1024px) {
+  .profile-personal-card {
+    width: 280px;
+    height: 400px;
+    padding: 22px;
+  }
+
+  .profile-bank-card {
+    width: 700px;
+    height: 380px;
+    padding: 26px 36px;
+  }
+
+  .profile-row {
+    gap: 30px;
+  }
+}
+
+

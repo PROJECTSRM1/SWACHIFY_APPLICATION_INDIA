@@ -1,7 +1,9 @@
 import React, { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import { fetchHomeServiceRequests } from "../../api/homeServiceApi";
 import type { Job } from "../../api/homeServiceApi";
-import MyWallet from "../../pages/freelancer/MyWallet";
+import MyWallet from "../freelancer/MyWallet";
+import { getWallet, addEarnings } from "../freelancer/walletStorage";
+
 
 
 
@@ -508,24 +510,29 @@ const HeaderComponent: React.FC<{
   onLogout: () => void;
   isDashboardVisible: boolean;
   onToggleDashboard: () => void;
-onOpenWallet: () => void;
-}> = ({ userName, onLogout, isDashboardVisible, onToggleDashboard, onOpenWallet }) => {
+  onToggleWallet: () => void;  // ADD THIS
+}> = ({ userName, onLogout, isDashboardVisible, onToggleDashboard, onToggleWallet }) => {
+
+const navigate = useNavigate(); // add this at top of HeaderComponent if not present
 
 const menu = (
   <Menu
     onClick={(e) => {
-      if (e.key === "dashboard") onToggleDashboard();
-     if (e.key === "wallet") onOpenWallet();
+  if (e.key === "profile") navigate("/freelancer/profile");
 
-
+      if (e.key === "wallet") onToggleWallet();
       if (e.key === "logout") onLogout();
     }}
   >
     <Menu.Item key="name" disabled>{userName}</Menu.Item>
     <Menu.Divider />
-    <Menu.Item key="dashboard" icon={<ArrowRightOutlined />}>My Dashboard</Menu.Item>
+    <Menu.Item key="profile" icon={<UserOutlined />}>My Profile</Menu.Item> 
+    <Menu.Divider />
     <Menu.Item key="wallet" icon={<DollarCircleOutlined />}>My Wallet</Menu.Item>
-    <Menu.Item key="logout" icon={<LogoutOutlined />} style={{ color: "#dc3545" }}>Logout</Menu.Item>
+    <Menu.Divider />
+    <Menu.Item key="logout" icon={<LogoutOutlined />} style={{ color: "#dc3545" }}>
+      Logout
+    </Menu.Item>
   </Menu>
 );
 
@@ -634,8 +641,6 @@ const JobCard: React.FC<JobCardProps> = ({
   const [isOtpModalVisible, setIsOtpModalVisible] = useState(false);
   const [generatedOtp, setGeneratedOtp] = useState<string>('');
   const [enteredOtp, setEnteredOtp] = useState<string>('');
-
-  
 
   // Generate a 6-digit OTP and open modal
   const openOtpModal = () => {
@@ -943,19 +948,7 @@ const RequestCard: React.FC<{ request: Job; onAccept: (req: Job) => void }> = ({
       </div>
 
       {/* CUSTOMER */}
-      <Text className="sw-frd-customer">
-  Customer: {request.customer}
-</Text>
-
-{request.customerPhone && (
-  <Text className="sw-frd-customer-phone">
-    <PhoneOutlined className="sw-frd-icon-sm" />{" "}
-    <a href={`tel:${request.customerPhone}`}>
-      {request.customerPhone}
-    </a>
-  </Text>
-)}
-
+      <Text className="sw-frd-customer">Customer: {request.customer}</Text>
 
       {/* DESCRIPTION */}
       <Text className="sw-frd-request-desc-text">{request.description}</Text>
@@ -1067,10 +1060,14 @@ const PendingApprovalCard: React.FC<{
 
 // --- MAIN DASHBOARD ---
 const FreelancerDashboard: React.FC = () => {
-  const [walletOpen, setWalletOpen] = useState(false);
-
-  
   const navigate = useNavigate();
+const [isWalletOpen, setIsWalletOpen] = useState(false);
+const [, setWallet] = useState(getWallet());
+
+
+const handleWalletOpen = () => {
+  setIsWalletOpen(true);
+};
 
   const [activeJobs, setActiveJobs] = useState<Job[]>([]);
   const [pendingJobs, setPendingJobs] = useState<Job[]>([]);
@@ -1282,14 +1279,26 @@ useEffect(() => {
 
 
   // --- ACTION HANDLERS ---
-  const handleMarkComplete = (id: string) => {
-    setActiveJobs((prev) =>
-      prev.map((job) =>
-        job.ticketId === id ? { ...job, status: 'Completed' } : job,
-      ),
-    );
-    message.success(`Job ${id} marked as completed.`);
-  };
+ const handleMarkComplete = (id: string) => {
+  const job = activeJobs.find((j) => j.ticketId === id);
+  if (!job) return;
+
+  // ADD earnings to wallet storage
+  addEarnings(job.ticketId, job.category, job.price);
+
+  // Update job list status
+  setActiveJobs((prev) =>
+    prev.map((j) =>
+      j.ticketId === id ? { ...j, status: "Completed" } : j
+    )
+  );
+
+  // Force wallet UI update
+  setWallet(getWallet());
+
+  message.success(`Job ${id} marked completed and earnings added to wallet.`);
+};
+
 
   const handleAcceptRequest = (request: Job) => {
   // Remove from Available Requests
@@ -1371,28 +1380,15 @@ useEffect(() => {
   return (
     <Layout className="sw-frd-layout-container">
       {/* UPDATED: Pass new props to HeaderComponent */}
-     <HeaderComponent
+<HeaderComponent
   userName={MOCK_USER.name}
   onLogout={handleLogout}
   isDashboardVisible={isDashboardVisible}
   onToggleDashboard={handleToggleDashboard}
-  onOpenWallet={() => setWalletOpen(true)}   // NEW
+  onToggleWallet={handleWalletOpen}  // FIXED
 />
 
-
-    <Content className="sw-frd-content-main">
-{walletOpen && (
-  <div className="wallet-popup-overlay" onClick={() => setWalletOpen(false)}>
-    <div onClick={(e) => e.stopPropagation()}>
-      <MyWallet onClose={() => setWalletOpen(false)} />
-    </div>
-  </div>
-)}
-
-
-
-
-
+      <Content className="sw-frd-content-main">
         
         {/* NEW: Conditional rendering for all non-request sections */}
         {isDashboardVisible && (
@@ -1653,8 +1649,7 @@ useEffect(() => {
 
 <Select
   value={selectedSkill}
- onChange={(val) => setSelectedSkill(val)}
-
+  onChange={(val) => setSelectedSkill(val as string)}
 >
   <Option value="All Skills">All Requests</Option>
   {MOCK_USER.skills.map((s) => (
@@ -1744,6 +1739,12 @@ useEffect(() => {
 
   </section>
 )}
+{isWalletOpen && (
+  <div className="wallet-popup-overlay">
+    <MyWallet onClose={() => setIsWalletOpen(false)} />
+  </div>
+)}
+
 
       </Content>
     </Layout>
