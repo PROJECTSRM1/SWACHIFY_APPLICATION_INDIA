@@ -1,9 +1,4 @@
-:root {
-  --swl-gold: #c9a56a;
-  --swl-gold-hover: #b89255;
-  --swl-text-dark: #1f2937;
-  --swl-border-light: #e5e7eb;
-}
+
 /* Header.css - EXACT COPY OF YOUR FILE + STICKY/FIXED NAVBAR */
 
 /* =================== BASE NAV =================== */
@@ -154,6 +149,16 @@
   text-decoration: none !important;
   color: #111 !important;
 }
+/* ===============================
+   AUTH MODAL COLOR SCOPE ONLY
+   =============================== */
+.swl-hs-rf-classname {
+  --swl-gold: #c9a56a;
+  --swl-gold-hover: #b89255;
+  --swl-text-dark: #1f2937;
+  --swl-border-light: #e5e7eb;
+}
+
 
 /* ===== AUTH MODAL CARD ===== */
 .ant-modal-content {
@@ -201,15 +206,6 @@
   font-weight: 500;
   color: var(--swl-text-dark);
 }
-/* ===== MAIN CTA BUTTONS (PASTE HERE) ===== */
-.ant-btn-primary,
-.ant-btn-primary:not(:disabled) {
-  background: var(--swl-gold) !important;
-  border-color: var(--swl-gold) !important;
-  border-radius: 12px !important;
-  height: 46px;
-  font-weight: 600;
-}
 
 .ant-btn-primary:hover {
   background: var(--swl-gold-hover) !important;
@@ -241,6 +237,7 @@
 
 
 /* Login tab top spacing illusion */
+.swl-hs-rf-classname
 .ant-tabs-tabpane-active form {
   margin-top: 6px;
 }
@@ -262,6 +259,7 @@
   color: var(--swl-text-dark);
 
   /* ICON (background) */
+.swl-hs-rf-classname {
   background-image: url("data:image/svg+xml;utf8,\
 <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23c9a56a' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'>\
 <path d='M20 21c0-3.314-3.582-6-8-6s-8 2.686-8 6'/>\
@@ -273,18 +271,22 @@
 }
 
 
+
 /* ===== REGISTER TITLE ON TOP (ABOVE TABS) ===== */
+.swl-hs-rf-classname
 .ant-tabs:has(.ant-tabs-tab-active:nth-child(2))::before {
   content: "Create Your Account";
   display: block;
   text-align: center;
   font-size: 22px;
-  font-weight: 700; /* reduced bold */
+  font-weight: 700;
   color: var(--swl-text-dark);
   margin-bottom: 12px;
 }
 
+
 /* ===== REGISTER TITLE STYLE ===== */
+.swl-hs-rf-classname
 .ant-tabs-tabpane-active h1,
 .ant-tabs-tabpane-active h2,
 .ant-tabs-tabpane-active h3 {
@@ -299,13 +301,13 @@
    ========================================================= */
 
 /* Ensure modal content allows layering */
-.ant-modal .ant-modal-content {
+.swl-hs-rf-classname .ant-modal-content {
   position: relative;
   overflow: visible !important;
 }
 
 /* Scroll should happen only inside body */
-.ant-modal .ant-modal-body {
+.swl-hs-rf-classname .ant-modal-body {
   max-height: 72vh;
   overflow-y: auto !important;
   padding-right: 48px !important;   /* pushes scrollbar inward */
@@ -315,17 +317,18 @@
 }
 
 /* Close icon must be above scrollbar and clickable */
-.ant-modal .ant-modal-close {
+.swl-hs-rf-classname .ant-modal-close {
   z-index: 9999 !important;
   right: 27px !important;
   top: 14px !important;
 }
 
-/* Close button clickable area */
-.ant-modal .ant-modal-close button {
+.swl-hs-rf-classname .ant-modal-close button {
   width: 34px;
   height: 34px;
   border-radius: 50%;
+}
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -334,34 +337,35 @@
 
 
 /* Scrollbar style (optional clean look) */
-.ant-modal .ant-modal-body::-webkit-scrollbar {
+.swl-hs-rf-classname .ant-modal-body::-webkit-scrollbar {
   width: 10px;
 }
 
-.ant-modal .ant-modal-body::-webkit-scrollbar-thumb {
+.swl-hs-rf-classname .ant-modal-body::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, 0.25);
   border-radius: 8px;
 }
 
-.ant-modal .ant-modal-body::-webkit-scrollbar-track {
+.swl-hs-rf-classname .ant-modal-body::-webkit-scrollbar-track {
   background: transparent;
 }
 
-.ant-modal .ant-modal-body {
+.swl-hs-rf-classname .ant-modal-body {
   scrollbar-width: thin;
   scrollbar-color: rgba(0,0,0,0.25) transparent;
 }
 
 /* Mobile extra space to avoid overlap */
 @media (max-width: 480px) {
-  .ant-modal .ant-modal-body {
+.swl-hs-rf-classname .ant-modal-body {
     padding-right: 58px !important;
   }
 }
 /* Reduce space between Email and Password in modal forms */
-.ant-modal .ant-form-item {
-  margin-bottom: 12px; /* default is 24px */
+.swl-hs-rf-classname .ant-form-item {
+  margin-bottom: 12px;
 }
+
 .swl-login-options-row {
   display: flex;
   justify-content: space-between;
@@ -371,21 +375,19 @@
 /* ===== FORCE REMOVE BLUE FROM LOGIN / REGISTER TABS ===== */
 
 /* Inactive tab text */
-.ant-tabs-tab .ant-tabs-tab-btn {
+.swl-hs-rf-classname .ant-tabs-tab .ant-tabs-tab-btn {
   color: var(--swl-text-dark) !important;
   font-weight: 600;
 }
 
-/* Active tab text (Register / Login) */
-.ant-tabs-tab-active .ant-tabs-tab-btn {
-  color: var(--swl-gold) !important; /* gold instead of blue */
-  font-weight: 600;
+.swl-hs-rf-classname .ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: var(--swl-gold) !important;
 }
 
-/* Remove blue hover effect */
-.ant-tabs-tab:hover .ant-tabs-tab-btn {
+.swl-hs-rf-classname .ant-tabs-tab:hover .ant-tabs-tab-btn {
   color: var(--swl-gold-hover) !important;
 }
+
 /* =====================================================
    🔥 FORCE REMOVE BLUE BORDER & GLOW (ANT DESIGN)
    ===================================================== */
@@ -426,12 +428,15 @@
 }
 
 /* Kill ALL blue outlines */
-.ant-input,
-.ant-input-password,
-.ant-input-affix-wrapper,
-.ant-select-selector {
+.swl-hs-rf-classname .ant-input,
+.swl-hs-rf-classname .ant-input-affix-wrapper,
+.swl-hs-rf-classname .ant-input-password,
+.swl-hs-rf-classname .ant-select-selector {
+  border-color: var(--swl-border-light) !important;
+  box-shadow: none !important;
   outline: none !important;
 }
+
 /* =====================================================
    🔥 REMOVE BLUE FROM HOVER / AUTOFILL / ACTIVE STATES
    ===================================================== */
@@ -588,12 +593,11 @@ input:-webkit-autofill:focus {
 }
 
 /* Autofill (Chrome) */
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus {
-  box-shadow: none !important;
-  -webkit-box-shadow: none !important;
+.swl-hs-rf-classname input:-webkit-autofill {
+  -webkit-text-fill-color: var(--swl-text-dark) !important;
+  -webkit-box-shadow: 0 0 0 1000px #fff inset !important;
 }
+
 
 /* Kill any outline leftovers */
 *:focus {
@@ -693,14 +697,14 @@ input:-webkit-autofill:focus {
 }
 
 /* ALL buttons inside auth modal */
-.ant-modal .ant-btn {
+.swl-hs-rf-classname .ant-btn {
   height: var(--auth-field-height) !important;
   border-radius: var(--auth-radius) !important;
   font-weight: 600;
 }
 
 /* Fix button text vertical alignment */
-.ant-modal .ant-btn > span {
+.swl-hs-rf-classname .ant-btn > span {
   line-height: var(--auth-field-height) !important;
 }
 
@@ -714,28 +718,28 @@ input:-webkit-autofill:focus {
    ====================================== */
 
 /* Make ALL form text slightly bolder */
-.ant-modal .ant-form {
+ .ant-form {
   font-weight: 600;
 }
 
 /* Ensure inputs inherit it */
-.ant-modal .ant-form input,
-.ant-modal .ant-form textarea,
-.ant-modal .ant-form .ant-select-selector {
+.swl-hs-rf-classname .ant-form input,
+.swl-hs-rf-classname .ant-form textarea,
+.swl-hs-rf-classname .ant-form .ant-select-selector {
   font-weight: 600;
 }
 
 /* Buttons text */
-.ant-modal .ant-form .ant-btn {
+.swl-hs-rf-classname .ant-form .ant-btn {
   font-weight: 700;
 }
 
 /* Tabs text */
-.ant-modal .ant-tabs-tab {
+.swl-hs-rf-classname .ant-tabs-tab {
   font-weight: 600;
 }
 
-.ant-modal .ant-tabs-tab-active {
+.swl-hs-rf-classname .ant-tabs-tab-active {
   font-weight: 700;
 }
 /* =====================================================
@@ -744,7 +748,7 @@ input:-webkit-autofill:focus {
    ===================================================== */
 
 /* Target ONLY Login submit button inside auth modal */
-.ant-modal .ant-tabs-tabpane-active form button[type="submit"] {
+.swl-hs-rf-classname .ant-tabs-tabpane-active form button[type="submit"] {
   background-color: var(--swl-gold) !important;
   border-color: var(--swl-gold) !important;
   color: #ffffff !important;
@@ -752,13 +756,20 @@ input:-webkit-autofill:focus {
 }
 
 /* Hover state */
-.ant-modal .ant-tabs-tabpane-active form button[type="submit"]:hover {
+.swl-hs-rf-classname .ant-tabs-tabpane-active form button[type="submit"]:hover {
   background-color: var(--swl-gold-hover) !important;
   border-color: var(--swl-gold-hover) !important;
 }
 
 /* Keep Skip Login unchanged */
-.ant-modal .ant-tabs-tabpane-active form button[type="button"] {
+.swl-hs-rf-classname .ant-tabs-tabpane-active form button[type="button"] {
   background: #ffffff !important;
   color: var(--swl-text-dark) !important;
+}
+/* ===== AUTH MODAL ONLY COLORS ===== */
+.swl-hs-rf-classname {
+  --swl-gold: #c9a56a;        /* change color HERE */
+  --swl-gold-hover: #b89255; /* hover color HERE */
+  --swl-text-dark: #1f2937;
+  --swl-border-light: #e5e7eb;
 }
