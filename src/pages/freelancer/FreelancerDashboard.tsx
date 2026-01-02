@@ -1,6 +1,10 @@
 import React, { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import { fetchHomeServiceRequests } from "../../api/homeServiceApi";
 import type { Job } from "../../api/homeServiceApi";
+import MyWallet from "../freelancer/MyWallet";
+import { getWallet, addEarnings } from "../freelancer/walletStorage";
+
+
 
 
 import {
@@ -506,28 +510,46 @@ const HeaderComponent: React.FC<{
   onLogout: () => void;
   isDashboardVisible: boolean;
   onToggleDashboard: () => void;
-}> = ({ userName, onLogout, isDashboardVisible, onToggleDashboard }) => {
-  const menu = (
-    <Menu
-      className="sw-frd-profile-menu"
-      onClick={(e) => {
-        if (e.key === 'logout') onLogout();
-      }}
-      style={{ borderRadius: 8, overflow: 'hidden', minWidth: 180 }}
+  onToggleWallet: () => void;  // ADD THIS
+}> = ({ userName, onLogout, isDashboardVisible, onToggleDashboard, onToggleWallet }) => {
+
+const menu = (
+  <Menu
+    className="sw-frd-profile-menu"
+    onClick={(e) => {
+      if (e.key === "wallet") onToggleWallet();
+      if (e.key === "logout") onLogout();
+    }}
+    style={{ borderRadius: 12, overflow: "hidden", minWidth: 190 }}
+  >
+    <Menu.Item key="name" disabled style={{ fontWeight: 600, color: "#102030" }}>
+      {userName}
+    </Menu.Item>
+
+    <Menu.Divider />
+
+    {/* NEW WALLET BUTTON */}
+    <Menu.Item
+      key="wallet"
+      icon={<DollarCircleOutlined style={{ color: "#f7b733" }} />}
+      style={{ fontWeight: 500, fontSize: 14 }}
     >
-      <Menu.Item key="name" disabled style={{ fontWeight: 600, color: '#102030' }}>
-        {userName}
-      </Menu.Item>
-      <Menu.Divider />
-      <Menu.Item
-        key="logout"
-        icon={<LogoutOutlined />}
-        style={{ color: '#dc3545', fontWeight: 500 }}
-      >
-        Logout
-      </Menu.Item>
-    </Menu>
-  );
+      My Wallet
+    </Menu.Item>
+
+    <Menu.Divider />
+
+    {/* LOGOUT */}
+    <Menu.Item
+      key="logout"
+      icon={<LogoutOutlined />}
+      style={{ color: "#dc3545", fontWeight: 500 }}
+    >
+      Logout
+    </Menu.Item>
+  </Menu>
+);
+
 
   return (
     <Header className="sw-frd-header">
@@ -1052,6 +1074,13 @@ const PendingApprovalCard: React.FC<{
 // --- MAIN DASHBOARD ---
 const FreelancerDashboard: React.FC = () => {
   const navigate = useNavigate();
+const [isWalletOpen, setIsWalletOpen] = useState(false);
+const [, setWallet] = useState(getWallet());
+
+
+const handleWalletOpen = () => {
+  setIsWalletOpen(true);
+};
 
   const [activeJobs, setActiveJobs] = useState<Job[]>([]);
   const [pendingJobs, setPendingJobs] = useState<Job[]>([]);
@@ -1263,14 +1292,26 @@ useEffect(() => {
 
 
   // --- ACTION HANDLERS ---
-  const handleMarkComplete = (id: string) => {
-    setActiveJobs((prev) =>
-      prev.map((job) =>
-        job.ticketId === id ? { ...job, status: 'Completed' } : job,
-      ),
-    );
-    message.success(`Job ${id} marked as completed.`);
-  };
+ const handleMarkComplete = (id: string) => {
+  const job = activeJobs.find((j) => j.ticketId === id);
+  if (!job) return;
+
+  // ADD earnings to wallet storage
+  addEarnings(job.ticketId, job.category, job.price);
+
+  // Update job list status
+  setActiveJobs((prev) =>
+    prev.map((j) =>
+      j.ticketId === id ? { ...j, status: "Completed" } : j
+    )
+  );
+
+  // Force wallet UI update
+  setWallet(getWallet());
+
+  message.success(`Job ${id} marked completed and earnings added to wallet.`);
+};
+
 
   const handleAcceptRequest = (request: Job) => {
   // Remove from Available Requests
@@ -1352,12 +1393,13 @@ useEffect(() => {
   return (
     <Layout className="sw-frd-layout-container">
       {/* UPDATED: Pass new props to HeaderComponent */}
-      <HeaderComponent
-        userName={MOCK_USER.name}
-        onLogout={handleLogout}
-        isDashboardVisible={isDashboardVisible}
-        onToggleDashboard={handleToggleDashboard}
-      />
+<HeaderComponent
+  userName={MOCK_USER.name}
+  onLogout={handleLogout}
+  isDashboardVisible={isDashboardVisible}
+  onToggleDashboard={handleToggleDashboard}
+  onToggleWallet={handleWalletOpen}  // FIXED
+/>
 
       <Content className="sw-frd-content-main">
         
@@ -1710,6 +1752,12 @@ useEffect(() => {
 
   </section>
 )}
+{isWalletOpen && (
+  <div className="wallet-popup-overlay">
+    <MyWallet onClose={() => setIsWalletOpen(false)} />
+  </div>
+)}
+
 
       </Content>
     </Layout>
