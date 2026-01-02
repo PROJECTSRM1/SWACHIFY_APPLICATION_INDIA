@@ -675,8 +675,16 @@ const [active, setActive] = useState<"Dashboard" | ServiceKey>("Dashboard");
 const [customRange, setCustomRange] =
   useState<[Dayjs | null, Dayjs | null]>([null, null]);
   // NEW: which preset is active (controls highlight)
-type PresetKey = | "all" | "today"| "yesterday" | "last7"|"lastMonth" | "custom"| "freelancer"| "vendor";
-  const [activePreset, setActivePreset] = useState<PresetKey>("all");
+type DatePreset = 
+  | "all"
+  | "today"
+  | "yesterday"
+  | "last7"
+  | "lastMonth"
+  | "custom";
+
+const [datePreset, setDatePreset] = useState<DatePreset>("all");
+
 
   const mapBookingFromAPI = (b: BookingAPIResponse): BookingRow => ({
   key: String(b.id),
@@ -905,8 +913,8 @@ const applyPreset = (
   which: "all" | "today" | "yesterday" | "last7" | "lastMonth"
 ) => {
   if (which === "all") {
-    setActivePreset("all");
-    return; // 👈 IMPORTANT: no date filtering
+    setDatePreset("all");
+    return;
   }
 
   let newRange;
@@ -920,11 +928,12 @@ const applyPreset = (
       from: new Date(newRange.from),
       to: new Date(newRange.to),
     });
-    setActivePreset(which);
+    setDatePreset(which);
   }
-  
+
   setShowCustomPopover(false);
 };
+
 
 
   // Bookings modal & table state
@@ -1164,22 +1173,44 @@ const filteredBookings = bookings.filter(b => {
 
   // aggregated dynamic values for range & active tab
   const aggregatedDynamic = useMemo(() => {
-    const service = active === "Dashboard" ? undefined : active;
-    const totals = aggTotals(range.from, range.to, service);
-    const buckets = seriesBuckets(range.from, range.to, service);
-    const bookingCounts = bookings.filter(b => {
-      const dt = dateFromISO(b.date); const f=new Date(range.from); f.setHours(0,0,0,0); const t=new Date(range.to); t.setHours(23,59,59,999);
-      return dt >= f && dt <= t && (service ? b.serviceType === service : true);
-    }).length;
+  const service = active === "Dashboard" ? undefined : active;
+
+  // ✅ ALL = no date filter
+  if (datePreset === "all") {
+    const sales = TXNS
+      .filter(t => !service || t.serviceType === service)
+      .filter(t => t.type === "sale")
+      .reduce((s, r) => s + r.amount, 0);
+
+    const purchases = TXNS
+      .filter(t => !service || t.serviceType === service)
+      .filter(t => t.type === "purchase")
+      .reduce((s, r) => s + r.amount, 0);
+
     return {
-      sales: totals.sales,
-      purchases: totals.purchases,
-      bookingsCount: bookingCounts,
-      salesSeries: buckets.salesBuckets,
-      purchasesSeries: buckets.purchaseBuckets,
-      seriesLabels: buckets.labels,
+      sales,
+      purchases,
+      bookingsCount: bookings.length,
+      salesSeries: SERVICE_DATA[active === "Dashboard" ? "Home Service" : active]?.salesSeries ?? [],
+      purchasesSeries: SERVICE_DATA[active === "Dashboard" ? "Home Service" : active]?.purchasesSeries ?? [],
+      seriesLabels: ["All"],
     };
-  }, [range, active]);
+  }
+
+  // 🔁 Normal date-based logic
+  const totals = aggTotals(range.from, range.to, service);
+  const buckets = seriesBuckets(range.from, range.to, service);
+
+  return {
+    sales: totals.sales,
+    purchases: totals.purchases,
+    bookingsCount: totals.bookingsCount,
+    salesSeries: buckets.salesBuckets,
+    purchasesSeries: buckets.purchaseBuckets,
+    seriesLabels: buckets.labels,
+  };
+}, [range, active, datePreset, bookings]);
+
 
   function computeBookingStatsFromCount(count: number) {
     const total = Math.max(0, Math.round(count));
@@ -1211,24 +1242,15 @@ const API_SUPPORTED_SERVICES: ServiceKey[] = [
 
 
 const bookingStats = useMemo(() => {
-  if (active !== "Dashboard" && !API_SUPPORTED_SERVICES.includes(active)) {
-    return { total: 0, completed: 0, pending: 0, rejected: 0 };
-  }
-
-  const filtered = bookings.filter(b => {
-    const serviceMatch =
-      active === "Dashboard"
-        ? API_SUPPORTED_SERVICES.includes(b.serviceType)
-        : b.serviceType === active;
-
-    if (!serviceMatch) return false;
-
-    const dt = dateFromISO(b.date);
-    const from = new Date(range.from); from.setHours(0,0,0,0);
-    const to = new Date(range.to); to.setHours(23,59,59,999);
-
-    return dt >= from && dt <= to;
-  });
+  const filtered =
+    datePreset === "all"
+      ? bookings
+      : bookings.filter(b => {
+          const dt = dateFromISO(b.date);
+          const from = new Date(range.from);
+          const to = new Date(range.to);
+          return dt >= from && dt <= to;
+        });
 
   return {
     total: filtered.length,
@@ -1236,7 +1258,8 @@ const bookingStats = useMemo(() => {
     pending: filtered.filter(b => b.status === "Pending").length,
     rejected: filtered.filter(b => b.status === "Rejected").length,
   };
-}, [bookings, active, range]);
+}, [bookings, range, datePreset]);
+
 
 
 
@@ -1260,7 +1283,7 @@ const bookingStats = useMemo(() => {
     const from = (customRange[0] as any).toDate();
     const to = (customRange[1] as any).toDate();
     setRange({ from, to });
-    setActivePreset("custom"); // IMPORTANT: highlight custom
+    setDatePreset("custom");
     setShowCustomPopover(false);
   };
 
@@ -1361,37 +1384,43 @@ const bookingStats = useMemo(() => {
       <span>Order Summary Dashboard</span>
 
       {/* RIGHT SIDE CONTROLS */}
-      <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+      <div className="dashboard-filter-bar">
         {/* DROPDOWN */}
         <Select
-        className="dashboard-filter-select"
-          value={activePreset}
-          style={{ width: 160 }}
-          onChange={(value) => {
-            if (value === "freelancer") {
-              setOpenPopup("freelancer");
-              setActivePreset("freelancer");
-              return;
-            }
+  className="dashboard-filter-select"
+  value={datePreset}
+  style={{ width: 160 }}
+  onChange={(value) => {
+    setDatePreset(value as DatePreset);
+    applyPreset(value as any);
+  }}
+  options={[
+    { label: "All", value: "all" },
+    { label: "Today", value: "today" },
+    { label: "Yesterday", value: "yesterday" },
+    { label: "Last 7 Days", value: "last7" },
+    { label: "Last Month", value: "lastMonth" },
+  ]}
+/>
 
-            if (value === "vendor") {
-              setOpenPopup("vendor");
-              setActivePreset("vendor");
-              return;
-            }
+        <Button
+  className="dashboard-action-btn"
+  type={openPopup === "freelancer" ? "primary" : "default"}
+  onClick={() => setOpenPopup("freelancer")}
+>
+  Freelancer
+</Button>
 
-            applyPreset(value as any);
-          }}
-          options={[
-            { label: "All", value: "all" },
-            { label: "Today", value: "today" },
-            { label: "Yesterday", value: "yesterday" },
-            { label: "Last 7 Days", value: "last7" },
-            { label: "Last Month", value: "lastMonth" },
-            { label: "Freelancer", value: "freelancer" },
-            { label: "Vendor", value: "vendor" },
-          ]}
-        />
+
+<Button
+  className="dashboard-action-btn"
+  type={openPopup === "vendor" ? "primary" : "default"}
+  onClick={() => setOpenPopup("vendor")}
+>
+  Vendor
+</Button>
+
+ 
 
         {/* CUSTOM RANGE */}
         <Popover
@@ -1423,9 +1452,11 @@ const bookingStats = useMemo(() => {
           open={showCustomPopover}
           onOpenChange={setShowCustomPopover}
         >
-          <Button>
-            Custom Range
-          </Button>
+               
+<Button className="dashboard-action-btn">
+  Custom Range
+</Button>
+
         </Popover>
       </div>
     </div>
