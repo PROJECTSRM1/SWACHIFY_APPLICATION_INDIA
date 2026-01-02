@@ -375,19 +375,24 @@ if (roleType === "admin") {
       )}
 
       {/* AUTH MODAL */}
-      <Modal
-        open={authModalVisible}
-        onCancel={closeAuthModal}
-        footer={null}
-        centered
-        width={520}
-        destroyOnClose
-        bodyStyle={{
-          padding: 24,
-          maxHeight: "70vh",
-          overflowY: "auto",
-        }}
-      >
+<Modal
+  className="swl-hs-rf-classname"
+  open={authModalVisible}
+  onCancel={closeAuthModal}
+  footer={null}
+  centered
+  width={520}
+  destroyOnClose
+  bodyStyle={{
+    padding: 24,
+    maxHeight: activeAuthTab === "login" ? "unset" : "70vh",
+    overflowY: activeAuthTab === "login" ? "hidden" : "auto",
+  }}
+>
+
+
+
+      
         <Tabs
           activeKey={activeAuthTab}
           onChange={(key) => setActiveAuthTab(key as "login" | "register")}
