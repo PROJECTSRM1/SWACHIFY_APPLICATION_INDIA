@@ -1,3 +1,4 @@
+
 /* Header.css - EXACT COPY OF YOUR FILE + STICKY/FIXED NAVBAR */
 
 /* =================== BASE NAV =================== */
@@ -148,13 +149,81 @@
   text-decoration: none !important;
   color: #111 !important;
 }
-
-.swl-hs-navbar-menu .ant-menu-item-selected,
-.swl-hs-navbar-menu .ant-menu-item-selected::after {
-  color: inherit !important;
-  border-bottom: none !important;
-  box-shadow: none !important;
+/* ===============================
+   AUTH MODAL COLOR SCOPE ONLY
+   =============================== */
+.swl-hs-rf-classname {
+  --swl-gold: #c9a56a;
+  --swl-gold-hover: #b89255;
+  --swl-text-dark: #1f2937;
+  --swl-border-light: #e5e7eb;
 }
+
+
+/* ===== AUTH MODAL CARD ===== */
+.ant-modal-content {
+  border-radius: 16px !important;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.18) !important;
+}
+
+.ant-modal-body {
+  padding: 28px 32px !important;
+}
+
+/* ===== AUTH MODAL TABS (PASTE HERE) ===== */
+.ant-tabs-nav {
+  margin-bottom: 22px !important;
+}
+
+.ant-tabs-tab {
+  font-weight: 600;
+  color: #6b7280;
+}
+
+.ant-tabs-tab-active {
+  color: var(--swl-gold) !important;
+}
+
+.ant-tabs-ink-bar {
+  background: var(--swl-gold) !important;
+  height: 3px !important;
+  border-radius: 4px;
+}
+.ant-input,
+.ant-input-password {
+  border-radius: 10px !important;
+  height: 44px;
+  border: 1px solid var(--swl-border-light);
+}
+
+.ant-input:focus,
+.ant-input-password:focus-within {
+  border-color: var(--swl-gold) !important;
+  box-shadow: 0 0 0 2px rgba(201,165,106,0.25) !important;
+}
+/* ===== FORM LABELS (ADD HERE) ===== */
+.ant-form-item-label > label {
+  font-weight: 500;
+  color: var(--swl-text-dark);
+}
+
+.ant-btn-primary:hover {
+  background: var(--swl-gold-hover) !important;
+  border-color: var(--swl-gold-hover) !important;
+}
+/* ===== FORGOT PASSWORD & LINKS (PASTE HERE) ===== */
+.swl-forgot-password-text,
+.ant-form a {
+  color: var(--swl-gold) !important;
+  font-weight: 500;
+}
+
+.swl-forgot-password-text:hover,
+.ant-form a:hover {
+  color: var(--swl-gold-hover) !important;
+}
+
+
 
 
 /* =================== MODAL TEXT UTILS =================== */
@@ -165,37 +234,80 @@
   font-weight: 600;
 }
 
-.swl-login-options-row {
+
+
+/* Login tab top spacing illusion */
+.swl-hs-rf-classname
+.ant-tabs-tabpane-active form {
+  margin-top: 6px;
+}
+/* ===== LOGIN HEADER (ICON + TITLE STACKED) ===== */
+.ant-tabs:has(.ant-tabs-tab-active:nth-child(1))::before {
+  content: "Welcome Back";
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+
+  /* spacing */
+  margin-bottom: 14px;
+  padding-top: 64px;
+
+  /* text */
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--swl-text-dark);
+
+  /* ICON (background) */
+.swl-hs-rf-classname {
+  background-image: url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23c9a56a' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'>\
+<path d='M20 21c0-3.314-3.582-6-8-6s-8 2.686-8 6'/>\
+<circle cx='12' cy='8' r='4'/>\
+</svg>");
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: 52px 52px;
+}
+
+
+
+/* ===== REGISTER TITLE ON TOP (ABOVE TABS) ===== */
+.swl-hs-rf-classname
+.ant-tabs:has(.ant-tabs-tab-active:nth-child(2))::before {
+  content: "Create Your Account";
+  display: block;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--swl-text-dark);
   margin-bottom: 12px;
 }
 
-.swl-forgot-password-text {
-  color: #1677ff;
-  cursor: pointer;
-  font-size: 14px;
+
+/* ===== REGISTER TITLE STYLE ===== */
+.swl-hs-rf-classname
+.ant-tabs-tabpane-active h1,
+.ant-tabs-tabpane-active h2,
+.ant-tabs-tabpane-active h3 {
+  font-weight: 500 !important;
+  font-size: 22px !important;
+  color: var(--swl-text-dark);
+  margin-bottom: 6px;
 }
-
-.swl-forgot-password-text:hover {
-  text-decoration: underline;
-}
-
-
 
 /* =========================================================
    ✅ FIX: SCROLLBAR SHOULD NOT BE UNDER CLOSE ICON
    ========================================================= */
 
 /* Ensure modal content allows layering */
-.ant-modal .ant-modal-content {
+.swl-hs-rf-classname .ant-modal-content {
   position: relative;
   overflow: visible !important;
 }
 
 /* Scroll should happen only inside body */
-.ant-modal .ant-modal-body {
+.swl-hs-rf-classname .ant-modal-body {
   max-height: 72vh;
   overflow-y: auto !important;
   padding-right: 48px !important;   /* pushes scrollbar inward */
@@ -205,17 +317,18 @@
 }
 
 /* Close icon must be above scrollbar and clickable */
-.ant-modal .ant-modal-close {
+.swl-hs-rf-classname .ant-modal-close {
   z-index: 9999 !important;
   right: 27px !important;
   top: 14px !important;
 }
 
-/* Close button clickable area */
-.ant-modal .ant-modal-close button {
+.swl-hs-rf-classname .ant-modal-close button {
   width: 34px;
   height: 34px;
   border-radius: 50%;
+}
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -224,27 +337,439 @@
 
 
 /* Scrollbar style (optional clean look) */
-.ant-modal .ant-modal-body::-webkit-scrollbar {
+.swl-hs-rf-classname .ant-modal-body::-webkit-scrollbar {
   width: 10px;
 }
 
-.ant-modal .ant-modal-body::-webkit-scrollbar-thumb {
+.swl-hs-rf-classname .ant-modal-body::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, 0.25);
   border-radius: 8px;
 }
 
-.ant-modal .ant-modal-body::-webkit-scrollbar-track {
+.swl-hs-rf-classname .ant-modal-body::-webkit-scrollbar-track {
   background: transparent;
 }
 
-.ant-modal .ant-modal-body {
+.swl-hs-rf-classname .ant-modal-body {
   scrollbar-width: thin;
   scrollbar-color: rgba(0,0,0,0.25) transparent;
 }
 
 /* Mobile extra space to avoid overlap */
 @media (max-width: 480px) {
-  .ant-modal .ant-modal-body {
+.swl-hs-rf-classname .ant-modal-body {
     padding-right: 58px !important;
   }
+}
+/* Reduce space between Email and Password in modal forms */
+.swl-hs-rf-classname .ant-form-item {
+  margin-bottom: 12px;
+}
+
+.swl-login-options-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* ===== FORCE REMOVE BLUE FROM LOGIN / REGISTER TABS ===== */
+
+/* Inactive tab text */
+.swl-hs-rf-classname .ant-tabs-tab .ant-tabs-tab-btn {
+  color: var(--swl-text-dark) !important;
+  font-weight: 600;
+}
+
+.swl-hs-rf-classname .ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: var(--swl-gold) !important;
+}
+
+.swl-hs-rf-classname .ant-tabs-tab:hover .ant-tabs-tab-btn {
+  color: var(--swl-gold-hover) !important;
+}
+
+/* =====================================================
+   🔥 FORCE REMOVE BLUE BORDER & GLOW (ANT DESIGN)
+   ===================================================== */
+
+/* Input wrapper (this is the real culprit) */
+.ant-input-affix-wrapper:focus,
+.ant-input-affix-wrapper-focused,
+.ant-input-affix-wrapper:hover {
+  border-color: var(--swl-gold) !important;
+  box-shadow: 0 0 0 2px rgba(201,165,106,0.25) !important;
+}
+
+/* Inner input */
+.ant-input-affix-wrapper input {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Normal inputs */
+.ant-input:focus,
+.ant-input-focused {
+  border-color: var(--swl-gold) !important;
+  box-shadow: 0 0 0 2px rgba(201,165,106,0.25) !important;
+}
+
+/* Password inputs */
+.ant-input-password,
+.ant-input-password-focused,
+.ant-input-password:hover {
+  border-color: var(--swl-gold) !important;
+  box-shadow: 0 0 0 2px rgba(201,165,106,0.25) !important;
+}
+
+/* Select (Gender) */
+.ant-select-focused .ant-select-selector {
+  border-color: var(--swl-gold) !important;
+  box-shadow: 0 0 0 2px rgba(201,165,106,0.25) !important;
+}
+
+/* Kill ALL blue outlines */
+.swl-hs-rf-classname .ant-input,
+.swl-hs-rf-classname .ant-input-affix-wrapper,
+.swl-hs-rf-classname .ant-input-password,
+.swl-hs-rf-classname .ant-select-selector {
+  border-color: var(--swl-border-light) !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* =====================================================
+   🔥 REMOVE BLUE FROM HOVER / AUTOFILL / ACTIVE STATES
+   ===================================================== */
+
+/* Input wrapper hover + focus */
+.ant-input-affix-wrapper:hover,
+.ant-input-affix-wrapper-focused,
+.ant-input-affix-wrapper:focus-within {
+  border-color: var(--swl-gold) !important;
+  box-shadow: 0 0 0 2px rgba(201,165,106,0.25) !important;
+}
+
+/* Normal inputs hover + focus */
+.ant-input:hover,
+.ant-input:focus,
+.ant-input-focused {
+  border-color: var(--swl-gold) !important;
+  box-shadow: 0 0 0 2px rgba(201,165,106,0.25) !important;
+}
+
+/* Password input hover */
+.ant-input-password:hover {
+  border-color: var(--swl-gold) !important;
+}
+
+/* 🔥 Chrome autofill (THIS WAS THE MAIN ISSUE) */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--swl-text-dark) !important;
+  -webkit-box-shadow: 0 0 0px 1000px #fff inset !important;
+  border-color: var(--swl-gold) !important;
+  box-shadow: 0 0 0 2px rgba(201,165,106,0.25) !important;
+}
+
+/* Remove any blue outline */
+.ant-input,
+.ant-input-affix-wrapper {
+  outline: none !important;
+}
+/* ============================================
+   🔥 REMOVE INNER INSET BOX-SHADOW (PASSWORD)
+   ============================================ */
+
+/* Kill inner shadow of password input */
+.ant-input-password input {
+  box-shadow: none !important;
+}
+
+/* Ensure no inset shadow comes back on hover/focus */
+.ant-input-password input:focus,
+.ant-input-password input:hover {
+  box-shadow: none !important;
+}
+
+/* Keep only outer wrapper border */
+.ant-input-password.ant-input-affix-wrapper {
+  box-shadow: none !important;
+}
+/* ============================================
+   🔥 REMOVE BLUE HOVER FROM LOGIN BUTTONS
+   ============================================ */
+
+/* Primary button hover (Login) */
+.ant-btn-primary:hover,
+.ant-btn-primary:focus {
+  border-color: var(--swl-gold) !important;
+  background: var(--swl-gold-hover) !important;
+  box-shadow: none !important;
+}
+
+/* Default button hover (Skip Login) */
+.ant-btn-default:hover,
+.ant-btn-default:focus {
+  border-color: var(--swl-border-light) !important;
+  background: #fff !important;
+  color: var(--swl-text-dark) !important;
+  box-shadow: none !important;
+}
+
+/* Kill any blue outline */
+.ant-btn {
+  outline: none !important;
+}
+/* ============================================
+   🔥 REMOVE BLUE FROM GENDER SELECT
+   ============================================ */
+
+/* Normal + hover */
+.ant-select-selector:hover {
+  border-color: var(--swl-gold) !important;
+  box-shadow: none !important;
+}
+
+/* Focused / active */
+.ant-select-focused .ant-select-selector,
+.ant-select-open .ant-select-selector {
+  border-color: var(--swl-gold) !important;
+  box-shadow: 0 0 0 2px rgba(201,165,106,0.25) !important;
+}
+
+/* Dropdown option hover */
+.ant-select-item-option-active:not(.ant-select-item-option-disabled),
+.ant-select-item-option-selected {
+  background-color: rgba(201,165,106,0.12) !important;
+  color: var(--swl-text-dark) !important;
+}
+
+/* Remove any blue outline */
+.ant-select,
+.ant-select-selector {
+  outline: none !important;
+}
+/* =====================================================
+   🔥 REMOVE ALL BOX-SHADOWS GLOBALLY (FINAL)
+   ===================================================== */
+
+/* Inputs */
+.ant-input,
+.ant-input:hover,
+.ant-input:focus,
+.ant-input-focused,
+.ant-input-affix-wrapper,
+.ant-input-affix-wrapper:hover,
+.ant-input-affix-wrapper-focused,
+.ant-input-password,
+.ant-input-password:hover,
+.ant-input-password-focused {
+  box-shadow: none !important;
+}
+
+/* Inner input (kills inset shadow) */
+.ant-input-affix-wrapper input,
+.ant-input-password input {
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* Select (Gender) */
+.ant-select,
+.ant-select-selector,
+.ant-select-selector:hover,
+.ant-select-focused .ant-select-selector,
+.ant-select-open .ant-select-selector {
+  box-shadow: none !important;
+}
+
+/* Buttons */
+.ant-btn,
+.ant-btn:hover,
+.ant-btn:focus,
+.ant-btn:active {
+  box-shadow: none !important;
+}
+
+/* Autofill (Chrome) */
+.swl-hs-rf-classname input:-webkit-autofill {
+  -webkit-text-fill-color: var(--swl-text-dark) !important;
+  -webkit-box-shadow: 0 0 0 1000px #fff inset !important;
+}
+
+
+/* Kill any outline leftovers */
+*:focus {
+  outline: none !important;
+}
+/* ============================================
+   🔥 REMOVE PASSWORD BORDER HIGHLIGHT COMPLETELY
+   ============================================ */
+
+/* Password wrapper – reset border always */
+.ant-input-password,
+.ant-input-password:hover,
+.ant-input-password:focus,
+.ant-input-password.ant-input-affix-wrapper-focused {
+  border-color: var(--swl-border-light) !important;
+  box-shadow: none !important;
+}
+
+/* Inner input – no outline or shadow */
+.ant-input-password input {
+  outline: none !important;
+  box-shadow: none !important;
+}
+/* =====================================================
+   🔥 MAKE ALL INPUTS FLAT (NO FOCUS / HOVER BORDER)
+   ===================================================== */
+
+/* ALL input wrappers (text, password, search, etc.) */
+.ant-input,
+.ant-input-affix-wrapper,
+.ant-input-password,
+.ant-input:hover,
+.ant-input:focus,
+.ant-input-affix-wrapper:hover,
+.ant-input-affix-wrapper:focus-within,
+.ant-input-affix-wrapper-focused,
+.ant-input-password:hover,
+.ant-input-password:focus,
+.ant-input-password.ant-input-affix-wrapper-focused {
+  border-color: var(--swl-border-light) !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* Inner input elements (kill inset shadow / outline) */
+.ant-input input,
+.ant-input-affix-wrapper input,
+.ant-input-password input {
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  background: transparent !important;
+}
+
+/* Select (Gender) – same flat behavior */
+.ant-select,
+.ant-select-selector,
+.ant-select-selector:hover,
+.ant-select-focused .ant-select-selector,
+.ant-select-open .ant-select-selector {
+  border-color: var(--swl-border-light) !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+/* ======================================
+   FORCE SAME HEIGHT FOR ALL AUTH FIELDS
+   ====================================== */
+
+:root {
+  --auth-field-height: 44px;
+  --auth-radius: 10px;
+}
+
+/* Normal inputs */
+.ant-input {
+  height: var(--auth-field-height) !important;
+  border-radius: var(--auth-radius) !important;
+}
+
+/* Password input wrapper */
+.ant-input-password {
+  height: var(--auth-field-height) !important;
+  border-radius: var(--auth-radius) !important;
+}
+
+/* Password input inner field */
+.ant-input-password input {
+  height: calc(var(--auth-field-height) - 2px) !important;
+}
+
+/* Select (gender, etc.) */
+.ant-select-selector {
+  height: var(--auth-field-height) !important;
+  border-radius: var(--auth-radius) !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* ALL buttons inside auth modal */
+.swl-hs-rf-classname .ant-btn {
+  height: var(--auth-field-height) !important;
+  border-radius: var(--auth-radius) !important;
+  font-weight: 600;
+}
+
+/* Fix button text vertical alignment */
+.swl-hs-rf-classname .ant-btn > span {
+  line-height: var(--auth-field-height) !important;
+}
+
+/* Remove size mismatch caused by AntD */
+.ant-btn-default,
+.ant-btn-primary {
+  padding: 0 !important;
+}
+/* ======================================
+   GLOBAL FORM TEXT BOLDNESS (SAFE)
+   ====================================== */
+
+/* Make ALL form text slightly bolder */
+ .ant-form {
+  font-weight: 600;
+}
+
+/* Ensure inputs inherit it */
+.swl-hs-rf-classname .ant-form input,
+.swl-hs-rf-classname .ant-form textarea,
+.swl-hs-rf-classname .ant-form .ant-select-selector {
+  font-weight: 600;
+}
+
+/* Buttons text */
+.swl-hs-rf-classname .ant-form .ant-btn {
+  font-weight: 700;
+}
+
+/* Tabs text */
+.swl-hs-rf-classname .ant-tabs-tab {
+  font-weight: 600;
+}
+
+.swl-hs-rf-classname .ant-tabs-tab-active {
+  font-weight: 700;
+}
+/* =====================================================
+   🔥 LOGIN BUTTON COLOR – EXACT REFERENCE MATCH
+   (ONLY Login, nothing else touched)
+   ===================================================== */
+
+/* Target ONLY Login submit button inside auth modal */
+.swl-hs-rf-classname .ant-tabs-tabpane-active form button[type="submit"] {
+  background-color: var(--swl-gold) !important;
+  border-color: var(--swl-gold) !important;
+  color: #ffffff !important;
+  font-weight: 700;
+}
+
+/* Hover state */
+.swl-hs-rf-classname .ant-tabs-tabpane-active form button[type="submit"]:hover {
+  background-color: var(--swl-gold-hover) !important;
+  border-color: var(--swl-gold-hover) !important;
+}
+
+/* Keep Skip Login unchanged */
+.swl-hs-rf-classname .ant-tabs-tabpane-active form button[type="button"] {
+  background: #ffffff !important;
+  color: var(--swl-text-dark) !important;
+}
+/* ===== AUTH MODAL ONLY COLORS ===== */
+.swl-hs-rf-classname {
+  --swl-gold: #c9a56a;        /* change color HERE */
+  --swl-gold-hover: #b89255; /* hover color HERE */
+  --swl-text-dark: #1f2937;
+  --swl-border-light: #e5e7eb;
 }

@@ -10,14 +10,24 @@ import {
   Table,
   Tag,
   Input,
-  Tooltip,
+  // Tooltip,
   DatePicker,
   Popover,
   message,
+  Select,
 } from "antd";
+
 import { fetchAdminBookings } from "../../api/adminBookings";
 
 import type { Dayjs } from "dayjs"; 
+
+import {
+  getFreelancers,
+  approveFreelancer,
+  rejectFreelancer
+} from "../../api/admin";
+
+import type { ColumnsType } from 'antd/es/table';
 
 import type { BookingAPIResponse } from "../../api/adminBookings";
 
@@ -34,7 +44,6 @@ import {
 import ReactApexChart from "react-apexcharts";
 import "./appadmin.css";
 // import { useEffect } from "react";
-import { getFreelancers } from "../../api/admin";
 
 
 import { LogoutOutlined } from "@ant-design/icons";
@@ -564,6 +573,8 @@ const approveVendor = (id: string) => {
 
       const data = await getFreelancers();
 
+      
+
       const mapped: Assignee[] = data.map((f: any) => {
         let pan = "NA";
         try {
@@ -664,8 +675,16 @@ const [active, setActive] = useState<"Dashboard" | ServiceKey>("Dashboard");
 const [customRange, setCustomRange] =
   useState<[Dayjs | null, Dayjs | null]>([null, null]);
   // NEW: which preset is active (controls highlight)
-  type PresetKey = "today" | "yesterday" | "last7" | "lastMonth" | "custom";
-  const [activePreset, setActivePreset] = useState<PresetKey>("last7");
+type DatePreset = 
+  | "all"
+  | "today"
+  | "yesterday"
+  | "last7"
+  | "lastMonth"
+  | "custom";
+
+const [datePreset, setDatePreset] = useState<DatePreset>("all");
+
 
   const mapBookingFromAPI = (b: BookingAPIResponse): BookingRow => ({
   key: String(b.id),
@@ -680,7 +699,7 @@ const [customRange, setCustomRange] =
       ? "Pending"
       : b.status_id === 2
       ? "In-Progress"
-      : b.status_id === 3
+      : b.status_id === 6
       ? "Completed"
       : "Rejected",
   phone: b.mobile,
@@ -713,6 +732,52 @@ const [customRange, setCustomRange] =
   loadBookings();
 }, []);
 
+
+
+
+const handleApproveFreelancer = async (freelancer: Assignee) => {
+  try {
+    const freelancerId = Number(
+      freelancer.id.replace("FR-", "")
+    );
+
+    await approveFreelancer(freelancerId);
+
+    message.success(`${freelancer.name} approved`);
+
+    // remove from pending
+    setPendingFreelancers(prev =>
+      prev.filter(f => f.id !== freelancer.id)
+    );
+
+    // add to total list
+    setTotalFreelancers(prev => [...prev, freelancer]);
+
+  } catch (err) {
+    console.error(err);
+    message.error("Approve failed");
+  }
+};
+
+const handleRejectFreelancer = async (freelancer: Assignee) => {
+  try {
+    const freelancerId = Number(
+      freelancer.id.replace("FR-", "")
+    );
+
+    await rejectFreelancer(freelancerId);
+
+    message.success(`${freelancer.name} rejected`);
+
+    setPendingFreelancers(prev =>
+      prev.filter(f => f.id !== freelancer.id)
+    );
+
+  } catch (err) {
+    console.error(err);
+    message.error("Reject failed");
+  }
+};
 
 
 
@@ -844,25 +909,31 @@ const [customRange, setCustomRange] =
   }
 
   // UPDATED applyPreset: sets activePreset to keep highlight in sync
-const applyPreset = (which: "today" | "yesterday" | "last7" | "lastMonth") => {
-  let newRange;
+const applyPreset = (
+  which: "all" | "today" | "yesterday" | "last7" | "lastMonth"
+) => {
+  if (which === "all") {
+    setDatePreset("all");
+    return;
+  }
 
+  let newRange;
   if (which === "today") newRange = setRangeToday();
   if (which === "yesterday") newRange = setRangeYesterday();
   if (which === "last7") newRange = setRangeLast7();
   if (which === "lastMonth") newRange = setRangeLastMonth();
 
   if (newRange) {
-    // 🔥 force NEW object reference
     setRange({
       from: new Date(newRange.from),
       to: new Date(newRange.to),
     });
-    setActivePreset(which);
+    setDatePreset(which);
   }
 
   setShowCustomPopover(false);
 };
+
 
 
   // Bookings modal & table state
@@ -884,42 +955,44 @@ const applyPreset = (which: "today" | "yesterday" | "last7" | "lastMonth") => {
   };
   const closeBookingsModal = () => setModalVisible(false);
 
-const columns = [
+const columns: ColumnsType<BookingRow> = [
   {
     title: "Booking ID",
     dataIndex: "bookingId",
-    width: 130,
+    width: 110,
+      align: "center",
     render: (t: string) => <strong>{t}</strong>,
   },
   {
     title: "Customer Name",
     dataIndex: "customerName",
-    width: 180,
-  },
-   {
-    title: "Location",          // ✅ NEW
-    dataIndex: "location",      // ✅ NEW
     width: 160,
+    align: "left",
   },
+  {
+  title: "Location",
+  dataIndex: "location",
+  width: 180,
+  render: (text: string) => (
+    <div className="location-cell" title={text}>
+      {text}
+    </div>
+  ),
+}
+,
   {
     title: "Service Type",
     dataIndex: "serviceType",
-    width: 160,
+    width: 150,
+    align: "center",
     // history:10,
   },
-  {
-    title: "Amount",
-    dataIndex: "amount",
-    width: 140,
-    align: "right" as const,
-    render: (amt: number) => (
-      <span className="table-amount">{inr.format(amt)}</span>
-    ),
-  },
+  
 {
   title: "Payment Status",
   key: "paymentStatus",
-  width: 160,
+  align: "center",
+  width: 140,
   render: (_: any, record: BookingRow) => {
     return (
       <Tag color={record.paymentDone ? "green" : "red"}>
@@ -928,14 +1001,11 @@ const columns = [
     );
   },
 },
-
-
-
-
 {
   title: "Work Status",
   key: "workStatus",
-  width: 260,
+  align: "center",
+  width: 120,
   render: (_: any, record: BookingRow) => {
 
     // 🔵 Show In-Progress
@@ -971,6 +1041,8 @@ const columns = [
       return <Tag color="red">Rejected</Tag>;
     }
 
+    
+
     return null;
   },
 },
@@ -979,7 +1051,8 @@ const columns = [
 {
   title: "Assigned To",
   key: "assigned",
-  width: 220,
+  align: "center",
+  width: 180,
   render: (_: any, r: BookingRow) => {
     if (!r.assignedId)
       return <Tag color="orange">Not Assigned</Tag>;
@@ -994,11 +1067,18 @@ const columns = [
       </Tag>
     );
   },
-}
+},
 
-
-
-
+{
+    title: "Amount",
+    dataIndex: "amount",
+    width: 120,
+    align: "center",
+    
+    render: (amt: number) => (
+      <span className="table-amount">{inr.format(amt)}</span>
+    ),
+  },
 
 ];
 const [assignOpen, setAssignOpen] = useState(false);
@@ -1048,7 +1128,7 @@ const handleAssign = async (assignee: Assignee) => {
               ...b,
               assignedId: Number(assignee.id.replace("FR-","")),
               assigned: assignee.name,
-              status: "Pending", // keep status or make In-Progress if you want
+              status: "In-Progress", 
             }
           : b
       )
@@ -1093,22 +1173,44 @@ const filteredBookings = bookings.filter(b => {
 
   // aggregated dynamic values for range & active tab
   const aggregatedDynamic = useMemo(() => {
-    const service = active === "Dashboard" ? undefined : active;
-    const totals = aggTotals(range.from, range.to, service);
-    const buckets = seriesBuckets(range.from, range.to, service);
-    const bookingCounts = bookings.filter(b => {
-      const dt = dateFromISO(b.date); const f=new Date(range.from); f.setHours(0,0,0,0); const t=new Date(range.to); t.setHours(23,59,59,999);
-      return dt >= f && dt <= t && (service ? b.serviceType === service : true);
-    }).length;
+  const service = active === "Dashboard" ? undefined : active;
+
+  // ✅ ALL = no date filter
+  if (datePreset === "all") {
+    const sales = TXNS
+      .filter(t => !service || t.serviceType === service)
+      .filter(t => t.type === "sale")
+      .reduce((s, r) => s + r.amount, 0);
+
+    const purchases = TXNS
+      .filter(t => !service || t.serviceType === service)
+      .filter(t => t.type === "purchase")
+      .reduce((s, r) => s + r.amount, 0);
+
     return {
-      sales: totals.sales,
-      purchases: totals.purchases,
-      bookingsCount: bookingCounts,
-      salesSeries: buckets.salesBuckets,
-      purchasesSeries: buckets.purchaseBuckets,
-      seriesLabels: buckets.labels,
+      sales,
+      purchases,
+      bookingsCount: bookings.length,
+      salesSeries: SERVICE_DATA[active === "Dashboard" ? "Home Service" : active]?.salesSeries ?? [],
+      purchasesSeries: SERVICE_DATA[active === "Dashboard" ? "Home Service" : active]?.purchasesSeries ?? [],
+      seriesLabels: ["All"],
     };
-  }, [range, active]);
+  }
+
+  // 🔁 Normal date-based logic
+  const totals = aggTotals(range.from, range.to, service);
+  const buckets = seriesBuckets(range.from, range.to, service);
+
+  return {
+    sales: totals.sales,
+    purchases: totals.purchases,
+    bookingsCount: totals.bookingsCount,
+    salesSeries: buckets.salesBuckets,
+    purchasesSeries: buckets.purchaseBuckets,
+    seriesLabels: buckets.labels,
+  };
+}, [range, active, datePreset, bookings]);
+
 
   function computeBookingStatsFromCount(count: number) {
     const total = Math.max(0, Math.round(count));
@@ -1140,32 +1242,25 @@ const API_SUPPORTED_SERVICES: ServiceKey[] = [
 
 
 const bookingStats = useMemo(() => {
-  if (active !== "Dashboard" && !API_SUPPORTED_SERVICES.includes(active)) {
-    return { total: 0, completed: 0, pending: 0, rejected: 0 };
-  }
-
-  const filtered = bookings.filter(b => {
-    const serviceMatch =
-      active === "Dashboard"
-        ? API_SUPPORTED_SERVICES.includes(b.serviceType)
-        : b.serviceType === active;
-
-    if (!serviceMatch) return false;
-
-    const dt = dateFromISO(b.date);
-    const from = new Date(range.from); from.setHours(0,0,0,0);
-    const to = new Date(range.to); to.setHours(23,59,59,999);
-
-    return dt >= from && dt <= to;
-  });
+  const filtered =
+    datePreset === "all"
+      ? bookings
+      : bookings.filter(b => {
+          const dt = dateFromISO(b.date);
+          const from = new Date(range.from);
+          const to = new Date(range.to);
+          return dt >= from && dt <= to;
+        });
 
   return {
     total: filtered.length,
+    inProgress: filtered.filter(b => b.status === "In-Progress").length,
     completed: filtered.filter(b => b.status === "Completed").length,
     pending: filtered.filter(b => b.status === "Pending").length,
     rejected: filtered.filter(b => b.status === "Rejected").length,
   };
-}, [bookings, active, range]);
+}, [bookings, range, datePreset]);
+
 
 
 
@@ -1189,7 +1284,7 @@ const bookingStats = useMemo(() => {
     const from = (customRange[0] as any).toDate();
     const to = (customRange[1] as any).toDate();
     setRange({ from, to });
-    setActivePreset("custom"); // IMPORTANT: highlight custom
+    setDatePreset("custom");
     setShowCustomPopover(false);
   };
 
@@ -1199,7 +1294,6 @@ const bookingStats = useMemo(() => {
     return `${a} → ${b}`;
   };
 
-  const rangeLabel = friendlyRange(range);
 
   return (
     <div className="layout-container">
@@ -1276,98 +1370,100 @@ const bookingStats = useMemo(() => {
   <div className="sticky-stack">
     <h2 className="page-title">Service Operations Dashboard</h2>
 
-    <div className="date-filter-bar">
-      <div className="date-nav">
+ <div className="dashboard-scroll">
+              <Card
+  className="big-card"
+  title={
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        width: "100%",
+      }}
+    >
+      <span>Order Summary Dashboard</span>
 
-              <Button
-                className={activePreset === "today" ? "df-active" : ""}
-                onClick={() => applyPreset("today")}
-              >
-                Today
-              </Button>
+      {/* RIGHT SIDE CONTROLS */}
+      <div className="dashboard-filter-bar">
+        {/* DROPDOWN */}
+        <Select
+  className="dashboard-filter-select"
+  value={datePreset}
+  style={{ width: 160 }}
+  onChange={(value) => {
+    setDatePreset(value as DatePreset);
+    applyPreset(value as any);
+  }}
+  options={[
+    { label: "All", value: "all" },
+    { label: "Today", value: "today" },
+    { label: "Yesterday", value: "yesterday" },
+    { label: "Last 7 Days", value: "last7" },
+    { label: "Last Month", value: "lastMonth" },
+  ]}
+/>
 
-              <Button
-                className={activePreset === "yesterday" ? "df-active" : ""}
-                onClick={() => applyPreset("yesterday")}
-              >
-                Yesterday
-              </Button>
-
-              <Button
-                className={activePreset === "last7" ? "df-active" : ""}
-                onClick={() => applyPreset("last7")}
-              >
-                Last 7 Days
-              </Button>
-
-              <Button
-                className={activePreset === "lastMonth" ? "df-active" : ""}
-                onClick={() => applyPreset("lastMonth")}
-              >
-                Last Month
-              </Button>
-
-              <Popover
-                content={
-                  <div style={{ padding: 8, minWidth: 320 }}>
-                <RangePicker
-                  allowClear
-                  value={customRange}
-                  onChange={(vals) => {
-                    if (!vals) {
-                      setCustomRange([null, null]); // ✅ handle clear
-                    } else {
-                      setCustomRange(vals);
-                    }
-                  }}
-                  style={{ width: "100%", marginBottom: 8 }}
-                />
-                    <div style={{ display: "flex", gap: 8, justifyContent: "flex-end" }}>
-                      <Button size="small" onClick={() => { setCustomRange([null, null]); setShowCustomPopover(false); }}>Cancel</Button>
-                      <Button size="small" type="primary" onClick={onCustomApply}>Apply</Button>
-                    </div>
-                  </div>
-                }
-                title="Select custom range"
-                trigger="click"
-                open={showCustomPopover}
-                onOpenChange={(vis) => setShowCustomPopover(vis)}
-                placement="bottomLeft"
-              >
-                <Button
-                  className={activePreset === "custom" ? "df-active" : ""}
-                  onClick={() => setShowCustomPopover(true)}
-                >
-                  Custom Range ⬇
-                </Button>
-              </Popover>
-
-              <div className="date-range-label">{rangeLabel}</div>
-              <div
-  className="assignee-toggle"
-  style={{ display: "flex", gap: 8, marginLeft: 12 }}
-  >
-<Button onClick={() => setOpenPopup("freelancer")}>
+        <Button
+  className="dashboard-action-btn"
+  type={openPopup === "freelancer" ? "primary" : "default"}
+  onClick={() => setOpenPopup("freelancer")}
+>
   Freelancer
 </Button>
 
-<Button onClick={() => setOpenPopup("vendor")}>
+
+<Button
+  className="dashboard-action-btn"
+  type={openPopup === "vendor" ? "primary" : "default"}
+  onClick={() => setOpenPopup("vendor")}
+>
   Vendor
 </Button>
 
-</div>
+ 
 
-  </div>
-          </div>
+        {/* CUSTOM RANGE */}
+        <Popover
+          content={
+            <div style={{ padding: 8, minWidth: 320 }}>
+              <RangePicker
+                value={customRange}
+                onChange={(vals) => setCustomRange(vals ?? [null, null])}
+                style={{ width: "100%", marginBottom: 8 }}
+              />
+              <div style={{ display: "flex", justifyContent: "flex-end", gap: 8 }}>
+                <Button
+                  size="small"
+                  onClick={() => setShowCustomPopover(false)}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  size="small"
+                  type="primary"
+                  onClick={onCustomApply}
+                >
+                  Apply
+                </Button>
+              </div>
+            </div>
+          }
+          trigger="click"
+          open={showCustomPopover}
+          onOpenChange={setShowCustomPopover}
+        >
+               
+<Button className="dashboard-action-btn">
+  Custom Range
+</Button>
 
-          {/* SUMMARY */}
-{/* SUMMARY */}
- <div className="dashboard-scroll">
-              <Card
-                className="big-card"
-                title={`Order Summary  ${active}`}
-                bordered={false}
-              >
+        </Popover>
+      </div>
+    </div>
+  }
+>
+
                 <Row gutter={20}>
 
               {/* SALES CARD (dynamic) */}
@@ -1474,87 +1570,68 @@ const bookingStats = useMemo(() => {
           </Row>
 
           {/* ----- 4 Compact Booking Cards (dynamic counts) ----- */}
-          <Row gutter={20} style={{ marginTop: 18 }}>
-            <Col xs={24} sm={12} md={6}>
-              <Card
-                className="mini-stat-card total-bookings clickable-card"
-                bordered={false}
-                onClick={() => openBookingsModal("Total")}
-                role="button"
-                tabIndex={0}
-                aria-label="Open total bookings"
-              >
-                <div className="mini-title">Total Bookings</div>
-                <div className="stat-number">{bookingStats.total}</div>
-                <div className="mini-card-footer">
-                  <span>View all bookings</span>
-                  <Tooltip title="Open bookings table">
-                    <PlusOutlined />
-                  </Tooltip>
-                </div>
-              </Card>
-            </Col>
+<Row gutter={16} style={{ marginTop: 18 }} wrap={false}>
+  <Col flex="1">
+    <Card
+      className="mini-stat-card total-bookings clickable-card"
+      bordered={false}
+      onClick={() => openBookingsModal("Total")}
+    >
+      <div className="mini-title">Total Bookings</div>
+      <div className="stat-number">{bookingStats.total}</div>
+      <div className="mini-card-footer">View all bookings <PlusOutlined /></div>
+    </Card>
+  </Col>
 
-            <Col xs={24} sm={12} md={6}>
-              <Card
-                className="mini-stat-card completed clickable-card"
-                bordered={false}
-                onClick={() => openBookingsModal("Completed")}
-                role="button"
-                tabIndex={0}
-                aria-label="Open completed bookings"
-              >
-                <div className="mini-title">Completed</div>
-                <div className="stat-number">{bookingStats.completed}</div>
-                <div className="mini-card-footer">
-                  <span>View completed</span>
-                  <Tooltip title="Open bookings table">
-                    <PlusOutlined />
-                  </Tooltip>
-                </div>
-              </Card>
-            </Col>
+  <Col flex="1">
+    <Card
+      className="mini-stat-card in-progress clickable-card"
+      bordered={false}
+      onClick={() => openBookingsModal("In-Progress")}
+    >
+      <div className="mini-title">In-Progress</div>
+      <div className="stat-number">{bookingStats.inProgress}</div>
+      <div className="mini-card-footer">View in-progress <PlusOutlined /></div>
+    </Card>
+  </Col>
 
-            <Col xs={24} sm={12} md={6}>
-              <Card
-                className="mini-stat-card pending clickable-card"
-                bordered={false}
-                onClick={() => openBookingsModal("Pending")}
-                role="button"
-                tabIndex={0}
-                aria-label="Open pending bookings"
-              >
-                <div className="mini-title">Pending</div>
-                <div className="stat-number">{bookingStats.pending}</div>
-                <div className="mini-card-footer">
-                  <span>View pending</span>
-                  <Tooltip title="Open bookings table">
-                    <PlusOutlined />
-                  </Tooltip>
-                </div>
-              </Card>
-            </Col>
+  <Col flex="1">
+    <Card
+      className="mini-stat-card completed clickable-card"
+      bordered={false}
+      onClick={() => openBookingsModal("Completed")}
+    >
+      <div className="mini-title">Completed</div>
+      <div className="stat-number">{bookingStats.completed}</div>
+      <div className="mini-card-footer">View completed <PlusOutlined /></div>
+    </Card>
+  </Col>
 
-            <Col xs={24} sm={12} md={6}>
-              <Card
-                className="mini-stat-card rejected clickable-card"
-                bordered={false}
-                onClick={() => openBookingsModal("Rejected")}
-                role="button"
-                tabIndex={0}
-                aria-label="Open rejected bookings"
-              >
-                <div className="mini-title">Rejected</div>
-                <div className="stat-number">{bookingStats.rejected}</div>
-                <div className="mini-card-footer">
-                  <span>View rejected</span>
-                  <Tooltip title="Open bookings table">
-                    <PlusOutlined />
-                  </Tooltip>
-                </div>
-              </Card>
-            </Col>
-          </Row>
+  <Col flex="1">
+    <Card
+      className="mini-stat-card pending clickable-card"
+      bordered={false}
+      onClick={() => openBookingsModal("Pending")}
+    >
+      <div className="mini-title">Pending</div>
+      <div className="stat-number">{bookingStats.pending}</div>
+      <div className="mini-card-footer">View pending <PlusOutlined /></div>
+    </Card>
+  </Col>
+
+  <Col flex="1">
+    <Card
+      className="mini-stat-card rejected clickable-card"
+      bordered={false}
+      onClick={() => openBookingsModal("Rejected")}
+    >
+      <div className="mini-title">Rejected</div>
+      <div className="stat-number">{bookingStats.rejected}</div>
+      <div className="mini-card-footer">View rejected <PlusOutlined /></div>
+    </Card>
+  </Col>
+</Row>
+
 
           {/* AGEING (STATIC: not filtered) */}
             <Card title="Order Ageing Summary" className="panel-card ageing-card" style={{ marginTop: 20 }}>
@@ -1601,7 +1678,9 @@ const bookingStats = useMemo(() => {
         Close
       </Button>,
     ]}
-    bodyStyle={{ padding: 0 }}
+    bodyStyle={{ padding: 0,
+         
+     }}
     className="bookings-modal"
     centered
   >
@@ -1611,8 +1690,9 @@ const bookingStats = useMemo(() => {
         dataSource={filteredBookings}
         pagination={{ pageSize: 10 }}
         rowKey="key"
-        size="middle"
+        size="small"
         bordered
+        scroll={{ y: '60vh' }}
       />
     </div>
   </Modal>
@@ -1633,7 +1713,7 @@ const bookingStats = useMemo(() => {
   >
     {assignRecord && (
       <>
-        <div style={{ marginBottom: 16 }}>
+        <div style={{ marginBottom: 16 }} className="assign-modal-header">
           <strong>Booking ID:</strong> {assignRecord.bookingId}
           <br />
           <strong>Customer:</strong> {assignRecord.customerName}
@@ -1752,12 +1832,22 @@ const bookingStats = useMemo(() => {
                   <td><SkillsCell skills={FREELANCER_SKILLS} /></td>
                   <td>{a.pan}</td>
                   <td>{a.experience}</td>
-                 <td className="actions">
-                    <button
-                      className="btn approve"
-                    />
-                    <button className="btn reject" />
-                  </td>
+<td className="actions">
+  <button
+    className="btn approve"
+    onClick={() => handleApproveFreelancer(a)}
+  >
+    ✓ Approve
+  </button>
+
+  <button
+    className="btn reject"
+    onClick={() => handleRejectFreelancer(a)}
+  >
+    ✕ Reject
+  </button>
+</td>
+
                 </tr>
               ))}
             </tbody>

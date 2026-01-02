@@ -66,7 +66,7 @@ export default function ServiceRequest() {
   const [activeUrgency, setActiveUrgency] = useState<string>("All");
   const [searchText, setSearchText] = useState<string>("");
     const [requests, setRequests] = useState<Request[]>([]);
-const [loading, setLoading] = useState<boolean>(false);
+const [, setLoading] = useState<boolean>(false);
 
   // Header / Auth modal states
   const navigate = useNavigate();

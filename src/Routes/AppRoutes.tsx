@@ -9,6 +9,10 @@ import FreelancerDashboard from "../pages/freelancer/FreelancerDashboard";
 import SwachifyProducts from "../pages/landing/Swachifyproducts";
 import CommonHeader from "../pages/landing/Header";
 import ResumePendingCart from "../pages/ResumePendingCart";
+import ProfilePage from "../pages/freelancer/ProfilePage";
+
+
+
 
 export const AppRoutes = () => {
   return (
@@ -18,6 +22,8 @@ export const AppRoutes = () => {
 
       <Routes>
         <Route path="/*" element={<NonSecureRoutes />} />
+        <Route path="/freelancer/profile" element={<ProfilePage />} />
+
 
         <Route
           path="/app/*"

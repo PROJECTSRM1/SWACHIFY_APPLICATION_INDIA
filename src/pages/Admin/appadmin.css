@@ -348,7 +348,8 @@
   overflow: hidden;
   box-shadow: 0 18px 60px rgba(15, 23, 42, 0.18);
   left: 0px;
-  bottom: -55px;
+  /* bottom: -55px; */
+  margin-top: 10px;
 }
 
 /* ensure header has right padding to avoid popover / reset overlap with close X */
@@ -384,9 +385,16 @@
 
 /* table wrapper to remove default modal padding and give premium top bar */
 .modal-table-wrap {
-  padding: 8px 18px 18px 18px; /* reduced top padding to avoid white-line gap */
+  padding: 8px 0px 8px 8px; /* reduced top padding to avoid white-line gap */
   background: linear-gradient(180deg, #fff 0%, #fbfbfd 100%);
+  box-sizing: border-box;
 }
+
+.modal-table-wrap .ant-table {
+  width: 100%;
+  table-layout: fixed; /* ensures columns respect width */
+}
+
 
 /* table row hover tint */
 .ant-table-tbody > tr > td {
@@ -401,10 +409,13 @@
 /* header style */
 .ant-table-thead > tr > th {
   background: transparent;
-  font-weight: 700;
+  font-weight: 600;
   color: #050505;
   border-bottom: 1px solid #edf0f6;
+    padding: 13px 8px  !important;
+    font-size:  12px !important;
 }
+
 
 /* amount cell style */
 .table-amount {
@@ -414,7 +425,7 @@
 
 /* status tag */
 .status-tag {
-  font-weight: 700;
+  font-weight: 600;
   border-radius: 6px;
   padding: 4px 8px;
   box-shadow: none;
@@ -448,6 +459,99 @@
     box-shadow: 0 6px 24px rgba(22,28,37,0.06);
   }
 }
+
+/* overall table font */
+.modal-table-wrap .ant-table {
+  font-size: 11px;
+}
+
+/* header cells */
+.modal-table-wrap .ant-table-thead > tr > th {
+  padding: 6px 8px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+/* body cells */
+.modal-table-wrap .ant-table-tbody > tr > td {
+  padding: 6px 8px !important;
+}
+
+/* tags smaller */
+.modal-table-wrap .ant-tag {
+  font-size: 11px;
+  padding: 2px 6px;
+}
+
+/* amount column */
+.modal-table-wrap .table-amount {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* hide scrollbar but preserve scroll */
+.modal-table-wrap .ant-table-body {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.modal-table-wrap .ant-table-body::-webkit-scrollbar {
+  width: 0;
+}
+.modal-table-wrap .ant-table-header {
+  padding-right: 12px;
+}
+
+.modal-table-wrap .ant-table-body {
+  margin-right: -12px;
+}
+
+.modal-table-wrap .location-cell {
+  display: -webkit-box;
+  display: box;              /* future / fallback */
+
+  -webkit-line-clamp: 4;     /* WebKit (Chrome, Edge, Safari) */
+  line-clamp: 4;             /* Standard (future support) */
+
+  -webkit-box-orient: vertical;
+  box-orient: vertical;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.35;
+  font-size: 12px;
+}
+
+
+/* Increase padding for Payment Status tags */
+.ant-table td .ant-tag {
+  padding: 5px 9px; /* default is smaller, increase for better look */
+  font-weight: 600;  /* optional: make text bold */
+  font-size: 10px;   /* optional: slightly bigger text */
+}
+
+.pending-btn{
+  font-weight: 600 !important;  /* override default bold */
+  font-size: 12px; /* optional: adjust size */
+  padding: 2px 8px;
+}
+
+.table-amount{
+  font-weight: 700;         /* Bold */
+  color: #0b1724;           /* Dark color for better readability */
+  white-space: nowrap;       /* Prevent line breaks */
+  padding-right: 16px;       /* Give some space from edge */
+  text-align: right; 
+}
+
+
+
+
+
+
+
+
+
 
 /* keep existing color theme intact for the rest of the UI */
 /* ---------- STICKY NAVBAR FOR DATE FILTER ---------- */
@@ -919,6 +1023,12 @@ body {
   border: 1px solid #c7d2fe;
   border-radius: 999px;
 }
+.in-progress {
+  background: #fdf2ff;
+  border-left: 4px solid #d946ef !important;
+}
+
+
 
 
 
@@ -1212,6 +1322,8 @@ body {
   height: calc(100vh - 140px); /* ✅ KEY FIX */
   overflow-y: auto;
   padding: 20px;
+      margin-top: -13px;
+
 }
 
 
@@ -1494,13 +1606,15 @@ body {
    MOBILE FIX: STACK GRAPHS / CARDS VERTICALLY
    ===================================================== */
 
+/* ONLY stack normal grid columns on mobile – NOT flex cards */
 @media (max-width: 768px) {
-  /* Force AntD columns to be full width */
-  .dashboard-main .ant-col {
+  .dashboard-main .ant-col:not([style*="flex"]) {
     width: 100% !important;
     max-width: 100% !important;
     flex: 0 0 100% !important;
   }
+}
+
 
   /* Remove horizontal row spacing issues */
   .dashboard-main .ant-row {
@@ -1508,7 +1622,7 @@ body {
     margin-right: 0 !important;
     row-gap: 16px; /* spacing between stacked cards */
   }
-}
+
 
 @media (max-width: 768px) {
   .panel-card,
@@ -1708,3 +1822,224 @@ font-size: 13px;
 padding: 12px 14px;
 text-align: center;
 }
+
+/* filters css */
+
+
+.dashboard-filter-select {
+  width: 30px;
+  margin-bottom: 5px;
+
+}
+
+/* Select box */
+/* 🔽 SMALLER ALL BUTTON */
+.dashboard-filter-select .ant-select-selector {
+  height: 32px !important;        /* 🔥 reduced height */
+  padding: 0 10px !important;     /* 🔥 reduced padding */
+  border-radius: 6px !important;  /* slightly tighter */
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  border: 1px solid #d9d9d9 !important;
+}
+
+
+/* Hover */
+.dashboard-filter-select .ant-select-selector:hover {
+  border-color: #6a2dff !important;
+}
+
+/* Focus */
+.dashboard-filter-select.ant-select-focused .ant-select-selector {
+  border-color: #6a2dff !important;
+  box-shadow: 0 0 0 2px rgba(106, 45, 255, 0.15);
+}
+
+/* Smaller text inside All */
+.dashboard-filter-select .ant-select-selection-item {
+  font-size: 13px;   /* 🔥 reduced */
+  line-height: 1;
+}
+
+
+/* Dropdown menu */
+.ant-select-dropdown {
+  border-radius: 10px;
+  padding: 6px 0;
+}
+
+/* Dropdown options */
+.ant-select-item {
+  font-size: 14px;
+  padding: 8px 14px;
+}
+
+/* Hover option */
+.ant-select-item-option-active {
+  background: #f3f0ff !important;
+}
+
+/* Selected option */
+.ant-select-item-option-selected {
+  background: #ede9fe !important;
+  color: #4c1d95 !important;
+  font-weight: 600;
+}
+
+/* ===============================
+   MOBILE OPTIMIZATION
+   =============================== */
+@media (max-width: 768px) {
+  .dashboard-filter-select {
+    width: 100% !important;
+  }
+
+  .dashboard-filter-select .ant-select-selector {
+    height: 40px !important;
+  }
+}
+/* ================= FIX DASHBOARD HEADER FILTER CLIPPING ================= */
+
+/* Allow header content to show fully */
+.ant-card-head {
+  overflow: visible !important;
+}
+
+/* Ensure title + actions align properly */
+.ant-card-head-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Prevent right-side controls from wrapping or cutting */
+.ant-card-extra {
+  overflow: visible !important;
+}
+
+
+.dashboard-custom-btn {
+  height: 38px !important;
+  min-height: 38px !important;
+  border-radius: 8px !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 14px;
+  font-weight: 600;
+}
+
+.dashboard-filter-select,
+.dashboard-custom-btn {
+  box-sizing: border-box;
+}
+
+/* Date range and custom range fix */
+
+
+/* Assign modal */
+
+.assign-modal-header {
+  position: sticky;
+  top: 0; /* sticks to the top of the modal body */
+  background: #fff; /* match modal background */
+  z-index: 10; /* stay above scrolling content */
+  padding: 16px 0; /* spacing */
+  border-bottom: 1px solid #f0f0f0; /* optional separator line */
+}
+/* ================= DASHBOARD FILTER BAR ================= */
+
+.dashboard-filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* -------- Select (All / Today / etc.) -------- */
+.dashboard-filter-select {
+  min-width: 140px;
+}
+
+.dashboard-filter-select .ant-select-selector {
+  height: 36px !important;
+  border-radius: 8px !important;
+  padding: 0 12px !important;
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+}
+
+/* -------- Buttons: Freelancer / Vendor / Custom -------- */
+.dashboard-filter-bar .ant-btn {
+  height: 36px;
+  padding: 0 16px;
+  border-radius: 8px;
+  font-weight: 52 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Primary (active Freelancer / Vendor) */
+.dashboard-filter-bar .ant-btn-primary {
+  box-shadow: 0 4px 10px rgba(106, 45, 255, 0.35);
+}
+
+/* Hover polish */
+.dashboard-filter-bar .ant-btn:hover {
+  transform: translateY(-1px);
+}
+
+/* -------- Mobile behavior -------- */
+@media (max-width: 768px) {
+  .dashboard-filter-bar {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .dashboard-filter-select {
+    width: 100% !important;
+  }
+
+  .dashboard-filter-bar .ant-btn {
+    width: 100%;
+  }
+}
+
+.dashboard-action-btn {
+  height: 36px !important;
+  padding: 0 18px !important;
+  border-radius: 10px !important;  
+  font-weight: 300;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  transition: all 0.2s ease;
+  gap: 6px;
+}
+
+/* Hover */
+.dashboard-action-btn:hover {
+  border-color: #6a2dff;
+  color: #6a2dff;
+  transform: translateY(-1px);
+}
+
+/* Active (Freelancer / Vendor selected) */
+.dashboard-action-btn.ant-btn-primary {
+  background: #6a2dff !important;
+  border-color: #6a2dff !important;
+  color: #ffffff !important;
+  box-shadow: 0 6px 14px rgba(106, 45, 255, 0.35);
+}
+
+/* Keep focus clean */
+.dashboard-action-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(106, 45, 255, 0.15);
+}
+
