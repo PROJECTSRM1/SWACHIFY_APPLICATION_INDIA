@@ -1,8 +1,5 @@
 import axios from "axios";
 
-/* ===============================
-   BASE API INSTANCE
-================================ */
 const API = axios.create({
   baseURL: "https://swachify-india-be-1-mcrb.onrender.com",
   headers: {
@@ -10,9 +7,6 @@ const API = axios.create({
   },
 });
 
-/* ===============================
-   BACKEND RESPONSE TYPE
-================================ */
 export interface HomeServiceApiResponse {
   id: number;
   module_id: number;
@@ -29,16 +23,13 @@ export interface HomeServiceApiResponse {
   freelancer_id?: number;
   status?: "In Progress" | "Approval Pending" | "Completed";
 
-  // ✅ Add these dynamic fields expected from backend
+  
   service_name?: string;
   category_name?: string;
   time_slot?: string;
   service_price?: number;
 }
 
-/* ===============================
-   FRONTEND JOB TYPE
-================================ */
 export interface Job {
   ticketId: string;
   title: string;
@@ -60,35 +51,44 @@ export interface Job {
   description?: string;
 }
 
+export const TIME_SLOTS: Record<number, string> = {
+  1: "09:00 AM - 11:00 AM",
+  2: "11:00 AM - 01:00 PM",
+  3: "01:00 PM - 03:00 PM",
+  4: "03:00 PM - 05:00 PM",
+  5: "05:00 PM - 07:00 PM",
+};
 
 
-/* ===============================
-   API FUNCTION
-================================ */
 export const fetchHomeServiceRequests = async (): Promise<Job[]> => {
   const res = await API.get<HomeServiceApiResponse[]>("/api/home-service");
 
-  return res.data.map((item) => ({
-    ticketId: `TKT${item.id}`,
-    title: item.service_name || "Home Service", 
-    category: item.category_name || "General", 
-    status: item.status || "In Progress",
-    freelancer_id: item.freelancer_id,
-    
+  return res.data.map((item) => {
+    const timeSlot =
+      TIME_SLOTS[item.time_slot_id] || "Time not assigned";
 
-    customer: item.full_name,
-    customerName: item.full_name,
-    customerPhone: item.mobile,
-    customerEmail: item.email,
-    customerAddress: item.address,
+    return {
+      ticketId: `TKT${item.id}`,
+      title: item.service_name || "Home Service",
+      category: item.category_name || "General",
+      status: item.status || "In Progress",
+      freelancer_id: item.freelancer_id,
 
-    description: item.problem_description,
-    location: item.address,
-    date: `${item.preferred_date} at ${item.time_slot}`, 
+      customer: item.full_name,
+      customerName: item.full_name,
+      customerPhone: item.mobile,        
+      customerEmail: item.email,
+      customerAddress: item.address,
 
-   price: item.service_price || 0,
-estimatedPrice: item.service_price || 0,
+      description: item.problem_description,
+      location: item.address,
 
-  }));
+      
+      date: `${item.preferred_date} • ${timeSlot}`,
+
+      price: item.service_price || 0,
+      estimatedPrice: item.service_price || 0,
+    };
+  });
 };
 

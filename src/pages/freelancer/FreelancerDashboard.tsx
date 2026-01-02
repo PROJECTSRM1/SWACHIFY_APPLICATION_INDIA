@@ -943,7 +943,19 @@ const RequestCard: React.FC<{ request: Job; onAccept: (req: Job) => void }> = ({
       </div>
 
       {/* CUSTOMER */}
-      <Text className="sw-frd-customer">Customer: {request.customer}</Text>
+      <Text className="sw-frd-customer">
+  Customer: {request.customer}
+</Text>
+
+{request.customerPhone && (
+  <Text className="sw-frd-customer-phone">
+    <PhoneOutlined className="sw-frd-icon-sm" />{" "}
+    <a href={`tel:${request.customerPhone}`}>
+      {request.customerPhone}
+    </a>
+  </Text>
+)}
+
 
       {/* DESCRIPTION */}
       <Text className="sw-frd-request-desc-text">{request.description}</Text>
