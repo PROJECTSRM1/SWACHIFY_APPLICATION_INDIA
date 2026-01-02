@@ -1,35 +1,60 @@
-import React from "react";
-import { Card, Button, Typography, Row, Col, Tag, Space } from "antd";
+import React, { useEffect, useState } from "react";
+import { Card, Button, Typography, Row, Col, Tag, Space , Empty } from "antd";
+import { ClockCircleOutlined, CheckCircleOutlined } from "@ant-design/icons";
 import {
-  ClockCircleOutlined,
-  CheckCircleOutlined,
+  DollarCircleOutlined,
+  ToolOutlined,
+  ThunderboltOutlined,
+  
 } from "@ant-design/icons";
 import "./walletPopup.css";
+import { getWallet, withdrawEarnings } from "./walletStorage";
+
 
 
 const { Title, Text } = Typography;
+
+const SERVICE_ICON_MAP: Record<string, React.ReactNode> = {
+  Cleaning: <ToolOutlined />,
+  Plumbing: <ToolOutlined />,
+  Electrical: <ThunderboltOutlined />,
+  "House Repairs": <ToolOutlined />,
+  default: <DollarCircleOutlined />,
+};
+
 const MyWallet: React.FC<{ onClose: () => void }> = ({ onClose }) => {
+  const [wallet, setWallet] = useState(getWallet());
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setWallet(getWallet());
+    }, 500);
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleWithdraw = () => {
+    withdrawEarnings();
+    setWallet(getWallet());
+  };
 
   return (
-   
-  <div className="wallet-popup-card">
-    {/* ❗ Add this cross button */}
-    <span className="wallet-popup-close-btn" onClick={onClose}>×</span>
+    <div className="wallet-popup-card">
+      <span className="wallet-popup-close-btn" onClick={onClose}>×</span>
 
-    {/* BRAND HEADER */}
-    <div style={{ textAlign: "center", marginBottom: 20 }}>
-      <div className="wallet-popup-brand">SWACHIFY INDIA</div>
-      <Text style={{ fontSize: 16, color: "#475569" }}>Earnings Wallet</Text>
-    </div>
+      <div style={{ textAlign: "center", marginBottom: 20 }}>
+        <div className="wallet-popup-brand">SWACHIFY INDIA</div>
+        <Text style={{ fontSize: 16, color: "#475569" }}>Earnings Wallet</Text>
+      </div>
 
-      {/* BALANCE & WITHDRAW */}
       <div style={{ textAlign: "center", marginBottom: 24 }}>
         <Title level={2} style={{ fontWeight: 800, fontSize: 36, marginBottom: 12 }}>
-          ₹5,000
+          ₹{wallet.balance.toLocaleString()}
         </Title>
         <Button
           type="primary"
           className="wallet-popup-withdraw-btn"
+          onClick={handleWithdraw}
+          disabled={wallet.balance === 0}
           style={{
             width: "100%",
             height: 50,
@@ -46,70 +71,54 @@ const MyWallet: React.FC<{ onClose: () => void }> = ({ onClose }) => {
         </Button>
       </div>
 
-      {/* WALLET STATS */}
       <Row gutter={16} justify="center">
         <Col span={12}>
           <Card bordered={false} className="wallet-popup-stat-box">
             <Space align="center">
-              <ClockCircleOutlined style={{ fontSize: 18 }} />
+              <ClockCircleOutlined />
               <Text>Pending</Text>
             </Space>
-            <Title level={4} style={{ marginTop: 10, fontWeight: 700 }}>₹1,500</Title>
+            <Title level={4}>₹{wallet.pending.toLocaleString()}</Title>
           </Card>
         </Col>
 
         <Col span={12}>
           <Card bordered={false} className="wallet-popup-stat-box">
             <Space align="center">
-              <CheckCircleOutlined style={{ fontSize: 18 }} />
+              <CheckCircleOutlined />
               <Text>Withdrawn</Text>
             </Space>
-            <Title level={4} style={{ marginTop: 10, fontWeight: 700 }}>₹3,000</Title>
+            <Title level={4}>₹{wallet.withdrawn.toLocaleString()}</Title>
           </Card>
         </Col>
       </Row>
 
-      {/* RECENT TRANSACTIONS */}
       <div style={{ marginTop: 28 }}>
-        <Title level={4} style={{ fontWeight: 700, marginBottom: 14, textAlign: "center" }}>
-          Recent Transactions
-        </Title>
+        <Title level={4} style={{ textAlign: "center" }}>Recent Transactions</Title>
 
-        <Space direction="vertical" size={14} style={{ width: "100%" }}>
-
-          {/* TRANSACTION 1 */}
-          <Card bordered={false} className="wallet-popup-txn-item">
-            <Row justify="space-between" align="middle">
-              <div>
-                <Text strong style={{ fontSize: 15 }}>TKT#15692</Text><br />
-                <Text>Cleaning service</Text><br />
-                <Text type="secondary" style={{ fontSize: 12 }}>Oct 5, 2025</Text>
-              </div>
-              <div style={{ textAlign: "right" }}>
-                <Tag color="green" style={{ borderRadius: 6, fontWeight: 600 }}>AVAILABLE</Tag><br />
-                <Text style={{ fontWeight: 700 }}>₹3,000</Text><br />
-                <Text type="secondary" style={{ fontSize: 12 }}>Earned: ₹2,400 • Fee: ₹600</Text>
-              </div>
-            </Row>
-          </Card>
-
-          {/* TRANSACTION 2 */}
-          <Card bordered={false} className="wallet-popup-txn-item">
-            <Row justify="space-between" align="middle">
-              <div>
-                <Text strong style={{ fontSize: 15 }}>TKT#15484</Text><br />
-                <Text>Balcony service</Text><br />
-                <Text type="secondary" style={{ fontSize: 12 }}>Nov 06, 2025</Text>
-              </div>
-              <div style={{ textAlign: "right" }}>
-                <Tag color="green" style={{ borderRadius: 6, fontWeight: 600 }}>AVAILABLE</Tag><br />
-                <Text strong style={{ fontSize: 15 }}>₹2,000</Text><br />
-                <Text type="secondary" style={{ fontSize: 12 }}>Earned: ₹1,600 • Fee: ₹400</Text>
-              </div>
-            </Row>
-          </Card>
-
-        </Space>
+        {wallet.transactions.length === 0 ? (
+          <Empty description="No transactions yet" />
+        ) : (
+          <Space direction="vertical" size={14} style={{ width: "100%" }}>
+            {wallet.transactions.map((txn) => (
+              <Card key={txn.ticketId} bordered={false} className="wallet-popup-txn-item">
+                <Row justify="space-between" align="middle">
+                  <div>
+                    {SERVICE_ICON_MAP[txn.service] || SERVICE_ICON_MAP.default}
+                    <Text strong style={{ marginLeft: 8 }}>{txn.service}</Text><br />
+                    <Text type="secondary" style={{ fontSize: 12 }}>{txn.date}</Text>
+                  </div>
+                  <div style={{ textAlign: "right" }}>
+                    <Tag color={txn.step === "COMPLETED" ? "blue" : "green"}>
+                      {txn.step}
+                    </Tag><br />
+                    <Text strong>₹{txn.amount.toLocaleString()}</Text>
+                  </div>
+                </Row>
+              </Card>
+            ))}
+          </Space>
+        )}
       </div>
     </div>
   );
