@@ -1023,6 +1023,12 @@ body {
   border: 1px solid #c7d2fe;
   border-radius: 999px;
 }
+.in-progress {
+  background: #fdf2ff;
+  border-left: 4px solid #d946ef !important;
+}
+
+
 
 
 
@@ -1600,13 +1606,15 @@ body {
    MOBILE FIX: STACK GRAPHS / CARDS VERTICALLY
    ===================================================== */
 
+/* ONLY stack normal grid columns on mobile – NOT flex cards */
 @media (max-width: 768px) {
-  /* Force AntD columns to be full width */
-  .dashboard-main .ant-col {
+  .dashboard-main .ant-col:not([style*="flex"]) {
     width: 100% !important;
     max-width: 100% !important;
     flex: 0 0 100% !important;
   }
+}
+
 
   /* Remove horizontal row spacing issues */
   .dashboard-main .ant-row {
@@ -1614,7 +1622,7 @@ body {
     margin-right: 0 !important;
     row-gap: 16px; /* spacing between stacked cards */
   }
-}
+
 
 @media (max-width: 768px) {
   .panel-card,

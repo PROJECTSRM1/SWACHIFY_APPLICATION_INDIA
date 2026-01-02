@@ -10,7 +10,7 @@ import {
   Table,
   Tag,
   Input,
-  Tooltip,
+  // Tooltip,
   DatePicker,
   Popover,
   message,
@@ -691,7 +691,7 @@ type PresetKey = | "all" | "today"| "yesterday" | "last7"|"lastMonth" | "custom"
       ? "Pending"
       : b.status_id === 2
       ? "In-Progress"
-      : b.status_id === 3
+      : b.status_id === 6
       ? "Completed"
       : "Rejected",
   phone: b.mobile,
@@ -1119,7 +1119,7 @@ const handleAssign = async (assignee: Assignee) => {
               ...b,
               assignedId: Number(assignee.id.replace("FR-","")),
               assigned: assignee.name,
-              status: "Pending", // keep status or make In-Progress if you want
+              status: "In-Progress", 
             }
           : b
       )
@@ -1232,6 +1232,7 @@ const bookingStats = useMemo(() => {
 
   return {
     total: filtered.length,
+    inProgress: filtered.filter(b => b.status === "In-Progress").length,
     completed: filtered.filter(b => b.status === "Completed").length,
     pending: filtered.filter(b => b.status === "Pending").length,
     rejected: filtered.filter(b => b.status === "Rejected").length,
@@ -1538,87 +1539,68 @@ const bookingStats = useMemo(() => {
           </Row>
 
           {/* ----- 4 Compact Booking Cards (dynamic counts) ----- */}
-          <Row gutter={20} style={{ marginTop: 18 }}>
-            <Col xs={24} sm={12} md={6}>
-              <Card
-                className="mini-stat-card total-bookings clickable-card"
-                bordered={false}
-                onClick={() => openBookingsModal("Total")}
-                role="button"
-                tabIndex={0}
-                aria-label="Open total bookings"
-              >
-                <div className="mini-title">Total Bookings</div>
-                <div className="stat-number">{bookingStats.total}</div>
-                <div className="mini-card-footer">
-                  <span>View all bookings</span>
-                  <Tooltip title="Open bookings table">
-                    <PlusOutlined />
-                  </Tooltip>
-                </div>
-              </Card>
-            </Col>
+<Row gutter={16} style={{ marginTop: 18 }} wrap={false}>
+  <Col flex="1">
+    <Card
+      className="mini-stat-card total-bookings clickable-card"
+      bordered={false}
+      onClick={() => openBookingsModal("Total")}
+    >
+      <div className="mini-title">Total Bookings</div>
+      <div className="stat-number">{bookingStats.total}</div>
+      <div className="mini-card-footer">View all bookings <PlusOutlined /></div>
+    </Card>
+  </Col>
 
-            <Col xs={24} sm={12} md={6}>
-              <Card
-                className="mini-stat-card completed clickable-card"
-                bordered={false}
-                onClick={() => openBookingsModal("Completed")}
-                role="button"
-                tabIndex={0}
-                aria-label="Open completed bookings"
-              >
-                <div className="mini-title">Completed</div>
-                <div className="stat-number">{bookingStats.completed}</div>
-                <div className="mini-card-footer">
-                  <span>View completed</span>
-                  <Tooltip title="Open bookings table">
-                    <PlusOutlined />
-                  </Tooltip>
-                </div>
-              </Card>
-            </Col>
+  <Col flex="1">
+    <Card
+      className="mini-stat-card in-progress clickable-card"
+      bordered={false}
+      onClick={() => openBookingsModal("In-Progress")}
+    >
+      <div className="mini-title">In-Progress</div>
+      <div className="stat-number">{bookingStats.inProgress}</div>
+      <div className="mini-card-footer">View in-progress <PlusOutlined /></div>
+    </Card>
+  </Col>
 
-            <Col xs={24} sm={12} md={6}>
-              <Card
-                className="mini-stat-card pending clickable-card"
-                bordered={false}
-                onClick={() => openBookingsModal("Pending")}
-                role="button"
-                tabIndex={0}
-                aria-label="Open pending bookings"
-              >
-                <div className="mini-title">Pending</div>
-                <div className="stat-number">{bookingStats.pending}</div>
-                <div className="mini-card-footer">
-                  <span>View pending</span>
-                  <Tooltip title="Open bookings table">
-                    <PlusOutlined />
-                  </Tooltip>
-                </div>
-              </Card>
-            </Col>
+  <Col flex="1">
+    <Card
+      className="mini-stat-card completed clickable-card"
+      bordered={false}
+      onClick={() => openBookingsModal("Completed")}
+    >
+      <div className="mini-title">Completed</div>
+      <div className="stat-number">{bookingStats.completed}</div>
+      <div className="mini-card-footer">View completed <PlusOutlined /></div>
+    </Card>
+  </Col>
 
-            <Col xs={24} sm={12} md={6}>
-              <Card
-                className="mini-stat-card rejected clickable-card"
-                bordered={false}
-                onClick={() => openBookingsModal("Rejected")}
-                role="button"
-                tabIndex={0}
-                aria-label="Open rejected bookings"
-              >
-                <div className="mini-title">Rejected</div>
-                <div className="stat-number">{bookingStats.rejected}</div>
-                <div className="mini-card-footer">
-                  <span>View rejected</span>
-                  <Tooltip title="Open bookings table">
-                    <PlusOutlined />
-                  </Tooltip>
-                </div>
-              </Card>
-            </Col>
-          </Row>
+  <Col flex="1">
+    <Card
+      className="mini-stat-card pending clickable-card"
+      bordered={false}
+      onClick={() => openBookingsModal("Pending")}
+    >
+      <div className="mini-title">Pending</div>
+      <div className="stat-number">{bookingStats.pending}</div>
+      <div className="mini-card-footer">View pending <PlusOutlined /></div>
+    </Card>
+  </Col>
+
+  <Col flex="1">
+    <Card
+      className="mini-stat-card rejected clickable-card"
+      bordered={false}
+      onClick={() => openBookingsModal("Rejected")}
+    >
+      <div className="mini-title">Rejected</div>
+      <div className="stat-number">{bookingStats.rejected}</div>
+      <div className="mini-card-footer">View rejected <PlusOutlined /></div>
+    </Card>
+  </Col>
+</Row>
+
 
           {/* AGEING (STATIC: not filtered) */}
             <Card title="Order Ageing Summary" className="panel-card ageing-card" style={{ marginTop: 20 }}>
