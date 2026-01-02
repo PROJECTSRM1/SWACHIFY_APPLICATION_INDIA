@@ -513,42 +513,29 @@ const HeaderComponent: React.FC<{
   onToggleWallet: () => void;  // ADD THIS
 }> = ({ userName, onLogout, isDashboardVisible, onToggleDashboard, onToggleWallet }) => {
 
+const navigate = useNavigate(); // add this at top of HeaderComponent if not present
+
 const menu = (
   <Menu
-    className="sw-frd-profile-menu"
     onClick={(e) => {
+  if (e.key === "profile") navigate("/freelancer/profile");
+
       if (e.key === "wallet") onToggleWallet();
       if (e.key === "logout") onLogout();
     }}
-    style={{ borderRadius: 12, overflow: "hidden", minWidth: 190 }}
   >
-    <Menu.Item key="name" disabled style={{ fontWeight: 600, color: "#102030" }}>
-      {userName}
-    </Menu.Item>
-
+    <Menu.Item key="name" disabled>{userName}</Menu.Item>
     <Menu.Divider />
-
-    {/* NEW WALLET BUTTON */}
-    <Menu.Item
-      key="wallet"
-      icon={<DollarCircleOutlined style={{ color: "#f7b733" }} />}
-      style={{ fontWeight: 500, fontSize: 14 }}
-    >
-      My Wallet
-    </Menu.Item>
-
+    <Menu.Item key="profile" icon={<UserOutlined />}>My Profile</Menu.Item> 
     <Menu.Divider />
-
-    {/* LOGOUT */}
-    <Menu.Item
-      key="logout"
-      icon={<LogoutOutlined />}
-      style={{ color: "#dc3545", fontWeight: 500 }}
-    >
+    <Menu.Item key="wallet" icon={<DollarCircleOutlined />}>My Wallet</Menu.Item>
+    <Menu.Divider />
+    <Menu.Item key="logout" icon={<LogoutOutlined />} style={{ color: "#dc3545" }}>
       Logout
     </Menu.Item>
   </Menu>
 );
+
 
 
   return (
