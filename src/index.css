@@ -17674,8 +17674,8 @@ body {
   font-size: 14px;
   padding: 6px 14px;
   border-radius: 20px;
-  background-color: var(--primary-light);
-  color: var(--primary);
+  background-color: blue;
+  color: white;
   border-color: var(--primary);
   font-weight: 600;
 }
