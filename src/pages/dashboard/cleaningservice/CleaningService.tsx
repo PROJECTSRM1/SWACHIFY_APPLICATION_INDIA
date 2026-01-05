@@ -2194,7 +2194,7 @@ sub_group_id: getSubModuleId(selectedSubKey),
                 form={form}
                 layout="vertical"
                 onFinish={onAddToCart} // <-- CHANGE THIS
-                initialValues={{ additional: [], serviceType: 'standard', propertySize: 1000 }} // Added defaults
+                initialValues={{ additional: []}} // Added defaults
                 onValuesChange={(_changed, allValues) => computeTotal(allValues)}
               >
                 <div className="sw-cs-form-row">
