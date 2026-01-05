@@ -1,0 +1,72 @@
+/* Loader.css */
+
+.loader-fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  background-color: #ffffff;
+}
+
+.loader-fullscreen.loader-overlay {
+  background-color: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(4px);
+}
+
+.loader-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.loader-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  min-height: 200px;
+}
+
+.loader-message {
+  margin-top: 16px;
+  font-size: 16px;
+  color: #666;
+  font-weight: 500;
+  text-align: center;
+}
+
+/* Custom spinner animation */
+@keyframes loaderPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(0.95);
+  }
+}
+
+.loader-content .ant-spin,
+.loader-container .ant-spin {
+  animation: loaderPulse 1.5s ease-in-out infinite;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .loader-message {
+    font-size: 14px;
+  }
+  
+  .loader-container {
+    min-height: 150px;
+    padding: 30px 15px;
+  }
+}
