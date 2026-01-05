@@ -22,6 +22,57 @@ ap {
 .sw-cs-half-width {
   width: 100%;
 }
+@media (max-width: 900px) {
+
+  .sw-cs-no-h-scroll-modal .ant-modal-body {
+    max-height: none !important;
+    overflow-y: visible !important;
+    padding-right: 0 !important;
+  }
+  .sw-cs-no-h-scroll-modal .sw-cs-otp-row {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    align-items: stretch !important;
+  }
+
+  .sw-cs-no-h-scroll-modal .otp-item {
+    width: 100% !important;
+  }
+  .sw-cs-no-h-scroll-modal .sw-cs-otp-row-below {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    margin-top: 0 !important;
+    margin-bottom: 16px !important;
+  }
+  .sw-cs-no-h-scroll-modal .sw-cs-otp-verify-btn {
+    margin-top: 0 !important;
+    margin-bottom: 16px !important;
+    width: 100% !important;
+  }
+
+  .sw-cs-no-h-scroll-modal .sw-cs-otp-verify-btn button {
+    width: 100% !important;
+    height: 48px !important;
+    font-size: 15px !important;
+    border-radius: 10px !important;
+  }
+}
+
+/* ---------- SMALL MOBILE ---------- */
+@media (max-width: 480px) {
+
+  .sw-cs-no-h-scroll-modal .sw-cs-otp-row input {
+    height: 44px !important;
+    font-size: 14px !important;
+  }
+
+  .sw-cs-no-h-scroll-modal .sw-cs-otp-row-below {
+    gap: 10px !important;
+  }
+}
+
 
 .sw-cs-location-btn {
   width: 100%;
@@ -4866,9 +4917,18 @@ body,
 .sw-fr-hero-buttons {
   display: flex;
   justify-content: center;
-  gap: 16px;
+  gap: 25px;
   flex-wrap: wrap;
   margin-bottom: 18px;
+  border-radius: 25px !important;
+}
+
+.sw-fr-hero-buttons:hover{
+  color: #000;
+}
+
+.sw-fr-back-arrow{
+  cursor: pointer !important;
 }
 
 /* ========== STATS ========== */
@@ -5439,19 +5499,23 @@ body {
 
 .sw-fr-sr-filter-btn {
   border-radius: 10px;
-  padding: 7px 12px;
-  height: 40px;
-  background: #09a86a;
-  border: 2px solid #09a86a;
+  padding: 7px 30px;
+  height: 36px;
+  background: #10b59a;
+  border: 10px thin #10b59a !important;
   color: #ffffff;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 7px;
   font-weight: 600;
 }
 
 .sw-fr-sr-filter-btn.active {
   box-shadow: 0 0 0 4px rgba(10, 160, 140, 0.08);
+}
+
+.sw-fr-text{
+  font-size: 13px !important;
 }
 
 /* Filters panel */
