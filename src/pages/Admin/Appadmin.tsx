@@ -1698,7 +1698,7 @@ const bookingStats = useMemo(() => {
   </Modal>
 
   {/* ---------- ASSIGN MODAL ---------- */}
-  <Modal
+<Modal
     open={assignOpen}
     title="Assign Booking"
     onCancel={() => setAssignOpen(false)}
@@ -1706,13 +1706,20 @@ const bookingStats = useMemo(() => {
     width={900}
     centered
     bodyStyle={{
-      maxHeight: "75vh",
-      overflowY: "auto",
-      overflowX: "hidden",
+      // maxHeight: "75vh",
+      // overflowY: "auto",
+      // overflowX: "hidden",
+       padding: 0,
+    overflow: "hidden",
     }}
   >
     {assignRecord && (
-      <>
+      <div
+        style={{
+      maxHeight: "75vh",
+      overflowY: "auto",
+    }}
+      >
         <div style={{ marginBottom: 16 }} className="assign-modal-header">
           <strong>Booking ID:</strong> {assignRecord.bookingId}
           <br />
@@ -1788,7 +1795,7 @@ const bookingStats = useMemo(() => {
   ))}
 </div>
 
-      </>
+      </div>
     )}
   </Modal>
 {/* ---------- FREELANCER / VENDOR POPUP ---------- */}
