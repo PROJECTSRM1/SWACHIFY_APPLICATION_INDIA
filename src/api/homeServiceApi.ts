@@ -10,6 +10,7 @@ const API = axios.create({
 export interface HomeServiceApiResponse {
   id: number;
   module_id: number;
+  sub_module_id: number;
   service_id: number;
   sub_service_id: number;
   full_name: string;
@@ -31,6 +32,8 @@ export interface HomeServiceApiResponse {
 }
 
 export interface Job {
+  sub_module_id: number;
+  module_id: number;
   ticketId: string;
   title: string;
   category: string;
@@ -68,6 +71,11 @@ export const fetchHomeServiceRequests = async (): Promise<Job[]> => {
       TIME_SLOTS[item.time_slot_id] || "Time not assigned";
 
     return {
+
+      // ✅ REQUIRED BACKEND IDS (ADD THESE)
+      module_id: item.module_id,
+      sub_module_id:item.sub_module_id,
+
       ticketId: `TKT${item.id}`,
       title: item.service_name || "Home Service",
       category: item.category_name || "General",
