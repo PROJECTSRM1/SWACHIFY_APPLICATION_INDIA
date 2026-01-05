@@ -6082,6 +6082,48 @@ body {
 .sw-fr-signup-link:hover {
   text-decoration: underline;
 }
+/* ===============================
+   FIX INPUT HORIZONTAL ALIGNMENT
+   (Ant Design prefix inputs)
+================================ */
+
+/* Main wrapper */
+.ant-input-affix-wrapper {
+  display: flex !important;
+  align-items: center !important;
+  height: 48px !important;
+  border-radius: 12px !important;
+  padding: 0 14px !important;
+}
+
+/* Prefix icon */
+.ant-input-prefix {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+  font-size: 16px;
+  color: #999;
+}
+
+/* Actual input */
+.ant-input {
+  height: 100% !important;
+  line-height: 48px !important;
+  padding: 0 !important;
+  font-size: 15px;
+}
+
+/* Password input fix */
+.ant-input-password {
+  display: flex;
+  align-items: center;
+}
+
+/* Remove vertical jump on focus */
+.ant-input-affix-wrapper-focused {
+  box-shadow: none !important;
+}
+
 
 /* FIX: Increase card size & avoid overlap on small screens */
 @media (max-width: 576px) {

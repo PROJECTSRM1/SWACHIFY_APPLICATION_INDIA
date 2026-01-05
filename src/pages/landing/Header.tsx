@@ -22,6 +22,7 @@ import {
   EyeTwoTone,
   MenuOutlined,
   CloseOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 
 import axios from "axios";
@@ -390,7 +391,10 @@ if (roleType === "admin") {
   }}
 >
 
-
+          <div className="auth-header">
+            <UserOutlined className="auth-profile-icon" />
+            <div className="auth-title">Welcome Back</div>
+          </div>
 
       
         <Tabs
