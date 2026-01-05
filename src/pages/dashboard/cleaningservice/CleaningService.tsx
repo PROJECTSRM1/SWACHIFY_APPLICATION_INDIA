@@ -1661,57 +1661,62 @@ setIsModulesModalOpen(false);
   };
 
 
-  const computeTotal = (values: any) => {
-    if (!selectedModule) {
-      setComputedPrice(null);
-      return;
-    }
+ const computeTotal = (values: any) => {
+  if (!selectedModule) {
+    setComputedPrice(null);
+    return;
+  }
 
-    let st = values?.serviceType || "standard";
-    setServiceTypeKey(st);
+  let st = values?.serviceType || "standard";
+  setServiceTypeKey(st);
 
-    const sqftRaw = values?.propertySize;
-    let sqft = 0;
+  const sqftRaw = values?.propertySize;
+  let sqft = 0;
 
-    if (typeof sqftRaw === "number") sqft = sqftRaw;
-    else if (typeof sqftRaw === "string") sqft = parseFloat(sqftRaw || "0") || 0;
+  if (typeof sqftRaw === "number") sqft = sqftRaw;
+  else if (typeof sqftRaw === "string") sqft = parseFloat(sqftRaw || "0") || 0;
 
-    const addons: string[] = values?.additional || [];
-    const selectedServices: string[] = values?.selectedServices || [];
+  const addons: string[] = values?.additional || [];
+  const selectedServices: string[] = values?.selectedServices || [];
+  const paymentType = values?.paymentType || "full"; // ⭐ ADD THIS
 
+  let total = 0;
+
+  if (sqft > 0) {
+    total = calculatePrice(
+      selectedModule,
+      sqft,
+      st,
+      addons,
+      selectedServices
+    );
+  } else {
     const basePrice =
-      parseInt((selectedModule.price || "").toString().replace(/[₹,\s]/g, "")) || 0;
+      parseInt((selectedModule.price || "").replace(/[₹,\s]/g, "")) || 0;
 
     const mult = SERVICE_MULTIPLIERS[st] ?? 1;
-
 
     const extraSelectedServicePrice = selectedServices.reduce(
       (sum, s) => sum + (INDIVIDUAL_SERVICE_PRICES[s] || 0),
       0
     );
 
+    const addonCost = addons.reduce(
+      (s, a) => s + (ADDON_PRICES[a] || 0),
+      0
+    );
 
-    const addonCost = addons.reduce((s, a) => s + (ADDON_PRICES[a] || 0), 0);
+    total = Math.round((basePrice + extraSelectedServicePrice) * mult) + addonCost;
+  }
 
+  // ⭐⭐ PARTIAL PAYMENT LOGIC ⭐⭐
+  if (paymentType === "partial") {
+    total = Math.ceil(total / 2); // 50% of price
+  }
 
-    if (sqft > 0) {
-      const total = calculatePrice(
-        selectedModule,
-        sqft,
-        st,
-        addons,
-        selectedServices
-      );
-      setComputedPrice(total);
-      return;
-    }
+  setComputedPrice(total);
+};
 
-
-    const display =
-      Math.round((basePrice + extraSelectedServicePrice) * mult) + addonCost;
-
-    setComputedPrice(display);
-  };
 
   const getModuleId = (key: string): number => {
     // Assuming 'residential' is ID 1, 'commercial' is ID 2, etc.
