@@ -443,68 +443,6 @@ const MOCK_USER = {
   skills: ['Cleaning', 'Home Services', 'Plumbing', 'Electrical'],
 };
 
-// --- HEADER WITH PROFILE DROPDOWN (UPDATED) ---
-// const HeaderComponent: React.FC<{
-//   userName: string;
-//   onLogout: () => void;
-//   isDashboardVisible: boolean; // NEW: state prop
-//   onToggleDashboard: () => void; // NEW: handler prop
-// }> = ({ userName, onLogout, isDashboardVisible, onToggleDashboard }) => {
-//   const menu = (
-//     <Menu
-//       className="sw-frd-profile-menu"
-//       onClick={(e) => {
-//         if (e.key === 'logout') onLogout();
-//       }}
-//       style={{ borderRadius: 8, overflow: 'hidden', minWidth: 180 }}
-//     >
-//       <Menu.Item key="name" disabled style={{ fontWeight: 600, color: '#102030' }}>
-//         {userName}
-//       </Menu.Item>
-//       <Menu.Divider />
-//       <Menu.Item
-//         key="logout"
-//         icon={<LogoutOutlined />}
-//         style={{ color: '#dc3545', fontWeight: 500 }}
-//       >
-//         Logout
-//       </Menu.Item>
-//     </Menu>
-//   );
-
-//   return (
-//     <Header className="sw-frd-header">
-//       <div className="sw-frd-logo-area">
-//         <Text strong className="sw-frd-logo-text">
-//           SWACHIFY INDIA
-//         </Text>
-//         <Text className="sw-frd-portal-text">Freelancer Portal</Text>
-//       </div>
-
-//       <div className="sw-frd-user-area">
-//         {/* NEW: View My Dashboard button, visible only when dashboard is hidden */}
-//         {!isDashboardVisible && (
-//           <Button
-//             type="primary"
-//             className="sw-frd-view-dashboard-btn"
-//             onClick={onToggleDashboard}
-//             icon={<ArrowRightOutlined />}
-//           >
-//             View My Dashboard
-//           </Button>
-//         )}
-//         <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
-//           <Button
-//             type="default"
-//             className="sw-frd-profile-btn"
-//             icon={<UserOutlined style={{ fontSize: 18 }} />}
-//           />
-//         </Dropdown>
-//       </div>
-//     </Header>
-//   );
-// };
-
 
 
 // Header Component
