@@ -461,3 +461,61 @@ button[type="submit"]:hover {
   font-weight: 700;
   color: #1f2937;
 }
+/* ===============================
+   AUTH INPUT ALIGNMENT FIX
+================================ */
+
+/* Fix Email / Text input padding */
+.swl-hs-rf-classname .ant-input {
+  padding-left: 18px !important;
+}
+
+/* Fix Password wrapper alignment */
+.swl-hs-rf-classname .ant-input-password {
+  padding: 0 !important; /* remove uneven padding */
+}
+
+/* Fix inner password input */
+.swl-hs-rf-classname .ant-input-password .ant-input {
+  padding-left: 18px !important;
+  padding-right: 44px !important; /* space for eye icon */
+  height: 56px;
+}
+
+/* Fix eye icon vertical alignment */
+.swl-hs-rf-classname .ant-input-password .ant-input-suffix {
+  margin-right: 12px;
+}
+
+/* Ensure full width blue background */
+.swl-hs-rf-classname .ant-input-affix-wrapper {
+  padding: 0 !important;
+  height: 56px;
+  align-items: center;
+}
+/* ===============================
+   FIX PASSWORD BLUE BACKGROUND
+================================ */
+
+/* Force password wrapper to look like normal input */
+.swl-hs-rf-classname .ant-input-affix-wrapper {
+  height: 56px !important;
+  border-radius: 16px !important;
+  padding: 0 16px !important;
+  background-color: #eaf2ff !important; /* same as email */
+  display: flex;
+  align-items: center;
+}
+
+/* Inner password input */
+.swl-hs-rf-classname .ant-input-affix-wrapper input.ant-input {
+  background: transparent !important;
+  padding: 0 !important;
+  height: 100%;
+  font-size: 16px;
+}
+
+/* Eye icon alignment */
+.swl-hs-rf-classname .ant-input-affix-wrapper .ant-input-suffix {
+  margin-left: 8px;
+}
