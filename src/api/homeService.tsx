@@ -21,14 +21,25 @@ export interface HomeServiceBookingPayload {
   payment_type_id: number;
   payment_done:boolean;
   created_by:number;
-   status_id: number
+   status_id: number;
+  
 }
 
 export interface HomeServiceBookingResponse {
-  id: number;   
+  id: number;
   message: string;
+  order_id?: string;  
+}
+
+export interface HomeServiceBookingApiResponse {
+  service_id: number;
+  message: string;
+  status_id: number;
+  status_name: string;
   order_id?: string;
 }
+
+
 
 const API_ENDPOINT = "/api/home-service";
 
@@ -39,6 +50,18 @@ const API_ENDPOINT = "/api/home-service";
 export const bookHomeService = async (
   data: HomeServiceBookingPayload
 ): Promise<HomeServiceBookingResponse> => {
-  const res = await api.post<HomeServiceBookingResponse>(API_ENDPOINT, data);
-  return res.data;
+  const res = await api.post<HomeServiceBookingApiResponse>(
+    API_ENDPOINT,
+    data
+  );
+
+  return {
+    id: res.data.service_id,   // ✅ allowed now
+    message: res.data.message,
+    order_id: res.data.order_id,
+  };
 };
+
+
+
+
