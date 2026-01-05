@@ -442,68 +442,6 @@ const MOCK_USER = {
   skills: ['Cleaning', 'Home Services', 'Plumbing', 'Electrical'],
 };
 
-// --- HEADER WITH PROFILE DROPDOWN (UPDATED) ---
-// const HeaderComponent: React.FC<{
-//   userName: string;
-//   onLogout: () => void;
-//   isDashboardVisible: boolean; // NEW: state prop
-//   onToggleDashboard: () => void; // NEW: handler prop
-// }> = ({ userName, onLogout, isDashboardVisible, onToggleDashboard }) => {
-//   const menu = (
-//     <Menu
-//       className="sw-frd-profile-menu"
-//       onClick={(e) => {
-//         if (e.key === 'logout') onLogout();
-//       }}
-//       style={{ borderRadius: 8, overflow: 'hidden', minWidth: 180 }}
-//     >
-//       <Menu.Item key="name" disabled style={{ fontWeight: 600, color: '#102030' }}>
-//         {userName}
-//       </Menu.Item>
-//       <Menu.Divider />
-//       <Menu.Item
-//         key="logout"
-//         icon={<LogoutOutlined />}
-//         style={{ color: '#dc3545', fontWeight: 500 }}
-//       >
-//         Logout
-//       </Menu.Item>
-//     </Menu>
-//   );
-
-//   return (
-//     <Header className="sw-frd-header">
-//       <div className="sw-frd-logo-area">
-//         <Text strong className="sw-frd-logo-text">
-//           SWACHIFY INDIA
-//         </Text>
-//         <Text className="sw-frd-portal-text">Freelancer Portal</Text>
-//       </div>
-
-//       <div className="sw-frd-user-area">
-//         {/* NEW: View My Dashboard button, visible only when dashboard is hidden */}
-//         {!isDashboardVisible && (
-//           <Button
-//             type="primary"
-//             className="sw-frd-view-dashboard-btn"
-//             onClick={onToggleDashboard}
-//             icon={<ArrowRightOutlined />}
-//           >
-//             View My Dashboard
-//           </Button>
-//         )}
-//         <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
-//           <Button
-//             type="default"
-//             className="sw-frd-profile-btn"
-//             icon={<UserOutlined style={{ fontSize: 18 }} />}
-//           />
-//         </Dropdown>
-//       </div>
-//     </Header>
-//   );
-// };
-
 
 const HeaderComponent: React.FC<{
   userName: string;
@@ -1491,7 +1429,6 @@ useEffect(() => {
               </div>
             </section>
 
-            {/* ACTIVE JOB – SINGLE CARD WITH FLOW */}
             <section className="sw-frd-section">
               <div className="sw-frd-section-header">
                 <Title level={4} className="sw-frd-section-title">
@@ -1554,66 +1491,6 @@ useEffect(() => {
           </>
         )}
 
-        {/* AVAILABLE REQUESTS (ALWAYS VISIBLE) */}
-        {/* <section className="sw-frd-section">
-          <Row
-            justify="space-between"
-            align="middle"
-            className="sw-frd-available-header"
-          >
-            <div>
-              <Title
-                level={4}
-                className="sw-frd-section-title sw-frd-requests-title"
-              >
-                Available Requests
-              </Title>
-              <Text className="sw-frd-section-subtitle">
-                Start your flow by accepting a request
-              </Text>
-            </div>
-
-            <Space size={12} className="sw-frd-filter-bar">
-              <Select
-                value={requestFilter}
-                onChange={(value) => setRequestFilter(value as any)}
-                className="sw-frd-filter-select"
-              >
-                <Option value="All Requests">All Requests</Option>
-                <Option value="Matched to My Skills">
-                  Matched to My Skills
-                </Option>
-              </Select>
-
-              <Select
-                value={requestSort}
-                onChange={(value) => setRequestSort(value as any)}
-                className="sw-frd-sort-select"
-              >
-                <Option value="Newest First">Newest First</Option>
-                <Option value="Highest Price">Highest Price</Option>
-              </Select>
-            </Space>
-          </Row>
-
-          <div className="sw-frd-requests-list">
-            {filteredRequests.length > 0 ? (
-              filteredRequests.map((req) => (
-                <RequestCard
-                  key={req.ticketId}
-                  request={req}
-                  onAccept={handleAcceptRequest}
-                />
-              ))
-            ) : (
-              <Empty
-                description={`No available requests matching "${requestFilter}" criteria.`}
-                image={Empty.PRESENTED_IMAGE_SIMPLE}
-              />
-            )}
-          </div>
-        </section> */}
-        {/* AVAILABLE REQUESTS — only show when dashboard is NOT visible (i.e. login/requests view) */}
 {!isDashboardVisible && (
   <section className="sw-frd-section">
     <Row
@@ -1634,18 +1511,7 @@ useEffect(() => {
       </div>
 
       <Space size={12} className="sw-frd-filter-bar">
-        {/* <Select
-          value={requestFilter}
-          onChange={(value) => setRequestFilter(value as any)}
-          className="sw-frd-filter-select"
-        >
-          <Option value="All Requests">All Requests</Option>
-          <Option value="Matched to My Skills">
-            Matched to My Skills
-          </Option>
-        </Select> */}
-
-
+        
 
 <Select
   value={selectedSkill}
@@ -1669,31 +1535,6 @@ useEffect(() => {
       </Space>
     </Row>
 
-    {/* <div className="sw-frd-requests-list">
-      {filteredRequests.length > 0 ? (
-        filteredRequests.map((req) => (
-          <RequestCard
-            key={req.ticketId}
-            request={req}
-            onAccept={handleAcceptRequest}
-          />
-        ))
-      ) : (
-        // <Empty
-        //   description={`No available requests matching "${requestFilter}" criteria.`}
-        //   image={Empty.PRESENTED_IMAGE_SIMPLE}
-        // />
-        <Empty
-  description={
-    selectedSkill === 'All Skills'
-      ? 'No available requests.'
-      : `No requests found for "${selectedSkill}".`
-  }
-  image={Empty.PRESENTED_IMAGE_SIMPLE}
-/>
-
-      )}
-    </div> */}
 
         <div className="sw-frd-requests-list">
       {visibleRequests.length === 0 && !loadingMore && (
@@ -1721,10 +1562,8 @@ useEffect(() => {
   ))
 )}
 
-      {/* Sentinel observed by IntersectionObserver */}
       <div ref={sentinelRef} style={{ height: 1 }} />
 
-      {/* Loading / end indicators */}
       {loadingMore && (
         <div style={{ textAlign: 'center', padding: 12 }}>
           <span>Loading more…</span>
