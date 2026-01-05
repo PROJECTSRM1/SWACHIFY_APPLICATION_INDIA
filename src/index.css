@@ -4866,9 +4866,18 @@ body,
 .sw-fr-hero-buttons {
   display: flex;
   justify-content: center;
-  gap: 16px;
+  gap: 25px;
   flex-wrap: wrap;
   margin-bottom: 18px;
+  border-radius: 25px !important;
+}
+
+.sw-fr-hero-buttons:hover{
+  color: #000;
+}
+
+.sw-fr-back-arrow{
+  cursor: pointer !important;
 }
 
 /* ========== STATS ========== */
@@ -5439,19 +5448,23 @@ body {
 
 .sw-fr-sr-filter-btn {
   border-radius: 10px;
-  padding: 7px 12px;
-  height: 40px;
-  background: #09a86a;
-  border: 2px solid #09a86a;
+  padding: 7px 30px;
+  height: 36px;
+  background: #10b59a;
+  border: 10px thin #10b59a !important;
   color: #ffffff;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 7px;
   font-weight: 600;
 }
 
 .sw-fr-sr-filter-btn.active {
   box-shadow: 0 0 0 4px rgba(10, 160, 140, 0.08);
+}
+
+.sw-fr-text{
+  font-size: 13px !important;
 }
 
 /* Filters panel */
