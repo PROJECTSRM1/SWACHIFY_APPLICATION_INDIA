@@ -1,3 +1,47 @@
+
+
+/* ===============================
+   REMOVE CHROME AUTOFILL BLUE/YELLOW
+   =============================== */
+
+.sw-cs-details-modal-body input:-webkit-autofill,
+.sw-cs-details-modal-body input:-webkit-autofill:hover,
+.sw-cs-details-modal-body input:-webkit-autofill:focus,
+.sw-cs-details-modal-body textarea:-webkit-autofill,
+.sw-cs-details-modal-body select:-webkit-autofill {
+  -webkit-box-shadow: 0 0 -10 1000px #fff inset !important;
+  -webkit-text-fill-color: #0d0606 !important;
+  transition: background-color 9999s ease-in-out 0s;
+}
+
+
+/* Inputs & Selects ONLY (exclude textarea) */
+.sw-cs-details-modal-body 
+.ant-input:not(textarea),
+.sw-cs-details-modal-body 
+.ant-input-affix-wrapper,
+.sw-cs-details-modal-body 
+.ant-select-selector {
+  height: 42px !important;          /* ✅ SAME HEIGHT */
+  padding: 0 12px !important;       /* ✅ VALID PADDING */
+  font-size: 14px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+}
+
+/* ✅ Special Instructions textarea padding fix */
+.sw-cs-details-modal-body 
+.ant-input-textarea textarea {
+  padding: 10px 12px !important;   /* ← LEFT & RIGHT PADDING */
+  line-height: 1.5;
+  font-size: 14px;
+  min-height: 96px;
+  box-sizing: border-box;
+}
+
+
+
 /* ---------------- updated CleaningService.css  nithin cleaning dash ---------------- */
 
 ap {
@@ -74,14 +118,24 @@ ap {
 }
 
 
+
+/* Detect My Current Location button */
 .sw-cs-location-btn {
   width: 100%;
   height: 40px;
   border-radius: 6px;
   border: 1px solid #000;
   background: #fff;
-  margin-top: -8px; /* aligns perfectly under address */
+
+  margin-top: -8px;     /* keeps alignment */
+  margin-bottom: 16px; /* ✅ space below button */
 }
+
+.sw-cs-location-btn:hover {
+  background: #000;
+  color: #fff;
+}
+
 
 .sw-cs-location-btn:hover {
   background: #000;
@@ -6108,8 +6162,7 @@ body {
 /* Actual input */
 .ant-input {
   height: 100% !important;
-  line-height: 48px !important;
-  padding: 0 !important;
+  padding: 10px !important;
   font-size: 15px;
 }
 
@@ -18567,7 +18620,7 @@ width: 100%;
 /* CARD */
 .recent-booking-card {
   border-radius: 12px !important;
-  padding: 6px;
+  padding: 12px;
   background: #fff !important;
   border: 1px solid #eef2f7 !important;
   box-shadow: 0 6px 18px rgba(12, 18, 30, 0.04);
@@ -18617,7 +18670,7 @@ width: 100%;
 
 /* list inner spacing so each card keeps fixed height and looks tidy */
 .recent-booking-wrapper .ant-list-item {
-  padding: 0;
+  padding:6px 0;
   margin-bottom: 14px;
 }
 
@@ -18711,6 +18764,189 @@ width: 100%;
     gap: 14px;
   }
 }
+
+
+
+
+
+
+
+
+
+/* =========================================
+   MOBILE FIX – Image + Status alignment
+   Desktop NOT affected
+========================================= */
+@media (max-width: 768px) {
+
+  /* Stack columns vertically */
+  .recent-booking-wrapper .ant-row {
+    flex-direction: column;
+    padding-left: 12px;  
+    
+    align-items: flex-start;
+  }
+
+  /* Image wrapper */
+  .recent-booking-wrapper .booking-image {
+    position: relative;
+    margin-bottom: 12px;
+  }
+
+  /* Move status beside image */
+  .recent-booking-wrapper .booking-status {
+    position: absolute;
+    left: 109px;       /* image width + gap */
+    top: 10px;
+    padding: 0;
+  }
+
+  /* Status pill style */
+  .recent-booking-wrapper .booking-status .ant-tag {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  /* Fix text spacing */
+  .recent-booking-wrapper .booking-text {
+    padding-left: 0;
+    width: 100%;
+  }
+}
+
+
+
+
+
+/* ===============================
+   MEDIUM MOBILES (375px – 425px)
+================================ */
+@media (min-width: 321px) and (max-width: 425px) {
+
+  .recent-booking-wrapper .booking-text {
+    padding-left: 2px;   /* slightly more space */
+  }
+
+  .recent-booking-wrapper .booking-status {
+    left: 104px;          /* move status a bit right */
+    top: 22px;
+  }
+
+  .recent-booking-wrapper .booking-status .ant-tag {
+    font-size: 13px;      /* better proportion */
+  }
+}
+
+/* ===============================
+   TABLET VIEW
+================================ */
+@media (min-width: 426px) and (max-width: 768px) {
+
+  .recent-booking-wrapper .ant-row {
+    flex-direction: row;     /* restore horizontal feel */
+    align-items: center;
+  }
+
+  .recent-booking-wrapper .booking-text {
+    padding-left: 16px;
+  }
+
+  .recent-booking-wrapper .booking-status {
+    position: static;        /* normal flow */
+    margin-left: auto;
+  }
+}
+
+.booking-row {
+  flex-wrap: nowrap;
+}
+
+/* HEADER = TITLE + STATUS */
+.booking-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+/* TITLE */
+.booking-title {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+/* STATUS */
+.booking-status-tag {
+  padding: 6px 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* 🔥 MOBILE FIX (375px & 425px) */
+@media (max-width: 480px) {
+  .booking-header {
+    align-items: flex-start;
+  }
+}
+/* Mobile ONLY (small + medium + large mobiles) */
+@media (max-width: 480px) {
+  .booking-status-tag {
+    position: relative;
+    top: -80px; 
+    left:10px;  /* tweak if needed */
+  }
+}
+
+
+.booking-row {
+  padding-top: 10px;
+  padding-bottom: 6px;
+}
+
+
+/* Laptop ONLY – vertically center image & text */
+@media (min-width: 1024px) {
+  .recent-booking-wrapper .booking-row {
+    align-items: center;
+  }
+}
+
+
+@media (min-width: 1024px) {
+  .recent-booking-wrapper .booking-text {
+    margin-top: -19px;   /* small upward nudge */
+  }
+}
+
+/* Laptop ONLY – move status slightly DOWN */
+@media (min-width: 1024px) {
+  .booking-status-tag {
+    position: relative;
+    top: 30px;   /* move down */
+  }
+}
+/* TABLET ONLY – reduce top space for image & title */
+@media (min-width: 426px) and (max-width: 1023px) {
+
+  /* Reduce AntD card top padding */
+  .recent-booking-wrapper .ant-card-body {
+    padding-top: 0px;   /* default is ~24px */
+  }
+
+  /* Pull image slightly up */
+  .recent-booking-wrapper .booking-image {
+    padding-top: 0px;    /* was 12px */
+  }
+
+  /* Pull title (khasim2) up */
+  .recent-booking-wrapper .booking-text {
+    padding-top: 0px;    /* was 12px */
+  }
+}
+
+
 
 /* /////vamsi Recent booking css//// */
 

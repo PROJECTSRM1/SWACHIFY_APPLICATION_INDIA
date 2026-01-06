@@ -194,36 +194,50 @@ useEffect(() => {
 
           return (
             <List.Item key={item.id}>
-              <Card bordered={false} className="booking-card">
-                <Row align="top" wrap>
-                  {/* IMAGE + STATUS */}
-<Col span={24}>
-  <div className="image-status-row">
-    <Image
-      src={item.image}
-      width={84}
-      height={84}
-      preview={false}
-      style={{ objectFit: "cover", borderRadius: 8 }}
-    />
-
-    <Tag color={meta.color} className="status-tag">
-      {meta.label}
-    </Tag>
-  </div>
-</Col>
-
+              <Card bordered={false}>
+                <Row align="top" className="booking-row">
+                  {/* IMAGE */}
+                  <Col flex="84px" className="Booking-image">
+                    {item.image ? (
+                      <Image
+                        src={item.image}
+                        width={84}
+                        height={84}
+                        preview={false}
+                        style={{ objectFit: "cover", borderRadius: 8 }}
+                      />
+                    ) : (
+                      <div
+                        style={{
+                          width: 84,
+                          height: 84,
+                          borderRadius: 8,
+                          background: "#f5f5f5",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        No Image
+                      </div>
+                    )}
+                  </Col>
 
                   {/* DETAILS */}
-                  <Col span={24} style={{ marginTop: 10 }}>
+                  <Col flex="auto" className="booking-text">
+                    <div className="booking-header">
+  <div className="booking-title">{item.title}</div>
 
-                    <div className="booking-title" style={{ fontSize: 18, fontWeight: 700 }}>
+  <Tag
+    color={meta.color}
+    className="booking-status-tag"
+  >
+    {meta.label}
+  </Tag>
+</div>
 
-                      {item.title}
-                    </div>
 
-                   <div className="booking-details" style={{ color: "#6b7280", fontSize: 14 }}>
-
+                    <div style={{ color: "#6b7280", fontSize: 14 }}>
                       <div>Date: {item.date}</div>
                       <div>Time: {item.time}</div>
                       <div>Amount: ₹{item.amount}</div>
@@ -241,6 +255,8 @@ useEffect(() => {
                       </div>
                     )}
                   </Col>
+
+                  {/* STATUS BADGE */}
                 </Row>
               </Card>
             </List.Item>
