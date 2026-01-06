@@ -194,42 +194,36 @@ useEffect(() => {
 
           return (
             <List.Item key={item.id}>
-              <Card bordered={false}>
-                <Row align="middle" wrap={false}>
-                  {/* IMAGE */}
-                  <Col flex="84px">
-                    {item.image ? (
-                      <Image
-                        src={item.image}
-                        width={84}
-                        height={84}
-                        preview={false}
-                        style={{ objectFit: "cover", borderRadius: 8 }}
-                      />
-                    ) : (
-                      <div
-                        style={{
-                          width: 84,
-                          height: 84,
-                          borderRadius: 8,
-                          background: "#f5f5f5",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                      >
-                        No Image
-                      </div>
-                    )}
-                  </Col>
+              <Card bordered={false} className="booking-card">
+                <Row align="top" wrap>
+                  {/* IMAGE + STATUS */}
+<Col span={24}>
+  <div className="image-status-row">
+    <Image
+      src={item.image}
+      width={84}
+      height={84}
+      preview={false}
+      style={{ objectFit: "cover", borderRadius: 8 }}
+    />
+
+    <Tag color={meta.color} className="status-tag">
+      {meta.label}
+    </Tag>
+  </div>
+</Col>
+
 
                   {/* DETAILS */}
-                  <Col flex="auto" style={{ paddingLeft: 16 }}>
-                    <div style={{ fontSize: 18, fontWeight: 700 }}>
+                  <Col span={24} style={{ marginTop: 10 }}>
+
+                    <div className="booking-title" style={{ fontSize: 18, fontWeight: 700 }}>
+
                       {item.title}
                     </div>
 
-                    <div style={{ color: "#6b7280", fontSize: 14 }}>
+                   <div className="booking-details" style={{ color: "#6b7280", fontSize: 14 }}>
+
                       <div>Date: {item.date}</div>
                       <div>Time: {item.time}</div>
                       <div>Amount: ₹{item.amount}</div>
@@ -246,16 +240,6 @@ useEffect(() => {
                         </div>
                       </div>
                     )}
-                  </Col>
-
-                  {/* STATUS BADGE */}
-                  <Col flex="110px">
-                    <Tag
-                      color={meta.color}
-                      style={{ padding: "6px 12px", fontWeight: 600 }}
-                    >
-                      {meta.label}
-                    </Tag>
                   </Col>
                 </Row>
               </Card>

@@ -226,6 +226,7 @@ const previewRequests = liveRequests.slice(0, 3);
               shape="round"
               onClick={() => navigate("/servicerequests")}
               icon={<ArrowRightOutlined />}
+              className="sw-fr-text"
             >
               View Live Requests
             </Button>
@@ -235,6 +236,7 @@ const previewRequests = liveRequests.slice(0, 3);
               size="large"
               shape="round"
               onClick={() => navigate("/freelancerregistration")}
+              className="sw-fr-text"
             >
               Become a Freelancer
             </Button>
