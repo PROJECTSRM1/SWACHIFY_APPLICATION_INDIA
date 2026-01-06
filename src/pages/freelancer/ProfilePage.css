@@ -1,0 +1,219 @@
+/* ===============================
+   THEME VARIABLES
+================================ */
+:root {
+  --primary-color: #3c66f1;
+  --primary-light: #481ce9;
+  --text-dark: #1f2937;
+  --text-muted: #6b7280;
+  --page-bg: #eaf7fb;
+  --card-bg: #ffffff;
+  --radius-lg: 18px;
+  --radius-sm: 10px;
+}
+
+/* ===============================
+   PAGE WRAPPER
+================================ */
+.profile-page-wrapper {
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--page-bg) 60%, #ffffff 40%);
+  padding: 40px 60px;
+}
+
+/* ===============================
+   TOP DASHBOARD BUTTON (ALIGNED)
+================================ */
+.profile-dashboard-top {
+  margin-bottom: 32px;
+}
+
+/* Dashboard Button */
+.profile-dashboard-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: var(--radius-sm);
+  background: var(--primary-color);
+  color: #ffffff;
+  font-size: 14px;
+  cursor: pointer;
+  width: fit-content;
+  transition: all 0.2s ease;
+
+  /* ✅ ALIGN WITH CARD */
+  margin-left: 7px;
+}
+
+.profile-dashboard-btn:hover {
+  opacity: 0.9;
+}
+
+/* ===============================
+   MAIN ROW
+================================ */
+.profile-content-row {
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+}
+
+/* ===============================
+   COMMON CARD
+================================ */
+.profile-card-base {
+  background: var(--card-bg);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+}
+
+/* ===============================
+   PERSONAL DETAILS CARD
+================================ */
+.profile-personal-box {
+  width: 320px;
+  padding: 30px 26px;
+}
+
+/* Avatar */
+.profile-avatar {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 18px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-avatar-icon {
+  font-size: 34px;
+  color: #ffffff;
+}
+
+/* Title */
+.profile-section-title {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  color: #0f172a;
+  margin-bottom: 22px;
+}
+
+/* Info rows */
+.profile-info-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  color: var(--text-dark);
+  margin-bottom: 14px;
+}
+
+.profile-info-icon {
+  font-size: 16px;
+  color: var(--primary-color);
+}
+
+.profile-info-row b {
+  font-weight: 600;
+}
+
+/* ===============================
+   BANK DETAILS CARD
+================================ */
+.profile-bank-box {
+  flex: 1;
+  padding: 32px 40px;
+}
+
+/* Title */
+.profile-bank-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #0f172a;
+  margin-bottom: 30px;
+}
+
+/* Grid */
+.bank-details-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  margin-bottom: 28px;
+}
+
+/* Item */
+.bank-detail-item {
+  text-align: center;
+}
+
+/* Icon circle */
+.bank-circle-icon {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 12px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bank-circle-icon svg {
+  font-size: 24px;
+  color: #ffffff;
+}
+
+/* Labels */
+.bank-label-text {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+  display: block;
+}
+
+.bank-value-text {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+/* ===============================
+   SUPPORT TEXT
+================================ */
+.profile-support-note {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.profile-support-link {
+  color: var(--primary-color);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+@media (max-width: 1024px) {
+  .profile-content-row {
+    flex-direction: column;
+  }
+
+  .profile-personal-box {
+    width: 100%;
+  }
+
+  .bank-details-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-dashboard-btn {
+    margin-left: 0;
+  }
+}

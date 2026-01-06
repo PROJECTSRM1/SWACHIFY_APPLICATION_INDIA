@@ -195,9 +195,9 @@ useEffect(() => {
           return (
             <List.Item key={item.id}>
               <Card bordered={false}>
-                <Row align="middle" wrap={false}>
+                <Row align="top" className="booking-row">
                   {/* IMAGE */}
-                  <Col flex="84px">
+                  <Col flex="84px" className="Booking-image">
                     {item.image ? (
                       <Image
                         src={item.image}
@@ -224,10 +224,18 @@ useEffect(() => {
                   </Col>
 
                   {/* DETAILS */}
-                  <Col flex="auto" style={{ paddingLeft: 16 }}>
-                    <div style={{ fontSize: 18, fontWeight: 700 }}>
-                      {item.title}
-                    </div>
+                  <Col flex="auto" className="booking-text">
+                    <div className="booking-header">
+  <div className="booking-title">{item.title}</div>
+
+  <Tag
+    color={meta.color}
+    className="booking-status-tag"
+  >
+    {meta.label}
+  </Tag>
+</div>
+
 
                     <div style={{ color: "#6b7280", fontSize: 14 }}>
                       <div>Date: {item.date}</div>
@@ -249,14 +257,6 @@ useEffect(() => {
                   </Col>
 
                   {/* STATUS BADGE */}
-                  <Col flex="110px">
-                    <Tag
-                      color={meta.color}
-                      style={{ padding: "6px 12px", fontWeight: 600 }}
-                    >
-                      {meta.label}
-                    </Tag>
-                  </Col>
                 </Row>
               </Card>
             </List.Item>

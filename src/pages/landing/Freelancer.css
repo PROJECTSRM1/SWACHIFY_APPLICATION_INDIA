@@ -112,6 +112,11 @@
   gap: 20px;
 }
 
+.sw-fr-hero-buttons:hover{
+  color: #0f1724;
+
+}
+
 .swf-stats {
   margin-top: 60px;
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Typography, Button } from "antd";
-import "./profile.css";
+import "./ProfilePage.css";
 
 import {
   UserOutlined,
@@ -10,11 +10,11 @@ import {
   BankOutlined,
   GlobalOutlined,
   CreditCardOutlined,
-  ArrowLeftOutlined
+  ArrowLeftOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 
-const { Title, } = Typography;
+const { Title } = Typography;
 
 const getStoredProfile = () => {
   try {
@@ -37,9 +37,12 @@ const ProfilePage: React.FC = () => {
 
   if (!profile) {
     return (
-      <div className="profile-container">
-        <Button className="top-back-btn" icon={<ArrowLeftOutlined />} onClick={() => navigate(-1)} />
-        <Card className="profile-card profile-personal-card" bordered={false}>
+      <div className="profile-page-wrapper">
+        <Button icon={<ArrowLeftOutlined />} onClick={() => navigate(-1)} />
+        <Card
+          className="profile-card-base profile-personal-box"
+          bordered={false}
+        >
           <Title level={4}>Profile not found</Title>
         </Card>
       </div>
@@ -47,82 +50,105 @@ const ProfilePage: React.FC = () => {
   }
 
   return (
-    <div className="profile-container">
+    <div className="profile-page-wrapper">
 
-      {/* Top left back button */}
-     
+      {/* ✅ GO TO DASHBOARD (TOP) */}
+      <div
+        className="profile-dashboard-btn profile-dashboard-top"
+        onClick={() => navigate("/freelancer-dashboard")}
+      >
+        <ArrowLeftOutlined />
+        <span>Go to Dashboard</span>
+      </div>
 
-      {/* Cards Wrapper */}
-      <div className="profile-row">
-
-        {/* Personal Details Card (tall & narrow, shifted left) */}
-        <Card className="profile-card profile-personal-card" bordered={false}>
-          <div className="profile-icon-wrapper">
-            <UserOutlined className="profile-icon" />
-          </div>
-          <h2 className="card-header">Personal Details</h2>
-
-          <div className="profile-detail-line">
-            <GlobalOutlined className="detail-icon"/> <span><b>Login ID:</b> {profile.loginId || "111702"}</span>
-          </div>
-
-          <div className="profile-detail-line">
-            <MailOutlined className="detail-icon"/> <span><b>Email:</b> {profile.email}</span>
-          </div>
-
-          <div className="profile-detail-line">
-            <PhoneOutlined className="detail-icon"/> <span><b>Phone:</b> {profile.phone || profile.mobile || "+91-8074407557"}</span>
+      <div className="profile-content-row">
+        
+        {/* Personal Details */}
+        <Card
+          className="profile-card-base profile-personal-box"
+          bordered={false}
+        >
+          <div className="profile-avatar">
+            <UserOutlined className="profile-avatar-icon" />
           </div>
 
-          <div className="profile-detail-line">
-            <EnvironmentOutlined className="detail-icon"/> <span><b>Address:</b> {profile.address || "Hyderabad"}</span>
+          <h2 className="profile-section-title">Personal Details</h2>
+
+          <div className="profile-info-row">
+            <GlobalOutlined className="profile-info-icon" />
+            <span>
+              <b>Login ID:</b> {profile.loginId || "111702"}
+            </span>
+          </div>
+
+          <div className="profile-info-row">
+            <MailOutlined className="profile-info-icon" />
+            <span>
+              <b>Email:</b> {profile.email}
+            </span>
+          </div>
+
+          <div className="profile-info-row">
+            <PhoneOutlined className="profile-info-icon" />
+            <span>
+              <b>Phone:</b>{" "}
+              {profile.phone || profile.mobile || "+91-8074407557"}
+            </span>
+          </div>
+
+          <div className="profile-info-row">
+            <EnvironmentOutlined className="profile-info-icon" />
+            <span>
+              <b>Address:</b> {profile.address || "Hyderabad"}
+            </span>
           </div>
         </Card>
 
-        {/* Bank Information Card (wide & shorter height) */}
-      <Card className="profile-card profile-bank-card" bordered={false}>
-  <h2 className="profile-title">Bank Information</h2>
+        {/* Bank Information */}
+        <Card
+          className="profile-card-base profile-bank-box"
+          bordered={false}
+        >
+          <h2 className="profile-bank-title">Bank Information</h2>
 
-  <div className="bank-info-grid">
-    <div className="bank-item">
-      <div className="bank-icon-wrapper"><BankOutlined className="bank-icon"/></div>
-      <span className="bank-label">Bank Name</span>
-      <span className="bank-value">{bank.bankName}</span>
-    </div>
+          <div className="bank-details-grid">
+            <div className="bank-detail-item">
+              <div className="bank-circle-icon">
+                <BankOutlined />
+              </div>
+              <span className="bank-label-text">Bank Name</span>
+              <span className="bank-value-text">{bank.bankName}</span>
+            </div>
 
-    <div className="bank-item">
-      <div className="bank-icon-wrapper"><GlobalOutlined className="bank-icon"/></div>
-      <span className="bank-label">IFSC Code</span>
-      <span className="bank-value">{bank.ifsc}</span>
-    </div>
+            <div className="bank-detail-item">
+              <div className="bank-circle-icon">
+                <GlobalOutlined />
+              </div>
+              <span className="bank-label-text">IFSC Code</span>
+              <span className="bank-value-text">{bank.ifsc}</span>
+            </div>
 
-    <div className="bank-item">
-      <div className="bank-icon-wrapper"><CreditCardOutlined className="bank-icon"/></div>
-      <span className="bank-label">Account No</span>
-      <span className="bank-value">{bank.accountNumber}</span>
-    </div>
-  </div>
+            <div className="bank-detail-item">
+              <div className="bank-circle-icon">
+                <CreditCardOutlined />
+              </div>
+              <span className="bank-label-text">Account No</span>
+              <span className="bank-value-text">{bank.accountNumber}</span>
+            </div>
+          </div>
 
-  {/* ✅ ONLY change is here */}
-  <div className="bank-support-text">
-  To update your bank details or personal information, please contact our support team at{" "}
-  <b className="support-link" onClick={() => navigate("/freelancerlogin")}>
-    support@swachifyindia.com
-  </b>
-</div>
-
-
-</Card>
-
-<div className="dashboard-nav-block" onClick={() => navigate("/freelancer-dashboard")}>
-  <ArrowLeftOutlined />
-  <span>Go to Dashboard</span>
-</div>
-
-
-
+          <div className="profile-support-note">
+            To update your bank details or personal information, please contact
+            our support team at{" "}
+            <span
+              className="profile-support-link"
+              onClick={() => navigate("/freelancerlogin")}
+            >
+              support@swachifyindia.com
+            </span>
+          </div>
+        </Card>
       </div>
-
     </div>
   );
 };

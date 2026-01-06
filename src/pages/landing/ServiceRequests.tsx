@@ -1,4 +1,4 @@
-import { useMemo, useState, useEffect} from "react";
+import { useMemo, useState, useEffect } from "react";
 import {
   Row,
   Col,
@@ -10,11 +10,6 @@ import {
   Rate,
   Empty,
   Layout,
-  // Menu,
-  // Form,
-  // Tabs,
-  // Modal,
-  // message,
 } from "antd";
 import { useNavigate } from "react-router-dom";
 import {
@@ -23,10 +18,8 @@ import {
   EnvironmentOutlined,
   ClockCircleOutlined,
 } from "@ant-design/icons";
+import Loader from "../landing/Loader";
 // import "./ServiceRequests.css";
-
-// const { TabPane } = Tabs;
-// const { Header } = Layout;
 
 type Request = {
   id: number;
@@ -43,8 +36,6 @@ type Request = {
   urgentFlag?: boolean;
 };
 
-
-
 const CATEGORIES = [
   "All",
   "Moving",
@@ -58,70 +49,51 @@ const CATEGORIES = [
 
 const URGENCY = ["All", "high", "medium", "low"] as const;
 
-
-
 export default function ServiceRequest() {
   const [showFilters, setShowFilters] = useState(false);
   const [activeCategory, setActiveCategory] = useState<string>("All");
   const [activeUrgency, setActiveUrgency] = useState<string>("All");
   const [searchText, setSearchText] = useState<string>("");
-    const [requests, setRequests] = useState<Request[]>([]);
-const [, setLoading] = useState<boolean>(false);
+  const [requests, setRequests] = useState<Request[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
-  // Header / Auth modal states
   const navigate = useNavigate();
-  // const [authModalVisible, setAuthModalVisible] = useState(false);
-  // const [activeTab, setActiveTab] = useState("login");
-  // const [loginForm] = Form.useForm();
-  // const [registerForm] = Form.useForm();
 
-  // const onLoginFinish = () => {
-  //   message.success("Logged in (demo)");
-  //   setAuthModalVisible(false);
-  // };
+  useEffect(() => {
+    const fetchRequests = async () => {
+      try {
+        setLoading(true);
+        const res = await fetch(
+          "https://swachify-india-be-1-mcrb.onrender.com/api/home-service"
+        );
+        const data = await res.json();
+        const mapped: Request[] = Array.isArray(data)
+          ? data.map((item: any, index: number) => ({
+              id: item.id ?? index,
+              name: item.full_name ?? "Customer",
+              title: "Cleaning Request",
+              desc: `Property size: ${item.property_size_sqft} sqft`,
+              category: "Cleaning",
+              urgency: "medium",
+              distanceKm: 2.5,
+              place: item.address ?? "Nearby",
+              timeAgo: new Date(item.preferred_date).toLocaleDateString(),
+              price: "Price on visit",
+              rating: 4.5,
+              urgentFlag: false,
+            }))
+          : [];
 
-  // const onRegisterFinish = () => {
-  //   message.success("Registered (demo)");
-  //   setAuthModalVisible(false);
-  // };
+        setRequests(mapped);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-useEffect(() => {
-  const fetchRequests = async () => {
-    try {
-      setLoading(true);
-      const res = await fetch(
-        "https://swachify-india-be-1-mcrb.onrender.com/api/home-service"
-      );
-      const data = await res.json();
-const mapped: Request[] = Array.isArray(data)
-  ? data.map((item: any, index: number) => ({
-      id: item.id ?? index,
-      name: item.full_name ?? "Customer",   // ✅ DYNAMIC
-      title: "Cleaning Request",
-      desc: `Property size: ${item.property_size_sqft} sqft`,
-      category: "Cleaning",
-      urgency: "medium",
-      distanceKm: 2.5,
-      place: item.address ?? "Nearby",
-      timeAgo: new Date(item.preferred_date).toLocaleDateString(),
-      price: "Price on visit",
-      rating: 4.5,
-      urgentFlag: false,
-    }))
-  : [];
-
-setRequests(mapped);
-
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  fetchRequests();
-}, []);
-
+    fetchRequests();
+  }, []);
 
   const toggleCategory = (cat: string) => {
     setActiveCategory((prev) => (prev === cat ? "All" : cat));
@@ -132,7 +104,7 @@ setRequests(mapped);
   };
 
   const filtered = useMemo(() => {
-   return requests.filter((d) => {
+    return requests.filter((d) => {
       if (activeCategory !== "All" && d.category !== activeCategory) return false;
       if (activeUrgency !== "All" && d.urgency !== activeUrgency) return false;
       if (searchText.trim()) {
@@ -148,14 +120,17 @@ setRequests(mapped);
       }
       return true;
     });
-}, [requests, activeCategory, activeUrgency, searchText]);
+  }, [requests, activeCategory, activeUrgency, searchText]);
 
-  // Align start when 1..3 cards present, otherwise center
   const rowJustify = filtered.length > 0 && filtered.length <= 3 ? "start" : "center";
+
+  // Show loader while fetching data
+  if (loading) {
+    return <Loader fullScreen message="Loading service requests..." />;
+  }
 
   return (
     <Layout className="sw-fr-sr-layout">
-      {/* Page content */}
       <div className="sw-fr-sr-page">
         <div className="sw-fr-sr-container">
           <div className="sw-fr-sr-header">
@@ -260,12 +235,12 @@ setRequests(mapped);
 
                       <div className="sw-fr-sr-meta-row compact">
                         <div className="sw-fr-sr-meta-left-group">
-                        <div className="sw-fr-sr-meta-left">
-                        <span className="sw-fr-sr-customer-name">👤 {r.name}</span>
                           <div className="sw-fr-sr-meta-left">
-                            <EnvironmentOutlined className="sw-fr-sr-meta-icon" />
-                            <span className="sw-fr-sr-meta-text">{r.place}</span>
-                          </div>
+                            <span className="sw-fr-sr-customer-name">👤 {r.name}</span>
+                            <div className="sw-fr-sr-meta-left">
+                              <EnvironmentOutlined className="sw-fr-sr-meta-icon" />
+                              <span className="sw-fr-sr-meta-text">{r.place}</span>
+                            </div>
                           </div>
 
                           <div className="sw-fr-sr-meta-middle">

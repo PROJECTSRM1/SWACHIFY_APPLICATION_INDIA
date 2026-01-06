@@ -1,10 +1,28 @@
-.swc-fr-registration-page {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 20px;
-  position: relative;
+/* ===============================
+   GLOBAL RESET
+   =============================== */
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow-x: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
+/* ===============================
+   PAGE LAYOUT
+   =============================== */
+.swc-fr-registration-page {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  overflow: hidden;
+}
+
+/* Back link */
 .swc-fr-back-link {
   position: absolute;
   top: 30px;
@@ -13,192 +31,185 @@
   font-size: 16px;
   font-weight: 500;
   text-decoration: none;
-  transition: all 0.3s ease;
   z-index: 10;
+  transition: all 0.3s ease;
 }
 
 .swc-fr-back-link:hover {
-  color: #f0f0f0;
-  transform: translateX(-5px);
+  transform: translateX(-4px);
+  opacity: 0.9;
 }
 
+/* ===============================
+   MAIN CONTAINER
+   =============================== */
 .swc-fr-registration-container {
+  width: 100%;
   max-width: 1200px;
-  margin: 0 auto;
+  height: 100%;
   display: grid;
-  grid-template-columns: 400px 1fr;
-  gap: 40px;
-  align-items: start;
-  padding-top: 60px;
+  grid-template-columns: 380px 1fr;
+  gap: 24px;
+  padding: 24px;
+  box-sizing: border-box;
 }
 
-/* keep left sticky */
+/* ===============================
+   BRANDING PANEL
+   =============================== */
 .swc-fr-registration-branding {
-  position: sticky;
-  top: 80px;
-}
-
-.swc-fr-registration-branding {
-  min-width: 280px;
-  flex-shrink: 0; /* stops collapsing */
+  height: 100%;
 }
 
 .swc-fr-branding-card {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
+  height: 100%;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(12px);
   border-radius: 20px;
-  padding: 40px;
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.swc-fr-branding-header {
+  padding: 32px;
+  color: #fff;
   display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 30px;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .swc-fr-branding-title {
   font-size: 28px;
   font-weight: 700;
-  letter-spacing: -0.5px;
 }
 
 .swc-fr-branding-heading {
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 700;
-  margin: 0 0 16px 0;
-  line-height: 1.2;
+  margin: 20px 0 10px;
 }
 
 .swc-fr-branding-text {
-  font-size: 16px;
-  line-height: 1.6;
-  margin: 0 0 40px 0;
+  font-size: 15px;
   opacity: 0.9;
 }
 
+/* Steps */
 .swc-fr-steps-container {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 18px;
 }
 
 .swc-fr-step-item {
   display: flex;
+  gap: 14px;
   align-items: center;
-  gap: 16px;
-  opacity: 0.5;
-  transition: all 0.3s ease;
+  opacity: 0.6;
+  cursor: pointer;
 }
 
 .swc-fr-step-item.active {
-  opacity: 1;
-}
-
-.swc-fr-step-item.completed {
-  opacity: 0.8;
+  /* opacity: 1; */
+  background: transparent !important;
 }
 
 .swc-fr-step-number {
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.25);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
   font-weight: 600;
-  flex-shrink: 0;
-  transition: all 0.3s ease;
 }
 
-.swc-fr-step-item.active .swc-fr-step-number {
-  background: white;
-  color: #667eea;
-}
-
+/* COMPLETED STEP – GREEN CIRCLE WITH WHITE CONTENT */
 .swc-fr-step-item.completed .swc-fr-step-number {
-  background: #4ade80;
-  color: white;
+  background: #22c55e !important; /* green */
+  color: #ffffff !important;      /* number / ✓ in white */
 }
+
 
 .swc-fr-step-content h3 {
-  margin: 0 0 4px 0;
-  font-size: 16px;
-  font-weight: 600;
+  margin: 0;
+  font-size: 15px;
+  color: #ffffff;
 }
 
 .swc-fr-step-content p {
   margin: 0;
-  font-size: 14px;
-  opacity: 0.8;
+  font-size: 13px;
+  opacity: 0.85;
+  color: #ffffff;
 }
 
+
+/* ===============================
+   FORM SECTION
+   =============================== */
 .swc-fr-registration-form-section {
-  background: white;
+  height: 100%;
+  background: #fff;
   border-radius: 20px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
 }
 
 .swc-fr-registration-card {
-  padding: 48px;
+  height: 100%;
+  padding: 28px 32px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* 🔥 NO SCROLL */
 }
 
+/* Header */
 .swc-fr-registration-header {
-  margin-bottom: 30px;
+  margin-bottom: 14px;
 }
 
 .swc-fr-registration-title {
-  font-size: 32px;
+  font-size: 26px;
   font-weight: 700;
-  margin: 0 0 8px 0;
-  color: #1a1a1a;
-}
-
-.swc-fr-registration-subtitle {
-  font-size: 16px;
-  color: #666;
   margin: 0;
 }
 
+.swc-fr-registration-subtitle {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/* Progress */
 .swc-fr-progress-bar {
   height: 8px;
   background: #e5e7eb;
   border-radius: 999px;
-  overflow: hidden;
-  margin-bottom: 40px;
+  margin-bottom: 18px;
 }
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(90deg, #667eea, #764ba2);
   border-radius: 999px;
-  transition: width 0.5s ease;
 }
 
+/* ===============================
+   FORM
+   =============================== */
 .swc-fr-registration-form {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 16px;
+  justify-content: space-between;
 }
 
 .swc-fr-form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  gap: 14px;
 }
 
 .swc-fr-form-group {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-}
-
-.swc-fr-form-group-half {
-  flex: 1;
+  gap: 6px;
 }
 
 .swc-fr-form-label {
@@ -207,506 +218,147 @@
   color: #374151;
 }
 
-.swc-fr-form-input {
-  height: 48px;
-  border-radius: 10px;
-  border: 2px solid #e5e7eb;
-  font-size: 15px;
-  transition: all 0.3s ease;
-}
-
-.swc-fr-form-input:hover {
-  border-color: #d1d5db;
-}
-
-.swc-fr-form-input:focus {
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-}
-
-.swc-fr-form-input.form-input-error {
-  border-color: #ef4444;
-}
-
-/* Select styling overrides (Antd) */
-.swc-fr-form-select .ant-select-selector {
-  height: 48px !important;
+/* Inputs */
+.swc-fr-form-input input,
+.ant-input,
+.ant-input-password {
+  height: 46px !important;
   border-radius: 10px !important;
-  border: 2px solid #e5e7eb !important;
-  padding: 0 16px !important;
+}
+
+.swc-fr-form-error {
+  font-size: 12px;
+  color: #ef4444;
+}
+
+/* Select */
+.swc-fr-form-select .ant-select-selector {
+  height: 46px !important;
+  border-radius: 10px !important;
   display: flex;
   align-items: center;
 }
 
-.swc-fr-form-select .ant-select-selection-item {
-  line-height: 48px !important;
-}
-
-.swc-fr-form-select:hover .ant-select-selector {
-  border-color: #d1d5db !important;
-}
-
-.swc-fr-form-select.ant-select-focused .ant-select-selector {
-  border-color: #667eea !important;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1) !important;
-}
-
-.swc-fr-form-error {
-  color: #ef4444;
-  font-size: 13px;
-  margin-top: -4px;
-}
-
+/* Skills */
 .swc-fr-skills-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 12px;
+  gap: 10px;
 }
 
 .swc-fr-skill-tag {
-  height: 44px;
+  height: 42px;
   border-radius: 10px;
-  border: 2px solid #e5e7eb;
-  font-size: 14px;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  background: white;
-  color: #374151;
 }
 
-.swc-fr-skill-tag:hover {
-  border-color: #667eea;
-  color: #667eea;
+/* Primary Continue Button */
+.swc-fr-btn.btn-primary {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8) !important; /* blue */
+  color: #ffffff !important; /* white text */
+  border: none !important;
 }
 
-.swc-fr-skill-tag.active {
-  background: #667eea;
-  border-color: #667eea;
-  color: white;
+/* Text inside AntD Button */
+.swc-fr-btn.btn-primary span {
+  color: #ffffff !important;
 }
 
-/* Payment header box */
+/* Hover state */
+.swc-fr-btn.btn-primary:hover {
+  background: linear-gradient(135deg, #1e40af, #1e3a8a) !important;
+  color: #ffffff !important;
+}
+
+/* Disabled state */
+.swc-fr-btn.btn-primary:disabled,
+.swc-fr-btn.btn-primary[disabled] {
+  background: #93c5fd !important; /* light blue */
+  color: #ffffff !important;
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+
+/* ===============================
+   PAYMENT
+   =============================== */
 .swc-fr-payment-header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 24px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  padding: 16px;
   border-radius: 12px;
-  margin-bottom: 24px;
 }
 
 .swc-fr-payment-title {
-  font-size: 20px;
-  font-weight: 700;
-  color: white;
-  margin: 0 0 12px 0;
+  color: #fff;
+  margin: 0;
 }
 
 .swc-fr-platform-fee {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-flex-wrap: wrap;
+  color: #fff;
 }
 
-.swc-fr-fee-label {
-  font-size: 16px;
-  color: rgba(255, 255, 255, 0.9);
-}
-
-.swc-fr-fee-amount {
-  font-size: 28px;
-  font-weight: 700;
-  color: white;
-}
-
-/* Payment options grid */
 .swc-fr-payment-methods {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin-top: 12px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
 }
 
 .swc-fr-payment-option {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  padding: 20px;
   border: 2px solid #e5e7eb;
   border-radius: 12px;
+  padding: 14px;
+  text-align: center;
   cursor: pointer;
-  transition: all 0.3s ease;
-  background: white;
-  min-height: 120px;
-}
-
-.swc-fr-payment-option:hover {
-  border-color: #667eea;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
 }
 
 .swc-fr-payment-option.active {
   border-color: #667eea;
-  background: #f0f4ff;
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+  background: #eef2ff;
 }
 
-/* Disabled styling after payment is done */
-.swc-fr-payment-option.disabled-option {
-  opacity: 0.6;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-}
-
-/* Icon area */
-.swc-fr-payment-icon {
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.swc-fr-payment-icon img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-}
-
-/* Payment option label */
-.swc-fr-payment-option span {
-  font-size: 14px;
-  font-weight: 500;
-  color: #374151;
-  text-align: center;
-}
-
-/* Buttons */
+/* ===============================
+   BUTTONS
+   =============================== */
 .swc-fr-btn {
-  height: 52px;
+  height: 48px;
   border-radius: 10px;
-  font-size: 16px;
   font-weight: 600;
-  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #fff;
   border: none;
 }
 
-.swc-fr-btn.btn-primary {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-}
-
-.swc-fr-btn.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
-}
-
-.swc-fr-btn.btn-primary:active {
-  transform: translateY(0);
-}
-
-.swc-fr-btn.btn-block {
-  width: 100%;
-}
-
+/* Login */
 .swc-fr-login-link {
   text-align: center;
-  margin-top: 24px;
-  color: #6b7280;
   font-size: 14px;
+  margin-top: 10px;
 }
 
 .swc-fr-login-link a {
   color: #667eea;
   font-weight: 600;
-  text-decoration: none;
-  cursor: pointer;
-  transition: color 0.3s ease;
 }
 
-.swc-fr-login-link a:hover {
-  color: #764ba2;
-  text-decoration: underline;
-}
-
-.swc-fr-success-content {
-  text-align: center;
-  padding: 40px 20px;
-}
-
-.swc-fr-success-icon {
-  font-size: 80px;
-  color: #4ade80;
-  margin-bottom: 24px;
-}
-
-.swc-fr-success-title {
-  font-size: 28px;
-  font-weight: 700;
-  color: #1a1a1a;
-  margin: 0 0 16px 0;
-}
-
-.swc-fr-success-message {
-  font-size: 16px;
-  color: #666;
-  margin: 0 0 32px 0;
-  line-height: 1.6;
-}
-
-.swc-fr-success-button {
-  height: 48px;
-  padding: 0 40px;
-  font-size: 16px;
-  font-weight: 600;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border: none;
-}
-
-.swc-fr-success-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
-}
-
-/* Responsive */
-/* Tablet & Small Laptop Fix (max-width: 1024px) */
-@media (max-width: 1024px) {
+/* ===============================
+   MOBILE
+   =============================== */
+@media (max-width: 768px) {
   .swc-fr-registration-container {
-    grid-template-columns: 1fr;   /* collapse columns */
-    gap: 20px;
-    padding-top: 20px;
+    grid-template-columns: 1fr;
+    padding: 16px;
   }
 
   .swc-fr-registration-branding {
-    position: static;             /* remove sticky */
-  }
-
-  .swc-fr-branding-card {
-    padding: 20px;
+    display: none;
   }
 
   .swc-fr-registration-card {
-    padding: 24px;
+    overflow-y: auto;
   }
 }
-
-
-@media (max-width: 640px) {
-  .swc-fr-registration-page {
-    padding: 12px;
-  }
-
-  .swc-fr-back-link {
-    top: 20px;
-    left: 20px;
-  }
-
-  .swc-fr-registration-container {
-    padding-top: 50px;
-  }
-
-  .swc-fr-registration-card {
-    padding: 24px;
-  }
-
-  .swc-fr-registration-title {
-    font-size: 24px;
-  }
-
-  .swc-fr-branding-heading {
-    font-size: 24px;
-  }
-
-  .swc-fr-form-row {
-    grid-template-columns: 1fr;
-  }
-
-  .swc-fr-skills-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .swc-fr-payment-methods {
-    grid-template-columns: 1fr;
-  }
-
-  .swc-fr-success-content {
-    padding: 30px 15px;
-  }
-
-  .swc-fr-success-icon {
-    font-size: 60px;
-  }
-
-  .swc-fr-success-title {
-    font-size: 22px;
-  }
-}
-
-/* Prevent card overflow on mobile */
-@media (max-width: 480px) {
-  .swc-fr-registration-card {
-    padding: 16px !important;
-  }
-
-  .swc-fr-payment-header {
-    padding: 16px !important;
-  }
-
-  .swc-fr-fee-amount {
-    font-size: 22px !important;
-  }
-
-  .swc-fr-payment-methods {
-    grid-template-columns: 1fr !important;
-  }
-}
-
-/* Mobile M & L (375px – 430px) */
-@media (max-width: 430px) {
-  .swc-fr-registration-title {
-    font-size: 22px !important;
-  }
-
-  .swc-fr-progress-bar {
-    margin-bottom: 25px;
-  }
-
-  .swc-fr-payment-title {
-    font-size: 18px !important;
-  }
-
-  .swc-fr-payment-option {
-    min-height: 110px;
-    padding: 15px;
-  }
-
-  .swc-fr-payment-option span {
-    font-size: 12px;
-  }
-
-  .swc-fr-form-input,
-  .swc-fr-form-select .ant-select-selector {
-    height: 44px !important;
-  }
-}
-@media (max-width: 480px) {
-  .swc-fr-registration-page {
-    padding: 8px !important;
-  }
-
-  .swc-fr-back-link {
-    left: 12px !important;
-    top: 12px !important;
-  }
-}
-
-
-
-/* Back Button (same style as Continue but light) */
-.swc-fr-btn-back {
-  height: 52px;
-  border-radius: 10px;
-  font-size: 16px;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  background: #ffffff;
-  color: #4b5563;
-  border: 2px solid #e5e7eb;
-}
-
-.swc-fr-btn-back:hover {
-  border-color: #667eea;
-  color: #667eea;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
-}
-
-.swc-fr-btn-back:active {
-  transform: translateY(0);
-}
-
-/* FORCE single column layout on any mobile screen */
-@media (max-width: 768px) {
-  .swc-fr-registration-container {
-    display: block !important;
-    width: 100% !important;
-    padding: 0 !important;
-    margin: 0 auto !important;
-  }
-
-  /* Remove branding panel completely on mobile */
-  .swc-fr-registration-branding {
-    display: none !important;
-  }
-
-  /* The main white form card */
-  .swc-fr-registration-form-section {
-    width: 100% !important;
-    margin: 0 !important;
-  }
-}
-
-/* Prevent card from overflowing */
-@media (max-width: 768px) {
-  .swc-fr-registration-card {
-    width: 100% !important;
-    padding: 16px !important;
-    box-sizing: border-box !important;
-  }
-}
-
-@media (max-width: 768px) {
-  .swc-fr-payment-header {
-    padding: 16px !important;
-  }
-
-  .swc-fr-platform-fee {
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
-    flex-wrap: nowrap;   /* prevents ₹499 push */
-  }
-
-  .swc-fr-fee-amount {
-    font-size: 20px !important;
-  }
-}
-
-@media (max-width: 768px) {
-  .swc-fr-payment-methods {
-    grid-template-columns: 1fr !important;
-    gap: 12px !important;
-  }
-
-  .swc-fr-payment-option {
-    width: 100% !important;
-    padding: 14px !important;
-    min-height: 100px !important;
-  }
-}
-/* Stack Pay + Create buttons vertically on mobile */
-@media (max-width: 640px) {
-  .swc-fr-buttons-row {
-    flex-direction: column !important;
-    width: 100%;
-    gap: 12px !important;
-  }
-
-  .swc-fr-buttons-row .swc-fr-btn {
-    width: 100% !important;
-    min-width: unset !important;
-  }
-}
-
-.swc-fr-step-item {
-  cursor: pointer; /* default for inactive */
-}
-
-.swc-fr-step-item.clickable {
-  cursor: pointer; /* show pointer only if allowed */
-}
-

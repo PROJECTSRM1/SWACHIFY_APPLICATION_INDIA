@@ -3,6 +3,7 @@ import { fetchHomeServiceRequests } from "../../api/homeServiceApi";
 import type { Job } from "../../api/homeServiceApi";
 import MyWallet from "../freelancer/MyWallet";
 import { getWallet, addEarnings } from "../freelancer/walletStorage";
+import Loader from "../landing/Loader";
 
 
 
@@ -442,101 +443,37 @@ const MOCK_USER = {
   skills: ['Cleaning', 'Home Services', 'Plumbing', 'Electrical'],
 };
 
-// --- HEADER WITH PROFILE DROPDOWN (UPDATED) ---
-// const HeaderComponent: React.FC<{
-//   userName: string;
-//   onLogout: () => void;
-//   isDashboardVisible: boolean; // NEW: state prop
-//   onToggleDashboard: () => void; // NEW: handler prop
-// }> = ({ userName, onLogout, isDashboardVisible, onToggleDashboard }) => {
-//   const menu = (
-//     <Menu
-//       className="sw-frd-profile-menu"
-//       onClick={(e) => {
-//         if (e.key === 'logout') onLogout();
-//       }}
-//       style={{ borderRadius: 8, overflow: 'hidden', minWidth: 180 }}
-//     >
-//       <Menu.Item key="name" disabled style={{ fontWeight: 600, color: '#102030' }}>
-//         {userName}
-//       </Menu.Item>
-//       <Menu.Divider />
-//       <Menu.Item
-//         key="logout"
-//         icon={<LogoutOutlined />}
-//         style={{ color: '#dc3545', fontWeight: 500 }}
-//       >
-//         Logout
-//       </Menu.Item>
-//     </Menu>
-//   );
-
-//   return (
-//     <Header className="sw-frd-header">
-//       <div className="sw-frd-logo-area">
-//         <Text strong className="sw-frd-logo-text">
-//           SWACHIFY INDIA
-//         </Text>
-//         <Text className="sw-frd-portal-text">Freelancer Portal</Text>
-//       </div>
-
-//       <div className="sw-frd-user-area">
-//         {/* NEW: View My Dashboard button, visible only when dashboard is hidden */}
-//         {!isDashboardVisible && (
-//           <Button
-//             type="primary"
-//             className="sw-frd-view-dashboard-btn"
-//             onClick={onToggleDashboard}
-//             icon={<ArrowRightOutlined />}
-//           >
-//             View My Dashboard
-//           </Button>
-//         )}
-//         <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
-//           <Button
-//             type="default"
-//             className="sw-frd-profile-btn"
-//             icon={<UserOutlined style={{ fontSize: 18 }} />}
-//           />
-//         </Dropdown>
-//       </div>
-//     </Header>
-//   );
-// };
 
 
+// Header Component
 const HeaderComponent: React.FC<{
   userName: string;
   onLogout: () => void;
   isDashboardVisible: boolean;
   onToggleDashboard: () => void;
-  onToggleWallet: () => void;  // ADD THIS
+  onToggleWallet: () => void;
 }> = ({ userName, onLogout, isDashboardVisible, onToggleDashboard, onToggleWallet }) => {
+  const navigate = useNavigate();
 
-const navigate = useNavigate(); // add this at top of HeaderComponent if not present
-
-const menu = (
-  <Menu
-    onClick={(e) => {
-  if (e.key === "profile") navigate("/freelancer/profile");
-
-      if (e.key === "wallet") onToggleWallet();
-      if (e.key === "logout") onLogout();
-    }}
-  >
-    <Menu.Item key="name" disabled>{userName}</Menu.Item>
-    <Menu.Divider />
-    <Menu.Item key="profile" icon={<UserOutlined />}>My Profile</Menu.Item> 
-    <Menu.Divider />
-    <Menu.Item key="wallet" icon={<DollarCircleOutlined />}>My Wallet</Menu.Item>
-    <Menu.Divider />
-    <Menu.Item key="logout" icon={<LogoutOutlined />} style={{ color: "#dc3545" }}>
-      Logout
-    </Menu.Item>
-  </Menu>
-);
-
-
+  const menu = (
+    <Menu
+      onClick={(e) => {
+        if (e.key === "profile") navigate("/freelancer/profile");
+        if (e.key === "wallet") onToggleWallet();
+        if (e.key === "logout") onLogout();
+      }}
+    >
+      <Menu.Item key="name" disabled>{userName}</Menu.Item>
+      <Menu.Divider />
+      <Menu.Item key="profile" icon={<UserOutlined />}>My Profile</Menu.Item>
+      <Menu.Divider />
+      <Menu.Item key="wallet" icon={<DollarCircleOutlined />}>My Wallet</Menu.Item>
+      <Menu.Divider />
+      <Menu.Item key="logout" icon={<LogoutOutlined />} style={{ color: "#dc3545" }}>
+        Logout
+      </Menu.Item>
+    </Menu>
+  );
 
   return (
     <Header className="sw-frd-header">
@@ -546,7 +483,6 @@ const menu = (
       </div>
 
       <div className="sw-frd-user-area">
-        {/* When dashboard is hidden: show View My Dashboard */}
         {!isDashboardVisible && (
           <Button
             type="primary"
@@ -558,7 +494,6 @@ const menu = (
           </Button>
         )}
 
-        {/* When dashboard IS visible: show Back to Requests */}
         {isDashboardVisible && (
           <Button
             type="default"
@@ -583,8 +518,7 @@ const menu = (
   );
 };
 
-
-// --- SMALL COMPONENTS (Unchanged) ---
+// User Skills Component
 const UserSkills: React.FC<{ skills: string[] }> = ({ skills }) => (
   <section className="sw-frd-section">
     <div className="sw-frd-section-header">
@@ -605,6 +539,7 @@ const UserSkills: React.FC<{ skills: string[] }> = ({ skills }) => (
   </section>
 );
 
+// Job Card Component
 interface JobCardProps {
   job: Job;
   isActive: boolean;
@@ -616,9 +551,6 @@ interface JobCardProps {
   onStepImageUpload?: (step: ServiceStepIndex, files: File[]) => void;
 }
 
-/**
- * Job card + flow
- */
 const JobCard: React.FC<JobCardProps> = ({
   job,
   isActive,
@@ -637,12 +569,10 @@ const JobCard: React.FC<JobCardProps> = ({
   const canProceedFromCurrent =
     !requiresImage(currentStep) || stepImages[currentStep].length > 0;
 
-  /* ---------------- OTP STATE (for demo) ---------------- */
   const [isOtpModalVisible, setIsOtpModalVisible] = useState(false);
   const [generatedOtp, setGeneratedOtp] = useState<string>('');
   const [enteredOtp, setEnteredOtp] = useState<string>('');
 
-  // Generate a 6-digit OTP and open modal
   const openOtpModal = () => {
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
     setGeneratedOtp(otp);
@@ -652,7 +582,6 @@ const JobCard: React.FC<JobCardProps> = ({
 
   const handleVerifyOtp = () => {
     if (enteredOtp === generatedOtp) {
-      // Correct OTP → move to next stage
       const next = ((currentStep + 1) as unknown) as ServiceStepIndex;
       if (onStepChange) onStepChange(next);
       setIsOtpModalVisible(false);
@@ -662,7 +591,6 @@ const JobCard: React.FC<JobCardProps> = ({
     }
   };
 
-  /* ---------------- STEP ACTION HANDLER ---------------- */
   const handleStepAction = () => {
     if (!canProceedFromCurrent) {
       message.error(
@@ -671,19 +599,16 @@ const JobCard: React.FC<JobCardProps> = ({
       return;
     }
 
-    // If this is the last step, just complete the job
     if (isLastStep) {
       if (onMarkComplete) onMarkComplete(job.ticketId);
       return;
     }
 
-    // We want OTP when moving from "On the way" (step 0) → "Reached location" (step 1)
     if (currentStep === 1) {
       openOtpModal();
       return;
     }
 
-    // Normal flow for other steps
     const next = ((currentStep + 1) as unknown) as ServiceStepIndex;
     if (onStepChange) onStepChange(next);
   };
@@ -695,7 +620,6 @@ const JobCard: React.FC<JobCardProps> = ({
   return (
     <Card className={cardClass} bordered={false}>
       <Row gutter={24} align="top" wrap>
-        {/* LEFT: JOB META */}
         <Col xs={24} md={showFlow ? 14 : 24} className="sw-frd-job-col">
           <div className="sw-frd-job-header-row">
             <div>
@@ -730,7 +654,6 @@ const JobCard: React.FC<JobCardProps> = ({
             </Text>
           </div>
 
-          {/* Customer details block (unchanged) */}
           {(job.customerName ||
             job.customerPhone ||
             job.customerEmail ||
@@ -795,7 +718,6 @@ const JobCard: React.FC<JobCardProps> = ({
             </Button>
           )}
 
-          {/* Fallback for completed / non-flow cards */}
           {isActive && onMarkComplete && !showFlow && (
             <Button
               type="primary"
@@ -807,7 +729,6 @@ const JobCard: React.FC<JobCardProps> = ({
           )}
         </Col>
 
-        {/* RIGHT: SERVICE FLOW STEPPER */}
         {isActive && showFlow && (
           <Col xs={24} md={10} className="sw-frd-flow-col">
             <div className="sw-frd-flow-container">
@@ -895,7 +816,6 @@ const JobCard: React.FC<JobCardProps> = ({
         )}
       </Row>
 
-      {/* -------- OTP MODAL (demo) -------- */}
       <Modal
         title="Verify OTP with customer"
         open={isOtpModalVisible}
@@ -922,15 +842,13 @@ const JobCard: React.FC<JobCardProps> = ({
   );
 };
 
-
+// Request Card Component
 const RequestCard: React.FC<{ request: Job; onAccept: (req: Job) => void }> = ({
   request,
   onAccept,
 }) => (
   <Card className="sw-frd-request-card" bordered={false}>
     <div className="sw-frd-request-body">
-
-      {/* HEADER: Title (left) + Price (right) */}
       <div className="sw-frd-card-header">
         <div className="sw-frd-card-title-block">
           <Text strong className="sw-frd-request-title">
@@ -947,13 +865,9 @@ const RequestCard: React.FC<{ request: Job; onAccept: (req: Job) => void }> = ({
         </div>
       </div>
 
-      {/* CUSTOMER */}
       <Text className="sw-frd-customer">Customer: {request.customer}</Text>
-
-      {/* DESCRIPTION */}
       <Text className="sw-frd-request-desc-text">{request.description}</Text>
 
-      {/* DETAILS */}
       <div className="sw-frd-details-row">
         <Text className="sw-frd-detail-item">
           <EnvironmentOutlined className="sw-frd-icon-sm" /> {request.location}
@@ -970,7 +884,6 @@ const RequestCard: React.FC<{ request: Job; onAccept: (req: Job) => void }> = ({
       </div>
     </div>
 
-    {/* FOOTER WITH ACCEPT BUTTON */}
     <div className="sw-frd-request-footer">
       <Button
         type="primary"
@@ -985,15 +898,13 @@ const RequestCard: React.FC<{ request: Job; onAccept: (req: Job) => void }> = ({
   </Card>
 );
 
-
-
+// Pending Approval Card Component
 const PendingApprovalCard: React.FC<{
   job: Job;
   onApprove: (id: string) => void;
 }> = ({ job, onApprove }) => (
   <Card className="sw-frd-pending-card" bordered={false}>
     <div className="sw-frd-pending-body">
-      {/* Header: title + status + price */}
       <div className="sw-frd-card-header">
         <div className="sw-frd-card-title-block">
           <Text strong className="sw-frd-request-title">
@@ -1018,10 +929,8 @@ const PendingApprovalCard: React.FC<{
         </div>
       </div>
 
-      {/* Description */}
       <Text className="sw-frd-request-desc-text">{job.description}</Text>
 
-      {/* Details row – location + FULL date string (with timeslot) + estimated */}
       <div className="sw-frd-details-row">
         <Text className="sw-frd-detail-item">
           <EnvironmentOutlined className="sw-frd-icon-sm" /> {job.location}
@@ -1035,14 +944,12 @@ const PendingApprovalCard: React.FC<{
         </Text>
       </div>
 
-      {/* Pending note */}
       <div className="sw-frd-pending-note">
         <HourglassOutlined className="sw-frd-pending-icon" />
-        Admin review in progress. You’ll be able to start only after approval.
+        Admin review in progress. You'll be able to start only after approval.
       </div>
     </div>
 
-    {/* Footer button */}
     <div className="sw-frd-pending-footer">
       <Button
         size="small"
@@ -1056,80 +963,69 @@ const PendingApprovalCard: React.FC<{
   </Card>
 );
 
-
-
-// --- MAIN DASHBOARD ---
+// Main Dashboard Component
 const FreelancerDashboard: React.FC = () => {
   const navigate = useNavigate();
-const [isWalletOpen, setIsWalletOpen] = useState(false);
-const [, setWallet] = useState(getWallet());
+  const [isWalletOpen, setIsWalletOpen] = useState(false);
+  const [, setWallet] = useState(getWallet());
 
-
-const handleWalletOpen = () => {
-  setIsWalletOpen(true);
-};
+  const handleWalletOpen = () => {
+    setIsWalletOpen(true);
+  };
 
   const [activeJobs, setActiveJobs] = useState<Job[]>([]);
   const [pendingJobs, setPendingJobs] = useState<Job[]>([]);
-const [availableRequests, setAvailableRequests] = useState<Job[]>([]);
-const [loadingRequests, setLoadingRequests] = useState(false);
-useEffect(() => {
-  const loadRequests = async () => {
-    try {
-      setLoadingRequests(true);
-      const jobs = await fetchHomeServiceRequests();
-      setAvailableRequests(jobs);
-    } catch (error) {
-      console.error(error);
-      message.error("Failed to load available requests");
-    } finally {
-      setLoadingRequests(false);
-    }
-  };
+  const [availableRequests, setAvailableRequests] = useState<Job[]>([]);
+  const [loadingRequests, setLoadingRequests] = useState(true);
 
-  loadRequests();
-}, []);
+  // Load available requests
+  useEffect(() => {
+    const loadRequests = async () => {
+      try {
+        setLoadingRequests(true);
+        const jobs = await fetchHomeServiceRequests();
+        setAvailableRequests(jobs);
+      } catch (error) {
+        console.error(error);
+        message.error("Failed to load available requests");
+      } finally {
+        setLoadingRequests(false);
+      }
+    };
 
+    loadRequests();
+  }, []);
 
+  // Load active jobs
+  useEffect(() => {
+    const loadMyActiveJobs = async () => {
+      try {
+        const allJobs = await fetchHomeServiceRequests();
 
-useEffect(() => {
-  const loadMyActiveJobs = async () => {
-    try {
-     const allJobs = await fetchHomeServiceRequests(); // correct function
+        const freelancer = JSON.parse(
+          localStorage.getItem("freelancer") || "{}"
+        );
 
-const freelancer = JSON.parse(
-  localStorage.getItem("freelancer") || "{}"
-);
+        const myActiveJobs = allJobs.filter(
+          (job) =>
+            job.status === "In Progress" &&
+            job.freelancer_id === freelancer.id
+        );
+        setActiveJobs(myActiveJobs);
+      } catch (err) {
+        console.error(err);
+      }
+    };
 
-const myActiveJobs = allJobs.filter(
-  (job) =>
-    job.status === "In Progress" &&
-    job.freelancer_id === freelancer.id
-);
-      setActiveJobs(myActiveJobs);
-    } catch (err) {
-      console.error(err);
-    }
-  };
+    loadMyActiveJobs();
+  }, []);
 
-  loadMyActiveJobs();
-}, []);
-
-
-
-
-  // const [requestFilter, setRequestFilter] = useState<
-  //   'All Requests' | 'Matched to My Skills'
-  // >('All Requests');
   const [requestSort, setRequestSort] = useState<'Newest First' | 'Highest Price'>(
     'Newest First',
   );
-  // add this
-const [selectedSkill, setSelectedSkill] = useState<string>('All Skills');
 
-  // NEW STATE: Control visibility of non-request dashboard sections
-  const [isDashboardVisible, setIsDashboardVisible] = useState(false); 
-  
+  const [isDashboardVisible, setIsDashboardVisible] = useState(false);
+
   const handleToggleDashboard = () => {
     setIsDashboardVisible((prev) => !prev);
   };
@@ -1144,9 +1040,17 @@ const [selectedSkill, setSelectedSkill] = useState<string>('All Skills');
     3: [],
   });
 
-  
+  type ServiceFilter =
+  | 'All'
+  | 'Home Services'
+  | 'Cleaning'
+  | 'Electrical'
+  | 'Plumbing';
 
-  // --- METRICS / KPIs ---
+  const [selectedSkill, setSelectedSkill] = useState<ServiceFilter>('All');
+
+
+
   const activeJobsInProgress = useMemo(
     () => activeJobs.filter((job) => job.status === 'In Progress'),
     [activeJobs],
@@ -1164,99 +1068,88 @@ const [selectedSkill, setSelectedSkill] = useState<string>('All Skills');
 
   const averageRating = 4.8;
   const activeJob = activeJobsInProgress[0] || null;
- // const upcomingJob = activeJob;
   const pendingCount = pendingJobs.length;
 
-  // Reset service flow when active job changes
   useEffect(() => {
     setActiveFlowStep(0);
     setStepImages({ 0: [], 1: [], 2: [], 3: [] });
   }, [activeJob?.ticketId]);
 
+  useEffect(() => {
+    setIsDashboardVisible(false);
+  }, []);
 
-  // Ensure we start on the Requests view when the dashboard mounts
-useEffect(() => {
-  setIsDashboardVisible(false);
-}, []);
-
-
-  // --- FILTER & SORT AVAILABLE REQUESTS ---
   const filteredRequests = useMemo(() => {
-    let list = [...availableRequests];
+  let list = [...availableRequests];
 
-      // Skill-specific filter (if user selected one)
-  // if (selectedSkill && selectedSkill !== 'All Skills') {
-  //   list = list.filter((req) => req.category === selectedSkill);
-  // }
+ // ---------- FILTER ----------
+  if (selectedSkill !== 'All') {
+    list = list.filter((req) => {
+      // Home Services → module_id = 1
+      if (selectedSkill === 'Home Services') {
+        return req.module_id === 1;
+      }
 
-    if (selectedSkill !== 'All Skills') {
-    list = list.filter((req) => req.category === selectedSkill);
+      // Sub-services → sub_module_id based filtering
+      if (selectedSkill === 'Cleaning') {
+        return req.module_id === 1 && req.sub_module_id === 1;
+      }
+
+      if (selectedSkill === 'Electrical') {
+        return req.module_id === 1 && req.sub_module_id === 2;
+      }
+
+      if (selectedSkill === 'Plumbing') {
+        return req.module_id === 1 && req.sub_module_id === 3;
+      }
+
+      return true;
+    });
   }
 
-    // if (requestFilter === 'Matched to My Skills') {
-    //   const userSkillsSet = new Set(skills);
-    //   list = list.filter((req) => userSkillsSet.has(req.category));
-    // }
 
+  // Sort by price
+  if (requestSort === 'Highest Price') {
+    list.sort((a, b) => (b.estimatedPrice || b.price) - (a.estimatedPrice || a.price));
+  } else {
+    // Sort by newest first (if you have a date field, use that)
+    // For now, keep original order or reverse to show newest
+    list = list.reverse();
+  }
 
+  return list;
+}, [availableRequests, selectedSkill, requestSort]);
 
-
-    
-
-    if (requestSort === 'Highest Price') {
-      list.sort((a, b) => (b.estimatedPrice || b.price) - (a.estimatedPrice || a.price));
-    }
-
-    return list;
-  }, 
-  // [availableRequests, requestFilter, requestSort, skills]
- [availableRequests, selectedSkill, requestSort]
-
-);
-
-  // ---------- Infinite scroll for Available Requests (client-side pagination) ----------
-  const pageSize = 6; // items per "page" — tweak as needed
-  // const [page, setPage] = useState(1);
+  const pageSize = 6;
   const [visibleRequests, setVisibleRequests] = useState<Job[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
   const sentinelRef = useRef<HTMLDivElement | null>(null);
 
-  // Reset pagination whenever the filtered list changes (filters, sort, accept/remove)
-  // useEffect(() => {
-  //   setPage(1);
-  //   const first = filteredRequests.slice(0, pageSize);
-  //   setVisibleRequests(first);
-  //   setHasMore(filteredRequests.length > first.length);
-  // }, [filteredRequests]);
-
   useEffect(() => {
-  // reset visible list whenever filter/sort/availableRequests change
-  const first = filteredRequests.slice(0, pageSize);
-  setVisibleRequests(first);
-  setHasMore(filteredRequests.length > first.length);
-  setLoadingMore(false);
-}, [filteredRequests]);
+    const first = filteredRequests.slice(0, pageSize);
+    setVisibleRequests(first);
+    setHasMore(filteredRequests.length > first.length);
+    setLoadingMore(false);
+  }, [filteredRequests]);
 
+  const loadMore = useCallback(() => {
+    if (loadingMore) return;
+    if (!hasMore) return;
+    setLoadingMore(true);
 
-  // load more function (slices the filteredRequests array)
- const loadMore = useCallback(() => {
-  if (loadingMore) return;
-  if (!hasMore) return;
-  setLoadingMore(true);
+    setTimeout(() => {
+      setVisibleRequests((prev) => {
+        const start = prev.length;
+        const nextChunk = filteredRequests.slice(start, start + pageSize);
+        const newList = [...prev, ...nextChunk];
+        setHasMore(start + nextChunk.length < filteredRequests.length);
+        setLoadingMore(false);
+        return newList;
+      });
+    }, 250);
+  }, [filteredRequests, hasMore, loadingMore]);
 
-  setTimeout(() => {
-    setVisibleRequests((prev) => {
-      const start = prev.length; // safe — uses most up-to-date length
-      const nextChunk = filteredRequests.slice(start, start + pageSize);
-      const newList = [...prev, ...nextChunk];
-      setHasMore(start + nextChunk.length < filteredRequests.length);
-      setLoadingMore(false);
-      return newList;
-    });
-  }, 250); // optional UX delay
-}, [filteredRequests, hasMore, loadingMore]);
-  // IntersectionObserver: watch sentinel and trigger loadMore
   useEffect(() => {
     const el = sentinelRef.current;
     if (!el) return;
@@ -1270,58 +1163,47 @@ useEffect(() => {
           }
         });
       },
-      { root: null, rootMargin: '250px', threshold: 0.1 } // trigger early
+      { root: null, rootMargin: '250px', threshold: 0.1 }
     );
 
     obs.observe(el);
     return () => obs.disconnect();
   }, [loadMore, hasMore, loadingMore]);
 
+  const handleMarkComplete = (id: string) => {
+    const job = activeJobs.find((j) => j.ticketId === id);
+    if (!job) return;
 
-  // --- ACTION HANDLERS ---
- const handleMarkComplete = (id: string) => {
-  const job = activeJobs.find((j) => j.ticketId === id);
-  if (!job) return;
+    addEarnings(job.ticketId, job.category, job.price);
 
-  // ADD earnings to wallet storage
-  addEarnings(job.ticketId, job.category, job.price);
+    setActiveJobs((prev) =>
+      prev.map((j) =>
+        j.ticketId === id ? { ...j, status: "Completed" } : j
+      )
+    );
 
-  // Update job list status
-  setActiveJobs((prev) =>
-    prev.map((j) =>
-      j.ticketId === id ? { ...j, status: "Completed" } : j
-    )
-  );
+    setWallet(getWallet());
 
-  // Force wallet UI update
-  setWallet(getWallet());
-
-  message.success(`Job ${id} marked completed and earnings added to wallet.`);
-};
-
-
-  const handleAcceptRequest = (request: Job) => {
-  // Remove from Available Requests
-  setAvailableRequests((prev) =>
-    prev.filter((req) => req.ticketId !== request.ticketId),
-  );
-
-  // Move to Approval Pending – KEEP original date + timeslot
-  const pendingJob: Job = {
-    ...request,                  // keeps "2025-11-29 at 4:00 PM"
-    status: 'Approval Pending',
-    // don't override date here
-    // date: new Date().toISOString().slice(0, 10),  ❌ remove this line
-    price: request.estimatedPrice || request.price,
+    message.success(`Job ${id} marked completed and earnings added to wallet.`);
   };
 
-  setPendingJobs((prev) => [...prev, pendingJob]);
+  const handleAcceptRequest = (request: Job) => {
+    setAvailableRequests((prev) =>
+      prev.filter((req) => req.ticketId !== request.ticketId),
+    );
 
-  message.success(
-    `Request ${request.ticketId} accepted! Waiting for admin approval.`,
-  );
-};
+    const pendingJob: Job = {
+      ...request,
+      status: 'Approval Pending',
+      price: request.estimatedPrice || request.price,
+    };
 
+    setPendingJobs((prev) => [...prev, pendingJob]);
+
+    message.success(
+      `Request ${request.ticketId} accepted! Waiting for admin approval.`,
+    );
+  };
 
   const handleApprovePending = (ticketId: string) => {
     const alreadyActive = activeJobs.some((j) => j.status === 'In Progress');
@@ -1340,7 +1222,6 @@ useEffect(() => {
     const job = pendingJobs.find((j) => j.ticketId === ticketId);
     if (!job) return;
 
-    // move from Approval Pending → Active Job
     setPendingJobs((prev) => prev.filter((j) => j.ticketId !== ticketId));
 
     const activeJob: Job = {
@@ -1353,16 +1234,14 @@ useEffect(() => {
     message.success(`Job ${ticketId} approved and moved to Active Job.`);
   };
 
-  // UPDATED: Accepts File[] (fileList) and maps them to URLs
   const handleStepImageUpload = (step: ServiceStepIndex, files: File[]) => {
     const newUrls = files.map(file => URL.createObjectURL(file));
-    setStepImages((prev) => ({ ...prev, [step]: newUrls })); // Replace existing files
+    setStepImages((prev) => ({ ...prev, [step]: newUrls }));
     message.success(`${newUrls.length} image(s) uploaded/captured.`);
   };
 
   const handleLogout = () => {
     localStorage.removeItem('freelancerLoggedIn');
-    //  setIsDashboardVisible(false); 
     navigate('/freelancer');
   };
 
@@ -1373,27 +1252,24 @@ useEffect(() => {
     }
   }, [navigate]);
 
-  // inside FreelancerDashboard component (near the top)
-
-
+  // Show loader while fetching initial requests
+  if (loadingRequests) {
+    return <Loader fullScreen message="Loading available requests..." />;
+  }
 
   return (
     <Layout className="sw-frd-layout-container">
-      {/* UPDATED: Pass new props to HeaderComponent */}
-<HeaderComponent
-  userName={MOCK_USER.name}
-  onLogout={handleLogout}
-  isDashboardVisible={isDashboardVisible}
-  onToggleDashboard={handleToggleDashboard}
-  onToggleWallet={handleWalletOpen}  // FIXED
-/>
+      <HeaderComponent
+        userName={MOCK_USER.name}
+        onLogout={handleLogout}
+        isDashboardVisible={isDashboardVisible}
+        onToggleDashboard={handleToggleDashboard}
+        onToggleWallet={handleWalletOpen}
+      />
 
       <Content className="sw-frd-content-main">
-        
-        {/* NEW: Conditional rendering for all non-request sections */}
         {isDashboardVisible && (
           <>
-            {/* OVERVIEW METRICS */}
             <section className="sw-frd-section sw-frd-overview-section">
               <div className="sw-frd-section-header">
                 <Title level={4} className="sw-frd-section-title">
@@ -1416,8 +1292,6 @@ useEffect(() => {
                     From {completedJobs.length} completed jobs
                   </Text>
                 </Card>
-
-                
 
                 <Card className="sw-frd-overview-card sw-frd-pending-metric" bordered={false}>
                   <Text className="sw-frd-overview-label">Approval Pending</Text>
@@ -1452,17 +1326,14 @@ useEffect(() => {
                     </Space>
                   </div>
                   <Text className="sw-frd-overview-subtext">
-                    Based on recent jobs 
+                    Based on recent jobs
                   </Text>
                 </Card>
               </div>
             </section>
 
-            {/* SKILLS */}
-          <UserSkills skills={MOCK_USER.skills} />
+            <UserSkills skills={MOCK_USER.skills} />
 
-
-            {/* APPROVAL PENDING */}
             <section className="sw-frd-section">
               <div className="sw-frd-section-header">
                 <Title level={4} className="sw-frd-section-title">
@@ -1491,7 +1362,6 @@ useEffect(() => {
               </div>
             </section>
 
-            {/* ACTIVE JOB – SINGLE CARD WITH FLOW */}
             <section className="sw-frd-section">
               <div className="sw-frd-section-header">
                 <Title level={4} className="sw-frd-section-title">
@@ -1523,7 +1393,6 @@ useEffect(() => {
               </div>
             </section>
 
-            {/* RECENTLY COMPLETED */}
             <section className="sw-frd-section">
               <div className="sw-frd-section-header">
                 <Title level={4} className="sw-frd-section-title">
@@ -1554,198 +1423,90 @@ useEffect(() => {
           </>
         )}
 
-        {/* AVAILABLE REQUESTS (ALWAYS VISIBLE) */}
-        {/* <section className="sw-frd-section">
-          <Row
-            justify="space-between"
-            align="middle"
-            className="sw-frd-available-header"
-          >
-            <div>
-              <Title
-                level={4}
-                className="sw-frd-section-title sw-frd-requests-title"
-              >
-                Available Requests
-              </Title>
-              <Text className="sw-frd-section-subtitle">
-                Start your flow by accepting a request
-              </Text>
-            </div>
+        {!isDashboardVisible && (
+          <section className="sw-frd-section">
+            <Row
+              justify="space-between"
+              align="middle"
+              className="sw-frd-available-header"
+            >
+              <div>
+                <Title
+                  level={4}
+                  className="sw-frd-section-title sw-frd-requests-title"
+                >
+                  Available Requests
+                </Title>
+                <Text className="sw-frd-section-subtitle">
+                  Start your flow by accepting a request
+                </Text>
+              </div>
 
-            <Space size={12} className="sw-frd-filter-bar">
-              <Select
-                value={requestFilter}
-                onChange={(value) => setRequestFilter(value as any)}
+              <Space size={12} className="sw-frd-filter-bar">
+                <Select
+                value={selectedSkill}
+                onChange={(val) => setSelectedSkill(val)}
                 className="sw-frd-filter-select"
               >
-                <Option value="All Requests">All Requests</Option>
-                <Option value="Matched to My Skills">
-                  Matched to My Skills
-                </Option>
+                <Option value="All">All Requests</Option>
+                <Option value="Home Services">Home Services</Option>
+                <Option value="Cleaning">Cleaning</Option>
+                <Option value="Electrical">Electrical</Option>
+                <Option value="Plumbing">Plumbing</Option>
               </Select>
 
-              <Select
-                value={requestSort}
-                onChange={(value) => setRequestSort(value as any)}
-                className="sw-frd-sort-select"
-              >
-                <Option value="Newest First">Newest First</Option>
-                <Option value="Highest Price">Highest Price</Option>
-              </Select>
-            </Space>
-          </Row>
+                <Select
+                  value={requestSort}
+                  onChange={(value) => setRequestSort(value as any)}
+                  className="sw-frd-sort-select"
+                >
+                  <Option value="Newest First">Newest First</Option>
+                  <Option value="Highest Price">Highest Price</Option>
+                </Select>
+              </Space>
+            </Row>
 
-          <div className="sw-frd-requests-list">
-            {filteredRequests.length > 0 ? (
-              filteredRequests.map((req) => (
+            <div className="sw-frd-requests-list">
+              {visibleRequests.length === 0 && !loadingMore && (
+                <Empty
+                  description={
+                    selectedSkill === 'All'
+                      ? 'No available requests.'
+                      : `No requests found for "${selectedSkill}".`
+                  }
+                  image={Empty.PRESENTED_IMAGE_SIMPLE}
+                />
+              )}
+
+              {visibleRequests.map((req) => (
                 <RequestCard
                   key={req.ticketId}
                   request={req}
                   onAccept={handleAcceptRequest}
                 />
-              ))
-            ) : (
-              <Empty
-                description={`No available requests matching "${requestFilter}" criteria.`}
-                image={Empty.PRESENTED_IMAGE_SIMPLE}
-              />
-            )}
+              ))}
+
+              <div ref={sentinelRef} style={{ height: 1 }} />
+
+              {loadingMore && (
+                <div style={{ textAlign: 'center', padding: 12 }}>
+                  <Loader size="default" message="Loading more requests..." />
+                </div>
+              )}
+              {!hasMore && visibleRequests.length > 0 && (
+                <div style={{ textAlign: 'center', padding: 12, color: '#666' }}>
+                  End of results
+                </div>
+              )}
+            </div>
+          </section>
+        )}
+
+        {isWalletOpen && (
+          <div className="wallet-popup-overlay">
+            <MyWallet onClose={() => setIsWalletOpen(false)} />
           </div>
-        </section> */}
-        {/* AVAILABLE REQUESTS — only show when dashboard is NOT visible (i.e. login/requests view) */}
-{!isDashboardVisible && (
-  <section className="sw-frd-section">
-    <Row
-      justify="space-between"
-      align="middle"
-      className="sw-frd-available-header"
-    >
-      <div>
-        <Title
-          level={4}
-          className="sw-frd-section-title sw-frd-requests-title"
-        >
-          Available Requests
-        </Title>
-        <Text className="sw-frd-section-subtitle">
-          Start your flow by accepting a request
-        </Text>
-      </div>
-
-      <Space size={12} className="sw-frd-filter-bar">
-        {/* <Select
-          value={requestFilter}
-          onChange={(value) => setRequestFilter(value as any)}
-          className="sw-frd-filter-select"
-        >
-          <Option value="All Requests">All Requests</Option>
-          <Option value="Matched to My Skills">
-            Matched to My Skills
-          </Option>
-        </Select> */}
-
-
-
-<Select
-  value={selectedSkill}
-  onChange={(val) => setSelectedSkill(val as string)}
->
-  <Option value="All Skills">All Requests</Option>
-  {MOCK_USER.skills.map((s) => (
-    <Option key={s} value={s}>{s}</Option>
-  ))}
-</Select>
-
-
-        <Select
-          value={requestSort}
-          onChange={(value) => setRequestSort(value as any)}
-          className="sw-frd-sort-select"
-        >
-          <Option value="Newest First">Newest First</Option>
-          <Option value="Highest Price">Highest Price</Option>
-        </Select>
-      </Space>
-    </Row>
-
-    {/* <div className="sw-frd-requests-list">
-      {filteredRequests.length > 0 ? (
-        filteredRequests.map((req) => (
-          <RequestCard
-            key={req.ticketId}
-            request={req}
-            onAccept={handleAcceptRequest}
-          />
-        ))
-      ) : (
-        // <Empty
-        //   description={`No available requests matching "${requestFilter}" criteria.`}
-        //   image={Empty.PRESENTED_IMAGE_SIMPLE}
-        // />
-        <Empty
-  description={
-    selectedSkill === 'All Skills'
-      ? 'No available requests.'
-      : `No requests found for "${selectedSkill}".`
-  }
-  image={Empty.PRESENTED_IMAGE_SIMPLE}
-/>
-
-      )}
-    </div> */}
-
-        <div className="sw-frd-requests-list">
-      {visibleRequests.length === 0 && !loadingMore && (
-        <Empty
-          description={
-            selectedSkill === 'All Skills'
-              ? 'No available requests.'
-              : `No requests found for "${selectedSkill}".`
-          }
-          image={Empty.PRESENTED_IMAGE_SIMPLE}
-        />
-      )}
-
-    {loadingRequests ? (
-  <div style={{ textAlign: "center", padding: 24 }}>
-    Loading requests...
-  </div>
-) : (
-  visibleRequests.map((req) => (
-    <RequestCard
-      key={req.ticketId}
-      request={req}
-      onAccept={handleAcceptRequest}
-    />
-  ))
-)}
-
-      {/* Sentinel observed by IntersectionObserver */}
-      <div ref={sentinelRef} style={{ height: 1 }} />
-
-      {/* Loading / end indicators */}
-      {loadingMore && (
-        <div style={{ textAlign: 'center', padding: 12 }}>
-          <span>Loading more…</span>
-        </div>
-      )}
-      {!hasMore && visibleRequests.length > 0 && (
-        <div style={{ textAlign: 'center', padding: 12, color: '#666' }}>
-          End of results
-        </div>
-      )}
-    </div>
-
-  </section>
-)}
-{isWalletOpen && (
-  <div className="wallet-popup-overlay">
-    <MyWallet onClose={() => setIsWalletOpen(false)} />
-  </div>
-)}
-
-
+        )}
       </Content>
     </Layout>
   );
