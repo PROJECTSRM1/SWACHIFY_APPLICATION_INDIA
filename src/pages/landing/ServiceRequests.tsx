@@ -58,6 +58,17 @@ export default function ServiceRequest() {
   const [loading, setLoading] = useState<boolean>(true);
 
   const navigate = useNavigate();
+  const [expandedCards, setExpandedCards] = useState<Record<number, boolean>>({});
+  const toggleExpand = (id: number) => {
+  setExpandedCards((prev) => ({
+    ...prev,
+    [id]: !prev[id],
+  }));
+};
+
+
+  
+
 
   useEffect(() => {
     const fetchRequests = async () => {
@@ -220,59 +231,68 @@ export default function ServiceRequest() {
               <Row gutter={[14, 14]} justify={rowJustify}>
                 {filtered.map((r) => (
                   <Col key={r.id} xs={24} sm={12} md={8} lg={7}>
-                    <Card className="sw-fr-sr-card compact" bordered={false}>
-                      <div className="sw-fr-sr-card-header">
-                        <Space size="small">
-                          {r.urgentFlag && <Tag className="sw-fr-sr-urgent">🔥 Urgent</Tag>}
-                          <Tag className="sw-fr-sr-distance">{r.distanceKm} km</Tag>
-                        </Space>
-                      </div>
+                    <Card className="sw-fr-sr-card" bordered={false}>
 
-                      <div className="sw-fr-sr-card-main">
-                        <h3 className="sw-fr-sr-card-title">{r.title}</h3>
-                        <p className="sw-fr-sr-card-desc">{r.desc}</p>
-                      </div>
+  {/* HEADER */}
+  <div className="sw-fr-sr-card-header">
+    <Space size="small">
+      {r.urgentFlag && <Tag className="sw-fr-sr-urgent">🔥 Urgent</Tag>}
+      <Tag className="sw-fr-sr-distance">{r.distanceKm} km</Tag>
+    </Space>
+  </div>
 
-                      <div className="sw-fr-sr-meta-row compact">
-                        <div className="sw-fr-sr-meta-left-group">
-                          <div className="sw-fr-sr-meta-left">
-                            <span className="sw-fr-sr-customer-name">👤 {r.name}</span>
-                            <div className="sw-fr-sr-meta-left">
-                              <EnvironmentOutlined className="sw-fr-sr-meta-icon" />
-                              <span className="sw-fr-sr-meta-text">{r.place}</span>
-                            </div>
-                          </div>
+  {/* CONTENT (THIS MUST GROW) */}
+  <div className="sw-fr-sr-card-content">
+    <h3 className="sw-fr-sr-card-title">{r.title}</h3>
 
-                          <div className="sw-fr-sr-meta-middle">
-                            <ClockCircleOutlined className="sw-fr-sr-meta-icon" />
-                            <span className="sw-fr-sr-meta-text">{r.timeAgo}</span>
-                          </div>
-                        </div>
+    <div className="sw-fr-sr-line">👤 {r.name}</div>
 
-                        <div className="sw-fr-sr-meta-right">
-                          <Rate disabled defaultValue={Math.round(r.rating)} />
-                          <span className="sw-fr-sr-rating">{r.rating.toFixed(1)}</span>
-                        </div>
-                      </div>
+    <div className="sw-fr-sr-line">
+      Property size: {r.desc.replace("Property size: ", "")}
+    </div>
 
-                      <div className="sw-fr-sr-divider" />
+    <div className="sw-fr-sr-line">
+      <EnvironmentOutlined />
+      <span
+        className={`sw-fr-sr-address ${
+          expandedCards[r.id] ? "expanded" : ""
+        }`}
+      >
+        {r.place}
+      </span>
+    </div>
 
-                      <div className="sw-fr-sr-card-bottom compact">
-                        <div className="sw-fr-sr-price">
-                          <span className="sw-fr-sr-currency">$</span>
-                          <span className="sw-fr-sr-amount">{r.price}</span>
-                        </div>
+    {r.place.length > 60 && (
+      <span
+        className="sw-fr-sr-view-more"
+        onClick={() => toggleExpand(r.id)}
+      >
+        {expandedCards[r.id] ? "View less" : "View more"}
+      </span>
+    )}
 
-                        <div className="sw-fr-sr-actions">
-                          <Button className="sw-fr-sr-accept small" size="small">
-                            Accept
-                          </Button>
-                          <Button onClick={() => navigate("/freelancerregistration")} className="sw-fr-sr-details small" size="small">
-                            Details
-                          </Button>
-                        </div>
-                      </div>
-                    </Card>
+    <div className="sw-fr-sr-line">
+      <ClockCircleOutlined /> {r.timeAgo}
+    </div>
+
+    <div className="sw-fr-sr-rating-row">
+      <Rate disabled value={Math.round(r.rating)} />
+      <span>{r.rating.toFixed(1)}</span>
+    </div>
+  </div>
+
+  {/* FOOTER (MUST STAY AT BOTTOM) */}
+  <div className="sw-fr-sr-card-footer">
+    <div className="sw-fr-sr-price">$ {r.price}</div>
+
+    <div className="sw-fr-sr-actions">
+      <Button className="sw-fr-sr-accept">Accept</Button>
+      <Button className="sw-fr-sr-details">Details</Button>
+    </div>
+  </div>
+
+</Card>
+
                   </Col>
                 ))}
               </Row>
