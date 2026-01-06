@@ -25,6 +25,7 @@ import {
   Upload,
   Modal, 
   Input,
+  Tooltip,
 } from 'antd';
 import {
   EnvironmentOutlined,
@@ -869,9 +870,23 @@ const RequestCard: React.FC<{ request: Job; onAccept: (req: Job) => void }> = ({
       <Text className="sw-frd-request-desc-text">{request.description}</Text>
 
       <div className="sw-frd-details-row">
-        <Text className="sw-frd-detail-item">
+        {/* <Text className="sw-frd-detail-item">
           <EnvironmentOutlined className="sw-frd-icon-sm" /> {request.location}
-        </Text>
+        </Text> */}
+
+
+<Tooltip
+  title={request.location}
+  placement="topLeft"
+  classNames={{
+    body: 'sw-frd-location-tooltip',
+  }}
+>
+  <Text className="sw-frd-detail-item sw-frd-location">
+    <EnvironmentOutlined className="sw-frd-icon-sm" /> {request.location}
+  </Text>
+</Tooltip>
+
 
         <Text className="sw-frd-detail-item">
           <ClockCircleOutlined className="sw-frd-icon-sm" /> {request.date}

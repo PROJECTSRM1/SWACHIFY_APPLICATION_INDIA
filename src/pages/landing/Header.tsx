@@ -13,9 +13,11 @@ import {
   Checkbox,
   message,
   //Radio,
+  Upload,
 } from "antd";
 
-import { Select } from "antd";
+import { Select ,TreeSelect} from "antd";
+
 
 import {
   EyeInvisibleOutlined,
@@ -23,6 +25,7 @@ import {
   MenuOutlined,
   CloseOutlined,
   UserOutlined,
+  PlusOutlined,
 } from "@ant-design/icons";
 
 import axios from "axios";
@@ -68,6 +71,9 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
   type RoleType = "vendor" | "admin";
 const [roleType, setRoleType] = useState<RoleType>("vendor");
 const [showRegisterHint, setShowRegisterHint] = useState<"vendor" | "admin" | null>(null);
+
+const [showProfessionalFields, setShowProfessionalFields] = useState(false);
+
 
 
 
@@ -338,7 +344,7 @@ if (roleType === "admin") {
 
         <Button
           className="swl-hs-contact-btn swl-signup-btn"
-          onClick={() => openAuthModal("login")}
+          onClick={() => openAuthModal("register")}
           htmlType="button"
         >
           Sign Up
@@ -489,134 +495,203 @@ if (roleType === "admin") {
           </TabPane>
 
           {/* REGISTER TAB */}
-          <TabPane tab="Register" key="register">
-            <Form layout="vertical" onFinish={onRegister} preserve={false}>
-              <div style={{ display: "flex", gap: 8 }}>
-                <Form.Item
-                  label="First Name"
-                  name="firstName"
-                  rules={[
-                    { required: true, message: "Please enter your first name" },
-                    { min: 2, message: "First name must be at least 2 characters" },
-                    {
-                      pattern: /^[A-Za-z]+$/,
-                      message: "First name must contain only letters",
-                    },
-                  ]}
-                  style={{ flex: 1 }}
-                >
-                  <Input />
-                </Form.Item>
-                <Form.Item
-                  label="Last Name"
-                  name="lastName"
-                  rules={[
-                    { required: true, message: "Please enter your last name" },
-                    { min: 2, message: "Last name must be at least 2 characters" },
-                    {
-                      pattern: /^[A-Za-z]+$/,
-                      message: "Last name must contain only letters",
-                    },
-                  ]}
-                  style={{ flex: 1 }}
-                >
-                  <Input />
-                </Form.Item>
-              </div>
-              <Form.Item
-                label="Email"
-                name="email"
-                rules={[
-                  { required: true, message: "Please enter your email" },
-                  {
-                    type: "email",
-                    message: "Enter a valid email (Ex: abcd@gmail.com)",
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-              <Form.Item
-                label="Phone"
-                name="phone"
-                rules={[
-                  { required: true, message: "Please enter phone number" },
-                  {
-                    pattern: /^[0-9]{10}$/,
-                    message: "Phone number must be exactly 10 digits",
-                  },
-                ]}
-              >
-                <Input maxLength={10} />
-              </Form.Item>
+<TabPane tab="Register" key="register">
+  <Form layout="vertical" onFinish={onRegister} preserve={false}>
+
 <Form.Item
-  label="Gender"
-  name="gender"
-  rules={[{ required: true, message: "Please select gender" }]}
+  label="Select Services"
+  name="service"
+  rules={[{ required: true, message: "Please select at least one service" }]}
 >
-  <Select placeholder="Select Gender">
-    <Select.Option value={1}>Male</Select.Option>
-    <Select.Option value={2}>Female</Select.Option>
-    <Select.Option value={3}>Other</Select.Option>
-  </Select>
+  <TreeSelect
+    treeCheckable
+    allowClear
+    placeholder="Select services"
+    style={{ width: "100%" }}
+    showCheckedStrategy={TreeSelect.SHOW_ALL}
+    maxTagCount={0}   // 🔥 HIDE ALL TAGS
+    maxTagPlaceholder={(values) => `${values.length} Services Selected `} // 🔥 SHOW COUNT
+    treeData={[
+      { title: "Cleaning & Home Services", value: "cleaning" },
+      { title: "Transport", value: "transport" },
+      { title: "Buy/Sell/Rental", value: "buy_sell_rent" },
+      { title: "Raw Materials", value: "raw_materials" },
+      { title: "Education", value: "education" },
+      { title: "Swachify Products", value: "swachify_products" },
+    ]}
+  />
 </Form.Item>
 
 
+    <Form.Item
+      label="First Name"
+      name="firstName"
+      rules={[{ required: true }]}
+    >
+      <Input placeholder="Enter first name" />
+    </Form.Item>
 
-              <Form.Item
-                label="Password"
-                name="password"
-                rules={[
-                  { required: true, message: "Please enter password" },
-                  {
-                    pattern:
-                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
-                    message:
-                      "Password must have 1 uppercase, 1 lowercase, 1 digit & 1 special symbol (Ex: Abcd123@)",
-                  },
-                ]}
-                hasFeedback
-              >
-                <Input.Password />
-              </Form.Item>
-              <Form.Item
-                label="Confirm Password"
-                name="confirm"
-                dependencies={["password"]}
-                hasFeedback
-                rules={[
-                  { required: true, message: "Please confirm your password" },
-                  ({ getFieldValue }) => ({
-                    validator(_, value) {
-                      return !value || getFieldValue("password") === value
-                        ? Promise.resolve()
-                        : Promise.reject(new Error("Passwords do not match"));
-                    },
-                  }),
-                ]}
-              >
-                <Input.Password />
-              </Form.Item>
+    <Form.Item
+      label="Last Name"
+      name="lastName"
+      rules={[{ required: true }]}
+    >
+      <Input placeholder="Enter last name" />
+    </Form.Item>
 
-              {/* ADDRESS */}
-              {/* <Form.Item
-                label="Address"
-                name="address"
-                rules={[
-                  { required: true, message: "Please enter your address" },
-                  { min: 5, message: "Address must be at least 8 characters" },
-                ]}
-              >
-                <Input.TextArea rows={3} placeholder="Enter your address" />
-              </Form.Item> */}
+    <Form.Item
+      label="Mobile Number"
+      name="mobile"
+      rules={[
+        { required: true },
+        { pattern: /^[0-9]{10}$/, message: "Enter valid 10-digit number" },
+      ]}
+    >
+      <Input placeholder="Enter mobile number" maxLength={10} />
+    </Form.Item>
 
-              <Form.Item>
-                <Button block htmlType="submit" loading={authLoading}>
-                  Register
-                </Button>
-              </Form.Item>
-            </Form>
-          </TabPane>
+    <Form.Item
+      label="Email ID"
+      name="email"
+      rules={[{ required: true, type: "email" }]}
+    >
+      <Input placeholder="Enter email" />
+    </Form.Item>
+
+    <Form.Item
+      label="Aadhaar Number"
+      name="aadhaar"
+      rules={[
+        { required: true },
+        { pattern: /^[0-9]{12}$/, message: "Enter 12-digit Aadhaar number" },
+      ]}
+    >
+      <Input placeholder="Enter 12-digit Aadhaar number" maxLength={12} />
+    </Form.Item>
+
+    <Form.Item
+      label="Location"
+      name="location"
+      rules={[{ required: true }]}
+    >
+      <Input placeholder="Enter your location" />
+    </Form.Item>
+
+<Form.Item
+  label="Select Work Type"
+  name="workType"
+  rules={[{ required: true }]}
+>
+  <Select
+    placeholder="Choose work type"
+    onChange={(value) => {
+      setShowProfessionalFields(value === "looking");
+    }}
+  >
+    <Select.Option value="assigning">Assigning for work</Select.Option>
+    <Select.Option value="looking">Looking for work</Select.Option>
+    <Select.Option value="both">Both</Select.Option>
+  </Select>
+</Form.Item>
+{showProfessionalFields && (
+  <div style={{ marginTop: 16 }}>
+
+    <h4 style={{ marginBottom: 12 }}>Professional Details</h4>
+
+    <Form.Item
+      label="Experience (in years)"
+      name="experience"
+      rules={[{ required: true }]}
+    >
+      <Input placeholder="Enter years of experience" />
+    </Form.Item>
+
+    <Form.Item
+      label="Expertise in"
+      name="expertise"
+      rules={[{ required: true }]}
+    >
+      <Input placeholder="e.g., Floor Cleaning, Plumbing" />
+    </Form.Item>
+
+    <Form.Item
+      label="Additional Service"
+      name="additionalService"
+    >
+      <Input placeholder="Any additional services offered" />
+    </Form.Item>
+
+    <Form.Item
+      label="Upload Work / ID Images"
+      name="documents"
+      valuePropName="fileList"
+      getValueFromEvent={(e) => e?.fileList}
+    >
+      <Upload
+        listType="picture-card"
+        beforeUpload={() => false}
+        multiple
+        maxCount={5}
+      >
+        <div>
+          <PlusOutlined />
+          <div style={{ marginTop: 8 }}>Upload</div>
+        </div>
+      </Upload>
+    </Form.Item>
+
+  </div>
+)}
+
+    {/* PASSWORD */}
+<Form.Item
+  label="Password"
+  name="password"
+  rules={[
+    { required: true, message: "Please enter password" },
+    {
+      pattern:
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
+      message:
+        "Password must include uppercase, lowercase, number & special character",
+    },
+  ]}
+  hasFeedback
+>
+  <Input.Password />
+</Form.Item>
+
+{/* CONFIRM PASSWORD */}
+<Form.Item
+  label="Confirm Password"
+  name="confirmPassword"
+  dependencies={["password"]}
+  hasFeedback
+  rules={[
+    { required: true, message: "Please confirm your password" },
+    ({ getFieldValue }) => ({
+      validator(_, value) {
+        if (!value || getFieldValue("password") === value) {
+          return Promise.resolve();
+        }
+        return Promise.reject(new Error("Passwords do not match"));
+      },
+    }),
+  ]}
+>
+  <Input.Password />
+</Form.Item>
+
+
+    <Form.Item>
+      <Button block htmlType="submit" loading={authLoading}>
+        Register
+      </Button>
+    </Form.Item>
+
+  </Form>
+</TabPane>
+
         </Tabs>
       </Modal>
 
