@@ -2340,61 +2340,50 @@ sub_group_id: getSubModuleId(selectedSubKey),
                   return (
                     <>
 
-                      <div className="sw-cs-form-row">
-                        {cfg.serviceType && (
-                          <Form.Item
-                            name="serviceType"
-                            label="Service Type"
-                            rules={[{ required: true, message: "Choose service type" }]}
-                            className="sw-cs-half-width"
-                          >
-                            <Select
-                              placeholder="Select service type"
-                              onChange={() => computeTotal(form.getFieldsValue())}
-                              allowClear
-                            >
-                              {selectedModule.title.toLowerCase().includes("room") ||
-                                selectedModule.title.toLowerCase().includes("bedroom") ? (
-                                <>
-                                  <Option value="standard">Regular Cleaning</Option>
-                                  <Option value="deep">Deep Cleaning</Option>
-                                </>
-                              ) : selectedModule.title.toLowerCase().includes("kitchen") ? (
-                                <>
-                                  <Option value="standard">Regular Cleaning</Option>
-                                  <Option value="deep">Deep Cleaning</Option>
-                                  <Option value="grease">Grease Removal</Option>
-                                </>
-                              ) : selectedModule.title.toLowerCase().includes("bathroom") ? (
-                                <>
-                                  <Option value="sanitization">Sanitization</Option>
-                                  <Option value="deep">Deep Bathroom Clean</Option>
-                                </>
-                              ) : (
-                                <>
-                                  <Option value="standard">Regular Cleaning</Option>
-                                  <Option value="deep">Deep Cleaning</Option>
-                                </>
-                              )}
+<div className="sw-cs-form-row sw-cs-3-col-row">
+  {cfg.serviceType && (
+    <Form.Item
+      name="serviceType"
+      label="Service Type"
+      rules={[{ required: true, message: "Choose service type" }]}
+      className="sw-cs-third-width"
+    >
+      <Select placeholder="Service">
+        <Option value="standard">Regular</Option>
+        <Option value="deep">Deep</Option>
+        <Option value="grease">Grease</Option>
+        <Option value="sanitization">Sanitization</Option>
+      </Select>
+    </Form.Item>
+  )}
 
-                            </Select>
-                          </Form.Item>
-                        )}
+  {cfg.sqft && (
+    <Form.Item
+      name="propertySize"
+      label="Property Size (sq ft)"
+      rules={[{ required: true, message: "Enter size" }]}
+      className="sw-cs-third-width"
+    >
+      <Input placeholder="1200" />
+    </Form.Item>
+  )}
 
-                        {cfg.sqft && (
-                          <Form.Item
-                            name="propertySize"
-                            label="Property Size (sq ft)"
-                            rules={[{ required: true, message: "Enter size" }]}
-                            className="sw-cs-half-width"
-                          >
-                            <Input
-                              placeholder="e.g., 1200"
-                              onChange={() => computeTotal(form.getFieldsValue())}
-                            />
-                          </Form.Item>
-                        )}
-                      </div>
+  {/* ✅ NEW DURATION FIELD */}
+  <Form.Item
+    name="duration"
+    label="Duration"
+    rules={[{ required: true, message: "Select duration" }]}
+    className="sw-cs-third-width"
+  >
+    <Select placeholder="Duration">
+      <Option value="1">1 Hour</Option>
+      <Option value="2">2 Hours</Option>
+      <Option value="3">3 Hours</Option>
+      <Option value="4">4+ Hours</Option>
+    </Select>
+  </Form.Item>
+</div>
+
 
 
                       <div className="sw-cs-form-row">
@@ -2415,6 +2404,19 @@ sub_group_id: getSubModuleId(selectedSubKey),
                             ))}
                           </Select>
                         </Form.Item>
+                          <Form.Item
+    name="duration"
+    label="Duration"
+    rules={[{ required: true, message: "Select duration" }]}
+    className="sw-cs-third-width"
+  >
+    <Select placeholder="Duration">
+      <Option value="1">1 Hour</Option>
+      <Option value="2">2 Hours</Option>
+      <Option value="3">3 Hours</Option>
+      <Option value="4">4+ Hours</Option>
+    </Select>
+  </Form.Item>
                         {selectedSubKey === "homes" && selectedModule?.title === "All Services" && (
                           <Form.Item
                             name="selectedServices"
