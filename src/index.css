@@ -1142,6 +1142,49 @@ with prefix */
   margin-bottom: 40px;
   text-align: center;
 }
+.sw-lp-classname-service-card {
+  text-align: center;
+  padding: 32px 24px;
+}
+
+.sw-lp-classname-service-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 56px;
+  height: 56px;
+
+  margin: 0 auto 16px; 
+
+  border-radius: 12px;
+  background: #f7f7f7;
+}
+
+
+.sw-lp-classname-service-card:hover .sw-lp-classname-service-icon {
+  background: #eef2ff;
+}
+
+
+.sw-lp-classname-service-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+
+.sw-lp-classname-service-desc {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 12px;
+}
+
+
+.sw-lp-classname-learn-more {
+  font-weight: 600;
+  color: #000;
+}
 
 /* keep ant-row behaviour but constrain width */
 .sw-lp-classname-services-section .ant-row {
