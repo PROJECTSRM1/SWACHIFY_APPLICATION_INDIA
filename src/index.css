@@ -17864,8 +17864,8 @@ body {
 .sw-frd-details-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 15px;
-  margin-top: 6px;
+  gap: 12px;
+  margin-top: 4px;
   margin-bottom: 10px;
 }
 .sw-frd-detail-item {
@@ -17878,6 +17878,16 @@ body {
   margin-right: 5px;
   color: var(--primary);
 }
+
+.sw-frd-detail-item,
+.sw-frd-customer,
+.sw-frd-ticket-id {
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1.2;
+  font-size: 12px;
+}
+
 
 /* Customer details block */
 .sw-frd-customer-block {
@@ -17975,6 +17985,9 @@ body {
   font-size: 0.9rem;
   padding-left: 20px;
   border-left: 3px solid var(--primary-light);
+
+  
+
 }
 .sw-frd-customer {
   display: block;
@@ -18066,6 +18079,8 @@ width: 100%;
   display: flex;
   flex-direction: column;
   height: 100%;
+  padding: 12px !important;
+  
 }
 
 /* Body grows, footer sticks to bottom */
@@ -18108,6 +18123,33 @@ width: 100%;
   align-items: center;
   justify-content: center;
 }
+
+.sw-frd-location {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  /* Standard (future-proof) */
+  line-clamp: 2;
+  /* Current browser support */
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+/* Tooltip container */
+.sw-frd-location-tooltip .ant-tooltip-inner {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  font-size: 13px;
+}
+
+/* Tooltip arrow */
+.sw-frd-location-tooltip .ant-tooltip-arrow::before {
+  background-color: #ffffff !important;
+}
+
+
 /* =========================
    HEADER – MOBILE LAYOUT
    ========================= */
@@ -18463,6 +18505,8 @@ width: 100%;
   line-height: 1.35;
 }
 
+
+
 /* Desktop-wide: allow slightly smaller columns to fit 4 cards in 1366px */
 @media (min-width: 1280px) {
   .sw-frd-requests-list {
@@ -18495,7 +18539,8 @@ width: 100%;
 
   .sw-frd-details-row {
     flex-direction: column;
-    gap: 6px;
+    gap: 4px;
+
   }
 }
 /* Make every request card the same height */
