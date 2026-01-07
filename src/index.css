@@ -5821,21 +5821,6 @@ body {
 }
 
 /* When expanded */
-/* collapsed address (default) */
-.sw-fr-sr-address {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1;
-
-  line-clamp: 1;              /* ✅ standard property */
-  overflow: hidden;
-}
-
-/* expanded address */
-.sw-fr-sr-address.expanded {
-  -webkit-line-clamp: unset;
-  line-clamp: unset;          /* ✅ fixes warning */
-}
 
 
 
@@ -6494,11 +6479,27 @@ body {
 
 /* Address text */
 .sw-fr-sr-address {
-  display: -webkit-box;
+  /* display: -webkit-box;
+  -webkit-line-clamp: 2;    
   -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis; */
+
+    /* display: -webkit-box;
+  -webkit-box-orient: vertical;
+
+  -webkit-line-clamp: 1; 
+  line-clamp: 1;         
+
+  overflow: hidden;
+  text-overflow: ellipsis; */
+
+   white-space: nowrap;      /* force single line */
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+
 
 
 /* Registration Form Section (right) */
@@ -17888,6 +17889,12 @@ body {
 }
 .sw-frd-request-card {
   border-left: 5px solid #28a745;
+    display: flex;
+  flex-direction: column;
+  justify-content: align-start; 
+  height: auto;
+
+
 }
 
 .sw-frd-job-col {
@@ -17951,6 +17958,8 @@ body {
   align-items: center;
   color: var(--light-text);
   font-size: 0.9rem;
+    gap: 4px;               /* spacing between icon & text */
+  line-height: 1.4;
 }
 .sw-frd-icon-sm {
   margin-right: 5px;
@@ -18166,11 +18175,12 @@ width: 100%;
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
+    margin-bottom: 8px;
 }
 
 .sw-frd-request-footer {
-  margin-top: auto;
-  padding-top: 12px;
+  margin-top: 0;
+  padding-top: 0;
 }
 
 /* --- TOP HEADER ALIGNMENT --- */
@@ -18203,16 +18213,58 @@ width: 100%;
 }
 
 .sw-frd-location {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  /* Standard (future-proof) */
-  line-clamp: 2;
-  /* Current browser support */
-  -webkit-line-clamp: 2;
+
+
+   display: inline-flex;       /* keep icon and text aligned */
+  align-items: center;        /* vertical alignment */
+  white-space: nowrap;        /* force 1 line */
+  overflow: hidden;           /* hide overflow */
+  text-overflow: ellipsis;    /* show ... */
+  max-width: 100%;  
+
+
+
+
+}
+
+.sw-frd-location-wrapper {
+  display: flex;
+  align-items: center;   /* keep vertical alignment */
+  gap: 4px;              /* reduce icon-text gap */
+  width: 100%;
+  max-width: 100%;
+  line-height: 1;        /* 🔥 removes extra vertical space */
+}
+
+.sw-frd-location-text {
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  cursor: pointer;
+  flex: 1;
+  max-width: 200px; 
+  font-size: 13px;
+  line-height: 1.2; 
+    color: #6b7280;     /* keeps text readable without padding */
 }
+
+
+
+.sw-frd-location-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 220px; /* adjust based on card width */
+}
+
+
+.sw-frd-icon-sm {
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+
+
+
 
 /* Tooltip container */
 .sw-frd-location-tooltip .ant-tooltip-inner {
@@ -18364,7 +18416,7 @@ width: 100%;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
 }
 
 /* Title */
@@ -18625,8 +18677,8 @@ width: 100%;
 .sw-frd-request-card {
   display: flex;
   flex-direction: column;
-  height: 100%;      /* stretch inside grid */
-  min-height: 320px; /* adjust based on your design */
+      /* stretch inside grid */
+  min-height: auto; /* adjust based on your design */
 }
 
 /* Body grows and pushes footer down */
@@ -18638,8 +18690,8 @@ width: 100%;
 
 /* Footer fixed at bottom of card */
 .sw-frd-request-footer {
-  margin-top: auto;       /* pushes footer to bottom */
-  padding-top: 12px;
+  margin-top: 0px;       /* pushes footer to bottom */
+  padding-top: 2px;
 }
 
 /* Ensure Accept button has consistent height */
@@ -21295,9 +21347,6 @@ body {
 .sw-ea-modal .ant-modal-content {
   border-radius: 16px;
 }
-
-
-
 /* ===== Header ===== */
 .sw-ea-title {
   font-size: 20px;
