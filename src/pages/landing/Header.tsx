@@ -503,23 +503,25 @@ if (roleType === "admin") {
   name="service"
   rules={[{ required: true, message: "Please select at least one service" }]}
 >
-  <TreeSelect
-    treeCheckable
-    allowClear
-    placeholder="Select services"
-    style={{ width: "100%" }}
-    showCheckedStrategy={TreeSelect.SHOW_ALL}
-    maxTagCount={0}   // 🔥 HIDE ALL TAGS
-    maxTagPlaceholder={(values) => `${values.length} Services Selected `} // 🔥 SHOW COUNT
-    treeData={[
-      { title: "Cleaning & Home Services", value: "cleaning" },
-      { title: "Transport", value: "transport" },
-      { title: "Buy/Sell/Rental", value: "buy_sell_rent" },
-      { title: "Raw Materials", value: "raw_materials" },
-      { title: "Education", value: "education" },
-      { title: "Swachify Products", value: "swachify_products" },
-    ]}
-  />
+<TreeSelect
+  treeCheckable
+  showSearch={false} 
+  showArrow              
+  placeholder="Select services"
+  style={{ width: "100%" }}
+  showCheckedStrategy={TreeSelect.SHOW_PARENT}
+  getPopupContainer={() => document.body}
+  treeData={[
+    { title: "Cleaning & Home Services", value: "cleaning" },
+    { title: "Transport", value: "transport" },
+    { title: "Buy/Sell/Rental", value: "buy_sell_rent" },
+    { title: "Raw Materials", value: "raw_materials" },
+    { title: "Education", value: "education" },
+    { title: "Swachify Products", value: "swachify_products" },
+  ]}
+/>
+
+
 </Form.Item>
 
 
