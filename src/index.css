@@ -5540,7 +5540,9 @@ body {
 }
 .sw-fr-sr-card-content {
   flex: 1;   
-    min-height: 200px;              /* takes remaining height */
+  min-height: 200px; 
+  display: flex;
+  flex-direction: column;             /* takes remaining height */
 }
 
 .sw-fr-sr-card-bottom {
@@ -5819,7 +5821,6 @@ body {
 }
 
 /* When expanded */
-
 
 
 
@@ -6473,7 +6474,7 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-top: 4px;
+  margin-top: auto;   /* 🔥 aligns rating across cards */
 }
 
 /* Address text */
