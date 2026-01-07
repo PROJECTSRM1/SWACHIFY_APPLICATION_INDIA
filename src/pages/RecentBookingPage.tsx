@@ -3,6 +3,8 @@ import { List, Card, Image, Tag, Row, Col } from "antd";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import "../index.css";
+import { Spin } from "antd";
+
 
 import cleaningImg from "../assets/HomeServices/cleaningservices.jpg";
 import electricalImg from "../assets/HomeServices/electricalservices.jpg";
@@ -19,6 +21,7 @@ const SERVICE_IMAGE_MAP: Record<number, string> = {
 };
 
 const DEFAULT_IMAGE = cleaningImg;
+
 
 
 const TIME_SLOT_LABELS: Record<number, string> = {
@@ -110,6 +113,8 @@ const computeStatus = (b: Booking): Status => {
 
 const RecentBookingPage: React.FC = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);
+  const [loading, setLoading] = useState(true);
+
 
   /* Load bookings from localStorage */
   // useEffect(() => {
@@ -127,15 +132,18 @@ useEffect(() => {
     // 🚫 Guest user
     if (!userId) {
       setBookings([]);
+      setLoading(false); // ✅ IMPORTANT
       return;
     }
 
     try {
+      setLoading(true); // ✅ START LOADER
+
       const res = await api.post(
         "api/admin/by-user",
         {
           created_by: userId,
-          payment_done: true
+          payment_done: true,
         }
       );
 
@@ -154,11 +162,15 @@ useEffect(() => {
       setBookings(mapped);
     } catch (err) {
       console.error("Failed to fetch recent bookings", err);
+      setBookings([]);
+    } finally {
+      setLoading(false); // ✅ STOP LOADER
     }
   };
 
   fetchRecentBookings();
 }, []);
+
 
   /* ⏱ Re-render every 30 seconds (auto complete / expiry) */
   useEffect(() => {
@@ -174,13 +186,31 @@ useEffect(() => {
     [bookings]
   );
 
-  if (sortedBookings.length === 0) {
-    return (
-      <div style={{ padding: 40 }}>
-        <h2>No recent bookings</h2>
-      </div>
-    );
-  }
+  // 1️⃣ Loader FIRST
+if (loading) {
+  return (
+    <div
+      style={{
+        height: "60vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <Spin size="large" tip="Loading recent bookings..." />
+    </div>
+  );
+}
+
+
+if (!loading && sortedBookings.length === 0) {
+  return (
+    <div style={{ padding: 40, textAlign: "center" }}>
+      <h2>No recent bookings</h2>
+    </div>
+  );
+}
+
 
   return (
     <div className="recent-booking-wrapper">
