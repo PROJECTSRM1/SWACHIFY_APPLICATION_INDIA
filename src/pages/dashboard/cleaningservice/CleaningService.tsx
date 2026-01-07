@@ -2394,7 +2394,21 @@ sub_group_id: getSubModuleId(selectedSubKey),
                             />
                           </Form.Item>
                         )}
-                      </div>
+                          <Form.Item
+    name="duration"
+    label="Duration"
+    rules={[{ required: true, message: "Select duration" }]}
+    className="sw-cs-third-width"
+  >
+    <Select placeholder="Duration">
+      <Option value="1">1 Hour</Option>
+      <Option value="2">2 Hours</Option>
+      <Option value="3">3 Hours</Option>
+      <Option value="4">4+ Hours</Option>
+    </Select>
+  </Form.Item>
+</div>
+                      
 
 
                       <div className="sw-cs-form-row">
@@ -2415,6 +2429,20 @@ sub_group_id: getSubModuleId(selectedSubKey),
                             ))}
                           </Select>
                         </Form.Item>
+                          <Form.Item
+    name="duration"
+    label="Duration"
+    rules={[{ required: true, message: "Select duration" }]}
+    className="sw-cs-third-width"
+  >
+    <Select placeholder="Duration">
+      <Option value="1">1 Hour</Option>
+      <Option value="2">2 Hours</Option>
+      <Option value="3">3 Hours</Option>
+      <Option value="4">4+ Hours</Option>
+    </Select>
+  </Form.Item>
+
                         {selectedSubKey === "homes" && selectedModule?.title === "All Services" && (
                           <Form.Item
                             name="selectedServices"
