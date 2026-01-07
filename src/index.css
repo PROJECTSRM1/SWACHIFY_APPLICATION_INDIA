@@ -5540,7 +5540,9 @@ body {
 }
 .sw-fr-sr-card-content {
   flex: 1;   
-    min-height: 200px;              /* takes remaining height */
+  min-height: 200px; 
+  display: flex;
+  flex-direction: column;             /* takes remaining height */
 }
 
 .sw-fr-sr-card-bottom {
@@ -5819,9 +5821,22 @@ body {
 }
 
 /* When expanded */
+/* collapsed address (default) */
+.sw-fr-sr-address {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+
+  line-clamp: 1;              /* ✅ standard property */
+  overflow: hidden;
+}
+
+/* expanded address */
 .sw-fr-sr-address.expanded {
   -webkit-line-clamp: unset;
+  line-clamp: unset;          /* ✅ fixes warning */
 }
+
 
 
 /* price */
@@ -6474,13 +6489,12 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-top: 4px;
+  margin-top: auto;   /* 🔥 aligns rating across cards */
 }
 
 /* Address text */
 .sw-fr-sr-address {
   display: -webkit-box;
-  -webkit-line-clamp: 2;     /* show only 2 lines */
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
