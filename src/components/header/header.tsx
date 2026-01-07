@@ -18,6 +18,7 @@ import RecentBookingPage from "../../pages/RecentBookingPage";
 //import PaymentPage from "../../pages/PaymentPage";
 import ConfirmBookingModal from "../ConfirmAddressModal";
 import { Input } from "antd";
+import EmployeeAllocationModal from "../EmployeeAllocationModal";
 
 
 type Booking = {
@@ -39,6 +40,8 @@ const Header: React.FC = () => {
   const [notificationOpen] = useState(false); // kept for parity; not used visibly
   const [cartOpen, setCartOpen] = useState(false); // cart drawer
   const [showBookingPage, setShowBookingPage] = useState(false);
+  const [employeeAllocationOpen, setEmployeeAllocationOpen] = useState(false);
+
   console.log(notificationOpen)
 
   const navigate = useNavigate();
@@ -318,7 +321,7 @@ useEffect(() => {
 
 
         {/* CONFIRM ADDRESS MODAL */}
-        <ConfirmBookingModal
+        {/* <ConfirmBookingModal
           open={confirmModalOpen}
           item={selectedCartItem}
           onClose={() => {
@@ -326,7 +329,27 @@ useEffect(() => {
             setSelectedCartItem(null);
           }}
           onConfirm={(bookingData: Booking) => handleBookingConfirmed(bookingData)}
-        />
+        /> */}
+
+        <ConfirmBookingModal
+  open={confirmModalOpen}
+  item={selectedCartItem}
+  onClose={() => {
+    setConfirmModalOpen(false);
+    setSelectedCartItem(null);
+  }}
+  onConfirm={(bookingData: Booking) => handleBookingConfirmed(bookingData)}
+  onPaymentSuccess={() => setEmployeeAllocationOpen(true)}   // ✅ ADD THIS
+/>
+
+<EmployeeAllocationModal
+  open={employeeAllocationOpen}
+  onClose={() => setEmployeeAllocationOpen(false)}
+/>
+
+
+
+        
 
 
         {/* RECENT BOOKING OVERLAY */}

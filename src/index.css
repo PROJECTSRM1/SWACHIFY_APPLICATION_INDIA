@@ -21155,3 +21155,423 @@ body {
   text-align: left !important;
   align-self: flex-start;
 }
+
+
+
+
+/* Employee Allocation Styling */
+
+/* ===== Modal Container ===== */
+.sw-ea-modal .ant-modal-content {
+  border-radius: 16px;
+}
+
+
+
+/* ===== Header ===== */
+.sw-ea-title {
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.sw-ea-subtitle {
+  color: #6b7280;
+  margin-bottom: 24px;
+}
+
+/* ===== Allocation Options ===== */
+.sw-ea-allocation-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.sw-ea-option-card {
+  border: 2px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  background: #fff;
+}
+
+.sw-ea-option-card h3 {
+  margin-bottom: 6px;
+  font-size: 16px;
+}
+
+.sw-ea-option-card p {
+  color: #6b7280;
+  margin: 0;
+}
+
+/* Active / Selected */
+.sw-ea-option-card.sw-ea-active {
+  border-color: #1677ff;
+  background: #f0f7ff;
+}
+
+/* Hover */
+.sw-ea-option-card:hover {
+  border-color: #1677ff;
+}
+
+/* ===== Filter Section ===== */
+.sw-ea-filter {
+  margin-top: 32px;
+}
+
+.sw-ea-section-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.sw-ea-filter-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* ===== Employee List ===== */
+.sw-ea-employee-list {
+  margin-top: 32px;
+}
+
+.sw-ea-employee-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  margin-bottom: 12px;
+  transition: background 0.2s ease;
+}
+
+.sw-ea-employee-card:hover {
+  background: #f9fafb;
+}
+
+.sw-ea-employee-card p {
+  margin: 2px 0;
+  color: #6b7280;
+}
+
+.sw-ea-rating {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .sw-ea-allocation-options {
+    grid-template-columns: 1fr;
+  }
+
+  .sw-ea-filter-row {
+    grid-template-columns: 1fr;
+  }
+
+  .sw-ea-modal {
+    width: 100% !important;
+  }
+}
+
+
+/* ===== CONTAINER ===== */
+.sw-ea-container {
+  padding: 16px;
+}
+
+.sw-ea-title {
+  margin-bottom: 4px;
+}
+
+.sw-ea-subtitle {
+  color: #6b7280;
+}
+
+/* ===== SUCCESS BOX ===== */
+.sw-ea-success-box {
+  margin-top: 16px;
+  padding: 20px;
+  border-radius: 14px;
+  background: #ecfdf3;
+  border: 1px solid #86efac;
+}
+
+.sw-ea-success-box h3 {
+  color: #15803d;
+  margin-bottom: 6px;
+}
+
+.sw-ea-success-box p {
+  color: #166534;
+  margin: 0;
+}
+
+/* ===== OPTIONS ===== */
+.sw-ea-options {
+  display: flex;
+  gap: 16px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+
+.sw-ea-option-card {
+  flex: 1;
+  min-width: 260px;
+  padding: 20px;
+  border-radius: 14px;
+  border: 2px solid #e5e7eb;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 12px 14px;
+}
+
+.sw-ea-option-card:hover {
+  border-color: #3b82f6;
+  background: #f8fafc;
+}
+
+.sw-ea-option-card h3 {
+  margin-bottom: 8px;
+}
+
+.sw-ea-option-card p {
+  color: #6b7280;
+}
+
+.sw-ea-active {
+  border-color: #2563eb;
+  background: #eff6ff;
+}
+
+/* ===== FILTER ===== */
+.sw-ea-filter {
+  margin-top: 32px;
+}
+
+.sw-ea-filter-row {
+  display: flex;
+  gap: 16px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+/* ===== EMPLOYEE LIST ===== */
+.sw-ea-employee-list {
+  margin-top: 24px;
+}
+
+.sw-ea-employee-card {
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  margin-top: 12px;
+  transition: all 0.2s ease;
+}
+
+.sw-ea-employee-card:hover {
+  background: #f9fafb;
+}
+
+.sw-ea-employee-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.sw-ea-rating {
+  font-weight: 600;
+}
+
+.sw-ea-muted {
+  color: #6b7280;
+  margin-top: 4px;
+}
+
+/* ===== SELECTED EMPLOYEE ===== */
+.sw-ea-selected {
+  border-color: #22c55e;
+  background: #f0fdf4;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .sw-ea-options {
+    flex-direction: column;
+  }
+
+  .sw-ea-filter-row {
+    flex-direction: column;
+  }
+}
+
+
+/* Filter title with icon */
+.sw-ea-filter-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* Dropdown look */
+.sw-ea-select {
+  width: 100%;
+}
+
+.sw-ea-select .ant-select-selector {
+  height: 44px !important;
+  border-radius: 10px !important;
+}
+
+
+/* Filter title with icon */
+.sw-ea-filter-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* Dropdown look */
+.sw-ea-select {
+  width: 100%;
+}
+
+.sw-ea-select .ant-select-selector {
+  height: 44px !important;
+  border-radius: 10px !important;
+}
+/* Filter header */
+.sw-ea-filter-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+
+
+/* Filters row */
+.sw-ea-filter-row {
+  display: flex;
+  gap: 24px;
+  margin-top: 16px;
+}
+
+/* Each filter block */
+.sw-ea-filter-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sw-ea-filter-item label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #111827;
+}
+
+/* Ant Select sizing */
+.sw-ea-filter-item .ant-select-selector {
+  height: 44px !important;
+  border-radius: 10px !important;
+}
+
+
+/* Employee card */
+.sw-ea-employee-card {
+  padding: 14px 16px;      /* slightly smaller padding */
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-family: 'Inter', sans-serif;
+}
+
+.sw-ea-blur {
+  filter: blur(1px);       /* slight blur */
+  opacity: 0.7;            /* a little faded */
+  transition: all 0.3s ease;
+}
+
+
+/* Employee header flex */
+.sw-ea-employee-header {
+  display: flex;
+   justify-content: space-between; /* ✅ space between */
+  align-items: flex-start;        /* avoids vertical centering */
+  width: 100%;
+}
+.sw-ea-modal .ant-modal-content {
+  max-height: 90vh;        /* 🔹 controls modal height */
+  overflow: hidden;
+}
+
+.sw-ea-modal .ant-modal-body {
+  max-height: 65vh;        /* 🔹 scroll area */
+  overflow-y: auto;
+  padding: 20px;          /* optional: reduce from default */
+}
+/* Left content */
+.sw-ea-employee-info {
+  display: flex;
+  flex-direction: column;
+
+  gap: 3px;
+}
+
+/* Employee Name */
+.sw-ea-employee-name {
+  font-size: 14px;
+  font-weight: 500;       /* only slightly bold */
+  color: #111827;
+}
+
+/* Employee meta info */
+.sw-ea-employee-meta {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* Rating block on right */
+.sw-ea-rating {
+  text-align: right;
+  min-width: 60px;
+}
+
+/* Rating numbers */
+.sw-ea-rating-value {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Label "Rating" */
+.sw-ea-rating-label {
+  font-size: 11px;
+  color: #6b7280;
+}
+
+/* Remove outer modal padding */
+.sw-ea-modal .ant-modal-content {
+  padding: 5px !important;
+}
+
+/* Remove body padding */
+.sw-ea-modal .ant-modal-body {
+  padding: 5px !important;
+}
+
+
+
+/* Employee Allocation Styling  */
