@@ -46,7 +46,7 @@
 }
 
 .swl-hs-navbar-menu .ant-menu-item {
-  font-weight: 600;
+  font-weight: 500;
   padding: 0 12px;
 }
 
@@ -537,4 +537,84 @@ button[type="submit"]:hover {
 .ant-select-multiple .ant-select-selection-item {
   margin-top: 4px;
   margin-bottom: 4px;
+}
+
+
+/* ===============================
+   SLIM WIDTH + HEIGHT AUTH MODAL
+================================ */
+
+/* Reduce modal width */
+.swl-hs-rf-classname.ant-modal {
+  max-width: 420px !important;
+}
+
+/* Reduce modal inner padding */
+.swl-hs-rf-classname .ant-modal-body {
+  padding: 16px 20px !important;
+}
+
+/* Modal border radius */
+.swl-hs-rf-classname .ant-modal-content {
+  border-radius: 12px !important;
+}
+
+/* Header compact */
+.auth-header {
+  margin-bottom: 8px !important;
+}
+
+.auth-profile-icon {
+  font-size: 28px !important;
+  margin-bottom: 2px !important;
+}
+
+.auth-title {
+  font-size: 21px !important;
+}
+
+/* Tabs tighter */
+.swl-hs-rf-classname .ant-tabs-nav {
+  margin-bottom: 12px !important;
+}
+
+.swl-hs-rf-classname .ant-tabs-tab {
+  font-size: 14px !important;
+  padding: 6px 0 !important;
+}
+
+/* Inputs & Select – thin */
+.swl-hs-rf-classname .ant-input,
+.swl-hs-rf-classname .ant-input-password,
+.swl-hs-rf-classname .ant-input-affix-wrapper,
+.swl-hs-rf-classname .ant-select-selector {
+  height: 38px !important;
+  min-height: 38px !important;
+  border-radius: 10px !important;
+  font-size: 14px !important;
+}
+
+/* Password input inner */
+.swl-hs-rf-classname .ant-input-password input {
+  height: 38px !important;
+}
+
+/* Buttons – slim */
+.swl-hs-rf-classname button {
+  height: 38px !important;
+  border-radius: 10px !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+}
+
+/* Reduce form spacing */
+.swl-hs-rf-classname .ant-form-item {
+  margin-bottom: 8px !important;
+}
+
+/* TreeSelect compact chips */
+.swl-hs-rf-classname .ant-select-multiple .ant-select-selection-item {
+  height: 20px;
+  line-height: 18px;
+  font-size: 12px;
 }
