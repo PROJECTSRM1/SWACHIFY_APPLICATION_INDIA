@@ -173,7 +173,8 @@ export default function ConfirmAddressModal({
               }
               rules={[{ required: true }]}
             >
-              <Input.TextArea rows={3} disabled={!isEditing} />
+              <Input.TextArea rows={4} style={{ minHeight: 80 }} disabled={!isEditing}/>
+              
             </Form.Item>
           </Form>
 

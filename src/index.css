@@ -1142,6 +1142,49 @@ with prefix */
   margin-bottom: 40px;
   text-align: center;
 }
+.sw-lp-classname-service-card {
+  text-align: center;
+  padding: 32px 24px;
+}
+
+.sw-lp-classname-service-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 56px;
+  height: 56px;
+
+  margin: 0 auto 16px; 
+
+  border-radius: 12px;
+  background: #f7f7f7;
+}
+
+
+.sw-lp-classname-service-card:hover .sw-lp-classname-service-icon {
+  background: #eef2ff;
+}
+
+
+.sw-lp-classname-service-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+
+.sw-lp-classname-service-desc {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 12px;
+}
+
+
+.sw-lp-classname-learn-more {
+  font-weight: 600;
+  color: #000;
+}
 
 /* keep ant-row behaviour but constrain width */
 .sw-lp-classname-services-section .ant-row {
@@ -5495,6 +5538,15 @@ body {
   box-sizing: border-box;
   font-family: "Inter", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
+.sw-fr-sr-card-content {
+  flex: 1;   
+    min-height: 200px;              /* takes remaining height */
+}
+
+.sw-fr-sr-card-bottom {
+  margin-top: auto;     /* pushes it to bottom */
+}
+
 
 /* white container with rounded corners */
 .sw-fr-sr-container {
@@ -5636,17 +5688,38 @@ body {
 
 /* Card styling - decreased size and tighter spacing */
 .sw-fr-sr-card {
-  border-radius: 12px;
   min-height: 270px;
-  /* decreased from before */
   height: 100%;
   padding: 14px;
-  /* decreased padding */
   box-shadow: 0 6px 18px rgba(31, 31, 31, 0.05);
   border: 1px solid rgba(0, 0, 0, 0.04);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  border-radius: 14px;
+}
+
+/* Card layout */
+/* .sw-fr-sr-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+} */
+
+/* Content grows, footer sticks */
+.sw-fr-sr-card-content {
+  flex: 1;
+}
+
+/* Footer fixed */
+.sw-fr-sr-card-footer {
+    margin-top: auto;        /* 🔥 PUSH FOOTER TO BOTTOM */
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 10px;
 }
 
 /* Top tags inside card */
@@ -5731,7 +5804,25 @@ body {
   justify-content: space-between;
   align-items: center;
   gap: 12px;
+  margin-top: auto;
 }
+.sw-fr-sr-view-more {
+  font-size: 13px;
+  color: #1677ff;
+  cursor: pointer;
+  font-weight: 600;
+  margin-left: 22px;
+}
+
+.sw-fr-sr-view-more:hover {
+  text-decoration: underline;
+}
+
+/* When expanded */
+.sw-fr-sr-address.expanded {
+  -webkit-line-clamp: unset;
+}
+
 
 /* price */
 .sw-fr-sr-price {
@@ -6370,6 +6461,31 @@ body {
   margin: 0;
   opacity: 0.9;
 }
+.sw-fr-sr-line {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 6px;
+}
+
+.sw-fr-sr-rating-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+/* Address text */
+.sw-fr-sr-address {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;     /* show only 2 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 
 /* Registration Form Section (right) */
 .sw-fr-registration-form-section {
@@ -17864,8 +17980,8 @@ body {
 .sw-frd-details-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 15px;
-  margin-top: 6px;
+  gap: 12px;
+  margin-top: 4px;
   margin-bottom: 10px;
 }
 .sw-frd-detail-item {
@@ -17878,6 +17994,16 @@ body {
   margin-right: 5px;
   color: var(--primary);
 }
+
+.sw-frd-detail-item,
+.sw-frd-customer,
+.sw-frd-ticket-id {
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1.2;
+  font-size: 12px;
+}
+
 
 /* Customer details block */
 .sw-frd-customer-block {
@@ -17975,6 +18101,9 @@ body {
   font-size: 0.9rem;
   padding-left: 20px;
   border-left: 3px solid var(--primary-light);
+
+  
+
 }
 .sw-frd-customer {
   display: block;
@@ -18066,6 +18195,8 @@ width: 100%;
   display: flex;
   flex-direction: column;
   height: 100%;
+  padding: 12px !important;
+  
 }
 
 /* Body grows, footer sticks to bottom */
@@ -18108,6 +18239,33 @@ width: 100%;
   align-items: center;
   justify-content: center;
 }
+
+.sw-frd-location {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  /* Standard (future-proof) */
+  line-clamp: 2;
+  /* Current browser support */
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+/* Tooltip container */
+.sw-frd-location-tooltip .ant-tooltip-inner {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  font-size: 13px;
+}
+
+/* Tooltip arrow */
+.sw-frd-location-tooltip .ant-tooltip-arrow::before {
+  background-color: #ffffff !important;
+}
+
+
 /* =========================
    HEADER – MOBILE LAYOUT
    ========================= */
@@ -18463,6 +18621,8 @@ width: 100%;
   line-height: 1.35;
 }
 
+
+
 /* Desktop-wide: allow slightly smaller columns to fit 4 cards in 1366px */
 @media (min-width: 1280px) {
   .sw-frd-requests-list {
@@ -18495,7 +18655,8 @@ width: 100%;
 
   .sw-frd-details-row {
     flex-direction: column;
-    gap: 6px;
+    gap: 4px;
+
   }
 }
 /* Make every request card the same height */
