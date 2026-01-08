@@ -1,0 +1,174 @@
+.profile-wrapper {
+  padding: 0;              /* 🔑 remove extra height */
+  background: #f2f6ff;
+}
+
+
+/* HEADER */
+.profile-header {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.profile-header h2 {
+  margin-top: 12px;
+  font-size: 18px;
+}
+
+.profile-header p {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.avatar-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.avatar-upload {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: #000;
+  color: #fff;
+  border-radius: 50%;
+  padding: 6px;
+  cursor: pointer;
+}
+
+/* CARD */
+.profile-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* INFO GRID */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px 32px;
+  margin-top: 12px;
+}
+
+.label {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.value {
+  font-weight: 600;
+  font-size: 14px;
+  margin-top: 2px;
+}
+
+.service-tag {
+  margin-top: 6px;
+  margin-left: 10px !important;
+}
+
+/* EDIT GRID */
+.edit-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.save-btn {
+  grid-column: span 2;
+  height: 36px;
+  width: fit-content;
+}
+
+/* EDUCATION */
+.education-box {
+  background: #f9fafb;
+  padding: 16px;
+  border-radius: 10px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.education-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f9fafb;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-top: 12px;
+}
+
+.education-item p {
+  margin: 0;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.remove-text {
+  color: red;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.empty-text {
+  margin-top: 10px;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .info-grid,
+  .edit-grid,
+  .education-box {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-wrapper {
+    padding: 10px;
+  }
+}
+/* PROFILE MODAL — SAME AS RECENT BOOKINGS */
+.profile-modal-scroll {
+  width: 720px;        /* 🔥 reduced width */
+  max-width: 95vw;
+
+  height: 70vh;        /* 🔥 reduced height */
+  max-height: 70vh;
+
+  overflow-y: auto;    /* internal scroll */
+  overflow-x: hidden;
+
+  padding: 14px 16px;
+  box-sizing: border-box;
+}
+
+
+/* Hide outer page scroll when modal open */
+body.modal-open {
+  overflow: hidden;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .profile-modal-scroll {
+    width: 100%;
+    height: 85vh;
+    max-height: 85vh;
+    padding: 12px;
+  }
+}
