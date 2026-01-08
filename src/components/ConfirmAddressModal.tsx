@@ -3,6 +3,7 @@ import { Modal, Button, Form, Input, message } from "antd";
 import { PaymentsAPI } from "../api/customerAuth";
 import { useCart } from "../context/CartContext";
 
+
 /* ---------------- TYPES ---------------- */
 
 type CartItemLike = {
@@ -29,20 +30,36 @@ export type Booking = {
 };
 
 
+// type Props = {
+//   open: boolean;
+//   item: CartItemLike | null;
+//   onClose: () => void;
+//   onConfirm: (booking: Booking) => void;
+// };
+
 type Props = {
   open: boolean;
   item: CartItemLike | null;
   onClose: () => void;
   onConfirm: (booking: Booking) => void;
+  onPaymentSuccess: () => void; // ✅ ADD THIS
 };
+
 
 /* ---------------- COMPONENT ---------------- */
 
+// export default function ConfirmAddressModal({
+//   open,
+//   item,
+//   onClose,
+//   onConfirm,
+// }:
 export default function ConfirmAddressModal({
   open,
   item,
   onClose,
   onConfirm,
+  onPaymentSuccess,
 }: Props) {
   const [form] = Form.useForm();
   const { removeFromCart } = useCart();
@@ -99,7 +116,13 @@ export default function ConfirmAddressModal({
             if (item.id) removeFromCart(Number(item.id));
 
             onConfirm(completedBooking);
-            onClose();
+
+            setTimeout(() => {
+  onClose();           // close confirm modal
+  onPaymentSuccess();  // open employee allocation modal
+}, 300);
+    
+
           } catch (err) {
             console.error(err);
             message.error("Payment verification failed");
@@ -150,7 +173,10 @@ export default function ConfirmAddressModal({
   /* ---------- UI ---------- */
 
   return (
-    <Modal open={open} onCancel={onClose} footer={null} centered width={640}>
+  
+      <div>
+
+          <Modal open={open} onCancel={onClose} footer={null} centered width={640}>
       <div style={{ display: "flex", gap: 16 }}>
         <div style={{ flex: 1 }}>
           <h3>{item.title}</h3>
@@ -195,5 +221,10 @@ export default function ConfirmAddressModal({
         </div>
       </div>
     </Modal>
+
+     
+
+
+      </div>
   );
 }
