@@ -8,6 +8,9 @@ import BuySaleProducts from "./buy&sale/BuySaleProducts";
 import HomeServices from "./homeservices/HomeServices";
 import ServicesPage from "./homerentals/pages/ServicesPage";
 
+import Education from "./Education/Education";
+
+
 import { useSearchParams, useNavigate } from "react-router-dom";
 
 
@@ -341,35 +344,49 @@ const Dashboard: React.FC = () => {
 
 
 
-  return (
-    <div className="dashboard-container">
-      {/* Header */}
-      <div className="services-section">
-        <h1 className="services-title">Our Services</h1>
+return (
+  <div className="dashboard-container">
 
-        {/*<div className="services-search">
-          <input
-            type="text"
-            placeholder="Search services..."
-            className="search-input"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-        </div>*/}
-      </div>
-
-      {/* Render filtered services */}
-      {filteredServices.length > 0 ? (
-        filteredServices.map((service, index) => (
-          <div key={index}>{service.component}</div>
-        ))
-      ) : (
-        <p style={{ textAlign: "center", marginTop: "20px" }}>
-          No services found.
-        </p>
-      )}
+    {/* Page Title */}
+    <div className="services-section">
+      <h1 className="services-title">Our Services</h1>
     </div>
-  );
+
+    {/* 1️⃣ Home Services */}
+    {
+      filteredServices.find(
+        (s) => s.name === "Home Services"
+      )?.component
+    }
+
+    {/* 2️⃣ Education Section (Navbar + 5 cards) */}
+    <Education />
+
+    {/* 3️⃣ Building & Construction Raw Materials */}
+    {
+      filteredServices.find(
+        (s) => s.name === "Building & Construction Raw Materials"
+      )?.component
+    }
+
+    {/* 4️⃣ Remaining Services */}
+    {
+      filteredServices
+        .filter(
+          (s) =>
+            s.name !== "Home Services" &&
+            s.name !== "Building & Construction Raw Materials"
+        )
+        .map((service) => (
+          <div key={service.name}>
+            {service.component}
+          </div>
+        ))
+    }
+
+  </div>
+);
+
 };
 
 export default Dashboard;

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Avatar, Button, Input, Tag } from "antd";
+import { Avatar, Button, Input, Tag, Upload, message } from "antd";
 import {
   UserOutlined,
   EditOutlined,
@@ -23,6 +23,7 @@ const ProfilePage: React.FC = () => {
   const [editPersonal, setEditPersonal] = useState(false);
   const [editEducation, setEditEducation] = useState(false);
   const [editCertificate, setEditCertificate] = useState(false);
+  const [avatar, setAvatar] = useState<string | null>(null);
 
   const [profile, setProfile] = useState({
     firstName: "John",
@@ -48,6 +49,30 @@ const ProfilePage: React.FC = () => {
   });
 
   const [certificates, setCertificates] = useState<Certificate[]>([]);
+
+  const [editNoc, setEditNoc] = useState(false);
+
+const [noc, setNoc] = useState({
+  certificateNumber: "",
+  policeStation: "",
+  issueYear: "",
+});
+
+const handleSaveNoc = () => {
+  setEditNoc(false);
+};
+
+
+
+  const handleAvatarUpload = (file: any) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      setAvatar(e.target?.result as string);
+      message.success("Profile image updated!");
+    };
+    reader.readAsDataURL(file);
+    return false;
+  };
 
   const handleProfileChange = (key: string, value: string) => {
     setProfile({ ...profile, [key]: value });
@@ -78,10 +103,17 @@ const ProfilePage: React.FC = () => {
       {/* HEADER */}
       <div className="profile-header">
         <div className="avatar-wrapper">
-          <Avatar size={88} icon={<UserOutlined />} />
-          <div className="avatar-upload">
-            <UploadOutlined />
-          </div>
+          <Upload beforeUpload={handleAvatarUpload} showUploadList={false}>
+            <Avatar
+              size={88}
+              src={avatar || undefined}
+              icon={!avatar && <UserOutlined />}
+              className="avatar-img"
+            />
+            <div className="avatar-upload-btn">
+              <UploadOutlined />
+            </div>
+          </Upload>
         </div>
         <h2>{profile.firstName} {profile.lastName}</h2>
         <p>{profile.email}</p>
@@ -95,7 +127,7 @@ const ProfilePage: React.FC = () => {
         </div>
 
         {!editPersonal ? (
-          <div className="info-grid">
+<div className="info-grid">
             <Info label="First Name" value={profile.firstName} />
             <Info label="Last Name" value={profile.lastName} />
             <Info label="Email" value={profile.email} />
@@ -199,6 +231,63 @@ const ProfilePage: React.FC = () => {
           </div>
         ))}
       </div>
+      {/* ===== NO OBJECTION CERTIFICATE (NOC) ===== */}
+<div className="profile-card">
+  <div className="card-header">
+    <h3>No Objection Certificate (NOC)</h3>
+    <EditOutlined onClick={() => setEditNoc(!editNoc)} />
+  </div>
+
+  {!editNoc ? (
+    <div className="info-grid info-grid-3">
+      <Info
+        label="Certificate Number"
+        value={noc.certificateNumber || "Not provided"}
+      />
+      <Info
+        label="Near Police Station"
+        value={noc.policeStation || "Not provided"}
+      />
+      <Info
+        label="Issue Year"
+        value={noc.issueYear || "Not provided"}
+      />
+    </div>
+  ) : (
+    <div className="edit-grid">
+      <Input
+        placeholder="Enter certificate number"
+        value={noc.certificateNumber}
+        onChange={(e) =>
+          setNoc({ ...noc, certificateNumber: e.target.value })
+        }
+      />
+      <Input
+        placeholder="Enter police station name"
+        value={noc.policeStation}
+        onChange={(e) =>
+          setNoc({ ...noc, policeStation: e.target.value })
+        }
+      />
+      <Input
+        placeholder="Enter issue year"
+        value={noc.issueYear}
+        onChange={(e) =>
+          setNoc({ ...noc, issueYear: e.target.value })
+        }
+      />
+
+      <Button
+        type="primary"
+        className="save-btn"
+        onClick={handleSaveNoc}
+      >
+        Save Changes
+      </Button>
+    </div>
+  )}
+</div>
+
     </div>
   );
 };
@@ -211,3 +300,4 @@ const Info = ({ label, value }: { label: string; value: string }) => (
 );
 
 export default ProfilePage;
+
