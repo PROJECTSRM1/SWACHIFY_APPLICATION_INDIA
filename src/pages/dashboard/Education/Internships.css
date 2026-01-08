@@ -1,0 +1,241 @@
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+}
+
+/* Page */
+.internship-page {
+   background: #eef3ff;
+  min-height: 100vh;
+  padding-bottom: 24px;
+}
+
+/* Header */
+/* Header Background Bar (like screenshot) */
+.header-wrapper {
+  top: 0;
+  z-index: 10;
+  width: 100%;
+  background: #fff; /* light header background */
+  border-bottom: 1px solid #e2e8f0;
+
+}
+
+/* Header Content */
+.page-header {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.header-wrapper {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.back-arrow-title{
+  display: flex;
+  justify-content: start;
+
+  gap: 30px;
+}
+
+.page-header h2 {
+  font-size: 18px;
+  font-weight: 600;
+
+}
+
+.back-arrow {
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.filter-btn {
+  background: #0f172a;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+/* Internship List */
+.internship-list {
+  width: 100%;
+  max-width: 1200px;     /* ⬅️ fullscreen list */
+  margin: auto;
+  padding: 0 16px;      /* ⬅️ spacing on big screens */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Card */
+.internship-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 20px;
+  margin-top: 20px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+}
+
+/* Card Header */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-header h3 {
+  font-size: 16px;
+  margin: 0;
+}
+
+/* Tag */
+.tag {
+  background: #f1f5f9;
+  color: #0f172a;
+  font-size: 12px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-weight: 500;
+}
+
+/* Company */
+.company {
+  font-size: 13px;
+  color: #64748b;
+  margin: 6px 0 12px;
+}
+
+/* Info */
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: #475569;
+  margin-bottom: 8px;
+}
+
+.stipend {
+  color: #16a34a;
+  font-weight: 600;
+}
+
+/* Description */
+.description {
+  font-size: 13px;
+  color: #334155;
+  margin: 12px 0 16px;
+}
+
+/* Apply Button */
+.apply-btn {
+  width: 100%;
+  background: linear-gradient(90deg, #020617, #0f172a);
+  color: #fff;
+  border: none;
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.apply-btn:hover {
+  opacity: 0.95;
+}
+
+
+/* Filter Panel */
+.filter-panel {
+  max-width: 1170px;
+  margin: 0 auto 24px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 14px;
+  margin-top: 10px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.filter-panel h3 {
+  margin: 0 0 16px;
+  font-size: 16px;
+}
+
+/* Filter Row */
+.filter-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.filter-row label {
+  display: block;
+  font-size: 12px;
+  color: #475569;
+  margin-bottom: 6px;
+}
+
+.filter-row select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  background: #f8fafc;
+}
+
+/* Sort Row */
+.sort-row {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sort-row span {
+  font-size: 13px;
+  color: #475569;
+}
+
+.sort-row button {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+  background: #e5e7eb;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.sort-row .active {
+  background: #0f172a;
+  color: #fff;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .filter-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* Mobile */
+@media (max-width: 768px) {
+  .info-row {
+    flex-direction: column;
+    gap: 6px;
+  }
+}
+.filter-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
