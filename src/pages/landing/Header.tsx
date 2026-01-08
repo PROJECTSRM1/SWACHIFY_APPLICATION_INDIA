@@ -96,6 +96,8 @@ const [vendorActiveTab, setVendorActiveTab] = useState<
     setAuthModalVisible(true);
     setMenuOpen(false);
   };
+  const [hideWorkType, setHideWorkType] = useState(false);
+
 
   const closeAuthModal = () => {
   localStorage.removeItem("loginSource");
@@ -540,14 +542,25 @@ if (roleType === "admin") {
   getPopupContainer={(triggerNode) => triggerNode.parentElement!}
   treeData={[
     { title: "Cleaning & Home Services", value: "cleaning" },
-    
     { title: "Transport", value: "transport" },
     { title: "Buy/Sell/Rental", value: "buy_sell_rent" },
     { title: "Raw Materials", value: "raw_materials" },
     { title: "Education", value: "education" },
     { title: "Swachify Products", value: "swachify_products" },
   ]}
+  onChange={(values) => {
+    // values is array because treeCheckable
+    const hasEducation = values?.includes("education");
+
+    setHideWorkType(hasEducation);
+
+    // reset dependent fields when education selected
+    if (hasEducation) {
+      setShowProfessionalFields(false);
+    }
+  }}
 />
+
 
 
 
@@ -608,22 +621,25 @@ if (roleType === "admin") {
       <Input placeholder="Enter your location" />
     </Form.Item>
 
-<Form.Item
-  label="Select Work Type"
-  name="workType"
-  rules={[{ required: true }]}
->
-  <Select
-    placeholder="Choose work type"
-    onChange={(value) => {
-      setShowProfessionalFields(value === "looking");
-    }}
+{!hideWorkType && (
+  <Form.Item
+    label="Select Work Type"
+    name="workType"
+    rules={[{ required: true }]}
   >
-    <Select.Option value="assigning">Assigning for work</Select.Option>
-    <Select.Option value="looking">Looking for work</Select.Option>
-    <Select.Option value="both">Both</Select.Option>
-  </Select>
-</Form.Item>
+    <Select
+      placeholder="Choose work type"
+      onChange={(value) => {
+        setShowProfessionalFields(value === "looking");
+      }}
+    >
+      <Select.Option value="assigning">Assigning for work</Select.Option>
+      <Select.Option value="looking">Looking for work</Select.Option>
+      <Select.Option value="both">Both</Select.Option>
+    </Select>
+  </Form.Item>
+)}
+
 {showProfessionalFields && (
   <div style={{ marginTop: 16 }}>
 
