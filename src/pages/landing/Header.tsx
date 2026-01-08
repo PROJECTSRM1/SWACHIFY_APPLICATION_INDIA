@@ -88,6 +88,8 @@ const [vendorActiveTab, setVendorActiveTab] = useState<
 
   const [authLoading, setAuthLoading] = useState(false); 
   const navigate = useNavigate();
+  const [serviceOpen, setServiceOpen] = useState(false);
+
 
   const openAuthModal = (tab: "login" | "register" = "login") => {
     setActiveAuthTab(tab);
@@ -99,6 +101,14 @@ const [vendorActiveTab, setVendorActiveTab] = useState<
   localStorage.removeItem("loginSource");
   setAuthModalVisible(false);
 };
+const [isMobile, setIsMobile] = useState(window.innerWidth <= 375);
+
+useEffect(() => {
+  const handleResize = () => setIsMobile(window.innerWidth <= 375);
+  window.addEventListener("resize", handleResize);
+  return () => window.removeEventListener("resize", handleResize);
+}, []);
+
 
   const [vendorForgotModalVisible, setVendorForgotModalVisible] = useState(false);
   const [emailValue, setEmailValue] = useState("");
@@ -122,14 +132,23 @@ const [vendorActiveTab, setVendorActiveTab] = useState<
         delete (window as any).openAuthModal;
         delete (window as any).closeAuthModal;
       } catch (e) {
-        // ignore deletion errors
+        
       }
     };
-  }, []); // run once on mount
+  }, []); 
 
-  // ==========================
-  // CUSTOMER LOGIN (BACKEND)
-  // ==========================
+  useEffect(() => {
+  const closeOnScroll = () => {
+    setServiceOpen(false);
+  };
+
+  window.addEventListener("scroll", closeOnScroll, true);
+
+  return () => {
+    window.removeEventListener("scroll", closeOnScroll, true);
+  };
+}, []);
+
 const onLogin = async (values: any) => {
   try {
     setAuthLoading(true);
@@ -388,19 +407,25 @@ if (roleType === "admin") {
   onCancel={closeAuthModal}
   footer={null}
   centered
-  width={520}
+  width={isMobile ? "100%" : 520}
+  style={isMobile ? { padding: "0 12px" } : undefined}
   destroyOnClose
   bodyStyle={{
-    padding: 24,
-    maxHeight: activeAuthTab === "login" ? "unset" : "70vh",
-    overflowY: activeAuthTab === "login" ? "hidden" : "auto",
+    padding: isMobile ? 12 : 24,
+    maxHeight: isMobile ? "90vh" : "70vh",
+    overflowY: "auto",
   }}
 >
 
+
           <div className="auth-header">
-            <UserOutlined className="auth-profile-icon" />
-            <div className="auth-title">Welcome Back</div>
-          </div>
+  <UserOutlined className="auth-profile-icon" />
+  <div className="auth-title">
+    {activeAuthTab === "register"
+      ? "Create Your Account"
+      : "Welcome Back"}
+  </div>
+</div>
 
       
         <Tabs
@@ -505,14 +530,17 @@ if (roleType === "admin") {
 >
 <TreeSelect
   treeCheckable
-  showSearch={false} 
-  showArrow              
+  showSearch={false}
+  showArrow
   placeholder="Select services"
   style={{ width: "100%" }}
   showCheckedStrategy={TreeSelect.SHOW_PARENT}
-  getPopupContainer={() => document.body}
+  open={serviceOpen}
+  onDropdownVisibleChange={setServiceOpen}
+  getPopupContainer={(triggerNode) => triggerNode.parentElement!}
   treeData={[
     { title: "Cleaning & Home Services", value: "cleaning" },
+    
     { title: "Transport", value: "transport" },
     { title: "Buy/Sell/Rental", value: "buy_sell_rent" },
     { title: "Raw Materials", value: "raw_materials" },
@@ -520,6 +548,7 @@ if (roleType === "admin") {
     { title: "Swachify Products", value: "swachify_products" },
   ]}
 />
+
 
 
 </Form.Item>
