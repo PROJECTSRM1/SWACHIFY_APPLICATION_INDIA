@@ -27,10 +27,11 @@ const userServiceIds: number[] = (JSON.parse(localStorage.getItem("service_ids")
   const serviceIdToName: Record<number, string> = {
   1: "Home Services",
   2: "Packers and Movers / Transport",
-  3: "House & Commercial Rentals",
+  // 3: "House & Commercial Rentals",
+    3: "Buy & Sale Products", 
   4: "Building & Construction Raw Materials",
-  8: "Education",
-  6: "Buy & Sale Products",
+  5: "Education",
+  // 6: "Buy & Sale Products",
 };
 
 
@@ -336,7 +337,7 @@ const userServiceIds: number[] = (JSON.parse(localStorage.getItem("service_ids")
     if (!searchQuery) {
       return {
         service,
-        matchScore: service.name === "House & Commercial Rentals" ? -1 : 0,
+        matchScore: 0,
       };
     }
 
@@ -371,28 +372,32 @@ return (
   <div className="dashboard-container">
     {isRootDashboard ? (
       <>
-        {/* 👇 YOUR ORIGINAL UI (UNCHANGED) */}
-
         <div className="services-section">
           <h1 className="services-title">Our Services</h1>
         </div>
 
-      {allowedServices.find(
-  (s) => s.name === "Home Services"
-)?.component}
+        {/* Home Services */}
+        {allowedServices.find(
+          (s) => s.name === "Home Services"
+        )?.component}
 
-{userServiceIds.includes(8) && <Education />}  
+        {/* Education */}
+        {userServiceIds.includes(5) && <Education />}
 
+       
 
+        {/* Construction */}
         {allowedServices.find(
           (s) => s.name === "Building & Construction Raw Materials"
         )?.component}
 
+        {/* Remaining services */}
         {allowedServices
           .filter(
             (s) =>
               s.name !== "Home Services" &&
-              s.name !== "Building & Construction Raw Materials"
+              s.name !== "Building & Construction Raw Materials" &&
+              s.name !== "House & Commercial Rentals"
           )
           .map((service) => (
             <div key={service.name}>
@@ -405,6 +410,7 @@ return (
     )}
   </div>
 );
+
 
 
 };
