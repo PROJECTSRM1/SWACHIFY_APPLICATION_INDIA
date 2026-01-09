@@ -1,4 +1,5 @@
 // src/components/header/header.tsx
+import { SettingOutlined } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
 import {
   HomeOutlined,
@@ -21,7 +22,7 @@ import ConfirmBookingModal from "../ConfirmAddressModal";
 import { Input } from "antd";
 import EmployeeAllocationModal from "../EmployeeAllocationModal";
 import ProfilePage from "../../pages/ProfilePage";
-
+import Preference from "../../pages/Preference/preference";
 
 
 type Booking = {
@@ -45,6 +46,8 @@ const Header: React.FC = () => {
   const [showBookingPage, setShowBookingPage] = useState(false);
   const [employeeAllocationOpen, setEmployeeAllocationOpen] = useState(false);
   const [showProfilePage, setShowProfilePage] = useState(false);
+  const [showPreferencePage, setShowPreferencePage] = useState(false);
+
 
 
   console.log(notificationOpen)
@@ -132,15 +135,26 @@ useEffect(() => {
 const profileMenu = (
   <Menu
     items={[
+      // 1️⃣ Profile
       { key: "profile", label: "Profile", icon: <ProfileOutlined /> },
+
+      // 2️⃣ Preferences (JUST BELOW PROFILE)
+      { key: "preferences", label: "Preferences", icon: <SettingOutlined /> },
+
+      // 3️⃣ Recent Booking
       { key: "bookings", label: "Recent Booking", icon: <HomeOutlined /> },
+
+      // 4️⃣ Cart
       { key: "cart", label: `Cart (${cart.length})`, icon: <ShoppingCartOutlined /> },
+
+      // 5️⃣ Logout
       { key: "logout", label: "Logout", icon: <LogoutOutlined /> },
     ]}
     onClick={(info) => {
       if (info.key === "profile") setShowProfilePage(true);
-      else if (info.key === "cart") setCartOpen(true);
+      else if (info.key === "preferences") setShowPreferencePage(true);
       else if (info.key === "bookings") setShowBookingPage(true);
+      else if (info.key === "cart") setCartOpen(true);
       else if (info.key === "logout") handleLogout();
     }}
   />
@@ -403,6 +417,7 @@ const profileMenu = (
   <ProfilePage />
 </div>
 
+
     </div>
   </div>
 )}
@@ -411,6 +426,29 @@ const profileMenu = (
 
 
         {/* PAYMENT OVERLAY */}
+        {showPreferencePage && (
+  <div
+    className="sw-booking-page-overlay"
+    onClick={() => setShowPreferencePage(false)}
+  >
+    <div
+      className="sw-booking-page-content"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <button
+        className="sw-booking-page-close"
+        onClick={() => setShowPreferencePage(false)}
+      >
+        <CloseOutlined />
+      </button>
+
+      <div className="profile-modal-scroll">
+        <Preference onBack={() => setShowPreferencePage(false)} />
+      </div>
+    </div>
+  </div>
+)}
+
        
        </>
 );
