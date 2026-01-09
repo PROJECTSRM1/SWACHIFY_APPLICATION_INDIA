@@ -71,7 +71,7 @@ const internships: Internship[] = [
   {
     title: "Content Writing Intern",
     company: "Media House",
-    location: "Remote",
+    location: "",
     deadline: "30/01/2025",
     duration: "2 months",
     stipend: "₹8,000/month",

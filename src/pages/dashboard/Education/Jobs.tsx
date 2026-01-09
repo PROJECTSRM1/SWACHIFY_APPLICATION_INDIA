@@ -137,8 +137,11 @@ export default function JobsPage({ onBack }: JobsPageProps) {
                 <option>All</option>
                 <option>IT</option>
                 <option>Marketing</option>
+                <option>Finance</option>
+                <option>Design</option>
               </select>
             </div>
+
 
             <div>
               <label>Location</label>
@@ -146,15 +149,22 @@ export default function JobsPage({ onBack }: JobsPageProps) {
                 <option>All</option>
                 <option>Bangalore</option>
                 <option>Mumbai</option>
+                <option>Pune</option>
+                <option>Hyderabad</option>
+                <option>Delhi</option>                
               </select>
             </div>
+
 
             <div>
               <label>Job Type</label>
               <select value={jobType} onChange={e => setJobType(e.target.value)}>
-                <option>All</option>
+                <option>All Types</option>
                 <option>Full time</option>
+                <option>Part Time </option>
                 <option>Contract</option>
+                <option>Freelancer</option>
+                
               </select>
             </div>
           </div>
@@ -201,7 +211,7 @@ export default function JobsPage({ onBack }: JobsPageProps) {
 
             <div className="job-bottom">
               <span className="exp">Experience: {job.experience}</span>
-              <button className="apply-btn">Apply Now</button>
+              <button className="apply-btn1">Apply Now</button>
             </div>
           </div>
         ))}
