@@ -71,7 +71,7 @@ const internships: Internship[] = [
   {
     title: "Content Writing Intern",
     company: "Media House",
-    location: "",
+    location: "Bangalore",
     deadline: "30/01/2025",
     duration: "2 months",
     stipend: "₹8,000/month",
@@ -191,7 +191,7 @@ const Internship = ({ onBack }: InternshipProps) => {
                 <option value="Pune">Pune</option>
                 <option value="Hyderabad">Hyderabad</option>
                 <option value="Delhi">Delhi</option>
-                <option value="Remote">Remote</option>
+                {/* <option value="Remote">Remote</option> */}
               </select>
             </div>
 
