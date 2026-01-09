@@ -11,14 +11,29 @@ import ServicesPage from "./homerentals/pages/ServicesPage";
 import Education from "./Education/Education";
 
 
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useSearchParams, useLocation, Outlet } from "react-router-dom";
 
 
 
 
 const Dashboard: React.FC = () => {
   const [searchParams] = useSearchParams();
-  const navigate = useNavigate();
+
+const userServiceIds: number[] = (JSON.parse(localStorage.getItem("service_ids") || "[]") as (string | number)[])
+  .map(id => Number(id))
+  .filter(id => !isNaN(id));
+
+
+  const serviceIdToName: Record<number, string> = {
+  1: "Home Services",
+  2: "Packers and Movers / Transport",
+  3: "House & Commercial Rentals",
+  4: "Building & Construction Raw Materials",
+  8: "Education",
+  6: "Buy & Sale Products",
+};
+
+
 
   const searchQuery = searchParams.get("q") || "";
   useEffect(() => {
@@ -69,7 +84,7 @@ const Dashboard: React.FC = () => {
       component: (
   <Packersandmovers
     searchQuery={searchQuery}
-    clearSearch={() => navigate("/app/dashboard")}
+    // clearSearch={() => navigate("/app/dashboard")}
 
   />
 ),
@@ -204,7 +219,7 @@ const Dashboard: React.FC = () => {
   component: (
     <HomeServices
       searchQuery={searchQuery}
-      clearSearch={() => navigate("/app/dashboard")}
+      // clearSearch={() => navigate("/app/dashboard")}
     />
   ),
 },
@@ -229,7 +244,7 @@ const Dashboard: React.FC = () => {
       component: (
     <ConstructionServices
       searchQuery={searchQuery}
-        clearSearch={() => navigate("/app/dashboard")}
+        // clearSearch={() => navigate("/app/dashboard")}
 
     />
   ),
@@ -276,7 +291,7 @@ const Dashboard: React.FC = () => {
   component: (
     <BuySaleProducts
       searchQuery={searchQuery}
-        clearSearch={() => navigate("/app/dashboard")}
+        // clearSearch={() => navigate("/app/dashboard")}
 
     />
   ),
@@ -306,7 +321,7 @@ const Dashboard: React.FC = () => {
   component: (
     <ServicesPage
       searchQuery={searchQuery}
-      clearSearch={() => navigate("/app/dashboard")}
+      // clearSearch={() => navigate("/app/dashboard")}
 
     />
   ),
@@ -341,51 +356,56 @@ const Dashboard: React.FC = () => {
   .sort((a, b) => b.matchScore - a.matchScore)
   .map((item) => item.service);
 
+  // Only keep services the user is allowed to access
+const allowedServices = filteredServices.filter((service) =>
+  userServiceIds.some((id) => serviceIdToName[id] === service.name)
+);
 
 
+
+
+const location = useLocation();
+const isRootDashboard = location.pathname === "/app/dashboard";
 
 return (
   <div className="dashboard-container">
+    {isRootDashboard ? (
+      <>
+        {/* 👇 YOUR ORIGINAL UI (UNCHANGED) */}
 
-    {/* Page Title */}
-    <div className="services-section">
-      <h1 className="services-title">Our Services</h1>
-    </div>
+        <div className="services-section">
+          <h1 className="services-title">Our Services</h1>
+        </div>
 
-    {/* 1️⃣ Home Services */}
-    {
-      filteredServices.find(
-        (s) => s.name === "Home Services"
-      )?.component
-    }
+      {allowedServices.find(
+  (s) => s.name === "Home Services"
+)?.component}
 
-    {/* 2️⃣ Education Section (Navbar + 5 cards) */}
-    <Education />
+{userServiceIds.includes(8) && <Education />}  
 
-    {/* 3️⃣ Building & Construction Raw Materials */}
-    {
-      filteredServices.find(
-        (s) => s.name === "Building & Construction Raw Materials"
-      )?.component
-    }
 
-    {/* 4️⃣ Remaining Services */}
-    {
-      filteredServices
-        .filter(
-          (s) =>
-            s.name !== "Home Services" &&
-            s.name !== "Building & Construction Raw Materials"
-        )
-        .map((service) => (
-          <div key={service.name}>
-            {service.component}
-          </div>
-        ))
-    }
+        {allowedServices.find(
+          (s) => s.name === "Building & Construction Raw Materials"
+        )?.component}
 
+        {allowedServices
+          .filter(
+            (s) =>
+              s.name !== "Home Services" &&
+              s.name !== "Building & Construction Raw Materials"
+          )
+          .map((service) => (
+            <div key={service.name}>
+              {service.component}
+            </div>
+          ))}
+      </>
+    ) : (
+      <Outlet />
+    )}
   </div>
 );
+
 
 };
 
