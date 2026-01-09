@@ -1,0 +1,179 @@
+/* =========================
+   EDUCATION CONTAINER
+========================= */
+.education-container {
+  width: 100%;
+}
+
+/* =========================
+   EDUCATION NAV BAR
+   (MATCH PACKERS & MOVERS)
+========================= */
+.education-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100%;
+  max-width: 1200px;          /* SAME AS PM */
+  margin: 65px auto 24px;     /* SAME AS PM */
+
+  padding: 22px 28px;         /* SAME AS PM */
+  background: #005cfa;
+  color: #fff;
+  border-radius: 12px;        /* SAME AS PM */
+  gap: 10px;
+}
+
+.education-header h2 {
+  margin: 0;
+  font-size: 20px;            /* SAME AS PM */
+  font-weight: 700;
+}
+
+.education-header p {
+  margin: 4px 0 0;
+  font-size: 13px;            /* SAME AS PM */
+  opacity: 0.95;
+}
+
+.education-header .view-all-btn {
+  background: #fff;
+  color: #000;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* =========================
+   EDUCATION CARDS GRID
+========================= */
+.education-grid {
+  max-width: 1200px;  
+  margin: 0 auto 28px;
+  padding: 0 14px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 18px;
+
+}
+.education-grid > .education-card:last-child {
+  width: 260px; 
+  max-width: 260px;
+  justify-self: center; 
+}
+
+.education-card {
+  height: 340px;              
+  max-width: 260px;           
+  margin: 0 auto;
+  border-radius: 12px;
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 6px 18px rgba(20, 20, 20, 0.06);
+  border: 1px solid #f0f0f0;
+  border-radius: 15px !important;
+  overflow: hidden !important;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Icon / Image area */
+.icon-box {
+  height: 150px;              /* SAME AS PM IMAGE */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 38px;
+  background: #f5f8ff;
+}
+
+/* Card body */
+.education-card h3 {
+  margin: 12px 12px 0;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.education-card p {
+  margin: 8px 12px 0;
+  font-size: 13px;
+  color: #6b7785;
+  text-align: center;
+}
+
+/* Footer */
+.details-btn {
+  margin: auto 12px 12px;
+  height: 40px;               /* SAME AS PM */
+  background: #000;
+  color: #fff;
+  border: none;
+  border-radius: 5px !important;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.fullscreen-page {
+  position: fixed;
+  inset: 0;
+  background: #fff;
+  z-index: 9999;
+  overflow-y: auto;
+}
+
+
+/* =========================
+   RESPONSIVE (MATCH PM)
+========================= */
+@media (max-width: 1200px) {
+  .education-card {
+    max-width: 240px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .education-card {
+    max-width: 230px;
+  }
+}
+
+@media (max-width: 768px) {
+  .education-header {
+    padding: 14px;
+  }
+
+  .education-card {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .icon-box {
+    height: 140px;
+  }
+
+  .details-btn {
+    width: 100%;
+  }
+}
+
+/* 🔥 FORCE EDUCATION CONTENT ABOVE ANY OVERLAY */
+.education-container,
+.education-grid,
+.education-card {
+  position: relative;
+  z-index: 5;
+}
+
+/* 🔥 ENSURE BUTTON RECEIVES CLICKS */
+.details-btn {
+  position: relative;
+  z-index: 10;
+  pointer-events: auto;
+}

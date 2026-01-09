@@ -88,17 +88,29 @@ const [vendorActiveTab, setVendorActiveTab] = useState<
 
   const [authLoading, setAuthLoading] = useState(false); 
   const navigate = useNavigate();
+  const [serviceOpen, setServiceOpen] = useState(false);
+
 
   const openAuthModal = (tab: "login" | "register" = "login") => {
     setActiveAuthTab(tab);
     setAuthModalVisible(true);
     setMenuOpen(false);
   };
+  const [hideWorkType, setHideWorkType] = useState(false);
+
 
   const closeAuthModal = () => {
   localStorage.removeItem("loginSource");
   setAuthModalVisible(false);
 };
+const [isMobile, setIsMobile] = useState(window.innerWidth <= 375);
+
+useEffect(() => {
+  const handleResize = () => setIsMobile(window.innerWidth <= 375);
+  window.addEventListener("resize", handleResize);
+  return () => window.removeEventListener("resize", handleResize);
+}, []);
+
 
   const [vendorForgotModalVisible, setVendorForgotModalVisible] = useState(false);
   const [emailValue, setEmailValue] = useState("");
@@ -122,14 +134,23 @@ const [vendorActiveTab, setVendorActiveTab] = useState<
         delete (window as any).openAuthModal;
         delete (window as any).closeAuthModal;
       } catch (e) {
-        // ignore deletion errors
+        
       }
     };
-  }, []); // run once on mount
+  }, []); 
 
-  // ==========================
-  // CUSTOMER LOGIN (BACKEND)
-  // ==========================
+  useEffect(() => {
+  const closeOnScroll = () => {
+    setServiceOpen(false);
+  };
+
+  window.addEventListener("scroll", closeOnScroll, true);
+
+  return () => {
+    window.removeEventListener("scroll", closeOnScroll, true);
+  };
+}, []);
+
 const onLogin = async (values: any) => {
   try {
     setAuthLoading(true);
@@ -388,19 +409,25 @@ if (roleType === "admin") {
   onCancel={closeAuthModal}
   footer={null}
   centered
-  width={520}
+  width={isMobile ? "100%" : 520}
+  style={isMobile ? { padding: "0 12px" } : undefined}
   destroyOnClose
   bodyStyle={{
-    padding: 24,
-    maxHeight: activeAuthTab === "login" ? "unset" : "70vh",
-    overflowY: activeAuthTab === "login" ? "hidden" : "auto",
+    padding: isMobile ? 12 : 24,
+    maxHeight: isMobile ? "90vh" : "70vh",
+    overflowY: "auto",
   }}
 >
 
+
           <div className="auth-header">
-            <UserOutlined className="auth-profile-icon" />
-            <div className="auth-title">Welcome Back</div>
-          </div>
+  <UserOutlined className="auth-profile-icon" />
+  <div className="auth-title">
+    {activeAuthTab === "register"
+      ? "Create Your Account"
+      : "Welcome Back"}
+  </div>
+</div>
 
       
         <Tabs
@@ -503,23 +530,40 @@ if (roleType === "admin") {
   name="service"
   rules={[{ required: true, message: "Please select at least one service" }]}
 >
-  <TreeSelect
-    treeCheckable
-    allowClear
-    placeholder="Select services"
-    style={{ width: "100%" }}
-    showCheckedStrategy={TreeSelect.SHOW_ALL}
-    maxTagCount={0}   // 🔥 HIDE ALL TAGS
-    maxTagPlaceholder={(values) => `${values.length} Services Selected `} // 🔥 SHOW COUNT
-    treeData={[
-      { title: "Cleaning & Home Services", value: "cleaning" },
-      { title: "Transport", value: "transport" },
-      { title: "Buy/Sell/Rental", value: "buy_sell_rent" },
-      { title: "Raw Materials", value: "raw_materials" },
-      { title: "Education", value: "education" },
-      { title: "Swachify Products", value: "swachify_products" },
-    ]}
-  />
+<TreeSelect
+  treeCheckable
+  showSearch={false}
+  showArrow
+  placeholder="Select services"
+  style={{ width: "100%" }}
+  showCheckedStrategy={TreeSelect.SHOW_PARENT}
+  open={serviceOpen}
+  onDropdownVisibleChange={setServiceOpen}
+  getPopupContainer={(triggerNode) => triggerNode.parentElement!}
+  treeData={[
+    { title: "Cleaning & Home Services", value: "cleaning" },
+    { title: "Transport", value: "transport" },
+    { title: "Buy/Sell/Rental", value: "buy_sell_rent" },
+    { title: "Raw Materials", value: "raw_materials" },
+    { title: "Education", value: "education" },
+    { title: "Swachify Products", value: "swachify_products" },
+  ]}
+  onChange={(values) => {
+    // values is array because treeCheckable
+    const hasEducation = values?.includes("education");
+
+    setHideWorkType(hasEducation);
+
+    // reset dependent fields when education selected
+    if (hasEducation) {
+      setShowProfessionalFields(false);
+    }
+  }}
+/>
+
+
+
+
 </Form.Item>
 
 
@@ -577,22 +621,25 @@ if (roleType === "admin") {
       <Input placeholder="Enter your location" />
     </Form.Item>
 
-<Form.Item
-  label="Select Work Type"
-  name="workType"
-  rules={[{ required: true }]}
->
-  <Select
-    placeholder="Choose work type"
-    onChange={(value) => {
-      setShowProfessionalFields(value === "looking");
-    }}
+{!hideWorkType && (
+  <Form.Item
+    label="Select Work Type"
+    name="workType"
+    rules={[{ required: true }]}
   >
-    <Select.Option value="assigning">Assigning for work</Select.Option>
-    <Select.Option value="looking">Looking for work</Select.Option>
-    <Select.Option value="both">Both</Select.Option>
-  </Select>
-</Form.Item>
+    <Select
+      placeholder="Choose work type"
+      onChange={(value) => {
+        setShowProfessionalFields(value === "looking");
+      }}
+    >
+      <Select.Option value="assigning">Assigning for work</Select.Option>
+      <Select.Option value="looking">Looking for work</Select.Option>
+      <Select.Option value="both">Both</Select.Option>
+    </Select>
+  </Form.Item>
+)}
+
 {showProfessionalFields && (
   <div style={{ marginTop: 16 }}>
 

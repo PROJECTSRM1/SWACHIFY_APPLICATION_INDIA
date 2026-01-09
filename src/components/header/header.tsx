@@ -7,6 +7,7 @@ import {
   BellOutlined,
   UserOutlined,
   CloseOutlined,
+  ProfileOutlined,
 } from "@ant-design/icons";
 import { Menu, message, Button, Dropdown, Badge, Avatar, Modal } from "antd";
 import { useNavigate } from "react-router-dom";
@@ -18,6 +19,9 @@ import RecentBookingPage from "../../pages/RecentBookingPage";
 //import PaymentPage from "../../pages/PaymentPage";
 import ConfirmBookingModal from "../ConfirmAddressModal";
 import { Input } from "antd";
+import EmployeeAllocationModal from "../EmployeeAllocationModal";
+import ProfilePage from "../../pages/ProfilePage";
+
 
 
 type Booking = {
@@ -39,6 +43,10 @@ const Header: React.FC = () => {
   const [notificationOpen] = useState(false); // kept for parity; not used visibly
   const [cartOpen, setCartOpen] = useState(false); // cart drawer
   const [showBookingPage, setShowBookingPage] = useState(false);
+  const [employeeAllocationOpen, setEmployeeAllocationOpen] = useState(false);
+  const [showProfilePage, setShowProfilePage] = useState(false);
+
+
   console.log(notificationOpen)
 
   const navigate = useNavigate();
@@ -121,20 +129,23 @@ useEffect(() => {
     />
   );
 
-  const profileMenu = (
-    <Menu
-      items={[
-        { key: "bookings", label: "Recent Booking", icon: <HomeOutlined /> },
-        { key: "cart", label: `Cart (${cart.length})`, icon: <ShoppingCartOutlined /> },
-        { key: "logout", label: "Logout", icon: <LogoutOutlined /> },
-      ]}
-      onClick={(info) => {
-        if (info.key === "cart") setCartOpen(true);
-        else if (info.key === "bookings") setShowBookingPage(true);
-        else if (info.key === "logout") handleLogout();
-      }}
-    />
-  );
+const profileMenu = (
+  <Menu
+    items={[
+      { key: "profile", label: "Profile", icon: <ProfileOutlined /> },
+      { key: "bookings", label: "Recent Booking", icon: <HomeOutlined /> },
+      { key: "cart", label: `Cart (${cart.length})`, icon: <ShoppingCartOutlined /> },
+      { key: "logout", label: "Logout", icon: <LogoutOutlined /> },
+    ]}
+    onClick={(info) => {
+      if (info.key === "profile") setShowProfilePage(true);
+      else if (info.key === "cart") setCartOpen(true);
+      else if (info.key === "bookings") setShowBookingPage(true);
+      else if (info.key === "logout") handleLogout();
+    }}
+  />
+);
+
 
   const addBookingToLocalStorage = (b: Booking) => {
     try {
@@ -318,7 +329,7 @@ useEffect(() => {
 
 
         {/* CONFIRM ADDRESS MODAL */}
-        <ConfirmBookingModal
+        {/* <ConfirmBookingModal
           open={confirmModalOpen}
           item={selectedCartItem}
           onClose={() => {
@@ -326,7 +337,27 @@ useEffect(() => {
             setSelectedCartItem(null);
           }}
           onConfirm={(bookingData: Booking) => handleBookingConfirmed(bookingData)}
-        />
+        /> */}
+
+        <ConfirmBookingModal
+  open={confirmModalOpen}
+  item={selectedCartItem}
+  onClose={() => {
+    setConfirmModalOpen(false);
+    setSelectedCartItem(null);
+  }}
+  onConfirm={(bookingData: Booking) => handleBookingConfirmed(bookingData)}
+  onPaymentSuccess={() => setEmployeeAllocationOpen(true)}   // ✅ ADD THIS
+/>
+
+<EmployeeAllocationModal
+  open={employeeAllocationOpen}
+  onClose={() => setEmployeeAllocationOpen(false)}
+/>
+
+
+
+        
 
 
         {/* RECENT BOOKING OVERLAY */}
@@ -353,6 +384,29 @@ useEffect(() => {
     </div>
   </div>
 )}
+{showProfilePage && (
+  <div
+    className="sw-booking-page-overlay"
+    onClick={() => setShowProfilePage(false)}
+  >
+    <div
+      className="sw-booking-page-content"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <button
+        className="sw-booking-page-close"
+        onClick={() => setShowProfilePage(false)}
+      >
+        <CloseOutlined />
+      </button>
+<div className="profile-modal-scroll">
+  <ProfilePage />
+</div>
+
+    </div>
+  </div>
+)}
+
 
 
 

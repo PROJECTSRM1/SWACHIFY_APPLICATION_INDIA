@@ -1,0 +1,308 @@
+
+
+.profile-wrapper {
+  padding: 0;              /* 🔑 remove extra height */
+  background: #f2f6ff;
+}
+
+
+/* HEADER */
+.profile-header {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.profile-header h2 {
+  margin-top: 12px;
+  font-size: 18px;
+}
+
+.profile-header p {
+  font-size: 13px;
+  color: #f9f9f9;
+}
+
+.avatar-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.avatar-upload {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: #000;
+  color: #fff;
+  border-radius: 50%;
+  padding: 6px;
+  cursor: pointer;
+}
+
+/* CARD */
+.profile-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* INFO GRID */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px 32px;
+  margin-top: 12px;
+}
+
+.label {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.value {
+  font-weight: 600;
+  font-size: 14px;
+  margin-top: 2px;
+}
+
+.service-tag {
+  margin-top: 6px;
+  margin-left: 10px !important;
+}
+
+/* EDIT GRID */
+.edit-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.save-btn {
+  grid-column: span 2;
+  height: 36px;
+  width: fit-content;
+}
+
+/* EDUCATION */
+.education-box {
+  background: #f9fafb;
+  padding: 16px;
+  border-radius: 10px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.education-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f9fafb;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-top: 12px;
+}
+
+.education-item p {
+  margin: 0;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.remove-text {
+  color: red;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.empty-text {
+  margin-top: 10px;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .info-grid,
+  .edit-grid,
+  .education-box {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-wrapper {
+    padding: 10px;
+  }
+}
+/* PROFILE MODAL — SAME AS RECENT BOOKINGS */
+.profile-modal-scroll {
+  width: 720px;        /* 🔥 reduced width */
+  max-width: 95vw;
+
+  height: 70vh;        /* 🔥 reduced height */
+  max-height: 70vh;
+
+  overflow-y: auto;    /* internal scroll */
+  overflow-x: hidden;
+
+  padding: 14px 16px;
+  box-sizing: border-box;
+}
+
+
+/* Hide outer page scroll when modal open */
+body.modal-open {
+  overflow: hidden;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .profile-modal-scroll {
+    width: 100%;
+    height: 85vh;
+    max-height: 85vh;
+    padding: 12px;
+  }
+}
+/* HEADER */
+.profile-header {
+  background: linear-gradient(135deg, #4f46e5, #2563eb);
+  border-radius: 14px;
+  padding: 28px 20px;
+  text-align: center;
+  margin-bottom: 18px;
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(37,99,235,0.25);
+}
+
+.profile-header h2 {
+  margin-top: 14px;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.profile-header p {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.avatar-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.avatar-img {
+  border: 3px solid #fff;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+}
+
+.avatar-upload-btn {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  background: #111827;
+  color: #fff;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 2px solid #fff;
+  transition: 0.3s;
+}
+
+.avatar-upload-btn:hover {
+  background: #2563eb;
+  transform: scale(1.15);
+}
+
+/* CARDS */
+.profile-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 18px 22px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  border-left: 5px solid #2563eb;
+}
+
+.card-header h3 {
+  font-size: 17px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.card-header .anticon {
+  font-size: 18px;
+  color: #2563eb;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.card-header .anticon:hover {
+  color: #4f46e5;
+  transform: scale(1.2);
+}
+
+/* EDUCATION & CERTIFICATE ITEMS */
+.education-item {
+  background: #f0f7ff;
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-top: 12px;
+  border: 1px solid #bfdbfe;
+  transition: 0.3s;
+}
+
+.education-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(37,99,235,0.15);
+  border-color: #2563eb;
+}
+
+.education-item strong {
+  font-size: 15px;
+  color: #1f2937;
+}
+
+.education-item p {
+  font-size: 13px;
+  color: #4b5563;
+}
+
+.remove-text {
+  color: #dc2626;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.remove-text:hover {
+  text-decoration: underline;
+}
+
+/* TAGS */
+.service-tag {
+  background: #dbeafe;
+  color: #1e40af;
+  font-weight: 600;
+  border-radius: 6px;
+  padding: 2px 10px;
+}
+/* 3-column grid (used for NOC) */
+.info-grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
