@@ -198,6 +198,8 @@ localStorage.setItem("token", res.data.access_token);
 localStorage.setItem("accessToken", res.access_token);
 localStorage.setItem("user", JSON.stringify(res));
 
+localStorage.removeItem("isGuest");
+
 const serviceIds: number[] = res.service_ids || [];
 
 const firstServiceId = serviceIds[0];

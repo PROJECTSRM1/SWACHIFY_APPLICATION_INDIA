@@ -926,8 +926,8 @@ const getPricePerSqft = (moduleTitle: string): number => {
 };
 const isLoggedIn = () => {
   const token = localStorage.getItem("accessToken");
-  const isGuest = localStorage.getItem("isGuest") === "true";
-  return Boolean(token) && !isGuest;
+ // const isGuest = localStorage.getItem("isGuest") === "true";
+  return Boolean(token);
 };
 
 
@@ -1779,7 +1779,8 @@ const buildBookingPayload = (
     payment_type_id: PAYMENT_TYPE_IDS[values.paymentType],
     time_slot_id: TIME_SLOT_IDS[values.timeSlot],
 
-    property_size_sqft: Number(values.propertySize || 0),
+   property_size_sqft: String(values.propertySize || ""),
+
 
     add_on_id: addOnId,
 
@@ -1794,6 +1795,7 @@ const buildBookingPayload = (
     payment_done:false,
     created_by:getLoggedInUserId(),
      status_id: 1,
+    duration_id:values.duration,
   };
 };
 
@@ -1874,39 +1876,39 @@ const processBookingAndAddToCart = async (values: any) => {
 
 };
 
-// useEffect(() => {
-//   // ✅ WAIT until user is actually logged in
-//   if (!isLoggedIn()) return;
+ useEffect(() => {
+   // ✅ WAIT until user is actually logged in
+   if (!isLoggedIn()) return;
 
-//   const pending = localStorage.getItem("pendingHomeServiceBooking");
-//   if (!pending) return;
+   const pending = localStorage.getItem("pendingHomeServiceBooking");
+   if (!pending) return;
 
-//   try {
-//     const data = JSON.parse(pending);
+   try {
+     const data = JSON.parse(pending);
 
-//     setSelectedMainKey(data.selectedMainKey);
-//     setSelectedSubKey(data.selectedSubKey);
-//     setSelectedModule(data.selectedModule);
-//     setComputedPrice(data.computedPrice);
-//     setServiceTypeKey(data.serviceTypeKey);
+     setSelectedMainKey(data.selectedMainKey);
+     setSelectedSubKey(data.selectedSubKey);
+     setSelectedModule(data.selectedModule);
+     setComputedPrice(data.computedPrice);
+     setServiceTypeKey(data.serviceTypeKey);
 
 //     // ⬇️ wait for state + auth header to be ready
-//     setTimeout(async () => {
-//       try {
-//         await processBookingAndAddToCart(data.values);
-//         message.success("Service booked and added to cart");
-//       } catch (e) {
-//         message.error("Failed to complete booking after login");
-//       } finally {
-//         localStorage.removeItem("pendingHomeServiceBooking");
-//         setIsDetailsModalOpen(false);
-//       }
-//     }, 300);
+     setTimeout(async () => {
+       try {
+         await processBookingAndAddToCart(data.values);
+         message.success("Service booked and added to cart");
+       } catch (e) {
+         message.error("Failed to complete booking after login");
+       } finally {
+         localStorage.removeItem("pendingHomeServiceBooking");
+         setIsDetailsModalOpen(false);
+       }
+     }, 300);
 
-//   } catch {
-//     localStorage.removeItem("pendingHomeServiceBooking");
-//   }
-// }, [isLoggedIn()]);
+   } catch {
+     localStorage.removeItem("pendingHomeServiceBooking");
+   }
+ }, [isLoggedIn()]);
 
 
 
@@ -1967,7 +1969,7 @@ sub_group_id: getSubModuleId(selectedSubKey),
       time_slot_id: TIME_SLOT_IDS[timeSlot] || 0,
       payment_type_id: PAYMENT_TYPE_IDS[paymentType] || 0,
       problem_description: selectedModule.title,
-      property_size_sqft: parseFloat(propertySize) || 0,
+      property_size_sqft: String(propertySize || ""),
       add_on_id: Array.isArray(additional)
         ? additional.map(addon => ADDON_ID_MAPPING[addon] || 0)[0] || null  // Take first addon ID or 0
         : ADDON_ID_MAPPING[additional || ''] || null,
@@ -1977,6 +1979,7 @@ sub_group_id: getSubModuleId(selectedSubKey),
       payment_done:false,
       created_by:getLoggedInUserId(),
        status_id: 1,
+       duration_id:values.duration,
     };
 
     // --- 2. API Submission ---
