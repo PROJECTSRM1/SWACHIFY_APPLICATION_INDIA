@@ -20,8 +20,6 @@ import { Select ,TreeSelect} from "antd";
 
 
 import {
-  EyeInvisibleOutlined,
-  EyeTwoTone,
   MenuOutlined,
   CloseOutlined,
   UserOutlined,
@@ -34,6 +32,26 @@ import axios from "axios";
 import { customerRegister, customerLogin } from "../../api/customerAuth";
 
 import "./Header.css";
+
+// ================= INPUT SANITIZERS =================
+
+// Only numbers
+const allowOnlyNumbers = (value: string) =>
+  value.replace(/[^0-9]/g, "");
+
+// Only letters + spaces
+const allowOnlyLetters = (value: string) =>
+  value.replace(/[^A-Za-z ]/g, "");
+
+// Letters + numbers (no special chars)
+const allowAlphaNumeric = (value: string) =>
+  value.replace(/[^A-Za-z0-9]/g, "");
+
+// Email-safe characters
+const allowEmailChars = (value: string) =>
+  value.replace(/[^A-Za-z0-9@._-]/g, "");
+
+
 
 const navItems = [
   { key: "home", label: <Link to="/landing">Home</Link> },
@@ -51,14 +69,6 @@ const navItems = [
 
 const { TabPane } = Tabs;
 
-const adminRegister = async (payload: any) => {
-  return axios.post(
-    "https://swachify-india-be-1-mcrb.onrender.com/api/admin/register",
-    payload
-  );
-};
-
-console.log(adminRegister)
 
 
 const CommonHeader: React.FC<{ selectedKey?: string }> = ({
@@ -270,36 +280,23 @@ localStorage.setItem("token", res.data.access_token);
 const onRegister = async (values: any) => {
   try {
     setAuthLoading(true);
-
 if (roleType === "admin") {
-  const res = await axios.post(
-    "https://swachify-india-be-1-mcrb.onrender.com/api/admin/login",
+  await axios.post(
+    "https://swachify-india-be-1-mcrb.onrender.com/api/admin/register",
     {
-      username_or_email: values.username?.trim(),
+      first_name: values.first_name,
+      last_name: values.last_name,
+      email: values.email,
+      mobile: values.mobile,
+      gender: values.gender,
+      address: values.address,
       password: values.password,
+      confirm_password: values.confirm_password,
     }
   );
 
-  // 🔍 SEE REAL RESPONSE
-  console.log("ADMIN LOGIN RESPONSE:", res.data);
-
-  // ✅ EXTRACT TOKEN SAFELY
-  const token =
-    res.data?.access_token ||
-    res.data?.token ||
-    res.data?.accessToken;
-
-  if (!token) {
-    message.error("Admin token not received from backend");
-    return;
-  }
-
-  // ✅ STORE TOKEN USING CORRECT KEY
-  localStorage.setItem("token", token);
-
-  message.success("Admin login successful");
-  setVendorModalVisible(false);
-  navigate("/adminshell/dashboard");
+  message.success("Admin registered successfully");
+  setVendorActiveTab("login");
   return;
 }
 
@@ -307,17 +304,19 @@ if (roleType === "admin") {
 
 
 
+
     // ================= CUSTOMER REGISTER =================
-  const payload = {
+const payload = {
   first_name: values.firstName,
   last_name: values.lastName,
   email: values.email,
-  mobile: values.phone,
+  mobile: values.mobile,        
   password: values.password,
-  confirm_password: values.confirm,
-  gender_id: values.gender, // ✅ DIRECT NUMBER
-  address: values.address ?? "",
+  confirm_password: values.confirmPassword, 
+   gender_id: values.gender,
+  address: values.location ?? "",
 };
+
 
 
     await customerRegister(payload);
@@ -438,25 +437,27 @@ if (roleType === "admin") {
           {/* LOGIN TAB */}
           <TabPane tab="Login" key="login">
             <Form layout="vertical" onFinish={onLogin} preserve={false}>
-              <Form.Item
-                label="Email / Phone"
-                name="identifier"
-                rules={[{ required: true }]}
-              >
-                <Input placeholder="john@example.com or +91 98765 43210" />
-              </Form.Item>
-
-              <Form.Item
-                label="Password"
-                name="password"
-                rules={[{ required: true }]}
-              >
-                <Input.Password
-                  iconRender={(visible) =>
-                    visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-                  }
-                />
-              </Form.Item>
+<Form.Item
+  label="Email / Phone"
+  name="identifier"
+  rules={[
+    { required: true, message: "Email or phone is required" },
+    {
+      validator: (_, value) => {
+        if (
+          !value ||
+          /^[0-9]{10}$/.test(value) || // phone
+          /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) // email
+        ) {
+          return Promise.resolve();
+        }
+        return Promise.reject("Enter valid email or 10-digit phone number");
+      },
+    },
+  ]}
+>
+  <Input placeholder="john@example.com or 9876543210" />
+</Form.Item>
 
               <div className="swl-login-options-row">
                 <Checkbox>Remember me</Checkbox>
@@ -567,51 +568,71 @@ if (roleType === "admin") {
 </Form.Item>
 
 
-    <Form.Item
-      label="First Name"
-      name="firstName"
-      rules={[{ required: true }]}
-    >
-      <Input placeholder="Enter first name" />
-    </Form.Item>
+<Form.Item
+  label="First Name"
+  name="firstName"
+  normalize={(value) => allowOnlyLetters(value || "")}
+  rules={[
+    { required: true },
+    { pattern: /^[A-Za-z ]+$/, message: "Only letters allowed" },
+  ]}
+>
+  <Input />
+</Form.Item>
 
-    <Form.Item
-      label="Last Name"
-      name="lastName"
-      rules={[{ required: true }]}
-    >
-      <Input placeholder="Enter last name" />
-    </Form.Item>
 
-    <Form.Item
-      label="Mobile Number"
-      name="mobile"
-      rules={[
-        { required: true },
-        { pattern: /^[0-9]{10}$/, message: "Enter valid 10-digit number" },
-      ]}
-    >
-      <Input placeholder="Enter mobile number" maxLength={10} />
-    </Form.Item>
+<Form.Item
+  label="Last Name"
+  name="lastName"
+  normalize={(value) => allowOnlyLetters(value || "")}
+  rules={[
+    { required: true, message: "Last name is required" },
+    { pattern: /^[A-Za-z ]+$/, message: "Only letters allowed" },
+  ]}
+>
+  <Input placeholder="Enter last name" />
+</Form.Item>
 
-    <Form.Item
-      label="Email ID"
-      name="email"
-      rules={[{ required: true, type: "email" }]}
-    >
-      <Input placeholder="Enter email" />
-    </Form.Item>
 
-    <Form.Item
-      label="Aadhaar Number"
-      name="aadhaar"
-      rules={[
-        { required: true },
-        { pattern: /^[0-9]{12}$/, message: "Enter 12-digit Aadhaar number" },
-      ]}
-    >
-      <Input placeholder="Enter 12-digit Aadhaar number" maxLength={12} />
-    </Form.Item>
+<Form.Item
+  label="Mobile Number"
+  name="mobile"
+  normalize={(value) => allowOnlyNumbers(value || "").slice(0, 10)}
+  rules={[
+    { required: true },
+    { pattern: /^[6-9][0-9]{9}$/, message: "Invalid mobile number" },
+  ]}
+>
+  <Input inputMode="numeric" />
+</Form.Item>
+
+
+<Form.Item
+  label="Email"
+  name="email"
+  normalize={(value) => allowEmailChars(value || "")}
+  rules={[
+    { required: true, type: "email", message: "Invalid email" },
+  ]}
+>
+  <Input />
+</Form.Item>
+
+
+
+<Form.Item
+  label="Aadhaar Number"
+  name="aadhaar"
+  normalize={(value) => allowOnlyNumbers(value || "").slice(0, 12)}
+  rules={[
+    { required: true },
+    { pattern: /^[0-9]{12}$/, message: "Enter 12 digit Aadhaar" },
+  ]}
+>
+  <Input inputMode="numeric" />
+</Form.Item>
+
+
 
     <Form.Item
       label="Location"
@@ -645,28 +666,71 @@ if (roleType === "admin") {
 
     <h4 style={{ marginBottom: 12 }}>Professional Details</h4>
 
-    <Form.Item
-      label="Experience (in years)"
-      name="experience"
-      rules={[{ required: true }]}
-    >
-      <Input placeholder="Enter years of experience" />
-    </Form.Item>
+<Form.Item
+  label="Experience (in years)"
+  name="experience"
+  rules={[
+    { required: true, message: "Experience is required" },
+    {
+      pattern: /^[0-9]+$/,
+      message: "Only numbers are allowed",
+    },
+    {
+      validator: (_, value) => {
+        if (value === undefined || value === "") {
+          return Promise.resolve();
+        }
+        if (Number(value) >= 0 && Number(value) <= 50) {
+          return Promise.resolve();
+        }
+        return Promise.reject(
+          new Error("Experience must be between 0 and 50 years")
+        );
+      },
+    },
+  ]}
+  hasFeedback
+>
+  <Input
+    placeholder="Enter experience"
+    inputMode="numeric"
+    maxLength={2}
+    onKeyDown={(e) => {
+      if (
+        !/[0-9]/.test(e.key) &&
+        e.key !== "Backspace" &&
+        e.key !== "Delete" &&
+        e.key !== "ArrowLeft" &&
+        e.key !== "ArrowRight" &&
+        e.key !== "Tab"
+      ) {
+        e.preventDefault();
+      }
+    }}
+  />
+</Form.Item>
+ 
 
-    <Form.Item
-      label="Expertise in"
-      name="expertise"
-      rules={[{ required: true }]}
-    >
-      <Input placeholder="e.g., Floor Cleaning, Plumbing" />
-    </Form.Item>
 
-    <Form.Item
-      label="Additional Service"
-      name="additionalService"
-    >
-      <Input placeholder="Any additional services offered" />
-    </Form.Item>
+
+<Form.Item
+  label="Expertise in Additional Service"
+  name="expertise"
+  rules={[
+    { required: true, message: "Expertise is required" },
+    {
+      min: 3,
+      message: "Minimum 3 characters required",
+    },
+    {
+      pattern: /^[A-Za-z ]+$/,
+      message: "Only letters and spaces are allowed",
+    },
+  ]}
+  hasFeedback
+>
+  <Input placeholder="Enter your expertise" />
+</Form.Item>
 
     <Form.Item
       label="Upload Work / ID Images"
@@ -695,18 +759,20 @@ if (roleType === "admin") {
   label="Password"
   name="password"
   rules={[
-    { required: true, message: "Please enter password" },
+    { required: true, message: "Password is required" },
     {
       pattern:
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{6,}$/,
       message:
-        "Password must include uppercase, lowercase, number & special character",
+        "Min 6 chars, uppercase, lowercase, number & special character required",
     },
   ]}
   hasFeedback
 >
   <Input.Password />
 </Form.Item>
+
+
 
 {/* CONFIRM PASSWORD */}
 <Form.Item
@@ -721,13 +787,14 @@ if (roleType === "admin") {
         if (!value || getFieldValue("password") === value) {
           return Promise.resolve();
         }
-        return Promise.reject(new Error("Passwords do not match"));
+        return Promise.reject("Passwords do not match");
       },
     }),
   ]}
 >
   <Input.Password />
 </Form.Item>
+
 
 
     <Form.Item>
@@ -1099,14 +1166,16 @@ title={roleType === "vendor" ? "Vendor Authentication" : "Admin Authentication"}
       >
         <Input placeholder="Enter email or phone" />
       </Form.Item>
+<Form.Item
+  label="Password"
+  name="password"
+  rules={[
+    { required: true, message: "Password is required" },
+  ]}
+>
+  <Input.Password />
+</Form.Item>
 
-      <Form.Item
-        label="Password"
-        name="password"
-        rules={[{ required: true }]}
-      >
-        <Input.Password />
-      </Form.Item>
 
       <div style={{ textAlign: "right", marginBottom: 12 }}>
         <a
@@ -1149,14 +1218,16 @@ title={roleType === "vendor" ? "Vendor Authentication" : "Admin Authentication"}
 
 <Form.Item
   label="Email"
-  name="username"
+  name="email"
+  normalize={(value) => allowEmailChars(value || "")}
   rules={[
-    { required: true, message: "Enter admin email" },
-    { type: "email", message: "Enter valid email" },
+    { required: true, type: "email", message: "Invalid email" },
   ]}
 >
-  <Input placeholder="admin@swachify.com" />
+  <Input />
 </Form.Item>
+
+
 
 
       <Form.Item
@@ -1199,21 +1270,42 @@ title={roleType === "vendor" ? "Vendor Authentication" : "Admin Authentication"}
       layout="vertical"
       onFinish={(values) => console.log("Vendor Register:", values)}
     >
-      <Form.Item label="Business Name" name="businessName" rules={[{ required: true }]}>
-        <Input />
-      </Form.Item>
+<Form.Item label="Business Name" name="businessName">
+  <Input
+    onChange={(e) =>
+      (e.target.value = allowAlphaNumeric(e.target.value))
+    }
+  />
+</Form.Item>
+
 
       <Form.Item label="Owner Name" name="ownerName" rules={[{ required: true }]}>
         <Input />
       </Form.Item>
 
-      <Form.Item label="Email" name="email" rules={[{ required: true, type: "email" }]}>
-        <Input />
-      </Form.Item>
+<Form.Item
+  label="Email"
+  name="email"
+  normalize={(value) => allowEmailChars(value || "")}
+  rules={[
+    { required: true, type: "email", message: "Invalid email" },
+  ]}
+>
+  <Input />
+</Form.Item>
 
-      <Form.Item label="Phone" name="phone" rules={[{ required: true }]}>
-        <Input />
-      </Form.Item>
+<Form.Item
+  label="Phone"
+  name="mobile"
+  normalize={(value) => allowOnlyNumbers(value || "").slice(0, 10)}
+  rules={[
+    { required: true },
+    { pattern: /^[6-9][0-9]{9}$/, message: "Invalid mobile number" },
+  ]}
+>
+  <Input inputMode="numeric" />
+</Form.Item>
+
 
       <Form.Item label="PAN" name="pan" rules={[{ required: true }]}>
         <Input />
@@ -1246,32 +1338,56 @@ title={roleType === "vendor" ? "Vendor Authentication" : "Admin Authentication"}
 <Tabs.TabPane tab="Register" key="admin_register">
     <Form layout="vertical" onFinish={onRegister} preserve={false}>
 
-      <Form.Item label="First Name" name="first_name" rules={[{ required: true }]}>
-        <Input />
-      </Form.Item>
+<Form.Item
+  label="First Name"
+  name="firstName"
+  normalize={(value) => allowOnlyLetters(value || "")}
+  rules={[
+    { required: true },
+    { pattern: /^[A-Za-z ]+$/, message: "Only letters allowed" },
+  ]}
+>
+  <Input />
+</Form.Item>
 
-      <Form.Item label="Last Name" name="last_name" rules={[{ required: true }]}>
-        <Input />
-      </Form.Item>
+<Form.Item
+  label="Last Name"
+  name="lastName"
+  normalize={(value) => allowOnlyLetters(value || "")}
+  rules={[
+    { required: true, message: "Last name is required" },
+    { pattern: /^[A-Za-z ]+$/, message: "Only letters allowed" },
+  ]}
+>
+  <Input placeholder="Enter last name" />
+</Form.Item>
 
-      <Form.Item
-        label="Email"
-        name="email"
-        rules={[{ required: true, type: "email" }]}
-      >
-        <Input />
-      </Form.Item>
 
-      <Form.Item
-        label="Mobile"
-        name="mobile"
-        rules={[
-          { required: true },
-          { pattern: /^[0-9]{10}$/, message: "Enter valid 10-digit number" },
-        ]}
-      >
-        <Input maxLength={10} />
-      </Form.Item>
+
+<Form.Item
+  label="Email"
+  name="email"
+  normalize={(value) => allowEmailChars(value || "")}
+  rules={[
+    { required: true, type: "email", message: "Invalid email" },
+  ]}
+>
+  <Input />
+</Form.Item>
+
+
+<Form.Item
+  label="Mobile Number"
+  name="mobile"
+  normalize={(value) => allowOnlyNumbers(value || "").slice(0, 10)}
+  rules={[
+    { required: true },
+    { pattern: /^[6-9][0-9]{9}$/, message: "Invalid mobile number" },
+  ]}
+>
+  <Input inputMode="numeric" />
+</Form.Item>
+
 
 <Form.Item
   label="Gender"
@@ -1284,6 +1400,7 @@ title={roleType === "vendor" ? "Vendor Authentication" : "Admin Authentication"}
     <Select.Option value={3}>Other</Select.Option>
   </Select>
 </Form.Item>
+
 
 
 
