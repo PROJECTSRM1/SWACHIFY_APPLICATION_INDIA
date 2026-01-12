@@ -1,5 +1,15 @@
 import { api } from "./client";
 
+export interface GovernmentId {
+  id_type: string;
+  id_number: string;
+}
+
+export interface ProfessionalDetails {
+  experience_years: number;
+  expertise_in: number[];
+}
+
 export interface CustomerRegisterPayload {
   first_name: string;
   last_name: string;
@@ -7,9 +17,18 @@ export interface CustomerRegisterPayload {
   mobile: string;
   password: string;
   confirm_password: string;
+
   gender_id: number;
   address: string;
+
+  work_type: number;
+  service_ids: number[];
+
+  government_id: GovernmentId[];
+
+  professional_details?: ProfessionalDetails;
 }
+
 
 export interface CustomerLoginPayload {
   email_or_phone: string;
@@ -40,6 +59,7 @@ export interface RegisterResponse {
 
 export const customerRegister = async (data: CustomerRegisterPayload) => {
   const res = await api.post<RegisterResponse>("api/auth/register", data);
+  
   return res.data;
 };
 
@@ -106,7 +126,7 @@ export const customerLogout = async () => {
 export const PaymentsAPI = {
   
   createOrder: async (bookingId: number, amount: number) => {
-    const res = await api.post("api/payments/create-order", {
+    const res = await api.post("api/v1/payments/create-order", {
       bookingId,
       amount,
     });
@@ -120,7 +140,7 @@ export const PaymentsAPI = {
     signature: string,
     home_service_id:number
   ) => {
-    const res = await api.post("api/payments/verify-payment", {
+    const res = await api.post("api/v1/payments/verify-payment", {
       order_id: orderId,
       payment_id: paymentId,
       signature,
@@ -137,3 +157,9 @@ export const getLoggedInUserIdSafe = (): number | null => {
   if (!id) return null;
   return Number(id);
 };
+
+
+
+
+
+

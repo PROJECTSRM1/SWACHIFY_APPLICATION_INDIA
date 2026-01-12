@@ -49,6 +49,17 @@ const navItems = [
   { key: "freelancer", label: <Link to="/Freelancer">Freelancer</Link> },
 ];
 
+const serviceIdToRoute: Record<number, string> = {
+  1: "/app/dashboard/homeservices",
+  2: "/app/dashboard/packers",
+  3: "/app/dashboard/commercials",
+  4: "/app/dashboard/constructions",
+  5: "/app/dashboard/education",
+  6: "/app/dashboard", // or products page if you add one
+};
+
+
+
 const { TabPane } = Tabs;
 
 const adminRegister = async (payload: any) => {
@@ -179,16 +190,35 @@ localStorage.setItem("token", res.data.access_token);
     }
 
     // ================= CUSTOMER LOGIN =================
-    const res: any = await customerLogin({
-      email_or_phone: values.identifier,
-      password: values.password,
-    });
+ const res: any = await customerLogin({
+  email_or_phone: values.identifier,
+  password: values.password,
+});
 
-    localStorage.setItem("accessToken", res.access_token);
-    localStorage.setItem("user", JSON.stringify(res.user));
+localStorage.setItem("accessToken", res.access_token);
+localStorage.setItem("user", JSON.stringify(res));
 
-    closeAuthModal();
-    navigate("/app/dashboard");
+localStorage.removeItem("isGuest");
+
+const serviceIds: number[] = res.service_ids || [];
+
+const firstServiceId = serviceIds[0];
+const redirectPath =
+  serviceIdToRoute[firstServiceId] || "/app/dashboard";
+
+console.log("Navigating to:", redirectPath);
+// After successful login
+localStorage.setItem("service_ids", JSON.stringify(res.service_ids));
+
+closeAuthModal();
+navigate(redirectPath);
+
+
+
+
+
+
+    // navigate("/app/dashboard");
   } catch (err: any) {
     message.error(
       err?.response?.data?.message || "Invalid login credentials"
@@ -196,7 +226,8 @@ localStorage.setItem("token", res.data.access_token);
   } finally {
     setAuthLoading(false);
   }
-};const onAdminLogin = async (values: any) => {
+};
+const onAdminLogin = async (values: any) => {
   try {
     setAuthLoading(true);
 
@@ -264,6 +295,16 @@ localStorage.setItem("token", res.data.access_token);
     setVendorModalVisible(false);
     message.success("Vendor Login Successful!");
   };
+const [selectedServices, setSelectedServices] = useState<number[]>([]);
+
+  const serviceOptions = [
+  { title: "Cleaning & Home Services", value: 1 },
+  { title: "Transport", value: 2 },
+  { title: "Buy/Sell/Rental", value: 3 },
+  { title: "Raw Materials", value: 4 },
+  { title: "Education", value: 5 },
+  { title: "Swachify Products", value: 6 },
+];
 
 
 
@@ -271,7 +312,7 @@ const onRegister = async (values: any) => {
   try {
     setAuthLoading(true);
 
-if (roleType === "admin") {
+   if (roleType === "admin") {
   const res = await axios.post(
     "https://swachify-india-be-1-mcrb.onrender.com/api/admin/login",
     {
@@ -280,8 +321,10 @@ if (roleType === "admin") {
     }
   );
 
+
   // 🔍 SEE REAL RESPONSE
   console.log("ADMIN LOGIN RESPONSE:", res.data);
+
 
   // ✅ EXTRACT TOKEN SAFELY
   const token =
@@ -289,13 +332,16 @@ if (roleType === "admin") {
     res.data?.token ||
     res.data?.accessToken;
 
+
   if (!token) {
     message.error("Admin token not received from backend");
     return;
   }
 
+
   // ✅ STORE TOKEN USING CORRECT KEY
   localStorage.setItem("token", token);
+
 
   message.success("Admin login successful");
   setVendorModalVisible(false);
@@ -303,42 +349,79 @@ if (roleType === "admin") {
   return;
 }
 
+     // ================= CUSTOMER REGISTER =================
+    const customerPayload = {
+      // Values from form items
+      first_name: values.firstName?.trim() || "DefaultFirst",
+      last_name: values.lastName?.trim() || "DefaultLast",
+      email: values.email?.trim() || "user@example.com",
+      mobile: values.mobile?.trim() || "9999999999",
+      password: values.password || "Default@123",
+      confirm_password: values.confirmPassword || "Default@123",
+      work_type:
+        values.workType === "assigning" ? 1 :
+        values.workType === "looking" ? 2 :
+        values.workType === "both" ? 3 : 1,
+       service_ids: selectedServices.length > 0
+        ? selectedServices.map(Number) // <--- Convert strings to numbers
+        : [1],
 
 
+      professional_details: values.experience
+        ? {
+            experience_years: Number(values.experience) || 1,
+            expertise_in: Array.isArray(values.expertise) 
+              ? values.expertise.map(Number) 
+              : [1],
+            additional_service: values.additionalService?.trim() || "None",
+          }
+        : undefined,
+      government_id: [
+        {
+          id_type: "aadhaar",
+          id_number: values.aadhaar?.trim() || "000000000000"
+        }
+      ],
 
+      // Hard-coded values
+      dob: "2001-01-01",
+      gender_id: 1,
+      state_id: 1,
+      district_id: 1,
+      address: values.location?.trim() || "Default Address",
+      documents: [], // leave empty for now
+    };
 
-    // ================= CUSTOMER REGISTER =================
-  const payload = {
-  first_name: values.firstName,
-  last_name: values.lastName,
-  email: values.email,
-  mobile: values.phone,
-  password: values.password,
-  confirm_password: values.confirm,
-  gender_id: values.gender, // ✅ DIRECT NUMBER
-  address: values.address ?? "",
-};
+    // Call your API
+    await customerRegister(customerPayload);
 
+    // Save selected services for dashboard
+    localStorage.setItem(
+      "user_services",
+      JSON.stringify(customerPayload.service_ids)
+    );
 
-    await customerRegister(payload);
-
-    message.success("Registration successful");
+    message.success("Customer registration successful");
     setActiveAuthTab("login");
+
   } catch (err: any) {
-  console.error("ADMIN REGISTER ERROR FULL:", err.response);
-  message.error(
-    err.response?.data?.message ||
-    err.response?.data?.error ||
-    "Admin registration failed"
-  );
-}
-  finally {
+    console.error("REGISTER ERROR:", err.response?.data);
+
+    const detail = err.response?.data?.detail;
+
+    if (Array.isArray(detail)) {
+      detail.forEach((e: any) => message.error(e.msg));
+    } else {
+      message.error(
+        err.response?.data?.message ||
+        err.response?.data?.error ||
+        "Registration failed"
+      );
+    }
+  } finally {
     setAuthLoading(false);
   }
 };
-
-
-
 
   return (
     <>
@@ -531,6 +614,7 @@ if (roleType === "admin") {
   rules={[{ required: true, message: "Please select at least one service" }]}
 >
 <TreeSelect
+  
   treeCheckable
   showSearch={false}
   showArrow
@@ -540,26 +624,20 @@ if (roleType === "admin") {
   open={serviceOpen}
   onDropdownVisibleChange={setServiceOpen}
   getPopupContainer={(triggerNode) => triggerNode.parentElement!}
-  treeData={[
-    { title: "Cleaning & Home Services", value: "cleaning" },
-    { title: "Transport", value: "transport" },
-    { title: "Buy/Sell/Rental", value: "buy_sell_rent" },
-    { title: "Raw Materials", value: "raw_materials" },
-    { title: "Education", value: "education" },
-    { title: "Swachify Products", value: "swachify_products" },
-  ]}
-  onChange={(values) => {
-    // values is array because treeCheckable
-    const hasEducation = values?.includes("education");
+  treeData={serviceOptions} // numeric values
+  onChange={(values: number[]) => {
+    setSelectedServices(values);
 
+    const hasEducation = values.includes(5); // 5 = Education ID
     setHideWorkType(hasEducation);
 
-    // reset dependent fields when education selected
     if (hasEducation) {
       setShowProfessionalFields(false);
     }
   }}
 />
+
+
 
 
 
@@ -621,14 +699,15 @@ if (roleType === "admin") {
       <Input placeholder="Enter your location" />
     </Form.Item>
 
-{!hideWorkType && (
+
   <Form.Item
     label="Select Work Type"
     name="workType"
-    rules={[{ required: true }]}
+     rules={hideWorkType ? [] : [{ required: true, message: "Please select work type" }]}
   >
     <Select
       placeholder="Choose work type"
+       disabled={hideWorkType} 
       onChange={(value) => {
         setShowProfessionalFields(value === "looking");
       }}
@@ -638,7 +717,7 @@ if (roleType === "admin") {
       <Select.Option value="both">Both</Select.Option>
     </Select>
   </Form.Item>
-)}
+
 
 {showProfessionalFields && (
   <div style={{ marginTop: 16 }}>

@@ -165,6 +165,7 @@ const Students: React.FC<StudentsProps> = ({ onBack }) => {
         <div className="sw-s-sort-container">
              <Space>
           <Button
+           type="text"
             className={`sw-s-sort-btn ${
               selectedSort === "Location (Nearby)" ? "sw-s-active" : ""
             }`}

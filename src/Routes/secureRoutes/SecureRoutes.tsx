@@ -13,6 +13,7 @@ import Packersandmovers from "../../pages/dashboard/PackersAndMovers/Packersandm
 import HomeServices from "../../pages/dashboard/homeservices/HomeServices";
 import ServicesPage from "../../pages/dashboard/homerentals/pages/ServicesPage";
 import BuySaleProducts from "../../pages/dashboard/buy&sale/BuySaleProducts";
+import Education from "../../pages/dashboard/Education/Education";
 
 
 export const SecureRoutes = () => {
@@ -23,15 +24,17 @@ export const SecureRoutes = () => {
       
 
       <Routes>
-        <Route path="/" element={<Dashboard />} />
-
         <Route path="dashboard" element={<Dashboard />} />
-        <Route path="dashboard/cleaning" element={<CleaningService />} />
-        <Route path="dashboard/packers" element={<Packersandmovers />} />
-        <Route path="dashboard/homeservices" element={<HomeServices />} />
-        <Route path="dashboard/rentals" element={<ServicesPage />} />
-        <Route path="dashboard/constructions" element={<ConstructionServices />} />
-        <Route path="dashboard/commercials" element={<BuySaleProducts />} />
+
+        <Route path="dashboard" element={<Dashboard />}>
+    <Route path="cleaning" element={<CleaningService />} />
+    <Route path="packers" element={<Packersandmovers />} />
+    <Route path="homeservices" element={<HomeServices />} />
+    <Route path="rentals" element={<ServicesPage />} />
+    <Route path="constructions" element={<ConstructionServices />} />
+    <Route path="commercials" element={<BuySaleProducts />} />
+    <Route path="education" element={<Education />} />
+  </Route>
 
         <Route path="/material-supply" element={<MaterialSupply />} />
         <Route path="/machinery-rental" element={<MachineryRental />} />

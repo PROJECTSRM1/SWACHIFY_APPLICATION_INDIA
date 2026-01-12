@@ -85,7 +85,7 @@ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
   color: #fff;
 }
 
-.sw-s-sort-btn {
+.ant-btn.sw-s-sort-btn {
   height: 38px;
   padding: 0 18px;
   border-radius: 12px;
@@ -93,12 +93,30 @@ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
   background: #eef0f3;
   color: #000;
   border: none;
+  box-shadow: none;
+  transition: all 0.2s ease;
 }
 
-.sw-s-sort-btn.sw-s-active {
+/* Normal hover */
+.ant-btn.sw-s-sort-btn:hover,
+.ant-btn.sw-s-sort-btn:focus {
+  background: #dfe3e8;
+  color: #000;
+}
+
+/* Active button */
+.ant-btn.sw-s-sort-btn.sw-s-active {
   background: #000;
   color: #fff;
 }
+
+/* Active hover (important!) */
+.ant-btn.sw-s-sort-btn.sw-s-active:hover,
+.ant-btn.sw-s-sort-btn.sw-s-active:focus {
+  background: #000;
+  color: #fff;
+}
+
 
 
 /* ================= STUDENT CARD ================= */
@@ -178,32 +196,43 @@ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
 }
 
 /* Button */
-.sw-s-btn {
+/* ===== BUTTON BASE ===== */
+.ant-btn.sw-s-btn {
   height: 38px;
   border-radius: 10px;
-  background: linear-gradient(90deg, #000, #111);
-  color: #fff;
-  font-size: 14px;
-  border: none;
-}
-.sw-s-btn:hover{
-     background: linear-gradient(90deg, #000, #111);
+  background: linear-gradient(90deg, #000, #111) !important;
+  background-color: #000 !important;
   color: #fff !important;
-}
-/* Focus / Active / Click */
-.sw-s-btn:focus,
-.sw-s-btn:active,
-.sw-s-btn:focus-visible {
-  background: linear-gradient(90deg, #111, #222);
-  color: #fff;
+  font-size: 14px;
+  border: none !important;
   box-shadow: none !important;
-  outline: none;
 }
 
-/* Remove AntD default blue border */
-.sw-s-btn::after {
+/* ===== HOVER ===== */
+.ant-btn.sw-s-btn:hover {
+  background: linear-gradient(90deg, #000, #111) !important;
+  background-color: #000 !important;
+  color: #fff !important;
+  border: none !important;
+}
+
+/* ===== ACTIVE / FOCUS ===== */
+.ant-btn.sw-s-btn:active,
+.ant-btn.sw-s-btn:focus,
+.ant-btn.sw-s-btn:focus-visible {
+  background: linear-gradient(90deg, #111, #222) !important;
+  background-color: #111 !important;
+  color: #fff !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* ===== REMOVE ANT CLICK EFFECT ===== */
+.ant-btn.sw-s-btn::after {
   display: none !important;
 }
+
 
 /* ================= RESPONSIVE ================= */
 
