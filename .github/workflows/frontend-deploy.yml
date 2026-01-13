@@ -1,19 +1,21 @@
-name: Auto Deploy – Swachify Frontend
+name: Auto Deploy – Swachify Frontend (DEV)
 
 on:
   push:
     branches:
-      - main
+      - dev
 
 jobs:
   deploy:
     runs-on: self-hosted
 
     steps:
-      - name: Pull latest code
+      - name: Pull latest DEV code
         run: |
           cd /home/projects/services/SWACHIFY_APPLICATION_INDIA
-          git pull origin main
+          git fetch --all
+          git checkout dev
+          git pull origin dev
 
       - name: Install dependencies
         run: |
@@ -25,6 +27,12 @@ jobs:
           cd /home/projects/services/SWACHIFY_APPLICATION_INDIA
           npm run build
 
+      - name: Deploy dist to DEV Nginx folder
+        run: |
+          sudo rm -rf /var/www/swachify-dev/*
+          sudo cp -r /home/projects/services/SWACHIFY_APPLICATION_INDIA/dist/* /var/www/swachify-dev/
+
       - name: Reload Nginx
         run: |
           sudo systemctl reload nginx
+
