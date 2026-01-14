@@ -42,7 +42,7 @@ export interface HomeServiceBookingApiResponse {
 
 
 
-const API_ENDPOINT = "/api/v1/master/api/home-service";
+const API_ENDPOINT = "/api/master/home-service";
 
 /**
  * Submits a new home service booking request to the backend.
