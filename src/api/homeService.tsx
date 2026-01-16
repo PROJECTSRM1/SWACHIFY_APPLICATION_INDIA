@@ -57,7 +57,7 @@ export const bookHomeService = async (
   );
 
   return {
-    id: res.data.service_id,   // ✅ allowed now
+    id: (res.data as any).id ?? res.data.service_id,
     message: res.data.message,
     order_id: res.data.order_id,
   };
