@@ -42,7 +42,7 @@ type Props = {
   item: CartItemLike | null;
   onClose: () => void;
   onConfirm: (booking: Booking) => void;
-  onPaymentSuccess: () => void; // ✅ ADD THIS
+  onPaymentSuccess: (booking: Booking) => void;  // ✅ ADD THIS
 };
 
 
@@ -118,9 +118,11 @@ export default function ConfirmAddressModal({
             onConfirm(completedBooking);
 
             setTimeout(() => {
-  onClose();           // close confirm modal
-  onPaymentSuccess();  // open employee allocation modal
+  onClose();           
+  onPaymentSuccess(completedBooking);  // ✅ pass booking
 }, 300);
+
+
     
 
           } catch (err) {

@@ -1,14 +1,19 @@
-import { Modal,  Select } from "antd";
+import { message, Modal,  Select } from "antd";
 import { useState } from "react";
 import { FilterOutlined } from "@ant-design/icons";
+
+import { useEffect } from "react";
+import { allocateEmployeeManually, getAllOptions, allocateAutoEmployee } from "../api/customerAuth";
 
 
 type Props = {
   open: boolean;
   onClose: () => void;
+  bookingId: string; 
 };
 
 type Employee = {
+  id: number;
   name: string;
   location: string;
   distance: number;      // numeric for sorting
@@ -18,49 +23,51 @@ type Employee = {
   service: string;      // available time slots
 };
 
-const employees: Employee[] = [
-  {
-    name: "Priya Sharma",
-    location: "Koramangala",
-    distance: 2.5,
-    rating: 4.9,
-    experience: 3,
-    slots: ["10:00", "15:00"],
-    service: "cleaning",
-  },
-  {
-    name: "Rajesh Kumar",
-    location: "Indiranagar",
-    distance: 1.2,
-    rating: 4.8,
-    experience: 5,
-    slots: ["09:00", "14:00"],
-    service: "transport",
-  },
-  {
-    name: "Amit Patel",
-    location: "Whitefield",
-    distance: 3.8,
-    rating: 4.7,
-    experience: 7,
-    slots: ["11:00", "16:00"],
-    service: "education",
-  },
-   {
-    name: "Vikram Singh",
-    location: "Jayanagar ",
-    distance: 5.1,
-    rating: 4.5,
-    experience: 6,
-    slots: ["09:00", "14:00"],
-    service: "education",
-  },
-];
+// const employees: Employee[] = [
+//   {
+//     name: "Priya Sharma",
+//     location: "Koramangala",
+//     distance: 2.5,
+//     rating: 4.9,
+//     experience: 3,
+//     slots: ["10:00", "15:00"],
+//     service: "cleaning",
+//   },
+//   {
+//     name: "Rajesh Kumar",
+//     location: "Indiranagar",
+//     distance: 1.2,
+//     rating: 4.8,
+//     experience: 5,
+//     slots: ["09:00", "14:00"],
+//     service: "transport",
+//   },
+//   {
+//     name: "Amit Patel",
+//     location: "Whitefield",
+//     distance: 3.8,
+//     rating: 4.7,
+//     experience: 7,
+//     slots: ["11:00", "16:00"],
+//     service: "education",
+//   },
+//    {
+//     name: "Vikram Singh",
+//     location: "Jayanagar ",
+//     distance: 5.1,
+//     rating: 4.5,
+//     experience: 6,
+//     slots: ["09:00", "14:00"],
+//     service: "education",
+//   },
+// ];
 
 
 export default function EmployeeAllocationModal({
   open,
   onClose,
+  bookingId
+  
 }: Props) {
   const [allocationMode, setAllocationMode] = useState<
     "auto" | "manual" | null
@@ -70,16 +77,96 @@ export default function EmployeeAllocationModal({
 
 const [selectedService, setSelectedService] = useState<string>("all");
 const [selectedSlot, setSelectedSlot] = useState<string>("all");
+const [employees, setEmployees] = useState<Employee[]>([]);
+const [loading, setLoading] = useState(false);
+const [error, setError] = useState<string | null>(null);
+const [isConfirmed, setIsConfirmed] = useState(false);
+
+
+
+useEffect(() => {
+  if (!open) return;
+
+  setLoading(true);
+  setError(null);
+  console.log(bookingId);
+  
+  getAllOptions(bookingId) // 👈 pass real booking id
+    .then((apiData) => {
+      const mapped: Employee[] = apiData.map((emp) => ({
+         id: emp.employee_id,   // ✅ keep ID
+        name: emp.name,
+        location: emp.address,
+        distance: 0,
+        rating: emp.rating,
+        experience: 0,
+        slots: [],
+        service: "cleaning",
+      }));
+
+      setEmployees(mapped);
+    })
+    .catch(() => {
+      setError("Failed to load employees");
+    })
+    .finally(() => {
+      setLoading(false);
+    });
+}, [open]);
+
+
+ const handleManualConfirm = async () => {
+  if (!allocatedEmployee) return;
+
+  try {
+    const res = await allocateEmployeeManually(bookingId, allocatedEmployee.id);
+    console.log("API Response:", res);
+
+    message.success(res.message || "Employee allocated successfully");
+    setIsConfirmed(true);   // ✅ only now it's really allocated
+  } catch (err) {
+    console.error(err);
+    message.error("Failed to allocate employee");
+  }
+};
 
 
 
 
-  const handleAutoAllocation = () => {
-    setAllocationMode("auto");
-    const randomEmployee =
-      employees[Math.floor(Math.random() * employees.length)];
-    setAllocatedEmployee(randomEmployee);
-  };
+ const handleAutoAllocation = async () => {
+  setAllocationMode("auto");
+
+  try {
+    const res = await allocateAutoEmployee(bookingId);
+    console.log("API Response:", res);
+
+    // 👇 Find employee from fetched list
+    const matched = employees.find(e => e.id === res.assigned_to);
+
+    if (matched) {
+      setAllocatedEmployee(matched);
+    } else {
+      // fallback
+      setAllocatedEmployee({
+        id: res.assigned_to,
+        name: "Assigned Employee",
+        location: "",
+        distance: 0,
+        rating: 0,
+        experience: 0,
+        slots: [],
+        service: "cleaning",
+      });
+    }
+
+    message.success(res.message || "Employee allocated successfully");
+    setIsConfirmed(true);
+  } catch (err) {
+    console.error(err);
+    message.error("Failed to allocate employee");
+  }
+};
+
 
   const filteredAndSortedEmployees = [...employees]
   .filter((emp) => {
@@ -151,15 +238,18 @@ const [selectedSlot, setSelectedSlot] = useState<string>("all");
 
 
         {/* SUCCESS MESSAGE */}
-        {allocationMode && allocatedEmployee && (
-          <div className="sw-ea-success-box">
-            <h3>Payment Done Successfully! ✓</h3>
-            <p>
-              Employee allocated successfully!{" "}
-              <strong>{allocatedEmployee.name}</strong> will contact you shortly.
-            </p>
-          </div>
-        )}
+
+        {isConfirmed && allocatedEmployee && (
+  <div className="sw-ea-success-box">
+    <h3>Payment Done Successfully! ✓</h3>
+    <p>
+      Employee allocated successfully!{" "}
+      <strong>{allocatedEmployee.name}</strong> will contact you shortly.
+    </p>
+  </div>
+)}
+
+   
 
         {/* FILTER SECTION */}
 
@@ -214,44 +304,72 @@ const [selectedSlot, setSelectedSlot] = useState<string>("all");
 </div>
 
 
+        {loading && (
+  <div className="sw-ea-loading">
+    Loading employees…
+  </div>
+)}
+
+{error && (
+  <div className="sw-ea-error">
+    {error}
+  </div>
+)}
 
         {/* EMPLOYEE LIST */}
-        <div className="sw-ea-employee-list">
-          <h3>Available Employees (Sorted by Rating & Distance)</h3>
+       
+<div className="sw-ea-employee-list">
+  <h3>Available Employees (Sorted by Rating & Distance)</h3>
 
-          {filteredAndSortedEmployees.map((emp) => (
-           <div
-  key={emp.name}
-     className={`sw-ea-employee-card
-    ${allocatedEmployee?.name === emp.name ? "sw-ea-selected" : ""}
-    ${!allocationMode ? "sw-ea-blur" : ""}
-  `}
-  onClick={() => allocationMode === "manual" && setAllocatedEmployee(emp)}
->
-<div className="sw-ea-employee-header">
-  <div className="sw-ea-employee-info">
-    <div className="sw-ea-employee-name">{emp.name}</div>
-    <div className="sw-ea-employee-meta">
-      {emp.location} • {emp.distance} km away
-    </div>
-    <div className="sw-ea-employee-meta">
-      Experience: {emp.experience} years
-    </div>
-    <div className="sw-ea-employee-meta">
-      Available slots: {emp.slots.join(", ")}
-    </div>
-  </div>
+  {filteredAndSortedEmployees.map((emp) => (
+    <div
+      key={emp.id}
+      className={`sw-ea-employee-card
+        ${allocatedEmployee?.id === emp.id ? "sw-ea-selected" : ""}
+        ${allocationMode !== "manual" ? "sw-ea-blur" : ""}
+      `}
+      onClick={() => {
+  if (allocationMode === "manual" && !allocatedEmployee) {
+    setAllocatedEmployee(emp);
+  }
+}}
 
-  <div className="sw-ea-rating">
-    <div className="sw-ea-rating-value">⭐ {emp.rating}</div>
-    <div className="sw-ea-rating-label">Rating</div>
-  </div>
-</div>
-
-</div>
-
-          ))}
+    >
+      <div className="sw-ea-employee-header">
+        <div className="sw-ea-employee-info">
+          <div className="sw-ea-employee-name">{emp.name}</div>
+          <div className="sw-ea-employee-meta">
+            {emp.location} • {emp.distance} km away
+          </div>
+          <div className="sw-ea-employee-meta">
+            Experience: {emp.experience} years
+          </div>
+          <div className="sw-ea-employee-meta">
+            Available slots: {emp.slots.join(", ")}
+          </div>
         </div>
+
+        <div className="sw-ea-rating">
+          <div className="sw-ea-rating-value">⭐ {emp.rating}</div>
+          <div className="sw-ea-rating-label">Rating</div>
+        </div>
+      </div>
+    </div>
+  ))}
+
+  {/* MANUAL CONFIRM BUTTON */}
+  {allocationMode === "manual" && allocatedEmployee && !isConfirmed &&(
+    <div style={{ marginTop: 16, textAlign: "right" }}>
+      <button
+        className="sw-ea-btn-primary"
+        onClick={handleManualConfirm}
+      >
+        Confirm Manual Allocation
+      </button>
+    </div>
+  )}
+</div>
+
       </div>
     </Modal>
   );
