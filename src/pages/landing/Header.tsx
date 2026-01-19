@@ -401,8 +401,35 @@ const onRegister = async (values: any) => {
       JSON.stringify(customerPayload.service_ids)
     );
 
-    message.success("Customer registration successful");
-    setActiveAuthTab("login");
+    // ✅ AUTO LOGIN AFTER REGISTER
+const loginRes: any = await customerLogin({
+  email_or_phone: values.email,
+  password: values.password,
+});
+
+// ✅ SAVE LOGIN DATA
+localStorage.setItem("accessToken", loginRes.access_token);
+localStorage.setItem("user", JSON.stringify(loginRes));
+localStorage.setItem(
+  "service_ids",
+  JSON.stringify(loginRes.service_ids || customerPayload.service_ids)
+);
+
+// ✅ REDIRECT BASED ON FIRST SERVICE
+const firstServiceId =
+  (loginRes.service_ids && loginRes.service_ids[0]) ||
+  customerPayload.service_ids[0];
+
+const redirectPath =
+  serviceIdToRoute[firstServiceId] || "/app/dashboard";
+
+message.success("Registration successful");
+
+// ✅ CLOSE MODAL & NAVIGATE
+closeAuthModal();
+navigate(redirectPath);
+
+
 
   } catch (err: any) {
     console.error("REGISTER ERROR:", err.response?.data);
