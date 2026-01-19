@@ -42,7 +42,7 @@ export interface HomeServiceBookingApiResponse {
 
 
 
-const API_ENDPOINT = "/api/v1/master/api/home-service";
+const API_ENDPOINT = "/api/master/home-service";
 
 /**
  * Submits a new home service booking request to the backend.
@@ -57,7 +57,7 @@ export const bookHomeService = async (
   );
 
   return {
-    id: res.data.service_id,   // ✅ allowed now
+    id: (res.data as any).id ?? res.data.service_id,
     message: res.data.message,
     order_id: res.data.order_id,
   };
