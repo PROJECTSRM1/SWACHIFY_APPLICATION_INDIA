@@ -25,17 +25,28 @@ import ServiceRequests from '../../pages/landing/ServiceRequests';
 export const NonSecureRoutes = () => {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const userData: any = getUserDetails('user');
-    const currentPath = window.location.pathname;
+useEffect(() => {
+  const userData: any = getUserDetails("user");
+  const currentPath = window.location.pathname;
 
-    if (userData && !currentPath.startsWith('/app')) {
-      navigate('/app/dashboard');
-    } else if (!userData && (currentPath === '/' || currentPath === '')) {
-      navigate('/landing');
-    }
-  }, [navigate]);
+  // ✅ Allow all freelancer pages freely
+  if (currentPath.startsWith("/freelancer")) {
+    return;
+  }
+
+  // ✅ Logged-in customer → force app dashboard
+  if (userData && !currentPath.startsWith("/app")) {
+    navigate("/app/freelancer", { replace: true });
+    return;
+  }
+
+  // ✅ Non-logged user visiting root → landing
+  if (!userData && currentPath === "/") {
+    navigate("/freelancer", { replace: true });
+  }
+}, [navigate]);
+
+
 
   return (
     <Routes>
@@ -56,6 +67,7 @@ export const NonSecureRoutes = () => {
       <Route path="/Education" element={<Education />} />
       <Route path="/freelancer" element={<Freelancer />} />
       <Route path="/freelancerlogin" element={<Freelancerlogin />} />
+      
       <Route path="/freelancerregistration" element={<FreelancerRegistration />} />
       <Route path="/servicerequests" element={<ServiceRequests />} />
       {/* <Route path="/Vendor" element={<Vendor/>}/> */}

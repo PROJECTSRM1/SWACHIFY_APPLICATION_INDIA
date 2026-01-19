@@ -180,6 +180,9 @@ if (roleType === "admin") {
 console.log("ADMIN LOGIN RESPONSE:", res.data);
 
 localStorage.setItem("token", res.data.access_token);
+localStorage.setItem("user_role", "freelancer");
+localStorage.setItem("user_role", "customer");
+
 
 
 
@@ -416,6 +419,24 @@ localStorage.setItem(
 );
 
 // ✅ REDIRECT BASED ON FIRST SERVICE
+message.success("Registration successful");
+
+// ✅ IF USER IS LOOKING FOR WORK → GO TO FREELANCER LOGIN
+// 🚫 DO NOT AUTO LOGIN FREELANCERS
+if (values.workType === "looking") {
+  message.success("Registration successful");
+
+  closeAuthModal();
+
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("user");
+
+  navigate("/freelancerlogin");
+  return;
+}
+
+
+// ✅ OTHERWISE → NORMAL CUSTOMER FLOW
 const firstServiceId =
   (loginRes.service_ids && loginRes.service_ids[0]) ||
   customerPayload.service_ids[0];
@@ -423,11 +444,9 @@ const firstServiceId =
 const redirectPath =
   serviceIdToRoute[firstServiceId] || "/app/dashboard";
 
-message.success("Registration successful");
-
-// ✅ CLOSE MODAL & NAVIGATE
 closeAuthModal();
 navigate(redirectPath);
+
 
 
 
