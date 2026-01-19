@@ -126,7 +126,7 @@ export const customerLogout = async () => {
 export const PaymentsAPI = {
   
   createOrder: async (bookingId: number, amount: number) => {
-    const res = await api.post("api/payments/create-order", {
+    const res = await api.post("/api/payment/create-order", {
       bookingId,
       amount,
     });
@@ -140,7 +140,7 @@ export const PaymentsAPI = {
     signature: string,
     home_service_id:number
   ) => {
-    const res = await api.post("api/payments/verify-payment", {
+    const res = await api.post("/api/payment/verify-payment", {
       order_id: orderId,
       payment_id: paymentId,
       signature,

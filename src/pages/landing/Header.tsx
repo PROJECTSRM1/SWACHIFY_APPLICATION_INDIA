@@ -72,7 +72,7 @@ const serviceIdToRoute: Record<number, string> = {
   2: "/app/dashboard/packers",
   3: "/app/dashboard/commercials",
   4: "/app/dashboard/constructions",
-  8: "/app/dashboard/education",
+  5: "/app/dashboard/education",
   6: "/app/dashboard", // or products page if you add one
 };
 
@@ -208,6 +208,8 @@ localStorage.setItem("token", res.data.access_token);
 localStorage.setItem("accessToken", res.access_token);
 localStorage.setItem("user", JSON.stringify(res));
 
+localStorage.removeItem("isGuest");
+
 const serviceIds: number[] = res.service_ids || [];
 
 const firstServiceId = serviceIds[0];
@@ -310,7 +312,7 @@ const [selectedServices, setSelectedServices] = useState<number[]>([]);
   { title: "Transport", value: 2 },
   { title: "Buy/Sell/Rental", value: 3 },
   { title: "Raw Materials", value: 4 },
-  { title: "Education", value: 8 },
+  { title: "Education", value: 5 },
   { title: "Swachify Products", value: 6 },
 ];
 
@@ -735,14 +737,15 @@ const onRegister = async (values: any) => {
       <Input placeholder="Enter your location" />
     </Form.Item>
 
-{!hideWorkType && (
+
   <Form.Item
     label="Select Work Type"
     name="workType"
-    rules={[{ required: true }]}
+     rules={hideWorkType ? [] : [{ required: true, message: "Please select work type" }]}
   >
     <Select
       placeholder="Choose work type"
+       disabled={hideWorkType} 
       onChange={(value) => {
         setShowProfessionalFields(value === "looking");
       }}
@@ -752,7 +755,7 @@ const onRegister = async (values: any) => {
       <Select.Option value="both">Both</Select.Option>
     </Select>
   </Form.Item>
-)}
+
 
 {showProfessionalFields && (
   <div style={{ marginTop: 16 }}>
