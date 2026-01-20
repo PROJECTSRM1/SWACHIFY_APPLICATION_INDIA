@@ -45,6 +45,8 @@ const Header: React.FC = () => {
   const [showBookingPage, setShowBookingPage] = useState(false);
   const [employeeAllocationOpen, setEmployeeAllocationOpen] = useState(false);
   const [showProfilePage, setShowProfilePage] = useState(false);
+  const [currentBookingId, setCurrentBookingId] = useState<string>(""); // new
+
 
 
   console.log(notificationOpen)
@@ -347,12 +349,18 @@ const profileMenu = (
     setSelectedCartItem(null);
   }}
   onConfirm={(bookingData: Booking) => handleBookingConfirmed(bookingData)}
-  onPaymentSuccess={() => setEmployeeAllocationOpen(true)}   // ✅ ADD THIS
+    onPaymentSuccess={(bookingData: Booking) => {
+    setCurrentBookingId(String(bookingData.id)); // 👈 store booking id
+    setEmployeeAllocationOpen(true);            // open modal
+  }}
+   // ✅ ADD THIS
+
 />
 
 <EmployeeAllocationModal
   open={employeeAllocationOpen}
   onClose={() => setEmployeeAllocationOpen(false)}
+   bookingId={currentBookingId}
 />
 
 

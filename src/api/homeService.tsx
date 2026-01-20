@@ -12,7 +12,7 @@ export interface HomeServiceBookingPayload {
   address: string;
   service_type_id: number;
   problem_description: string;
-  property_size_sqft: number;
+ property_size_sqft: string;
   add_on_id: number | null;
   preferred_date: string;
   time_slot_id: number;
@@ -22,6 +22,7 @@ export interface HomeServiceBookingPayload {
   payment_done:boolean;
   created_by:number;
    status_id: number;
+   duration_id:number
   
 }
 
@@ -41,7 +42,7 @@ export interface HomeServiceBookingApiResponse {
 
 
 
-const API_ENDPOINT = "/api/home-service";
+const API_ENDPOINT = "/api/master/home-service";
 
 /**
  * Submits a new home service booking request to the backend.
@@ -56,7 +57,7 @@ export const bookHomeService = async (
   );
 
   return {
-    id: res.data.service_id,   // ✅ allowed now
+    id: (res.data as any).id ?? res.data.service_id,
     message: res.data.message,
     order_id: res.data.order_id,
   };
