@@ -329,7 +329,7 @@ useEffect(() => {
       key={emp.id}
       className={`sw-ea-employee-card
         ${allocatedEmployee?.id === emp.id ? "sw-ea-selected" : ""}
-        ${allocationMode !== "manual" ? "sw-ea-blur" : ""}
+        ${allocationMode !== "manual"  && !isConfirmed ? "sw-ea-blur" : ""}
       `}
       onClick={() => {
   if (allocationMode === "manual" && !isConfirmed) {
