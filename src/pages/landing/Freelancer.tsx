@@ -60,41 +60,41 @@ const stats = [
 export default function Freelancer() {
   const navigate = useNavigate();
 
-type BookingRequest = {
-  id: number;
-  full_name: string;
-  property_size_sqft: string;
-  preferred_date: string;
-};
-
-const [liveRequests, setLiveRequests] = useState<BookingRequest[]>([]);
-const [loading, setLoading] = useState(false);
-
-
-useEffect(() => {
-  const fetchLiveRequests = async () => {
-    try {
-      setLoading(true);
-
-      const res = await fetch(
-        "https://swachify-india-be-1-mcrb.onrender.com/api/home-service"
-      );
-
-      const data = await res.json();
-
-      console.log("FULL API RESPONSE 👉", data);
-
-      setLiveRequests(Array.isArray(data) ? data : []);
-    } catch (error) {
-      message.error("Failed to load live requests");
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
+  type BookingRequest = {
+    id: number;
+    full_name: string;
+    property_size_sqft: string;
+    preferred_date: string;
   };
 
-  fetchLiveRequests();
-}, []);
+  const [liveRequests, setLiveRequests] = useState<BookingRequest[]>([]);
+  const [loading, setLoading] = useState(false);
+
+
+  useEffect(() => {
+    const fetchLiveRequests = async () => {
+      try {
+        setLoading(true);
+
+        const res = await fetch(
+          "https://swachify-india-be-1-mcrb.onrender.com/api/master/home-service"
+        );
+
+        const data = await res.json();
+
+        console.log("FULL API RESPONSE 👉", data);
+
+        setLiveRequests(Array.isArray(data) ? data : []);
+      } catch (error) {
+        message.error("Failed to load live requests");
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchLiveRequests();
+  }, []);
 
 
 
@@ -105,7 +105,7 @@ useEffect(() => {
   const [loginForm] = Form.useForm();
   const [registerForm] = Form.useForm();
 
- 
+
   const [selectedCodes, setSelectedCodes] = useState<string[] | null>(null);
 
   const onLoginFinish = () => {
@@ -119,15 +119,15 @@ useEffect(() => {
   };
 
 
-const previewRequests = liveRequests.slice(0, 3);
+  const previewRequests = liveRequests.slice(0, 3);
 
 
-  
+
   const handleCategoryClick = (codes: string[]) => {
     if (selectedCodes && selectedCodes.join(",") === codes.join(",")) {
-      setSelectedCodes(null); 
+      setSelectedCodes(null);
     } else {
-      setSelectedCodes(codes); 
+      setSelectedCodes(codes);
     }
   };
 
@@ -151,7 +151,7 @@ const previewRequests = liveRequests.slice(0, 3);
             type="primary"
             className="sw-fr-fix-header-btn"
             // onClick={() => navigate("/freelancerregistration")}
-            onClick={()=>navigate("/freelancerlogin")}
+            onClick={() => navigate("/freelancerlogin")}
           >
             Login / Register
           </Button>
@@ -171,7 +171,7 @@ const previewRequests = liveRequests.slice(0, 3);
         onCancel={() => setAuthModalVisible(false)}
         width={420}
       >
-<Tabs activeKey={activeTab} onChange={(k) => setActiveTab(k)}>
+        <Tabs activeKey={activeTab} onChange={(k) => setActiveTab(k)}>
           <TabPane tab="Login" key="login">
             <Form form={loginForm} layout="vertical" onFinish={onLoginFinish}>
               <Form.Item name="identifier" label="Email or Phone" rules={[{ required: true }]}>
@@ -270,9 +270,9 @@ const previewRequests = liveRequests.slice(0, 3);
               <Card
                 hoverable
                 className={`sw-fr-category-card ${selectedCodes &&
-                    selectedCodes.join(",") === cat.codes.join(",")
-                    ? "sw-fr-category-card-active"
-                    : ""
+                  selectedCodes.join(",") === cat.codes.join(",")
+                  ? "sw-fr-category-card-active"
+                  : ""
                   }`}
                 onClick={() => handleCategoryClick(cat.codes)}
               >
@@ -305,40 +305,40 @@ const previewRequests = liveRequests.slice(0, 3);
           </Button>
         </div>
 
-<Row gutter={[20, 20]}>
-  {previewRequests.map((req) => (
-    <Col xs={24} md={12} lg={8} key={req.id}>
-      <Card hoverable className="sw-fr-request-card" loading={loading}>
-        <h3 className="sw-fr-request-title">
-          Cleaning Request — {req.full_name}
-        </h3>
+        <Row gutter={[20, 20]}>
+          {previewRequests.map((req) => (
+            <Col xs={24} md={12} lg={8} key={req.id}>
+              <Card hoverable className="sw-fr-request-card" loading={loading}>
+                <h3 className="sw-fr-request-title">
+                  Cleaning Request — {req.full_name}
+                </h3>
 
-        <p className="sw-fr-request-desc">
-          Property Size: {req.property_size_sqft} sqft
-        </p>
+                <p className="sw-fr-request-desc">
+                  Property Size: {req.property_size_sqft} sqft
+                </p>
 
-        <p>
-          <ClockCircleOutlined /> Preferred Date:{" "}
-          {new Date(req.preferred_date).toLocaleDateString()}
-        </p>
+                <p>
+                  <ClockCircleOutlined /> Preferred Date:{" "}
+                  {new Date(req.preferred_date).toLocaleDateString()}
+                </p>
 
-        <div className="sw-fr-request-bottom">
-          <span className="sw-fr-price">
-            <DollarCircleOutlined /> Price on Visit
-          </span>
+                <div className="sw-fr-request-bottom">
+                  <span className="sw-fr-price">
+                    <DollarCircleOutlined /> Price on Visit
+                  </span>
 
-          <Button
-            type="primary"
-            shape="round"
-            onClick={() => navigate("/freelancerregistration")}
-          >
-            Accept
-          </Button>
-        </div>
-      </Card>
-    </Col>
-  ))}
-</Row>
+                  <Button
+                    type="primary"
+                    shape="round"
+                    onClick={() => navigate("/freelancerregistration")}
+                  >
+                    Accept
+                  </Button>
+                </div>
+              </Card>
+            </Col>
+          ))}
+        </Row>
 
 
       </Content>
