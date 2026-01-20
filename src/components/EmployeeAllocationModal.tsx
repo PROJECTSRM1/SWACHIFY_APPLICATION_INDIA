@@ -195,7 +195,10 @@ useEffect(() => {
   return (
     <Modal open={open} onCancel={onClose} footer={null} width={900} centered  className="sw-ea-modal">
       <div className="sw-ea-container">
-        <h2 className="sw-ea-title">Employee Allocation</h2>
+ 
+
+<div className="sw-ea-top">
+         <h2 className="sw-ea-title">Employee Allocation</h2>
 {!(allocationMode && allocatedEmployee) && (
 <div>
 
@@ -302,7 +305,7 @@ useEffect(() => {
     </div>
   </div>
 </div>
-
+</div>
 
         {loading && (
   <div className="sw-ea-loading">
@@ -317,8 +320,8 @@ useEffect(() => {
 )}
 
         {/* EMPLOYEE LIST */}
-       
-<div className="sw-ea-employee-list">
+       <div className="sw-ea-employee-list-container">
+        <div className="sw-ea-employee-list">
   <h3>Available Employees (Sorted by Rating & Distance)</h3>
 
   {filteredAndSortedEmployees.map((emp) => (
@@ -329,7 +332,7 @@ useEffect(() => {
         ${allocationMode !== "manual" ? "sw-ea-blur" : ""}
       `}
       onClick={() => {
-  if (allocationMode === "manual" && !allocatedEmployee) {
+  if (allocationMode === "manual" && !isConfirmed) {
     setAllocatedEmployee(emp);
   }
 }}
@@ -357,9 +360,11 @@ useEffect(() => {
     </div>
   ))}
 
-  {/* MANUAL CONFIRM BUTTON */}
+  </div>
+</div>
+ {/* MANUAL CONFIRM BUTTON */}
   {allocationMode === "manual" && allocatedEmployee && !isConfirmed &&(
-    <div style={{ marginTop: 16, textAlign: "right" }}>
+    <div  className="sw-ea-footer">
       <button
         className="sw-ea-btn-primary"
         onClick={handleManualConfirm}
@@ -368,7 +373,8 @@ useEffect(() => {
       </button>
     </div>
   )}
-</div>
+      
+
 
       </div>
     </Modal>
