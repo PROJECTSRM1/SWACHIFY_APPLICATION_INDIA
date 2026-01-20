@@ -1,1 +1,40 @@
+name: Auto Deploy – Swachify Frontend (PREPROD)
+
+on:
+  push:
+    branches:
+      - preprod1
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Pull latest PREPROD code
+        run: |
+          cd /home/projects/services/SWACHIFY_APPLICATION_INDIA
+          git fetch --all
+          git checkout preprod1
+          git pull origin preprod1
+
+      - name: Install dependencies
+        run: |
+          cd /home/projects/services/SWACHIFY_APPLICATION_INDIA
+          npm install
+
+      - name: Build frontend
+        run: |
+          cd /home/projects/services/SWACHIFY_APPLICATION_INDIA
+          npm run build
+
+      - name: Deploy dist to QA folder (Preprod env)
+        run: |
+          sudo mkdir -p /var/www/swachify-qa
+          sudo rm -rf /var/www/swachify-qa/*
+          sudo cp -r /home/projects/services/SWACHIFY_APPLICATION_INDIA/dist/* /var/www/swachify-qa/
+
+      - name: Reload Nginx
+        run: |
+          sudo nginx -t
+          sudo systemctl reload nginx
 
