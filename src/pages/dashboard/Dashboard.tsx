@@ -9,6 +9,7 @@ import HomeServices from "./homeservices/HomeServices";
 import ServicesPage from "./homerentals/pages/ServicesPage";
 
 import Education from "./Education/Education";
+import SwachifyProducts from "./SwachifyProducts/SwachifyProducts";
 
 
 import { useSearchParams, useLocation, Outlet } from "react-router-dom";
@@ -19,9 +20,25 @@ import { useSearchParams, useLocation, Outlet } from "react-router-dom";
 const Dashboard: React.FC = () => {
   const [searchParams] = useSearchParams();
 
-const userServiceIds: number[] = (JSON.parse(localStorage.getItem("service_ids") || "[]") as (string | number)[])
-  .map(id => Number(id))
-  .filter(id => !isNaN(id));
+  // Auto-initialize service ID 6 (Swachify Products) for demo/skip login
+  useEffect(() => {
+    const existingServiceIds = localStorage.getItem("service_ids");
+    if (!existingServiceIds) {
+      // If no service IDs exist, set service ID 6 by default
+      localStorage.setItem("service_ids", JSON.stringify([6]));
+    } else {
+      // If service IDs exist but don't include 6, add it
+      const serviceIds = JSON.parse(existingServiceIds) as (string | number)[];
+      if (!serviceIds.includes(6) && !serviceIds.includes("6")) {
+        serviceIds.push(6);
+        localStorage.setItem("service_ids", JSON.stringify(serviceIds));
+      }
+    }
+  }, []);
+
+  const userServiceIds: number[] = (JSON.parse(localStorage.getItem("service_ids") || "[]") as (string | number)[])
+    .map(id => Number(id))
+    .filter(id => !isNaN(id));
 
 
   const serviceIdToName: Record<number, string> = {
@@ -384,7 +401,8 @@ return (
         {/* Education */}
         {userServiceIds.includes(5) && <Education />}
 
-       
+          {/* Swachify Products */}
+          {userServiceIds.includes(6) && <SwachifyProducts searchQuery={searchQuery} />}
 
         {/* Construction */}
         {allowedServices.find(
