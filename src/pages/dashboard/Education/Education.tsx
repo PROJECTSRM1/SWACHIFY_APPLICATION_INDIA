@@ -3,158 +3,192 @@ import "./Education.css";
 
 import Companies from "../Education/Companies";
 import Students from "../Education/Students";
-import JobsPage from "../Education/Jobs";
+import type { Student } from "../Education/Students";
+
+import JobsPage from "./TrainingPage";
 import Internship from "../Education/Internships";
+import CandidateProfile from "../Education/CandidateProfile";
+import TrainingPage from "./TrainingPage";
+import { useLocation } from "react-router-dom";
 
 
 
+type Page =
+  | "home"
+  | "students"
+  | "internships"
+  | "companies"
+  | "training"
+  | "candidateProfile";
 
-interface CardItem {
-  id: number;
-  title: string;
-  description: string;
-  icon: string;
-  isDummy?: boolean;
-}
 
-const cards: CardItem[] = [
-  {
-    id: 1,
-    title: "Students",
-    description: "Browse student profiles and connect with talented individuals",
-    icon: "🎓",
-  },
-  {
-    id: 2,
-    title: "Jobs",
-    description: "Explore job opportunities and career openings",
-    icon: "💼",
-  },
-  {
-    id: 3,
-    title: "Internships",
-    description: "Find internship programs and gain experience",
-    icon: "👥",
-  },
-  {
-    id: 4,
-    title: "Companies",
-    description: "Discover companies and their opportunities",
-    icon: "🏢",
-  },
-  {
-    id: 5,
-    title: "Corporate Training",
-    description: "Professional training programs for skill development",
-    icon: "📦",
-    isDummy: true,
-  },
+const searchableItems = [
+  "Students",
+  "Internships",
+  "Companies",
+  "Training",
+  "Google Internship",
+  "Harvard University",
 ];
 
 const Education: React.FC = () => {
-  const [showAll, setShowAll] = useState(false);
-  
-  const [page, setPage] = useState<"education" | "companies">("education");
+  const [page, setPage] = useState<Page>("home");
+  const [query, setQuery] = useState("");
+  const [searched, setSearched] = useState(false);
+  const [selectedStudent, setSelectedStudent] =
+    useState<Student | null>(null);
+    const location = useLocation();
 
-const [activeCard, setActiveCard] = useState<
-  "companies" | "students" | "jobs" | "internships" | null
->(null);
-
-
-
-
-const handleBack = () => {
-  setPage("education");
-  setActiveCard(null);
-};
+// 🚨 IMPORTANT FIX:
+// If we are on enrollment page, do NOT render Education
+if (location.pathname.startsWith("/course")) {
+  return null;
+}
 
 
-return (
-  <>
-    {page === "education" && (
-      <div className="education-container">
-        {/* HEADER */}
-        <div className="education-header">
-          <div>
-            <h2>Education</h2>
-            <p>5 services available</p>
-          </div>
+  const filteredResults = searchableItems.filter((item) =>
+    item.toLowerCase().includes(query.toLowerCase())
+  );
 
-          <button
-            className="view-all-btn"
-            onClick={() => setShowAll(prev => !prev)}
-          >
-            {showAll ? "Show Less" : "View All Services"}
-          </button>
-        </div>
+  /* ================= FULLSCREEN PAGES ================= */
+  if (page !== "home") {
+    return (
+      <div className="fullscreen-page">
+        {page === "students" && (
+          <Students
+            onBack={() => setPage("home")}
+            onSelectStudent={(student: Student) => {
+              setSelectedStudent(student);
+              setPage("candidateProfile");
+            }}
+          />
+        )}
 
-        {/* CARDS */}
-        <div className="education-grid">
-          {cards
-            .filter(card => showAll || !card.isDummy)
-            .map(card => (
-              <div className="education-card" key={card.id}>
-                <div className="icon-box">{card.icon}</div>
-                <h3>{card.title}</h3>
-                <p>{card.description}</p>
+        {page === "candidateProfile" && selectedStudent && (
+          <CandidateProfile
+            student={selectedStudent}
+            onBack={() => setPage("students")}
+          />
+        )}
 
-<button
-  className="details-btn"
-  onClick={() => {
-    if (card.title === "Students") {
-      setActiveCard("students");
-      setPage("companies");
-    }
+        {page === "internships" && (
+          <Internship onBack={() => setPage("home")} />
+        )}
 
-    if (card.title === "Companies") {
-      setActiveCard("companies");
-      setPage("companies");
-    }
+        {page === "companies" && (
+          <Companies onBack={() => setPage("home")} />
+        )}
 
-    if (card.title === "Jobs") {
-      setActiveCard("jobs");
-      setPage("companies");
-    }
-
-    if (card.title === "Internships") {
-      setActiveCard("internships");
-      setPage("companies");
-    }
-  }}
->
-  View Details
-</button>
-
-
-              </div>
-            ))}
-        </div>
-      </div>
-    )}
-
-{page === "companies" && (
-  <div className="fullscreen-page">
-    {activeCard === "companies" && (
-      <Companies onBack={handleBack} />
-    )}
-
-    {activeCard === "students" && (
-      <Students onBack={handleBack} />
-    )}
-
-    {activeCard === "jobs" && (
-      <JobsPage onBack={handleBack} />
-    )}
-
-    {activeCard === "internships" && (
-      <Internship onBack={handleBack} />
-    )}
-  </div>
+        {page === "training" && (
+  <TrainingPage onBack={() => setPage("home")} />
 )}
 
-  </>
-);
+      </div>
+    );
+  }
 
+  /* ================= HOME ================= */
+  return (
+    <div className="edu-wrapper">
+      {/* ================= FEATURED ================= */}
+      <div className="edu-featured">
+        <img
+          src="https://images.unsplash.com/photo-1562774053-701939374585?w=1400"
+          alt="featured"
+        />
+
+        <div className="blue-overlay" />
+
+        <div className="featured-content">
+          <div className="featured-left">
+            <span className="tag">FEATURED</span>
+            <h2>Top University of the Week</h2>
+            <p>Discover the latest computer science programs...</p>
+            <button className="details-btn">View Details →</button>
+          </div>
+
+          <div className="featured-search-wrapper">
+            <div className="featured-search">
+              <input
+                placeholder="Search colleges, jobs..."
+                value={query}
+                onChange={(e) => {
+                  setQuery(e.target.value);
+                  setSearched(false);
+                }}
+              />
+              <button onClick={() => query && setSearched(true)}>
+                🔍
+              </button>
+            </div>
+
+            {searched && (
+              <div className="search-result">
+                {filteredResults.length ? (
+                  <span>
+                    Found: <b>{filteredResults.join(", ")}</b>
+                  </span>
+                ) : (
+                  <span className="not-found">Not available</span>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* ================= CATEGORIES ================= */}
+      <div className="edu-section">
+        <h3 className="section-title">Explore Categories</h3>
+
+        <div className="category-grid">
+          <div onClick={() => setPage("students")}>
+            <span className="blue">🎓</span>
+            <p>Students</p>
+          </div>
+
+          <div onClick={() => setPage("internships")}>
+            <span className="purple">💼</span>
+            <p>Internships</p>
+          </div>
+
+          <div onClick={() => setPage("companies")}>
+            <span className="orange">🏢</span>
+            <p>Companies</p>
+          </div>
+
+          <div onClick={() => setPage("training")}>
+  <span className="green">🧭</span>
+  <p>Training</p>
+</div>
+
+        </div>
+      </div>
+
+      {/* ================= TRENDING (MISSING CARDS FIXED) ================= */}
+      <div className="edu-section">
+        <h3 className="trending-title">Trending Now</h3>
+
+        <div className="trending-row">
+          <div className="trending-card">
+            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800" />
+            <div className="body">
+              <h4>Google Internship</h4>
+              <p>Software Engineering • Remote</p>
+            </div>
+          </div>
+
+          <div className="trending-card">
+            <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800" />
+            <div className="body">
+              <h4>Harvard University</h4>
+              <p>Business Administration</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Education;
