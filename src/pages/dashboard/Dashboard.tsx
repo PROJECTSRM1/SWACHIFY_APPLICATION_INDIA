@@ -291,7 +291,7 @@ const userServiceIds: number[] = (JSON.parse(localStorage.getItem("service_ids")
   ],
   component: (
     <BuySaleProducts
-      searchQuery={searchQuery}
+      // searchQuery={searchQuery}
         // clearSearch={() => navigate("/app/dashboard")}
 
     />
@@ -373,7 +373,7 @@ return (
     {isRootDashboard ? (
       <>
         <div className="services-section">
-          <h1 className="services-title">Our Services</h1>
+          {/* <h1 className="services-title">Our Services</h1> */}
         </div>
 
         {/* Home Services */}
