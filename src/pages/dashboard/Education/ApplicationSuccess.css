@@ -1,0 +1,106 @@
+.success-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f8fafc;
+  padding: 40px;
+  font-family: Inter, system-ui, sans-serif;
+}
+
+.success-container {
+  background: #ffffff;
+  max-width: 520px;
+  width: 100%;
+  padding: 48px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.08);
+}
+
+.check-circle {
+  width: 72px;
+  height: 72px;
+  background: #2563eb;
+  color: #ffffff;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 32px;
+  font-weight: 800;
+  margin: 0 auto 24px;
+}
+
+.success-container h1 {
+  font-size: 26px;
+  margin-bottom: 12px;
+}
+
+.subtitle {
+  color: #475569;
+  font-size: 15px;
+  margin-bottom: 28px;
+}
+
+/* Card */
+.success-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 20px;
+  text-align: left;
+  margin-bottom: 28px;
+  position: relative;
+}
+
+.success-card .row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  font-size: 14px;
+}
+
+.success-card span {
+  color: #64748b;
+}
+
+.app-id {
+  color: #2563eb;
+}
+
+.status-pill {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: #dcfce7;
+  color: #166534;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Buttons */
+.primary-btn {
+  width: 100%;
+  height: 48px;
+  background: #2563eb;
+  color: #ffffff;
+  border: none;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-bottom: 12px;
+}
+
+.secondary-btn {
+  width: 100%;
+  height: 48px;
+  background: #f1f5f9;
+  color: #0f172a;
+  border: none;
+  border-radius: 14px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}

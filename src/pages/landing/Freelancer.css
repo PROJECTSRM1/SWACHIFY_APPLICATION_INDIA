@@ -128,6 +128,9 @@
   overflow: hidden;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
+   display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .card:hover {
@@ -143,6 +146,9 @@
 
 .card-body {
   padding: 16px;
+    display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .card-header {
@@ -225,7 +231,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 12px;
+  margin-top: auto;
 }
 
 /* STACK STARTING AT + PRICE */
@@ -300,4 +306,106 @@
   .card-body {
     padding: 12px !important;
   }
+}
+
+/* ===== FIX MERGE ISSUE: LOCK RATING BADGE ===== */
+.card-header .rating {
+  position: static !important;     /* kills absolute/sticky */
+  width: auto !important;
+  max-width: fit-content !important;
+
+
+  display: inline-flex !important;
+  align-items: center;
+  gap: 6px;
+
+
+  padding: 6px 10px;
+  border-radius: 10px;
+
+
+  background: rgba(250, 204, 21, 0.25);
+  font-size: 12px;
+  font-weight: 600;
+  color: #0f172a;
+
+
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.card.disabled {
+  opacity: 0.6;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.card.disabled * {
+  cursor: not-allowed !important;
+}
+.status.waiting {
+  color: #f59e0b;
+}
+.status.waiting span {
+  background: #f59e0b;
+}
+
+.status.inactive {
+  color: #dc2626;
+}
+.status.inactive span {
+  background: #dc2626;
+}
+.meta {
+  font-size: 13px;
+  color: #334155;
+  margin-top: 6px;
+
+  white-space: nowrap;     /* 🔒 forces one line */
+  overflow: hidden;        /* safety */
+  text-overflow: ellipsis; /* safety (won’t trigger normally) */
+}
+/* STATUS DOT COLORS */
+.status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.status span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+/* Active (Looking for work) */
+.status.waiting {
+  color: #16a34a;
+}
+.status.waiting span {
+  background: #16a34a;
+}
+
+/* Inactive */
+.status.inactive {
+  color: #dc2626;
+}
+.status.inactive span {
+  background: #dc2626;
+}
+
+/* In progress */
+.status.in_progress {
+  color: #f59e0b;
+}
+.status.in_progress span {
+  background: #f59e0b;
+}
+
+/* Disabled button */
+.disabled-btn {
+  background: #e5e7eb !important;
+  color: #6b7280 !important;
+  cursor: not-allowed;
 }
