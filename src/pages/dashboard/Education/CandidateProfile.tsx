@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./CandidateProfile.css";
 
 export type Student = {
@@ -10,6 +10,7 @@ export type Student = {
   status: "Active" | "Completed";
   attendance: number;
   shift: string;
+  resumeUrl?: string;
 };
 
 type Props = {
@@ -18,6 +19,8 @@ type Props = {
 };
 
 const CandidateProfile: React.FC<Props> = ({ student, onBack }) => {
+  const [criminal, setCriminal] = useState<"YES" | "NO">("NO");
+
   return (
     <div className="cp-root">
       {/* HEADER */}
@@ -43,11 +46,23 @@ const CandidateProfile: React.FC<Props> = ({ student, onBack }) => {
             <button className="cp-btn primary">✏ Edit Profile</button>
           </div>
         </div>
+
+        {/* ✅ RIGHT SIDE – VERTICAL RESUME BUTTONS */}
+        <div className="cp-resume-right">
+          <label className="cp-btn secondary">
+            ⬆ Upload Resume
+            <input type="file" hidden />
+          </label>
+
+          <button className="cp-btn secondary">
+            ⬇ Download Resume
+          </button>
+        </div>
       </div>
 
       {/* CONTENT GRID */}
       <div className="cp-grid">
-        {/* LEFT */}
+        {/* LEFT COLUMN */}
         <div className="cp-col">
           <section className="cp-section">
             <h4>Personal Identity</h4>
@@ -62,9 +77,38 @@ const CandidateProfile: React.FC<Props> = ({ student, onBack }) => {
               <p>ABCDE1234F</p>
             </div>
 
-            <div className="cp-card status">
-              <strong>NOC Status</strong>
-              <span className="approved">APPROVED</span>
+            <div className="cp-card">
+              <strong>NOC Details</strong>
+
+              <div className="noc-row">
+                <span>Criminal Background</span>
+                <select
+                  value={criminal}
+                  onChange={(e) =>
+                    setCriminal(e.target.value as "YES" | "NO")
+                  }
+                >
+                  <option value="NO">NO</option>
+                  <option value="YES">YES</option>
+                </select>
+              </div>
+
+              {criminal === "NO" && (
+                <p className="approved">No criminal cases reported</p>
+              )}
+
+              {criminal === "YES" && (
+                <>
+                  <input
+                    className="cp-input"
+                    placeholder="Enter Case Number"
+                  />
+                  <label className="cp-upload">
+                    ⬆ Upload Clean Sheet Certificate
+                    <input type="file" hidden />
+                  </label>
+                </>
+              )}
             </div>
           </section>
 
@@ -72,20 +116,20 @@ const CandidateProfile: React.FC<Props> = ({ student, onBack }) => {
             <h4>Education</h4>
 
             <div className="cp-card">
-              <strong>{student.program}</strong>
-              <p>Score: {student.attendance}%</p>
-              <p>Passing Year: 2024</p>
+              <strong>B.Tech Computer Science</strong>
+              <p>Score: 92%</p>
+              <p>Duration: 2020 – 2024</p>
             </div>
 
             <div className="cp-card">
               <strong>Bachelor of Science (IT)</strong>
               <p>Score: 9.2 CGPA</p>
-              <p>Passing Year: 2021</p>
+              <p>Duration: 2017 – 2021</p>
             </div>
           </section>
         </div>
 
-        {/* RIGHT */}
+        {/* RIGHT COLUMN */}
         <div className="cp-col">
           <section className="cp-section">
             <h4>Work Details</h4>
