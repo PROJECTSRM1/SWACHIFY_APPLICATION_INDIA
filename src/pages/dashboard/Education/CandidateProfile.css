@@ -158,4 +158,72 @@
   .cp-actions {
     justify-content: center;
   }
+
+  /* NOC */
+.noc-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 8px 0;
+}
+
+.noc-row select {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+}
+
+/* Inputs */
+.cp-input {
+  width: 100%;
+  margin-top: 8px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+}
+
+.cp-upload {
+  display: inline-block;
+  margin-top: 10px;
+  font-weight: 600;
+  color: #2563eb;
+  cursor: pointer;
+}
+
+
+/* Right side resume buttons - vertical */
+.cp-resume-right {
+  position: absolute;
+  right: 32px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Ensure parent allows absolute positioning */
+.cp-top {
+  position: relative;
+}
+
+
+}
+
+
+/* Ensure parent is relative */
+.cp-top {
+  position: relative;
+}
+
+/* Move resume buttons further right */
+.cp-resume-right {
+  position: absolute;
+  right: 0;          /* move to extreme right */
+  margin-right: 32px; /* small padding from edge */
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
