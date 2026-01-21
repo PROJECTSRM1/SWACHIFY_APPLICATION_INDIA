@@ -1,301 +1,145 @@
-/* ================= PAGE WRAPPER ================= */
-.sw-s-wrapper {
-  margin: 0 auto;
-  padding: 16px;
-  background: #f3f6fd;
+.students-root {
+  margin-top: 140px;       /* ✅ Our Services overlap FIX */
+  background: #f5f7fb;
+  min-height: 100vh;
+  padding-bottom: 80px;
 }
 
-/* ================= HEADER ================= */
-.sw-s-header {
-  top: 0;
-  z-index: 10;
-  background: #fff;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
-}
-
-.sw-s-header-inner {
+/* HEADER */
+.students-header {
   max-width: 1200px;
-  margin: 0 auto;
-  height: 56px;
-  padding: 0 16px;
+  margin: 0 auto 24px;
+  padding: 18px 24px;
+  background: #fff;
   display: flex;
   align-items: center;
-  gap: 17px;
-  margin-left: 30px;
- 
-}
-
-.sw-s-header-title {
-  font-size: 24px;
-  font-weight: 600;
-  color: #000;
-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, "Helvetica Neue", Arial, sans-serif;
-
-}
-
-.sw-s-back-arrow {
-  font-size: 25px;
-  cursor: pointer;
-  font-weight: 800;
-}
-
-
-
-
-/* ================= COMMON CARD ================= */
-.sw-s-card {
-  max-width: 1100px;
-  margin: 0 auto 18px;
-  border-radius: 14px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-  padding: 18px;
-}
-
-/* Remove AntD default padding */
-.sw-s-card .ant-card-body {
-  padding: 0;
-}
-
-/* ================= FILTER / SORT ================= */
-
-.sw-s-card h3 {
-  font-size: 16px;          /* Screenshot size */
-  font-weight: 600;
-  margin-bottom: 14px;
-}
-
-
-
-/* Tags (Filter pills) */
-
-.sw-s-filter-tag {
-  border-radius: 12px;
-  padding: 6px 16px;
-  font-size: 14px;
-  font-weight: 500;
-  background: #eef0f3;
-  color: #000;
-  border: none;
-  cursor: pointer;
-}
-
-.sw-s-filter-tag.sw-s-active {
-  background: #000;
-  color: #fff;
-}
-
-.ant-btn.sw-s-sort-btn {
-  height: 38px;
-  padding: 0 18px;
-  border-radius: 12px;
-  font-size: 14px;
-  background: #eef0f3;
-  color: #000;
-  border: none;
-  box-shadow: none;
-  transition: all 0.2s ease;
-}
-
-/* Normal hover */
-.ant-btn.sw-s-sort-btn:hover,
-.ant-btn.sw-s-sort-btn:focus {
-  background: #dfe3e8;
-  color: #000;
-}
-
-/* Active button */
-.ant-btn.sw-s-sort-btn.sw-s-active {
-  background: #000;
-  color: #fff;
-}
-
-/* Active hover (important!) */
-.ant-btn.sw-s-sort-btn.sw-s-active:hover,
-.ant-btn.sw-s-sort-btn.sw-s-active:focus {
-  background: #000;
-  color: #fff;
-}
-
-
-
-/* ================= STUDENT CARD ================= */
-
-/* TOP ROW – DETAILS + AGGREGATE */
-.sw-s-top-row {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
   gap: 16px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
 }
 
-/* Details block */
-.sw-s-details {
-  flex: 1;
-}
-
-/* Name */
-.sw-s-name {
-  margin: 0 0 10px 0;
-  font-size: 18px;
-  font-weight: 600;
-  line-height: 1.25;
-  color: #1a1a1a;
-}
-
-/* Info rows */
-.sw-s-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  color: #555;
-  margin-bottom: 8px;
-}
-
-.sw-s-row svg {
-  font-size: 14px;
-  color: #666;
-}
-
-/* Institute */
-.sw-s-institute {
-  margin-top: 6px;
-  font-size: 13px;
-  font-weight: 500;
-  color: #444;
-}
-
-/* Aggregate box */
-.sw-s-aggregate-box {
-  background: #e9fbe9;
-  border-radius: 12px;
-  padding: 8px 5px;      /* Slightly taller (screenshot) */
-  min-width: 96px;
-  text-align: center;
-  flex-shrink: 0;
-}
-
-.sw-s-aggregate-score {
-  font-size: 22px;
-  font-weight: 700;
-  color: #1d7f1d;
-  line-height: 1.2;
-}
-
-.sw-s-aggregate-label {
-  font-size: 12px;
-  color: #1d7f1d;
-}
-
-/* Divider */
-.sw-s-divider {
-  margin: 14px 0 12px;
-  height: 1px;
-  background: #eaeaea;
-}
-
-/* Button */
-/* ===== BUTTON BASE ===== */
-.ant-btn.sw-s-btn {
+.students-back {
+  width: 38px;
   height: 38px;
   border-radius: 10px;
-  background: linear-gradient(90deg, #000, #111) !important;
-  background-color: #000 !important;
-  color: #fff !important;
-  font-size: 14px;
-  border: none !important;
-  box-shadow: none !important;
+  border: none;
+  background: #eef2ff;
+  font-size: 18px;
+  cursor: pointer;
 }
 
-/* ===== HOVER ===== */
-.ant-btn.sw-s-btn:hover {
-  background: linear-gradient(90deg, #000, #111) !important;
-  background-color: #000 !important;
-  color: #fff !important;
-  border: none !important;
+.students-search {
+  margin-left: auto;
+  width: 300px;
+  height: 42px;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  padding: 0 14px;
 }
 
-/* ===== ACTIVE / FOCUS ===== */
-.ant-btn.sw-s-btn:active,
-.ant-btn.sw-s-btn:focus,
-.ant-btn.sw-s-btn:focus-visible {
-  background: linear-gradient(90deg, #111, #222) !important;
-  background-color: #111 !important;
-  color: #fff !important;
-  border: none !important;
-  outline: none !important;
-  box-shadow: none !important;
+/* FILTERS */
+.students-filters {
+  max-width: 1200px;
+  margin: 0 auto 24px;
+  padding: 0 24px;
 }
 
-/* ===== REMOVE ANT CLICK EFFECT ===== */
-.ant-btn.sw-s-btn::after {
-  display: none !important;
+.tabs {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
 }
 
-
-/* ================= RESPONSIVE ================= */
-
-/* Tablet */
-@media (max-width: 768px) {
-  .sw-s-card {
-    padding: 16px;
-  }
-
-  .sw-s-top-row {
-    flex-direction: column;
-  }
-
-  .sw-s-aggregate-box {
-    margin-top: 10px;
-  }
+.tabs button {
+  padding: 8px 18px;
+  border-radius: 20px;
+  border: none;
+  background: #e5e7eb;
+  cursor: pointer;
 }
 
-/* Mobile */
-@media (max-width: 480px) {
-  .sw-page-title {
-    font-size: 20px;
-  }
-
-  .sw-s-card {
-    padding: 14px;
-  }
-
-  .sw-s-name {
-    font-size: 16px;
-  }
-
-  .sw-s-row,
-  .sw-s-institute {
-    font-size: 12px;
-  }
-
-  .sw-s-btn {
-    height: 36px;
-    font-size: 13px;
-  }
+.tabs .active {
+  background: #2563eb;
+  color: #fff;
 }
 
-
-/* ================= SORT RESPONSIVE ================= */
-
-@media (max-width: 360px) {
-  .sw-s-sort-container {
-    width: 100%;
-  }
-
-  .sw-s-sort-container .ant-space {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .sw-s-sort-btn {
-    width: 100%;
-    justify-content: center;
-  }
+.dropdowns {
+  display: flex;
+  gap: 12px;
 }
 
+.dropdowns select {
+  flex: 1;
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid #d1d5db;
+  padding: 0 12px;
+}
 
+/* GRID */
+.students-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 22px;
+}
 
+/* CARD */
+.students-card {
+  background: #fff;
+  border-radius: 18px;
+  padding: 18px;
+  display: flex;
+  gap: 16px;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+}
 
+.students-card img {
+  width: 64px;
+  height: 64px;
+  border-radius: 14px;
+}
+
+.students-top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.rating {
+  color: #f59e0b;
+  font-weight: 600;
+}
+
+.program {
+  font-size: 13px;
+  color: #2563eb;
+}
+
+.meta {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.students-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.status.active {
+  color: #059669;
+  font-weight: 700;
+}
+
+.status.completed {
+  color: #6b7280;
+  font-weight: 700;
+}
+
+.students-empty {
+  text-align: center;
+  grid-column: 1 / -1;
+  color: #6b7280;
+}
