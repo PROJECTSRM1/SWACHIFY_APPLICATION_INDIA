@@ -7,6 +7,7 @@ import Packersandmovers from "./PackersAndMovers/Packersandmovers";
 import BuySaleProducts from "./buy&sale/BuySaleProducts";
 import HomeServices from "./homeservices/HomeServices";
 import ServicesPage from "./homerentals/pages/ServicesPage";
+import HealthCare from "./HealthCare/HealthCare";
 
 import Education from "./Education/Education";
 
@@ -376,14 +377,19 @@ return (
           {/* <h1 className="services-title">Our Services</h1> */}
         </div>
 
+
         {/* Home Services */}
         {allowedServices.find(
           (s) => s.name === "Home Services"
         )?.component}
 
+
+        {/* HealthCare Full Header + Search + Cards */}
+        <HealthCare />
+
+
         {/* Education */}
         {userServiceIds.includes(5) && <Education />}
-
        
 
         {/* Construction */}
