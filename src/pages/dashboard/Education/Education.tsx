@@ -9,6 +9,8 @@ import JobsPage from "./TrainingPage";
 import Internship from "../Education/Internships";
 import CandidateProfile from "../Education/CandidateProfile";
 import TrainingPage from "./TrainingPage";
+import { useLocation } from "react-router-dom";
+
 
 
 type Page =
