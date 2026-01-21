@@ -17,7 +17,7 @@
 .services-title {
   font-size: 34px;
   font-weight: 700;
-  margin-bottom: 8px;
+  margin-bottom: 25px;
 }
 
 .services-subtitle {
@@ -98,3 +98,27 @@
     padding: 12px;
   }
 }
+
+
+
+
+
+.healthcare-header {
+  margin: 40px 0 20px;
+  padding: 20px;
+  background: #f4f9f9;
+  border-radius: 12px;
+}
+
+.services-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.services-subtitle {
+  font-size: 14px;
+  color: #6b7280;
+  margin-top: 4px;
+}
+
