@@ -1,0 +1,797 @@
+/* =======================
+   GLOBAL
+======================= */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: #f8fafc;
+  overflow-x: hidden;
+}
+
+/* =======================
+   PAGE & CONTAINER
+======================= */
+.page {
+  min-height: 100vh;
+  background: #f8fafc;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px 24px 80px; /* reduced top padding */
+}
+
+/* =======================
+   HEADER
+======================= */
+.web-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 12px; /* reduced to remove gap */
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.web-header h1 {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.dropdown {
+  background: #f1f5f9;
+  border: 1px solid #e5e7eb;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.sell-btn {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* =======================
+   FILTER BAR
+======================= */
+.filter-bar {
+  display: flex;
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.filter-bar button {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* =======================
+   SEARCH
+======================= */
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: white;
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  margin-bottom: 20px;
+}
+
+.search-box input {
+  border: none;
+  outline: none;
+  flex: 1;
+  font-size: 15px;
+}
+
+/* =======================
+   LOCATION
+======================= */
+.location-bar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.label {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.loc-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+}
+
+.change {
+  color: #2563eb;
+  cursor: pointer;
+}
+
+/* =======================
+   CATEGORIES
+======================= */
+.categories {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.categories button {
+  background: white;
+  border: 1px solid #e5e7eb;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.categories .active {
+  background: #2563eb;
+  color: white;
+  border-color: #2563eb;
+}
+
+/* =======================
+   TITLE
+======================= */
+.title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.title-row h2 {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.sort {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #64748b;
+}
+
+/* =======================
+   GRID
+======================= */
+.property-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+/* =======================
+   CARD
+======================= */
+.property-card {
+  background: white;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.property-card:hover {
+  box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+  transform: translateY(-3px);
+}
+
+/* IMAGE */
+.image-wrapper {
+  position: relative;
+}
+
+.image-wrapper img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+/* BADGES */
+.badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: #2563eb;
+  color: white;
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.rating {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  background: rgba(0,0,0,0.7);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 12px;
+  display: flex;
+  gap: 4px;
+}
+
+/* CONTENT */
+.card-body {
+  padding: 14px;
+}
+
+.card-body h3 {
+  font-size: 15px;
+  margin-bottom: 6px;
+}
+
+.price {
+  font-size: 18px;
+  font-weight: 700;
+  color: #2563eb;
+  margin-bottom: 8px;
+}
+
+.meta {
+  font-size: 13px;
+  color: #64748b;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* =======================
+   FULL WIDTH BACKGROUND
+======================= */
+.marketplace-section {
+  width: 100%;
+  min-height: 100vh;
+  background: #f8fafc;
+  padding-top: 0;
+}
+
+/* for form */
+/* =======================
+   GLOBAL RESET
+======================= */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: Inter, system-ui, sans-serif;
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+/* =======================
+   SELL MODAL OVERLAY
+======================= */
+.sellModalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* =======================
+   MODAL CONTAINER
+======================= */
+.sellModalContainer {
+  width: 100%;
+  max-width: 460px;
+  height: 90vh;
+  background: #ffffff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.25);
+  display: flex;
+  flex-direction: column;
+  animation: fadeUp 0.25s ease;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =======================
+   FORM WRAPPER
+======================= */
+.sellForm {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #ffffff;
+}
+
+/* =======================
+   HEADER
+======================= */
+.sellFormHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid #e5e7eb;
+  flex-shrink: 0;
+}
+
+.sellFormHeader h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.sellFormHeader button {
+  border: none;
+  background: transparent;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* =======================
+   BODY (SCROLLABLE)
+======================= */
+.sellFormBody {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.sellFormBody::-webkit-scrollbar {
+  display: none;
+}
+
+/* =======================
+   LABELS
+======================= */
+.sellFormBody label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748b;
+  margin: 18px 0 8px;
+}
+
+/* =======================
+   INPUTS
+======================= */
+.sellFormBody input,
+.sellFormBody select,
+.sellFormBody textarea {
+  width: 100%;
+  height: 52px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  font-size: 14px;
+  color: #0f172a;
+  margin-bottom: 14px;
+}
+
+.sellFormBody textarea {
+  height: auto;
+  min-height: 140px;
+  resize: none;
+}
+
+.sellFormBody input:focus,
+.sellFormBody select:focus,
+.sellFormBody textarea:focus {
+  outline: none;
+  border-color: #2563eb;
+  background: #ffffff;
+}
+
+/* =======================
+   SELECT ARROW FIX
+======================= */
+.sellFormBody select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='%2364748b' viewBox='0 0 20 20'%3E%3Cpath d='M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.25a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 18px;
+  padding-right: 42px;
+}
+
+/* =======================
+   TOGGLE
+======================= */
+.sellToggle {
+  display: flex;
+  gap: 12px;
+}
+
+.sellToggle button {
+  flex: 1;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  background: #f1f5f9;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+}
+
+.sellToggle .active {
+  background: #2563eb;
+  color: #ffffff;
+  border-color: #2563eb;
+}
+
+/* =======================
+   ROW (SQFT + BHK)
+======================= */
+.sellRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+/* =======================
+   ROW BETWEEN
+======================= */
+.sellRowBetween {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+/* =======================
+   PHOTO UPLOAD
+======================= */
+.sellPhotoRow {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.sellPhotoRow::-webkit-scrollbar {
+  display: none;
+}
+
+.sellUploadBox {
+  width: 110px;
+  height: 110px;
+  border: 2px dashed #c7d2fe;
+  border-radius: 16px;
+  background: #eef2ff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #2563eb;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.sellUploadBox span {
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.sellImageBox {
+  position: relative;
+}
+
+.sellImageBox img {
+  width: 110px;
+  height: 110px;
+  border-radius: 16px;
+  object-fit: cover;
+}
+
+.sellImageBox button {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: rgba(0,0,0,0.6);
+  color: #ffffff;
+  border: none;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+}
+
+/* =======================
+   FOOTER
+======================= */
+.sellFormFooter {
+  padding: 16px;
+  border-top: 1px solid #e5e7eb;
+  background: #ffffff;
+  flex-shrink: 0;
+}
+
+.sellPrimaryBtn {
+  width: 100%;
+  padding: 16px;
+  background: #2563eb;
+  border-radius: 16px;
+  border: none;
+  font-size: 16px;
+  font-weight: 800;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.sellPrimaryBtn:hover {
+  background: #1e40af;
+}
+
+/* =======================
+   MOBILE
+======================= */
+@media (max-width: 480px) {
+  .sellModalContainer {
+    width: 100%;
+    height: 100vh;
+    border-radius: 0;
+  }
+}
+
+/* card css */
+.buyerPage {
+  background: #0a0c10;
+  color: #fff;
+  height: 100vh;              /* 🔑 REQUIRED */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;           /* 🔑 REQUIRED */
+}
+
+/* HEADER */
+.buyerHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  border-bottom: 1px solid #232936;
+}
+
+.buyerBackBtn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.buyerFavIcon {
+  font-size: 22px;
+}
+
+/* 🔑 SCROLL FIX */
+.buyerContent {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* IMAGE */
+.buyerImageSection {
+  position: relative;
+}
+
+.buyerImageSection img {
+  width: 100%;
+  height: 380px;
+  object-fit: cover;
+}
+
+/* BADGES */
+.buyerBadges {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  display: flex;
+  gap: 8px;
+}
+
+.badgeSale {
+  background: #2563eb;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+.badgeRent {
+  background: #f59e0b;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+.badgeCondition {
+  background: #8b5cf6;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+/* DOTS */
+.buyerDots {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  background: #64748b;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.dot.active {
+  width: 22px;
+  background: white;
+}
+
+/* DETAILS */
+.buyerDetails {
+  padding: 16px;
+}
+
+.buyerTitleRow {
+  display: flex;
+  justify-content: space-between;
+}
+
+.buyerRating {
+  background: #161b26;
+  padding: 6px 10px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.buyerPrice {
+  font-size: 28px;
+  color: #135bec;
+  margin: 12px 0;
+}
+
+.buyerInfo {
+  color: #94a3b8;
+  margin-bottom: 6px;
+}
+
+.buyerSpecs {
+  display: flex;
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.specBox {
+  background: #161b26;
+  border: 1px solid #232936;
+  border-radius: 12px;
+  padding: 12px;
+  text-align: center;
+  flex: 1;
+}
+
+.buyerDescription {
+  color: #94a3b8;
+  line-height: 1.6;
+}
+
+/* FORM */
+.buyerDetails input,
+.buyerDetails textarea {
+  width: 100%;
+  padding: 14px;
+  margin-top: 12px;
+  background: #161b26;
+  border: 1px solid #232936;
+  border-radius: 12px;
+  color: white;
+}
+
+.buyerDetails textarea {
+  min-height: 100px;
+}
+
+/* BOTTOM */
+.buyerBottom {
+  position: sticky;
+  bottom: 0;
+  background: #0a0c10;
+  border-top: 1px solid #232936;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.buyerBottom button {
+  background: #135bec;
+  border: none;
+  color: white;
+  padding: 14px 20px;
+  border-radius: 12px;
+  font-weight: 700;
+  display: flex;
+  gap: 8px;
+  cursor: pointer;
+}
+
+/* MODAL */
+.buyerModalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.buyerSuccessModal {
+  background: #161b26;
+  padding: 32px;
+  border-radius: 20px;
+  text-align: center;
+}
+
+.buyerSuccessModal button {
+  margin-top: 20px;
+  padding: 12px 24px;
+  background: #135bec;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+}
+
+.property-card {
+  cursor: pointer;
+}
+
