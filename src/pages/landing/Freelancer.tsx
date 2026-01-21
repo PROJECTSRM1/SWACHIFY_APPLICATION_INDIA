@@ -1,420 +1,390 @@
+import React, { useState } from "react";
+import {
+  ArrowLeft,
+  Search,
+  Filter,
+  Star,
+  Building2,
+} from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { useEffect } from "react";
-
-import {
-  EnvironmentOutlined,
-  ClockCircleOutlined,
-  DollarCircleOutlined,
-  StarOutlined,
-  UserOutlined,
-  ArrowRightOutlined,
-  SafetyCertificateOutlined,
-  RiseOutlined,
-  PhoneOutlined,
-  MailOutlined,
-  FacebookOutlined,
-  TwitterOutlined,
-  InstagramOutlined,
-  LinkedinOutlined,
-} from "@ant-design/icons";
-
-import {
-  Layout,
-  Input,
-  Button,
-  Row,
-  Col,
-  Card,
-  Statistic,
-  Modal,
-  Tabs,
-  Form,
-  message,
-} from "antd";
+import "./Freelancer.css";
+type WorkStatus = "WAITING" | "INACTIVE" | "IN_PROGRESS";
 
 
-const { Content } = Layout;
-const { TabPane } = Tabs;
+interface OrganisationDetails {
+  orgName: string;
+  gstin: string;
+  group: number;
+}
 
+interface ServiceProvider {
+  id: string;
+  name: string;
+  service: string;
+  rating: number;
+  reviews: number;
+  skills: string[];
+  hourlyRate: number;
+  image: string;
+   status: WorkStatus; 
+  // isActive: boolean;
+   inactiveReason?: string;
+  isEnrolled: boolean;
+    tasksCompleted: number;        
+  speciality?: string[];     
+   certificates?: string[];    
+ 
+  organisation?: OrganisationDetails;
+  cuisineStyle?: "North" | "South";
 
-const serviceCategories = [
-  { icon: "🏠", name: "Cleaning & Home Services", count: 10, codes: ["Cleaning", "Home", "Moving"] },
-  { icon: "🚚", name: "Transport", count: 15, codes: ["Transport"] },
-  { icon: "🏢", name: "Buy/Sale/Rentals", count: 23, codes: ["Property"] },
-  { icon: "🧱", name: "Raw Materials", count: 14, codes: ["Materials"] },
-  { icon: "📚", name: "Education", count: 17, codes: ["Education"] },
-  { icon: "🛍️", name: "Swachify Products", count: 27, codes: ["Products"] },
+}
+
+const categories = [
+  "All",
+  "Chef",
+  "Plumber",
+  "Cleaner",
+  "Electrician",
+  "Washer",
 ];
 
+const serviceProviders: ServiceProvider[] = [
+  {
+    id: "1",
+    name: "Ramesh Kumar",
+    service: "Plumber",
+    rating: 4.8,
+    reviews: 156,
+    skills: ["Pipe Fitting", "Drainage"],
+    hourlyRate: 350,
+        tasksCompleted: 6,
+        status: "IN_PROGRESS",
 
+  speciality: [ "Leak Fixing",
+    "Bathroom Fittings",
+    "Pipeline Repair",
+    "Tap Installation",
+    "Water Motor Repair",
+    "Drain Cleaning",],
+    image:
+      "https://images.unsplash.com/photo-1540569014015-19a7be504e3a?w=600",
+    // isActive: true,
+    isEnrolled: true,
+    certificates: ["Plumbing Level 1", "Safety Training"],
 
+  },
+  {
+    id: "2",
+    name: "Lakshmi Devi",
+    service: "Cleaner",
+    rating: 5.0,
+    reviews: 203,
+    inactiveReason: "Currently on medical leave",
+    skills: ["Deep Cleaning", "Sanitization"],
+    hourlyRate: 250,
+     tasksCompleted: 18,
+     status: "INACTIVE",
+// inactiveReason: "Currently on medical leave",
 
-const stats = [
-  { icon: <RiseOutlined />, label: "Active Tasks", value: "2,456+" },
-  { icon: <UserOutlined />, label: "Freelancers", value: "10,000+" },
-  { icon: <StarOutlined />, label: "Avg Rating", value: "4.8" },
-  { icon: <SafetyCertificateOutlined />, label: "Verified Jobs", value: "100%" },
+     speciality: [
+    "Deep Cleaning",
+    "Kitchen Cleaning",
+    "Bathroom Cleaning",
+    "Sanitization",
+    "Sofa Cleaning",
+    "Office Cleaning",
+  ],
+  
+    image:
+      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600",
+    // isActive: false,
+    isEnrolled: true,
+    certificates: ["Hygiene & Sanitization"],
+
+  },
+  {
+    id: "3",
+    name: "Suresh Reddy",
+    service: "Electrician",
+    rating: 4.7,
+    reviews: 98,
+    skills: ["Wiring", "Repair"],
+    hourlyRate: 400,
+    status: "WAITING",
+
+    image:
+      "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=600",
+    // isActive: true,
+    isEnrolled: true,
+     tasksCompleted: 6,
+  speciality: [   "Wiring",
+    "Switch Repair",
+    "Fan Installation",
+    "Light Fixtures",
+    "Inverter Setup",
+    "MCB Repair",],
+    // organisation: {
+    //   orgName: "Sparkle Cleaning Pvt Ltd",
+    //   gstin: "29ABCDE1234F1Z5",
+    //   group: 10,
+    // },
+  },
+  {
+    id: "24",
+    name: "Priya Mani",
+    service: "Chef",
+    cuisineStyle: "South",
+    rating: 4.9,
+    reviews: 88,
+    skills: ["Andhra Cuisine", "Meals"],
+    hourlyRate: 500,
+      tasksCompleted: 6,
+      status: "WAITING",
+
+  speciality: [
+    "Andhra Meals",
+    "Sambar",
+    "Rasam",
+    "Avakaya Pickle",
+    "Vegetarian Thali",
+    "Millet Dishes",
+  ],
+    image:
+      "https://images.unsplash.com/photo-1623582854588-d60de57fa33f?w=600",
+    // isActive: true,
+    isEnrolled: true,
+    certificates: ["Food Safety Certification"],
+
+  },
+  {
+    id: "25",
+    name: "Sajid Khan",
+    service: "Washer",
+    cuisineStyle: "North",
+    rating: 4.8,
+    reviews: 112,
+    status: "WAITING",
+
+    skills: ["Tandoori", "Mughlai"],
+    hourlyRate: 600,
+        tasksCompleted: 16,
+  speciality: [  "Dry Cleaning",
+    "Steam Press",
+    "Fabric Care",
+    "Stain Removal",
+    "Bulk Laundry",
+    "Ironing",],
+    image:
+      "https://images.unsplash.com/photo-1566492031773-4f4e44671857?w=600",
+    // isActive: true,
+    isEnrolled: true,
+  },
 ];
 
-export default function Freelancer() {
+const Freelancer: React.FC = () => {
   const navigate = useNavigate();
 
-  type BookingRequest = {
-    id: number;
-    full_name: string;
-    property_size_sqft: string;
-    preferred_date: string;
-  };
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showOnlyActive, setShowOnlyActive] = useState(false);
+  const [chefStyle, setChefStyle] = useState<"North" | "South">("South");
 
-  const [liveRequests, setLiveRequests] = useState<BookingRequest[]>([]);
-  const [loading, setLoading] = useState(false);
+  const filteredProviders = serviceProviders.filter((p) => {
+    const matchCategory =
+      selectedCategory === "All" || p.service === selectedCategory;
 
+    const matchChef =
+      selectedCategory === "Chef" ? p.cuisineStyle === chefStyle : true;
 
-  useEffect(() => {
-    const fetchLiveRequests = async () => {
-      try {
-        setLoading(true);
+    const matchSearch =
+      p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      p.service.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      p.skills.some((s) =>
+        s.toLowerCase().includes(searchQuery.toLowerCase())
+      );
 
-        const res = await fetch(
-          "https://swachify-india-be-1-mcrb.onrender.com/api/master/home-service"
-        );
-
-        const data = await res.json();
-
-        console.log("FULL API RESPONSE 👉", data);
-
-        setLiveRequests(Array.isArray(data) ? data : []);
-      } catch (error) {
-        message.error("Failed to load live requests");
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchLiveRequests();
-  }, []);
-
-
-
-
-  const [authModalVisible, setAuthModalVisible] = useState(false);
-  const [activeTab, setActiveTab] = useState("login");
-
-  const [loginForm] = Form.useForm();
-  const [registerForm] = Form.useForm();
-
-
-  const [selectedCodes, setSelectedCodes] = useState<string[] | null>(null);
-
-  const onLoginFinish = () => {
-    message.success("Logged in (demo)");
-    setAuthModalVisible(false);
-  };
-
-  const onRegisterFinish = () => {
-    message.success("Registered (demo)");
-    setAuthModalVisible(false);
-  };
-
-
-  const previewRequests = liveRequests.slice(0, 3);
-
-
-
-  const handleCategoryClick = (codes: string[]) => {
-    if (selectedCodes && selectedCodes.join(",") === codes.join(",")) {
-      setSelectedCodes(null);
-    } else {
-      setSelectedCodes(codes);
-    }
-  };
-
-
+    // const matchActive = showOnlyActive ? p.isActive : true;
 
   return (
-    <Layout className="sw-fr-layout">
-      <header className="sw-fr-fix-header">
-        <div className="sw-fr-fix-header-left">Swachify Freelancer</div>
+  matchCategory &&
+  matchChef &&
+  matchSearch &&
+  p.isEnrolled
+);
 
-        <div className="sw-fr-header-actions">
-          <Button
-            type="primary"
-            className="sw-fr-fix-header-btn"
-            onClick={() => navigate("/landing")}
-          >
-            Back
-          </Button>
+  });
 
-          <Button
-            type="primary"
-            className="sw-fr-fix-header-btn"
-            // onClick={() => navigate("/freelancerregistration")}
-            onClick={() => navigate("/freelancerlogin")}
-          >
-            Login / Register
-          </Button>
-
-
-        </div>
-
+  return (
+    <div className="page">
+      {/* Header */}
+      <header className="header">
+        <ArrowLeft
+          style={{ cursor: "pointer" }}
+          onClick={() => navigate("/landing")}
+        />
+        <h2>Freelancers</h2>
+        <span />
       </header>
 
-
-
-      {/* Modal */}
-      <Modal
-        centered
-        open={authModalVisible}
-        footer={null}
-        onCancel={() => setAuthModalVisible(false)}
-        width={420}
-      >
-        <Tabs activeKey={activeTab} onChange={(k) => setActiveTab(k)}>
-          <TabPane tab="Login" key="login">
-            <Form form={loginForm} layout="vertical" onFinish={onLoginFinish}>
-              <Form.Item name="identifier" label="Email or Phone" rules={[{ required: true }]}>
-                <Input />
-              </Form.Item>
-              <Form.Item name="password" label="Password" rules={[{ required: true }]}>
-                <Input.Password />
-              </Form.Item>
-              <Button type="primary" htmlType="submit" block>
-                Login
-              </Button>
-            </Form>
-          </TabPane>
-
-          <TabPane tab="Register" key="register">
-            <Form form={registerForm} layout="vertical" onFinish={onRegisterFinish}>
-              <Form.Item name="name" label="Full Name" rules={[{ required: true }]}>
-                <Input />
-              </Form.Item>
-              <Form.Item name="email" label="Email" rules={[{ required: true }]}>
-                <Input />
-              </Form.Item>
-              <Form.Item name="phone" label="Phone" rules={[{ required: true }]}>
-                <Input />
-              </Form.Item>
-              <Form.Item name="password" label="Password" rules={[{ required: true }]}>
-                <Input.Password />
-              </Form.Item>
-              <Button type="primary" htmlType="submit" block>
-                Register
-              </Button>
-            </Form>
-          </TabPane>
-        </Tabs>
-      </Modal>
-
-      {/* Hero */}
-      <div className="sw-fr-hero">
-        <div className="sw-fr-hero-overlay"></div>
-
-        <Content className="sw-fr-hero-content">
-          <h1 className="sw-fr-hero-title">
-            Find the Right Tasks <br /> That Match Your Skills
-          </h1>
-
-          <p className="sw-fr-hero-sub">Verified jobs. Nearby opportunities. Instant earning.</p>
-
-          <div className="sw-fr-hero-buttons">
-            <Button
-              type="default"
-              size="large"
-              shape="round"
-              onClick={() => navigate("/servicerequests")}
-              icon={<ArrowRightOutlined />}
-              className="sw-fr-text"
-            >
-              View Live Requests
-            </Button>
-
-            <Button
-              type="default"
-              size="large"
-              shape="round"
-              onClick={() => navigate("/freelancerregistration")}
-              className="sw-fr-text"
-            >
-              Become a Freelancer
-            </Button>
-          </div>
-
-          <Row gutter={16} className="sw-fr-stats">
-            {stats.map((s, index) => (
-              <Col xs={12} md={6} key={index}>
-                <Card bordered={false} className="sw-fr-stat-card">
-                  <Statistic
-                    title={s.label}
-                    value={s.value}
-                    prefix={s.icon}
-                    valueStyle={{ color: "#fff" }}
-                  />
-                </Card>
-              </Col>
-            ))}
-          </Row>
-        </Content>
+      {/* Search */}
+      <div className="search-row">
+        <div className="search-box">
+          <Search size={18} />
+          <input
+            placeholder="Search services or names"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
+        <button
+          className={`filter-btn ${showOnlyActive ? "active" : ""}`}
+          onClick={() => setShowOnlyActive((p) => !p)}
+        >
+          <Filter size={18} />
+        </button>
       </div>
 
       {/* Categories */}
-      <Content className="sw-fr-section">
-        <h2 className="sw-fr-section-title">Browse Categories</h2>
-
-        <Row gutter={[20, 20]}>
-          {serviceCategories.map((cat, i) => (
-            <Col xs={12} sm={8} md={6} lg={4} key={i}>
-
-              <Card
-                hoverable
-                className={`sw-fr-category-card ${selectedCodes &&
-                  selectedCodes.join(",") === cat.codes.join(",")
-                  ? "sw-fr-category-card-active"
-                  : ""
-                  }`}
-                onClick={() => handleCategoryClick(cat.codes)}
-              >
-                <div className="sw-fr-category-icon">{cat.icon}</div>
-                <h4 className="sw-fr-category-name">{cat.name}</h4>
-                <p className="sw-fr-category-count">{cat.count} jobs</p>
-              </Card>
-
-
-            </Col>
-          ))}
-        </Row>
-      </Content>
-
-      {/* Live Requests */}
-      <Content className="sw-fr-section">
-        <div className="sw-fr-section-header">
-          <div>
-            <h2>Live Service Requests Near You</h2>
-            <p>Accept a task and start earning instantly</p>
-          </div>
-
-          <Button
-            type="primary"
-            shape="round"
-            icon={<ArrowRightOutlined />}
-            onClick={() => navigate("/servicerequests")}
+      <div className="categories">
+        {categories.map((cat) => (
+          <button
+            key={cat}
+            className={`chip ${
+              selectedCategory === cat ? "active" : ""
+            }`}
+            onClick={() => setSelectedCategory(cat)}
           >
-            View All
-          </Button>
+            {cat}
+          </button>
+        ))}
+      </div>
+
+      {/* Chef Toggle */}
+      {selectedCategory === "Chef" && (
+        <div className="chef-toggle">
+          <button
+            className={chefStyle === "South" ? "active" : ""}
+            onClick={() => setChefStyle("South")}
+          >
+            South Style
+          </button>
+          <button
+            className={chefStyle === "North" ? "active" : ""}
+            onClick={() => setChefStyle("North")}
+          >
+            North Style
+          </button>
         </div>
+      )}
 
-        <Row gutter={[20, 20]}>
-          {previewRequests.map((req) => (
-            <Col xs={24} md={12} lg={8} key={req.id}>
-              <Card hoverable className="sw-fr-request-card" loading={loading}>
-                <h3 className="sw-fr-request-title">
-                  Cleaning Request — {req.full_name}
-                </h3>
+      {/* Cards */}
+      <div className="list">
+        {filteredProviders.map((p) => (
+          <div
+  key={p.id}
+ className={`card ${
+  p.status !== "WAITING" ? "disabled" : ""
+}`}
 
-                <p className="sw-fr-request-desc">
-                  Property Size: {req.property_size_sqft} sqft
-                </p>
+>
 
-                <p>
-                  <ClockCircleOutlined /> Preferred Date:{" "}
-                  {new Date(req.preferred_date).toLocaleDateString()}
-                </p>
+            <div className="card-image">
+  <img src={p.image} alt={p.name} />
+</div>
 
-                <div className="sw-fr-request-bottom">
-                  <span className="sw-fr-price">
-                    <DollarCircleOutlined /> Price on Visit
-                  </span>
 
-                  <Button
-                    type="primary"
-                    shape="round"
-                    onClick={() => navigate("/freelancerregistration")}
-                  >
-                    Accept
-                  </Button>
+            <div className="card-body">
+              <div className="card-header">
+                <div>
+                  <h3>{p.name}</h3>
+                  <p className="service">
+  Role: <strong>{p.service}</strong>
+</p>
+
+
+<div className={`status ${p.status.toLowerCase()}`}>
+  <span />
+  {p.status === "WAITING" && "Active (Looking for work)"}
+  {p.status === "INACTIVE" && "Inactive (Not logged in)"}
+  {p.status === "IN_PROGRESS" && "Work Assigned (In-Progress)"}
+</div>
+
+{p.status === "INACTIVE" && p.inactiveReason && (
+  <div className="inactive-reason">
+    {p.inactiveReason}
+  </div>
+)}
+
                 </div>
-              </Card>
-            </Col>
-          ))}
-        </Row>
+
+                <div className="rating">
+                  <Star size={14} />
+                  {p.rating} ({p.reviews})
+                </div>
+              </div>
+
+              {p.organisation && (
+                <div className="org">
+                  <Building2 size={14} />
+                  {p.organisation.orgName}
+                </div>
+              )}
+
+              <div className="skills">
+                {p.skills.map((s) => (
+                  <span key={s}>{s}</span>
+                ))}
+              </div>
+             <div className="meta">
+  {p.tasksCompleted} tasks completed
+</div>
+
+{p.speciality && p.speciality.length > 0 && (
+  <div className="speciality">
+    <small>PRO AT</small>
+    <div className="skills">
+      {p.speciality.map((item) => (
+        <span key={item}>{item}</span>
+      ))}
+    </div>
+  </div>
+)}
+{p.certificates && p.certificates.length > 0 && (
+  <div className="certificates">
+    <small>CERTIFICATES</small>
+    <div className="skills">
+      {p.certificates.map((cert) => (
+        <span key={cert}>{cert}</span>
+      ))}
+    </div>
+  </div>
+)}
 
 
-      </Content>
 
-      {/* Footer */}
-      <footer className="hs-footer">
-        <div className="hs-footer-inner">
-          <div className="hs-footer-col hs-footer-about">
-            <h4>About Us</h4>
-            <p>
-              Your trusted partner for all home and property-related services.
-              Quality, reliability, and customer satisfaction guaranteed.
-            </p>
-          </div>
 
-          <div className="hs-footer-col hs-footer-services">
-            <h4>Services</h4>
-            <ul>
-              <li>Cleaning Service</li>
-              <li>Packers & Movers</li>
-              <li>Home Services</li>
-              <li>Rentals</li>
-              <li>Commercial Plots</li>
-              <li>Construction Materials</li>
-            </ul>
-          </div>
 
-          <div className="hs-footer-col hs-footer-links">
-            <h4>Quick Links</h4>
-            <ul>
-              <li>Home</li>
-              <li>About</li>
-              <li>Contact</li>
-              <li>Careers</li>
-            </ul>
-          </div>
+              <div className="footer">
+                <div>
+                  <small>STARTING AT</small>
+                  <strong>₹{p.hourlyRate}/hr</strong>
+                </div>
+                <button
+  className={`primary ${
+    p.status !== "WAITING" ? "disabled-btn" : ""
+  }`}
+  disabled={p.status !== "WAITING"}
+>
+  {p.status === "WAITING" ? "Book Now" : "Unavailable"}
+</button>
 
-          <div className="hs-footer-col hs-footer-contact">
-            <h4>Contact Info</h4>
-            <div className="hs-contact-row">
-              <PhoneOutlined />
-              <span>+1 (555) 123-4567</span>
-            </div>
-            <div className="hs-contact-row">
-              <MailOutlined />
-              <span>info@homeservices.com</span>
-            </div>
-            <div className="hs-contact-row">
-              <EnvironmentOutlined />
-              <span>123 Service Street, City, State</span>
-            </div>
-
-            <div className="hs-footer-socials">
-              <a>
-                <FacebookOutlined />
-              </a>
-              <a>
-                <TwitterOutlined />
-              </a>
-              <a>
-                <InstagramOutlined />
-              </a>
-              <a>
-                <LinkedinOutlined />
-              </a>
+              </div>
             </div>
           </div>
-        </div>
-
-        <div className="hs-footer-bottom">
-          <div className="hs-footer-line" />
-          <div className="hs-footer-copy">
-            © {new Date().getFullYear()} Home Services. All rights reserved.
-          </div>
-        </div>
-      </footer>
-    </Layout>
+        ))}
+      </div>
+    </div>
   );
-}
+};
+
+export default Freelancer;
