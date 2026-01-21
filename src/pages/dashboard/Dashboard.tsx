@@ -21,7 +21,6 @@ import { useSearchParams, useLocation, Outlet } from "react-router-dom";
 const Dashboard: React.FC = () => {
   const [searchParams] = useSearchParams();
 
-<<<<<<< HEAD
   // Auto-initialize service ID 6 (Swachify Products) for demo/skip login
   useEffect(() => {
     const existingServiceIds = localStorage.getItem("service_ids");
@@ -38,8 +37,6 @@ const Dashboard: React.FC = () => {
     }
   }, []);
 
-=======
->>>>>>> dev
   const userServiceIds: number[] = (JSON.parse(localStorage.getItem("service_ids") || "[]") as (string | number)[])
     .map(id => Number(id))
     .filter(id => !isNaN(id));
