@@ -190,6 +190,9 @@ if (roleType === "admin") {
 console.log("ADMIN LOGIN RESPONSE:", res.data);
 
 localStorage.setItem("token", res.data.access_token);
+localStorage.setItem("user_role", "freelancer");
+localStorage.setItem("user_role", "customer");
+
 
 
 
@@ -417,8 +420,51 @@ const onRegister = async (values: any) => {
       JSON.stringify(customerPayload.service_ids)
     );
 
-    message.success("Customer registration successful");
-    setActiveAuthTab("login");
+    // ✅ AUTO LOGIN AFTER REGISTER
+const loginRes: any = await customerLogin({
+  email_or_phone: values.email,
+  password: values.password,
+});
+
+// ✅ SAVE LOGIN DATA
+localStorage.setItem("accessToken", loginRes.access_token);
+localStorage.setItem("user", JSON.stringify(loginRes));
+localStorage.setItem(
+  "service_ids",
+  JSON.stringify(loginRes.service_ids || customerPayload.service_ids)
+);
+
+// ✅ REDIRECT BASED ON FIRST SERVICE
+message.success("Registration successful");
+
+// ✅ IF USER IS LOOKING FOR WORK → GO TO FREELANCER LOGIN
+// 🚫 DO NOT AUTO LOGIN FREELANCERS
+if (values.workType === "looking") {
+  message.success("Registration successful");
+
+  closeAuthModal();
+
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("user");
+
+  navigate("/freelancerlogin");
+  return;
+}
+
+
+// ✅ OTHERWISE → NORMAL CUSTOMER FLOW
+const firstServiceId =
+  (loginRes.service_ids && loginRes.service_ids[0]) ||
+  customerPayload.service_ids[0];
+
+const redirectPath =
+  serviceIdToRoute[firstServiceId] || "/app/dashboard";
+
+closeAuthModal();
+navigate(redirectPath);
+
+
+
 
   } catch (err: any) {
     console.error("REGISTER ERROR:", err.response?.data);
