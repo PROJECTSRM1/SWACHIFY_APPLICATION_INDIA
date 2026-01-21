@@ -76,80 +76,42 @@ const [commercialArea, setCommercialArea] = useState("");
 
   /* ================= SUBMIT ================= */
   const handleSubmit = () => {
-    if (!price) {
-      alert("Please enter price");
-      return;
-    }
+  if (!price || images.length === 0) {
+    alert("Please upload images and enter price");
+    return;
+  }
 
-    if (images.length === 0) {
-      alert("Please upload at least one image");
-      return;
-    }
-
-    if (isHouse && (!sqft || !location || !area)) {
-      alert("Please fill all house details");
-      return;
-    }
-
-    if (
-      isVehicle &&
-      (!brand || !model || !year || !distance || !ownerName || !mobileNumber)
-    ) {
-      alert("Please fill all vehicle details");
-      return;
-    }
-
-    if (isLand && (!landSqft || !landLocation || !landArea || !registeredOwner)) {
-      alert("Please fill all land details");
-      return;
-    }
-
-    const listing = {
-      id: Date.now(),
-      listingType,
-      propertyType,
-      itemCondition,
-      price,
-
-      // house
-      sqft,
-      bhk,
-      location,
-      area,
-      furnishingType,
-
-      // vehicle
-      brand,
-      model,
-      year,
-      distance,
-      ownerName,
-      mobileNumber,
-
-      // land
-      landSqft,
-      landType,
-      landLocation,
-      landArea,
-      registeredOwner,
-
-      description,
-      images,
-      createdAt: new Date().toISOString(),
-    };
-
-    const existing: typeof listing[] = JSON.parse(
-      localStorage.getItem("marketplace_listings") || "[]"
-    );
-
-    localStorage.setItem(
-      "marketplace_listings",
-      JSON.stringify([...existing, listing])
-    );
-
-    alert("Listing posted successfully!");
-    onClose?.();
+  const listing = {
+    id: Date.now(),
+    listingType,
+    propertyType,
+    itemCondition,
+    price,
+    sqft,
+    bhk,
+    location,
+    area,
+    description,
+    images,
+    createdAt: new Date().toISOString(),
   };
+
+  const existing = JSON.parse(
+    localStorage.getItem("marketplace_listings") || "[]"
+  );
+
+  localStorage.setItem(
+    "marketplace_listings",
+    JSON.stringify([...existing, listing])
+  );
+
+  // ✅ THIS IS THE FIX
+  window.dispatchEvent(new Event("listing-added"));
+
+  alert("Listing posted successfully!");
+  onClose?.();
+};
+
 
   return (
     <div className="sellModalOverlay">
