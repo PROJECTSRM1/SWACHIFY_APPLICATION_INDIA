@@ -9,6 +9,8 @@ import JobsPage from "./TrainingPage";
 import Internship from "../Education/Internships";
 import CandidateProfile from "../Education/CandidateProfile";
 import TrainingPage from "./TrainingPage";
+import { useLocation } from "react-router-dom";
+
 
 
 type Page =
@@ -35,6 +37,14 @@ const Education: React.FC = () => {
   const [searched, setSearched] = useState(false);
   const [selectedStudent, setSelectedStudent] =
     useState<Student | null>(null);
+    const location = useLocation();
+
+// 🚨 IMPORTANT FIX:
+// If we are on enrollment page, do NOT render Education
+if (location.pathname.startsWith("/course")) {
+  return null;
+}
+
 
   const filteredResults = searchableItems.filter((item) =>
     item.toLowerCase().includes(query.toLowerCase())
