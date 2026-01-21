@@ -24,7 +24,7 @@ export interface HomeServiceApiResponse {
   freelancer_id?: number;
   status?: "In Progress" | "Approval Pending" | "Completed";
 
-  
+
   service_name?: string;
   category_name?: string;
   time_slot?: string;
@@ -43,7 +43,7 @@ export interface Job {
   price: number;
   estimatedPrice?: number;
 
-   freelancer_id?: number;
+  freelancer_id?: number;
 
 
   customer?: string;
@@ -64,7 +64,7 @@ export const TIME_SLOTS: Record<number, string> = {
 
 
 export const fetchHomeServiceRequests = async (): Promise<Job[]> => {
-  const res = await API.get<HomeServiceApiResponse[]>("/api/home-service");
+  const res = await API.get<HomeServiceApiResponse[]>("/api/master/home-service");
 
   return res.data.map((item) => {
     const timeSlot =
@@ -74,7 +74,7 @@ export const fetchHomeServiceRequests = async (): Promise<Job[]> => {
 
       // ✅ REQUIRED BACKEND IDS (ADD THESE)
       module_id: item.module_id,
-      sub_module_id:item.sub_module_id,
+      sub_module_id: item.sub_module_id,
 
       ticketId: `TKT${item.id}`,
       title: item.service_name || "Home Service",
@@ -84,14 +84,14 @@ export const fetchHomeServiceRequests = async (): Promise<Job[]> => {
 
       customer: item.full_name,
       customerName: item.full_name,
-      customerPhone: item.mobile,        
+      customerPhone: item.mobile,
       customerEmail: item.email,
       customerAddress: item.address,
 
       description: item.problem_description,
       location: item.address,
 
-      
+
       date: `${item.preferred_date} • ${timeSlot}`,
 
       price: item.service_price || 0,
