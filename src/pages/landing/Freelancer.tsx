@@ -8,6 +8,8 @@ import {
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import "./Freelancer.css";
+type WorkStatus = "WAITING" | "INACTIVE" | "IN_PROGRESS";
+
 
 interface OrganisationDetails {
   orgName: string;
@@ -24,8 +26,8 @@ interface ServiceProvider {
   skills: string[];
   hourlyRate: number;
   image: string;
-  
-  isActive: boolean;
+   status: WorkStatus; 
+  // isActive: boolean;
    inactiveReason?: string;
   isEnrolled: boolean;
     tasksCompleted: number;        
@@ -56,6 +58,8 @@ const serviceProviders: ServiceProvider[] = [
     skills: ["Pipe Fitting", "Drainage"],
     hourlyRate: 350,
         tasksCompleted: 6,
+        status: "IN_PROGRESS",
+
   speciality: [ "Leak Fixing",
     "Bathroom Fittings",
     "Pipeline Repair",
@@ -64,7 +68,7 @@ const serviceProviders: ServiceProvider[] = [
     "Drain Cleaning",],
     image:
       "https://images.unsplash.com/photo-1540569014015-19a7be504e3a?w=600",
-    isActive: true,
+    // isActive: true,
     isEnrolled: true,
     certificates: ["Plumbing Level 1", "Safety Training"],
 
@@ -79,6 +83,9 @@ const serviceProviders: ServiceProvider[] = [
     skills: ["Deep Cleaning", "Sanitization"],
     hourlyRate: 250,
      tasksCompleted: 18,
+     status: "INACTIVE",
+// inactiveReason: "Currently on medical leave",
+
      speciality: [
     "Deep Cleaning",
     "Kitchen Cleaning",
@@ -90,7 +97,7 @@ const serviceProviders: ServiceProvider[] = [
   
     image:
       "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600",
-    isActive: false,
+    // isActive: false,
     isEnrolled: true,
     certificates: ["Hygiene & Sanitization"],
 
@@ -103,9 +110,11 @@ const serviceProviders: ServiceProvider[] = [
     reviews: 98,
     skills: ["Wiring", "Repair"],
     hourlyRate: 400,
+    status: "WAITING",
+
     image:
       "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=600",
-    isActive: true,
+    // isActive: true,
     isEnrolled: true,
      tasksCompleted: 6,
   speciality: [   "Wiring",
@@ -130,6 +139,8 @@ const serviceProviders: ServiceProvider[] = [
     skills: ["Andhra Cuisine", "Meals"],
     hourlyRate: 500,
       tasksCompleted: 6,
+      status: "WAITING",
+
   speciality: [
     "Andhra Meals",
     "Sambar",
@@ -140,7 +151,7 @@ const serviceProviders: ServiceProvider[] = [
   ],
     image:
       "https://images.unsplash.com/photo-1623582854588-d60de57fa33f?w=600",
-    isActive: true,
+    // isActive: true,
     isEnrolled: true,
     certificates: ["Food Safety Certification"],
 
@@ -152,6 +163,8 @@ const serviceProviders: ServiceProvider[] = [
     cuisineStyle: "North",
     rating: 4.8,
     reviews: 112,
+    status: "WAITING",
+
     skills: ["Tandoori", "Mughlai"],
     hourlyRate: 600,
         tasksCompleted: 16,
@@ -163,7 +176,7 @@ const serviceProviders: ServiceProvider[] = [
     "Ironing",],
     image:
       "https://images.unsplash.com/photo-1566492031773-4f4e44671857?w=600",
-    isActive: true,
+    // isActive: true,
     isEnrolled: true,
   },
 ];
@@ -190,15 +203,15 @@ const Freelancer: React.FC = () => {
         s.toLowerCase().includes(searchQuery.toLowerCase())
       );
 
-    const matchActive = showOnlyActive ? p.isActive : true;
+    // const matchActive = showOnlyActive ? p.isActive : true;
 
-    return (
-      matchCategory &&
-      matchChef &&
-      matchSearch &&
-      matchActive &&
-      p.isEnrolled
-    );
+  return (
+  matchCategory &&
+  matchChef &&
+  matchSearch &&
+  p.isEnrolled
+);
+
   });
 
   return (
@@ -269,7 +282,10 @@ const Freelancer: React.FC = () => {
         {filteredProviders.map((p) => (
           <div
   key={p.id}
-  className={`card ${!p.isActive ? "disabled" : ""}`}
+ className={`card ${
+  p.status !== "WAITING" ? "disabled" : ""
+}`}
+
 >
 
             <div className="card-image">
@@ -286,19 +302,19 @@ const Freelancer: React.FC = () => {
 </p>
 
 
-                  <div
-                    className={`status ${
-                      p.isActive ? "on" : "off"
-                    }`}
-                  >
-                    <span />
-                    {p.isActive ? "Active" : "Inactive"}
-                  </div>
-                  {!p.isActive && p.inactiveReason && (
+<div className={`status ${p.status.toLowerCase()}`}>
+  <span />
+  {p.status === "WAITING" && "Active (Looking for work)"}
+  {p.status === "INACTIVE" && "Inactive (Not logged in)"}
+  {p.status === "IN_PROGRESS" && "Work Assigned (In-Progress)"}
+</div>
+
+{p.status === "INACTIVE" && p.inactiveReason && (
   <div className="inactive-reason">
-    Reason: {p.inactiveReason}
+    {p.inactiveReason}
   </div>
 )}
+
                 </div>
 
                 <div className="rating">
@@ -353,7 +369,15 @@ const Freelancer: React.FC = () => {
                   <small>STARTING AT</small>
                   <strong>₹{p.hourlyRate}/hr</strong>
                 </div>
-                <button className="primary">Book Now</button>
+                <button
+  className={`primary ${
+    p.status !== "WAITING" ? "disabled-btn" : ""
+  }`}
+  disabled={p.status !== "WAITING"}
+>
+  {p.status === "WAITING" ? "Book Now" : "Unavailable"}
+</button>
+
               </div>
             </div>
           </div>

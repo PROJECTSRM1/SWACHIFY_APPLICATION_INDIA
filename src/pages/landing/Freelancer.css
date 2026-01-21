@@ -364,3 +364,48 @@
   overflow: hidden;        /* safety */
   text-overflow: ellipsis; /* safety (won’t trigger normally) */
 }
+/* STATUS DOT COLORS */
+.status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.status span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+/* Active (Looking for work) */
+.status.waiting {
+  color: #16a34a;
+}
+.status.waiting span {
+  background: #16a34a;
+}
+
+/* Inactive */
+.status.inactive {
+  color: #dc2626;
+}
+.status.inactive span {
+  background: #dc2626;
+}
+
+/* In progress */
+.status.in_progress {
+  color: #f59e0b;
+}
+.status.in_progress span {
+  background: #f59e0b;
+}
+
+/* Disabled button */
+.disabled-btn {
+  background: #e5e7eb !important;
+  color: #6b7280 !important;
+  cursor: not-allowed;
+}
