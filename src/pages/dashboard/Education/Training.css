@@ -1,0 +1,148 @@
+.training-page {
+  background: #0b1220;
+  min-height: 100vh;
+  padding: 16px;
+  color: #fff;
+}
+
+.training-header {
+  margin-bottom: 14px;
+}
+
+.back-title {
+  font-size: 22px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.sub-text {
+  color: #9ca3af;
+  margin-top: 4px;
+}
+
+.category-row {
+  display: flex;
+  gap: 10px;
+  margin: 16px 0;
+  overflow-x: auto;
+}
+
+.category-btn {
+  background: #1c1f27;
+  border: none;
+  color: #9ca3af;
+  padding: 6px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.category-btn.active {
+  background: #2563eb;
+  color: #fff;
+  font-weight: 700;
+}
+
+/* IMPORTANT: SINGLE COLUMN (LIKE MOBILE) */
+.training-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.training-card {
+  background: #111827;
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.course-image {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.course-body {
+  padding: 14px;
+}
+
+.status-badge {
+  display: inline-block;
+  background: #2563eb;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.subtitle {
+  color: #9ca3af;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.progress-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.progress-bg {
+  flex: 1;
+  height: 6px;
+  background: #1c1f27;
+  border-radius: 6px;
+}
+
+.progress-fill {
+  height: 6px;
+  background: #2563eb;
+  border-radius: 6px;
+}
+
+.progress-text {
+  font-size: 13px;
+}
+
+.modules-box {
+  background: #0b1220;
+  padding: 10px;
+  border-radius: 12px;
+  margin-bottom: 14px;
+}
+
+.modules-box p {
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.modules-box ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  color: #9ca3af;
+  font-size: 13px;
+}
+
+.course-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.price {
+  color: #22c55e;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.action-btn {
+  background: #2563eb;
+  border: none;
+  color: #fff;
+  padding: 8px 18px;
+  border-radius: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}

@@ -1,264 +1,209 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import "./Internships.css";
+import InternshipDetails from "./InternshipDetails";
+import ReviewApplication from "./ReviewApplication";
 
-interface Internship {
+/* ================= TYPES ================= */
+
+export interface Internship {
+  id: number;
   title: string;
   company: string;
+  logoColor: string;
   location: string;
-  deadline: string;
   duration: string;
-  stipend: string;
+  type: string | null;
+  isRemote: boolean;
   description: string;
-  tag?: string;
+  category: string;
 }
 
-const internships: Internship[] = [
-  {
-    title: "Software Development Intern",
-    company: "Tech Innovators",
-    location: "Bangalore",
-    deadline: "20/02/2025",
-    duration: "3 months",
-    stipend: "₹15,000/month",
-    description:
-      "Work on real-world projects using React, Node.js, and cloud technologies.",
-    tag: "IT",
-  },
-  {
-    title: "Marketing Intern",
-    company: "Brand Masters",
-    location: "Mumbai",
-    deadline: "25/02/2025",
-    duration: "6 months",
-    stipend: "₹10,000/month",
-    description:
-      "Assist in social media campaigns, content creation, and market research.",
-    tag: "Marketing",
-  },
-  {
-    title: "Data Science Intern",
-    company: "Analytics Hub",
-    location: "Pune",
-    deadline: "15/02/2025",
-    duration: "4 months",
-    stipend: "₹18,000/month",
-    description:
-      "Learn and apply machine learning algorithms to solve business problems.",
-    tag: "IT",
-  },
-  {
-    title: "Graphic Design Intern",
-    company: "Creative Studio",
-    location: "Hyderabad",
-    deadline: "01/03/2025",
-    duration: "3 months",
-    stipend: "₹12,000/month",
-    description:
-      "Create visual content for digital platforms and branding materials.",
-    tag: "Design",
-  },
-  {
-    title: "Finance Intern",
-    company: "Investment Solutions",
-    location: "Delhi",
-    deadline: "10/03/2025",
-    duration: "6 months",
-    stipend: "₹20,000/month",
-    description:
-      "Support financial analysis, reporting, and investment research activities.",
-    tag: "Finance",
-  },
-  {
-    title: "Content Writing Intern",
-    company: "Media House",
-    location: "Bangalore",
-    deadline: "30/01/2025",
-    duration: "2 months",
-    stipend: "₹8,000/month",
-    description:
-      "Write engaging articles, blog posts, and web content on various topics.",
-    tag: "Media",
-  },
-];
-
-type InternshipProps = {
+type Props = {
   onBack?: () => void;
 };
 
+/* ================= DATA ================= */
 
-const Internship = ({ onBack }: InternshipProps) => {
+const internships: Internship[] = [
+  {
+    id: 1,
+    title: "UX Design Intern",
+    company: "Spotify",
+    logoColor: "#1DB954",
+    location: "Stockholm",
+    duration: "6 Months",
+    type: "Paid",
+    isRemote: false,
+    description:
+      "Join our design team to help shape the future of audio streaming. You will work closely with researchers, product managers...",
+    category: "design",
+  },
+  {
+    id: 2,
+    title: "Software Engineer Intern",
+    company: "Google",
+    logoColor: "#4285F4",
+    location: "Remote",
+    duration: "3 Months",
+    type: null,
+    isRemote: true,
+    description:
+      "Work on large-scale systems and help build the future of search. We are looking for students with strong algorithmic skills...",
+    category: "engineering",
+  },
+  {
+    id: 3,
+    title: "Product Design Intern",
+    company: "Apple",
+    logoColor: "#000000",
+    location: "Cupertino",
+    duration: "Summer 2024",
+    type: null,
+    isRemote: false,
+    description:
+      "Define the user experience for Apple products. You'll work on everything from hardware interactions to software interfaces.",
+    category: "design",
+  },
+  {
+    id: 4,
+    title: "Marketing Intern",
+    company: "Airbnb",
+    logoColor: "#FF5A5F",
+    location: "Remote",
+    duration: "12 Weeks",
+    type: null,
+    isRemote: true,
+    description:
+      "Support our global marketing campaigns and help tell the story of belonging anywhere.",
+    category: "marketing",
+  },
+];
 
-  const [showFilters, setShowFilters] = useState(false);
-  const [industry, setIndustry] = useState("All");
-  const [location, setLocation] = useState("All");
-  const [duration, setDuration] = useState("All");
-  const [sortBy, setSortBy] = useState<"relevance" | "deadline">("relevance");
+const filters = ["All", "Design", "Engineering", "Marketing", "Remote"];
 
-  const parseDate = (dateStr: string) => {
-    const [day, month, year] = dateStr.split("/").map(Number);
-    return new Date(year, month - 1, day);
-  };
+/* ================= COMPONENT ================= */
 
-  const filteredInternships = internships
-    .filter((item) => {
-      const industryMatch =
-        industry === "All" || item.tag === industry || !item.tag;
+const Internships = ({ onBack }: Props) => {
+  const [activeFilter, setActiveFilter] = useState(0);
+  const [search, setSearch] = useState("");
+  const [selectedInternship, setSelectedInternship] =
+    useState<Internship | null>(null);
+  const [showReview, setShowReview] = useState(false);
 
-      const locationMatch =
-        location === "All" || item.location === location;
+  /* ================= FILTER LOGIC ================= */
 
-      const durationMatch =
-        duration === "All" || item.duration === duration;
+  const filteredData = useMemo(() => {
+    let data = internships;
 
-      return industryMatch && locationMatch && durationMatch;
-    })
-    .sort((a, b) => {
-      if (sortBy === "deadline") {
-        return (
-          parseDate(a.deadline).getTime() -
-          parseDate(b.deadline).getTime()
-        );
-      }
-      return 0; // relevance
-    });
+    if (activeFilter !== 0) {
+      const f = filters[activeFilter].toLowerCase();
+      data = data.filter((i) =>
+        f === "remote" ? i.isRemote : i.category === f
+      );
+    }
+
+    if (search.trim()) {
+      const q = search.toLowerCase();
+      data = data.filter(
+        (i) =>
+          i.title.toLowerCase().includes(q) ||
+          i.company.toLowerCase().includes(q)
+      );
+    }
+
+    return data;
+  }, [activeFilter, search]);
+
+  /* ================= RENDER ================= */
 
   return (
-    <div className="internship-page">
-      {/* Header */}
-      <div className="header-wrapper">
-        <div className="page-header">
-          <div className="back-arrow-title">
-<span
-  className="back-arrow"
-  onClick={() => onBack?.()}
->
-  ←
-</span>
-            <h2>Internship Opportunities</h2>
-          </div>
-
-          <button
-            className="filter-btn"
-            onClick={() => setShowFilters(!showFilters)}
-          >
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <polygon points="22 3 2 3 10 12 10 19 14 21 14 12 22 3" />
-            </svg>
-            Filters
-          </button>
-        </div>
-      </div>
-
-      {/* Filter & Sort Panel */}
-      {showFilters && (
-        <div className="filter-panel">
-          <h3>Filter & Sort</h3>
-
-          <div className="filter-row">
-            <div>
-              <label>Industry</label>
-              <select
-                value={industry}
-                onChange={(e) => setIndustry(e.target.value)}
-              >
-                <option value="All">All Industries</option>
-                <option value="IT">IT</option>
-                <option value="Marketing">Marketing</option>
-                <option value="Finance">Finance</option>
-                <option value="Design">Design</option>
-                <option value="Media">Media</option>
-              </select>
+    <div className="internships-web">
+      {showReview ? (
+        /* ================= REVIEW SCREEN ================= */
+        <ReviewApplication onBack={() => setShowReview(false)} />
+      ) : selectedInternship ? (
+        /* ================= DETAILS SCREEN ================= */
+        <InternshipDetails
+          internship={selectedInternship}
+          onBack={() => setSelectedInternship(null)}
+          onApply={() => setShowReview(true)}
+        />
+      ) : (
+        /* ================= LIST SCREEN ================= */
+        <>
+          {/* Header */}
+          <header className="web-header">
+            <div className="left">
+              <button className="back-btn" onClick={() => onBack?.()}>
+                ←
+              </button>
+              <h1>Internships</h1>
             </div>
 
-            <div>
-              <label>Location</label>
-              <select
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-              >
-                <option value="All">All Locations</option>
-                <option value="Bangalore">Bangalore</option>
-                <option value="Mumbai">Mumbai</option>
-                <option value="Pune">Pune</option>
-                <option value="Hyderabad">Hyderabad</option>
-                <option value="Delhi">Delhi</option>
-                {/* <option value="Remote">Remote</option> */}
-              </select>
+            <div className="search-wrapper">
+              <input
+                placeholder="Search role, company..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+              <span className="filter-icon">⚙</span>
             </div>
+          </header>
 
-            <div>
-              <label>Duration</label>
-              <select
-                value={duration}
-                onChange={(e) => setDuration(e.target.value)}
+          {/* Filters */}
+          <div className="filter-bar">
+            {filters.map((f, i) => (
+              <button
+                key={f}
+                className={`filter-btn ${i === activeFilter ? "active" : ""}`}
+                onClick={() => setActiveFilter(i)}
               >
-                <option value="All">All Durations</option>
-                <option value="2 months">2 months</option>
-                <option value="3 months">3 months</option>
-                <option value="4 months">4 months</option>
-                <option value="6 months">6 months</option>
-              </select>
-            </div>
+                {f}
+              </button>
+            ))}
           </div>
 
-          <div className="sort-row">
-            <span>Sort By</span>
+          {/* Internship Grid */}
+          <div className="internship-grid">
+            {filteredData.map((i) => (
+              <div className="card" key={i.id}>
+                <div className="card-header">
+                  <div className="company">
+                    <div
+                      className="logo"
+                      style={{ backgroundColor: i.logoColor }}
+                    >
+                      {i.company[0]}
+                    </div>
+                    <div>
+                      <h3>{i.title}</h3>
+                      <p>{i.company}</p>
+                    </div>
+                  </div>
+                  <button className="bookmark">🔖</button>
+                </div>
 
-            <button
-              className={sortBy === "relevance" ? "active" : ""}
-              onClick={() => setSortBy("relevance")}
-            >
-              Relevance
-            </button>
+                <div className="tags">
+                  <span>📍 {i.location}</span>
+                  <span>⏳ {i.duration}</span>
+                  {i.type && <span>💰 {i.type}</span>}
+                </div>
 
-            <button
-              className={sortBy === "deadline" ? "active" : ""}
-              onClick={() => setSortBy("deadline")}
-            >
-              Application Deadline
-            </button>
+                <p className="desc">{i.description}</p>
+
+                <button
+                  className="apply-btn"
+                  onClick={() => setSelectedInternship(i)}
+                >
+                  Apply Now
+                </button>
+              </div>
+            ))}
           </div>
-        </div>
+        </>
       )}
-
-      {/* Internship List */}
-      <div className="internship-list">
-        {filteredInternships.map((item, index) => (
-          <div className="internship-card" key={index}>
-            <div className="card-header">
-              <h3>{item.title}</h3>
-              {item.tag && <span className="tag">{item.tag}</span>}
-            </div>
-
-            <p className="company">{item.company}</p>
-
-            <div className="info-row">
-              <span>📍 {item.location}</span>
-              <span>⏳ {item.duration}</span>
-            </div>
-
-            <div className="info-row">
-              <span>📅 Deadline: {item.deadline}</span>
-              <span className="stipend">{item.stipend}</span>
-            </div>
-
-            <p className="description">{item.description}</p>
-
-            <button className="apply-btn">Apply Now</button>
-          </div>
-        ))}
-      </div>
     </div>
   );
 };
 
-export default Internship;
+export default Internships;

@@ -5,17 +5,20 @@ import Companies from "../Education/Companies";
 import Students from "../Education/Students";
 import type { Student } from "../Education/Students";
 
-import JobsPage from "../Education/Jobs";
+import JobsPage from "./TrainingPage";
 import Internship from "../Education/Internships";
 import CandidateProfile from "../Education/CandidateProfile";
+import TrainingPage from "./TrainingPage";
+
 
 type Page =
   | "home"
   | "students"
   | "internships"
   | "companies"
-  | "jobs"
+  | "training"
   | "candidateProfile";
+
 
 const searchableItems = [
   "Students",
@@ -66,9 +69,10 @@ const Education: React.FC = () => {
           <Companies onBack={() => setPage("home")} />
         )}
 
-        {page === "jobs" && (
-          <JobsPage onBack={() => setPage("home")} />
-        )}
+        {page === "training" && (
+  <TrainingPage onBack={() => setPage("home")} />
+)}
+
       </div>
     );
   }
@@ -143,10 +147,11 @@ const Education: React.FC = () => {
             <p>Companies</p>
           </div>
 
-          <div>
-            <span className="green">🧭</span>
-            <p>Training</p>
-          </div>
+          <div onClick={() => setPage("training")}>
+  <span className="green">🧭</span>
+  <p>Training</p>
+</div>
+
         </div>
       </div>
 
