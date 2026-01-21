@@ -24,10 +24,17 @@ interface ServiceProvider {
   skills: string[];
   hourlyRate: number;
   image: string;
+  
   isActive: boolean;
+   inactiveReason?: string;
   isEnrolled: boolean;
+    tasksCompleted: number;        
+  speciality?: string[];     
+   certificates?: string[];    
+ 
   organisation?: OrganisationDetails;
   cuisineStyle?: "North" | "South";
+
 }
 
 const categories = [
@@ -48,10 +55,19 @@ const serviceProviders: ServiceProvider[] = [
     reviews: 156,
     skills: ["Pipe Fitting", "Drainage"],
     hourlyRate: 350,
+        tasksCompleted: 6,
+  speciality: [ "Leak Fixing",
+    "Bathroom Fittings",
+    "Pipeline Repair",
+    "Tap Installation",
+    "Water Motor Repair",
+    "Drain Cleaning",],
     image:
       "https://images.unsplash.com/photo-1540569014015-19a7be504e3a?w=600",
     isActive: true,
     isEnrolled: true,
+    certificates: ["Plumbing Level 1", "Safety Training"],
+
   },
   {
     id: "2",
@@ -59,12 +75,25 @@ const serviceProviders: ServiceProvider[] = [
     service: "Cleaner",
     rating: 5.0,
     reviews: 203,
+    inactiveReason: "Currently on medical leave",
     skills: ["Deep Cleaning", "Sanitization"],
     hourlyRate: 250,
+     tasksCompleted: 18,
+     speciality: [
+    "Deep Cleaning",
+    "Kitchen Cleaning",
+    "Bathroom Cleaning",
+    "Sanitization",
+    "Sofa Cleaning",
+    "Office Cleaning",
+  ],
+  
     image:
       "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600",
     isActive: false,
     isEnrolled: true,
+    certificates: ["Hygiene & Sanitization"],
+
   },
   {
     id: "3",
@@ -78,11 +107,18 @@ const serviceProviders: ServiceProvider[] = [
       "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=600",
     isActive: true,
     isEnrolled: true,
-    organisation: {
-      orgName: "Sparkle Cleaning Pvt Ltd",
-      gstin: "29ABCDE1234F1Z5",
-      group: 10,
-    },
+     tasksCompleted: 6,
+  speciality: [   "Wiring",
+    "Switch Repair",
+    "Fan Installation",
+    "Light Fixtures",
+    "Inverter Setup",
+    "MCB Repair",],
+    // organisation: {
+    //   orgName: "Sparkle Cleaning Pvt Ltd",
+    //   gstin: "29ABCDE1234F1Z5",
+    //   group: 10,
+    // },
   },
   {
     id: "24",
@@ -93,10 +129,21 @@ const serviceProviders: ServiceProvider[] = [
     reviews: 88,
     skills: ["Andhra Cuisine", "Meals"],
     hourlyRate: 500,
+      tasksCompleted: 6,
+  speciality: [
+    "Andhra Meals",
+    "Sambar",
+    "Rasam",
+    "Avakaya Pickle",
+    "Vegetarian Thali",
+    "Millet Dishes",
+  ],
     image:
       "https://images.unsplash.com/photo-1623582854588-d60de57fa33f?w=600",
     isActive: true,
     isEnrolled: true,
+    certificates: ["Food Safety Certification"],
+
   },
   {
     id: "25",
@@ -107,6 +154,13 @@ const serviceProviders: ServiceProvider[] = [
     reviews: 112,
     skills: ["Tandoori", "Mughlai"],
     hourlyRate: 600,
+        tasksCompleted: 16,
+  speciality: [  "Dry Cleaning",
+    "Steam Press",
+    "Fabric Care",
+    "Stain Removal",
+    "Bulk Laundry",
+    "Ironing",],
     image:
       "https://images.unsplash.com/photo-1566492031773-4f4e44671857?w=600",
     isActive: true,
@@ -213,14 +267,24 @@ const Freelancer: React.FC = () => {
       {/* Cards */}
       <div className="list">
         {filteredProviders.map((p) => (
-          <div key={p.id} className="card">
-            <img src={p.image} alt={p.name} />
+          <div
+  key={p.id}
+  className={`card ${!p.isActive ? "disabled" : ""}`}
+>
+
+            <div className="card-image">
+  <img src={p.image} alt={p.name} />
+</div>
+
 
             <div className="card-body">
               <div className="card-header">
                 <div>
                   <h3>{p.name}</h3>
-                  <p className="service">{p.service}</p>
+                  <p className="service">
+  Role: <strong>{p.service}</strong>
+</p>
+
 
                   <div
                     className={`status ${
@@ -230,6 +294,11 @@ const Freelancer: React.FC = () => {
                     <span />
                     {p.isActive ? "Active" : "Inactive"}
                   </div>
+                  {!p.isActive && p.inactiveReason && (
+  <div className="inactive-reason">
+    Reason: {p.inactiveReason}
+  </div>
+)}
                 </div>
 
                 <div className="rating">
@@ -250,6 +319,34 @@ const Freelancer: React.FC = () => {
                   <span key={s}>{s}</span>
                 ))}
               </div>
+             <div className="meta">
+  {p.tasksCompleted} tasks completed
+</div>
+
+{p.speciality && p.speciality.length > 0 && (
+  <div className="speciality">
+    <small>PRO AT</small>
+    <div className="skills">
+      {p.speciality.map((item) => (
+        <span key={item}>{item}</span>
+      ))}
+    </div>
+  </div>
+)}
+{p.certificates && p.certificates.length > 0 && (
+  <div className="certificates">
+    <small>CERTIFICATES</small>
+    <div className="skills">
+      {p.certificates.map((cert) => (
+        <span key={cert}>{cert}</span>
+      ))}
+    </div>
+  </div>
+)}
+
+
+
+
 
               <div className="footer">
                 <div>
