@@ -112,7 +112,7 @@ html, body {
 .location-bar {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
 .label {
@@ -128,8 +128,10 @@ html, body {
 }
 
 .change {
+  margin-left: 6px;
   color: #2563eb;
   cursor: pointer;
+  font-weight: 500;
 }
 
 /* =======================
@@ -272,6 +274,251 @@ html, body {
   background: #f8fafc;
   padding-top: 0;
 }
+.dropdown-wrapper {
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 42px;
+  left: 0;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+  overflow: hidden;
+  z-index: 20;
+}
+
+.dropdown-menu div {
+  padding: 10px 16px;
+  cursor: pointer;
+}
+
+.dropdown-menu div:hover {
+  background: #f1f5f9;
+}
+/* ===========================
+   SEARCH + FILTER BAR (CLEAN UI)
+=========================== */
+.search-filter-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 20px 0;
+    margin-bottom: 10px;
+
+}
+
+/* SEARCH BAR */
+.search-box.wide {
+  flex: 1.5;
+  height: 52px;
+
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+
+  padding: 0 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.search-box.wide svg {
+  font-size: 20px;
+  color: #64748b;
+}
+
+.search-box.wide input {
+  border: none;
+  outline: none;
+  font-size: 15px;
+  width: 100%;
+}
+
+/* FILTER BUTTON GROUP */
+.top-filters {
+  display: flex;
+  gap: 4px;
+  flex: 1;
+  margin-top: -15px;
+}
+
+
+/* LOCATION – FIXED */
+.location-bar.compact {
+  margin-top: 6px;   /* reduced gap from search */
+  margin-bottom: 18px;
+}
+
+
+.label {
+  font-size: 12px;
+  color: #64748b;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.loc-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+}
+
+.change {
+  margin-left: 8px;
+  color: #2563eb;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+
+/* FILTER BUTTON */
+.top-filters button {
+  height: 52px;
+  min-width: 160px;
+
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+
+  padding: 0 16px;
+  font-size: 14px;
+  font-weight: 500;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  cursor: pointer;
+  position: relative;
+
+  transition: all 0.2s ease;
+}
+
+.top-filters button svg {
+  font-size: 20px;
+  color: #64748b;
+}
+
+/* HOVER */
+.top-filters button:hover {
+  border-color: #c7d2fe;
+  background: #f8fafc;
+}
+
+/* ACTIVE */
+.top-filters button.active {
+  border-color: #2563eb;
+  background: #eef2ff;
+  color: #2563eb;
+}
+
+/* ===========================
+   FILTER DROPDOWN (ALIGNED)
+=========================== */
+.filter-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+
+  width: 100%;
+  min-width: 220px;
+
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+
+  box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+  z-index: 9999;
+
+  overflow: hidden;
+  animation: dropdownFade 0.15s ease;
+}
+
+.filter-dropdown div {
+  padding: 14px 18px;
+  font-size: 14px;
+  font-weight: 500;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  cursor: pointer;
+}
+
+.filter-dropdown div:not(:last-child) {
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.filter-dropdown div:hover {
+  background: #f8fafc;
+}
+
+.filter-dropdown div.active {
+  background: #eef2ff;
+  color: #2563eb;
+  font-weight: 600;
+}
+
+/* ===========================
+   DROPDOWN ANIMATION
+=========================== */
+@keyframes dropdownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===========================
+   RESPONSIVE (TABLET & MOBILE)
+=========================== */
+@media (max-width: 900px) {
+  .search-filter-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-box.wide {
+    width: 100%;
+    flex: 1;
+  }
+
+  .top-filters {
+    width: 100%;
+  }
+
+  .filter-dropdown {
+    width: 100%;
+    left: 0;
+    right: 0;
+  }
+}
+
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .web-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .sell-btn {
+    width: 100%;
+  }
+
+  .property-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 
 /* for form */
 /* =======================
@@ -573,13 +820,29 @@ html, body {
 }
 
 /* card css */
-.buyerPage {
-  background: #0a0c10;
-  color: #fff;
-  height: 100vh;              /* 🔑 REQUIRED */
+
+/* OVERLAY */
+.buyerOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+/* WEB MODAL */
+.buyerPage.web {
+  width: 100%;
+  max-width: 880px;
+  height: 90vh;
+  background: #ffffff;
+  border-radius: 20px;
   display: flex;
   flex-direction: column;
-  overflow: hidden;           /* 🔑 REQUIRED */
+  overflow: hidden;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.35);
 }
 
 /* HEADER */
@@ -587,14 +850,18 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px;
-  border-bottom: 1px solid #232936;
+  padding: 18px 22px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.buyerHeader h2 {
+  font-size: 18px;
+  font-weight: 600;
 }
 
 .buyerBackBtn {
   background: none;
   border: none;
-  color: white;
   font-size: 18px;
   cursor: pointer;
 }
@@ -603,125 +870,117 @@ html, body {
   font-size: 22px;
 }
 
-/* 🔑 SCROLL FIX */
+/* SCROLLABLE CONTENT */
 .buyerContent {
   flex: 1;
   overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
+  padding-bottom: 12px;
+}
+
+/* INVISIBLE SCROLLBAR */
+.invisible-scroll::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+.invisible-scroll {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE */
 }
 
 /* IMAGE */
-.buyerImageSection {
-  position: relative;
-}
-
 .buyerImageSection img {
   width: 100%;
-  height: 380px;
+  height: 200px;
   object-fit: cover;
 }
 
 /* BADGES */
 .buyerBadges {
   position: absolute;
-  top: 16px;
-  left: 16px;
-  display: flex;
-  gap: 8px;
+  top: 18px;
+  left: 18px;
 }
 
 .badgeSale {
   background: #2563eb;
-  padding: 6px 10px;
-  border-radius: 6px;
-  font-size: 12px;
-}
-
-.badgeRent {
-  background: #f59e0b;
-  padding: 6px 10px;
-  border-radius: 6px;
-  font-size: 12px;
-}
-
-.badgeCondition {
-  background: #8b5cf6;
-  padding: 6px 10px;
-  border-radius: 6px;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 999px;
   font-size: 12px;
 }
 
 /* DOTS */
 .buyerDots {
-  position: absolute;
-  bottom: 16px;
-  left: 50%;
-  transform: translateX(-50%);
   display: flex;
+  justify-content: center;
   gap: 6px;
+  margin-top: -20px;
 }
 
 .dot {
   width: 8px;
   height: 8px;
-  background: #64748b;
+  background: #cbd5f5;
   border-radius: 50%;
   cursor: pointer;
 }
 
 .dot.active {
-  width: 22px;
-  background: white;
+  width: 24px;
+  background: #2563eb;
 }
 
 /* DETAILS */
 .buyerDetails {
-  padding: 16px;
+  padding: 22px;
 }
 
 .buyerTitleRow {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+
+.buyerTitleRow h1 {
+  font-size: 22px;
 }
 
 .buyerRating {
-  background: #161b26;
+  background: #f1f5f9;
   padding: 6px 10px;
   border-radius: 8px;
   display: flex;
-  align-items: center;
   gap: 4px;
 }
 
 .buyerPrice {
-  font-size: 28px;
-  color: #135bec;
+  font-size: 30px;
+  font-weight: 700;
+  color: #2563eb;
   margin: 12px 0;
 }
 
 .buyerInfo {
-  color: #94a3b8;
-  margin-bottom: 6px;
+  color: #475569;
+  display: flex;
+  gap: 6px;
+  align-items: center;
 }
 
+/* SPECS */
 .buyerSpecs {
   display: flex;
-  gap: 12px;
-  margin: 16px 0;
+  gap: 14px;
+  margin: 18px 0;
 }
 
 .specBox {
-  background: #161b26;
-  border: 1px solid #232936;
-  border-radius: 12px;
-  padding: 12px;
-  text-align: center;
   flex: 1;
-}
-
-.buyerDescription {
-  color: #94a3b8;
-  line-height: 1.6;
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 16px;
+  text-align: center;
 }
 
 /* FORM */
@@ -730,68 +989,189 @@ html, body {
   width: 100%;
   padding: 14px;
   margin-top: 12px;
-  background: #161b26;
-  border: 1px solid #232936;
   border-radius: 12px;
-  color: white;
+  border: 1px solid #e5e7eb;
+  font-size: 14px;
 }
 
 .buyerDetails textarea {
-  min-height: 100px;
+  min-height: 110px;
 }
 
-/* BOTTOM */
+/* BOTTOM BAR */
 .buyerBottom {
-  position: sticky;
-  bottom: 0;
-  background: #0a0c10;
-  border-top: 1px solid #232936;
-  padding: 16px;
+      position: static;
+  border-top: 1px solid #e5e7eb;
+  padding: 18px 22px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: #ffffff;
 }
 
 .buyerBottom button {
-  background: #135bec;
-  border: none;
+  background: #2563eb;
   color: white;
-  padding: 14px 20px;
-  border-radius: 12px;
-  font-weight: 700;
+  border: none;
+  padding: 14px 24px;
+  border-radius: 14px;
+  font-weight: 600;
   display: flex;
   gap: 8px;
   cursor: pointer;
 }
 
-/* MODAL */
+/* SUCCESS MODAL */
 .buyerModalOverlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.8);
+  background: rgba(0,0,0,0.7);
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 }
 
 .buyerSuccessModal {
-  background: #161b26;
-  padding: 32px;
-  border-radius: 20px;
+  background: #ffffff;
+  padding: 34px;
+  border-radius: 22px;
   text-align: center;
 }
 
 .buyerSuccessModal button {
   margin-top: 20px;
-  padding: 12px 24px;
-  background: #135bec;
+  padding: 12px 26px;
+  background: #2563eb;
   border: none;
+  color: white;
   border-radius: 10px;
+}
+
+.imageTitle {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #0f172a;
+}
+
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .buyerPage.web {
+    max-width: 100%;
+    height: 100vh;
+    border-radius: 0;
+  }
+}
+
+/* SPLIT LAYOUT */
+/* SPLIT LAYOUT */
+.buyerSplit {
+  display: flex;
+  gap: 28px;
+  padding: 22px;
+}
+
+/* LEFT – IMAGE SIDE */
+.imageSide {
+  width: 45%;
+}
+
+/* RIGHT – FORM SIDE */
+.formSide {
+  flex: 1;
+}
+
+
+
+/* IMAGE INFO */
+.imageInfo {
+  margin-top: 16px;
+}
+
+.priceRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.imagePrice {
+  font-size: 18px;
+  font-weight: 700;
+  color: #2563eb;
+}
+
+.imageRating {
+  background: #f1f5f9;
+  padding: 6px 10px;
+  border-radius: 10px;
+  display: flex;
+  gap: 4px;
+  font-weight: 600;
+}
+
+/* SPECS */
+.buyerSpecs {
+  display: flex;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.specBox {
+  flex: 1;
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 14px;
+  text-align: center;
+}
+
+/* FORM */
+.formSide input,
+.formSide textarea {
+  width: 100%;
+  padding: 14px;
+  margin-top: 12px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  font-size: 14px;
+}
+
+.formSide textarea {
+  min-height: 120px;
+}
+
+/* MOBILE */
+@media (max-width: 900px) {
+  .buyerSplit {
+    flex-direction: column;
+  }
+
+  .imageSide,
+  .formSide {
+    width: 100%;
+  }
+
+  .buyerImageSection img {
+    height: 260px;
+  }
+}
+
+
+.delete-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0,0,0,0.7);
   color: white;
   cursor: pointer;
+  font-size: 14px;
 }
 
-.property-card {
-  cursor: pointer;
+.delete-btn:hover {
+  background: #ef4444;
 }
-

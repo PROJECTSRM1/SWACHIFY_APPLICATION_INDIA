@@ -33,140 +33,132 @@ export default function BuyerPageWeb({ property, onBack }: any) {
   };
 
   return (
-    <div className="buyerPage">
-        
-      {/* HEADER */}
-      <header className="buyerHeader">
-        <button className="buyerBackBtn" onClick={onBack}>
-          <MdArrowBackIos />
-        </button>
-        <h2>Property Details</h2>
-        <MdFavoriteBorder className="buyerFavIcon" />
-      </header>
+    <div className="buyerOverlay">
+      <div className="buyerPage web">
 
-      {/* 🔑 SCROLLABLE CONTENT */}
-      <div className="buyerContent">
-        {/* IMAGE */}
-        <div className="buyerImageSection">
-          <img src={images[activeImage]} alt="property" />
+        {/* HEADER */}
+        <header className="buyerHeader">
+          <button className="buyerBackBtn" onClick={onBack}>
+            <MdArrowBackIos />
+          </button>
+          <h2>Property Details</h2>
+          <MdFavoriteBorder className="buyerFavIcon" />
+        </header>
 
-          <div className="buyerBadges">
-            <span
-              className={
-                property.listingType === "buy" ? "badgeSale" : "badgeRent"
-              }
-            >
-              {property.listingType === "buy" ? "FOR SALE" : "FOR RENT"}
-            </span>
+        {/* CONTENT */}
+        <div className="buyerContent invisible-scroll buyerSplit">
 
-            {property.itemCondition && (
-              <span className="badgeCondition">
-                {property.itemCondition === "New Item" ? "NEW" : "USED"}
-              </span>
-            )}
-          </div>
+          {/* LEFT – IMAGE + DETAILS */}
+          <div className="buyerLeft imageSide">
+            <div className="buyerImageSection">
+              <img src={images[activeImage]} alt="property" />
 
-          <div className="buyerDots">
-            {images.map((_: any, i: number) => (
-              <span
-                key={i}
-                className={i === activeImage ? "dot active" : "dot"}
-                onClick={() => setActiveImage(i)}
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* DETAILS */}
-        <section className="buyerDetails">
-          <div className="buyerTitleRow">
-            <h1>{property.title}</h1>
-            {property.rating && (
-              <div className="buyerRating">
-                <MdStar /> {property.rating}
+              <div className="buyerBadges">
+                <span
+                  className={
+                    property.listingType === "buy" ? "badgeSale" : "badgeRent"
+                  }
+                >
+                  {property.listingType === "buy" ? "FOR SALE" : "FOR RENT"}
+                </span>
               </div>
-            )}
-          </div>
 
-          <div className="buyerPrice">{property.price}</div>
-
-          {property.location && (
-            <div className="buyerInfo">
-              <MdLocationOn /> {property.location}
+              <div className="buyerDots">
+                {images.map((_: any, i: number) => (
+                  <span
+                    key={i}
+                    className={i === activeImage ? "dot active" : "dot"}
+                    onClick={() => setActiveImage(i)}
+                  />
+                ))}
+              </div>
             </div>
-          )}
 
-          {property.area && <div className="buyerInfo">📍 {property.area}</div>}
+            {/* IMAGE BOTTOM INFO */}
+            <div className="imageInfo">
 
-          <div className="buyerSpecs">
-            {property.sqft && (
-              <div className="specBox">
-                <strong>{property.sqft}</strong>
-                <span>SQFT</span>
+              {/* ✅ TITLE MOVED HERE */}
+              <h1 className="imageTitle">{property.title}</h1>
+
+              <div className="priceRow">
+                <span className="imagePrice">{property.price}</span>
+                {property.rating && (
+                  <span className="imageRating">
+                    <MdStar /> {property.rating}
+                  </span>
+                )}
               </div>
-            )}
-            {property.bhk && (
-              <div className="specBox">
-                <strong>{property.bhk}</strong>
-                <span>BHK</span>
+
+              <div className="buyerInfo">
+                <MdLocationOn /> {property.area}
               </div>
-            )}
+
+              <div className="buyerSpecs">
+                {property.sqft && (
+                  <div className="specBox">
+                    <strong>{property.sqft}</strong>
+                    <span>SQFT</span>
+                  </div>
+                )}
+                {property.bhk && (
+                  <div className="specBox">
+                    <strong>{property.bhk}</strong>
+                    <span>BHK</span>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
 
-          {property.description && (
-            <>
-              <h3>Description</h3>
-              <p className="buyerDescription">{property.description}</p>
-            </>
-          )}
+          {/* RIGHT – FORM ONLY */}
+          <div className="buyerRight formSide">
+            <h3>Your Information</h3>
 
-          {/* FORM */}
-          <h3>Your Information</h3>
+            <input
+              placeholder="Full Name"
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+            />
 
-          <input
-            placeholder="Full Name"
-            value={fullName}
-            onChange={(e) => setFullName(e.target.value)}
-          />
+            <input
+              placeholder="Mobile Number"
+              value={mobile}
+              onChange={(e) => setMobile(e.target.value)}
+            />
 
-          <input
-            placeholder="Mobile Number"
-            value={mobile}
-            onChange={(e) => setMobile(e.target.value)}
-          />
+            <textarea
+              placeholder="Delivery Address"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+            />
+          </div>
+        </div>
 
-          <textarea
-            placeholder="Delivery Address"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-          />
-        </section>
+        {/* BOTTOM BAR */}
+        <footer className="buyerBottom">
+          <div>
+            <span>Total Amount</span>
+            <strong>{property.price}</strong>
+          </div>
+
+          <button onClick={handleBuy}>
+            <MdShoppingCart />
+            {property.listingType === "buy" ? "Buy Property" : "Book Property"}
+          </button>
+        </footer>
+
+        {/* SUCCESS MODAL */}
+        {showSuccess && (
+          <div className="buyerModalOverlay">
+            <div className="buyerSuccessModal">
+              <MdCheckCircle size={72} color="#22c55e" />
+              <h2>Booked Successfully</h2>
+              <p>Owner will contact you shortly</p>
+              <button onClick={() => setShowSuccess(false)}>Done</button>
+            </div>
+          </div>
+        )}
       </div>
-
-      {/* BOTTOM BAR */}
-      <footer className="buyerBottom">
-        <div>
-          <span>Total Amount</span>
-          <strong>{property.price}</strong>
-        </div>
-
-        <button onClick={handleBuy}>
-          <MdShoppingCart />
-          {property.listingType === "buy" ? "Buy Property" : "Book Property"}
-        </button>
-      </footer>
-
-      {/* SUCCESS MODAL */}
-      {showSuccess && (
-        <div className="buyerModalOverlay">
-          <div className="buyerSuccessModal">
-            <MdCheckCircle size={72} color="#10b981" />
-            <h2>Booked Successfully</h2>
-            <p>Owner will contact you shortly</p>
-            <button onClick={() => setShowSuccess(false)}>Done</button>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
