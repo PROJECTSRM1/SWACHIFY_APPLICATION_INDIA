@@ -12,6 +12,10 @@ type Company = {
   isRemote?: boolean;
   status: "Active" | "Hiring Frozen";
 };
+type Props = {
+  onBack: () => void;
+};
+
 
 const COMPANIES: Company[] = [
   {
@@ -97,7 +101,8 @@ const LOCATIONS = [
 
 const SIZES = ["All", "50-200", "100-200", "200-500", "500+", "1000+"];
 
-export default function Companies() {
+export default function Companies({ onBack }: Props) {
+
   const [tab, setTab] = useState<"all" | "active">("all");
   const [industry, setIndustry] = useState("All");
   const [location, setLocation] = useState("All");
@@ -129,7 +134,8 @@ export default function Companies() {
     <div className="companies-layout">
       <div className="page-header">
         <div className="header-left">
-          <button className="back-btn" onClick={() => window.history.back()}>
+          <button className="back-btn" onClick={onBack}>
+
             ←
           </button>
           <h2>Companies</h2>

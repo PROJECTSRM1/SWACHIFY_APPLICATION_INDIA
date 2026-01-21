@@ -1,124 +1,206 @@
 import { useMemo, useState } from "react";
 import "./Training.css";
+// import { useNavigate } from "react-router-dom";
+import CourseEnroll from "./CourseEnroll";
+import CourseDetails from "./CourseDetails";
 
-/* ================= TYPES ================= */
+
+
+type Props = {
+  onBack: () => void;
+};
 
 type Category = "All" | "Java" | "Python" | "Management";
 
-type Training = {
+interface Course {
   id: number;
   title: string;
   subtitle: string;
-  category: Exclude<Category, "All">;
   progress: number;
   price: number;
+  status?: string;
   modules: string[];
-  status?: "IN PROGRESS";
+  category: Exclude<Category, "All">;
   image: string;
-};
+}
 
-type Props = {
-  onBack?: () => void;
-};
+const CATEGORIES: Category[] = ["All", "Java", "Python", "Management"];
 
-/* ================= DATA ================= */
 
-const TRAININGS: Training[] = [
+const FALLBACK_IMAGE =
+  "https://images.unsplash.com/photo-1518779578993-ec3579fee39f";
+
+const COURSES: Course[] = [
   {
     id: 1,
     title: "Java Microservices Architecture",
     subtitle: "Advanced Backend Development",
-    category: "Java",
     progress: 75,
     price: 999,
     status: "IN PROGRESS",
+    category: "Java",
+    image:   "https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&q=80",
     modules: [
       "Spring Boot Basics",
       "REST APIs",
       "Microservices Design",
       "Docker & Kubernetes",
     ],
-    image:
-      "https://images.unsplash.com/photo-1581091215363-9d6c99f145d3?w=1400",
   },
   {
     id: 2,
     title: "Python for Data Engineering",
-    subtitle: "Data Pipelines & ETL Mastery",
-    category: "Python",
+    subtitle: "Data Pipelines & ETL mastery",
     progress: 42,
     price: 499,
+    category: "Python",
+    image: "https://images.unsplash.com/photo-1517433456452-f9633a875f6f",
     modules: [
       "Python Fundamentals",
       "ETL Pipelines",
       "Apache Airflow",
       "Data Warehousing",
     ],
-    image:
-      "https://images.unsplash.com/photo-1517433456452-f9633a875f6f?w=1400",
   },
   {
     id: 3,
     title: "Project Management Pro",
     subtitle: "Agile & Scrum Methodologies",
-    category: "Management",
     progress: 12,
     price: 999,
+    category: "Management",
+    image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f",
     modules: [
       "Project Lifecycle",
       "Agile & Scrum",
       "Risk Management",
       "Stakeholder Communication",
     ],
-    image:
-      "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1400",
+  },
+  {
+    id: 4,
+    title: "Advanced Java DSA",
+    subtitle: "Problem Solving & Competitive Coding",
+    progress: 0,
+    price: 999,
+    category: "Java",
+    image: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4",
+    modules: [
+      "Arrays & Strings",
+      "Recursion & Backtracking",
+      "Trees & Graphs",
+      "Dynamic Programming",
+      "Interview Patterns",
+    ],
+  },
+  {
+    id: 5,
+    title: "Python Machine Learning Bootcamp",
+    subtitle: "ML from Scratch to Deployment",
+    progress: 18,
+    price: 999,
+    category: "Python",
+    image: "https://images.unsplash.com/photo-1555949963-aa79dcee981c",
+    modules: [
+      "Python for ML",
+      "Supervised Learning",
+      "Unsupervised Learning",
+      "Model Evaluation",
+      "ML Deployment",
+    ],
+  },
+  {
+    id: 6,
+    title: "Leadership & Team Management",
+    subtitle: "Managing High Performance Teams",
+    progress: 60,
+    price: 499,
+    category: "Management",
+    image: "https://images.unsplash.com/photo-1556761175-4b46a572b786",
+    modules: [
+      "Leadership Styles",
+      "Team Motivation",
+      "Conflict Resolution",
+      "Decision Making",
+    ],
   },
 ];
 
-/* ================= COMPONENT ================= */
-
 export default function TrainingPage({ onBack }: Props) {
-  console.log("TrainingPage rendered"); // debug-safe
+  const [activeCategory, setActiveCategory] = useState<Category>("All");
+  // const navigate = useNavigate();
+  const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
+  const [showDetails, setShowDetails] = useState(false);
 
-  const [category, setCategory] = useState<Category>("All");
 
-  const filteredTrainings = useMemo(() => {
-    if (category === "All") return TRAININGS;
-    return TRAININGS.filter(t => t.category === category);
-  }, [category]);
+
+
+  const filteredCourses = useMemo(() => {
+    return activeCategory === "All"
+      ? COURSES
+      : COURSES.filter(c => c.category === activeCategory);
+  }, [activeCategory]);
+  // AFTER CONFIRM → SHOW COURSE DETAILS
+if (selectedCourse && showDetails) {
+  return <CourseDetails />;
+}
+
+// ENROLL PAGE
+if (selectedCourse) {
+  return (
+    <CourseEnroll
+      course={{
+        id: selectedCourse.id,
+        title: selectedCourse.title,
+        duration: "6 Weeks",
+        rating: 4.8,
+        features: selectedCourse.modules,
+      }}
+      onBack={() => setSelectedCourse(null)}
+      onConfirm={() => setShowDetails(true)}   // 🔥 THIS WAS MISSING
+    />
+  );
+}
+
+
 
   return (
     <div className="training-page">
-      {/* HEADER */}
       <div className="training-header">
-        <h2 className="back-title" onClick={() => onBack?.()}>
-          ← Active Training
-        </h2>
-        <p className="sub-text">Pick up where you left off</p>
-      </div>
+  <button className="back-btn" onClick={onBack}>←</button>
 
-      {/* CATEGORY FILTER */}
+  <div>
+    <h1>Active Training</h1>
+    <p>Pick up where you left off</p>
+  </div>
+</div>
+
+
       <div className="category-row">
-        {(["All", "Java", "Python", "Management"] as const).map(cat => (
+        {CATEGORIES.map(cat => (
           <button
             key={cat}
-            className={`category-btn ${category === cat ? "active" : ""}`}
-            onClick={() => setCategory(cat)}
+            className={`category-btn ${cat === activeCategory ? "active" : ""}`}
+            onClick={() => setActiveCategory(cat)}
           >
             {cat}
           </button>
         ))}
       </div>
 
-      {/* TRAINING LIST */}
-      <div className="training-list">
-        {filteredTrainings.map(course => (
-          <div key={course.id} className="training-card">
-            <img
-              className="course-image"
-              src={course.image}
-              alt={course.title}
-            />
+      <div className="course-grid">
+        {filteredCourses.map(course => (
+          <div key={course.id} className="course-card">
+            {/* IMAGE FIX */}
+            <div className="image-wrapper">
+              <img
+                src={course.image}
+                alt={course.title}
+                onError={e => {
+                  (e.currentTarget as HTMLImageElement).src = FALLBACK_IMAGE;
+                }}
+              />
+            </div>
 
             <div className="course-body">
               {course.status && (
@@ -126,9 +208,8 @@ export default function TrainingPage({ onBack }: Props) {
               )}
 
               <h3>{course.title}</h3>
-              <p className="subtitle">{course.subtitle}</p>
+              <p className="course-subtitle">{course.subtitle}</p>
 
-              {/* PROGRESS */}
               <div className="progress-row">
                 <div className="progress-bg">
                   <div
@@ -136,33 +217,35 @@ export default function TrainingPage({ onBack }: Props) {
                     style={{ width: `${course.progress}%` }}
                   />
                 </div>
-                <span className="progress-text">{course.progress}%</span>
+                <span>{course.progress}%</span>
               </div>
 
-              {/* MODULES */}
-              <div className="modules-box">
-                <p>Modules Included ({course.modules.length})</p>
+              <div className="modules">
+                <p className="modules-title">
+                  Modules Included ({course.modules.length})
+                </p>
                 <ul>
-                  {course.modules?.map(module => (
-                    <li key={module}>• {module}</li>
+                  {course.modules.map(m => (
+                    <li key={m}>{m}</li>
                   ))}
                 </ul>
               </div>
 
-              {/* FOOTER */}
-              <div className="course-footer">
+              <div className="card-footer">
                 <span className="price">₹{course.price}</span>
-                <button className="action-btn">
-                  {course.progress > 0 ? "Continue →" : "Enroll Now →"}
-                </button>
+                <button
+  className="enroll-btn"
+onClick={() => setSelectedCourse(course)}
+
+>
+  ENROLL NOW →
+</button>
+
+
               </div>
             </div>
           </div>
         ))}
-
-        {filteredTrainings.length === 0 && (
-          <p className="empty-text">No trainings found</p>
-        )}
       </div>
     </div>
   );
