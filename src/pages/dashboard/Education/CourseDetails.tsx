@@ -26,18 +26,31 @@ const materials: CourseMaterial[] = [
   },
 ];
 
-export default function CourseDetails() {
+type Props = {
+  course: {
+    title: string;
+    image: string;
+  };
+  onBack: () => void;
+};
+
+export default function CourseDetails({ course, onBack }: Props) {
   const [tab, setTab] = useState<"documents" | "media">("documents");
 
   return (
     <div className="course-details-page">
+      <button className="page-back-btn" onClick={onBack}>
+    ← Back
+  </button>
       {/* HERO */}
-      <div className="course-hero">
-        <button className="back-btn">← Back</button>
-        <h1>Python Machine Learning Bootcamp</h1>
+      <div
+        className="course-hero"
+        style={{ backgroundImage: `url(${course.image})` }}
+      >
+        <h1>{course.title}</h1>
       </div>
 
-      {/* STATS WITH ICONS */}
+      {/* STATS */}
       <div className="stats-row">
         <div className="stat-card">
           <div className="stat-icon">⏱</div>
@@ -82,7 +95,7 @@ export default function CourseDetails() {
           </button>
         </div>
 
-        {/* DOCUMENTS */}
+        {/* DOCUMENTS TAB */}
         {tab === "documents" && (
           <>
             <div className="materials-header">
@@ -125,6 +138,13 @@ export default function CourseDetails() {
               🔒 Progress tracking will be available once the course is unlocked.
             </div>
           </>
+        )}
+
+        {/* MEDIA TAB */}
+        {tab === "media" && (
+          <div className="locked-info">
+            🎥 Video content will be available once the course is unlocked.
+          </div>
         )}
       </div>
     </div>

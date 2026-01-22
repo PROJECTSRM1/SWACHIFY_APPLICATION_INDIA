@@ -49,6 +49,15 @@ export interface Property {
   distance: string;
   listingType: "buy" | "rent";
   category: "land" | "apartment" | "house" | "vehicle" | "commercial";
+  landType?: string;
+  ownerName?: string;
+  documents?: string[];
+  registrationStatus?: string;
+  registrationValue?: string;
+  marketValue?: string;
+  description?: string;
+
+  isUserListing?: boolean;
 }
 
 /* =======================
@@ -61,7 +70,7 @@ const DUMMY_PROPERTIES: Property[] = [
     id: "1",
     title: "1 BHK Villa in Downtown",
     price: "₹1,20,000",
-    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
+    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
     rating: 4.9,
     area: "Hyderabad",
     sqft: "1200",
@@ -70,12 +79,12 @@ const DUMMY_PROPERTIES: Property[] = [
     listingType: "buy",
     category: "house",
   },
-  
+
   {
     id: "3",
     title: "Open Land Near Highway",
     price: "₹2,40,000",
-    image: "https://images.unsplash.com/photo-1495107334309-fcf20504a5ab",
+    image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80",
     rating: 4.8,
     area: "Shamshabad",
     sqft: "2000",
@@ -83,11 +92,12 @@ const DUMMY_PROPERTIES: Property[] = [
     listingType: "buy",
     category: "land",
   },
+
   {
     id: "4",
     title: "3 BHK Independent House",
     price: "₹1,80,000",
-    image: "https://images.unsplash.com/photo-1570129477492-45c003edd2be",
+    image: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=800&q=80",
     rating: 4.7,
     area: "Kukatpally",
     sqft: "1600",
@@ -96,11 +106,12 @@ const DUMMY_PROPERTIES: Property[] = [
     listingType: "buy",
     category: "house",
   },
+
   {
     id: "5",
     title: "2 BHK Apartment for Rent",
     price: "₹18,000 / month",
-    image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+    image: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=800&q=80",
     rating: 4.6,
     area: "Gachibowli",
     sqft: "1100",
@@ -115,7 +126,7 @@ const DUMMY_PROPERTIES: Property[] = [
     id: "10",
     title: "Yamaha R15 V4",
     price: "₹1,82,000",
-    image: "https://images.unsplash.com/photo-1609630875171-b1321377ee65",
+    image: "https://images.unsplash.com/photo-1609630875171-b1321377ee65?auto=format&fit=crop&w=800&q=80",
     rating: 4.5,
     area: "Kukatpally",
     sqft: "",
@@ -123,25 +134,11 @@ const DUMMY_PROPERTIES: Property[] = [
     listingType: "buy",
     category: "vehicle",
   },
-
- 
-  {
-    id: "15",
-    title: "TVS Apache RTR 160",
-    price: "₹1,28,000",
-    image: "https://images.unsplash.com/photo-1625047509168-a7026f36de04",
-    rating: 4.2,
-    area: "LB Nagar",
-    sqft: "",
-    distance: "5.2 km away",
-    listingType: "buy",
-    category: "vehicle",
-  },
   {
     id: "16",
     title: "Hyundai i20 Sportz",
     price: "₹9,40,000",
-    image: "https://images.unsplash.com/photo-1621135802920-133df287f89c",
+    image: "https://th.bing.com/th/id/OIP.ZKNVZarz3HYsUlg24taeLwHaEK?w=290&h=180&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3",
     rating: 4.5,
     area: "Uppal",
     sqft: "",
@@ -150,6 +147,7 @@ const DUMMY_PROPERTIES: Property[] = [
     category: "vehicle",
   },
 ];
+
 
 const PROPERTY_TYPE_OPTIONS = [
   { label: "All", category: "all" },
@@ -173,37 +171,34 @@ const getUserListings = (): (Property & { isUserListing: boolean })[] => {
   );
 
   return stored.map((item: any) => ({
-    id: String(item.id),
+  id: String(item.id),
 
-    title:
-      item.propertyType === "Land" || item.propertyType === "Apartment"
-        ? `${item.propertyType} for ${
-            item.listingType === "sell" ? "Sale" : "Rent"
-          }`
-        : item.propertyType,
+  title: "Land for Sale",
 
-    price: `₹${item.price}`,
-    image: item.images?.[0],   // ⭐ image works
-    rating: 4.5,
-    area: item.area || item.location || "Near Your Area",
-    sqft: item.sqft || "",
-    bhk: item.bhk || "",
-    distance: "Just now",
+  price: `₹${item.price}`,
+  image: item.images?.[0],
+  images: item.images,
 
-    listingType: item.listingType === "sell" ? "buy" : "rent",
+  rating: 4.5,
+  area: item.landArea || "Near Your Area",
+  sqft: item.landSqft || "",
 
-    category:
-      item.propertyType === "Land"
-        ? "land"
-        : ["Apartment", "Villa", "Independent House"].includes(item.propertyType)
-        ? "house"
-        : ["Bike", "Car"].includes(item.propertyType)
-        ? "vehicle"
-        : "commercial",
+  // 👇 LAND DATA PASSED HERE
+  landType: item.landType,
+  ownerName: item.registeredOwner,
+  documents: item.documents,
+  registrationStatus: item.registrationStatus,
+  registrationValue: item.registrationValue,
+  marketValue: item.marketValue,
+  description: item.description,
 
-    // 🔴 THIS LINE IS VERY IMPORTANT
-    isUserListing: true,
-  }));
+  distance: "Just now",
+  listingType: "buy",
+  category: "land",
+  isUserListing: true,
+}));
+
+
 };
 
 
@@ -216,6 +211,11 @@ export default function MarketplaceWeb() {
   const [selectedProperty, setSelectedProperty] = useState<Property | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [location, setLocation] = useState("Detecting location...");
+  const [manualLocation, setManualLocation] = useState<string | null>(null);
+  const [editingLocation, setEditingLocation] = useState(false);
+const [tempLocation, setTempLocation] = useState("");
+
+
   const [properties, setProperties] = useState<
   (Property & { isUserListing?: boolean })[]
 >([]);
@@ -239,14 +239,16 @@ export default function MarketplaceWeb() {
   const [dateLabel, setDateLabel] = useState("Updated Date");
   const [ratingLabel, setRatingLabel] = useState("Ratings");
 
-  useEffect(() => {
+ useEffect(() => {
   const userListings = getUserListings();
-
-  // ✅ MERGE USER LISTINGS + DUMMY CARDS
   setProperties([...userListings, ...DUMMY_PROPERTIES]);
 
-  detectLocation();
-}, []);
+  if (!manualLocation) {
+    detectLocation();
+  }
+}, [manualLocation]);
+
+
 
 useEffect(() => {
   const refreshListings = () => {
@@ -259,17 +261,56 @@ useEffect(() => {
     window.removeEventListener("listing-added", refreshListings);
 }, []);
 
-  const detectLocation = () => {
-    navigator.geolocation?.getCurrentPosition(
-      () => setLocation("Near Your Area"),
-      () => setLocation("Near Your Area")
-    );
-  };
+ const detectLocation = () => {
+  if (!navigator.geolocation) {
+    setLocation("Near Your Area");
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    async (position) => {
+      const { latitude, longitude } = position.coords;
+
+      try {
+        const res = await fetch(
+          `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
+        );
+        const data = await res.json();
+        const address = data.address || {};
+
+        const city =
+          address.city ||
+          address.town ||
+          address.village ||
+          address.suburb ||
+          address.county ||
+          "";
+
+        const state = address.state || "";
+
+        if (city && state) {
+          setLocation(`Near ${city}, ${state}`);
+        } else if (city) {
+          setLocation(`Near ${city}`);
+        } else if (state) {
+          setLocation(`Near ${state}`);
+        } else {
+          setLocation("Near Your Area");
+        }
+      } catch {
+        setLocation("Near Your Area");
+      }
+    },
+    () => setLocation("Near Your Area")
+  );
+};
+
+
 
   /* =======================
      FILTER LOGIC (100% SAME)
   ======================= */
-  const filteredProperties = properties.filter((p) => {
+const filteredProperties = properties.filter((p: Property) => {
     const matchesType =
       filterType === "all" ? true : p.listingType === filterType;
 
@@ -288,18 +329,18 @@ useEffect(() => {
 
   return (
     <>
-      <div className="page">
-        <section className="marketplace-section">
-          <div className="container">
+      <div className="mp-page">
+        <section className="mp-marketplace-section">
+          <div className="mp-container">
 
             {/* HEADER */}
-            <header className="web-header">
-              <div className="header-left">
+            <header className="mp-web-header">
+              <div className="mp-header-left">
                 <h1>Marketplace</h1>
 
-                <div className="dropdown-wrapper">
+                <div className="mp-dropdown-wrapper">
                   <button
-                    className="dropdown"
+                    className="mp-dropdown"
                     onClick={() => setShowDropdown(!showDropdown)}
                   >
                     {filterType === "all"
@@ -311,7 +352,7 @@ useEffect(() => {
                   </button>
 
                   {showDropdown && (
-                    <div className="dropdown-menu">
+                    <div className="mp-dropdown-menu">
                       {(["all", "buy", "rent"] as const)
                         .filter((t) => t !== filterType)
                         .map((t) => (
@@ -330,14 +371,14 @@ useEffect(() => {
                 </div>
               </div>
 
-              <button className="sell-btn" onClick={() => setOpenSellForm(true)}>
+              <button className="mp-sell-btn" onClick={() => setOpenSellForm(true)}>
                 <MdAdd /> Sell / Rent
               </button>
             </header>
 
             {/* SEARCH + FILTERS */}
-            <div className="search-filter-row">
-              <div className="search-box wide">
+            <div className="mp-search-filter-row">
+              <div className="mp-search-box wide">
                 <MdSearch />
                 <input
                   placeholder="Search homes, cars, land..."
@@ -346,9 +387,8 @@ useEffect(() => {
                 />
               </div>
 
-              <div className="top-filters">
+              <div className="mp-top-filters">
 
-                {/* PROPERTY TYPE */}
                 {/* PROPERTY TYPE */}
 <button
   onClick={() => {
@@ -360,7 +400,7 @@ useEffect(() => {
   {propertyTypeLabel} <MdExpandMore />
 
   {showPropertyType && (
-    <div className="filter-dropdown">
+    <div className="mp-filter-dropdown">
       {PROPERTY_TYPE_OPTIONS.map((item) => (
         <div
           key={item.label}
@@ -386,7 +426,7 @@ useEffect(() => {
                 }}>
                   {dateLabel} <MdExpandMore />
                   {showDateFilter && (
-                    <div className="filter-dropdown">
+                    <div className="mp-filter-dropdown">
                       {["All Time", "Today", "Last 7 Days", "Last 30 Days"].map(
                         (d) => (
                           <div
@@ -412,7 +452,7 @@ useEffect(() => {
                 }}>
                   {ratingLabel} <MdExpandMore />
                   {showRatingFilter && (
-                    <div className="filter-dropdown">
+                    <div className="mp-filter-dropdown">
                       {[null, 4.5, 4.0, 3.5].map((r) => (
                         <div
                           key={String(r)}
@@ -434,20 +474,67 @@ useEffect(() => {
               </div>
             </div>
 
-            {/* LOCATION */}
-<div className="location-bar compact">
+            
+{/* LOCATION */}
+<div className="mp-location-bar compact">
   <div>
-    <span className="label">CURRENT LOCATION</span>
-    <div className="loc-row">
+    <span className="mp-label">CURRENT LOCATION</span>
+
+    <div className="mp-loc-row">
       <MdLocationOn />
-      <strong>{location}</strong>
-      <span className="change">Change</span>
+
+      {!editingLocation ? (
+        <>
+          <strong>{location}</strong>
+          <span
+            className="mp-change"
+            onClick={() => {
+              setTempLocation("");
+              setEditingLocation(true);
+            }}
+          >
+            Change
+          </span>
+        </>
+      ) : (
+        <>
+          <input
+            className="mp-location-input"
+            placeholder="Enter city or area"
+            value={tempLocation}
+            onChange={(e) => setTempLocation(e.target.value)}
+            autoFocus
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && tempLocation.trim()) {
+                const formatted = `Near ${tempLocation.trim()}`;
+                setManualLocation(formatted);
+                setLocation(formatted);
+                setEditingLocation(false);
+              }
+            }}
+          />
+          <span
+            className="mp-change"
+            onClick={() => {
+              if (tempLocation.trim()) {
+                const formatted = `Near ${tempLocation.trim()}`;
+                setManualLocation(formatted);
+                setLocation(formatted);
+              }
+              setEditingLocation(false);
+            }}
+          >
+            Save
+          </span>
+        </>
+      )}
     </div>
   </div>
 </div>
 
+
             {/* CATEGORY BUTTONS */}
-            <div className="categories">
+            <div className="mp-categories">
               {["all", "land", "apartment", "house", "commercial", "vehicle"].map(
                 (c) => (
                   <button
@@ -462,28 +549,28 @@ useEffect(() => {
             </div>
 
             {/* GRID */}
-            <div className="property-grid">
+            <div className="mp-property-grid">
               {filteredProperties.map((p) => (
                 <div
                   key={p.id}
-                  className="property-card"
+                  className="mp-property-card"
                   onClick={() => setSelectedProperty(p)}
                 >
-                  <div className="image-wrapper">
+                  <div className="mp-image-wrapper">
   <img src={p.image} alt={p.title} />
 
-  <span className="badge">
+  <span className="mp-badge">
     {p.listingType === "buy" ? "FOR SALE" : "FOR RENT"}
   </span>
 
-  <div className="rating">
+  <div className="mp-rating">
     <MdStar /> {p.rating}
   </div>
 
   {/* ❌ DELETE BUTTON – ONLY USER POSTED CARD */}
   {"isUserListing" in p && p.isUserListing && (
     <button
-      className="delete-btn"
+      className="mp-delete-btn"
       onClick={(e) => {
         e.stopPropagation();
         handleDelete(p.id, setProperties);
@@ -495,10 +582,10 @@ useEffect(() => {
 </div>
 
 
-                  <div className="card-body">
+                  <div className="mp-card-body">
                     <h3>{p.title}</h3>
-                    <div className="price">{p.price}</div>
-                    <div className="meta">
+                    <div className="mp-price">{p.price}</div>
+                    <div className="mp-meta">
                       <span>📍 {p.area}</span>
                       {p.sqft && <span>📐 {p.sqft} sqft</span>}
                       {p.bhk && <span>🛏 {p.bhk}</span>}

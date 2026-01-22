@@ -21,21 +21,7 @@ import { useSearchParams, useLocation, Outlet } from "react-router-dom";
 const Dashboard: React.FC = () => {
   const [searchParams] = useSearchParams();
 
-  // Auto-initialize service ID 6 (Swachify Products) for demo/skip login
-  useEffect(() => {
-    const existingServiceIds = localStorage.getItem("service_ids");
-    if (!existingServiceIds) {
-      // If no service IDs exist, set service ID 6 by default
-      localStorage.setItem("service_ids", JSON.stringify([6]));
-    } else {
-      // If service IDs exist but don't include 6, add it
-      const serviceIds = JSON.parse(existingServiceIds) as (string | number)[];
-      if (!serviceIds.includes(6) && !serviceIds.includes("6")) {
-        serviceIds.push(6);
-        localStorage.setItem("service_ids", JSON.stringify(serviceIds));
-      }
-    }
-  }, []);
+
 
   const userServiceIds: number[] = (JSON.parse(localStorage.getItem("service_ids") || "[]") as (string | number)[])
     .map(id => Number(id))
@@ -45,12 +31,11 @@ const Dashboard: React.FC = () => {
   const serviceIdToName: Record<number, string> = {
     1: "Home Services",
     2: "Packers and Movers / Transport",
-    // 3: "House & Commercial Rentals",
     3: "Buy & Sale Products",
     4: "Building & Construction Raw Materials",
     5: "Education",
-    // 6: "Buy & Sale Products",
-    6: "HealthCare"
+    6: "Swachify Products",
+    7: "HealthCare",
   };
 
 
@@ -211,22 +196,22 @@ const Dashboard: React.FC = () => {
 
 
 
-    // appliances
-    "ac service",
-    "washing machine",
-    "microwave servicing",
-    "tv servicing",
-    "refrigerator",
-    "appliances repair",
-  ],
-  component: (
-    <HomeServices
-      //searchQuery={searchQuery}
-      // clearSearch={() => navigate("/app/dashboard")}
-      
-    />
-  ),
-},
+        // appliances
+        "ac service",
+        "washing machine",
+        "microwave servicing",
+        "tv servicing",
+        "refrigerator",
+        "appliances repair",
+      ],
+      component: (
+        <HomeServices
+        //searchQuery={searchQuery}
+        // clearSearch={() => navigate("/app/dashboard")}
+
+        />
+      ),
+    },
 
 
     {
@@ -389,9 +374,7 @@ const Dashboard: React.FC = () => {
           {userServiceIds.includes(6) && <SwachifyProducts searchQuery={searchQuery} />}
 
           {/* HealthCare Full Header + Search + Cards */}
-          {userServiceIds.includes(6) && <HealthCare />}
-
-
+          {userServiceIds.includes(7) && <HealthCare />}
           {/* Education */}
           {userServiceIds.includes(5) && <Education />}
 
