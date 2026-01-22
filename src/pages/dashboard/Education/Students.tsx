@@ -98,7 +98,8 @@ const Students: React.FC<StudentsProps> = ({ onBack, onSelectStudent }) => {
     let data = [...studentsData];
 
     if (tab === "top") data = data.filter((s) => s.rating >= 4.7);
-    if (tab === "recent") data = [...data].sort((a, b) => b.id - a.id).slice(0, 4);
+    if (tab === "recent")
+      data = [...data].sort((a, b) => b.id - a.id).slice(0, 4);
 
     if (aggregate === "90+") data = data.filter((s) => s.attendance >= 90);
     if (aggregate === "80-90")
@@ -135,13 +136,19 @@ const Students: React.FC<StudentsProps> = ({ onBack, onSelectStudent }) => {
 
       {/* FILTERS */}
       <div className="students-filters">
-        <div className="tabs">
-          <button onClick={() => setTab("all")} className={tab === "all" ? "active" : ""}>All Students</button>
-          <button onClick={() => setTab("top")} className={tab === "top" ? "active" : ""}>Top Performers</button>
-          <button onClick={() => setTab("recent")} className={tab === "recent" ? "active" : ""}>Recent Joiners</button>
+        <div className="students-tabs">
+          <button onClick={() => setTab("all")} className={tab === "all" ? "active" : ""}>
+            All Students
+          </button>
+          <button onClick={() => setTab("top")} className={tab === "top" ? "active" : ""}>
+            Top Performers
+          </button>
+          <button onClick={() => setTab("recent")} className={tab === "recent" ? "active" : ""}>
+            Recent Joiners
+          </button>
         </div>
 
-        <div className="dropdowns">
+        <div className="students-dropdowns">
           <select onChange={(e) => setAggregate(e.target.value)}>
             <option value="">Aggregate</option>
             <option value="90+">90%+</option>
@@ -174,17 +181,20 @@ const Students: React.FC<StudentsProps> = ({ onBack, onSelectStudent }) => {
             style={{ cursor: "pointer" }}
           >
             <img src={s.avatar} alt={s.name} />
+
             <div className="students-info">
               <div className="students-top">
                 <h3>{s.name}</h3>
-                <span className="rating">⭐ {s.rating}</span>
+                <span className="students-rating">⭐ {s.rating}</span>
               </div>
-              <p className="program">{s.program}</p>
-              <p className="meta">{s.attendance}% Attendance</p>
-              <p className="meta">{s.shift}</p>
+
+              <p className="students-program">{s.program}</p>
+              <p className="students-meta">{s.attendance}% Attendance</p>
+              <p className="students-meta">{s.shift}</p>
+
               <div className="students-footer">
                 <span>ID: {s.id}</span>
-                <span className={`status ${s.status.toLowerCase()}`}>
+                <span className={`students-status ${s.status.toLowerCase()}`}>
                   {s.status}
                 </span>
               </div>
