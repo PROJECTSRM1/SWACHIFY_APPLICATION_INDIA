@@ -1,7 +1,7 @@
-name: Auto Deploy – Swachify Frontend (DEV)
+name: Auto Deploy – Swachify Frontend (DEV)      #message
 
 on:
-  push:
+  push: 
     branches:
       - dev
 
