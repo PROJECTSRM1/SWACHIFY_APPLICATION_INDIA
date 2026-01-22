@@ -153,7 +153,7 @@ const FleetPie: React.FC<{ out: number; inNum: number }> = ({ out, inNum }) => {
           ))}
 
         </Pie>
-        <ReTooltip formatter={(value: number | undefined, name: string | undefined) => [`${value ?? 0}`, name ?? '']} />
+        {/* <ReTooltip formatter={(value: number | undefined, name: string | undefined) => [`${value ?? 0}`, name ?? '']} /> */}
       </PieChart>
     </ResponsiveContainer>
   );
