@@ -1,0 +1,139 @@
+/* PAGE */
+.enroll-page {
+  min-height: 100vh;
+  background: #f5f7fb;
+  padding: 40px 16px;
+  display: flex;
+  justify-content: center;
+}
+
+/* CONTAINER */
+.enroll-container {
+  width: 100%;
+  max-width: 900px;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+}
+
+/* HEADER */
+.enroll-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.enroll-header h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.step {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  color: #2563eb;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+/* COURSE CARD */
+.course-card-enroll {
+  background: #f9fafb;
+  border-radius: 14px;
+  padding: 24px;
+  margin-bottom: 32px;
+  border: 1px solid #e5e7eb;
+}
+
+.course-top h1 {
+  margin: 12px 0 8px;
+  font-size: 24px;
+  color: #111827;
+}
+
+.premium-badge {
+  display: inline-block;
+  background: #2563eb;
+  color: #fff;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.meta {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 16px;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.features span {
+  background: #e0e7ff;
+  color: #1e40af;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+/* FORM */
+.form-section h3 {
+  margin: 24px 0 12px;
+  font-size: 18px;
+  color: #111827;
+}
+
+.form-section input {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 14px;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+}
+
+.row {
+  display: flex;
+  gap: 14px;
+}
+
+/* UPLOAD */
+.upload-box {
+  margin-top: 12px;
+  padding: 20px;
+  border: 2px dashed #93c5fd;
+  border-radius: 12px;
+  text-align: center;
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+/* FOOTER BUTTON */
+.confirm-btn {
+  width: 100%;
+  margin-top: 32px;
+  background: #2563eb;
+  padding: 16px;
+  border-radius: 12px;
+  border: none;
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+  cursor: pointer;
+}
