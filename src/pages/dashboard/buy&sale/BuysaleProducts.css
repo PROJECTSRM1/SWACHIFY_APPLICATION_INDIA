@@ -328,6 +328,7 @@
   display: flex;
   gap: 4px;
   flex: 1;
+  margin-top: -19px;
 }
 
 
@@ -503,7 +504,7 @@
 .mp-location-input {
   background: transparent;
   border: none;
-  border-bottom: 1px solid #2563eb;
+  border-bottom: px solid #2563eb;
   outline: none;
 
   color: #0f172a;
