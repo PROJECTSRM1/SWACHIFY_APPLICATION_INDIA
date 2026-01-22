@@ -127,7 +127,6 @@ export default function BuyerPageWeb({ property, onBack }: any) {
       <div className="ownerAvatar">👤</div>
       <div className="ownerText">
         <strong>{property.ownerName}</strong>
-        <span>Property Owner</span>
       </div>
       <button className="callBtnNew">📞</button>
     </div>
