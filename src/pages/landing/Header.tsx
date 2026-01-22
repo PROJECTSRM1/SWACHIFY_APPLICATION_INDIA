@@ -96,6 +96,10 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
 
   const [showProfessionalFields, setShowProfessionalFields] = useState(false);
 
+  const [isHealthCareSelected, setIsHealthCareSelected] = useState(false);
+  const [doctorRoleSelected, setDoctorRoleSelected] = useState(false);
+
+
 
 
 
@@ -701,16 +705,25 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
                   onDropdownVisibleChange={setServiceOpen}
                   getPopupContainer={(triggerNode) => triggerNode.parentElement!}
                   treeData={serviceOptions} // numeric values
-                  onChange={(values: number[]) => {
-                    setSelectedServices(values);
+onChange={(values: number[]) => {
+  setSelectedServices(values);
 
-                    const hasEducation = values.includes(5); // 5 = Education ID
-                    setHideWorkType(hasEducation);
+  const hasEducation = values.includes(5);
+  const hasHealthCare = values.includes(7); // ✅ HealthCare ID
 
-                    if (hasEducation) {
-                      setShowProfessionalFields(false);
-                    }
-                  }}
+  setHideWorkType(hasEducation || hasHealthCare);
+  setIsHealthCareSelected(hasHealthCare);
+
+  // reset doctor section when healthcare unselected
+  if (!hasHealthCare) {
+    setDoctorRoleSelected(false);
+  }
+
+  if (hasEducation) {
+    setShowProfessionalFields(false);
+  }
+}}
+
                 />
 
 
@@ -796,23 +809,112 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
               </Form.Item>
 
 
-              <Form.Item
-                label="Select Work Type"
-                name="workType"
-                rules={hideWorkType ? [] : [{ required: true, message: "Please select work type" }]}
-              >
-                <Select
-                  placeholder="Choose work type"
-                  disabled={hideWorkType}
-                  onChange={(value) => {
-                    setShowProfessionalFields(value === "looking");
-                  }}
-                >
-                  <Select.Option value="assigning">Assigning for work</Select.Option>
-                  <Select.Option value="looking">Looking for work</Select.Option>
-                  <Select.Option value="both">Both</Select.Option>
-                </Select>
-              </Form.Item>
+{!isHealthCareSelected && (
+  <Form.Item
+    label="Select Work Type"
+    name="workType"
+    rules={hideWorkType ? [] : [{ required: true, message: "Please select work type" }]}
+  >
+    <Select
+      placeholder="Choose work type"
+      disabled={hideWorkType}
+      onChange={(value) => {
+        setShowProfessionalFields(value === "looking");
+      }}
+    >
+      <Select.Option value="assigning">Assigning for work</Select.Option>
+      <Select.Option value="looking">Looking for work</Select.Option>
+      <Select.Option value="both">Both</Select.Option>
+    </Select>
+  </Form.Item>
+)}
+
+
+
+{isHealthCareSelected && (
+  <Form.Item
+    label="Select Role"
+    name="role"
+    rules={[{ required: true, message: "Please select role" }]}
+  >
+    <Select
+      placeholder="Select role"
+      onChange={(value) => {
+        setDoctorRoleSelected(value === "doctor");
+      }}
+    >
+      <Select.Option value="doctor">Doctor</Select.Option>
+    </Select>
+  </Form.Item>
+)}
+
+
+
+{isHealthCareSelected && doctorRoleSelected && (
+  <div style={{ marginTop: 16 }}>
+    <h4 style={{ marginBottom: 12 }}>Doctor Details</h4>
+
+    {/* Hospital Name */}
+    <Form.Item
+      label="Hospital Name"
+      name="hospitalName"
+      rules={[{ required: true, message: "Hospital name is required" }]}
+    >
+      <Input placeholder="Enter hospital / clinic name" />
+    </Form.Item>
+
+    {/* Designation */}
+    <Form.Item
+      label="Designation"
+      name="designation"
+      rules={[{ required: true, message: "Designation is required" }]}
+    >
+      <Input placeholder="e.g. Cardiologist" />
+    </Form.Item>
+
+    {/* Years of Experience */}
+    <Form.Item
+      label="Years of Experience"
+      name="doctorExperience"
+      rules={[
+        { required: true, message: "Experience is required" },
+        { pattern: /^[0-9]+$/, message: "Only numbers allowed" },
+      ]}
+    >
+      <Input inputMode="numeric" placeholder="e.g. 5" maxLength={2} />
+    </Form.Item>
+
+    {/* Working Type */}
+    <Form.Item
+      label="Working Type"
+      name="workingType"
+      rules={[{ required: true, message: "Select working type" }]}
+    >
+      <Select placeholder="Select working type">
+        <Select.Option value="online">Online</Select.Option>
+        <Select.Option value="offline">Offline</Select.Option>
+        <Select.Option value="both">Both</Select.Option>
+      </Select>
+    </Form.Item>
+
+    {/* Certificate Upload */}
+    <Form.Item
+      label="Medical Certificate"
+      name="doctorCertificate"
+      valuePropName="fileList"
+      getValueFromEvent={(e) => e?.fileList}
+      rules={[{ required: true, message: "Certificate is required" }]}
+    >
+      <Upload listType="picture-card" beforeUpload={() => false} maxCount={2}>
+        <div>
+          <PlusOutlined />
+          <div style={{ marginTop: 8 }}>Upload</div>
+        </div>
+      </Upload>
+    </Form.Item>
+  </div>
+)}
+
 
 
               {showProfessionalFields && (

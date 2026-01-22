@@ -227,3 +227,176 @@
   flex-direction: column;
   gap: 10px;
 }
+
+
+/* ============================= */
+/* 🖥️ LARGE DESKTOP (1280px+) */
+/* ============================= */
+@media (min-width: 1280px) {
+  .cp-root {
+    max-width: 1200px;
+  }
+
+  .cp-grid {
+    gap: 32px;
+  }
+}
+
+/* ============================= */
+/* 💻 LAPTOP (1024px – 1279px) */
+/* ============================= */
+@media (max-width: 1279px) and (min-width: 1024px) {
+  .cp-root {
+    margin-top: 100px;
+  }
+
+  .cp-top {
+    padding: 22px;
+  }
+
+  .cp-avatar-wrap {
+    width: 120px;
+    height: 120px;
+  }
+
+  .cp-resume-right {
+    margin-right: 20px;
+  }
+}
+
+/* ============================= */
+/* 📱 TABLET (768px – 1023px) */
+/* ============================= */
+@media (max-width: 1023px) and (min-width: 768px) {
+  .cp-root {
+    margin-top: 96px;
+    padding: 0 16px;
+  }
+
+  .cp-top {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+  }
+
+  .cp-avatar-wrap {
+    width: 110px;
+    height: 110px;
+  }
+
+  .cp-actions {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .cp-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  /* Resume buttons move below on tablet */
+  .cp-resume-right {
+    position: static;
+    transform: none;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 10px;
+  }
+}
+
+/* ============================= */
+/* 📲 MOBILE (≤ 767px) */
+/* ============================= */
+@media (max-width: 767px) {
+  .cp-root {
+    margin-top: 84px;
+    padding: 0 14px;
+  }
+
+  .cp-header {
+    gap: 10px;
+    margin-bottom: 22px;
+  }
+
+  .cp-back {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+
+  .cp-top {
+    padding: 18px;
+    border-radius: 16px;
+  }
+
+  .cp-avatar-wrap {
+    width: 96px;
+    height: 96px;
+  }
+
+  .cp-main h3 {
+    font-size: 20px;
+  }
+
+  .cp-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .cp-btn {
+    width: 100%;
+  }
+
+  .cp-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Resume buttons → stacked below profile */
+  .cp-resume-right {
+    position: static;
+    transform: none;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 12px;
+  }
+}
+
+/* ============================= */
+/* 📲 SMALL MOBILE (≤ 480px) */
+/* ============================= */
+@media (max-width: 480px) {
+  .cp-root {
+    margin-top: 72px;
+  }
+
+  .cp-top {
+    padding: 16px;
+  }
+
+  .cp-avatar-wrap {
+    width: 84px;
+    height: 84px;
+  }
+
+  .cp-main h3 {
+    font-size: 18px;
+  }
+
+  .cp-sub {
+    font-size: 13px;
+  }
+
+  .cp-card {
+    padding: 14px;
+  }
+
+  .cp-section h4 {
+    font-size: 15px;
+  }
+
+  .cp-btn {
+    height: 40px;
+    font-size: 14px;
+  }
+}
