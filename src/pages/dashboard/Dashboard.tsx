@@ -211,38 +211,22 @@ const Dashboard: React.FC = () => {
 
 
 
-        // plumbing
-        "plumbing services",
-        "leak",
-        "pipe",
-        "geyser installation",
-        "bathroom fitting",
-        "water tank",
-        "drain cleaning",
-
-        // electrical
-        "electrical services",
-        "wiring",
-        "fan",
-        "circuit",
-        "switchboard",
-        "smart home",
-
-        // appliances
-        "ac service",
-        "washing machine",
-        "microwave servicing",
-        "tv servicing",
-        "refrigerator",
-        "appliances repair",
-      ],
-      component: (
-        <HomeServices
-          searchQuery={searchQuery}
-        // clearSearch={() => navigate("/app/dashboard")}
-        />
-      ),
-    },
+    // appliances
+    "ac service",
+    "washing machine",
+    "microwave servicing",
+    "tv servicing",
+    "refrigerator",
+    "appliances repair",
+  ],
+  component: (
+    <HomeServices
+      //searchQuery={searchQuery}
+      // clearSearch={() => navigate("/app/dashboard")}
+      
+    />
+  ),
+},
 
 
     {

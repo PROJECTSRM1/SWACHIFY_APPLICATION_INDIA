@@ -1,0 +1,303 @@
+.pay_page {
+  min-height: 100vh;
+  background: #ffffff;
+  color: #111827;
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* HEADER */
+.pay_header {
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  backdrop-filter: none;
+}
+
+.pay_headerTitle {
+  color: #111827;
+}
+
+
+.pay_backBtn {
+  width: 44px;
+  height: 44px;
+  border-radius: 22px;
+  border: none;
+  background: transparent;
+  color: #ffffff;
+  cursor: pointer;
+
+  display: grid;
+  place-items: center;
+  transition: background 0.2s ease;
+}
+
+.pay_backBtn:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.pay_headerTitle {
+  margin: 0;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.pay_headerSpacer {
+  width: 44px;
+  height: 44px;
+}
+
+/* CONTENT */
+.pay_content {
+  padding: 16px;
+  padding-bottom: 120px;
+}
+
+.pay_sectionLabel {
+  margin: 22px 0 10px;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+}
+
+.pay_card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+}
+
+
+.pay_emptyCard {
+  background: #0f172a;
+  border-radius: 16px;
+  padding: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.pay_emptyText {
+  margin: 0;
+  color: #94a3b8;
+  font-weight: 700;
+}
+
+/* Service Row */
+.pay_serviceRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+@media (max-width: 520px) {
+  .pay_serviceRow {
+    flex-direction: column;
+  }
+}
+
+.pay_serviceInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.pay_serviceName {
+  margin: 0 0 8px;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.pay_tagRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.pay_blueTag {
+  background: #1e3a8a;
+  padding: 3px 8px;
+  border-radius: 6px;
+  color: #3b82f6;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.pay_subInfo {
+  color: #94a3b8;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.pay_dateRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pay_dateIcon {
+  color: #94a3b8;
+}
+
+.pay_dateText {
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+/* Image */
+.pay_serviceImage {
+  width: 110px;
+  height: 110px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+@media (max-width: 520px) {
+  .pay_serviceImage {
+    width: 100%;
+    height: 160px;
+  }
+}
+
+/* Total */
+.pay_totalRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.pay_totalLabel {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.pay_totalValue {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 900;
+  color: #2563eb;
+}
+
+/* FOOTER */
+.pay_footer {
+  position: sticky;
+  bottom: 0;
+
+  background: #ffffff;
+  border-top: 1px solid #e5e7eb;
+}
+
+
+.pay_checkoutBtn {
+  width: 100%;
+  height: 56px;
+
+  border: none;
+  cursor: pointer;
+
+  background: #2563eb;
+  color: #ffffff;
+
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 800;
+
+  transition: filter 0.2s ease, transform 0.08s ease;
+}
+
+.pay_checkoutBtn:hover {
+  filter: brightness(1.05);
+}
+
+.pay_checkoutBtn:active {
+  transform: scale(0.99);
+}
+
+.pay_checkoutBtn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* MODAL */
+.pay_modalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(0, 0, 0, 0.6);
+
+  display: grid;
+  place-items: center;
+  padding: 18px;
+}
+
+.pay_modalCard {
+  width: 100%;
+  max-width: 420px;
+  background: #0f172a;
+  border-radius: 20px;
+  padding: 24px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.pay_successIcon {
+  color: #22c55e;
+  margin-bottom: 14px;
+}
+
+.pay_modalTitle {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.pay_modalSub {
+  margin: 8px 0 20px;
+  color: #94a3b8;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.pay_modalBtn {
+  width: 100%;
+  height: 48px;
+  border: none;
+  cursor: pointer;
+
+  background: #22c55e;
+  color: #020617;
+
+  font-size: 16px;
+  font-weight: 900;
+  border-radius: 12px;
+}
+
+.pay_modalBtn:hover {
+  filter: brightness(1.05);
+}
+
+/* Desktop center */
+@media (min-width: 900px) {
+  .pay_content {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .pay_footer {
+    max-width: 760px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 1px solid rgba(255, 255, 255, 0.06);
+    border-right: 1px solid rgba(255, 255, 255, 0.06);
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+  }
+}
+@media (min-width: 900px) {
+  .pay_content {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+}
