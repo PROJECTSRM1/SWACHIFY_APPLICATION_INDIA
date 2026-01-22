@@ -12,6 +12,7 @@
   flex-direction: column; /* stack title + search vertical */
   align-items: center;    /* center horizontally */
   justify-content: center;
+  margin-top: -25px;
 }
 
 .services-title {
