@@ -604,6 +604,13 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
               >
                 <Input placeholder="john@example.com or 9876543210" />
               </Form.Item>
+              <Form.Item
+                label="Password"
+                name="password"
+                rules={[{ required: true, message: "Password is required" }]}
+              >
+                <Input.Password placeholder="Enter password" />
+              </Form.Item>
 
               <div className="swl-login-options-row">
                 <Checkbox>Remember me</Checkbox>
