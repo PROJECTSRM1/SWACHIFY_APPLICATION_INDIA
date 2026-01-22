@@ -129,6 +129,7 @@ const serviceProviders: ServiceProvider[] = [
     //   group: 10,
     // },
   },
+  
   {
     id: "24",
     name: "Priya Mani",
@@ -179,6 +180,127 @@ const serviceProviders: ServiceProvider[] = [
     // isActive: true,
     isEnrolled: true,
   },
+    {
+    id: "26",
+    name: "Anjali Rao",
+    service: "Chef",
+    cuisineStyle: "South",
+    rating: 4.6,
+    reviews: 142,
+    skills: ["South Indian", "Healthy Meals"],
+    hourlyRate: 480,
+    tasksCompleted: 22,
+    status: "WAITING",
+    speciality: [
+       "Idli & Dosa",
+    "Vegetarian Meals",
+    "Sambar",
+    "Rasam",
+    "Home-style Cooking",
+    "Millet Dishes",
+    ],
+    image:
+      "https://images.unsplash.com/photo-1607746882042-944635dfe10e?w=600",
+    isEnrolled: true,
+    certificates: ["Food Hygiene Certificate"],
+  },
+
+  {
+    id: "27",
+    name: "Vikram Singh",
+    service: "Plumber",
+    rating: 4.5,
+    reviews: 97,
+    skills: ["Leak Detection", "Bathroom Repair"],
+    hourlyRate: 360,
+    tasksCompleted: 14,
+    status: "WAITING",
+    speciality: [
+      "Leak Fixing",
+    "Tap Installation",
+    "Pipeline Repair",
+    "Drain Cleaning",
+    "Bathroom Fittings",
+    "Water Motor Repair",
+    ],
+    image:
+      "https://images.unsplash.com/photo-1595152772835-219674b2a8a6?w=600",
+    isEnrolled: true,
+    certificates: ["Plumbing Safety Training"],
+  },
+
+  {
+    id: "28",
+    name: "Meena Joseph",
+    service: "Cleaner",
+    rating: 4.9,
+    reviews: 211,
+    skills: ["Home Cleaning", "Sanitization"],
+    hourlyRate: 260,
+    tasksCompleted: 31,
+    status: "WAITING",
+    speciality: [
+      "Deep Cleaning",
+    "Kitchen Cleaning",
+    "Bathroom Cleaning",
+    "Sanitization",
+    "Sofa Cleaning",
+    "Office Cleaning",
+    ],
+    image:
+      "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600",
+    isEnrolled: true,
+    certificates: ["Professional Cleaning Training"],
+  },
+
+  {
+    id: "29",
+    name: "Rohit Verma",
+    service: "Electrician",
+    rating: 4.4,
+    reviews: 76,
+    skills: ["Wiring", "Appliance Repair"],
+    hourlyRate: 420,
+    tasksCompleted: 12,
+    status: "WAITING",
+    speciality: [
+     "Wiring",
+    "Switch Repair",
+    "Fan Installation",
+    "Light Fixtures",
+    "Inverter Setup",
+    "MCB Repair",
+    ],
+    image:
+      "https://images.unsplash.com/photo-1552058544-f2b08422138a?w=600",
+    isEnrolled: true,
+    certificates: ["Electrical Safety Certificate"],
+  },
+
+  {
+    id: "30",
+    name: "Aamir Khan",
+    service: "Washer",
+    rating: 4.7,
+    reviews: 134,
+    skills: ["Laundry", "Steam Press"],
+    hourlyRate: 300,
+    tasksCompleted: 19,
+    status: "WAITING",
+    speciality: [
+      "Dry Cleaning",
+    "Steam Press",
+    "Fabric Care",
+    "Stain Removal",
+    "Bulk Laundry",
+    "Ironing",
+    ],
+    image:
+      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600",
+    isEnrolled: true,
+    certificates: ["Laundry Operations Training"],
+  },
+
 ];
 
 const Freelancer: React.FC = () => {
@@ -189,30 +311,32 @@ const Freelancer: React.FC = () => {
   const [showOnlyActive, setShowOnlyActive] = useState(false);
   const [chefStyle, setChefStyle] = useState<"North" | "South">("South");
 
-  const filteredProviders = serviceProviders.filter((p) => {
-    const matchCategory =
-      selectedCategory === "All" || p.service === selectedCategory;
+ const filteredProviders = serviceProviders.filter((p) => {
+  const matchCategory =
+    selectedCategory === "All" || p.service === selectedCategory;
 
-    const matchChef =
-      selectedCategory === "Chef" ? p.cuisineStyle === chefStyle : true;
+  const matchChef =
+    selectedCategory === "Chef" ? p.cuisineStyle === chefStyle : true;
 
-    const matchSearch =
-      p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      p.service.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      p.skills.some((s) =>
-        s.toLowerCase().includes(searchQuery.toLowerCase())
-      );
+  const matchSearch =
+    p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    p.service.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    p.skills.some((s) =>
+      s.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
-    // const matchActive = showOnlyActive ? p.isActive : true;
+  // ✅ FILTER LOGIC (ACTIVE = WAITING)
+  const matchActive = showOnlyActive ? p.status === "WAITING" : true;
 
   return (
-  matchCategory &&
-  matchChef &&
-  matchSearch &&
-  p.isEnrolled
-);
+    matchCategory &&
+    matchChef &&
+    matchSearch &&
+    matchActive &&
+    p.isEnrolled
+  );
+});
 
-  });
 
   return (
     <div className="page">
@@ -308,12 +432,16 @@ const Freelancer: React.FC = () => {
   {p.status === "INACTIVE" && "Inactive (Not logged in)"}
   {p.status === "IN_PROGRESS" && "Work Assigned (In-Progress)"}
 </div>
+<div className="inactive-reason">
+  {p.status === "INACTIVE" && p.inactiveReason ? (
+    p.inactiveReason
+  ) : (
+    <span>&nbsp;</span>
+  )}
+</div>
 
-{p.status === "INACTIVE" && p.inactiveReason && (
-  <div className="inactive-reason">
-    {p.inactiveReason}
-  </div>
-)}
+
+
 
                 </div>
 
@@ -349,16 +477,21 @@ const Freelancer: React.FC = () => {
     </div>
   </div>
 )}
-{p.certificates && p.certificates.length > 0 && (
-  <div className="certificates">
-    <small>CERTIFICATES</small>
-    <div className="skills">
-      {p.certificates.map((cert) => (
-        <span key={cert}>{cert}</span>
-      ))}
-    </div>
-  </div>
-)}
+<div className="certificates">
+  {p.certificates?.length ? (
+    <>
+      <small>CERTIFICATES</small>
+      <div className="skills">
+        {p.certificates.map((cert) => (
+          <span key={cert}>{cert}</span>
+        ))}
+      </div>
+    </>
+  ) : (
+    <small>&nbsp;</small> 
+  )}
+</div>
+
 
 
 

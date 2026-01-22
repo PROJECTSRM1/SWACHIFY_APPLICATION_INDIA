@@ -1,0 +1,280 @@
+.cs_page {
+  min-height: 100vh;
+  background: #101c22;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+}
+
+/* HEADER */
+.cs_header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+
+  display: grid;
+  grid-template-columns: 44px 1fr 44px;
+  align-items: center;
+
+  padding: 10px 14px;
+  background: rgba(16, 28, 34, 0.85);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+}
+
+.cs_backBtn {
+  width: 44px;
+  height: 44px;
+  border-radius: 22px;
+  border: none;
+  background: transparent;
+  color: #ffffff;
+  cursor: pointer;
+
+  display: grid;
+  place-items: center;
+  transition: background 0.2s ease;
+}
+
+.cs_backBtn:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.cs_headerSpacer {
+  pointer-events: none;
+  opacity: 0;
+}
+
+.cs_headerTitle {
+  margin: 0;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* MAIN */
+.cs_main {
+  flex: 1;
+  padding-bottom: 170px; /* space for fixed footer */
+}
+
+/* HEADLINE */
+.cs_headlineContainer {
+  padding: 18px 14px 12px;
+}
+
+.cs_headline {
+  margin: 0 0 8px;
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: -0.6px;
+}
+
+.cs_description {
+  margin: 0;
+  font-size: 15px;
+  color: #9db0b9;
+  line-height: 1.6;
+}
+
+/* LIST */
+.cs_list {
+  padding: 0 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cs_card {
+  width: 100%;
+  border: 2px solid transparent;
+  background: #1c2a33;
+  border-radius: 16px;
+  padding: 16px;
+
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  cursor: pointer;
+  text-align: left;
+
+  transition: transform 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease;
+}
+
+.cs_card:hover {
+  transform: translateY(-1px);
+}
+
+.cs_cardSelected {
+  border-color: #135bec;
+  box-shadow: 0 10px 28px rgba(19, 91, 236, 0.22);
+}
+
+.cs_iconWrap {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: #283339;
+
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.cs_iconWrapSelected {
+  background: rgba(19, 91, 236, 0.18);
+}
+
+.cs_icon {
+  color: #9db0b9;
+}
+
+.cs_iconSelected {
+  color: #135bec;
+}
+
+.cs_info {
+  flex: 1;
+  min-width: 0;
+}
+
+.cs_title {
+  margin: 0 0 4px;
+  font-size: 16px;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.cs_subtitle {
+  margin: 0;
+  font-size: 14px;
+  color: #9db0b9;
+}
+
+.cs_priceWrap {
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+
+.cs_price {
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.cs_priceNormal {
+  color: #135bec;
+}
+
+.cs_priceQuote {
+  color: #9db0b9;
+  font-weight: 700;
+}
+
+/* bottom spacer */
+.cs_bottomSpacer {
+  height: 20px;
+}
+
+/* FIXED BOTTOM */
+.cs_bottomFixed {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 80;
+
+  background: rgba(16, 28, 34, 0.95);
+  border-top: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+/* Continue Button Area */
+.cs_actionArea {
+  padding: 14px 14px 8px;
+}
+
+.cs_continueBtn {
+  width: 100%;
+  border: none;
+  cursor: pointer;
+
+  background: #135bec;
+  color: #ffffff;
+
+  padding: 16px 14px;
+  border-radius: 16px;
+
+  font-size: 16px;
+  font-weight: 900;
+
+  box-shadow: 0 10px 22px rgba(19, 91, 236, 0.25);
+}
+
+.cs_continueBtn:hover {
+  filter: brightness(1.05);
+}
+
+/* Tabs */
+.cs_tabs {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  padding: 8px 14px 14px;
+}
+
+.cs_tab {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+
+  padding: 6px 10px;
+  border-radius: 12px;
+  transition: background 0.2s ease;
+}
+
+.cs_tab:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.cs_tabActive {
+  font-size: 10px;
+  font-weight: 800;
+  color: #135bec;
+  letter-spacing: 0.5px;
+}
+
+.cs_tabInactive {
+  font-size: 10px;
+  font-weight: 800;
+  color: #64748b;
+  letter-spacing: 0.5px;
+}
+
+/* Desktop improvement */
+@media (min-width: 900px) {
+  .cs_main {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .cs_bottomFixed {
+    max-width: 760px;
+    margin: 0 auto;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 1px solid rgba(148, 163, 184, 0.15);
+    border-right: 1px solid rgba(148, 163, 184, 0.15);
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
+  }
+}
