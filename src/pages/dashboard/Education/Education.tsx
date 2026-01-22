@@ -5,11 +5,11 @@ import Companies from "../Education/Companies";
 import Students from "../Education/Students";
 import type { Student } from "../Education/Students";
 
-import JobsPage from "./TrainingPage";
+// import JobsPage from "./TrainingPage";
 import Internship from "../Education/Internships";
 import CandidateProfile from "../Education/CandidateProfile";
 import TrainingPage from "./TrainingPage";
-import { useLocation } from "react-router-dom";
+// import { useLocation } from "react-router-dom";c
 
 
 
