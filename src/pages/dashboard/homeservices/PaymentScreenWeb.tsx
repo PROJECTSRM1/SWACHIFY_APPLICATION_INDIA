@@ -1,11 +1,13 @@
 import React, { useMemo, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import {
   MdArrowBackIosNew,
   MdCalendarToday,
-  MdCheckCircle,
+//   MdCheckCircle,
 } from "react-icons/md";
 import "./PaymentScreenWeb.css";
+import PaymentSuccessDetailsScreenWeb from "./PaymentSuccessDetailsScreenWeb";
+
 
 /* ---------------- TYPES ---------------- */
 
@@ -47,7 +49,9 @@ type PaymentScreenWebProps = {
 
 /* ---------------- CONFIG ---------------- */
 
-const RAZORPAY_KEY = "rzp_test_RnpmMY4LPogJ7J";
+//const RAZORPAY_KEY = "rzp_test_RnpmMY4LPogJ7J";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
+const RAZORPAY_KEY = import.meta.env.VITE_RAZORPAY_KEY_ID as string;
 
 /* ---------------- HELPERS ---------------- */
 
@@ -84,25 +88,42 @@ async function createOrder(
   amount: number,
   bookingId: number
 ): Promise<CreateOrderResponse> {
-  const res = await fetch("/api/payment/create-order", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ amount, bookingId }),
-  });
+  const res = await fetch(
+    `${API_BASE_URL}/api/payment/create-order`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ amount, bookingId }),
+    }
+  );
 
-  if (!res.ok) throw new Error("Create order failed");
+  if (!res.ok) {
+    throw new Error("Create order failed");
+  }
+
   return res.json();
 }
 
-async function verifyPayment(payload: VerifyPayload): Promise<void> {
-  const res = await fetch("/api/payment/verify", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
-  });
 
-  if (!res.ok) throw new Error("Verify payment failed");
+async function verifyPayment(payload: VerifyPayload): Promise<void> {
+  const res = await fetch(
+    `${API_BASE_URL}/api/payment/verify-payment`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    }
+  );
+
+  if (!res.ok) {
+    throw new Error("Verify payment failed");
+  }
 }
+
 
 /* ---------------- COMPONENT ---------------- */
 
@@ -112,11 +133,13 @@ const PaymentScreenWeb: React.FC<PaymentScreenWebProps> = ({
   allocatedEmployee,
   bookingDetails,
 }) => {
-  const navigate = useNavigate();
+//   const navigate = useNavigate();
 
   const paymentHandled = useRef(false);
-  const [paymentSuccess, setPaymentSuccess] = useState(false);
+//   const [paymentSuccess, setPaymentSuccess] = useState(false);
   const [loadingPay, setLoadingPay] = useState(false);
+  const [showSuccessDetails, setShowSuccessDetails] = useState(false);
+
 
   const TOTAL_AMOUNT = Math.round(totalAmount * 100); // ₹ → paise
   const BOOKING_ID = 26;
@@ -172,7 +195,8 @@ const PaymentScreenWeb: React.FC<PaymentScreenWebProps> = ({
               home_service_id: BOOKING_ID,
             });
 
-            setPaymentSuccess(true);
+           setShowSuccessDetails(true);
+
           } catch {
             alert("Payment verification failed");
           } finally {
@@ -251,42 +275,22 @@ const PaymentScreenWeb: React.FC<PaymentScreenWebProps> = ({
       </footer>
 
       {/* SUCCESS MODAL */}
-      {paymentSuccess && (
-        <div className="pay_modalOverlay">
-          <div className="pay_modalCard">
-            <MdCheckCircle size={80} className="pay_successIcon" />
-
-            <p className="pay_modalTitle">Payment Successful</p>
-            <p className="pay_modalSub">
-              Your payment has been completed successfully.
-            </p>
-
-            <button
-              className="pay_modalBtn"
-              type="button"
-              onClick={() => {
-                setPaymentSuccess(false);
-
-                if (!allocatedEmployee || !bookingDetails) {
-                  alert("Missing booking details");
-                  return;
-                }
-
-                navigate("/dashboard/payment-success", {
-                  replace: true,
-                  state: {
-                    allocatedEmployee,
-                    bookingDetails,
-                    transactionId: "CLEAN-88291",
-                  },
-                });
-              }}
-            >
-              Done
-            </button>
-          </div>
-        </div>
-      )}
+      {showSuccessDetails && (
+  <div className="ps_modalOverlay">
+    <div className="ps_modalCardWrapper">
+      <PaymentSuccessDetailsScreenWeb
+        allocatedEmployee={allocatedEmployee || undefined}
+        bookingDetails={bookingDetails || undefined}
+        transactionId="CLEAN-88291"
+        onClose={() => {
+          setShowSuccessDetails(false);
+          onClose(); // optional: close payment modal also
+        }}
+      />
+    </div>
+  </div>
+)}
+    
     </div>
   );
 };
