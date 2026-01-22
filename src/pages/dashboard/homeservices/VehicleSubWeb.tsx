@@ -7,8 +7,6 @@ import {
   MdTwoWheeler,
   MdLocalShipping,
   MdPedalBike,
-  MdExpandLess,
-  MdExpandMore,
   MdArrowForward,
 } from "react-icons/md";
 import "./VehicleSubWeb.css";
@@ -42,185 +40,159 @@ type VehicleSubWebProps = {
   }) => void;
 };
 
-const formatMoney = (n: number) => `$${n.toFixed(2)}`;
-
-/* ================= COMPONENT ================= */
+const formatMoney = (n: number) => `₹${n.toFixed(0)}`;
 
 const VehicleSubWeb: React.FC<VehicleSubWebProps> = ({
   onClose,
   onContinue,
 }) => {
-  const [selectedCategory, setSelectedCategory] = useState<string>("hatchback");
+  const [selectedCategory, setSelectedCategory] =
+    useState<string>("hatchback");
   const [selectedService, setSelectedService] =
     useState<ServiceType>("Full Wash");
-  const [expandedItem, setExpandedItem] = useState<string>("hatchback");
 
   const categories: VehicleCategory[] = useMemo(
     () => [
       {
         id: "hatchback",
-        name: "Hatchback/Sedan",
-        icon: <MdDirectionsCar size={28} />,
-        description: "Small to medium family cars",
-        duration: "45 - 60 mins",
-        prices: { interior: 35, exterior: 25, fullWash: 45 },
+        name: "Hatchback / Sedan",
+        icon: <MdDirectionsCar size={26} />,
+        description: "Small to medium cars",
+        duration: "45 – 60 mins",
+        prices: { interior: 999, exterior: 699, fullWash: 1299 },
       },
       {
         id: "suv",
-        name: "SUV/Luxury",
-        icon: <MdAirportShuttle size={28} />,
-        description: "Large vehicles & high-end cars",
-        duration: "60 - 90 mins",
-        prices: { interior: 55, exterior: 40, fullWash: 75 },
+        name: "SUV / Luxury",
+        icon: <MdAirportShuttle size={26} />,
+        description: "Large & premium cars",
+        duration: "60 – 90 mins",
+        prices: { interior: 1499, exterior: 999, fullWash: 1899 },
       },
       {
         id: "motorcycle",
-        name: "Motorcycle/Bike",
-        icon: <MdTwoWheeler size={28} />,
-        description: "Two-wheelers and scooters",
-        duration: "20 - 30 mins",
-        prices: { interior: 0, exterior: 15, fullWash: 15 },
+        name: "Motorcycle",
+        icon: <MdTwoWheeler size={26} />,
+        description: "Bikes & scooters",
+        duration: "20 – 30 mins",
+        prices: { interior: 0, exterior: 299, fullWash: 299 },
       },
       {
         id: "van",
         name: "Commercial Van",
-        icon: <MdLocalShipping size={28} />,
-        description: "Cargo vans and transport vehicles",
-        duration: "75 - 120 mins",
-        prices: { interior: 65, exterior: 50, fullWash: 95 },
+        icon: <MdLocalShipping size={26} />,
+        description: "Transport vehicles",
+        duration: "75 – 120 mins",
+        prices: { interior: 1799, exterior: 1299, fullWash: 2199 },
       },
       {
         id: "bicycle",
         name: "Bicycle",
-        icon: <MdPedalBike size={28} />,
-        description: "MTB, Road, or Commuter bikes",
-        duration: "15 - 25 mins",
-        prices: { interior: 0, exterior: 10, fullWash: 10 },
+        icon: <MdPedalBike size={26} />,
+        description: "All cycle types",
+        duration: "15 – 25 mins",
+        prices: { interior: 0, exterior: 199, fullWash: 199 },
       },
     ],
     []
   );
 
-  const currentCategory = useMemo(
-    () => categories.find((c) => c.id === selectedCategory),
-    [categories, selectedCategory]
+  const currentCategory = categories.find(
+    (c) => c.id === selectedCategory
   );
 
-  const currentPrice = useMemo(() => {
-    if (!currentCategory) return 0;
-
-    const map: Record<ServiceType, keyof ServicePrice> = {
-      Interior: "interior",
-      Exterior: "exterior",
-      "Full Wash": "fullWash",
-    };
-
-    return currentCategory.prices[map[selectedService]];
-  }, [currentCategory, selectedService]);
-
-  const bookNow = () => {
-    if (!currentCategory) return;
-
-    onContinue({
-      categoryId: currentCategory.id,
-      serviceType: selectedService,
-      price: currentPrice,
-      duration: currentCategory.duration,
-    });
-  };
+  const price =
+    currentCategory?.prices[
+      selectedService === "Interior"
+        ? "interior"
+        : selectedService === "Exterior"
+        ? "exterior"
+        : "fullWash"
+    ] || 0;
 
   return (
     <div className="vs_page">
       {/* HEADER */}
       <header className="vs_header">
-        <button
-          className="vs_headerBtn"
-          type="button"
-          onClick={onClose}
-          aria-label="Back"
-        >
+        <button className="vs_headerBtn" onClick={onClose}>
           <MdArrowBackIosNew size={18} />
         </button>
-
         <h1 className="vs_headerTitle">Vehicle Cleaning</h1>
-
-        <button
-          className="vs_headerBtn"
-          type="button"
-          onClick={() => alert("Info")}
-          aria-label="Info"
-        >
+        <button className="vs_headerBtn">
           <MdInfoOutline size={22} />
         </button>
       </header>
 
-      {/* CONTENT */}
-      <main className="vs_content">
-        <section className="vs_sectionHeader">
-          <h2 className="vs_sectionTitle">Select Vehicle Category</h2>
-          <p className="vs_sectionSubtitle">
-            Prices vary based on vehicle dimensions
-          </p>
-        </section>
+      {/* MAIN */}
+      <main className="vs_main">
+        <h2>Select vehicle type</h2>
+        <p className="vs_subtitle">
+          Pricing depends on vehicle size & service
+        </p>
 
-        {/* Accordion */}
-        <section className="vs_accordion">
-          {categories.map((category) => {
-            const isExpanded = expandedItem === category.id;
+        {/* DESKTOP GRID */}
+        <div className="vs_grid">
+          {categories.map((c) => {
+            const active = c.id === selectedCategory;
 
             return (
-              <div key={category.id} className="vs_item">
-                <button
-                  className="vs_itemHeader"
-                  type="button"
-                  onClick={() =>
-                    setExpandedItem(isExpanded ? "" : category.id)
-                  }
-                >
-                  <div className="vs_itemLeft">
-                    <div className="vs_iconBox">{category.icon}</div>
+              <button
+                key={c.id}
+                className={`vs_card ${active ? "active" : ""}`}
+                onClick={() => setSelectedCategory(c.id)}
+              >
+                <div className="vs_icon">{c.icon}</div>
 
-                    <div className="vs_itemInfo">
-                      <p className="vs_itemName">{category.name}</p>
-                      <p className="vs_itemDesc">{category.description}</p>
-                    </div>
-                  </div>
+                <h3>{c.name}</h3>
+                <p>{c.description}</p>
 
-                  {isExpanded ? (
-                    <MdExpandLess size={24} />
-                  ) : (
-                    <MdExpandMore size={24} />
-                  )}
-                </button>
-
-                {isExpanded && (
-                  <div className="vs_itemBody">
-                    <p className="vs_durationValue">{category.duration}</p>
-                  </div>
-                )}
-              </div>
+                <div className="vs_priceRow">
+                  <span>{formatMoney(c.prices.fullWash)}</span>
+                  <small>Full Wash</small>
+                </div>
+              </button>
             );
           })}
-        </section>
-
-        <div className="vs_bottomSpacer" />
-      </main>
-
-      {/* BOTTOM PRICE CARD */}
-      <div className="vs_priceCard">
-        <div className="vs_priceLeft">
-          <p className="vs_priceLabel">SELECTED PRICE</p>
-          <p className="vs_priceValue">{formatMoney(currentPrice)}</p>
-          <p className="vs_priceSub">
-            {currentCategory?.name} • {selectedService}
-          </p>
         </div>
 
-        <button className="vs_bookBtn" type="button" onClick={bookNow}>
-          Book Now
-          <MdArrowForward size={18} />
-        </button>
-      </div>
+        {/* SERVICE TOGGLE */}
+        <div className="vs_serviceToggle">
+          {(["Interior", "Exterior", "Full Wash"] as ServiceType[]).map(
+            (type) => (
+              <button
+                key={type}
+                className={
+                  selectedService === type ? "active" : ""
+                }
+                onClick={() => setSelectedService(type)}
+              >
+                {type}
+              </button>
+            )
+          )}
+        </div>
+
+        {/* CTA */}
+        <div className="vs_cta">
+          <div>
+            <strong>{formatMoney(price)}</strong>
+            <span>{currentCategory?.duration}</span>
+          </div>
+
+          <button
+            onClick={() =>
+              onContinue({
+                categoryId: selectedCategory,
+                serviceType: selectedService,
+                price,
+                duration: currentCategory?.duration || "",
+              })
+            }
+          >
+            Book Now <MdArrowForward />
+          </button>
+        </div>
+      </main>
     </div>
   );
 };

@@ -4,7 +4,7 @@ import HeaderBar from "../../components/header/header";
 import Dashboard from "../../pages/dashboard/Dashboard";
 import CleaningService from "../../pages/dashboard/cleaningservice/CleaningService";
 import HomeServices from "../../pages/dashboard/homeservices/HomeServices";
-import ServiceCategoryScreenWeb from "../../pages/dashboard/homeservices/ServiceCategoryScreenWeb";
+// import ServiceCategoryScreenWeb from "../../pages/dashboard/homeservices/ServiceCategoryScreenWeb";
 
 import Packersandmovers from "../../pages/dashboard/PackersAndMovers/Packersandmovers";
 import ServicesPage from "../../pages/dashboard/homerentals/pages/ServicesPage";
