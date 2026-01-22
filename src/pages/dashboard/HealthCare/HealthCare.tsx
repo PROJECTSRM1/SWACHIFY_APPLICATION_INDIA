@@ -15,6 +15,7 @@ type Doctor = {
 
 
 const doctors: Doctor[] = [
+  // ================= HEART (Cardiologists) =================
   {
     id: 1,
     name: "Dr. Sarah Jenkins",
@@ -24,7 +25,7 @@ const doctors: Doctor[] = [
     rating: 4.9,
     availability: "2:00 PM",
     price: "$120/hr",
-    image: "https://randomuser.me/api/portraits/women/44.jpg",
+    image: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?auto=format&fit=crop&w=800&q=80",
   },
   {
     id: 2,
@@ -35,21 +36,56 @@ const doctors: Doctor[] = [
     rating: 4.8,
     availability: "5:00 PM",
     price: "$140/hr",
-    image: "https://randomuser.me/api/portraits/men/32.jpg",
+    image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=800&q=80",
   },
   {
     id: 3,
-    name: "Dr. Marcus Chen",
-    speciality: "DERMATOLOGIST",
-    category: "Skin",
-    conditions: ["acne", "eczema"],
-    rating: 4.8,
-    availability: "4:30 PM",
-    price: "$95/hr",
-    image: "https://randomuser.me/api/portraits/men/12.jpg",
+    name: "Dr. Neha Sharma",
+    speciality: "CARDIOLOGIST",
+    category: "Heart",
+    conditions: ["ECG", "high bp", "heart checkup"],
+    rating: 4.7,
+    availability: "7:15 PM",
+    price: "$110/hr",
+    image: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&w=800&q=80",
   },
   {
     id: 4,
+    name: "Dr. Arvind Mehta",
+    speciality: "CARDIOLOGIST",
+    category: "Heart",
+    conditions: ["pulse issues", "bp", "cholesterol"],
+    rating: 4.6,
+    availability: "Tomorrow 10:30 AM",
+    price: "$115/hr",
+    image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    id: 5,
+    name: "Dr. Priya Reddy",
+    speciality: "CARDIOLOGIST",
+    category: "Heart",
+    conditions: ["heart burn", "chest pressure", "ECG"],
+    rating: 4.8,
+    availability: "Today 8:00 PM",
+    price: "$125/hr",
+    image: "https://images.unsplash.com/photo-1527613426441-4da17471b66d?auto=format&fit=crop&w=800&q=80",
+  },
+
+  // ================= SKIN (Dermatologists) =================
+  {
+    id: 6,
+    name: "Dr. Marcus Chen",
+    speciality: "DERMATOLOGIST",
+    category: "Skin",
+    conditions: ["acne", "eczema", "rash"],
+    rating: 4.8,
+    availability: "4:30 PM",
+    price: "$95/hr",
+    image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    id: 7,
     name: "Dr. Priya Nair",
     speciality: "DERMATOLOGIST",
     category: "Skin",
@@ -57,10 +93,45 @@ const doctors: Doctor[] = [
     rating: 4.7,
     availability: "1:00 PM",
     price: "$100/hr",
-    image: "https://randomuser.me/api/portraits/women/68.jpg",
+    image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=80",
   },
   {
-    id: 5,
+    id: 8,
+    name: "Dr. Ananya Rao",
+    speciality: "DERMATOLOGIST",
+    category: "Skin",
+    conditions: ["skin rash", "itching", "dark spots"],
+    rating: 4.8,
+    availability: "Tomorrow 3:30 PM",
+    price: "$92/hr",
+    image: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    id: 9,
+    name: "Dr. Arjun Reddy",
+    speciality: "DERMATOLOGIST",
+    category: "Skin",
+    conditions: ["fungal infection", "allergy", "psoriasis"],
+    rating: 4.6,
+    availability: "Today 8:30 PM",
+    price: "$90/hr",
+    image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    id: 10,
+    name: "Dr. Meera Iyer",
+    speciality: "DERMATOLOGIST",
+    category: "Skin",
+    conditions: ["eczema", "skin peeling", "redness"],
+    rating: 4.7,
+    availability: "Tomorrow 1:15 PM",
+    price: "$98/hr",
+    image: "https://images.unsplash.com/photo-1638202993928-7267aad84c31?auto=format&fit=crop&w=800&q=80",
+  },
+
+  // ================= MENTAL (Mental Health) =================
+  {
+    id: 11,
     name: "Dr. Aaron Patel",
     speciality: "PSYCHIATRIST",
     category: "Mental",
@@ -68,10 +139,56 @@ const doctors: Doctor[] = [
     rating: 4.7,
     availability: "6:00 PM",
     price: "$130/hr",
-    image: "https://randomuser.me/api/portraits/men/45.jpg",
+    image: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=800&q=80",
   },
   {
-    id: 6,
+    id: 12,
+    name: "Dr. Aisha Khan",
+    speciality: "PSYCHOLOGIST",
+    category: "Mental",
+    conditions: ["stress", "panic attack", "sleep issues"],
+    rating: 4.8,
+    availability: "Tomorrow 10:00 AM",
+    price: "$125/hr",
+    image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    id: 13,
+    name: "Dr. Pooja Kulkarni",
+    speciality: "PSYCHIATRIST",
+    category: "Mental",
+    conditions: ["depression", "anxiety", "mood swings"],
+    rating: 4.9,
+    availability: "Tomorrow 7:15 PM",
+    price: "$135/hr",
+    image: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    id: 14,
+    name: "Dr. Olivia Green",
+    speciality: "PSYCHOLOGIST",
+    category: "Mental",
+    conditions: ["therapy", "stress", "anger"],
+    rating: 4.7,
+    availability: "Today 9:00 PM",
+    price: "$120/hr",
+    image: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    id: 15,
+    name: "Dr. Daniel Thomas",
+    speciality: "PSYCHIATRIST",
+    category: "Mental",
+    conditions: ["sleep issues", "panic", "mental health"],
+    rating: 4.6,
+    availability: "Tomorrow 4:45 PM",
+    price: "$128/hr",
+    image: "https://images.unsplash.com/photo-1550831107-1553da8c8464?auto=format&fit=crop&w=800&q=80",
+  },
+
+  // ================= EYES (Ophthalmologists) =================
+  {
+    id: 16,
     name: "Dr. Sophia Lee",
     speciality: "OPHTHALMOLOGIST",
     category: "Eyes",
@@ -79,10 +196,34 @@ const doctors: Doctor[] = [
     rating: 4.6,
     availability: "Tomorrow",
     price: "$100/hr",
-    image: "https://randomuser.me/api/portraits/women/22.jpg",
+    image: "https://images.unsplash.com/photo-1579154203451-0d2d83d2f4a2?auto=format&fit=crop&w=1200&q=80",
   },
   {
-    id: 7,
+    id: 17,
+    name: "Dr. Varun Mehta",
+    speciality: "OPHTHALMOLOGIST",
+    category: "Eyes",
+    conditions: ["eye dryness", "blur vision", "eye redness"],
+    rating: 4.7,
+    availability: "Today 6:15 PM",
+    price: "$105/hr",
+    image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    id: 18,
+    name: "Dr. Kavita Singh",
+    speciality: "OPHTHALMOLOGIST",
+    category: "Eyes",
+    conditions: ["glasses", "eye infection", "eye pain"],
+    rating: 4.8,
+    availability: "Today 5:45 PM",
+    price: "$98/hr",
+    image: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&w=800&q=80",
+  },
+
+  // ================= BONES (Orthopedics) =================
+  {
+    id: 21,
     name: "Dr. John Williams",
     speciality: "ORTHOPEDIC",
     category: "Bones",
@@ -90,21 +231,47 @@ const doctors: Doctor[] = [
     rating: 4.8,
     availability: "3:00 PM",
     price: "$150/hr",
-    image: "https://randomuser.me/api/portraits/men/40.jpg",
+    image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=800&q=80",
   },
   {
-    id: 8,
-    name: "Dr. Emily Carter",
+    id: 22,
+    name: "Dr. Kavya Iyer",
+    speciality: "ORTHOPEDIC",
+    category: "Bones",
+    conditions: ["back pain", "knee pain", "sports injury"],
+    rating: 4.9,
+    availability: "Tomorrow 12:30 PM",
+    price: "$155/hr",
+    image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=80",
+  },
+
+  // ================= CHILD (Pediatricians) =================
+  {
+    id: 26,
+    name: "Dr. Emma Wilson",
     speciality: "PEDIATRICIAN",
     category: "Child",
     conditions: ["child fever", "vaccination"],
     rating: 4.9,
     availability: "11:00 AM",
     price: "$90/hr",
-    image: "https://randomuser.me/api/portraits/women/36.jpg",
+    image: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?auto=format&fit=crop&w=800&q=80",
   },
   {
-    id: 9,
+    id: 27,
+    name: "Dr. Rahul Verma",
+    speciality: "PEDIATRICIAN",
+    category: "Child",
+    conditions: ["cold", "fever", "stomach pain"],
+    rating: 4.8,
+    availability: "Today 4:00 PM",
+    price: "$95/hr",
+    image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=800&q=80",
+  },
+
+  // ================= DENTAL (Dentists) =================
+  {
+    id: 31,
     name: "Dr. Robert Brown",
     speciality: "DENTIST",
     category: "Dental",
@@ -112,9 +279,21 @@ const doctors: Doctor[] = [
     rating: 4.6,
     availability: "1:00 PM",
     price: "$80/hr",
-    image: "https://randomuser.me/api/portraits/men/18.jpg",
+    image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    id: 35,
+    name: "Dr. Aditya Menon",
+    speciality: "DENTIST",
+    category: "Dental",
+    conditions: ["root canal", "cavity", "gum swelling"],
+    rating: 4.9,
+    availability: "Today 8:40 PM",
+    price: "$92/hr",
+    image: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=800&q=80",
   },
 ];
+
 
 
 type Specialist = {
@@ -134,8 +313,9 @@ const specialistByType: Record<string, Specialist> = {
     rating: 4.8,
     availableAt: "Available at 1:30 PM",
     image:
-      "https://images.unsplash.com/photo-1537368910025-700350fe46c7?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?auto=format&fit=crop&w=1200&q=80",
   },
+
   Cardiologist: {
     id: 2,
     name: "Dr. Sarah Miles",
@@ -143,8 +323,9 @@ const specialistByType: Record<string, Specialist> = {
     rating: 4.9,
     availableAt: "Available at 3:00 PM",
     image:
-      "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&w=1200&q=80",
   },
+
   Dermatologist: {
     id: 3,
     name: "Dr. Marcus Lee",
@@ -152,8 +333,9 @@ const specialistByType: Record<string, Specialist> = {
     rating: 4.7,
     availableAt: "Available at 5:15 PM",
     image:
-      "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1580281657527-47f249e8f2d1?auto=format&fit=crop&w=1200&q=80",
   },
+
   Neurologist: {
     id: 4,
     name: "Dr. Elena Carter",
@@ -161,9 +343,92 @@ const specialistByType: Record<string, Specialist> = {
     rating: 4.8,
     availableAt: "Available at 6:00 PM",
     image:
-      "https://images.unsplash.com/photo-1622253692010-333f2da6031d?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1582719478185-2f7b6a7a52c0?auto=format&fit=crop&w=1200&q=80",
+  },
+
+  Orthopedic: {
+    id: 5,
+    name: "Dr. Jason Reed",
+    experience: "11 years experience",
+    rating: 4.9,
+    availableAt: "Available at 4:10 PM",
+    image:
+      "https://images.unsplash.com/photo-1576765607924-3f7b8410a787?auto=format&fit=crop&w=1200&q=80",
+  },
+
+  Pediatrician: {
+    id: 6,
+    name: "Dr. Emma Wilson",
+    experience: "8 years experience",
+    rating: 4.8,
+    availableAt: "Available at 12:45 PM",
+    image:
+      "https://images.unsplash.com/photo-1589758438368-0ad531db3366?auto=format&fit=crop&w=1200&q=80",
+  },
+
+  Dentist: {
+    id: 7,
+    name: "Dr. Ryan Cooper",
+    experience: "6 years experience",
+    rating: 4.7,
+    availableAt: "Available at 2:20 PM",
+    image:
+      "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=1200&q=80",
+  },
+
+  Psychologist: {
+    id: 8,
+    name: "Dr. Olivia Green",
+    experience: "9 years experience",
+    rating: 4.8,
+    availableAt: "Available at 7:30 PM",
+    image:
+      "https://images.unsplash.com/photo-1581594549595-35f6edc7b762?auto=format&fit=crop&w=1200&q=80",
+  },
+
+  // ✅ EXTRA SPECIALISTS (MORE LIST)
+  ENT: {
+    id: 9,
+    name: "Dr. Rahul Mehta",
+    experience: "10 years experience",
+    rating: 4.7,
+    availableAt: "Available at 11:10 AM",
+    image:
+      "https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&w=1200&q=80",
+  },
+
+  Gynecologist: {
+    id: 10,
+    name: "Dr. Ananya Rao",
+    experience: "13 years experience",
+    rating: 4.9,
+    availableAt: "Available at 2:50 PM",
+    image:
+      "https://images.unsplash.com/photo-1584982751601-97dcc096659c?auto=format&fit=crop&w=1200&q=80",
+  },
+
+  Diabetologist: {
+    id: 11,
+    name: "Dr. Suresh Naidu",
+    experience: "8 years experience",
+    rating: 4.6,
+    availableAt: "Available at 6:40 PM",
+    image:
+      "https://images.unsplash.com/photo-1584467735871-0b1d5f9b6d42?auto=format&fit=crop&w=1200&q=80",
+  },
+
+  Gastroenterologist: {
+    id: 12,
+    name: "Dr. Vikram Singh",
+    experience: "14 years experience",
+    rating: 4.8,
+    availableAt: "Available at 5:05 PM",
+    image:
+      "https://images.unsplash.com/photo-1579154203451-0d2d83d2f4a2?auto=format&fit=crop&w=1200&q=80",
   },
 };
+
+
 const pharmacies = [
   {
     id: 1,
@@ -248,10 +513,49 @@ const labs = [
     buttonText: "Book Test",
   },
 ];
+const ambulanceHospitals = [
+  {
+    id: 1,
+    name: "Apollo Hospital",
+    type: "MULTI-SPECIALITY",
+    location: "Jubilee Hills, Hyderabad",
+    distance: "2.3 km away • 8 mins arrival",
+    available: "3 ambulances available",
+    phone: "+91-40-23607777",
+  },
+  {
+    id: 2,
+    name: "Care Hospital",
+    type: "MULTI-SPECIALITY",
+    location: "Banjara Hills, Hyderabad",
+    distance: "3.1 km away • 12 mins arrival",
+    available: "2 ambulances available",
+    phone: "+91-40-61656565",
+  },
+  {
+    id: 3,
+    name: "Yashoda Hospitals",
+    type: "MULTI-SPECIALITY",
+    location: "Somajiguda, Hyderabad",
+    distance: "4.4 km away • 15 mins arrival",
+    available: "4 ambulances available",
+    phone: "+91-40-45674567",
+  },
+  {
+    id: 4,
+    name: "KIMS Hospital",
+    type: "MULTI-SPECIALITY",
+    location: "Secunderabad, Hyderabad",
+    distance: "5.2 km away • 18 mins arrival",
+    available: "2 ambulances available",
+    phone: "+91-40-44885000",
+  },
+];
+
 
 const HealthCare: React.FC = () => {
-    const [searchText, setSearchText] = useState("");
-    const [activeCategory, setActiveCategory] = useState<string>("All");
+  const [searchText, setSearchText] = useState("");
+  const [activeCategory, setActiveCategory] = useState<string>("All");
 
   const [openConsultation, setOpenConsultation] = useState<boolean>(false);
 
@@ -260,6 +564,27 @@ const HealthCare: React.FC = () => {
   const [description, setDescription] = useState<string>("");
   const [days, setDays] = useState<string>("");
   const [insurance, setInsurance] = useState<"yes" | "no" | "">("");
+
+  const [openDoctorProfile, setOpenDoctorProfile] = useState(false);
+
+  const [openAmbulancePopup, setOpenAmbulancePopup] = useState(false);
+
+  const [openAmbulanceScreen, setOpenAmbulanceScreen] = useState(false);
+
+
+
+  const [doctorProfile, setDoctorProfile] = useState({
+    name: "Dr. Sarah Jenkins",
+    speciality: "CARDIOLOGIST",
+    hospital: "City Heart Care",
+    experience: "12 Years",
+    contact: "+91 98765 43210",
+    opTime: "10:00 AM - 01:00 PM",
+  });
+
+  const [editOpTime, setEditOpTime] = useState(false);
+  const [newOpTime, setNewOpTime] = useState(doctorProfile.opTime);
+
 
   const selectedSpecialist = specialistByType[doctorSpecialized];
 
@@ -305,21 +630,21 @@ const HealthCare: React.FC = () => {
 
   const canBookAppointment = isFormCompleted && selectedDoctorId !== null;
 
-const filteredDoctors = useMemo(() => {
-  const q = searchText.toLowerCase();
+  const filteredDoctors = useMemo(() => {
+    const q = searchText.toLowerCase();
 
-  return doctors.filter((doc) => {
-    const matchesCategory =
-      activeCategory === "All" || doc.category === activeCategory;
+    return doctors.filter((doc) => {
+      const matchesCategory =
+        activeCategory === "All" || doc.category === activeCategory;
 
-    const matchesSearch =
-      doc.name.toLowerCase().includes(q) ||
-      doc.speciality.toLowerCase().includes(q) ||
-      doc.conditions.some((c) => c.toLowerCase().includes(q));
+      const matchesSearch =
+        doc.name.toLowerCase().includes(q) ||
+        doc.speciality.toLowerCase().includes(q) ||
+        doc.conditions.some((c) => c.toLowerCase().includes(q));
 
-    return matchesCategory && matchesSearch;
-  });
-}, [searchText, activeCategory]);
+      return matchesCategory && matchesSearch;
+    });
+  }, [searchText, activeCategory]);
 
 
 
@@ -362,10 +687,10 @@ const filteredDoctors = useMemo(() => {
     return () => clearInterval(interval);
   }, [openConfirmedScreen]);
   const formatTime = (totalSeconds: number) => {
-  const m = Math.floor(totalSeconds / 60);
-  const s = totalSeconds % 60;
-  return `${m}:${s.toString().padStart(2, "0")}`;
-};
+    const m = Math.floor(totalSeconds / 60);
+    const s = totalSeconds % 60;
+    return `${m}:${s.toString().padStart(2, "0")}`;
+  };
 
 
 
@@ -386,58 +711,106 @@ const filteredDoctors = useMemo(() => {
             Submit your Health Condition
           </button>
         </div>
-
         <div className="healthcare-banner-icon">
-          <span>➕</span>
+          {/* Profile Icon */}
+          <button
+            type="button"
+            className="banner-profile-btn"
+            onClick={() => setOpenDoctorProfile(true)}
+          >
+            👤
+          </button>
+
+          {/* Plus Icon */}
+          <button type="button" className="banner-plus-btn">
+            ➕
+          </button>
         </div>
+
+
+
       </div>
 
       {/* Search */}
       <div className="healthcare-search">
         <input
-  type="text"
-  placeholder="Search doctor, specialty, or condition"
-  value={searchText}
-  onChange={(e) => setSearchText(e.target.value)}
-/>
+          type="text"
+          placeholder="Search doctor, specialty, or condition"
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
+        />
 
       </div>
 
       {/* Categories */}
       <div className="healthcare-cards">
+        {/* SEE ALL CARD */}
+        <div
+          className={`healthcare-card ${activeCategory === "All" ? "active" : ""}`}
+          onClick={() => setActiveCategory("All")}
+        >
+          <span>📌</span>
+          <p>See All</p>
+        </div>
+
         {[
-  { label: "Heart", icon: "❤️" },
-  { label: "Skin", icon: "🩹" },
-  { label: "Mental", icon: "🧠" },
-  { label: "Eyes", icon: "👁️" },
-  { label: "Bones", icon: "🦴" },
-  { label: "Child", icon: "👶" },
-  { label: "Dental", icon: "🦷" },
-].map((c) => (
-  <div
-    key={c.label}
-    className={`healthcare-card ${
-      activeCategory === c.label ? "active" : ""
-    }`}
-    onClick={() => setActiveCategory(c.label)}
-  >
-    <span>{c.icon}</span>
-    <p>{c.label}</p>
-  </div>
-))}
+          { label: "Heart", icon: "❤️" },
+          { label: "Skin", icon: "🩹" },
+          { label: "Mental", icon: "🧠" },
+          { label: "Eyes", icon: "👁️" },
+          { label: "Bones", icon: "🦴" },
+          { label: "Child", icon: "👶" },
+          { label: "Dental", icon: "🦷" },
+        ].map((c) => (
+          <div
+            key={c.label}
+            className={`healthcare-card ${activeCategory === c.label ? "active" : ""}`}
+            onClick={() => setActiveCategory(c.label)}
+          >
+            <span>{c.icon}</span>
+            <p>{c.label}</p>
+          </div>
+        ))}
+      </div>
+      {/* Categories */}
+      <div className="healthcare-cards"> ... </div>
+
+      {/* ✅ Emergency Ambulance Card (ADD THIS) */}
+      <div className="emergency-card">
+        <div className="emergency-left">
+          <div className="emergency-icon-wrap">
+            <div className="emergency-icon">✚</div>
+          </div>
+
+          <div className="emergency-text">
+            <h4>Emergency</h4>
+            <h3>Ambulance</h3>
+            <p>Available 24/7 for urgent care</p>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          className="emergency-btn"
+          onClick={() => setOpenAmbulanceScreen(true)}
+        >
+          Book Now →
+        </button>
 
       </div>
+
+
 
       {/* Available Doctors */}
       <div className="available-doctors-header">
         <h3>Available Doctors</h3>
         <span className="see-all" onClick={() => setActiveCategory("All")}>
-  See all
-</span>
+          See all
+        </span>
 
       </div>
 
-      <div className="doctor-list">
+      <div className="doctor-list grid-view">
         {filteredDoctors.map((doc) => (
           <div key={doc.id} className="doctor-card">
             <img src={doc.image} alt={doc.name} />
@@ -500,11 +873,19 @@ const filteredDoctors = useMemo(() => {
                 onChange={(e) => setDoctorSpecialized(e.target.value)}
               >
                 <option value="">Select Doctor</option>
+
                 <option value="General Practitioner">General Practitioner</option>
                 <option value="Cardiologist">Cardiologist</option>
                 <option value="Dermatologist">Dermatologist</option>
                 <option value="Neurologist">Neurologist</option>
+
+                {/* ✅ NEW SPECIALISTS */}
+                <option value="Orthopedic">Orthopedic</option>
+                <option value="Pediatrician">Pediatrician</option>
+                <option value="Dentist">Dentist</option>
+                <option value="Psychologist">Psychologist</option>
               </select>
+
             </div>
 
             {/* Description */}
@@ -618,6 +999,8 @@ const filteredDoctors = useMemo(() => {
               Book Appointment
             </button>
           </div>
+
+
 
           {/* Payment popup */}
           {openPaymentPopup && (
@@ -1050,10 +1433,193 @@ const filteredDoctors = useMemo(() => {
         </div>
       )
       }
+      {openDoctorProfile && (
+        <div
+          className="profile-overlay"
+          onClick={() => setOpenDoctorProfile(false)}
+        >
+          <div className="profile-popup" onClick={(e) => e.stopPropagation()}>
+            <div className="profile-header">
+              <h2>Doctor Profile</h2>
+              <button
+                className="profile-close"
+                onClick={() => setOpenDoctorProfile(false)}
+              >
+                ✖
+              </button>
+            </div>
+
+            <div className="profile-body">
+              <p><b>Name:</b> {doctorProfile.name}</p>
+              <p><b>Speciality:</b> {doctorProfile.speciality}</p>
+              <p><b>Hospital:</b> {doctorProfile.hospital}</p>
+              <p><b>Experience:</b> {doctorProfile.experience}</p>
+              <p><b>Contact:</b> {doctorProfile.contact}</p>
+
+              <div className="op-time-box">
+                <p><b>OP Time:</b></p>
+
+                {!editOpTime ? (
+                  <div className="op-time-row">
+                    <span className="op-time">{doctorProfile.opTime}</span>
+                    <button
+                      className="edit-btn"
+                      onClick={() => {
+                        setEditOpTime(true);
+                        setNewOpTime(doctorProfile.opTime);
+                      }}
+                    >
+                      Edit
+                    </button>
+                  </div>
+                ) : (
+                  <div className="op-time-edit">
+                    <input
+                      type="text"
+                      value={newOpTime}
+                      onChange={(e) => setNewOpTime(e.target.value)}
+                      placeholder="Ex: 10:00 AM - 01:00 PM"
+                    />
+
+                    <div className="op-time-actions">
+                      <button
+                        className="cancel-btn"
+                        onClick={() => setEditOpTime(false)}
+                      >
+                        Cancel
+                      </button>
+
+                      <button
+                        className="save-btn"
+                        onClick={() => {
+                          setDoctorProfile((prev) => ({ ...prev, opTime: newOpTime }));
+                          setEditOpTime(false);
+                        }}
+                      >
+                        Save
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {openAmbulancePopup && (
+        <div
+          className="ambulance-overlay"
+          onClick={() => setOpenAmbulancePopup(false)}
+        >
+          <div className="ambulance-popup" onClick={(e) => e.stopPropagation()}>
+            <h2 className="ambulance-title">🚑 Ambulance Booking</h2>
+            <p className="ambulance-subtitle">
+              Emergency ambulance will reach you within <b>10-15 mins</b>.
+            </p>
+
+            <div className="ambulance-actions">
+              <button
+                className="ambulance-cancel"
+                onClick={() => setOpenAmbulancePopup(false)}
+              >
+                Cancel
+              </button>
+
+              <button
+                className="ambulance-confirm"
+                onClick={() => {
+                  setOpenAmbulancePopup(false);
+                  alert("✅ Ambulance booked successfully!");
+                }}
+              >
+                Confirm Booking
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {openAmbulanceScreen && (
+        <div className="ambulance-screen">
+          {/* Header */}
+          <div className="ambulance-header">
+            <button
+              className="ambulance-back-btn"
+              onClick={() => setOpenAmbulanceScreen(false)}
+            >
+              ←
+            </button>
+            <h2 className="ambulance-header-title">Book Ambulance</h2>
+            <div style={{ width: 42 }} />
+          </div>
+
+          {/* Body */}
+          <div className="ambulance-body">
+            {/* Warning */}
+            <div className="ambulance-warning">
+              <span className="ambulance-warning-icon">⚠</span>
+              <p>
+                <b>For life-threatening emergencies, call 108 immediately</b>
+              </p>
+            </div>
+
+            {/* Hospitals Found */}
+            <h3 className="ambulance-found-title">8 hospitals found within 30 km</h3>
+
+            <p className="ambulance-location">📍 Hyderabad, Telangana</p>
+
+            {/* Hospital Cards */}
+            <div className="ambulance-hospital-list">
+              {ambulanceHospitals.map((h) => (
+                <div key={h.id} className="ambulance-hospital-card">
+                  <div className="ambulance-hospital-top">
+                    <div className="ambulance-hospital-icon-wrap">
+                      <div className="ambulance-hospital-icon">✚</div>
+                    </div>
+
+                    <div className="ambulance-hospital-info">
+                      <h2>{h.name}</h2>
+                      <p className="ambulance-hospital-type">{h.type}</p>
+                    </div>
+                  </div>
+
+                  <div className="ambulance-details">
+                    <p>📍 {h.location}</p>
+                    <p>🚑 {h.distance}</p>
+                    <p>🚐 {h.available}</p>
+                    <p>📞 {h.phone}</p>
+                  </div>
+
+                  <div className="ambulance-actions-row">
+                    <button
+                      className="ambulance-call-btn"
+                      onClick={() => window.open(`tel:${h.phone.replace(/[^0-9+]/g, "")}`)}
+                    >
+                      📞 Call
+                    </button>
+
+                    <button
+                      className="ambulance-book-btn"
+                      onClick={() => alert(`✅ Ambulance booked from ${h.name}`)}
+                    >
+                      Book Now →
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+
 
     </div >
 
+
   );
+
 };
+
 
 export default HealthCare;

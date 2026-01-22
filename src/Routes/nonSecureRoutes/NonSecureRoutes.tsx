@@ -42,7 +42,7 @@ useEffect(() => {
 
   // ✅ Non-logged user visiting root → landing
   if (!userData && currentPath === "/") {
-    navigate("/freelancer", { replace: true });
+    navigate("/landing", { replace: true });
   }
 }, [navigate]);
 

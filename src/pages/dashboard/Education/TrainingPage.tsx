@@ -167,7 +167,8 @@ export default function TrainingPage({ onBack }: Props) {
     );
   }
 
-  return (
+ return (
+  <div className="training-scope">
     <div className="training-page">
       <div className="training-header">
         <button className="back-btn" onClick={onBack}>←</button>
@@ -245,5 +246,7 @@ export default function TrainingPage({ onBack }: Props) {
         ))}
       </div>
     </div>
-  );
+  </div>
+);
+
 }

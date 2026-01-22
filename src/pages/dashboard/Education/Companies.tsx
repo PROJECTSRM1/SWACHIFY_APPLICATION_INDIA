@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import  { useMemo, useState } from "react";
 import "./Companies.css";
 import JobDetails from "./JobDetails";
 
