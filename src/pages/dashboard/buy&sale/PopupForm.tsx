@@ -35,6 +35,13 @@ export default function SellItemWeb({ onClose }: SellItemWebProps) {
   const [landLocation, setLandLocation] = useState("");
   const [landArea, setLandArea] = useState("");
   const [registeredOwner, setRegisteredOwner] = useState("");
+
+  const [registrationStatus, setRegistrationStatus] =
+  useState<"Registered" | "Non-Registered">("Registered"); 
+  const [registrationValue, setRegistrationValue] = useState("");
+  const [marketValue, setMarketValue] = useState("");
+  const [landDocuments, setLandDocuments] = useState<string[]>([]);
+
   /* ================= COMMERCIAL (BASIC) ================= */
 const [commercialSqft, setCommercialSqft] = useState("");
 const [commercialLocation, setCommercialLocation] = useState("");
@@ -55,20 +62,42 @@ const [commercialArea, setCommercialArea] = useState("");
 
 
   const wordCount = description.trim().split(/\s+/).filter(Boolean).length;
+  const fileToBase64 = (file: File): Promise<string> =>
+  new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result as string);
+    reader.readAsDataURL(file);
+  });
+
 
   /* ================= IMAGE UPLOAD ================= */
-  const handleImages = (e: ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) return;
+ const handleImages = async (e: ChangeEvent<HTMLInputElement>) => {
+  if (!e.target.files) return;
 
-    const files = Array.from(e.target.files);
-    if (images.length + files.length > 10) {
-      alert("Maximum 10 images allowed");
-      return;
-    }
+  const files = Array.from(e.target.files);
 
-    const urls = files.map((file) => URL.createObjectURL(file));
-    setImages((prev) => [...prev, ...urls]);
-  };
+  if (images.length + files.length > 10) {
+    alert("Maximum 10 images allowed");
+    return;
+  }
+
+  const base64Images = await Promise.all(
+    files.map((file) => fileToBase64(file))
+  );
+
+  setImages((prev) => [...prev, ...base64Images]);
+};
+const handleLandDocs = async (e: ChangeEvent<HTMLInputElement>) => {
+  if (!e.target.files) return;
+
+  const files = Array.from(e.target.files);
+  const base64Docs = await Promise.all(
+    files.map((file) => fileToBase64(file))
+  );
+
+  setLandDocuments((prev) => [...prev, ...base64Docs]);
+};
+
 
   const removeImage = (index: number) => {
     setImages((prev) => prev.filter((_, i) => i !== index));
@@ -93,6 +122,15 @@ const [commercialArea, setCommercialArea] = useState("");
     area,
     description,
     images,
+    registrationStatus,
+    registrationValue,
+    marketValue,
+    landSqft,
+    landType,
+    landLocation,
+    landArea,
+    registeredOwner,
+    documents: landDocuments,
     createdAt: new Date().toISOString(),
   };
 
@@ -236,52 +274,68 @@ const [commercialArea, setCommercialArea] = useState("");
 
 
             {/* ============ LAND FIELDS (AFTER PRICE) ============ */}
-            {isLand && (
-              <>
-                <div className="sellRow">
-                  <div>
-                    <label>SQFT</label>
-                    <input
-                      placeholder="5000"
-                      value={landSqft}
-                      onChange={(e) => setLandSqft(e.target.value)}
-                    />
-                  </div>
+           {isLand && (
+  <>
+    <label>REGISTRATION STATUS</label>
+    <div className="sellToggle">
+      <button
+        className={registrationStatus === "Registered" ? "active" : ""}
+        onClick={() => setRegistrationStatus("Registered")}
+      >
+        Registered Land
+      </button>
+      <button
+        className={registrationStatus === "Non-Registered" ? "active" : ""}
+        onClick={() => setRegistrationStatus("Non-Registered")}
+      >
+        Non-Registered
+      </button>
+    </div>
 
-                  <div>
-                    <label>LAND TYPE</label>
-                    <select
-                      value={landType}
-                      onChange={(e) => setLandType(e.target.value)}
-                    >
-                      <option>Agriculture</option>
-                      <option>Commercial</option>
-                    </select>
-                  </div>
-                </div>
+    <div className="sellRow">
+      <div>
+        <label>SQFT</label>
+        <input value={landSqft} onChange={(e) => setLandSqft(e.target.value)} />
+      </div>
 
-                <label>LOCATION</label>
-                <input
-                  placeholder="City or Village"
-                  value={landLocation}
-                  onChange={(e) => setLandLocation(e.target.value)}
-                />
+      <div>
+        <label>LAND TYPE</label>
+        <select value={landType} onChange={(e) => setLandType(e.target.value)}>
+          <option>Agriculture</option>
+          <option>Commercial</option>
+        </select>
+      </div>
+    </div>
 
-                <label>AREA</label>
-                <input
-                  placeholder="Industrial Hub"
-                  value={landArea}
-                  onChange={(e) => setLandArea(e.target.value)}
-                />
+    <label>REGISTRATION VALUE (₹)</label>
+    <input
+      value={registrationValue}
+      onChange={(e) => setRegistrationValue(e.target.value)}
+    />
 
-                <label>REGISTERED OWNER NAME</label>
-                <input
-                  placeholder="John Doe"
-                  value={registeredOwner}
-                  onChange={(e) => setRegisteredOwner(e.target.value)}
-                />
-              </>
-            )}
+    <label>MARKET VALUE (₹)</label>
+    <input
+      value={marketValue}
+      onChange={(e) => setMarketValue(e.target.value)}
+    />
+
+    <label>LOCATION</label>
+    <input value={landLocation} onChange={(e) => setLandLocation(e.target.value)} />
+
+    <label>AREA</label>
+    <input value={landArea} onChange={(e) => setLandArea(e.target.value)} />
+
+    <label>REGISTERED OWNER NAME</label>
+    <input
+      value={registeredOwner}
+      onChange={(e) => setRegisteredOwner(e.target.value)}
+    />
+
+    <label>UPLOAD LAND DOCUMENTS</label>
+    <input type="file" multiple accept="image/*" onChange={handleLandDocs} />
+  </>
+)}
+
 
             {/* VEHICLE FIELDS */}
             {isVehicle && (
