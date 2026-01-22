@@ -255,7 +255,11 @@ const trendingStudents: TrendingStudent[] = studentsData
           <p className="score">{student.academicScore}% Academic Score</p>
 
           <div className="trending-footer">
-            <span className="rating">⭐ {student.rating}</span>
+            <div className="rating">
+  <span className="star">⭐</span>
+  <span>{student.rating}</span>
+</div>
+
             <span className={`status ${student.status}`}>
               {student.status.toUpperCase()}
             </span>

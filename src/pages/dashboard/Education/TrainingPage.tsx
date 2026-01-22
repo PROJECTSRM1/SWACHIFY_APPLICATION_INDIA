@@ -1,10 +1,7 @@
 import { useMemo, useState } from "react";
 import "./Training.css";
-// import { useNavigate } from "react-router-dom";
 import CourseEnroll from "./CourseEnroll";
 import CourseDetails from "./CourseDetails";
-
-
 
 type Props = {
   onBack: () => void;
@@ -26,7 +23,6 @@ interface Course {
 
 const CATEGORIES: Category[] = ["All", "Java", "Python", "Management"];
 
-
 const FALLBACK_IMAGE =
   "https://images.unsplash.com/photo-1518779578993-ec3579fee39f";
 
@@ -39,7 +35,8 @@ const COURSES: Course[] = [
     price: 999,
     status: "IN PROGRESS",
     category: "Java",
-    image:   "https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&q=80",
+    image:
+      "https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&q=80",
     modules: [
       "Spring Boot Basics",
       "REST APIs",
@@ -54,7 +51,8 @@ const COURSES: Course[] = [
     progress: 42,
     price: 499,
     category: "Python",
-    image: "https://images.unsplash.com/photo-1517433456452-f9633a875f6f",
+    image:
+      "https://images.unsplash.com/photo-1517433456452-f9633a875f6f",
     modules: [
       "Python Fundamentals",
       "ETL Pipelines",
@@ -69,7 +67,8 @@ const COURSES: Course[] = [
     progress: 12,
     price: 999,
     category: "Management",
-    image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f",
+    image:
+      "https://images.unsplash.com/photo-1522202176988-66273c2fd55f",
     modules: [
       "Project Lifecycle",
       "Agile & Scrum",
@@ -84,7 +83,8 @@ const COURSES: Course[] = [
     progress: 0,
     price: 999,
     category: "Java",
-    image: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4",
+    image:
+      "https://images.unsplash.com/photo-1515879218367-8466d910aaa4",
     modules: [
       "Arrays & Strings",
       "Recursion & Backtracking",
@@ -100,7 +100,8 @@ const COURSES: Course[] = [
     progress: 18,
     price: 999,
     category: "Python",
-    image: "https://images.unsplash.com/photo-1555949963-aa79dcee981c",
+    image:
+      "https://images.unsplash.com/photo-1555949963-aa79dcee981c",
     modules: [
       "Python for ML",
       "Supervised Learning",
@@ -116,7 +117,8 @@ const COURSES: Course[] = [
     progress: 60,
     price: 499,
     category: "Management",
-    image: "https://images.unsplash.com/photo-1556761175-4b46a572b786",
+    image:
+      "https://images.unsplash.com/photo-1556761175-4b46a572b786",
     modules: [
       "Leadership Styles",
       "Team Motivation",
@@ -128,53 +130,52 @@ const COURSES: Course[] = [
 
 export default function TrainingPage({ onBack }: Props) {
   const [activeCategory, setActiveCategory] = useState<Category>("All");
-  // const navigate = useNavigate();
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const [showDetails, setShowDetails] = useState(false);
-
-
-
 
   const filteredCourses = useMemo(() => {
     return activeCategory === "All"
       ? COURSES
       : COURSES.filter(c => c.category === activeCategory);
   }, [activeCategory]);
-  // AFTER CONFIRM → SHOW COURSE DETAILS
-if (selectedCourse && showDetails) {
-  return <CourseDetails />;
-}
 
-// ENROLL PAGE
-if (selectedCourse) {
-  return (
-    <CourseEnroll
-      course={{
-        id: selectedCourse.id,
-        title: selectedCourse.title,
-        duration: "6 Weeks",
-        rating: 4.8,
-        features: selectedCourse.modules,
-      }}
-      onBack={() => setSelectedCourse(null)}
-      onConfirm={() => setShowDetails(true)}   // 🔥 THIS WAS MISSING
-    />
-  );
-}
+  // COURSE DETAILS PAGE
+  if (selectedCourse && showDetails) {
+    return (
+      <CourseDetails
+        course={selectedCourse}
+        onBack={() => setShowDetails(false)}
+      />
+    );
+  }
 
-
+  // ENROLL PAGE
+  if (selectedCourse) {
+    return (
+      <CourseEnroll
+        course={{
+          id: selectedCourse.id,
+          title: selectedCourse.title,
+          duration: "6 Weeks",
+          rating: 4.8,
+          features: selectedCourse.modules,
+          image: selectedCourse.image,
+        }}
+        onBack={() => setSelectedCourse(null)}
+        onConfirm={() => setShowDetails(true)}
+      />
+    );
+  }
 
   return (
     <div className="training-page">
       <div className="training-header">
-  <button className="back-btn" onClick={onBack}>←</button>
-
-  <div>
-    <h1>Active Training</h1>
-    <p>Pick up where you left off</p>
-  </div>
-</div>
-
+        <button className="back-btn" onClick={onBack}>←</button>
+        <div>
+          <h1>Active Training</h1>
+          <p>Pick up where you left off</p>
+        </div>
+      </div>
 
       <div className="category-row">
         {CATEGORIES.map(cat => (
@@ -191,7 +192,6 @@ if (selectedCourse) {
       <div className="course-grid">
         {filteredCourses.map(course => (
           <div key={course.id} className="course-card">
-            {/* IMAGE FIX */}
             <div className="image-wrapper">
               <img
                 src={course.image}
@@ -234,14 +234,11 @@ if (selectedCourse) {
               <div className="card-footer">
                 <span className="price">₹{course.price}</span>
                 <button
-  className="enroll-btn"
-onClick={() => setSelectedCourse(course)}
-
->
-  ENROLL NOW →
-</button>
-
-
+                  className="enroll-btn"
+                  onClick={() => setSelectedCourse(course)}
+                >
+                  ENROLL NOW →
+                </button>
               </div>
             </div>
           </div>
