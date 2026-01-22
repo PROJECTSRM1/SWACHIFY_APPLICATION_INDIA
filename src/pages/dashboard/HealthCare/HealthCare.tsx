@@ -5,41 +5,117 @@ type Doctor = {
   id: number;
   name: string;
   speciality: string;
+  category: string;          // NEW
+  conditions: string[];      // NEW
   rating: number;
   availability: string;
   price: string;
   image: string;
 };
 
+
 const doctors: Doctor[] = [
   {
     id: 1,
     name: "Dr. Sarah Jenkins",
     speciality: "CARDIOLOGIST",
+    category: "Heart",
+    conditions: ["heart pain", "bp", "cholesterol"],
     rating: 4.9,
     availability: "2:00 PM",
     price: "$120/hr",
-    image: "https://i.pravatar.cc/150?img=47",
+    image: "https://randomuser.me/api/portraits/women/44.jpg",
   },
   {
     id: 2,
-    name: "Dr. Marcus Chen",
-    speciality: "DERMATOLOGIST",
+    name: "Dr. Kevin Moore",
+    speciality: "CARDIOLOGIST",
+    category: "Heart",
+    conditions: ["chest pain", "angioplasty"],
     rating: 4.8,
-    availability: "4:30 PM",
-    price: "$95/hr",
-    image: "https://i.pravatar.cc/150?img=12",
+    availability: "5:00 PM",
+    price: "$140/hr",
+    image: "https://randomuser.me/api/portraits/men/32.jpg",
   },
   {
     id: 3,
-    name: "Dr. Elena Rodriguez",
-    speciality: "GENERAL PRACTITIONER",
-    rating: 5.0,
-    availability: "Available Now",
-    price: "$110/hr",
-    image: "https://i.pravatar.cc/150?img=32",
+    name: "Dr. Marcus Chen",
+    speciality: "DERMATOLOGIST",
+    category: "Skin",
+    conditions: ["acne", "eczema"],
+    rating: 4.8,
+    availability: "4:30 PM",
+    price: "$95/hr",
+    image: "https://randomuser.me/api/portraits/men/12.jpg",
+  },
+  {
+    id: 4,
+    name: "Dr. Priya Nair",
+    speciality: "DERMATOLOGIST",
+    category: "Skin",
+    conditions: ["hair fall", "pigmentation"],
+    rating: 4.7,
+    availability: "1:00 PM",
+    price: "$100/hr",
+    image: "https://randomuser.me/api/portraits/women/68.jpg",
+  },
+  {
+    id: 5,
+    name: "Dr. Aaron Patel",
+    speciality: "PSYCHIATRIST",
+    category: "Mental",
+    conditions: ["anxiety", "depression"],
+    rating: 4.7,
+    availability: "6:00 PM",
+    price: "$130/hr",
+    image: "https://randomuser.me/api/portraits/men/45.jpg",
+  },
+  {
+    id: 6,
+    name: "Dr. Sophia Lee",
+    speciality: "OPHTHALMOLOGIST",
+    category: "Eyes",
+    conditions: ["vision", "eye pain"],
+    rating: 4.6,
+    availability: "Tomorrow",
+    price: "$100/hr",
+    image: "https://randomuser.me/api/portraits/women/22.jpg",
+  },
+  {
+    id: 7,
+    name: "Dr. John Williams",
+    speciality: "ORTHOPEDIC",
+    category: "Bones",
+    conditions: ["joint pain", "fracture"],
+    rating: 4.8,
+    availability: "3:00 PM",
+    price: "$150/hr",
+    image: "https://randomuser.me/api/portraits/men/40.jpg",
+  },
+  {
+    id: 8,
+    name: "Dr. Emily Carter",
+    speciality: "PEDIATRICIAN",
+    category: "Child",
+    conditions: ["child fever", "vaccination"],
+    rating: 4.9,
+    availability: "11:00 AM",
+    price: "$90/hr",
+    image: "https://randomuser.me/api/portraits/women/36.jpg",
+  },
+  {
+    id: 9,
+    name: "Dr. Robert Brown",
+    speciality: "DENTIST",
+    category: "Dental",
+    conditions: ["tooth pain", "gum bleeding"],
+    rating: 4.6,
+    availability: "1:00 PM",
+    price: "$80/hr",
+    image: "https://randomuser.me/api/portraits/men/18.jpg",
   },
 ];
+
 
 type Specialist = {
   id: number;
@@ -174,6 +250,9 @@ const labs = [
 ];
 
 const HealthCare: React.FC = () => {
+    const [searchText, setSearchText] = useState("");
+    const [activeCategory, setActiveCategory] = useState<string>("All");
+
   const [openConsultation, setOpenConsultation] = useState<boolean>(false);
 
   // form states
@@ -226,6 +305,24 @@ const HealthCare: React.FC = () => {
 
   const canBookAppointment = isFormCompleted && selectedDoctorId !== null;
 
+const filteredDoctors = useMemo(() => {
+  const q = searchText.toLowerCase();
+
+  return doctors.filter((doc) => {
+    const matchesCategory =
+      activeCategory === "All" || doc.category === activeCategory;
+
+    const matchesSearch =
+      doc.name.toLowerCase().includes(q) ||
+      doc.speciality.toLowerCase().includes(q) ||
+      doc.conditions.some((c) => c.toLowerCase().includes(q));
+
+    return matchesCategory && matchesSearch;
+  });
+}, [searchText, activeCategory]);
+
+
+
   useEffect(() => {
     setSelectedDoctorId(null);
   }, [doctorSpecialized, description, days, insurance]);
@@ -265,10 +362,10 @@ const HealthCare: React.FC = () => {
     return () => clearInterval(interval);
   }, [openConfirmedScreen]);
   const formatTime = (totalSeconds: number) => {
-    const m = Math.floor(totalSeconds / 60);
-    const s = totalSeconds % 60;
-    return `${m}:${s.toString().padStart(2, "0")}`;
-  };
+  const m = Math.floor(totalSeconds / 60);
+  const s = totalSeconds % 60;
+  return `${m}:${s.toString().padStart(2, "0")}`;
+};
 
 
 
@@ -298,42 +395,50 @@ const HealthCare: React.FC = () => {
       {/* Search */}
       <div className="healthcare-search">
         <input
-          type="text"
-          placeholder="Search doctor, specialty, or condition"
-        />
+  type="text"
+  placeholder="Search doctor, specialty, or condition"
+  value={searchText}
+  onChange={(e) => setSearchText(e.target.value)}
+/>
+
       </div>
 
       {/* Categories */}
       <div className="healthcare-cards">
-        <div className="healthcare-card">
-          <span>❤️</span>
-          <p>Heart</p>
-        </div>
+        {[
+  { label: "Heart", icon: "❤️" },
+  { label: "Skin", icon: "🩹" },
+  { label: "Mental", icon: "🧠" },
+  { label: "Eyes", icon: "👁️" },
+  { label: "Bones", icon: "🦴" },
+  { label: "Child", icon: "👶" },
+  { label: "Dental", icon: "🦷" },
+].map((c) => (
+  <div
+    key={c.label}
+    className={`healthcare-card ${
+      activeCategory === c.label ? "active" : ""
+    }`}
+    onClick={() => setActiveCategory(c.label)}
+  >
+    <span>{c.icon}</span>
+    <p>{c.label}</p>
+  </div>
+))}
 
-        <div className="healthcare-card">
-          <span>🩹</span>
-          <p>Skin</p>
-        </div>
-
-        <div className="healthcare-card">
-          <span>🧠</span>
-          <p>Mental</p>
-        </div>
-
-        <div className="healthcare-card">
-          <span>👁️</span>
-          <p>Eyes</p>
-        </div>
       </div>
 
       {/* Available Doctors */}
       <div className="available-doctors-header">
         <h3>Available Doctors</h3>
-        <span className="see-all">See all</span>
+        <span className="see-all" onClick={() => setActiveCategory("All")}>
+  See all
+</span>
+
       </div>
 
       <div className="doctor-list">
-        {doctors.map((doc) => (
+        {filteredDoctors.map((doc) => (
           <div key={doc.id} className="doctor-card">
             <img src={doc.image} alt={doc.name} />
 
