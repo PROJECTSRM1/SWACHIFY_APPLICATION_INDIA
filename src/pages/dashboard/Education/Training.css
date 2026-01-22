@@ -1,32 +1,28 @@
-.training-page {
+.training-scope .training-page {
   background: #f9fafb;
   padding: 28px;
   min-height: 100vh;
 }
 
-
-.training-header h1 {
+.training-scope .training-header h1 {
   font-size: 26px;
   font-weight: 700;
   color: #111827;
 }
 
-
-.training-header p {
+.training-scope .training-header p {
   color: #6b7280;
   margin-bottom: 22px;
 }
 
-
 /* CATEGORY */
-.category-row {
+.training-scope .category-row {
   display: flex;
   gap: 12px;
   margin-bottom: 28px;
 }
 
-
-.category-btn {
+.training-scope .category-btn {
   padding: 7px 16px;
   border-radius: 999px;
   border: none;
@@ -34,22 +30,19 @@
   font-weight: 600;
 }
 
-
-.category-btn.active {
+.training-scope .category-btn.active {
   background: #2563eb;
   color: #fff;
 }
 
-
 /* GRID */
-.course-grid {
+.training-scope .course-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 22px;
 }
 
-
-.course-card {
+.training-scope .course-card {
   background: #fff;
   border-radius: 16px;
   overflow: hidden;
@@ -58,121 +51,107 @@
   flex-direction: column;
 }
 
-
-
-/* IMAGE – SMALLER */
-.image-wrapper {
+/* IMAGE */
+.training-scope .image-wrapper {
   width: 100%;
-  height: 135px;
+  height: 160px;
   overflow: hidden;
 }
 
-
-.image-wrapper img {
+.training-scope .image-wrapper img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
+  object-position: center;
 }
 
-
-.course-body {
+.training-scope .course-body {
   padding: 14px;
   display: flex;
   flex-direction: column;
   height: 100%;
 }
 
-
-
-.status-badge {
+.training-scope .status-badge {
+  display: inline-block;
+  width: fit-content;
+  max-width: max-content;
   background: #2563eb;
   color: #fff;
   font-size: 11px;
-  padding: 4px 10px;
-  border-radius: 8px;
-  margin-bottom: 6px;
-  display: inline-block;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 999px;
+  margin-bottom: 8px;
+  letter-spacing: 0.4px;
 }
 
-
-.course-body h3 {
+.training-scope .course-body h3 {
   font-size: 16px;
   font-weight: 700;
 }
 
-
-.course-subtitle {
+.training-scope .course-subtitle {
   font-size: 13px;
   color: #6b7280;
   margin-bottom: 10px;
 }
 
-
 /* PROGRESS */
-.progress-row {
+.training-scope .progress-row {
   display: flex;
   align-items: center;
   gap: 8px;
   margin-bottom: 10px;
 }
 
-
-.progress-bg {
+.training-scope .progress-bg {
   flex: 1;
   height: 5px;
   background: #e5e7eb;
   border-radius: 6px;
 }
 
-
-.progress-fill {
+.training-scope .progress-fill {
   height: 5px;
   background: #2563eb;
   border-radius: 6px;
 }
 
-
-/* MODULES – SINGLE BULLET */
-.modules-title {
+/* MODULES */
+.training-scope .modules-title {
   font-size: 13px;
   font-weight: 600;
   margin-bottom: 6px;
 }
 
-
-.modules ul {
+.training-scope .modules ul {
   padding-left: 16px;
   margin: 0;
 }
 
-
-.modules li {
+.training-scope .modules li {
   font-size: 13px;
   color: #374151;
   margin-bottom: 4px;
   list-style-type: disc;
 }
 
-
-/* FOOTER – SAME ROW */
-.card-footer {
+/* FOOTER */
+.training-scope .card-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: auto;   /* 🔥 THIS fixes alignment */
+  margin-top: auto;
 }
 
-
-
-.price {
+.training-scope .price {
   font-size: 17px;
   font-weight: 700;
   color: #16a34a;
 }
 
-
-.enroll-btn {
+.training-scope .enroll-btn {
   padding: 7px 14px;
   background: #2563eb;
   color: #fff;
@@ -181,17 +160,15 @@
   font-weight: 700;
 }
 
-
 /* RESPONSIVE */
 @media (max-width: 900px) {
-  .course-grid {
+  .training-scope .course-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-
 @media (max-width: 640px) {
-  .course-grid {
+  .training-scope .course-grid {
     grid-template-columns: 1fr;
   }
 }

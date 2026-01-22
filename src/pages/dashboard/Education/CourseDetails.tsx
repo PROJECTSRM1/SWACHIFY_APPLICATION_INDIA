@@ -39,8 +39,7 @@ export default function CourseDetails({ course, onBack }: Props) {
 
   return (
     <div className="course-details-page">
-        {/* BACK BUTTON – OUTSIDE IMAGE */}
-  <button className="page-back-btn" onClick={onBack}>
+      <button className="page-back-btn" onClick={onBack}>
     ← Back
   </button>
       {/* HERO */}
@@ -48,8 +47,6 @@ export default function CourseDetails({ course, onBack }: Props) {
         className="course-hero"
         style={{ backgroundImage: `url(${course.image})` }}
       >
-       
-
         <h1>{course.title}</h1>
       </div>
 
