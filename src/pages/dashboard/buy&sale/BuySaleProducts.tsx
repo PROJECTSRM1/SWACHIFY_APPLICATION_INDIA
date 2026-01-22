@@ -216,6 +216,11 @@ export default function MarketplaceWeb() {
   const [selectedProperty, setSelectedProperty] = useState<Property | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [location, setLocation] = useState("Detecting location...");
+  const [manualLocation, setManualLocation] = useState<string | null>(null);
+  const [editingLocation, setEditingLocation] = useState(false);
+const [tempLocation, setTempLocation] = useState("");
+
+
   const [properties, setProperties] = useState<
   (Property & { isUserListing?: boolean })[]
 >([]);
@@ -239,14 +244,16 @@ export default function MarketplaceWeb() {
   const [dateLabel, setDateLabel] = useState("Updated Date");
   const [ratingLabel, setRatingLabel] = useState("Ratings");
 
-  useEffect(() => {
+ useEffect(() => {
   const userListings = getUserListings();
-
-  // ✅ MERGE USER LISTINGS + DUMMY CARDS
   setProperties([...userListings, ...DUMMY_PROPERTIES]);
 
-  detectLocation();
-}, []);
+  if (!manualLocation) {
+    detectLocation();
+  }
+}, [manualLocation]);
+
+
 
 useEffect(() => {
   const refreshListings = () => {
@@ -259,17 +266,56 @@ useEffect(() => {
     window.removeEventListener("listing-added", refreshListings);
 }, []);
 
-  const detectLocation = () => {
-    navigator.geolocation?.getCurrentPosition(
-      () => setLocation("Near Your Area"),
-      () => setLocation("Near Your Area")
-    );
-  };
+ const detectLocation = () => {
+  if (!navigator.geolocation) {
+    setLocation("Near Your Area");
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    async (position) => {
+      const { latitude, longitude } = position.coords;
+
+      try {
+        const res = await fetch(
+          `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
+        );
+        const data = await res.json();
+        const address = data.address || {};
+
+        const city =
+          address.city ||
+          address.town ||
+          address.village ||
+          address.suburb ||
+          address.county ||
+          "";
+
+        const state = address.state || "";
+
+        if (city && state) {
+          setLocation(`Near ${city}, ${state}`);
+        } else if (city) {
+          setLocation(`Near ${city}`);
+        } else if (state) {
+          setLocation(`Near ${state}`);
+        } else {
+          setLocation("Near Your Area");
+        }
+      } catch {
+        setLocation("Near Your Area");
+      }
+    },
+    () => setLocation("Near Your Area")
+  );
+};
+
+
 
   /* =======================
      FILTER LOGIC (100% SAME)
   ======================= */
-  const filteredProperties = properties.filter((p) => {
+const filteredProperties = properties.filter((p: Property) => {
     const matchesType =
       filterType === "all" ? true : p.listingType === filterType;
 
@@ -288,18 +334,18 @@ useEffect(() => {
 
   return (
     <>
-      <div className="page">
-        <section className="marketplace-section">
-          <div className="container">
+      <div className="mp-page">
+        <section className="mp-marketplace-section">
+          <div className="mp-container">
 
             {/* HEADER */}
-            <header className="web-header">
-              <div className="header-left">
+            <header className="mp-web-header">
+              <div className="mp-header-left">
                 <h1>Marketplace</h1>
 
-                <div className="dropdown-wrapper">
+                <div className="mp-dropdown-wrapper">
                   <button
-                    className="dropdown"
+                    className="mp-dropdown"
                     onClick={() => setShowDropdown(!showDropdown)}
                   >
                     {filterType === "all"
@@ -311,7 +357,7 @@ useEffect(() => {
                   </button>
 
                   {showDropdown && (
-                    <div className="dropdown-menu">
+                    <div className="mp-dropdown-menu">
                       {(["all", "buy", "rent"] as const)
                         .filter((t) => t !== filterType)
                         .map((t) => (
@@ -330,14 +376,14 @@ useEffect(() => {
                 </div>
               </div>
 
-              <button className="sell-btn" onClick={() => setOpenSellForm(true)}>
+              <button className="mp-sell-btn" onClick={() => setOpenSellForm(true)}>
                 <MdAdd /> Sell / Rent
               </button>
             </header>
 
             {/* SEARCH + FILTERS */}
-            <div className="search-filter-row">
-              <div className="search-box wide">
+            <div className="mp-search-filter-row">
+              <div className="mp-search-box wide">
                 <MdSearch />
                 <input
                   placeholder="Search homes, cars, land..."
@@ -346,9 +392,8 @@ useEffect(() => {
                 />
               </div>
 
-              <div className="top-filters">
+              <div className="mp-top-filters">
 
-                {/* PROPERTY TYPE */}
                 {/* PROPERTY TYPE */}
 <button
   onClick={() => {
@@ -360,7 +405,7 @@ useEffect(() => {
   {propertyTypeLabel} <MdExpandMore />
 
   {showPropertyType && (
-    <div className="filter-dropdown">
+    <div className="mp-filter-dropdown">
       {PROPERTY_TYPE_OPTIONS.map((item) => (
         <div
           key={item.label}
@@ -386,7 +431,7 @@ useEffect(() => {
                 }}>
                   {dateLabel} <MdExpandMore />
                   {showDateFilter && (
-                    <div className="filter-dropdown">
+                    <div className="mp-filter-dropdown">
                       {["All Time", "Today", "Last 7 Days", "Last 30 Days"].map(
                         (d) => (
                           <div
@@ -412,7 +457,7 @@ useEffect(() => {
                 }}>
                   {ratingLabel} <MdExpandMore />
                   {showRatingFilter && (
-                    <div className="filter-dropdown">
+                    <div className="mp-filter-dropdown">
                       {[null, 4.5, 4.0, 3.5].map((r) => (
                         <div
                           key={String(r)}
@@ -435,19 +480,66 @@ useEffect(() => {
             </div>
 
             {/* LOCATION */}
-<div className="location-bar compact">
+{/* LOCATION */}
+<div className="mp-location-bar compact">
   <div>
-    <span className="label">CURRENT LOCATION</span>
-    <div className="loc-row">
+    <span className="mp-label">CURRENT LOCATION</span>
+
+    <div className="mp-loc-row">
       <MdLocationOn />
-      <strong>{location}</strong>
-      <span className="change">Change</span>
+
+      {!editingLocation ? (
+        <>
+          <strong>{location}</strong>
+          <span
+            className="mp-change"
+            onClick={() => {
+              setTempLocation("");
+              setEditingLocation(true);
+            }}
+          >
+            Change
+          </span>
+        </>
+      ) : (
+        <>
+          <input
+            className="mp-location-input"
+            placeholder="Enter city or area"
+            value={tempLocation}
+            onChange={(e) => setTempLocation(e.target.value)}
+            autoFocus
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && tempLocation.trim()) {
+                const formatted = `Near ${tempLocation.trim()}`;
+                setManualLocation(formatted);
+                setLocation(formatted);
+                setEditingLocation(false);
+              }
+            }}
+          />
+          <span
+            className="mp-change"
+            onClick={() => {
+              if (tempLocation.trim()) {
+                const formatted = `Near ${tempLocation.trim()}`;
+                setManualLocation(formatted);
+                setLocation(formatted);
+              }
+              setEditingLocation(false);
+            }}
+          >
+            Save
+          </span>
+        </>
+      )}
     </div>
   </div>
 </div>
 
+
             {/* CATEGORY BUTTONS */}
-            <div className="categories">
+            <div className="mp-categories">
               {["all", "land", "apartment", "house", "commercial", "vehicle"].map(
                 (c) => (
                   <button
@@ -462,28 +554,28 @@ useEffect(() => {
             </div>
 
             {/* GRID */}
-            <div className="property-grid">
+            <div className="mp-property-grid">
               {filteredProperties.map((p) => (
                 <div
                   key={p.id}
-                  className="property-card"
+                  className="mp-property-card"
                   onClick={() => setSelectedProperty(p)}
                 >
-                  <div className="image-wrapper">
+                  <div className="mp-image-wrapper">
   <img src={p.image} alt={p.title} />
 
-  <span className="badge">
+  <span className="mp-badge">
     {p.listingType === "buy" ? "FOR SALE" : "FOR RENT"}
   </span>
 
-  <div className="rating">
+  <div className="mp-rating">
     <MdStar /> {p.rating}
   </div>
 
   {/* ❌ DELETE BUTTON – ONLY USER POSTED CARD */}
   {"isUserListing" in p && p.isUserListing && (
     <button
-      className="delete-btn"
+      className="mp-delete-btn"
       onClick={(e) => {
         e.stopPropagation();
         handleDelete(p.id, setProperties);
@@ -495,10 +587,10 @@ useEffect(() => {
 </div>
 
 
-                  <div className="card-body">
+                  <div className="mp-card-body">
                     <h3>{p.title}</h3>
-                    <div className="price">{p.price}</div>
-                    <div className="meta">
+                    <div className="mp-price">{p.price}</div>
+                    <div className="mp-meta">
                       <span>📍 {p.area}</span>
                       {p.sqft && <span>📐 {p.sqft} sqft</span>}
                       {p.bhk && <span>🛏 {p.bhk}</span>}
