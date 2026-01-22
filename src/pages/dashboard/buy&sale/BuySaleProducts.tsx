@@ -70,18 +70,7 @@ const DUMMY_PROPERTIES: Property[] = [
     listingType: "buy",
     category: "house",
   },
-  {
-    id: "2",
-    title: "Residential Plot for Sale",
-    price: "₹95,000",
-    image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
-    rating: 4.5,
-    area: "Suburb",
-    sqft: "900",
-    distance: "1.9 km away",
-    listingType: "buy",
-    category: "land",
-  },
+  
   {
     id: "3",
     title: "Open Land Near Highway",
@@ -160,6 +149,21 @@ const DUMMY_PROPERTIES: Property[] = [
     listingType: "buy",
     category: "vehicle",
   },
+];
+
+const PROPERTY_TYPE_OPTIONS = [
+  { label: "All", category: "all" },
+
+  { label: "Apartment", category: "apartment" },
+  { label: "Villa", category: "house" },
+  { label: "Independent House", category: "house" },
+
+  { label: "Land", category: "land" },
+
+  { label: "Bike", category: "vehicle" },
+  { label: "Car", category: "vehicle" },
+  { label: "Lorry", category: "vehicle" },
+  { label: "Auto", category: "vehicle" },
 ];
 
 // ✅ READ USER POSTED LISTINGS FROM LOCAL STORAGE
@@ -345,35 +349,34 @@ useEffect(() => {
               <div className="top-filters">
 
                 {/* PROPERTY TYPE */}
-                <button onClick={() => {
-                  setShowPropertyType(!showPropertyType);
-                  setShowDateFilter(false);
-                  setShowRatingFilter(false);
-                }}>
-                  {propertyTypeLabel} <MdExpandMore />
-                  {showPropertyType && (
-                    <div className="filter-dropdown">
-                      {[
-                        "All",
-                        "Apartment",
-                        "House",
-                        "Land",
-                        "Vehicle",
-                      ].map((t) => (
-                        <div
-                          key={t}
-                          onClick={() => {
-                            setPropertyTypeLabel(t);
-                            setActiveCategory(t.toLowerCase() as any);
-                            setShowPropertyType(false);
-                          }}
-                        >
-                          {t}
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </button>
+                {/* PROPERTY TYPE */}
+<button
+  onClick={() => {
+    setShowPropertyType(!showPropertyType);
+    setShowDateFilter(false);
+    setShowRatingFilter(false);
+  }}
+>
+  {propertyTypeLabel} <MdExpandMore />
+
+  {showPropertyType && (
+    <div className="filter-dropdown">
+      {PROPERTY_TYPE_OPTIONS.map((item) => (
+        <div
+          key={item.label}
+          onClick={() => {
+            setPropertyTypeLabel(item.label);
+            setActiveCategory(item.category as any);
+            setShowPropertyType(false);
+          }}
+        >
+          {item.label}
+        </div>
+      ))}
+    </div>
+  )}
+</button>
+
 
                 {/* UPDATED DATE */}
                 <button onClick={() => {
