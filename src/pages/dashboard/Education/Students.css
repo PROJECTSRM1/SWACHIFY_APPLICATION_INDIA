@@ -1,12 +1,12 @@
 .students-root {
-  margin-top: 140px;       /* ✅ Our Services overlap FIX */
+  margin-top: 140px;
   background: #f5f7fb;
   min-height: 100vh;
   padding-bottom: 80px;
 }
 
 /* HEADER */
-.students-header {
+.students-root .students-header {
   max-width: 1200px;
   margin: 0 auto 24px;
   padding: 18px 24px;
@@ -18,7 +18,7 @@
   box-shadow: 0 8px 24px rgba(0,0,0,0.08);
 }
 
-.students-back {
+.students-root .students-back {
   width: 38px;
   height: 38px;
   border-radius: 10px;
@@ -28,7 +28,7 @@
   cursor: pointer;
 }
 
-.students-search {
+.students-root .students-search {
   margin-left: auto;
   width: 300px;
   height: 42px;
@@ -38,19 +38,19 @@
 }
 
 /* FILTERS */
-.students-filters {
+.students-root .students-filters {
   max-width: 1200px;
   margin: 0 auto 24px;
   padding: 0 24px;
 }
 
-.tabs {
+.students-root .students-tabs {
   display: flex;
   gap: 12px;
   margin-bottom: 16px;
 }
 
-.tabs button {
+.students-root .students-tabs button {
   padding: 8px 18px;
   border-radius: 20px;
   border: none;
@@ -58,17 +58,17 @@
   cursor: pointer;
 }
 
-.tabs .active {
+.students-root .students-tabs .active {
   background: #2563eb;
   color: #fff;
 }
 
-.dropdowns {
+.students-root .students-dropdowns {
   display: flex;
   gap: 12px;
 }
 
-.dropdowns select {
+.students-root .students-dropdowns select {
   flex: 1;
   height: 44px;
   border-radius: 12px;
@@ -77,7 +77,7 @@
 }
 
 /* GRID */
-.students-grid {
+.students-root .students-grid {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 24px;
@@ -87,7 +87,7 @@
 }
 
 /* CARD */
-.students-card {
+.students-root .students-card {
   background: #fff;
   border-radius: 18px;
   padding: 18px;
@@ -96,50 +96,259 @@
   box-shadow: 0 12px 28px rgba(0,0,0,0.08);
 }
 
-.students-card img {
+.students-root .students-card img {
   width: 64px;
   height: 64px;
   border-radius: 14px;
 }
 
-.students-top {
+.students-root .students-top {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
 }
 
-.rating {
-  color: #f59e0b;
+/* ⭐ RATING — SCOPED */
+.students-root .students-rating {
+  background: #3f3f46;
+  color: #facc15;
+  font-weight: 700;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;         /* 🔥 PREVENT OVERLAP */
+}
+.students-root .students-top h3 {
+  margin: 0;
+  font-size: 16px;
   font-weight: 600;
+  flex: 1;                /* 🔥 KEY FIX */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* 🔥 FORCE CLEAN COMPLETED BADGE (NO GREEN) */
+.students-root .students-status.completed {
+  background: #ffffff !important;   /* full white */
+  color: #6b7280 !important;
+
+  /* REMOVE ANY LEFT STRIP / SHADOW */
+  border: 1px solid #e5e7eb !important;
+  border-left: 1px solid #e5e7eb !important;
+  box-shadow: none !important;
+  outline: none !important;
 }
 
-.program {
+/* PROGRAM */
+.students-root .students-program {
   font-size: 13px;
   color: #2563eb;
+  margin: 2px 0;
 }
 
-.meta {
+/* META */
+.students-root .students-meta {
   font-size: 12px;
   color: #6b7280;
 }
 
-.students-footer {
+/* FOOTER */
+.students-root .students-footer {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-top: 10px;
 }
 
-.status.active {
+/* STATUS */
+.students-root .students-status {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 999px;
+}
+
+.students-root .students-status.active {
+  background: #dcfce7;
   color: #059669;
-  font-weight: 700;
 }
 
-.status.completed {
+.students-root .students-status.completed {
+  background: #e5e7eb;
   color: #6b7280;
-  font-weight: 700;
 }
 
-.students-empty {
+/* EMPTY */
+.students-root .students-empty {
   text-align: center;
   grid-column: 1 / -1;
   color: #6b7280;
+}
+
+
+/* ============================= */
+/* 🖥️ LARGE DESKTOP (1280px+) */
+/* ============================= */
+@media (min-width: 1280px) {
+  .students-root .students-grid {
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  }
+
+  .students-root .students-search {
+    width: 340px;
+  }
+}
+
+/* ============================= */
+/* 💻 LAPTOP (1024px – 1279px) */
+/* ============================= */
+@media (max-width: 1279px) and (min-width: 1024px) {
+  .students-root {
+    margin-top: 120px;
+  }
+
+  .students-root .students-header {
+    padding: 16px 20px;
+  }
+
+  .students-root .students-search {
+    width: 280px;
+  }
+
+  .students-root .students-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+}
+
+/* ============================= */
+/* 📱 TABLET (768px – 1023px) */
+/* ============================= */
+@media (max-width: 1023px) and (min-width: 768px) {
+  .students-root {
+    margin-top: 110px;
+  }
+
+  .students-root .students-header {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .students-root .students-search {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .students-root .students-dropdowns {
+    flex-wrap: wrap;
+  }
+
+  .students-root .students-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    padding: 0 20px;
+  }
+
+  .students-root .students-card {
+    padding: 16px;
+  }
+}
+
+/* ============================= */
+/* 📲 MOBILE (≤ 767px) */
+/* ============================= */
+@media (max-width: 767px) {
+  .students-root {
+    margin-top: 96px;
+    padding-bottom: 60px;
+  }
+
+  .students-root .students-header {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .students-root .students-back {
+    align-self: flex-start;
+  }
+
+  .students-root .students-search {
+    width: 100%;
+  }
+
+  .students-root .students-filters {
+    padding: 0 16px;
+  }
+
+  .students-root .students-tabs {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .students-root .students-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .students-root .students-dropdowns {
+    flex-direction: column;
+  }
+
+  .students-root .students-grid {
+    grid-template-columns: 1fr;
+    padding: 0 16px;
+  }
+
+  .students-root .students-card {
+    gap: 14px;
+  }
+
+  .students-root .students-card img {
+    width: 56px;
+    height: 56px;
+  }
+
+  .students-root .students-top h3 {
+    font-size: 15px;
+  }
+}
+
+/* ============================= */
+/* 📲 SMALL MOBILE (≤ 480px) */
+/* ============================= */
+@media (max-width: 480px) {
+  .students-root {
+    margin-top: 84px;
+  }
+
+  .students-root .students-header {
+    padding: 14px;
+    border-radius: 14px;
+  }
+
+  .students-root .students-search {
+    height: 40px;
+    font-size: 14px;
+  }
+
+  .students-root .students-tabs button {
+    padding: 6px 14px;
+    font-size: 13px;
+  }
+
+  .students-root .students-card {
+    padding: 14px;
+  }
+
+  .students-root .students-rating {
+    font-size: 11px;
+    padding: 3px 8px;
+  }
+
+  .students-root .students-status {
+    font-size: 11px;
+    padding: 5px 12px;
+  }
 }

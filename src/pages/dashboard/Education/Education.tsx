@@ -5,11 +5,11 @@ import Companies from "../Education/Companies";
 import Students from "../Education/Students";
 import type { Student } from "../Education/Students";
 
-import JobsPage from "./TrainingPage";
+// import JobsPage from "./TrainingPage";
 import Internship from "../Education/Internships";
 import CandidateProfile from "../Education/CandidateProfile";
 import TrainingPage from "./TrainingPage";
-import { useLocation } from "react-router-dom";
+// import { useLocation } from "react-router-dom";c
 
 
 
@@ -255,7 +255,11 @@ const trendingStudents: TrendingStudent[] = studentsData
           <p className="score">{student.academicScore}% Academic Score</p>
 
           <div className="trending-footer">
-            <span className="rating">⭐ {student.rating}</span>
+            <div className="rating">
+  <span className="star">⭐</span>
+  <span>{student.rating}</span>
+</div>
+
             <span className={`status ${student.status}`}>
               {student.status.toUpperCase()}
             </span>

@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   MdArrowBack,
-  MdMoreHoriz,
+  // MdMoreHoriz,
   MdLocationOn,
   MdMyLocation,
   MdCalendarToday,
@@ -68,6 +68,11 @@ const ALL_SERVICES: Service[] = [
 
 const BASE_PRICE = 80;
 const ADDON_PRICE = 25;
+type BookCleaningScreenWebProps = {
+  selectedServices: any[];
+  consultationCharge: number;
+  onClose: () => void;
+};
 
 /* =======================
    SMALL COMPONENTS
@@ -103,7 +108,11 @@ async function reverseGeocode(lat: number, lon: number): Promise<string> {
 /* =======================
    SCREEN
    ======================= */
-const BookCleaningScreenWeb: React.FC = () => {
+const BookCleaningScreenWeb: React.FC<BookCleaningScreenWebProps> = ({
+  //selectedServices,
+  //consultationCharge,
+  // onClose,
+}) => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -286,9 +295,7 @@ const totalPrice = servicePrice + consultationCharge;
           <h1 className="bc_headerTitle">Book Cleaning</h1>
         </div>
 
-        <button className="bc_iconBtn" type="button">
-          <MdMoreHoriz size={24} color="#9CA3AF" />
-        </button>
+       <div style={{ width: 40 }} />
       </header>
 
       {/* CONTENT */}
