@@ -49,6 +49,15 @@ export interface Property {
   distance: string;
   listingType: "buy" | "rent";
   category: "land" | "apartment" | "house" | "vehicle" | "commercial";
+  landType?: string;
+  ownerName?: string;
+  documents?: string[];
+  registrationStatus?: string;
+  registrationValue?: string;
+  marketValue?: string;
+  description?: string;
+
+  isUserListing?: boolean;
 }
 
 /* =======================
@@ -61,7 +70,7 @@ const DUMMY_PROPERTIES: Property[] = [
     id: "1",
     title: "1 BHK Villa in Downtown",
     price: "₹1,20,000",
-    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
+    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
     rating: 4.9,
     area: "Hyderabad",
     sqft: "1200",
@@ -70,12 +79,12 @@ const DUMMY_PROPERTIES: Property[] = [
     listingType: "buy",
     category: "house",
   },
-  
+
   {
     id: "3",
     title: "Open Land Near Highway",
     price: "₹2,40,000",
-    image: "https://images.unsplash.com/photo-1495107334309-fcf20504a5ab",
+    image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80",
     rating: 4.8,
     area: "Shamshabad",
     sqft: "2000",
@@ -83,11 +92,12 @@ const DUMMY_PROPERTIES: Property[] = [
     listingType: "buy",
     category: "land",
   },
+
   {
     id: "4",
     title: "3 BHK Independent House",
     price: "₹1,80,000",
-    image: "https://images.unsplash.com/photo-1570129477492-45c003edd2be",
+    image: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=800&q=80",
     rating: 4.7,
     area: "Kukatpally",
     sqft: "1600",
@@ -96,11 +106,12 @@ const DUMMY_PROPERTIES: Property[] = [
     listingType: "buy",
     category: "house",
   },
+
   {
     id: "5",
     title: "2 BHK Apartment for Rent",
     price: "₹18,000 / month",
-    image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+    image: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=800&q=80",
     rating: 4.6,
     area: "Gachibowli",
     sqft: "1100",
@@ -115,7 +126,7 @@ const DUMMY_PROPERTIES: Property[] = [
     id: "10",
     title: "Yamaha R15 V4",
     price: "₹1,82,000",
-    image: "https://images.unsplash.com/photo-1609630875171-b1321377ee65",
+    image: "https://images.unsplash.com/photo-1609630875171-b1321377ee65?auto=format&fit=crop&w=800&q=80",
     rating: 4.5,
     area: "Kukatpally",
     sqft: "",
@@ -123,25 +134,11 @@ const DUMMY_PROPERTIES: Property[] = [
     listingType: "buy",
     category: "vehicle",
   },
-
- 
-  {
-    id: "15",
-    title: "TVS Apache RTR 160",
-    price: "₹1,28,000",
-    image: "https://images.unsplash.com/photo-1625047509168-a7026f36de04",
-    rating: 4.2,
-    area: "LB Nagar",
-    sqft: "",
-    distance: "5.2 km away",
-    listingType: "buy",
-    category: "vehicle",
-  },
   {
     id: "16",
     title: "Hyundai i20 Sportz",
     price: "₹9,40,000",
-    image: "https://images.unsplash.com/photo-1621135802920-133df287f89c",
+    image: "https://th.bing.com/th/id/OIP.ZKNVZarz3HYsUlg24taeLwHaEK?w=290&h=180&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3",
     rating: 4.5,
     area: "Uppal",
     sqft: "",
@@ -150,6 +147,7 @@ const DUMMY_PROPERTIES: Property[] = [
     category: "vehicle",
   },
 ];
+
 
 const PROPERTY_TYPE_OPTIONS = [
   { label: "All", category: "all" },
@@ -173,37 +171,34 @@ const getUserListings = (): (Property & { isUserListing: boolean })[] => {
   );
 
   return stored.map((item: any) => ({
-    id: String(item.id),
+  id: String(item.id),
 
-    title:
-      item.propertyType === "Land" || item.propertyType === "Apartment"
-        ? `${item.propertyType} for ${
-            item.listingType === "sell" ? "Sale" : "Rent"
-          }`
-        : item.propertyType,
+  title: "Land for Sale",
 
-    price: `₹${item.price}`,
-    image: item.images?.[0],   // ⭐ image works
-    rating: 4.5,
-    area: item.area || item.location || "Near Your Area",
-    sqft: item.sqft || "",
-    bhk: item.bhk || "",
-    distance: "Just now",
+  price: `₹${item.price}`,
+  image: item.images?.[0],
+  images: item.images,
 
-    listingType: item.listingType === "sell" ? "buy" : "rent",
+  rating: 4.5,
+  area: item.landArea || "Near Your Area",
+  sqft: item.landSqft || "",
 
-    category:
-      item.propertyType === "Land"
-        ? "land"
-        : ["Apartment", "Villa", "Independent House"].includes(item.propertyType)
-        ? "house"
-        : ["Bike", "Car"].includes(item.propertyType)
-        ? "vehicle"
-        : "commercial",
+  // 👇 LAND DATA PASSED HERE
+  landType: item.landType,
+  ownerName: item.registeredOwner,
+  documents: item.documents,
+  registrationStatus: item.registrationStatus,
+  registrationValue: item.registrationValue,
+  marketValue: item.marketValue,
+  description: item.description,
 
-    // 🔴 THIS LINE IS VERY IMPORTANT
-    isUserListing: true,
-  }));
+  distance: "Just now",
+  listingType: "buy",
+  category: "land",
+  isUserListing: true,
+}));
+
+
 };
 
 
@@ -479,7 +474,7 @@ const filteredProperties = properties.filter((p: Property) => {
               </div>
             </div>
 
-            {/* LOCATION */}
+            
 {/* LOCATION */}
 <div className="mp-location-bar compact">
   <div>
