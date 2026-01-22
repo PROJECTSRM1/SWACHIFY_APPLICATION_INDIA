@@ -1,6 +1,6 @@
 // src/pages/.../HomeServices.tsx
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import ServiceCategoryScreenWeb from "./ServiceCategoryScreenWeb";
 import HomeSubWeb from "./HomeSubWeb";
 import HomeSubCatWeb from "./HomeSubCatWeb";
@@ -20,7 +20,7 @@ interface HomeServicesProps {
 }
 
 const HomeServices: React.FC<HomeServicesProps> = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const [openCleaningPopup, setOpenCleaningPopup] = useState(false);
   const [openHomeSubPopup, setOpenHomeSubPopup] = useState(false);
@@ -49,7 +49,7 @@ useEffect(() => {
 <section className="cleaning-section">
   <div className="cleaning-header">
     <div>
-      <h2 className="cleaning-title">Cleaning Services</h2>
+      <h2 className="cleaning-title">Housing Services</h2>
       <p className="cleaning-subtitle">2 services available</p>
     </div>
 
@@ -120,13 +120,13 @@ useEffect(() => {
 />
 
 
-            <button
+            {/* <button
               className="sc_popupClose"
               onClick={() => setOpenCleaningPopup(false)}
               aria-label="Close"
             >
               ✕
-            </button>
+            </button> */}
           </div>
         </div>
       )}
@@ -136,13 +136,13 @@ useEffect(() => {
             <CleaningServicesScreenWeb />
 
 
-            <button
+            {/* <button
               className="sc_popupClose"
               onClick={() => setOpenCleaningPopup(false)}
               aria-label="Close"
             >
               ✕
-            </button>
+            </button> */}
           </div>
         </div>
       )}
@@ -160,13 +160,13 @@ useEffect(() => {
   }}
 />
 
-            <button
+            {/* <button
               className="sc_popupClose"
               onClick={() => setOpenHomeSubPopup(false)}
               aria-label="Close"
             >
               ✕
-            </button>
+            </button> */}
           </div>
           {/* 🔥 POPUP 3 — HOME CLEANING SERVICE OPTIONS */}
 
@@ -191,12 +191,12 @@ useEffect(() => {
         }}
       />
 
-      <button
+      {/* <button
         className="sc_popupClose"
         onClick={() => setOpenHomeSubCatPopup(false)}
       >
         ✕
-      </button>
+      </button> */}
     </div>
   </div>
 )}
@@ -206,12 +206,12 @@ useEffect(() => {
     <div className="sc_popupContent">
       <BookCleaningScreenWeb />
 
-      <button
+      {/* <button
         className="sc_popupClose"
         onClick={() => setOpenbookcleaningweb(false)}
       >
         ✕
-      </button>
+      </button> */}
     </div>
   </div>
 )}
@@ -231,12 +231,12 @@ useEffect(() => {
         }}
       />
 
-      <button
+      {/* <button
         className="sc_popupClose"
         onClick={() => setOpenCommercialPopup(false)}
       >
         ✕
-      </button>
+      </button> */}
     </div>
   </div>
 )}

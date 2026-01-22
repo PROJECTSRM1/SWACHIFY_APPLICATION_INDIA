@@ -36,39 +36,39 @@ const CommercialSubWeb: React.FC<CommercialSubWebProps> = ({
     () => [
       {
         id: "small",
-        icon: <MdComputer size={28} />,
+        icon: <MdComputer size={26} />,
         title: "Small Office",
         subtitle: "Up to 500 sqft",
-        price: "From $49",
+        price: "From ₹3,999",
       },
       {
         id: "medium",
-        icon: <MdChair size={28} />,
+        icon: <MdChair size={26} />,
         title: "Medium Office",
-        subtitle: "500–2000 sqft",
-        price: "From $129",
+        subtitle: "500 – 2000 sqft",
+        price: "From ₹7,999",
       },
       {
         id: "large",
-        icon: <MdBusiness size={28} />,
+        icon: <MdBusiness size={26} />,
         title: "Large Corporate Office",
         subtitle: "2000+ sqft",
-        price: "Quote",
+        price: "Get Quote",
         isQuote: true,
       },
       {
         id: "retail",
-        icon: <MdStore size={28} />,
-        title: "Retail Shop / Showroom",
-        subtitle: "Public facing areas",
-        price: "From $89",
+        icon: <MdStore size={26} />,
+        title: "Retail / Showroom",
+        subtitle: "Customer-facing space",
+        price: "From ₹5,999",
       },
       {
         id: "warehouse",
-        icon: <MdWarehouse size={28} />,
+        icon: <MdWarehouse size={26} />,
         title: "Warehouse / Clinic",
-        subtitle: "Specialized sanitation",
-        price: "From $199",
+        subtitle: "Deep sanitation",
+        price: "From ₹11,999",
       },
     ],
     []
@@ -78,85 +78,64 @@ const CommercialSubWeb: React.FC<CommercialSubWebProps> = ({
     <div className="cs_page">
       {/* HEADER */}
       <header className="cs_header">
-        <button
-          className="cs_backBtn"
-          type="button"
-          onClick={onClose}
-          aria-label="Back"
-        >
+        <button className="cs_backBtn" onClick={onClose}>
           <MdArrowBack size={22} />
         </button>
-
-        <h1 className="cs_headerTitle">Commercial Property</h1>
-        <div className="cs_backBtn cs_headerSpacer" />
+        <h1 className="cs_headerTitle">Commercial Cleaning</h1>
+        <div />
       </header>
 
-      {/* CONTENT */}
+      {/* MAIN */}
       <main className="cs_main">
-        <section className="cs_headlineContainer">
-          <h2 className="cs_headline">Select property type</h2>
-          <p className="cs_description">
+        <section className="cs_intro">
+          <h2>Select property type</h2>
+          <p>
             Choose the option that best describes your commercial workspace.
           </p>
         </section>
 
-        <section className="cs_list">
+        <section className="cs_grid">
           {properties.map((property) => {
-            const isSelected = selectedProperty === property.id;
+            const active = selectedProperty === property.id;
 
             return (
               <button
                 key={property.id}
                 type="button"
-                className={`cs_card ${
-                  isSelected ? "cs_cardSelected" : ""
-                }`}
+                className={`cs_card ${active ? "cs_cardActive" : ""}`}
                 onClick={() => setSelectedProperty(property.id)}
               >
-                <div
-                  className={`cs_iconWrap ${
-                    isSelected ? "cs_iconWrapSelected" : ""
-                  }`}
-                >
+                <div className={`cs_iconBox ${active ? "active" : ""}`}>
                   {property.icon}
                 </div>
 
-                <div className="cs_info">
-                  <p className="cs_title">{property.title}</p>
-                  <p className="cs_subtitle">{property.subtitle}</p>
+                <div className="cs_cardBody">
+                  <h3>{property.title}</h3>
+                  <p>{property.subtitle}</p>
                 </div>
 
-                <div className="cs_priceWrap">
-                  <span
-                    className={`cs_price ${
-                      property.isQuote
-                        ? "cs_priceQuote"
-                        : "cs_priceNormal"
-                    }`}
-                  >
-                    {property.price}
-                  </span>
+                <div
+                  className={`cs_price ${
+                    property.isQuote ? "quote" : ""
+                  }`}
+                >
+                  {property.price}
                 </div>
               </button>
             );
           })}
         </section>
 
-        <div className="cs_bottomSpacer" />
-      </main>
-
-      {/* FOOTER */}
-      <footer className="cs_bottomFixed">
-        <div className="cs_actionArea">
+        {/* CONTINUE BUTTON (INSIDE CONTAINER) */}
+        <div className="cs_continueWrapper">
           <button
             className="cs_continueBtn"
-            type="button"
             onClick={() => onContinue(selectedProperty)}
           >
-            Continue to Schedule
+            Continue
           </button>
         </div>
-      </footer>
+      </main>
     </div>
   );
 };
