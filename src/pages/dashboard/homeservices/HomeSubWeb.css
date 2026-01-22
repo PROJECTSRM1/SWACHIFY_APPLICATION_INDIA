@@ -1,0 +1,151 @@
+/* Page */
+.hsw_page {
+  background: #f9fafb;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.hsw_header {
+  display: grid;
+  grid-template-columns: 40px 1fr 40px;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid #e5e7eb;
+  background: #ffffff;
+}
+
+.hsw_header h1 {
+  margin: 0;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.hsw_backBtn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* Search */
+.hsw_search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 16px 20px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+}
+
+.hsw_search input {
+  border: none;
+  outline: none;
+  font-size: 14px;
+  flex: 1;
+}
+
+/* List */
+.hsw_list {
+  padding: 0 20px 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Card */
+.hsw_card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.hsw_card:hover {
+  border-color: #2563eb;
+}
+
+.hsw_card.active {
+  border-color: #2563eb;
+  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.15);
+}
+
+.hsw_left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.hsw_icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #eef2ff;
+  display: grid;
+  place-items: center;
+  color: #2563eb;
+}
+
+.hsw_card h3 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.hsw_card p {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+/* Check */
+.hsw_check {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #2563eb;
+  color: #ffffff;
+  display: grid;
+  place-items: center;
+}
+
+/* Footer */
+.hsw_footer {
+  position: sticky;
+  bottom: 0;
+  background: #ffffff;
+  border-top: 1px solid #e5e7eb;
+  padding: 16px 20px;
+}
+
+.hsw_footer button {
+  width: 100%;
+  background: #2563eb;
+  color: #ffffff;
+  border: none;
+  border-radius: 14px;
+  padding: 14px;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.hsw_footer button:hover {
+  filter: brightness(1.05);
+}
+
+/* Desktop */
+@media (min-width: 900px) {
+  .hsw_page {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+}

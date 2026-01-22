@@ -219,8 +219,9 @@ const userServiceIds: number[] = (JSON.parse(localStorage.getItem("service_ids")
   ],
   component: (
     <HomeServices
-      searchQuery={searchQuery}
+      //searchQuery={searchQuery}
       // clearSearch={() => navigate("/app/dashboard")}
+      
     />
   ),
 },

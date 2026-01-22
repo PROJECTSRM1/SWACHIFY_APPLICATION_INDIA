@@ -1,0 +1,211 @@
+CleaningCategoryWeb.css
+/* Full page background like LinearGradient */
+.ccw_safe {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #0d1321, #101622);
+  color: #fff;
+  position: relative;
+  padding-bottom: 80px; /* space for bottom nav */
+}
+
+/* Header */
+.ccw_header {
+  height: 100px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #1c2433;
+}
+
+.ccw_iconBtn {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  border: none;
+  background: transparent;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.ccw_headerTitle {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+  text-align: center;
+}
+
+.ccw_headerSpacer {
+  width: 24px;
+}
+
+/* Content container */
+.ccw_container {
+  width: 100%;
+  max-width: 950px;
+  margin: 0 auto;
+}
+
+.ccw_content {
+  padding: 20px 16px 16px;
+}
+
+.ccw_title {
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 32px;
+  margin: 0;
+  color: #fff;
+}
+
+.ccw_subtitle {
+  margin-top: 8px;
+  color: #9da6b9;
+  font-size: 14px;
+  line-height: 20px;
+  margin-bottom: 0;
+}
+
+/* Cards wrapper */
+.ccw_cardsWrapper {
+  padding: 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 0;
+  margin-bottom: 30px;
+}
+
+/* Big Card */
+.ccw_bigCard {
+  height: 180px;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #1c1f27;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  padding: 0;
+  text-align: left;
+}
+
+.ccw_cardImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.ccw_cardOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.ccw_cardContent {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+}
+
+.ccw_cardTitle {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.ccw_cardSub {
+  margin: 6px 0 0 0;
+  color: #d1d5db;
+  font-size: 14px;
+}
+
+/* Bottom Nav */
+.ccw_bottomNav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 72px;
+  background: #1c1f27;
+  border-top: 1px solid #282e39;
+  display: flex;
+  padding-bottom: 12px;
+  z-index: 50;
+}
+
+.ccw_navItem {
+  flex: 1;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 0;
+}
+
+.ccw_navIcon {
+  font-size: 22px;
+}
+
+.ccw_navText {
+  color: #9da6b9;
+  font-size: 12px;
+}
+
+.ccw_navTextActive {
+  color: #1a5cff;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* =========================
+   Mobile Responsive
+========================= */
+@media (max-width: 768px) {
+  .ccw_title {
+    font-size: 22px;
+    line-height: 28px;
+  }
+
+  .ccw_bigCard {
+    height: 170px;
+  }
+
+  .ccw_cardTitle {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 420px) {
+  .ccw_header {
+    height: 90px;
+  }
+
+  .ccw_headerTitle {
+    font-size: 16px;
+  }
+
+  .ccw_bigCard {
+    height: 160px;
+  }
+
+  .ccw_cardContent {
+    bottom: 16px;
+    left: 16px;
+  }
+
+  .ccw_navIcon {
+    font-size: 20px;
+  }
+
+  .ccw_navText,
+  .ccw_navTextActive {
+    font-size: 11px;
+  }
+}
