@@ -10,6 +10,7 @@ import SwachifyProducts from "../pages/landing/Swachifyproducts";
 import CommonHeader from "../pages/landing/Header";
 import ResumePendingCart from "../pages/ResumePendingCart";
 import ProfilePage from "../pages/freelancer/ProfilePage";
+import { ProductsListing, RegisterProduct } from "../pages/Swachify_Products";
 
 
 
@@ -42,6 +43,8 @@ export const AppRoutes = () => {
         <Route path="/freelancer-dashboard" element={<FreelancerDashboard />} />
         <Route path="/adminshell/*" element={<App />} />
         <Route path="/swachify-products" element={<SwachifyProducts />} />
+        <Route path="/products" element={<ProductsListing />} />
+        <Route path="/products/register" element={<RegisterProduct />} />
       </Routes>
     </>
   );

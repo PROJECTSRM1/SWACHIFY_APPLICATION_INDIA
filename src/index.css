@@ -14652,6 +14652,8 @@ body {
   margin-left: auto;
   cursor: pointer;
   transition: 0.3s ease;
+  
+  
 }
 
 
@@ -14662,20 +14664,35 @@ body {
 
 /* âœ… 4 CARDS IN A ROW GRID */
 
+/* ===== DESKTOP ===== */
 .sw-hs-services-card-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  /* 4 cards per row */
   gap: 20px;
   width: 100%;
-  max-width: 1200px;
 }
 
-/* CARD WRAPPER */
-
-.sw-hs-service-card-wrapper {
-  width: 100%;
+/* ===== TABLET (≤1200px) ===== */
+@media (max-width: 1200px) {
+  .sw-hs-services-card-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
+
+/* ===== SMALL TABLET / LARGE MOBILE ===== */
+@media (max-width: 768px) {
+  .sw-hs-services-card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 480px) {
+  .sw-hs-services-card-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 
 /* CARD SHADOW REDUCED */
 
@@ -14754,7 +14771,14 @@ body {
   text-align: center;
   transition: 0.25s ease;
   margin-bottom: 10px !important;
+
+  margin-top: auto;
+
+  margin-bottom: 12px !important;
+  transition: 0.25s ease;
 }
+
+
 
 /* âœ… RESPONSIVE SETTINGS */
 
@@ -14797,7 +14821,15 @@ body {
     text-align: center;
   }
 
-
+   .sw-hs-header-viewall-btn {
+    width: auto;           /* 🔥 key */
+    min-width: 140px;
+    max-width: none;
+    padding: 0 14px;
+    height: 32px;
+    font-size: 12px;
+    margin-top: 6px;
+  }
 
 }
 
@@ -14838,17 +14870,37 @@ body {
   }
 }
 
-@media (max-width: 320px) {
+@media (max-width: 360px) {
+  .sw-hs-services-top-banner {
+    padding: 10px;
+  }
+
+  .sw-hs-banner-left {
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* Reduce button size aggressively for 320px */
   .sw-hs-header-viewall-btn {
-    width: 70px !important;
-    /* âœ… smaller width */
-    height: 30px !important;
-    /* âœ… smaller height */
-    font-size: 11px !important;
-    /* âœ… smaller text */
-    padding: 0 !important;
+    font-size: 10px;
+    height: 28px;
+    padding: 0 8px;
+    max-width: 120px;        /* 🔥 KEY */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Keep title readable */
+  .sw-hs-banner-title {
+    font-size: 14px;
+  }
+
+  .sw-hs-banner-subtitle {
+    font-size: 10px;
   }
 }
+
 
 
 /* next  */
