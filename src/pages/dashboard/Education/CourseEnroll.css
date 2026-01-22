@@ -146,3 +146,128 @@
   background: #9ca3af;
   cursor: not-allowed;
 }
+
+
+@media (min-width: 1440px) {
+  .enroll-page {
+    padding: 60px 24px;
+  }
+
+  .enroll-container {
+    max-width: 1000px;
+    padding: 40px;
+  }
+
+  .course-image {
+    height: 260px;
+  }
+}
+
+@media (max-width: 1439px) and (min-width: 1024px) {
+  .enroll-container {
+    max-width: 900px;
+  }
+}
+
+
+@media (max-width: 1023px) and (min-width: 768px) {
+  .enroll-page {
+    padding: 32px 20px;
+  }
+
+  .enroll-container {
+    padding: 28px;
+  }
+
+  .course-image {
+    height: 200px;
+  }
+
+  .meta {
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+}
+@media (max-width: 767px) {
+  .enroll-page {
+    padding: 24px 14px;
+  }
+
+  .enroll-container {
+    padding: 22px;
+  }
+
+  .enroll-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .course-card-enroll {
+    padding: 20px;
+  }
+
+  .course-image {
+    height: 180px;
+  }
+
+  .meta {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .features {
+    gap: 8px;
+  }
+
+  .confirm-btn {
+    padding: 14px;
+    font-size: 15px;
+  }
+}
+
+
+  
+@media (max-width: 425px) {
+  .enroll-header {
+    position: relative;
+    padding-top: 4px;
+  }
+
+  .back-btn {
+    position: relative;
+    margin-bottom: 6px;
+    font-size: 18px;   /* slightly smaller */
+    padding: 4px 6px;
+    line-height: 1;
+  }
+}
+
+
+
+@media (max-width: 375px) {
+  .back-btn {
+    font-size: 17px;
+    padding: 3px 6px;
+  }
+
+  .enroll-header h2 {
+    margin-top: 2px;
+  }
+}
+
+
+@media (max-width: 320px) {
+  .back-btn {
+    font-size: 16px;
+    padding: 2px 4px;
+  }
+
+  .enroll-header {
+    gap: 4px;
+  }
+
+  .enroll-header h2 {
+    font-size: 15px;
+  }
+}
