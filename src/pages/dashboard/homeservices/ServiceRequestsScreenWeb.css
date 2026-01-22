@@ -1,0 +1,175 @@
+.srw_page {
+  min-height: 100vh;
+  background: #f3f4f6;
+}
+
+.srw_header {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.srw_back {
+  border: none;
+  background: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.srw_container {
+  padding: 0 16px 24px;
+}
+
+.srw_searchCard {
+  background: white;
+  border-radius: 18px;
+  padding: 14px;
+  margin-bottom: 16px;
+}
+
+.srw_searchRow {
+  display: flex;
+  gap: 10px;
+}
+
+.srw_searchWrap {
+  flex: 1;
+  position: relative;
+}
+
+.srw_searchInput {
+  width: 100%;
+  padding: 10px 40px 10px 16px;
+  border-radius: 999px;
+  border: none;
+  background: #f3f4f6;
+}
+
+.srw_searchIcon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.srw_filterBtn {
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: #10b981;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.srw_filterBtn.active {
+  background: #059669;
+}
+
+.srw_sectionTitle {
+  margin: 12px 0 6px;
+  font-weight: 700;
+}
+
+.srw_chipRow {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+}
+
+.srw_chip {
+  padding: 8px 14px;
+  border-radius: 20px;
+  background: #e5e7eb;
+  border: none;
+  cursor: pointer;
+}
+
+.srw_chip.active {
+  background: #059669;
+  color: white;
+}
+
+.srw_chip.allActive {
+  background: #ef4444;
+  color: white;
+}
+
+.srw_found {
+  font-size: 13px;
+  color: #6b7280;
+  margin-bottom: 10px;
+}
+
+.srw_card {
+  background: white;
+  border-radius: 18px;
+  padding: 14px;
+  margin-bottom: 14px;
+}
+
+.srw_cardTop {
+  display: flex;
+  justify-content: space-between;
+}
+
+.srw_tag {
+  background: #fee2e2;
+  color: #dc2626;
+  padding: 4px 10px;
+  border-radius: 50px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.srw_distance {
+  background: #e5e7eb;
+  padding: 4px 10px;
+  border-radius: 50px;
+  font-size: 11px;
+}
+
+.srw_desc {
+  color: #6b7280;
+}
+
+.srw_meta {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.srw_rating {
+  margin: 6px 0;
+}
+
+.srw_footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.srw_price {
+  font-weight: 700;
+  color: #2563eb;
+}
+
+.srw_actions {
+  display: flex;
+  gap: 8px;
+}
+
+.srw_accept {
+  background: #ef4444;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 50px;
+  border: none;
+}
+
+.srw_details {
+  background: #10b981;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 50px;
+  border: none;
+}
