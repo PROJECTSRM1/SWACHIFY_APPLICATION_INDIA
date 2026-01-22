@@ -187,3 +187,168 @@
   grid-column: 1 / -1;
   color: #6b7280;
 }
+
+
+/* ============================= */
+/* 🖥️ LARGE DESKTOP (1280px+) */
+/* ============================= */
+@media (min-width: 1280px) {
+  .students-root .students-grid {
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  }
+
+  .students-root .students-search {
+    width: 340px;
+  }
+}
+
+/* ============================= */
+/* 💻 LAPTOP (1024px – 1279px) */
+/* ============================= */
+@media (max-width: 1279px) and (min-width: 1024px) {
+  .students-root {
+    margin-top: 120px;
+  }
+
+  .students-root .students-header {
+    padding: 16px 20px;
+  }
+
+  .students-root .students-search {
+    width: 280px;
+  }
+
+  .students-root .students-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+}
+
+/* ============================= */
+/* 📱 TABLET (768px – 1023px) */
+/* ============================= */
+@media (max-width: 1023px) and (min-width: 768px) {
+  .students-root {
+    margin-top: 110px;
+  }
+
+  .students-root .students-header {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .students-root .students-search {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .students-root .students-dropdowns {
+    flex-wrap: wrap;
+  }
+
+  .students-root .students-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    padding: 0 20px;
+  }
+
+  .students-root .students-card {
+    padding: 16px;
+  }
+}
+
+/* ============================= */
+/* 📲 MOBILE (≤ 767px) */
+/* ============================= */
+@media (max-width: 767px) {
+  .students-root {
+    margin-top: 96px;
+    padding-bottom: 60px;
+  }
+
+  .students-root .students-header {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .students-root .students-back {
+    align-self: flex-start;
+  }
+
+  .students-root .students-search {
+    width: 100%;
+  }
+
+  .students-root .students-filters {
+    padding: 0 16px;
+  }
+
+  .students-root .students-tabs {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .students-root .students-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .students-root .students-dropdowns {
+    flex-direction: column;
+  }
+
+  .students-root .students-grid {
+    grid-template-columns: 1fr;
+    padding: 0 16px;
+  }
+
+  .students-root .students-card {
+    gap: 14px;
+  }
+
+  .students-root .students-card img {
+    width: 56px;
+    height: 56px;
+  }
+
+  .students-root .students-top h3 {
+    font-size: 15px;
+  }
+}
+
+/* ============================= */
+/* 📲 SMALL MOBILE (≤ 480px) */
+/* ============================= */
+@media (max-width: 480px) {
+  .students-root {
+    margin-top: 84px;
+  }
+
+  .students-root .students-header {
+    padding: 14px;
+    border-radius: 14px;
+  }
+
+  .students-root .students-search {
+    height: 40px;
+    font-size: 14px;
+  }
+
+  .students-root .students-tabs button {
+    padding: 6px 14px;
+    font-size: 13px;
+  }
+
+  .students-root .students-card {
+    padding: 14px;
+  }
+
+  .students-root .students-rating {
+    font-size: 11px;
+    padding: 3px 8px;
+  }
+
+  .students-root .students-status {
+    font-size: 11px;
+    padding: 5px 12px;
+  }
+}
