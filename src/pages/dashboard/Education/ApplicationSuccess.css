@@ -57,6 +57,7 @@
   justify-content: space-between;
   margin-bottom: 14px;
   font-size: 14px;
+  margin-top: 13px;
 }
 
 .success-card span {
@@ -77,6 +78,7 @@
   border-radius: 999px;
   font-size: 12px;
   font-weight: 600;
+      margin-top: -10px;
 }
 
 /* Buttons */
@@ -104,3 +106,191 @@
   font-weight: 600;
   cursor: pointer;
 }
+
+/* ============================= */
+/* 🖥️ LARGE DESKTOP (1280px+) */
+/* ============================= */
+@media (min-width: 1280px) {
+  .success-container {
+    padding: 56px;
+  }
+
+  .success-container h1 {
+    font-size: 28px;
+  }
+}
+
+/* ============================= */
+/* 💻 LAPTOP (1024px – 1279px) */
+/* ============================= */
+@media (max-width: 1279px) and (min-width: 1024px) {
+  .success-page {
+    padding: 32px;
+  }
+
+  .success-container {
+    padding: 44px;
+  }
+
+  .success-container h1 {
+    font-size: 26px;
+  }
+}
+
+/* ============================= */
+/* 📱 TABLET (768px – 1023px) */
+/* ============================= */
+@media (max-width: 1023px) and (min-width: 768px) {
+  .success-page {
+    padding: 28px;
+  }
+
+  .success-container {
+    padding: 36px;
+  }
+
+  .check-circle {
+    width: 64px;
+    height: 64px;
+    font-size: 28px;
+  }
+
+  .success-container h1 {
+    font-size: 24px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+  }
+}
+
+/* ============================= */
+/* 📲 MOBILE (≤ 767px) */
+/* ============================= */
+@media (max-width: 767px) {
+  .success-page {
+    padding: 20px;
+    align-items: flex-start;   /* 🔥 avoid vertical squeeze */
+  }
+
+  .success-container {
+    padding: 28px 22px;
+    border-radius: 16px;
+  }
+
+  .check-circle {
+    width: 56px;
+    height: 56px;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .success-container h1 {
+    font-size: 22px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+
+  .success-card {
+    padding: 16px;
+  }
+
+  .success-card .row {
+    font-size: 13px;
+  }
+
+  .status-pill {
+    font-size: 11px;
+    padding: 3px 10px;
+  }
+
+  .primary-btn,
+  .secondary-btn {
+    height: 44px;
+    font-size: 15px;
+    border-radius: 12px;
+  }
+}
+
+/* ============================= */
+/* 📲 SMALL MOBILE (≤ 480px) */
+/* ============================= */
+@media (max-width: 480px) {
+  .success-page {
+    padding: 16px;
+  }
+
+  .success-container {
+    padding: 24px 18px;
+  }
+
+  .success-container h1 {
+    font-size: 20px;
+  }
+
+  .subtitle {
+    font-size: 13px;
+  }
+
+  .success-card .row {
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 10px;
+  }
+
+  .status-pill {
+    top: 10px;
+    right: 10px;
+  }
+
+  .primary-btn,
+  .secondary-btn {
+    height: 42px;
+    font-size: 14px;
+  }
+}
+/* ================= FIX SUCCESS PAGE LAYOUT ================= */
+
+/* DESKTOP + LAPTOP + TABLET */
+@media (min-width: 768px) {
+  .success-page {
+    min-height: calc(100vh - 80px); /* 🔥 account for header */
+    align-items: flex-start;        /* stop fake centering */
+    padding-top: 60px;              /* real visual center */
+  }
+
+  .success-container {
+    margin: 0 auto;
+  }
+}
+
+/* LARGE DESKTOP REFINEMENT */
+@media (min-width: 1280px) {
+  .success-page {
+    padding-top: 80px;
+  }
+}
+
+
+/* ================= HARD FIX: SUCCESS PAGE DESKTOP CENTERING ================= */
+
+/* DESKTOP + LAPTOP + TABLET */
+@media (min-width: 768px) {
+  .success-page {
+    align-items: stretch !important;   /* 🔥 KILL FLEX CENTERING */
+    justify-content: flex-start !important;
+
+    min-height: auto !important;
+    padding-top: 64px !important;
+    padding-bottom: 64px !important;
+  }
+
+  .success-container {
+    margin: 0 auto !important;
+  }
+}
+
+
