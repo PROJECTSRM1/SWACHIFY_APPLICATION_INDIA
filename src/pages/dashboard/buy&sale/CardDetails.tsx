@@ -15,6 +15,10 @@ export default function BuyerPageWeb({ property, onBack }: any) {
   const [address, setAddress] = useState("");
   const [showSuccess, setShowSuccess] = useState(false);
   const [activeImage, setActiveImage] = useState(0);
+  const [docPopup, setDocPopup] = useState<string | null>(null);
+  const isLand = property.category === "land";
+
+
 
   const images =
     property.images?.length > 0
@@ -93,45 +97,130 @@ export default function BuyerPageWeb({ property, onBack }: any) {
                 <MdLocationOn /> {property.area}
               </div>
 
-              <div className="buyerSpecs">
-                {property.sqft && (
-                  <div className="specBox">
-                    <strong>{property.sqft}</strong>
-                    <span>SQFT</span>
-                  </div>
-                )}
-                {property.bhk && (
-                  <div className="specBox">
-                    <strong>{property.bhk}</strong>
-                    <span>BHK</span>
-                  </div>
-                )}
-              </div>
+             
+{/* LEFT INFO COLUMN */}
+
+
+
+{/* NORMAL PROPERTY SPECS */}
+<div className="buyerSpecs">
+  {property.sqft && (
+    <div className="specBox">
+      <strong>{property.sqft}</strong>
+      <span>SQFT</span>
+    </div>
+  )}
+
+  {property.bhk && (
+    <div className="specBox">
+      <strong>{property.bhk}</strong>
+      <span>BHK</span>
+    </div>
+  )}
+</div>
+{/* OWNER DETAILS – LEFT SIDE */}
+{isLand && property.ownerName && (
+  <div className="infoCard ownerCardNew">
+    <h3 className="cardTitle">Owner Details</h3>
+
+    <div className="ownerRow">
+      <div className="ownerAvatar">👤</div>
+      <div className="ownerText">
+        <strong>{property.ownerName}</strong>
+        <span>Property Owner</span>
+      </div>
+      <button className="callBtnNew">📞</button>
+    </div>
+  </div>
+)}
+
+{/* LAND DOCUMENTS – LEFT SIDE */}
+{isLand && property.documents?.length > 0 && (
+  <div className="infoCard">
+    <h3 className="cardTitle">Land Documents</h3>
+
+    <div className="docGrid">
+      {property.documents.map((img: string, i: number) => (
+        <img
+          key={i}
+          src={img}
+          className="docThumb"
+          onClick={() => setDocPopup(img)}
+        />
+      ))}
+    </div>
+  </div>
+)}
+
+
+
+
             </div>
           </div>
 
           {/* RIGHT – FORM ONLY */}
-          <div className="buyerRight formSide">
-            <h3>Your Information</h3>
+          {/* RIGHT – FORM + LAND DETAILS */}
+{/* RIGHT COLUMN */}
+<div className="buyerRight formSide">
 
-            <input
-              placeholder="Full Name"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-            />
+  {/* BUYER FORM */}
+  <h3>Your Information</h3>
 
-            <input
-              placeholder="Mobile Number"
-              value={mobile}
-              onChange={(e) => setMobile(e.target.value)}
-            />
+  <input
+    placeholder="Full Name"
+    value={fullName}
+    onChange={(e) => setFullName(e.target.value)}
+  />
 
-            <textarea
-              placeholder="Delivery Address"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-            />
-          </div>
+  <input
+    placeholder="Mobile Number"
+    value={mobile}
+    onChange={(e) => setMobile(e.target.value)}
+  />
+
+  <textarea
+    placeholder="Delivery Address"
+    value={address}
+    onChange={(e) => setAddress(e.target.value)}
+  />
+
+  {/* LAND DETAILS – RIGHT */}
+  {isLand && (
+    <div className="infoCard landDetailsRight">
+      <h3 className="cardTitle">Land Details</h3>
+
+      <div className="detailRow">
+        <span>Land Type</span>
+        <strong>{property.landType}</strong>
+      </div>
+
+      <div className="detailRow">
+        <span>Registration</span>
+        <strong>{property.registrationStatus}</strong>
+      </div>
+
+      {property.registrationValue && (
+        <div className="detailRow">
+          <span>Registration Value</span>
+          <strong>₹{property.registrationValue}</strong>
+        </div>
+      )}
+
+      {property.marketValue && (
+        <div className="detailRow">
+          <span>Market Value</span>
+          <strong>₹{property.marketValue}</strong>
+        </div>
+      )}
+
+      {property.description && (
+        <p className="descriptionText">{property.description}</p>
+      )}
+    </div>
+  )}
+</div>
+
+
         </div>
 
         {/* BOTTOM BAR */}
@@ -158,7 +247,19 @@ export default function BuyerPageWeb({ property, onBack }: any) {
             </div>
           </div>
         )}
+        {docPopup && (
+  <div className="imagePopupOverlay" onClick={() => setDocPopup(null)}>
+    <img
+      src={docPopup}
+      className="imagePopup"
+      onClick={(e) => e.stopPropagation()}
+    />
+  </div>
+)}
+
+
       </div>
     </div>
+    
   );
 }
