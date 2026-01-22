@@ -74,6 +74,7 @@ const serviceIdToRoute: Record<number, string> = {
   4: "/app/dashboard/constructions",
   5: "/app/dashboard/education",
   6: "/app/dashboard", // or products page if you add one
+  7: "/app/dashboard/healthcare",
 };
 
 
@@ -279,16 +280,19 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
   };
 
 
-
   const handleSkipLogin = () => {
     localStorage.setItem("isGuest", "true");
 
     localStorage.removeItem("accessToken");
     localStorage.removeItem("user");
 
+
+
+    // ✅ Guest should see ONLY HealthCare
+    localStorage.setItem("service_ids", JSON.stringify([6, 7]));
+
+
     closeAuthModal();
-
-
     navigate("/app/dashboard");
   };
 
@@ -317,6 +321,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
     { title: "Raw Materials", value: 4 },
     { title: "Education", value: 5 },
     { title: "Swachify Products", value: 6 },
+    { title: "HealthCare", value: 7 },
   ];
 
 
