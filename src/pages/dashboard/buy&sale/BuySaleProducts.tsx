@@ -171,35 +171,40 @@ const getUserListings = (): (Property & { isUserListing: boolean })[] => {
   );
 
   return stored.map((item: any) => ({
-  id: String(item.id),
+    id: String(item.id),
 
-  title: "Land for Sale",
+    title: "Land for Sale",
 
-  price: `₹${item.price}`,
-  image: item.images?.[0],
-  images: item.images,
+    price:
+      item.listingType === "rent"
+        ? `₹${item.price} / month`
+        : `₹${item.price}`,
 
-  rating: 4.5,
-  area: item.landArea || "Near Your Area",
-  sqft: item.landSqft || "",
+    image: item.images?.[0],
+    images: item.images,
 
-  // 👇 LAND DATA PASSED HERE
-  landType: item.landType,
-  ownerName: item.registeredOwner,
-  documents: item.documents,
-  registrationStatus: item.registrationStatus,
-  registrationValue: item.registrationValue,
-  marketValue: item.marketValue,
-  description: item.description,
+    rating: 4.5,
+    area: item.landArea || "Near Your Area",
+    sqft: item.landSqft || "",
 
-  distance: "Just now",
-  listingType: "buy",
-  category: "land",
-  isUserListing: true,
-}));
+    landType: item.landType,
+    ownerName: item.registeredOwner,
+    documents: item.documents,
+    registrationStatus: item.registrationStatus,
+    registrationValue: item.registrationValue,
+    marketValue: item.marketValue,
+    description: item.description,
 
+    distance: "Just now",
 
+    // ✅ THIS IS THE KEY FIX
+    listingType: item.listingType === "rent" ? "rent" : "buy",
+
+    category: "land",
+    isUserListing: true,
+  }));
 };
+
 
 
 
