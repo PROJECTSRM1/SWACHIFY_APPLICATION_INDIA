@@ -20,8 +20,69 @@ type Page =
   | "companies"
   | "training"
   | "candidateProfile";
+  type TrendingStudent = {
+  id: number;
+  name: string;
+  program: string;
+  avatar: string;
+  academicScore: number;
+  rating: number;
+  status: "active" | "completed";
+  shift: string;
+};
 
-
+const studentsData: TrendingStudent[] = [
+  {
+    id: 2125,
+    name: "Ananya Rao",
+    program: "B.Tech AI & ML",
+    rating: 4.6,
+    status: "active",
+    academicScore: 91,
+    shift: "09:00 AM - 06:00 PM",
+    avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200",
+  },
+  {
+    id: 2140,
+    name: "Sneha Iyer",
+    program: "B.Tech Information Technology",
+    rating: 4.9,
+    status: "active",
+    academicScore: 97,
+    shift: "09:30 AM - 06:30 PM",
+    avatar: "https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=200",
+  },
+  {
+    id: 2045,
+    name: "Sarah Jenkins",
+    program: "B.Tech Computer Science",
+    rating: 4.8,
+    status: "active",
+    academicScore: 92,
+    shift: "10:00 AM - 07:00 PM",
+    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200",
+  },
+  {
+    id: 2092,
+    name: "Emily Rodriguez",
+    program: "B.E. Information Tech",
+    rating: 4.9,
+    status: "active",
+    academicScore: 95,
+    shift: "10:00 AM - 07:00 PM",
+    avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200",
+  },
+  {
+    id: 2101,
+    name: "David Kim",
+    program: "B.S. Software Eng",
+    rating: 4.7,
+    status: "completed",
+    academicScore: 90,
+    shift: "10:00 AM - 07:00 PM",
+    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200",
+  },
+];
 const searchableItems = [
   "Students",
   "Internships",
@@ -37,13 +98,10 @@ const Education: React.FC = () => {
   const [searched, setSearched] = useState(false);
   const [selectedStudent, setSelectedStudent] =
     useState<Student | null>(null);
-    const location = useLocation();
-
-// 🚨 IMPORTANT FIX:
-// If we are on enrollment page, do NOT render Education
-if (location.pathname.startsWith("/course")) {
-  return null;
-}
+    const [showAllTrending, setShowAllTrending] = useState<boolean>(false);
+const trendingStudents: TrendingStudent[] = studentsData
+  .filter((student) => student.academicScore > 80)
+  .sort((a, b) => b.academicScore - a.academicScore);
 
 
   const filteredResults = searchableItems.filter((item) =>
@@ -166,27 +224,50 @@ if (location.pathname.startsWith("/course")) {
       </div>
 
       {/* ================= TRENDING (MISSING CARDS FIXED) ================= */}
-      <div className="edu-section">
-        <h3 className="trending-title">Trending Now</h3>
+      {/* ================= TRENDING ================= */}
+<div className="edu-section">
+  <div className="trending-header">
+    <h3 className="trending-title">Trending Now</h3>
 
-        <div className="trending-row">
-          <div className="trending-card">
-            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800" />
-            <div className="body">
-              <h4>Google Internship</h4>
-              <p>Software Engineering • Remote</p>
-            </div>
+    <button
+      className="view-all-btn"
+      onClick={() => setShowAllTrending(!showAllTrending)}
+    >
+      {showAllTrending ? "Show Less" : "View All"}
+    </button>
+  </div>
+
+  <div className="trending-list">
+    {(showAllTrending
+      ? trendingStudents
+      : trendingStudents.slice(0, 4)
+    ).map((student) => (
+      <div key={student.id} className="trending-row-card">
+        <img
+          src={student.avatar}
+          alt={student.name}
+          className="trending-avatar"
+        />
+
+        <div className="trending-info">
+          <h4>{student.name}</h4>
+          <p className="program">{student.program}</p>
+          <p className="score">{student.academicScore}% Academic Score</p>
+
+          <div className="trending-footer">
+            <span className="rating">⭐ {student.rating}</span>
+            <span className={`status ${student.status}`}>
+              {student.status.toUpperCase()}
+            </span>
           </div>
 
-          <div className="trending-card">
-            <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800" />
-            <div className="body">
-              <h4>Harvard University</h4>
-              <p>Business Administration</p>
-            </div>
-          </div>
+          <p className="shift">{student.shift}</p>
         </div>
       </div>
+    ))}
+  </div>
+</div>
+
     </div>
   );
 };
