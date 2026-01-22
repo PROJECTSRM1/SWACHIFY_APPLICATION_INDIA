@@ -208,3 +208,257 @@ body {
     width: 100%;
   }
 }
+
+/* ================= FINAL FORCE FIX FOR FILTER VISIBILITY ================= */
+
+/* Filter bar alignment */
+.internships-web .filter-bar {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+/* NON-ACTIVE FILTERS — DARK & CLEAR */
+.internships-web .filter-btn:not(.active) {
+  background: #ffffff !important;
+  color: #0f172a !important;   /* 🔥 DARK TEXT */
+  font-weight: 600 !important;
+  opacity: 1 !important;
+}
+
+/* ACTIVE FILTER — BLUE */
+.internships-web .filter-btn.active {
+  background: #2563eb !important;
+  color: #ffffff !important;
+  border-color: #2563eb !important;
+}
+
+
+/* ================= HARD RESET FILTER BUTTON LAYOUT ================= */
+
+.internships-web .filter-bar {
+  display: flex !important;
+  gap: 14px !important;
+  flex-wrap: wrap;
+}
+
+/* FORCE EACH BUTTON TO BE SEPARATE */
+.internships-web .filter-btn {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+
+  margin: 0 !important;
+  padding: 10px 18px !important;
+
+  letter-spacing: normal !important;
+  word-spacing: normal !important;
+  white-space: nowrap !important;
+
+  background: #ffffff !important;
+  color: #0f172a !important;
+  font-weight: 600 !important;
+
+  border: 1px solid #e5e7eb !important;
+  border-radius: 999px !important;
+
+  opacity: 1 !important;
+}
+
+/* ACTIVE BUTTON */
+.internships-web .filter-btn.active {
+  background: #2563eb !important;
+  color: #ffffff !important;
+  border-color: #2563eb !important;
+}
+/* ================= FINAL TEXT FIX FOR FILTER BUTTONS ================= */
+
+/* Force clean text rendering */
+.internships-web .filter-btn {
+  min-width: fit-content !important;
+  padding: 10px 20px !important;
+
+  font-size: 14px !important;
+  line-height: 1.2 !important;
+
+  letter-spacing: 0 !important;
+  word-spacing: 0 !important;
+
+  white-space: nowrap !important;
+  text-align: center !important;
+
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Ensure spacing BETWEEN buttons */
+.internships-web .filter-bar {
+  gap: 16px !important;
+}
+
+
+/* ============================= */
+/* 🖥️ LARGE DESKTOP (1280px+) */
+/* ============================= */
+@media (min-width: 1280px) {
+  .internships-web {
+    padding: 28px 40px;
+  }
+
+  .internship-grid {
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  }
+
+  .search-wrapper {
+    width: 420px;
+  }
+}
+
+/* ============================= */
+/* 💻 LAPTOP (1024px – 1279px) */
+/* ============================= */
+@media (max-width: 1279px) and (min-width: 1024px) {
+  .internships-web {
+    padding: 24px 32px;
+  }
+
+  .web-header h1 {
+    font-size: 24px;
+  }
+
+  .search-wrapper {
+    width: 360px;
+  }
+
+  .internship-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+}
+
+/* ============================= */
+/* 📱 TABLET (768px – 1023px) */
+/* ============================= */
+@media (max-width: 1023px) and (min-width: 768px) {
+  .internships-web {
+    padding: 20px 24px;
+  }
+
+  .web-header {
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .search-wrapper {
+    width: 100%;
+  }
+
+  .filter-bar {
+    flex-wrap: wrap;
+  }
+
+  .internship-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  .card {
+    padding: 20px;
+  }
+}
+
+/* ============================= */
+/* 📲 MOBILE (≤ 767px) */
+/* ============================= */
+@media (max-width: 767px) {
+  .internships-web {
+    padding: 16px;
+  }
+
+  .web-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+  }
+
+  .web-header h1 {
+    font-size: 22px;
+  }
+
+  .back-btn {
+    align-self: flex-start;
+  }
+
+  .search-wrapper {
+    width: 100%;
+    padding: 10px 14px;
+  }
+
+  .filter-bar {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    scrollbar-width: none;
+  }
+
+  .filter-bar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .internship-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .card {
+    padding: 18px;
+  }
+
+  .company h3 {
+    font-size: 15px;
+  }
+
+  .company p {
+    font-size: 13px;
+  }
+
+  .apply-btn {
+    height: 42px;
+    font-size: 14px;
+  }
+}
+
+/* ============================= */
+/* 📲 SMALL MOBILE (≤ 480px) */
+/* ============================= */
+@media (max-width: 480px) {
+  .web-header h1 {
+    font-size: 20px;
+  }
+
+  .search-wrapper input {
+    font-size: 13px;
+  }
+
+  .filter-btn {
+    padding: 8px 16px !important;
+    font-size: 13px !important;
+  }
+
+  .card {
+    padding: 16px;
+  }
+
+  .tags span {
+    font-size: 11px;
+    padding: 5px 8px;
+  }
+
+  .desc {
+    font-size: 13px;
+  }
+
+  .apply-btn {
+    height: 40px;
+    font-size: 14px;
+  }
+}
