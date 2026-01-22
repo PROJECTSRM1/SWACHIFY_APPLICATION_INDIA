@@ -1,0 +1,340 @@
+/* PAGE */
+.hsc_page {
+  background: #f9fafb;
+  color: #111827;
+  display: flex;
+  flex-direction: column;
+}
+
+/* HEADER */
+.hsc_header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 14px 20px;
+}
+
+.hsc_headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hsc_iconBtn {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: none;
+  background: #f3f4f6;
+  color: #111827;
+  cursor: pointer;
+
+  display: grid;
+  place-items: center;
+}
+
+.hsc_iconBtn:hover {
+  background: #e5e7eb;
+}
+
+.hsc_headerTitle {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.hsc_helpBtn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: #2563eb;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/* MAIN */
+.hsc_main {
+  flex: 1;
+  padding: 24px 20px 160px;
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+/* SECTION HEADER */
+.hsc_sectionHeader {
+  margin-bottom: 18px;
+}
+
+.hsc_sectionTitle {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.hsc_sectionSubtitle {
+  margin-top: 6px;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/* SERVICE LIST */
+.hsc_serviceList {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* SERVICE CARD */
+.hsc_serviceItem,
+.hsc_serviceItemTop {
+  width: 100%;
+  border-radius: 16px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  cursor: pointer;
+  padding: 16px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.hsc_serviceItem:hover,
+.hsc_serviceItemTop:hover {
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+.hsc_serviceContent {
+  display: flex;
+  gap: 14px;
+  flex: 1;
+}
+
+/* CHECKBOX */
+.hsc_checkbox {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid #d1d5db;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.hsc_checkboxChecked {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: #ffffff;
+}
+
+/* SERVICE DETAILS */
+.hsc_serviceDetails {
+  flex: 1;
+}
+
+.hsc_serviceTitleRow {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.hsc_serviceName {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.hsc_badge {
+  background: #eff6ff;
+  color: #2563eb;
+  font-size: 10px;
+  font-weight: 900;
+  padding: 3px 8px;
+  border-radius: 999px;
+}
+
+.hsc_servicePrice {
+  margin-top: 6px;
+  font-size: 15px;
+  font-weight: 900;
+  color: #2563eb;
+}
+
+.hsc_perUnit {
+  color: #6b7280;
+  font-size: 12px;
+}
+
+.hsc_serviceDesc {
+  margin-top: 6px;
+  font-size: 14px;
+  color: #6b7280;
+  line-height: 1.4;
+}
+
+/* ACTION */
+.hsc_serviceAction {
+  margin-left: 12px;
+}
+
+.hsc_addText {
+  font-weight: 800;
+  color: #2563eb;
+}
+
+.hsc_includedText {
+  font-size: 12px;
+  font-weight: 800;
+  color: #9ca3af;
+}
+
+/* EXPANDED WINDOW */
+.hsc_serviceItemExpanded {
+  border-radius: 16px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
+}
+
+/* QUANTITY */
+.hsc_quantityRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: #f9fafb;
+  border-top: 1px solid #e5e7eb;
+}
+
+.hsc_quantityLabel {
+  font-weight: 700;
+  color: #374151;
+}
+
+.hsc_quantitySelector {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hsc_qtyBtn {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  background: #e5e7eb;
+  display: grid;
+  place-items: center;
+}
+
+.hsc_qtyBtnPlus {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.hsc_qtyBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.hsc_qtyValue {
+  font-weight: 900;
+  font-size: 15px;
+}
+
+/* TIP */
+.hsc_tip {
+  margin-top: 18px;
+  padding: 14px;
+  border-radius: 12px;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  display: flex;
+  gap: 10px;
+}
+
+.hsc_tipIcon {
+  color: #2563eb;
+}
+
+.hsc_tipText {
+  font-size: 13px;
+  color: #1e3a8a;
+  line-height: 1.4;
+}
+
+.hsc_tipBold {
+  font-weight: 900;
+}
+
+/* FOOTER */
+.hsc_footer {
+  background: white;
+  border-top: 1px solid #e5e7eb;
+  padding: 16px 20px;
+}
+
+.hsc_summaryTab {
+  max-width: 820px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.hsc_summaryTab {
+  max-width: 820px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hsc_summaryLabel {
+  font-size: 11px;
+  font-weight: 800;
+  color: #6b7280;
+}
+
+.hsc_summaryTotal {
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.hsc_continueBtn {
+  background: #2563eb;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 22px;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.hsc_continueBtn:hover {
+  filter: brightness(1.05);
+}
+
+/* MOBILE */
+@media (max-width: 520px) {
+  .hsc_main {
+    padding: 16px 14px 160px;
+  }
+
+  .hsc_quantityRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}

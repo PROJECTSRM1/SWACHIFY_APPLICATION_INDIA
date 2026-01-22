@@ -1,0 +1,423 @@
+.vs_page {
+  min-height: 100vh;
+  background: #0a1419;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.vs_header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(10, 20, 25, 0.9);
+  backdrop-filter: blur(10px);
+
+  display: grid;
+  grid-template-columns: 44px 1fr 44px;
+  align-items: center;
+
+  padding: 12px 14px;
+  border-bottom: 1px solid #1e293a;
+}
+
+.vs_headerBtn {
+  width: 44px;
+  height: 44px;
+  border-radius: 22px;
+  border: none;
+  background: transparent;
+  color: #ffffff;
+  cursor: pointer;
+
+  display: grid;
+  place-items: center;
+  transition: background 0.2s ease;
+}
+
+.vs_headerBtn:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.vs_headerTitle {
+  margin: 0;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+/* Content */
+.vs_content {
+  flex: 1;
+  padding-bottom: 210px; /* space for fixed price + nav */
+}
+
+.vs_sectionHeader {
+  padding: 18px 14px 8px;
+}
+
+.vs_sectionTitle {
+  margin: 0 0 4px;
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.vs_sectionSubtitle {
+  margin: 0;
+  font-size: 14px;
+  color: #64748b;
+}
+
+/* Quick Grid */
+.vs_quickGrid {
+  padding: 14px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 520px) {
+  .vs_quickGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.vs_quickCard {
+  border: 1px solid #1e293a;
+  background: #1a2630;
+  border-radius: 12px;
+  padding: 18px 12px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+
+  cursor: pointer;
+  transition: transform 0.12s ease, border-color 0.12s ease;
+}
+
+.vs_quickCard:hover {
+  transform: translateY(-1px);
+}
+
+.vs_quickCardActive {
+  border: 2px solid #135bec;
+  background: rgba(19, 164, 236, 0.08);
+}
+
+.vs_quickIcon {
+  color: #64748b;
+}
+
+.vs_quickCardActive .vs_quickIcon {
+  color: #135bec;
+}
+
+.vs_quickText {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+/* Accordion */
+.vs_accordion {
+  padding: 0 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.vs_item {
+  border: 1px solid #1e293a;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #111618;
+}
+
+.vs_itemHeader {
+  width: 100%;
+  border: none;
+  background: #1a2630;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  text-align: left;
+}
+
+.vs_itemLeft {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex: 1;
+  min-width: 0;
+}
+
+.vs_iconBox {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  background: #1a2630;
+
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.vs_iconBoxActive {
+  background: rgba(19, 164, 236, 0.18);
+}
+
+.vs_icon {
+  color: #64748b;
+}
+
+.vs_iconActive {
+  color: #135bec;
+}
+
+.vs_itemInfo {
+  min-width: 0;
+}
+
+.vs_itemName {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.vs_itemDesc {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.vs_expandIcon {
+  color: #94a3b8;
+}
+
+/* Body */
+.vs_itemBody {
+  padding: 16px;
+  background: #111618;
+  border-top: 1px solid #1e293a;
+}
+
+.vs_selectorLabel {
+  margin: 0 0 10px;
+  font-size: 14px;
+  color: #64748b;
+  font-weight: 700;
+}
+
+.vs_toggleRow {
+  display: flex;
+  gap: 8px;
+  background: #1a2630;
+  border-radius: 12px;
+  padding: 4px;
+}
+
+.vs_toggleBtn {
+  flex: 1;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 10px;
+  padding: 12px 8px;
+
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.8px;
+  color: #64748b;
+}
+
+.vs_toggleBtnActive {
+  background: #0a1419;
+  color: #135bec;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+.vs_durationRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 14px;
+}
+
+.vs_durationLabel {
+  margin: 0;
+  font-size: 14px;
+  color: #64748b;
+}
+
+.vs_durationValue {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.vs_breakdown {
+  margin-top: 14px;
+  background: #1a2630;
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.vs_breakdownTitle {
+  margin: 0 0 10px;
+  font-size: 12px;
+  font-weight: 900;
+  color: #94a3b8;
+}
+
+.vs_breakRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  color: #cbd5e1;
+  padding: 6px 0;
+}
+
+.vs_bestValue {
+  color: #135bec;
+}
+
+.vs_bottomSpacer {
+  height: 10px;
+}
+
+/* Price Card */
+.vs_priceCard {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 72px; /* above bottom nav */
+  z-index: 70;
+
+  background: rgba(10, 20, 25, 0.98);
+  border-top: 1px solid #1e293a;
+
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.vs_priceLeft {
+  min-width: 0;
+}
+
+.vs_priceLabel {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 900;
+  color: #64748b;
+  letter-spacing: 1.4px;
+}
+
+.vs_priceValue {
+  margin: 4px 0 0;
+  font-size: 28px;
+  font-weight: 900;
+  color: #135bec;
+}
+
+.vs_priceSub {
+  margin: 2px 0 0;
+  font-size: 11px;
+  color: #64748b;
+}
+
+.vs_bookBtn {
+  border: none;
+  cursor: pointer;
+  background: #135bec;
+  color: #ffffff;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 12px 16px;
+  border-radius: 12px;
+
+  font-size: 15px;
+  font-weight: 900;
+  box-shadow: 0 10px 22px rgba(19, 91, 236, 0.25);
+}
+
+.vs_bookBtn:hover {
+  filter: brightness(1.05);
+}
+
+/* Bottom Nav */
+.vs_bottomNav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 80;
+
+  height: 72px;
+  background: #0a1419;
+  border-top: 1px solid #1e293a;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  padding: 8px 8px;
+}
+
+.vs_navItem {
+  flex: 1;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+
+  color: #64748b;
+  font-size: 10px;
+  font-weight: 700;
+  border-radius: 12px;
+  padding: 6px 10px;
+}
+
+.vs_navItem:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.vs_navActive {
+  color: #135bec;
+}
+
+/* Desktop improvement */
+@media (min-width: 900px) {
+  .vs_content {
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  .vs_priceCard,
+  .vs_bottomNav {
+    max-width: 780px;
+    margin-left: 49%;
+    transform: translateX(-50%);
+    border-left: 1px solid rgba(148, 163, 184, 0.12);
+    border-right: 1px solid rgba(148, 163, 184, 0.12);
+            margin-right: -12px;
+            margin-bottom: -48px;
+  }
+}

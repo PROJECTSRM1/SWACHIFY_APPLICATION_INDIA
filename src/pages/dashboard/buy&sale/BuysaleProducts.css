@@ -1,27 +1,13 @@
-/* =======================
-   GLOBAL
-======================= */
-* {
-  box-sizing: border-box;
-}
-
-html, body {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  background: #f8fafc;
-  overflow-x: hidden;
-}
 
 /* =======================
    PAGE & CONTAINER
 ======================= */
-.page {
+.mp-page {
   min-height: 100vh;
   background: #f8fafc;
 }
 
-.container {
+.mp-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 16px 24px 80px; /* reduced top padding */
@@ -30,7 +16,7 @@ html, body {
 /* =======================
    HEADER
 ======================= */
-.web-header {
+.mp-web-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -38,18 +24,18 @@ html, body {
   border-bottom: 1px solid #e5e7eb;
 }
 
-.header-left {
+.mp-header-left {
   display: flex;
   align-items: center;
   gap: 16px;
 }
 
-.web-header h1 {
+.mp-web-header h1 {
   font-size: 24px;
   font-weight: 700;
 }
 
-.dropdown {
+.mp-dropdown {
   background: #f1f5f9;
   border: 1px solid #e5e7eb;
   padding: 8px 14px;
@@ -57,7 +43,7 @@ html, body {
   cursor: pointer;
 }
 
-.sell-btn {
+.mp-sell-btn {
   background: #2563eb;
   color: white;
   border: none;
@@ -70,13 +56,13 @@ html, body {
 /* =======================
    FILTER BAR
 ======================= */
-.filter-bar {
+.mp-filter-bar {
   display: flex;
   gap: 12px;
   margin: 16px 0;
 }
 
-.filter-bar button {
+.mp-filter-bar button {
   background: #ffffff;
   border: 1px solid #e5e7eb;
   padding: 8px 14px;
@@ -88,7 +74,7 @@ html, body {
 /* =======================
    SEARCH
 ======================= */
-.search-box {
+.mp-search-box {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -99,7 +85,7 @@ html, body {
   margin-bottom: 20px;
 }
 
-.search-box input {
+.mp-search-box input {
   border: none;
   outline: none;
   flex: 1;
@@ -109,25 +95,25 @@ html, body {
 /* =======================
    LOCATION
 ======================= */
-.location-bar {
+.mp-location-bar {
   display: flex;
   justify-content: space-between;
   margin-bottom: 25px;
 }
 
-.label {
+.mp-label {
   font-size: 12px;
   color: #64748b;
 }
 
-.loc-row {
+.mp-loc-row {
   display: flex;
   align-items: center;
   gap: 6px;
   font-weight: 600;
 }
 
-.change {
+.mp-change {
   margin-left: 6px;
   color: #2563eb;
   cursor: pointer;
@@ -137,13 +123,13 @@ html, body {
 /* =======================
    CATEGORIES
 ======================= */
-.categories {
+.mp-categories {
   display: flex;
   gap: 12px;
   margin-bottom: 24px;
 }
 
-.categories button {
+.mp-categories button {
   background: white;
   border: 1px solid #e5e7eb;
   padding: 10px 20px;
@@ -151,7 +137,7 @@ html, body {
   cursor: pointer;
 }
 
-.categories .active {
+.mp-categories .active {
   background: #2563eb;
   color: white;
   border-color: #2563eb;
@@ -160,19 +146,19 @@ html, body {
 /* =======================
    TITLE
 ======================= */
-.title-row {
+.mp-title-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
 }
 
-.title-row h2 {
+.mp-title-row h2 {
   font-size: 20px;
   font-weight: 700;
 }
 
-.sort {
+.mp-sort {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -182,7 +168,7 @@ html, body {
 /* =======================
    GRID
 ======================= */
-.property-grid {
+.mp-property-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 24px;
@@ -191,7 +177,7 @@ html, body {
 /* =======================
    CARD
 ======================= */
-.property-card {
+.mp-property-card {
   background: white;
   border-radius: 14px;
   overflow: hidden;
@@ -199,24 +185,24 @@ html, body {
   transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 
-.property-card:hover {
+.mp-property-card:hover {
   box-shadow: 0 12px 24px rgba(0,0,0,0.08);
   transform: translateY(-3px);
 }
 
 /* IMAGE */
-.image-wrapper {
+.mp-image-wrapper {
   position: relative;
 }
 
-.image-wrapper img {
+.mp-image-wrapper img {
   width: 100%;
   height: 220px;
   object-fit: cover;
 }
 
 /* BADGES */
-.badge {
+.mp-badge {
   position: absolute;
   top: 12px;
   left: 12px;
@@ -227,7 +213,7 @@ html, body {
   border-radius: 999px;
 }
 
-.rating {
+.mp-image-wrapper .mp-rating {
   position: absolute;
   bottom: 12px;
   left: 12px;
@@ -240,24 +226,25 @@ html, body {
   gap: 4px;
 }
 
+
 /* CONTENT */
-.card-body {
+.mp-card-body {
   padding: 14px;
 }
 
-.card-body h3 {
+.mp-card-body h3 {
   font-size: 15px;
   margin-bottom: 6px;
 }
 
-.price {
+.mp-price {
   font-size: 18px;
   font-weight: 700;
   color: #2563eb;
   margin-bottom: 8px;
 }
 
-.meta {
+.mp-meta {
   font-size: 13px;
   color: #64748b;
   display: flex;
@@ -268,17 +255,17 @@ html, body {
 /* =======================
    FULL WIDTH BACKGROUND
 ======================= */
-.marketplace-section {
+.mp-marketplace-section {
   width: 100%;
   min-height: 100vh;
   background: #f8fafc;
   padding-top: 0;
 }
-.dropdown-wrapper {
+.mp-dropdown-wrapper {
   position: relative;
 }
 
-.dropdown-menu {
+.mp-dropdown-menu {
   position: absolute;
   top: 42px;
   left: 0;
@@ -289,18 +276,18 @@ html, body {
   z-index: 20;
 }
 
-.dropdown-menu div {
+.mp-dropdown-menu div {
   padding: 10px 16px;
   cursor: pointer;
 }
 
-.dropdown-menu div:hover {
+.mp-dropdown-menu div:hover {
   background: #f1f5f9;
 }
 /* ===========================
    SEARCH + FILTER BAR (CLEAN UI)
 =========================== */
-.search-filter-row {
+.mp-search-filter-row {
   display: flex;
   align-items: center;
   gap: 16px;
@@ -310,7 +297,7 @@ html, body {
 }
 
 /* SEARCH BAR */
-.search-box.wide {
+.mp-search-box.wide {
   flex: 1.5;
   height: 52px;
 
@@ -324,12 +311,12 @@ html, body {
   gap: 10px;
 }
 
-.search-box.wide svg {
+.mp-search-box.wide svg {
   font-size: 20px;
   color: #64748b;
 }
 
-.search-box.wide input {
+.mp-search-box.wide input {
   border: none;
   outline: none;
   font-size: 15px;
@@ -337,7 +324,7 @@ html, body {
 }
 
 /* FILTER BUTTON GROUP */
-.top-filters {
+.mp-top-filters {
   display: flex;
   gap: 4px;
   flex: 1;
@@ -346,27 +333,27 @@ html, body {
 
 
 /* LOCATION – FIXED */
-.location-bar.compact {
+.mp-location-bar.compact {
   margin-top: 6px;   /* reduced gap from search */
   margin-bottom: 18px;
 }
 
 
-.label {
+.mp-label {
   font-size: 12px;
   color: #64748b;
   display: block;
   margin-bottom: 4px;
 }
 
-.loc-row {
+.mp-loc-row {
   display: flex;
   align-items: center;
   gap: 6px;
   font-weight: 600;
 }
 
-.change {
+.mp-change {
   margin-left: 8px;
   color: #2563eb;
   cursor: pointer;
@@ -375,7 +362,7 @@ html, body {
 
 
 /* FILTER BUTTON */
-.top-filters button {
+.mp-top-filters button {
   height: 52px;
   min-width: 160px;
 
@@ -397,19 +384,19 @@ html, body {
   transition: all 0.2s ease;
 }
 
-.top-filters button svg {
+.mp-top-filters button svg {
   font-size: 20px;
   color: #64748b;
 }
 
 /* HOVER */
-.top-filters button:hover {
+.mp-top-filters button:hover {
   border-color: #c7d2fe;
   background: #f8fafc;
 }
 
 /* ACTIVE */
-.top-filters button.active {
+.mp-top-filters button.active {
   border-color: #2563eb;
   background: #eef2ff;
   color: #2563eb;
@@ -418,26 +405,21 @@ html, body {
 /* ===========================
    FILTER DROPDOWN (ALIGNED)
 =========================== */
-.filter-dropdown {
+.mp-filter-dropdown {
   position: absolute;
-  top: calc(100% + 8px);
+  top: 100%;
   left: 0;
-
-  width: 100%;
-  min-width: 220px;
-
+  width: 180px;           /* optional – keeps it neat */
+  max-height: 280px;      /* ✅ KEY: limit height */
+  overflow-y: auto;       /* ✅ enable scroll */
   background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 14px;
-
-  box-shadow: 0 12px 28px rgba(0,0,0,0.12);
-  z-index: 9999;
-
-  overflow: hidden;
-  animation: dropdownFade 0.15s ease;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  z-index: 100;
+  margin-top: 5px;
 }
 
-.filter-dropdown div {
+.mp-filter-dropdown div {
   padding: 14px 18px;
   font-size: 14px;
   font-weight: 500;
@@ -449,15 +431,15 @@ html, body {
   cursor: pointer;
 }
 
-.filter-dropdown div:not(:last-child) {
+.mp-filter-dropdown div:not(:last-child) {
   border-bottom: 1px solid #f1f5f9;
 }
 
-.filter-dropdown div:hover {
+.mp-filter-dropdown div:hover {
   background: #f8fafc;
 }
 
-.filter-dropdown div.active {
+.mp-filter-dropdown div.active {
   background: #eef2ff;
   color: #2563eb;
   font-weight: 600;
@@ -481,21 +463,21 @@ html, body {
    RESPONSIVE (TABLET & MOBILE)
 =========================== */
 @media (max-width: 900px) {
-  .search-filter-row {
+  .mp-search-filter-row {
     flex-direction: column;
     align-items: stretch;
   }
 
-  .search-box.wide {
+  .mp-search-box.wide {
     width: 100%;
     flex: 1;
   }
 
-  .top-filters {
+  .mp-top-filters {
     width: 100%;
   }
 
-  .filter-dropdown {
+  .mp-filter-dropdown {
     width: 100%;
     left: 0;
     right: 0;
@@ -505,18 +487,31 @@ html, body {
 
 /* MOBILE */
 @media (max-width: 768px) {
-  .web-header {
+  .mp-web-header {
     flex-direction: column;
     align-items: stretch;
   }
 
-  .sell-btn {
+  .mp-sell-btn {
     width: 100%;
   }
 
-  .property-grid {
+  .mp-property-grid {
     grid-template-columns: 1fr;
   }
+}
+
+.mp-location-input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #2563eb;
+  outline: none;
+
+  color: #0f172a;
+  font-size: 15px;
+  font-weight: 600;
+
+  min-width: 160px;
 }
 
 
@@ -1158,7 +1153,7 @@ html, body {
 }
 
 
-.delete-btn {
+.mp-delete-btn {
   position: absolute;
   top: 10px;
   right: 10px;
@@ -1172,6 +1167,6 @@ html, body {
   font-size: 14px;
 }
 
-.delete-btn:hover {
+.mp-delete-btn:hover {
   background: #ef4444;
 }

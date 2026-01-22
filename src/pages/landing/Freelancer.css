@@ -409,3 +409,114 @@
   color: #6b7280 !important;
   cursor: not-allowed;
 }
+.inactive-reason {
+  min-height: 18px;        /* ⭐ reserves space */
+  font-size: 12px;
+  color: #dc2626;
+  margin-top: 4px;
+}
+.certificates {
+  min-height: 52px;
+  margin-top: 8px;
+  flex-shrink: 0;
+}
+
+/* ========================================= */
+/* ✅ TABLET FIX — OVERRIDE FORCED GRID       */
+/* ========================================= */
+@media (min-width: 700px) and (max-width: 1024px) {
+
+  .list {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+
+    /* ⭐ THIS IS THE MISSING PART */
+    grid-auto-rows: 1fr !important;
+    align-items: stretch !important;
+  }
+
+  .card {
+    height: 100% !important;
+  }
+
+  .card-body {
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100% !important;
+  }
+
+  .footer {
+    margin-top: auto !important;
+  }
+}
+/* ================================================= */
+/* ✅ TABLET ONLY – NAME + RATING INLINE (CLEAN)     */
+/* ================================================= */
+@media (min-width: 700px) and (max-width: 1024px) {
+
+  /* Header row stays horizontal */
+  .card-header {
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 6px !important;
+  }
+
+  /* Left content (name + role + status) */
+  .card-header > div:first-child {
+    flex: 1;
+    min-width: 0; /* 🔑 allows ellipsis */
+  }
+
+  /* Name: smaller & single line */
+  .card-header h3 {
+    font-size: 14px !important;
+    line-height: 1.2 !important;
+  
+  }
+
+  /* Rating: sits beside name, fully visible */
+  .card-header .rating {
+    margin-top: 2px !important;
+    padding: 4px 8px !important;
+    font-size: 11px !important;
+    flex-shrink: 0;
+  }
+
+  /* Status text single line */
+  .status {
+    font-size: 11px !important;
+    white-space: nowrap;
+  }
+}
+/* ========================================= */
+/* ✅ MOBILE ONLY: NAME + RATING ALIGN FIX   */
+/* ========================================= */
+@media (max-width: 640px) {
+
+  /* Keep header row horizontal */
+  .card-header {
+    align-items: flex-start !important;
+    gap: 8px;
+  }
+
+  /* Name: allow 2 lines, slightly smaller */
+  .card-header h3 {
+    font-size: 15px;
+    line-height: 1.25;
+
+    display: -webkit-box;
+
+    -webkit-box-orient: vertical;
+
+    overflow: hidden;
+  }
+
+  /* ⭐ Rating: move up beside name */
+  .card-header .rating {
+    margin-top: 2px !important;
+    padding: 5px 8px;
+    font-size: 12px;
+    align-self: flex-start;
+    white-space: nowrap;
+  }
+}

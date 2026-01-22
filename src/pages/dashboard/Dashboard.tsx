@@ -10,6 +10,7 @@ import ServicesPage from "./homerentals/pages/ServicesPage";
 import HealthCare from "./HealthCare/HealthCare";
 
 import Education from "./Education/Education";
+import SwachifyProducts from "./SwachifyProducts/SwachifyProducts";
 
 
 import { useSearchParams, useLocation, Outlet } from "react-router-dom";
@@ -20,6 +21,8 @@ import { useSearchParams, useLocation, Outlet } from "react-router-dom";
 const Dashboard: React.FC = () => {
   const [searchParams] = useSearchParams();
 
+
+
   const userServiceIds: number[] = (JSON.parse(localStorage.getItem("service_ids") || "[]") as (string | number)[])
     .map(id => Number(id))
     .filter(id => !isNaN(id));
@@ -28,12 +31,11 @@ const Dashboard: React.FC = () => {
   const serviceIdToName: Record<number, string> = {
     1: "Home Services",
     2: "Packers and Movers / Transport",
-    // 3: "House & Commercial Rentals",
     3: "Buy & Sale Products",
     4: "Building & Construction Raw Materials",
     5: "Education",
-    // 6: "Buy & Sale Products",
-    6: "HealthCare"
+    6: "Swachify Products",
+    7: "HealthCare",
   };
 
 
@@ -194,23 +196,6 @@ const Dashboard: React.FC = () => {
 
 
 
-        // plumbing
-        "plumbing services",
-        "leak",
-        "pipe",
-        "geyser installation",
-        "bathroom fitting",
-        "water tank",
-        "drain cleaning",
-
-        // electrical
-        "electrical services",
-        "wiring",
-        "fan",
-        "circuit",
-        "switchboard",
-        "smart home",
-
         // appliances
         "ac service",
         "washing machine",
@@ -221,8 +206,9 @@ const Dashboard: React.FC = () => {
       ],
       component: (
         <HomeServices
-          searchQuery={searchQuery}
+        //searchQuery={searchQuery}
         // clearSearch={() => navigate("/app/dashboard")}
+
         />
       ),
     },
@@ -384,11 +370,11 @@ const Dashboard: React.FC = () => {
             (s) => s.name === "Home Services"
           )?.component}
 
+          {/* Swachify Products */}
+          {userServiceIds.includes(6) && <SwachifyProducts searchQuery={searchQuery} />}
 
           {/* HealthCare Full Header + Search + Cards */}
-          {userServiceIds.includes(6) && <HealthCare />}
-
-
+          {userServiceIds.includes(7) && <HealthCare />}
           {/* Education */}
           {userServiceIds.includes(5) && <Education />}
 
