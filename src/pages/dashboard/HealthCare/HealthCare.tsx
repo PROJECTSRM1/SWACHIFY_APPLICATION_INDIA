@@ -1,12 +1,8 @@
 import React, { useMemo, useState, useEffect } from "react";
-<<<<<<< HEAD
 import "./HealthCare.css";
-=======
-import "./Healthcare.css";
 import { Tooltip } from "antd";
 import { AppstoreOutlined } from "@ant-design/icons";
 // import { AppstoreOutlined } from "@ant-design/icons";
->>>>>>> dev
 
 type Doctor = {
   id: number;
