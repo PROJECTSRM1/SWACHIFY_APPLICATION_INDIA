@@ -41,16 +41,17 @@ useEffect(() => {
   }
 
   // ✅ Non-logged user visiting root → landing
-  if (!userData && currentPath === "/") {
-    navigate("/landing", { replace: true });
-  }
+  // if (!userData && currentPath === "/") {
+  //   navigate("/landing", { replace: true });
+  // }
 }, [navigate]);
 
 
 
   return (
     <Routes>
-      <Route path="/landing" element={<Landing />} />
+     <Route path="/" element={<Landing />} />
+
       {/* <Route path="/forgotpasswordlink" element={<ForgotPasswordLink />} /> */}
       {/* <Route path="/forgotpassword/:id" element={<ForgotPassword />} /> */}
       {/* <Route path="/privacy" element={<PrivacyPolicy />} /> */}
