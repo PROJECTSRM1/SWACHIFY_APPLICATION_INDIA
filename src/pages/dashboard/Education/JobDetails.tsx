@@ -90,7 +90,8 @@ export default function JobDetails({ companyId, onBack }: Props) {
     <div className="job-layout">
       {/* HEADER */}
       <div className="job-header">
-        <button className="back-btn" onClick={onBack}>←</button>
+       <button className="job-back-btn" onClick={onBack}>←</button>
+
         <h3>Job Details</h3>
         <div />
       </div>
