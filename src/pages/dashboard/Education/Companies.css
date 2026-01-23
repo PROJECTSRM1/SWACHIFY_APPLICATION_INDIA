@@ -15,36 +15,54 @@ body {
 
 .page-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   background: #ffffff;
-  padding: 16px 20px;
-  border-radius: 14px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
-  margin-bottom: 20px;
+
+  padding: 10px 14px;          /* 🔥 reduced height */
+  border-radius: 10px;         /* tighter corners */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04); /* flatter */
+
+  margin-bottom: 12px;         /* closer to tabs */
 }
+
 
 .header-left {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 10px;
 }
 
 .header-left h2 {
   margin: 0;
-  font-size: 18px;
+  font-size: 15px;     /* LinkedIn-style */
   font-weight: 600;
+  color: #111827;
 }
 
-.back-btn {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  border: none;
-  background: #eef2ff;
+
+.companies-back-btn {
+  width: 28px;
+  height: 28px;
+
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+
+  font-size: 14px;
+  line-height: 1;
   cursor: pointer;
-  font-size: 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #374151;
 }
+
+.companies-back-btn:hover {
+  background: #f3f4f6;
+}
+
 
 /* ================= TABS ================= */
 
@@ -234,4 +252,12 @@ body {
   .company-grid {
     grid-template-columns: 1fr;
   }
+}
+
+
+.companies-layout {
+  min-height: 100vh;
+  padding: 16px 24px 48px;
+
+  padding-top: 88px; /* 🔥 FIX: below fixed navbar */
 }

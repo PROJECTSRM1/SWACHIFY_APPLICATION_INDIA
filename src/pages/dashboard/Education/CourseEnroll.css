@@ -20,9 +20,15 @@
 /* HEADER */
 .enroll-header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  align-items: center;          /* ✅ keep */
+  gap: 16px;                    /* ✅ spacing instead of space-between */
   margin-bottom: 32px;
+}
+
+/* 🔥 REQUIRED */
+.enroll-title {
+  flex: 1;
+  min-width: 0;
 }
 
 .enroll-header h2 {
@@ -38,11 +44,28 @@
 }
 
 .back-btn {
-  background: none;
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #f1f5f9;        /* light grey like screenshot */
+  color: #111827;             /* dark arrow */
+
   border: none;
-  color: #2563eb;
-  font-size: 15px;
+  border-radius: 10px;        /* 🔥 square with soft corners */
+
+  font-size: 18px;
+  font-weight: 600;
+
   cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.back-btn:hover {
+  background: #e5e7eb;
 }
 
 /* COURSE CARD */
@@ -54,7 +77,7 @@
   border: 1px solid #e5e7eb;
 }
 
-/* ✅ IMAGE FIX */
+/* IMAGE */
 .course-image {
   width: 100%;
   height: 220px;
@@ -108,13 +131,15 @@
   color: #111827;
 }
 
-.form-section input {
+.form-section input,
+.form-section select {
   width: 100%;
   padding: 14px;
   margin-bottom: 14px;
   border-radius: 10px;
   border: 1px solid #d1d5db;
   font-size: 14px;
+  background: #ffffff;
 }
 
 .row {
@@ -147,127 +172,40 @@
   cursor: not-allowed;
 }
 
-
-@media (min-width: 1440px) {
-  .enroll-page {
-    padding: 60px 24px;
-  }
-
-  .enroll-container {
-    max-width: 1000px;
-    padding: 40px;
-  }
-
-  .course-image {
-    height: 260px;
-  }
-}
-
-@media (max-width: 1439px) and (min-width: 1024px) {
-  .enroll-container {
-    max-width: 900px;
-  }
-}
-
-
-@media (max-width: 1023px) and (min-width: 768px) {
-  .enroll-page {
-    padding: 32px 20px;
-  }
-
-  .enroll-container {
-    padding: 28px;
-  }
-
-  .course-image {
-    height: 200px;
-  }
-
-  .meta {
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-}
+/* MOBILE */
 @media (max-width: 767px) {
-  .enroll-page {
-    padding: 24px 14px;
-  }
-
-  .enroll-container {
-    padding: 22px;
-  }
-
   .enroll-header {
     flex-direction: column;
     align-items: flex-start;
     gap: 8px;
   }
-
-  .course-card-enroll {
-    padding: 20px;
-  }
-
-  .course-image {
-    height: 180px;
-  }
-
-  .meta {
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .features {
-    gap: 8px;
-  }
-
-  .confirm-btn {
-    padding: 14px;
-    font-size: 15px;
-  }
 }
 
 
-  
-@media (max-width: 425px) {
-  .enroll-header {
-    position: relative;
-    padding-top: 4px;
-  }
+.enroll-container {
+  position: relative; /* 🔥 create local stacking context */
+}
 
-  .back-btn {
-    position: relative;
-    margin-bottom: 6px;
-    font-size: 18px;   /* slightly smaller */
-    padding: 4px 6px;
-    line-height: 1;
-  }
+.back-btn-fixed {
+  position: absolute;
+  top: 18px;
+  left: 16px;
+
+  z-index: 50;
 }
 
 
-
-@media (max-width: 375px) {
-  .back-btn {
-    font-size: 17px;
-    padding: 3px 6px;
-  }
-
-  .enroll-header h2 {
-    margin-top: 2px;
-  }
+.enroll-header {
+  padding-left: 56px;   /* 🔥 space for back button */
 }
 
-
-@media (max-width: 320px) {
-  .back-btn {
-    font-size: 16px;
-    padding: 2px 4px;
-  }
-
-  .enroll-header {
-    gap: 4px;
-  }
-
-  .enroll-header h2 {
-    font-size: 15px;
-  }
+/* 🔥 FORCE BACK BUTTON VISIBILITY – FINAL FIX */
+.back-btn,
+.back-btn:focus,
+.back-btn:active,
+.back-btn:hover {
+  opacity: 1 !important;
+  visibility: visible !important;
+  color: #0f172a !important;
+  background: #f1f5f9 !important;
 }

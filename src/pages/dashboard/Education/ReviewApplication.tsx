@@ -32,7 +32,8 @@ const ReviewApplication = ({ onBack }: Props) => {
     <div className="review-web">
       {/* Header */}
       <header className="review-header">
-        <button className="back-btn" onClick={onBack}>←</button>
+        <button className="review-back-btn" onClick={onBack}>←</button>
+
         <h1>Review Application</h1>
         <button className="edit-all" onClick={() => setEditMode(!editMode)}>
           {editMode ? "Save Changes" : "Edit All"}
