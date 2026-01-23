@@ -27,11 +27,11 @@ const HomeSubWeb: React.FC<HomeSubWebProps> = ({ onBack, onContinue }) => {
 
   const options: PropertyOption[] = useMemo(
     () => [
-      { id: "1bhk", icon: <MdBed />, title: "1 BHK", price: "$80" },
-      { id: "2bhk", icon: <MdBed />, title: "2 BHK", price: "$120" },
-      { id: "3bhk", icon: <MdApartment />, title: "3 BHK+", price: "$180" },
-      { id: "studio", icon: <MdApartment />, title: "Studio", price: "$65" },
-      { id: "villa", icon: <MdVilla />, title: "Villa / Penthouse", price: "$250" },
+      { id: "1bhk", icon: <MdBed />, title: "1 BHK", price: "₹80" },
+      { id: "2bhk", icon: <MdBed />, title: "2 BHK", price: "₹120" },
+      { id: "3bhk", icon: <MdApartment />, title: "3 BHK+", price: "₹180" },
+      { id: "studio", icon: <MdApartment />, title: "Studio", price: "₹65" },
+      { id: "villa", icon: <MdVilla />, title: "Villa / Penthouse", price: "₹250" },
     ],
     []
   );
