@@ -1,0 +1,402 @@
+.cp-root {
+  max-width: 1200px;
+  margin: 110px auto 60px;
+  padding: 0 20px;
+}
+
+/* HEADER */
+.cp-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 30px;
+}
+
+.cp-back {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: none;
+  background: #eef2ff;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+/* TOP PROFILE */
+.cp-top {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 24px;
+  margin-bottom: 36px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+}
+
+.cp-avatar-wrap {
+  position: relative;
+  width: 140px;
+  height: 140px;
+}
+
+.cp-avatar-wrap img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 4px solid #2563eb;
+  object-fit: cover;
+}
+
+.cp-dot {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  width: 16px;
+  height: 16px;
+  background: #22c55e;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+.cp-main h3 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.cp-id {
+  color: #2563eb;
+  font-weight: 600;
+}
+
+.cp-sub {
+  color: #6b7280;
+}
+
+/* ACTIONS */
+.cp-actions {
+  display: flex;
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.cp-btn {
+  height: 42px;
+  padding: 0 18px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.cp-btn.primary {
+  background: #2563eb;
+  color: white;
+}
+
+.cp-btn.secondary {
+  background: #e5e7eb;
+}
+
+/* GRID */
+.cp-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+}
+
+.cp-section {
+  margin-bottom: 24px;
+}
+
+.cp-section h4 {
+  margin-bottom: 14px;
+  color: #111827;
+}
+
+/* CARD */
+.cp-card {
+  background: white;
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 12px;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.06);
+}
+
+.cp-card.status {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.approved {
+  color: #16a34a;
+  font-weight: 700;
+}
+
+.active {
+  color: #16a34a;
+  font-weight: 700;
+}
+
+.completed {
+  color: #6b7280;
+  font-weight: 700;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .cp-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cp-top {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .cp-actions {
+    justify-content: center;
+  }
+
+  /* NOC */
+.noc-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 8px 0;
+}
+
+.noc-row select {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+}
+
+/* Inputs */
+.cp-input {
+  width: 100%;
+  margin-top: 8px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+}
+
+.cp-upload {
+  display: inline-block;
+  margin-top: 10px;
+  font-weight: 600;
+  color: #2563eb;
+  cursor: pointer;
+}
+
+
+/* Right side resume buttons - vertical */
+.cp-resume-right {
+  position: absolute;
+  right: 32px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Ensure parent allows absolute positioning */
+.cp-top {
+  position: relative;
+}
+
+
+}
+
+
+/* Ensure parent is relative */
+.cp-top {
+  position: relative;
+}
+
+/* Move resume buttons further right */
+.cp-resume-right {
+  position: absolute;
+  right: 0;          /* move to extreme right */
+  margin-right: 32px; /* small padding from edge */
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+
+/* ============================= */
+/* 🖥️ LARGE DESKTOP (1280px+) */
+/* ============================= */
+@media (min-width: 1280px) {
+  .cp-root {
+    max-width: 1200px;
+  }
+
+  .cp-grid {
+    gap: 32px;
+  }
+}
+
+/* ============================= */
+/* 💻 LAPTOP (1024px – 1279px) */
+/* ============================= */
+@media (max-width: 1279px) and (min-width: 1024px) {
+  .cp-root {
+    margin-top: 100px;
+  }
+
+  .cp-top {
+    padding: 22px;
+  }
+
+  .cp-avatar-wrap {
+    width: 120px;
+    height: 120px;
+  }
+
+  .cp-resume-right {
+    margin-right: 20px;
+  }
+}
+
+/* ============================= */
+/* 📱 TABLET (768px – 1023px) */
+/* ============================= */
+@media (max-width: 1023px) and (min-width: 768px) {
+  .cp-root {
+    margin-top: 96px;
+    padding: 0 16px;
+  }
+
+  .cp-top {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+  }
+
+  .cp-avatar-wrap {
+    width: 110px;
+    height: 110px;
+  }
+
+  .cp-actions {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .cp-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  /* Resume buttons move below on tablet */
+  .cp-resume-right {
+    position: static;
+    transform: none;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 10px;
+  }
+}
+
+/* ============================= */
+/* 📲 MOBILE (≤ 767px) */
+/* ============================= */
+@media (max-width: 767px) {
+  .cp-root {
+    margin-top: 84px;
+    padding: 0 14px;
+  }
+
+  .cp-header {
+    gap: 10px;
+    margin-bottom: 22px;
+  }
+
+  .cp-back {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+
+  .cp-top {
+    padding: 18px;
+    border-radius: 16px;
+  }
+
+  .cp-avatar-wrap {
+    width: 96px;
+    height: 96px;
+  }
+
+  .cp-main h3 {
+    font-size: 20px;
+  }
+
+  .cp-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .cp-btn {
+    width: 100%;
+  }
+
+  .cp-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Resume buttons → stacked below profile */
+  .cp-resume-right {
+    position: static;
+    transform: none;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 12px;
+  }
+}
+
+/* ============================= */
+/* 📲 SMALL MOBILE (≤ 480px) */
+/* ============================= */
+@media (max-width: 480px) {
+  .cp-root {
+    margin-top: 72px;
+  }
+
+  .cp-top {
+    padding: 16px;
+  }
+
+  .cp-avatar-wrap {
+    width: 84px;
+    height: 84px;
+  }
+
+  .cp-main h3 {
+    font-size: 18px;
+  }
+
+  .cp-sub {
+    font-size: 13px;
+  }
+
+  .cp-card {
+    padding: 14px;
+  }
+
+  .cp-section h4 {
+    font-size: 15px;
+  }
+
+  .cp-btn {
+    height: 40px;
+    font-size: 14px;
+  }
+}

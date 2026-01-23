@@ -1,0 +1,284 @@
+/* =========================
+   ROOT / OVERLAY
+========================= */
+.sdw_root {
+  position: fixed;
+  inset: 0;
+  background: #f9fafb;
+  display: flex;
+  flex-direction: column;
+  z-index: 9999;
+}
+
+/* =========================
+   HEADER
+========================= */
+.sdw_header {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.sdw_header h1 {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.sdw_back {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: #f3f4f6;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.sdw_back:hover {
+  background: #e5e7eb;
+}
+
+/* =========================
+   BODY
+========================= */
+.sdw_body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+}
+
+/* =========================
+   PROPERTY SECTION
+========================= */
+.sdw_section label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b7280;
+}
+
+.sdw_section select {
+  width: 100%;
+  height: 48px;
+  margin-top: 6px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  padding: 0 12px;
+  font-size: 14px;
+  background: #fff;
+}
+
+.sdw_info {
+  margin-top: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #2563eb;
+}
+
+/* =========================
+   TITLES
+========================= */
+.sdw_body h2 {
+  margin-top: 24px;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.sdw_hint {
+  margin-top: 4px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+/* =========================
+   GRID (MOBILE FIRST)
+========================= */
+.sdw_grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+/* =========================
+   CARD
+========================= */
+.sdw_cardWrap {
+  width: 100%;
+}
+
+.sdw_card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 10px;
+  text-align: center;
+  border: 2px solid transparent;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.sdw_card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+}
+
+.sdw_card.active {
+  border-color: #10b981;
+}
+
+/* IMAGE */
+.sdw_card img {
+  width: 100%;
+  height: 100px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+/* TITLE */
+.sdw_card p {
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+}
+
+/* CHECK ICON */
+.sdw_check {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #10b981;
+  color: #ffffff;
+  font-size: 14px;
+  display: grid;
+  place-items: center;
+}
+
+/* FLOOR TAG */
+.sdw_floorTag {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 10px;
+  font-weight: 600;
+  color: #2563eb;
+  background: #dbeafe;
+  padding: 4px 6px;
+  border-radius: 6px;
+}
+
+/* =========================
+   FLOOR COUNTER
+========================= */
+.sdw_floorCounter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 6px;
+  padding: 6px 10px;
+  border-radius: 10px;
+  border: 1px solid #10b981;
+  background: #ffffff;
+}
+
+.sdw_floorCounter button {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: #10b981;
+  color: #ffffff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.sdw_floorCounter span {
+  font-size: 14px;
+  font-weight: 700;
+  color: #111827;
+}
+
+/* =========================
+   FOOTER
+========================= */
+.sdw_bottom {
+  background: #ffffff;
+  border-top: 1px solid #e5e7eb;
+}
+
+/* CONSULTATION BANNER */
+.sdw_warning {
+  background: #fffbeb;
+  color: #92400e;
+  padding: 10px 16px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* FOOTER ROW */
+.sdw_footerRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px 24px;
+}
+
+.sdw_footerRow strong {
+  font-size: 16px;
+}
+
+.sdw_footerRow p {
+  font-size: 12px;
+  margin-top: 2px;
+  color: #6b7280;
+}
+
+/* PROCEED BUTTON */
+.sdw_proceed {
+  background: #10b981;
+  color: #ffffff;
+  border: none;
+  padding: 14px 24px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.sdw_proceed.disabled {
+  background: #d1d5db;
+  cursor: not-allowed;
+}
+
+/* =========================
+   RESPONSIVE BREAKPOINTS
+========================= */
+
+/* TABLET */
+@media (min-width: 640px) {
+  .sdw_grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .sdw_card img {
+    height: 110px;
+  }
+}
+
+/* DESKTOP */
+@media (min-width: 1024px) {
+  .sdw_grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .sdw_card img {
+    height: 120px;
+  }
+}

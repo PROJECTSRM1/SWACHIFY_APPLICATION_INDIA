@@ -1,179 +1,401 @@
-/* =========================
-   EDUCATION CONTAINER
-========================= */
-.education-container {
-  width: 100%;
+/* ROOT */
+.edu-wrapper {
+  min-height: 100vh;
+  background: #f5f7fb;
+  color: #1f2937;
+  padding-bottom: 80px;
 }
 
-/* =========================
-   EDUCATION NAV BAR
-   (MATCH PACKERS & MOVERS)
-========================= */
-.education-header {
+/* FEATURED */
+.edu-featured {
+  max-width: 1200px;
+  height: 360px;
+  margin: 32px auto;
+  border-radius: 22px;
+  overflow: hidden;
+  position: relative;
+}
+
+.edu-featured img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.blue-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(37, 99, 235, 0.85),
+    rgba(37, 99, 235, 0.35)
+  );
+}
+
+.featured-content {
+  position: absolute;
+  inset: 0;
+  padding: 28px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  width: 100%;
-  max-width: 1200px;          /* SAME AS PM */
-  margin: 65px auto 24px;     /* SAME AS PM */
-
-  padding: 22px 28px;         /* SAME AS PM */
-  background: #005cfa;
   color: #fff;
-  border-radius: 12px;        /* SAME AS PM */
-  gap: 10px;
 }
 
-.education-header h2 {
-  margin: 0;
-  font-size: 20px;            /* SAME AS PM */
-  font-weight: 700;
+.featured-left {
+  max-width: 500px;
 }
 
-.education-header p {
-  margin: 4px 0 0;
-  font-size: 13px;            /* SAME AS PM */
-  opacity: 0.95;
-}
-
-.education-header .view-all-btn {
+/* SEARCH */
+.featured-search {
+  width: 320px;
+  height: 48px;
   background: #fff;
-  color: #000;
-  border: none;
-  padding: 8px 14px;
-  border-radius: 6px;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-/* =========================
-   EDUCATION CARDS GRID
-========================= */
-.education-grid {
-  max-width: 1200px;  
-  margin: 0 auto 28px;
-  padding: 0 14px;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 18px;
-
-}
-.education-grid > .education-card:last-child {
-  width: 260px; 
-  max-width: 260px;
-  justify-self: center; 
-}
-
-.education-card {
-  height: 340px;              
-  max-width: 260px;           
-  margin: 0 auto;
-  border-radius: 12px;
-  background: #fff;
-  border-radius: 4px;
-  box-shadow: 0 6px 18px rgba(20, 20, 20, 0.06);
-  border: 1px solid #f0f0f0;
-  border-radius: 15px !important;
-  overflow: hidden !important;
+  border-radius: 999px;
   display: flex;
-  flex-direction: column;
   overflow: hidden;
 }
 
-/* Icon / Image area */
-.icon-box {
-  height: 150px;              /* SAME AS PM IMAGE */
+.featured-search input {
+  flex: 1;
+  border: none;
+  padding: 0 16px;
+  color: #111;
+}
+
+.featured-search button {
+  width: 52px;
+  background: #2563eb;
+  border: none;
+  color: #fff;
+}
+
+/* SECTIONS */
+.edu-section {
+  max-width: 1200px;
+  margin: 40px auto;
+}
+
+/* ✅ FIXED GRID */
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 28px;
+}
+
+.category-grid div {
+  background: #fff;
+  padding: 18px;
+  border-radius: 16px;
+  text-align: center;
+}
+
+.category-grid span {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 38px;
-  background: #f5f8ff;
-}
-
-/* Card body */
-.education-card h3 {
-  margin: 12px 12px 0;
-  font-size: 16px;
-  font-weight: 600;
-  text-align: center;
-}
-
-.education-card p {
-  margin: 8px 12px 0;
-  font-size: 13px;
-  color: #6b7785;
-  text-align: center;
-}
-
-/* Footer */
-.details-btn {
-  margin: auto 12px 12px;
-  height: 40px;               /* SAME AS PM */
-  background: #000;
+  margin: auto;
   color: #fff;
-  border: none;
-  border-radius: 5px !important;
-  font-size: 15px;
+}
+
+.blue { background: #3b82f6; }
+.purple { background: #8b5cf6; }
+.orange { background: #f97316; }
+.green { background: #10b981; }
+
+/* ================= TRENDING ================= */
+
+.trending-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.trending-title {
+  font-size: 22px;
   font-weight: 700;
+}
+
+.view-all-btn {
+  background: none;
+  border: none;
+  color: #2563eb;
+  font-weight: 600;
   cursor: pointer;
 }
 
-.fullscreen-page {
-  position: fixed;
-  inset: 0;
-  background: #fff;
-  z-index: 9999;
-  overflow-y: auto;
+/* ✅ TWO PER ROW GRID */
+.trending-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+/* CARD */
+.trending-row-card {
+  display: flex;
+  gap: 14px;
+  background: #ffffff;
+  padding: 14px;
+  border-radius: 16px;
+  border: 1px solid #e5e7eb;
+  transition: box-shadow 0.2s ease;
+}
+
+.trending-row-card:hover {
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+}
+
+/* AVATAR */
+.trending-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+/* INFO */
+.trending-info {
+  flex: 1;
+}
+
+.trending-info h4 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.program {
+  font-size: 12px;
+  color: #2563eb;
+  margin: 2px 0;
+}
+
+.score,
+.shift {
+  font-size: 11px;
+  color: #6b7280;
+}
+
+/* FOOTER */
+.trending-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 6px;
+}
+
+/* RATING (INSIDE CARD, NO FLOATING) */
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: dark black;
+
+  /* 🔴 IMPORTANT */
+  position: static;   /* remove fixed / absolute */
+}
+
+.rating .star {
+  color: #facc15; /* yellow star */
 }
 
 
-/* =========================
-   RESPONSIVE (MATCH PM)
-========================= */
-@media (max-width: 1200px) {
-  .education-card {
-    max-width: 240px;
+/* STATUS */
+.status {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.status.active {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.status.completed {
+  background: #e5e7eb;
+  color: #6b7280;
+}
+
+/* 📱 MOBILE → ONE PER ROW */
+@media (max-width: 640px) {
+  .trending-list {
+    grid-template-columns: 1fr;
   }
 }
 
-@media (max-width: 1024px) {
-  .education-card {
-    max-width: 230px;
+
+/* ============================= */
+/* 🖥️ LARGE DESKTOP (1280px+) */
+/* ============================= */
+@media (min-width: 1280px) {
+  .edu-featured {
+    height: 380px;
+  }
+
+  .featured-left {
+    max-width: 560px;
+  }
+
+  .category-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .trending-list {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media (max-width: 768px) {
-  .education-header {
+/* ============================= */
+/* 💻 LAPTOP (1024px – 1279px) */
+/* ============================= */
+@media (max-width: 1279px) and (min-width: 1024px) {
+  .edu-featured {
+    height: 340px;
+    margin: 24px;
+  }
+
+  .featured-search {
+    width: 300px;
+  }
+
+  .category-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .trending-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ============================= */
+/* 📱 TABLET (768px – 1023px) */
+/* ============================= */
+@media (max-width: 1023px) and (min-width: 768px) {
+  .edu-featured {
+    height: 300px;
+    margin: 20px;
+  }
+
+  .featured-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .featured-search {
+    width: 100%;
+    max-width: 360px;
+  }
+
+  .category-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .trending-list {
+    grid-template-columns: 1fr;
+  }
+
+  .trending-row-card {
+    padding: 16px;
+  }
+}
+
+/* ============================= */
+/* 📲 MOBILE (≤ 767px) */
+/* ============================= */
+@media (max-width: 767px) {
+  .edu-wrapper {
+    padding-bottom: 60px;
+  }
+
+  .edu-featured {
+    height: auto;
+    margin: 16px;
+    border-radius: 16px;
+  }
+
+  .featured-content {
+    position: relative;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+    gap: 14px;
+  }
+
+  .featured-left {
+    max-width: 100%;
+  }
+
+  .featured-search {
+    width: 100%;
+    height: 44px;
+  }
+
+  .edu-section {
+    margin: 28px 16px;
+  }
+
+  .category-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .trending-list {
+    grid-template-columns: 1fr;
+  }
+
+  .trending-row-card {
+    flex-direction: row;
     padding: 14px;
   }
 
-  .education-card {
-    max-width: 100%;
-    height: auto;
+  .trending-avatar {
+    width: 48px;
+    height: 48px;
   }
 
-  .icon-box {
-    height: 140px;
-  }
-
-  .details-btn {
-    width: 100%;
+  .trending-info h4 {
+    font-size: 14px;
   }
 }
 
-/* 🔥 FORCE EDUCATION CONTENT ABOVE ANY OVERLAY */
-.education-container,
-.education-grid,
-.education-card {
-  position: relative;
-  z-index: 5;
-}
+/* ============================= */
+/* 📲 SMALL MOBILE (≤ 480px) */
+/* ============================= */
+@media (max-width: 480px) {
+  .category-grid {
+    grid-template-columns: 1fr;
+  }
 
-/* 🔥 ENSURE BUTTON RECEIVES CLICKS */
-.details-btn {
-  position: relative;
-  z-index: 10;
-  pointer-events: auto;
+  .featured-search {
+    height: 42px;
+  }
+
+  .featured-search input {
+    padding: 0 12px;
+    font-size: 14px;
+  }
+
+  .trending-row-card {
+    gap: 10px;
+  }
+
+  .rating {
+    font-size: 11px;
+  }
+
+  .status {
+    font-size: 9px;
+    padding: 3px 8px;
+  }
 }

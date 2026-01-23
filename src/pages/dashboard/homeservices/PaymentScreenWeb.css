@@ -1,0 +1,238 @@
+/* ===============================
+   PAGE
+================================ */
+.pay_page {
+  width: 100%;
+  color: #111827;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===============================
+   HEADER
+================================ */
+.pay_header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 16px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.pay_backBtn {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: #111827;
+
+  display: grid;
+  place-items: center;
+}
+
+.pay_backBtn:hover {
+  background: #f3f4f6;
+}
+
+.pay_headerTitle {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+  text-align: center;
+  flex: 1;
+}
+
+.pay_headerSpacer {
+  width: 40px;
+}
+
+/* ===============================
+   CONTENT
+================================ */
+.pay_content {
+  padding: 20px;
+  width: 100%;
+}
+
+.pay_sectionLabel {
+  margin: 24px 0 10px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #6b7280;
+  letter-spacing: 0.5px;
+}
+
+/* ===============================
+   CARDS
+================================ */
+.pay_card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.pay_serviceName {
+  margin: 0 0 10px;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.pay_dateRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: #475569;
+  margin-bottom: 6px;
+}
+
+.pay_address {
+  margin: 0;
+  font-size: 14px;
+  color: #64748b;
+  line-height: 1.4;
+}
+
+/* ===============================
+   TOTAL
+================================ */
+.pay_totalRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pay_totalLabel {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.pay_totalValue {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 900;
+  color: #2563eb;
+}
+
+/* ===============================
+   FOOTER (FIXED)
+   ❌ NOT sticky / fixed
+   ✅ normal modal flow
+================================ */
+.pay_footer {
+  margin-top: 28px;
+  padding-top: 16px;
+  border-top: 1px solid #e5e7eb;
+}
+
+/* ===============================
+   CHECKOUT BUTTON
+================================ */
+.pay_checkoutBtn {
+  width: 100%;
+  height: 56px;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+
+  background: #2563eb;
+  color: #ffffff;
+
+  font-size: 16px;
+  font-weight: 800;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: transform 0.08s ease, filter 0.2s ease;
+}
+
+.pay_checkoutBtn:hover {
+  filter: brightness(1.05);
+}
+
+.pay_checkoutBtn:active {
+  transform: scale(0.99);
+}
+
+.pay_checkoutBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ===============================
+   SUCCESS MODAL
+================================ */
+.pay_modalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  background: rgba(0, 0, 0, 0.6);
+
+  display: grid;
+  place-items: center;
+  padding: 18px;
+}
+
+.pay_modalCard {
+  width: 100%;
+  max-width: 420px;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 24px;
+  text-align: center;
+  border: 1px solid #e5e7eb;
+}
+
+.pay_successIcon {
+  color: #22c55e;
+  margin-bottom: 12px;
+}
+
+.pay_modalTitle {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.pay_modalSub {
+  margin: 8px 0 20px;
+  font-size: 14px;
+  color: #64748b;
+}
+
+.pay_modalBtn {
+  width: 100%;
+  height: 48px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+
+  background: #22c55e;
+  color: #022c22;
+
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.pay_modalBtn:hover {
+  filter: brightness(1.05);
+}
+
+/* ===============================
+   DESKTOP MODAL WIDTH
+================================ */
+@media (min-width: 900px) {
+  .pay_page {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+}

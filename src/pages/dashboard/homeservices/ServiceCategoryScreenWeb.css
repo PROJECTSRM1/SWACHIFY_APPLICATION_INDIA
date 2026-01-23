@@ -1,0 +1,124 @@
+/* Page */
+.scw_page {
+  height: 100%;                /* 🔑 FIX */
+  background: #f9fafb;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;            /* 🔑 FIX */
+}
+
+/* Header */
+.scw_header {
+  position: sticky;            /* 🔑 FIX */
+  top: 0;
+  z-index: 10;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 14px 18px;
+  border-bottom: 1px solid #e5e7eb;
+  background: #ffffff;
+}
+
+.scw_header h1 {
+  font-size: 18px;
+  font-weight: 800;
+  margin: 0;
+  color: #111827;
+}
+
+.scw_iconBtn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #374151;
+  width: 40px;
+  height: 40px;
+}
+.scw_iconBtn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #374151;
+  width: 40px;
+  height: 40px;
+}
+
+.scw_iconBtn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #374151;
+}
+
+/* Content */
+.scw_content {
+  flex: 1;                     /* 🔑 FIX */
+  padding: 24px;
+  overflow-y: auto;            /* 🔑 FIX */
+
+  /* Hide scrollbar */
+  scrollbar-width: none;
+}
+
+.scw_content::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.scw_sectionTitle {
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  color: #111827;
+}
+
+/* Cards */
+.scw_cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.scw_card {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.scw_card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+
+.scw_card div {
+  padding: 14px;
+}
+
+.scw_card h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 800;
+  color: #111827;
+}
+
+.scw_card p {
+  margin-top: 6px;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/* Hover */
+.scw_card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  border-color: #2563eb;
+}
