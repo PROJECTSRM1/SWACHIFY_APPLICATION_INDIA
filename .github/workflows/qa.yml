@@ -13,8 +13,8 @@ jobs:
       - name: Pull latest PREPROD code
         run: |
           cd /home/projects/services/SWACHIFY_APPLICATION_INDIA
-          git fetch origin preprod1
           git checkout preprod1
+          git fetch origin preprod1
           git reset --hard origin/preprod1
 
       - name: Show latest commit
@@ -33,7 +33,7 @@ jobs:
           rm -rf dist
           npm run build
 
-      - name: Deploy dist to QA folder (Preprod env)
+      - name: Deploy dist to PREPROD Nginx folder
         run: |
           sudo mkdir -p /var/www/swachify-qa
           sudo rm -rf /var/www/swachify-qa/*
@@ -44,5 +44,6 @@ jobs:
         run: |
           sudo nginx -t
           sudo systemctl reload nginx || sudo systemctl restart nginx
+
 
 
