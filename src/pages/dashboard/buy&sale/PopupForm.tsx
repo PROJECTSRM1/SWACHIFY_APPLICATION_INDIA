@@ -13,6 +13,20 @@ export default function SellItemWeb({ onClose }: SellItemWebProps) {
   const [price, setPrice] = useState<string>("");
 
   /* ================= HOUSE ================= */
+  const formatIndianNumber = (value: string) => {
+  // remove anything that is not a digit
+  const numeric = value.replace(/[^0-9]/g, "");
+
+  // add Indian commas
+  return numeric.replace(/\B(?=(\d{2})+(?!\d))/g, ",");
+};
+const handleNumericChange =
+  (setter: React.Dispatch<React.SetStateAction<string>>) =>
+  (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formatted = formatIndianNumber(e.target.value);
+    setter(formatted);
+  };
+
   const [sqft, setSqft] = useState("");
   const [bhk, setBhk] = useState("1 BHK");
   const [location, setLocation] = useState("");
@@ -43,7 +57,6 @@ export default function SellItemWeb({ onClose }: SellItemWebProps) {
   const [landDocuments, setLandDocuments] = useState<string[]>([]);
 
   /* ================= COMMERCIAL (BASIC) ================= */
-const [commercialSqft, setCommercialSqft] = useState("");
 const [commercialLocation, setCommercialLocation] = useState("");
 const [commercialArea, setCommercialArea] = useState("");
 
@@ -51,7 +64,7 @@ const [commercialArea, setCommercialArea] = useState("");
   /* ================= COMMON ================= */
   const [description, setDescription] = useState("");
   const [images, setImages] = useState<string[]>([]);
-  const cleanPrice = price.replace(/,/g, "");
+  // const cleanPrice = price.replace(/,/g, "");
   
 
   
@@ -72,11 +85,11 @@ const [commercialArea, setCommercialArea] = useState("");
     reader.onload = () => resolve(reader.result as string);
     reader.readAsDataURL(file);
   });
-const formatIndianPrice = (value: string) => {
-  const numeric = value.replace(/[^0-9]/g, "");
+// const formatIndianPrice = (value: string) => {
+//   const numeric = value.replace(/[^0-9]/g, "");
 
-  return numeric.replace(/\B(?=(\d{2})+(?!\d))/g, ",");
-};
+//   return numeric.replace(/\B(?=(\d{2})+(?!\d))/g, ",");
+// };
 
 
   /* ================= IMAGE UPLOAD ================= */
@@ -111,6 +124,7 @@ const handleLandDocs = async (e: ChangeEvent<HTMLInputElement>) => {
   const removeImage = (index: number) => {
     setImages((prev) => prev.filter((_, i) => i !== index));
   };
+const unformatNumber = (value: string) => value.replace(/,/g, "");
 
   /* ================= SUBMIT ================= */
   const handleSubmit = () => {
@@ -120,30 +134,33 @@ const handleLandDocs = async (e: ChangeEvent<HTMLInputElement>) => {
   }
 
   const listing = {
-    id: Date.now(),
-    listingType,
-    propertyType,
-    itemCondition,
-    
-    sqft,
-    bhk,
-    location,
-    area,
-    description,
-    images,
-    registrationStatus,
-    registrationValue,
-    marketValue,
-    landSqft,
-    landType,
-    landLocation,
-    landArea,
-    registeredOwner,
-    price: cleanPrice,
+  id: Date.now(),
+  listingType,
+  propertyType,
+  itemCondition,
 
-    documents: landDocuments,
-    createdAt: new Date().toISOString(),
-  };
+  price: unformatNumber(price),
+  sqft: unformatNumber(sqft),
+  landSqft: unformatNumber(landSqft),
+  registrationValue: unformatNumber(registrationValue),
+  marketValue: unformatNumber(marketValue),
+  distance: unformatNumber(distance),
+
+  bhk,
+  location,
+  area,
+  description,
+  images,
+
+  landType,
+  landLocation,
+  landArea,
+  registeredOwner,
+  documents: landDocuments,
+
+  createdAt: new Date().toISOString(),
+};
+
 
   const existing = JSON.parse(
     localStorage.getItem("marketplace_listings") || "[]"
@@ -255,11 +272,9 @@ const handleLandDocs = async (e: ChangeEvent<HTMLInputElement>) => {
   inputMode="numeric"
   value={price}
   placeholder="Enter price"
-  onChange={(e) => {
-    const formatted = formatIndianPrice(e.target.value);
-    setPrice(formatted);
-  }}
+  onChange={handleNumericChange(setPrice)}
 />
+
 
 
 
@@ -268,11 +283,10 @@ const handleLandDocs = async (e: ChangeEvent<HTMLInputElement>) => {
   <>
     <label>SQFT</label>
     <input
-      placeholder="Enter SQFT"
-      value={commercialSqft}
-      onChange={(e) => setCommercialSqft(e.target.value)}
-    />
-
+  inputMode="numeric"
+  value={sqft}
+  onChange={handleNumericChange(setSqft)}
+/>
     <label>LOCATION</label>
     <input
       placeholder="Full Address"
@@ -312,7 +326,12 @@ const handleLandDocs = async (e: ChangeEvent<HTMLInputElement>) => {
     <div className="sellRow">
       <div>
         <label>SQFT</label>
-        <input value={landSqft} onChange={(e) => setLandSqft(e.target.value)} />
+        <input
+  inputMode="numeric"
+  value={landSqft}
+  onChange={handleNumericChange(setLandSqft)}
+/>
+
       </div>
 
       <div>
@@ -326,15 +345,18 @@ const handleLandDocs = async (e: ChangeEvent<HTMLInputElement>) => {
 
     <label>REGISTRATION VALUE (₹)</label>
     <input
-      value={registrationValue}
-      onChange={(e) => setRegistrationValue(e.target.value)}
-    />
+  inputMode="numeric"
+  value={registrationValue}
+  onChange={handleNumericChange(setRegistrationValue)}
+/>
+
 
     <label>MARKET VALUE (₹)</label>
     <input
-      value={marketValue}
-      onChange={(e) => setMarketValue(e.target.value)}
-    />
+  inputMode="numeric"
+  value={marketValue}
+  onChange={handleNumericChange(setMarketValue)}
+/>
 
     <label>LOCATION</label>
     <input value={landLocation} onChange={(e) => setLandLocation(e.target.value)} />
@@ -390,10 +412,11 @@ const handleLandDocs = async (e: ChangeEvent<HTMLInputElement>) => {
                   <div>
                     <label>DISTANCE (KM)</label>
                     <input
-                      placeholder="10000"
-                      value={distance}
-                      onChange={(e) => setDistance(e.target.value)}
-                    />
+  inputMode="numeric"
+  value={distance}
+  onChange={handleNumericChange(setDistance)}
+/>
+
                   </div>
                 </div>
 
