@@ -33,67 +33,67 @@ const [openVehiclePopup, setOpenVehiclePopup] = useState(false);
   const [showAll, setShowAll] = useState(false);
   const [bookingPayload, setBookingPayload] = useState<any>(null);
 
-useEffect(() => {
-  setOpenCleaningPopup(false);
-  setOpenHomeSubPopup(false);
-  setOpenHomeSubCatPopup(false);
-  setOpenbookcleaningweb(false);
-}, []);
+  useEffect(() => {
+    setOpenCleaningPopup(false);
+    setOpenHomeSubPopup(false);
+    setOpenHomeSubCatPopup(false);
+    setOpenbookcleaningweb(false);
+  }, []);
 
 
 
   return (
     <>
-    
-     
-{/* ===== CLEANING SECTION ===== */}
-<section className="cleaning-section">
-  <div className="cleaning-header">
-    <div>
-      <h2 className="cleaning-title">Housing Services</h2>
-      <p className="cleaning-subtitle">2 services available</p>
-    </div>
 
-    <button
-      className="cleaning-viewall-btn"
-      onClick={() => setShowAll(prev => !prev)}
-    >
-      {showAll ? "Show Less" : "View All"}
-    </button>
-  </div>
 
-  <div className="cleaning-cards">
-    {/* Cleaning */}
-    <button
-      className="service-card"
-      onClick={() => setOpenCleaningPopup(true)}
-    >
-      <img
-        src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=900"
-        alt="Cleaning"
-      />
-      <div className="service-card-content">
-        <h3>Cleaning</h3>
-        <p>Residential & Commercial</p>
-      </div>
-    </button>
+      {/* ===== CLEANING SECTION ===== */}
+      <section className="cleaning-section">
+        <div className="cleaning-header">
+          <div>
+            <h2 className="cleaning-title">Housing Services</h2>
+            <p className="cleaning-subtitle">2 services available</p>
+          </div>
 
-    {/* Home Services */}
-    <button
-      className="service-card"
-      onClick={() => setOpenHomePopup(true)}
-    >
-      <img
-        src="https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&w=800&q=80"
-        alt="Home Services"
-      />
-      <div className="service-card-content">
-        <h3>Home Services</h3>
-        <p>Plumbing, Electrical & More</p>
-      </div>
-    </button>
-  </div>
-</section>
+          <button
+            className="cleaning-viewall-btn"
+            onClick={() => setShowAll(prev => !prev)}
+          >
+            {showAll ? "Show Less" : "View All"}
+          </button>
+        </div>
+
+        <div className="cleaning-cards">
+          {/* Cleaning */}
+          <button
+            className="service-card"
+            onClick={() => setOpenCleaningPopup(true)}
+          >
+            <img
+              src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=900"
+              alt="Cleaning"
+            />
+            <div className="service-card-content">
+              <h3>Cleaning</h3>
+              <p>Residential & Commercial</p>
+            </div>
+          </button>
+
+          {/* Home Services */}
+          <button
+            className="service-card"
+            onClick={() => setOpenHomePopup(true)}
+          >
+            <img
+              src="https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&w=800&q=80"
+              alt="Home Services"
+            />
+            <div className="service-card-content">
+              <h3>Home Services</h3>
+              <p>Plumbing, Electrical & More</p>
+            </div>
+          </button>
+        </div>
+      </section>
 
 
 
@@ -102,23 +102,23 @@ useEffect(() => {
         <div className="sc_popupOverlay">
           <div className="sc_popupContent">
             <ServiceCategoryScreenWeb
-  onClose={() => setOpenCleaningPopup(false)}
+              onClose={() => setOpenCleaningPopup(false)}
 
-  onSelectHomeCleaning={() => {
-    setOpenCleaningPopup(false);   // close current
-    setOpenHomeSubPopup(true);     // open home flow
-  }}
+              onSelectHomeCleaning={() => {
+                setOpenCleaningPopup(false);   // close current
+                setOpenHomeSubPopup(true);     // open home flow
+              }}
 
-  onSelectCommercialCleaning={() => {
-    setOpenCleaningPopup(false);   // ✅ close service category
-    setOpenCommercialPopup(true);  // ✅ open commercial popup
-  }}
+              onSelectCommercialCleaning={() => {
+                setOpenCleaningPopup(false);   // ✅ close service category
+                setOpenCommercialPopup(true);  // ✅ open commercial popup
+              }}
 
-  onSelectVehicleCleaning={() => {
-    setOpenCleaningPopup(false);  
-    setOpenVehiclePopup(true);
-  }}
-/>
+              onSelectVehicleCleaning={() => {
+                setOpenCleaningPopup(false);
+                setOpenVehiclePopup(true);
+              }}
+            />
 
 
             {/* <button
@@ -131,7 +131,7 @@ useEffect(() => {
           </div>
         </div>
       )}
-       {openHomePopup && (
+      {openHomePopup && (
         <div className="sc_popupOverlay">
           <div className="sc_popupContent">
             <CleaningServicesScreenWeb />
@@ -195,15 +195,15 @@ useEffect(() => {
 />
 
 
-      {/* <button
+            {/* <button
         className="sc_popupClose"
         onClick={() => setOpenHomeSubCatPopup(false)}
       >
         ✕
       </button> */}
-    </div>
-  </div>
-)}
+          </div>
+        </div>
+      )}
 
 {openbookcleaningweb && bookingPayload && (
   <div className="sc_popupOverlay">

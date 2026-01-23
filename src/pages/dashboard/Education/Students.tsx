@@ -153,6 +153,7 @@ const Students: React.FC<StudentsProps> = ({ onBack, onSelectStudent }) => {
             <option value="">Aggregate</option>
             <option value="90+">90%+</option>
             <option value="80-90">80–90%</option>
+             <option value="60-80">60–80%</option>
           </select>
 
           <select onChange={(e) => setCert(e.target.value)}>

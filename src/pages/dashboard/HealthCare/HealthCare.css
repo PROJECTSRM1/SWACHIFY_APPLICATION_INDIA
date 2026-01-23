@@ -96,10 +96,14 @@
 }
 
 .healthcare-card span {
+  display: flex;              /* 🔑 important */
+  align-items: center;        /* vertical center */
+  justify-content: center;    /* horizontal center */
+  height: 32px;               /* same for all icons */
   font-size: 26px;
-  display: block;
   margin-bottom: 6px;
 }
+
 
 .healthcare-card p {
   font-size: 14px;
@@ -2074,4 +2078,30 @@
   border-radius: 16px;
   font-weight: 900;
   cursor: pointer;
+}
+
+/* ---------- FIX CATEGORY TEXT ALIGNMENT ---------- */
+.healthcare-card p {
+  margin-top: 12px;   /* force same vertical spacing */
+  line-height: 1.2;
+}
+
+/* =========================
+   SEE ALL ICON – FINAL FIX
+   ========================= */
+
+.healthcare-card .see-all-icon {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 32px !important;     /* EXACT same as emoji icons */
+  margin-bottom: 6px !important;
+}
+
+/* Ant Design Appstore SVG */
+.healthcare-card .see-all-icon svg {
+  width: 26px !important;
+  height: 26px !important;
+  color: #22c55e !important;   /* GREEN */
+  display: block;
 }

@@ -76,7 +76,7 @@ const SwachifyProducts: React.FC<SwachifyProductsProps> = ({ searchQuery = "" })
                     {/* CARDS */}
                     <div className="sw-products-dashboard-grid">
                         {cards
-                            .filter((card, index) => showAll || index < 2)
+                            .filter((_, index) => showAll || index < 2)
                             .map(card => (
                                 <div className="sw-products-dashboard-card" key={card.id}>
                                     <div className="sw-products-icon-box">{card.icon}</div>
