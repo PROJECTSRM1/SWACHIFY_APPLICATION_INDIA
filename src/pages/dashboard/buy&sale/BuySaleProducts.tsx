@@ -8,6 +8,7 @@ import {
   MdAdd,
 } from "react-icons/md";
 
+
 const handleDelete = (
   id: string,
   setProperties: React.Dispatch<React.SetStateAction<any[]>>
@@ -219,6 +220,9 @@ export default function MarketplaceWeb() {
   const [manualLocation, setManualLocation] = useState<string | null>(null);
   const [editingLocation, setEditingLocation] = useState(false);
 const [tempLocation, setTempLocation] = useState("");
+const [isWishlistActive, setIsWishlistActive] = useState(false);
+const [wishlistIds, setWishlistIds] = useState<string[]>([]);
+
 
 
   const [properties, setProperties] = useState<
@@ -244,6 +248,25 @@ const [tempLocation, setTempLocation] = useState("");
   const [dateLabel, setDateLabel] = useState("Updated Date");
   const [ratingLabel, setRatingLabel] = useState("Ratings");
 
+  useEffect(() => {
+  const syncWishlist = () => {
+    const stored = JSON.parse(
+      localStorage.getItem("marketplace_wishlist") || "[]"
+    );
+    setWishlistIds(stored.map((item: any) => item.id));
+  };
+
+  // initial sync
+  syncWishlist();
+
+  // 🔥 listen for wishlist updates
+  window.addEventListener("wishlist-change", syncWishlist);
+
+  return () =>
+    window.removeEventListener("wishlist-change", syncWishlist);
+}, []);
+
+
  useEffect(() => {
   const userListings = getUserListings();
   setProperties([...userListings, ...DUMMY_PROPERTIES]);
@@ -253,6 +276,13 @@ const [tempLocation, setTempLocation] = useState("");
   }
 }, [manualLocation]);
 
+useEffect(() => {
+  const stored = JSON.parse(
+    localStorage.getItem("marketplace_wishlist") || "[]"
+  );
+
+  setWishlistIds(stored.map((item: any) => item.id));
+}, []);
 
 
 useEffect(() => {
@@ -316,21 +346,24 @@ useEffect(() => {
      FILTER LOGIC (100% SAME)
   ======================= */
 const filteredProperties = properties.filter((p: Property) => {
-    const matchesType =
-      filterType === "all" ? true : p.listingType === filterType;
+  if (isWishlistActive && !wishlistIds.includes(p.id)) return false;
 
-    const matchesCategory =
-      activeCategory === "all" ? true : p.category === activeCategory;
+  const matchesType =
+    filterType === "all" ? true : p.listingType === filterType;
 
-    const matchesSearch = p.title
-      .toLowerCase()
-      .includes(searchQuery.toLowerCase());
+  const matchesCategory =
+    activeCategory === "all" ? true : p.category === activeCategory;
 
-    const matchesRating =
-      ratingFilter === null ? true : p.rating >= ratingFilter;
+  const matchesSearch = p.title
+    .toLowerCase()
+    .includes(searchQuery.toLowerCase());
 
-    return matchesType && matchesCategory && matchesSearch && matchesRating;
-  });
+  const matchesRating =
+    ratingFilter === null ? true : p.rating >= ratingFilter;
+
+  return matchesType && matchesCategory && matchesSearch && matchesRating;
+});
+
 
   return (
     <>
@@ -475,6 +508,15 @@ const filteredProperties = properties.filter((p: Property) => {
                     </div>
                   )}
                 </button>
+                {/* RATINGS */}
+<button
+  className={isWishlistActive ? "active" : ""}
+  onClick={() => setIsWishlistActive(!isWishlistActive)}
+>
+  ❤️ Wishlist
+</button>
+
+
 
               </div>
             </div>

@@ -51,6 +51,10 @@ const [commercialArea, setCommercialArea] = useState("");
   /* ================= COMMON ================= */
   const [description, setDescription] = useState("");
   const [images, setImages] = useState<string[]>([]);
+  const cleanPrice = price.replace(/,/g, "");
+  
+
+  
 
   const isHouse = ["Apartment", "Villa", "Independent House"].includes(propertyType);
   const isVehicle = ["Bike", "Car", "Lorry", "Auto", "Bus"].includes(propertyType);
@@ -68,6 +72,11 @@ const [commercialArea, setCommercialArea] = useState("");
     reader.onload = () => resolve(reader.result as string);
     reader.readAsDataURL(file);
   });
+const formatIndianPrice = (value: string) => {
+  const numeric = value.replace(/[^0-9]/g, "");
+
+  return numeric.replace(/\B(?=(\d{2})+(?!\d))/g, ",");
+};
 
 
   /* ================= IMAGE UPLOAD ================= */
@@ -115,7 +124,7 @@ const handleLandDocs = async (e: ChangeEvent<HTMLInputElement>) => {
     listingType,
     propertyType,
     itemCondition,
-    price,
+    
     sqft,
     bhk,
     location,
@@ -130,6 +139,8 @@ const handleLandDocs = async (e: ChangeEvent<HTMLInputElement>) => {
     landLocation,
     landArea,
     registeredOwner,
+    price: cleanPrice,
+
     documents: landDocuments,
     createdAt: new Date().toISOString(),
   };
@@ -240,11 +251,17 @@ const handleLandDocs = async (e: ChangeEvent<HTMLInputElement>) => {
 
             {/* PRICE */}
             <label>PRICE (₹)</label>
-            <input
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-              placeholder="Enter price"
-            />
+<input
+  inputMode="numeric"
+  value={price}
+  placeholder="Enter price"
+  onChange={(e) => {
+    const formatted = formatIndianPrice(e.target.value);
+    setPrice(formatted);
+  }}
+/>
+
+
 
             {/* ============ COMMERCIAL BASIC FIELDS (AFTER PRICE) ============ */}
 {isCommercial && (

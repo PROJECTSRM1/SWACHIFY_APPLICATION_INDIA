@@ -409,7 +409,7 @@
   position: absolute;
   top: 100%;
   left: 0;
-  width: 180px;           /* optional – keeps it neat */
+  width: 160px;           /* optional – keeps it neat */
   max-height: 280px;      /* ✅ KEY: limit height */
   overflow-y: auto;       /* ✅ enable scroll */
   background: #ffffff;
@@ -417,6 +417,8 @@
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
   z-index: 100;
   margin-top: 5px;
+    z-index: 9999; /* 🔑 KEY FIX */
+
 }
 
 .mp-filter-dropdown div {
@@ -1639,5 +1641,137 @@ html, body {
 
   .mp-image-wrapper img {
     height: 220px;
+  }
+}
+.buyerFavIcon {
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.buyerFavIcon.active {
+  color: #ef4444;
+}
+/* =========================================
+   FIX FILTER DROPDOWN OVERLAPPING
+   (PROPERTY TYPE / UPDATED DATE / RATINGS)
+========================================= */
+
+
+/* Create proper stacking context */
+.mp-search-filter-row {
+  position: relative;
+  z-index: 5;
+}
+
+
+/* Filter container */
+.mp-top-filters {
+  position: relative;
+  z-index: 6;
+}
+
+
+/* Each filter button becomes anchor */
+.mp-top-filters button {
+  position: relative;
+  z-index: 7;
+}
+
+
+
+
+
+/* Prevent dropdown from overlapping search */
+.mp-search-box.wide {
+  position: relative;
+  z-index: 4;
+}
+
+
+/* Ensure dropdown text wraps cleanly */
+.mp-filter-dropdown div {
+  white-space: nowrap;
+}
+
+
+/* =========================================
+   DESKTOP-SPECIFIC ADJUSTMENT
+========================================= */
+@media (min-width: 901px) {
+
+
+  /* Space between filters to avoid clash */
+  .mp-top-filters {
+    gap: 12px;
+  }
+
+
+  /* Align dropdown under button center */
+  .mp-top-filters button .mp-filter-dropdown {
+    left: 0;
+  }
+}
+
+
+/* =========================================
+   MOBILE FIX – FULL WIDTH DROPDOWNS
+========================================= */
+@media (max-width: 768px) {
+
+
+  .mp-filter-dropdown {
+    position: fixed;
+    left: 16px;
+    right: 16px;
+    top: auto;
+    margin-top: 8px;
+
+
+    max-width: none;
+    width: calc(100% - 32px);
+  }
+}
+
+.wishlistToast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+
+  background: #111;
+  color: #fff;
+  padding: 12px 18px;
+  border-radius: 10px;
+
+  font-weight: 500;
+  font-size: 14px;
+
+  animation: slideIn 0.3s ease, fadeOut 0.3s ease 1.7s;
+}
+
+.wishlistToast.success {
+  background: #16a34a;
+}
+
+.wishlistToast.remove {
+  background: #dc2626;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
   }
 }

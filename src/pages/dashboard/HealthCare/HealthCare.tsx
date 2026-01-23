@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useEffect } from "react";
-import "./healthcare.css";
+import "./HealthCare.css";
 
 type Doctor = {
   id: number;
