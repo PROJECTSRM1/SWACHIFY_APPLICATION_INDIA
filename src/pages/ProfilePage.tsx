@@ -52,15 +52,15 @@ const ProfilePage: React.FC = () => {
 
   const [editNoc, setEditNoc] = useState(false);
 
-const [noc, setNoc] = useState({
-  certificateNumber: "",
-  policeStation: "",
-  issueYear: "",
-});
+  const [noc, setNoc] = useState({
+    certificateNumber: "",
+    policeStation: "",
+    issueYear: "",
+  });
 
-const handleSaveNoc = () => {
-  setEditNoc(false);
-};
+  const handleSaveNoc = () => {
+    setEditNoc(false);
+  };
 
 
 
@@ -127,7 +127,7 @@ const handleSaveNoc = () => {
         </div>
 
         {!editPersonal ? (
-<div className="info-grid">
+          <div className="info-grid">
             <Info label="First Name" value={profile.firstName} />
             <Info label="Last Name" value={profile.lastName} />
             <Info label="Email" value={profile.email} />
@@ -232,61 +232,61 @@ const handleSaveNoc = () => {
         ))}
       </div>
       {/* ===== NO OBJECTION CERTIFICATE (NOC) ===== */}
-<div className="profile-card">
-  <div className="card-header">
-    <h3>No Objection Certificate (NOC)</h3>
-    <EditOutlined onClick={() => setEditNoc(!editNoc)} />
-  </div>
+      <div className="profile-card">
+        <div className="card-header">
+          <h3>No Objection Certificate (NOC)</h3>
+          <EditOutlined onClick={() => setEditNoc(!editNoc)} />
+        </div>
 
-  {!editNoc ? (
-    <div className="info-grid info-grid-3">
-      <Info
-        label="Certificate Number"
-        value={noc.certificateNumber || "Not provided"}
-      />
-      <Info
-        label="Near Police Station"
-        value={noc.policeStation || "Not provided"}
-      />
-      <Info
-        label="Issue Year"
-        value={noc.issueYear || "Not provided"}
-      />
-    </div>
-  ) : (
-    <div className="edit-grid">
-      <Input
-        placeholder="Enter certificate number"
-        value={noc.certificateNumber}
-        onChange={(e) =>
-          setNoc({ ...noc, certificateNumber: e.target.value })
-        }
-      />
-      <Input
-        placeholder="Enter police station name"
-        value={noc.policeStation}
-        onChange={(e) =>
-          setNoc({ ...noc, policeStation: e.target.value })
-        }
-      />
-      <Input
-        placeholder="Enter issue year"
-        value={noc.issueYear}
-        onChange={(e) =>
-          setNoc({ ...noc, issueYear: e.target.value })
-        }
-      />
+        {!editNoc ? (
+          <div className="info-grid info-grid-3">
+            <Info
+              label="Certificate Number"
+              value={noc.certificateNumber || "Not provided"}
+            />
+            <Info
+              label="Near Police Station"
+              value={noc.policeStation || "Not provided"}
+            />
+            <Info
+              label="Issue Year"
+              value={noc.issueYear || "Not provided"}
+            />
+          </div>
+        ) : (
+          <div className="edit-grid">
+            <Input
+              placeholder="Enter certificate number"
+              value={noc.certificateNumber}
+              onChange={(e) =>
+                setNoc({ ...noc, certificateNumber: e.target.value })
+              }
+            />
+            <Input
+              placeholder="Enter police station name"
+              value={noc.policeStation}
+              onChange={(e) =>
+                setNoc({ ...noc, policeStation: e.target.value })
+              }
+            />
+            <Input
+              placeholder="Enter issue year"
+              value={noc.issueYear}
+              onChange={(e) =>
+                setNoc({ ...noc, issueYear: e.target.value })
+              }
+            />
 
-      <Button
-        type="primary"
-        className="save-btn"
-        onClick={handleSaveNoc}
-      >
-        Save Changes
-      </Button>
-    </div>
-  )}
-</div>
+            <Button
+              type="primary"
+              className="save-btn"
+              onClick={handleSaveNoc}
+            >
+              Save Changes
+            </Button>
+          </div>
+        )}
+      </div>
 
     </div>
   );
