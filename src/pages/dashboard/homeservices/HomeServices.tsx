@@ -25,12 +25,13 @@ const HomeServices: React.FC<HomeServicesProps> = () => {
   const [openCleaningPopup, setOpenCleaningPopup] = useState(false);
   const [openHomeSubPopup, setOpenHomeSubPopup] = useState(false);
   const [openHomeSubCatPopup, setOpenHomeSubCatPopup] = useState(false);
-  const [selectedPropertyType, setSelectedPropertyType] = useState<string>("1bhk");
-  const [openbookcleaningweb, setOpenbookcleaningweb] = useState(false);
-  const [openCommercialPopup, setOpenCommercialPopup] = useState(false);
-  const [openHomePopup, setOpenHomePopup] = useState(false);
-  const [openVehiclePopup, setOpenVehiclePopup] = useState(false);
+const [selectedPropertyType, setSelectedPropertyType] = useState<string[]>([]);
+const [openbookcleaningweb, setOpenbookcleaningweb] = useState(false);
+const [openCommercialPopup, setOpenCommercialPopup] = useState(false);
+const [openHomePopup, setOpenHomePopup] = useState(false);
+const [openVehiclePopup, setOpenVehiclePopup] = useState(false);
   const [showAll, setShowAll] = useState(false);
+  const [bookingPayload, setBookingPayload] = useState<any>(null);
 
   useEffect(() => {
     setOpenCleaningPopup(false);
@@ -151,14 +152,14 @@ const HomeServices: React.FC<HomeServicesProps> = () => {
       {openHomeSubPopup && (
         <div className="sc_popupOverlay">
           <div className="sc_popupContent">
-            <HomeSubWeb
-              onBack={() => setOpenHomeSubPopup(false)}
-              onContinue={(propertyType) => {
-                setSelectedPropertyType(propertyType);
-                // setOpenHomeSubPopup(false);
-                setOpenHomeSubCatPopup(true);
-              }}
-            />
+           <HomeSubWeb
+  onBack={() => setOpenHomeSubPopup(false)}
+  onContinue={(propertyType) => {
+    setSelectedPropertyType([propertyType]);
+   // setOpenHomeSubPopup(false);
+    setOpenHomeSubCatPopup(true);
+  }}
+/>
 
             {/* <button
               className="sc_popupClose"
@@ -175,21 +176,24 @@ const HomeServices: React.FC<HomeServicesProps> = () => {
         </div>
       )}
       {openHomeSubCatPopup && (
-        <div className="sc_popupOverlay">
-          <div className="sc_popupContent">
-            <HomeSubCatWeb
-              propertyType={selectedPropertyType as any}
-              onClose={() => setOpenHomeSubCatPopup(false)}
-              onContinue={(data) => {
-                // ✅ close current popup
-                setOpenHomeSubCatPopup(false);
+  <div className="sc_popupOverlay">
+    <div className="sc_popupContent">
+     <HomeSubCatWeb
+  propertyType={selectedPropertyType as any}
+  onClose={() => setOpenHomeSubCatPopup(false)}
+  onContinue={(data) => {
+    setOpenHomeSubCatPopup(false);
 
-                // ✅ open booking popup
-                setOpenbookcleaningweb(true);
+    // ✅ STORE DATA HERE
+    setBookingPayload({
+      selectedServices: data.selectedServices,
+      consultationCharge: Number(data.totalPrice),
+    });
 
-                console.log("Booking data:", data);
-              }}
-            />
+    setOpenbookcleaningweb(true);
+  }}
+/>
+
 
             {/* <button
         className="sc_popupClose"
@@ -201,64 +205,72 @@ const HomeServices: React.FC<HomeServicesProps> = () => {
         </div>
       )}
 
-      {openbookcleaningweb && (
-        <div className="sc_popupOverlay">
-          <div className="sc_popupContent">
-            <BookCleaningScreenWeb
-              selectedServices={[]}
-              consultationCharge={0}
-              onClose={() => setOpenbookcleaningweb(false)}
-            />
+{openbookcleaningweb && bookingPayload && (
+  <div className="sc_popupOverlay">
+    <div className="sc_popupContent">
+      <BookCleaningScreenWeb
+        selectedServices={bookingPayload.selectedServices}
+        consultationCharge={bookingPayload.consultationCharge}
+        onClose={() => {
+          setOpenbookcleaningweb(false);
+          setOpenHomeSubCatPopup(true); // 👈 BACK TO PREVIOUS POPUP
+        }}
+      />
+    </div>
+  </div>
+)}
 
-            {/* <button
-        className="sc_popupClose"
-        onClick={() => setOpenbookcleaningweb(false)}
-      >
-        ✕
-      </button> */}
-          </div>
-        </div>
-      )}
-      {openCommercialPopup && (
-        <div className="sc_popupOverlay">
-          <div className="sc_popupContent">
-            <CommercialSubWeb
-              onClose={() => setOpenCommercialPopup(false)}
-              onContinue={(propertyType) => {
-                // ✅ close commercial popup
-                setOpenCommercialPopup(false);
+{openCommercialPopup && (
+  <div className="sc_popupOverlay">
+    <div className="sc_popupContent">
+      <CommercialSubWeb
+        onClose={() => setOpenCommercialPopup(false)}
+        onContinue={(propertyType) => {
+          // 1️⃣ Close commercial popup
+          setOpenCommercialPopup(false);
 
-                // ✅ open booking popup
-                setOpenbookcleaningweb(true);
+          // 2️⃣ Set booking payload (REQUIRED)
+          setBookingPayload({
+            selectedServices: [`Commercial Cleaning - ${propertyType}`],
+            consultationCharge: 0, // or your commercial base price
+          });
 
-                console.log("Commercial property:", propertyType);
-              }}
-            />
+          // 3️⃣ Open booking popup
+          setOpenbookcleaningweb(true);
+        }}
+      />
+    </div>
+  </div>
+)}
 
-            {/* <button
-        className="sc_popupClose"
-        onClick={() => setOpenCommercialPopup(false)}
-      >
-        ✕
-      </button> */}
-          </div>
-        </div>
-      )}
 
-      {openVehiclePopup && (
-        <div className="sc_popupOverlay">
-          <div className="sc_popupContent">
-            <VehicleSubWeb
-              onClose={() => setOpenVehiclePopup(false)}
-              onContinue={(data) => {
-                setOpenVehiclePopup(false);
-                setOpenbookcleaningweb(true);
-                console.log("Vehicle booking:", data);
-              }}
-            />
-          </div>
-        </div>
-      )}
+{openVehiclePopup && (
+  <div className="sc_popupOverlay">
+    <div className="sc_popupContent">
+      <VehicleSubWeb
+        onClose={() => setOpenVehiclePopup(false)}
+        onContinue={(data) => {
+          // 1️⃣ close vehicle popup
+          setOpenVehiclePopup(false);
+
+          // 2️⃣ SET BOOKING PAYLOAD (THIS WAS THE CORE ISSUE)
+          setBookingPayload({
+            selectedServices: [
+              `Vehicle Cleaning - ${data.categoryId} (${data.serviceType})`,
+            ],
+            consultationCharge: data.price,
+            duration: data.duration,
+          });
+
+          // 3️⃣ open booking popup
+          setOpenbookcleaningweb(true);
+        }}
+      />
+    </div>
+  </div>
+)}
+
+
 
 
     </>
