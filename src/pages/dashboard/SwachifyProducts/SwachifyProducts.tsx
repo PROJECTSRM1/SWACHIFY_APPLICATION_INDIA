@@ -45,7 +45,6 @@ interface SwachifyProductsProps {
 }
 
 const SwachifyProducts: React.FC<SwachifyProductsProps> = ({ searchQuery = "" }) => {
-    const [showAll, setShowAll] = useState(false);
     const [page, setPage] = useState<"main" | "subpage">("main");
     const [activeCard, setActiveCard] = useState<"browse" | "register" | "myproducts" | "orders" | null>(null);
 
@@ -62,55 +61,46 @@ const SwachifyProducts: React.FC<SwachifyProductsProps> = ({ searchQuery = "" })
                     <div className="sw-products-dashboard-header">
                         <div>
                             <h2>Swachify Products</h2>
-                            <p>{showAll ? cards.length : 2} services available</p>
+                            <p>{cards.length} services available</p>
                         </div>
-
-                        <button
-                            className="sw-products-view-all-btn"
-                            onClick={() => setShowAll(prev => !prev)}
-                        >
-                            {showAll ? "Show Less" : "View All Services"}
-                        </button>
                     </div>
 
                     {/* CARDS */}
                     <div className="sw-products-dashboard-grid">
-                        {cards
-                            .filter((_, index) => showAll || index < 2)
-                            .map(card => (
-                                <div className="sw-products-dashboard-card" key={card.id}>
-                                    <div className="sw-products-icon-box">{card.icon}</div>
-                                    <h3>{card.title}</h3>
-                                    <p>{card.description}</p>
+                        {cards.map(card => (
+                            <div className="sw-products-dashboard-card" key={card.id}>
+                                <div className="sw-products-icon-box">{card.icon}</div>
+                                <h3>{card.title}</h3>
+                                <p>{card.description}</p>
 
-                                    <button
-                                        className="sw-products-details-btn"
-                                        onClick={() => {
-                                            if (card.title === "Browse Products") {
-                                                setActiveCard("browse");
-                                                setPage("subpage");
-                                            }
+                                <button
+                                    className="sw-products-details-btn"
+                                    onClick={() => {
+                                        if (card.title === "Browse Products") {
+                                            setActiveCard("browse");
+                                            setPage("subpage");
+                                        }
 
-                                            if (card.title === "Register Product") {
-                                                setActiveCard("register");
-                                                setPage("subpage");
-                                            }
+                                        if (card.title === "Register Product") {
+                                            setActiveCard("register");
+                                            setPage("subpage");
+                                        }
 
-                                            if (card.title === "My Products") {
-                                                setActiveCard("myproducts");
-                                                setPage("subpage");
-                                            }
+                                        if (card.title === "My Products") {
+                                            setActiveCard("myproducts");
+                                            setPage("subpage");
+                                        }
 
-                                            if (card.title === "Orders") {
-                                                setActiveCard("orders");
-                                                setPage("subpage");
-                                            }
-                                        }}
-                                    >
-                                        View Details
-                                    </button>
-                                </div>
-                            ))}
+                                        if (card.title === "Orders") {
+                                            setActiveCard("orders");
+                                            setPage("subpage");
+                                        }
+                                    }}
+                                >
+                                    View Details
+                                </button>
+                            </div>
+                        ))}
                     </div>
                 </div>
             )}

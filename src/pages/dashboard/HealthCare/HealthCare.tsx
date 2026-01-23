@@ -1,5 +1,8 @@
 import React, { useMemo, useState, useEffect } from "react";
-import "./Healthcare.css";
+import "./HealthCare.css";
+import { Tooltip } from "antd";
+import { AppstoreOutlined } from "@ant-design/icons";
+// import { AppstoreOutlined } from "@ant-design/icons";
 
 type Doctor = {
   id: number;
@@ -711,15 +714,17 @@ const HealthCare: React.FC = () => {
             Submit your Health Condition
           </button>
         </div>
-        <div className="healthcare-banner-icon">
-          {/* Profile Icon */}
-          <button
-            type="button"
-            className="banner-profile-btn"
-            onClick={() => setOpenDoctorProfile(true)}
-          >
-            👤
-          </button>
+<div className="healthcare-banner-icon">
+  {/* Profile Icon with Tooltip */}
+  <Tooltip title="Customize your Available Time" placement="bottom">
+    <button
+      type="button"
+      className="banner-profile-btn"
+      onClick={() => setOpenDoctorProfile(true)}
+    >
+      👤
+    </button>
+  </Tooltip>
 
           {/* Plus Icon */}
           <button type="button" className="banner-plus-btn">
@@ -745,13 +750,13 @@ const HealthCare: React.FC = () => {
       {/* Categories */}
       <div className="healthcare-cards">
         {/* SEE ALL CARD */}
-        <div
-          className={`healthcare-card ${activeCategory === "All" ? "active" : ""}`}
-          onClick={() => setActiveCategory("All")}
-        >
-          <span>📌</span>
-          <p>See All</p>
-        </div>
+{/* SEE ALL CARD */}
+<div className="healthcare-card">
+  <span className="see-all-icon">
+    <AppstoreOutlined />
+  </span>
+  <p>See All</p>
+</div>
 
         {[
           { label: "Heart", icon: "❤️" },
@@ -773,8 +778,7 @@ const HealthCare: React.FC = () => {
         ))}
       </div>
       {/* Categories */}
-      <div className="healthcare-cards"> ... </div>
-
+     
       {/* ✅ Emergency Ambulance Card (ADD THIS) */}
       <div className="emergency-card">
         <div className="emergency-left">

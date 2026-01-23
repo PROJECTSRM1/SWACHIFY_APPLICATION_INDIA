@@ -24,9 +24,10 @@ const InternshipDetails = ({ internship, onBack, onApply }: Props) => {
     <div className="details-page">
       {/* Header */}
       <div className="details-header">
-        <button className="back-btn" onClick={onBack}>
-          ←
-        </button>
+        <button className="details-back-btn" onClick={onBack}>
+  ←
+</button>
+
         <h2>Internship Details</h2>
         <div className="spacer" />
       </div>

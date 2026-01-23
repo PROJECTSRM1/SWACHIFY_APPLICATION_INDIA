@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./BuysaleProducts.css";
 import {
   MdArrowBackIos,
-  MdFavoriteBorder,
+  
   MdStar,
   MdLocationOn,
   MdShoppingCart,
@@ -17,6 +17,23 @@ export default function BuyerPageWeb({ property, onBack }: any) {
   const [activeImage, setActiveImage] = useState(0);
   const [docPopup, setDocPopup] = useState<string | null>(null);
   const isLand = property.category === "land";
+  const [isWishlisted, setIsWishlisted] = useState(false);
+  const [toast, setToast] = useState<{
+  message: string;
+  type: "success" | "remove";
+} | null>(null);
+
+
+
+useEffect(() => {
+  const stored = JSON.parse(
+    localStorage.getItem("marketplace_wishlist") || "[]"
+  );
+
+  setIsWishlisted(
+    stored.some((item: any) => item.id === property.id)
+  );
+}, [property.id]);
 
 
 
@@ -35,6 +52,40 @@ export default function BuyerPageWeb({ property, onBack }: any) {
     }
     setShowSuccess(true);
   };
+const toggleWishlist = () => {
+  const stored = JSON.parse(
+    localStorage.getItem("marketplace_wishlist") || "[]"
+  );
+
+  const exists = stored.some((item: any) => item.id === property.id);
+
+  let updated;
+
+  if (exists) {
+    updated = stored.filter((item: any) => item.id !== property.id);
+    setIsWishlisted(false);
+  } else {
+    updated = [...stored, property];
+    setIsWishlisted(true);
+    
+  }
+
+  localStorage.setItem(
+    "marketplace_wishlist",
+    JSON.stringify(updated)
+  );
+
+  // ✅ THIS IS THE FIX
+  window.dispatchEvent(new CustomEvent("wishlist-change"));
+    setTimeout(() => setToast(null), 2000);
+
+};
+
+
+
+
+
+  
 
   return (
     <div className="buyerOverlay">
@@ -46,7 +97,12 @@ export default function BuyerPageWeb({ property, onBack }: any) {
             <MdArrowBackIos />
           </button>
           <h2>Property Details</h2>
-          <MdFavoriteBorder className="buyerFavIcon" />
+<button
+  className={`buyerFavIcon ${isWishlisted ? "active" : ""}`}
+  onClick={toggleWishlist}
+>
+  {isWishlisted ? "❤️" : "🤍"}
+</button>
         </header>
 
         {/* CONTENT */}
@@ -258,6 +314,12 @@ export default function BuyerPageWeb({ property, onBack }: any) {
 
 
       </div>
+      {toast && (
+  <div className={`wishlistToast ${toast.type}`}>
+    {toast.message}
+  </div>
+)}
+
     </div>
     
   );

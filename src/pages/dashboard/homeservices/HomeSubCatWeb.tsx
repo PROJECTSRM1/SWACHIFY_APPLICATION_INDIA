@@ -40,7 +40,7 @@ const PRICING_CONFIG: Record<PropertyType, Pricing> = {
   "Villa": { standard: 149, deep: 249, sanitization: 65, window: 20, description: "Independent villa" },
 };
 
-const formatMoney = (n: number) => `$${n.toFixed(2)}`;
+const formatMoney = (n: number) => `₹${n.toFixed(2)}`;
 
 const HomeSubCatWeb: React.FC<HomeSubCatWebProps> = ({ onContinue }) => {
   const navigate = useNavigate();

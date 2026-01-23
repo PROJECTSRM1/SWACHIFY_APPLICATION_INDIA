@@ -89,7 +89,7 @@ const SummaryRow = ({ label, value }: { label: string; value: string }) => {
 /* =======================
    HELPERS
    ======================= */
-const formatMoney = (n: number) => `$${n.toFixed(2)}`;
+const formatMoney = (n: number) => `₹${n.toFixed(2)}`;
 
 async function reverseGeocode(lat: number, lon: number): Promise<string> {
   const res = await fetch(
@@ -289,7 +289,7 @@ const totalPrice = servicePrice + consultationCharge;
       <header className="bc_header">
         <div className="bc_headerLeft">
           <button className="bc_iconBtn" onClick={() => navigate(-1)} type="button">
-            <MdArrowBack size={22} color="#fff" />
+            <MdArrowBack size={22} color="#111827" />
           </button>
 
           <h1 className="bc_headerTitle">Book Cleaning</h1>
@@ -542,45 +542,51 @@ const totalPrice = servicePrice + consultationCharge;
 
         {/* UPLOAD PHOTOS */}
         <div className="bc_sectionBlock">
-          <p className="bc_label">UPLOAD PHOTOS OF AREA</p>
+  <p className="bc_label">UPLOAD PHOTOS OF AREA</p>
 
-          <div className="bc_photoGrid">
-            {/* Camera / Gallery (same input in web) */}
-            <label className="bc_photoBoxDashed">
-              <MdPhotoCamera size={28} className="bc_photoIcon" />
-              <span className="bc_photoText">Take Photo</span>
-              <input
-                className="bc_fileInput"
-                type="file"
-                accept="image/*"
-                capture="environment"
-                multiple
-                onChange={(e) => handlePickImages(e.target.files)}
-              />
-            </label>
+  <div className="bc_photoGrid">
+    {/* Camera */}
+    <label className="bc_photoBoxDashed">
+      <MdPhotoCamera size={28} className="bc_photoIcon" />
+      <span className="bc_photoText">Take Photo</span>
+      <input
+        className="bc_fileInput"
+        type="file"
+        accept="image/*"
+        capture="environment"
+        multiple
+        onChange={(e) => handlePickImages(e.target.files)}
+      />
+    </label>
 
-            <label className="bc_photoBoxDashed">
-              <MdPhotoLibrary size={28} className="bc_photoIcon" />
-              <span className="bc_photoText">Gallery</span>
-              <input
-                className="bc_fileInput"
-                type="file"
-                accept="image/*"
-                multiple
-                onChange={(e) => handlePickImages(e.target.files)}
-              />
-            </label>
+    {/* Gallery */}
+    <label className="bc_photoBoxDashed">
+      <MdPhotoLibrary size={28} className="bc_photoIcon" />
+      <span className="bc_photoText">Gallery</span>
+      <input
+        className="bc_fileInput"
+        type="file"
+        accept="image/*"
+        multiple
+        onChange={(e) => handlePickImages(e.target.files)}
+      />
+    </label>
 
-            {imageUrls.map((src, index) => (
-              <div key={index} className="bc_photoPreview">
-                <img src={src} className="bc_photoImage" alt={`Upload ${index + 1}`} />
-                <button className="bc_removePhoto" type="button" onClick={() => removeImage(index)}>
-                  <MdClose size={14} />
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
+    {/* Preview */}
+    {imageUrls.map((src, index) => (
+      <div key={index} className="bc_photoPreview">
+        <img src={src} className="bc_photoImage" />
+        <button
+          type="button"
+          className="bc_removePhoto"
+          onClick={() => removeImage(index)}
+        >
+          <MdClose size={14} />
+        </button>
+      </div>
+    ))}
+  </div>
+</div>
 
         {/* DIVIDER */}
         <div className="bc_divider" />
@@ -702,14 +708,15 @@ const totalPrice = servicePrice + consultationCharge;
           </div>
          
         </div>
-         <div className="bc_bottomBar">
+       
+
+        <div className="bc_bottomSpace" />
+      </div>
+        <div className="bc_bottomBar">
         <button className="bc_ctaBtn" type="button" onClick={validateAndCheckout}>
           <MdShoppingBag size={22} />
           <span>Add to Cart and Checkout</span>
         </button>
-      </div>
-
-        <div className="bc_bottomSpace" />
       </div>
 
       {/* BOTTOM CTA */}
