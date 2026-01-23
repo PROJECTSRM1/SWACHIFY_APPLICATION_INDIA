@@ -155,7 +155,7 @@ useEffect(() => {
            <HomeSubWeb
   onBack={() => setOpenHomeSubPopup(false)}
   onContinue={(propertyType) => {
-    setSelectedPropertyType(propertyType);
+    setSelectedPropertyType([propertyType]);
    // setOpenHomeSubPopup(false);
     setOpenHomeSubCatPopup(true);
   }}
