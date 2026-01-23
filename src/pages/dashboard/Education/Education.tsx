@@ -162,7 +162,10 @@ const trendingStudents: TrendingStudent[] = studentsData
             <span className="tag">FEATURED</span>
             <h2>Top University of the Week</h2>
             <p>Discover the latest computer science programs...</p>
-            <button className="details-btn">View Details →</button>
+           <button className="view-details-btn">
+  View Details →
+</button>
+
           </div>
 
           <div className="featured-search-wrapper">
