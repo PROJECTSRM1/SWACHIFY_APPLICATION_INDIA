@@ -20,6 +20,11 @@ type Props = {
 
 const CandidateProfile: React.FC<Props> = ({ student, onBack }) => {
   const [criminal, setCriminal] = useState<"YES" | "NO">("NO");
+ const [isEditing, setIsEditing] = useState(false);
+const [form, setForm] = useState<Student>(student);
+const [preview, setPreview] = useState(student.avatar);
+
+
 
   return (
     <div className="cp-root">
@@ -43,21 +48,29 @@ const CandidateProfile: React.FC<Props> = ({ student, onBack }) => {
 
           <div className="cp-actions">
             <button className="cp-btn secondary">⬇ PDF Report</button>
-            <button className="cp-btn primary">✏ Edit Profile</button>
+          <button className="cp-btn primary cp-edit-btn" onClick={() => setIsEditing(true)}>
+  ✎ Edit Profile
+</button>
+
+
+
           </div>
         </div>
 
         {/* ✅ RIGHT SIDE – VERTICAL RESUME BUTTONS */}
-        <div className="cp-resume-right">
-          <label className="cp-btn secondary">
-            ⬆ Upload Resume
-            <input type="file" hidden />
-          </label>
+       <div className="cp-resume-right">
+  <label className="cp-resume-btn">
+    <span className="icon">⬆</span>
+    Upload Resume
+    <input type="file" hidden />
+  </label>
 
-          <button className="cp-btn secondary">
-            ⬇ Download Resume
-          </button>
-        </div>
+  <button className="cp-resume-btn">
+    <span className="icon">⬇</span>
+    Download Resume
+  </button>
+</div>
+
       </div>
 
       {/* CONTENT GRID */}
@@ -115,17 +128,18 @@ const CandidateProfile: React.FC<Props> = ({ student, onBack }) => {
           <section className="cp-section">
             <h4>Education</h4>
 
-            <div className="cp-card">
-              <strong>B.Tech Computer Science</strong>
-              <p>Score: 92%</p>
-              <p>Duration: 2020 – 2024</p>
-            </div>
+           <div className="cp-card">
+  <strong>B.Tech Computer Science</strong>
+  <p>Score: 92%</p>
+  <p className="cp-muted">Duration: Aug 2020 – May 2024</p>
+</div>
 
-            <div className="cp-card">
-              <strong>Bachelor of Science (IT)</strong>
-              <p>Score: 9.2 CGPA</p>
-              <p>Duration: 2017 – 2021</p>
-            </div>
+<div className="cp-card">
+  <strong>Bachelor of Science (IT)</strong>
+  <p>Score: 9.2 CGPA</p>
+  <p className="cp-muted">Duration: Jul 2017 – Apr 2021</p>
+</div>
+
           </section>
         </div>
 
@@ -169,6 +183,97 @@ const CandidateProfile: React.FC<Props> = ({ student, onBack }) => {
           </section>
         </div>
       </div>
+      {isEditing && (
+  <div className="cp-modal-overlay">
+    <div className="cp-modal large">
+      <h3>Edit Profile</h3>
+
+      {/* PHOTO */}
+      <div className="cp-photo-edit">
+        <img src={preview} alt="preview" />
+        <label className="cp-photo-btn">
+          Change Photo
+          <input
+            type="file"
+            accept="image/*"
+            hidden
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file) {
+                setPreview(URL.createObjectURL(file));
+                setForm({ ...form, avatar: URL.createObjectURL(file) });
+              }
+            }}
+          />
+        </label>
+      </div>
+
+      {/* FORM GRID */}
+      <div className="cp-form-grid">
+        <input
+          className="cp-input"
+          placeholder="Full Name"
+          value={form.name}
+          onChange={(e) => setForm({ ...form, name: e.target.value })}
+        />
+
+        <input
+          className="cp-input"
+          placeholder="Program"
+          value={form.program}
+          onChange={(e) => setForm({ ...form, program: e.target.value })}
+        />
+
+        <input
+          className="cp-input"
+          type="number"
+          placeholder="Attendance %"
+          value={form.attendance}
+          onChange={(e) =>
+            setForm({ ...form, attendance: Number(e.target.value) })
+          }
+        />
+
+        <input
+          className="cp-input"
+          placeholder="Shift"
+          value={form.shift}
+          onChange={(e) => setForm({ ...form, shift: e.target.value })}
+        />
+
+        <select
+          className="cp-input"
+          value={form.status}
+          onChange={(e) =>
+            setForm({ ...form, status: e.target.value as "Active" | "Completed" })
+          }
+        >
+          <option value="Active">Active</option>
+          <option value="Completed">Completed</option>
+        </select>
+      </div>
+
+      {/* ACTIONS */}
+      <div className="cp-modal-actions">
+        <button className="cp-btn secondary" onClick={() => setIsEditing(false)}>
+          Cancel
+        </button>
+
+        <button
+          className="cp-btn primary"
+          onClick={() => {
+            Object.assign(student, form);
+            setIsEditing(false);
+          }}
+        >
+          Save Changes
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
+    
     </div>
   );
 };

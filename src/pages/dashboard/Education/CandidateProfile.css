@@ -362,6 +362,148 @@
   }
 }
 
+.cp-resume-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 10px 16px;
+  border-radius: 999px;
+
+  background: #f9fafb;
+  border: 1px solid #d1d5db;
+
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+
+  cursor: pointer;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cp-resume-btn:hover {
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.cp-resume-btn .icon {
+  font-size: 14px;
+  color: #2563eb;
+}
+/* Edit Profile Button */
+.cp-edit-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  background: #2563eb;
+  color: #ffffff;
+
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: 999px;
+  padding: 0 20px;
+
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.25);
+}
+
+/* Pencil icon */
+.cp-edit-icon {
+  font-size: 14px;
+  line-height: 1;
+  opacity: 0.95;
+}
+
+/* Hover – subtle, premium */
+.cp-edit-btn:hover {
+  background: #1d4ed8;
+  box-shadow: 0 8px 22px rgba(37, 99, 235, 0.35);
+}
+/* MODAL */
+.cp-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.cp-modal {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 24px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+.cp-modal h3 {
+  margin-bottom: 16px;
+}
+
+.cp-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 20px;
+}
+.cp-modal.large {
+  max-width: 600px;
+}
+.cp-photo-edit {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.cp-photo-edit img {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #2563eb;
+}
+
+.cp-photo-btn {
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: #f1f5f9;
+  border: 1px solid #d1d5db;
+  font-weight: 600;
+  cursor: pointer;
+}
+.cp-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+.cp-input {
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid #cbd5f5;
+  font-size: 14px;
+}
+@media (max-width: 640px) {
+  .cp-modal.large {
+    width: 92%;
+    padding: 20px;
+  }
+
+  .cp-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cp-photo-edit {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+
 /* ============================= */
 /* 📲 SMALL MOBILE (≤ 480px) */
 /* ============================= */

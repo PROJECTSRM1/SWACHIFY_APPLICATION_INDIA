@@ -134,10 +134,11 @@ export default function Companies({ onBack }: Props) {
     <div className="companies-layout">
       <div className="page-header">
         <div className="header-left">
-          <button className="back-btn" onClick={onBack}>
+         <button className="companies-back-btn" onClick={onBack}>
+  ←
+</button>
 
-            ←
-          </button>
+
           <h2>Companies</h2>
         </div>
       </div>

@@ -91,7 +91,7 @@ const Students: React.FC<StudentsProps> = ({ onBack, onSelectStudent }) => {
   const [search, setSearch] = useState("");
   const [tab, setTab] = useState<"all" | "top" | "recent">("all");
   const [aggregate, setAggregate] = useState("");
-  const [cert, setCert] = useState("");
+  const [certificate, setCertificate] = useState("");
   const [internship, setInternship] = useState("");
 
   const filtered = useMemo(() => {
@@ -104,8 +104,11 @@ const Students: React.FC<StudentsProps> = ({ onBack, onSelectStudent }) => {
     if (aggregate === "90+") data = data.filter((s) => s.attendance >= 90);
     if (aggregate === "80-90")
       data = data.filter((s) => s.attendance >= 80 && s.attendance < 90);
+    if (aggregate === "60-80") {
+  data = data.filter((s) => s.attendance >= 60 && s.attendance < 80);
+}
 
-    if (cert) data = data.filter((s) => s.certs.includes(cert));
+    if (certificate) data = data.filter((s) => s.certs.includes(certificate));
     if (internship) data = data.filter((s) => s.status === internship);
 
     if (search) {
@@ -118,7 +121,7 @@ const Students: React.FC<StudentsProps> = ({ onBack, onSelectStudent }) => {
     }
 
     return data;
-  }, [search, tab, aggregate, cert, internship]);
+  }, [search, tab, aggregate, certificate, internship]);
 
   return (
     <div className="students-root">
@@ -156,8 +159,8 @@ const Students: React.FC<StudentsProps> = ({ onBack, onSelectStudent }) => {
              <option value="60-80">60–80%</option>
           </select>
 
-          <select onChange={(e) => setCert(e.target.value)}>
-            <option value="">Cert</option>
+          <select onChange={(e) => setCertificate(e.target.value)}>
+            <option value="">Certificate</option>
             <option value="Java">Java</option>
             <option value="Python">Python</option>
             <option value="React">React</option>

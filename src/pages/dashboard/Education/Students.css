@@ -3,6 +3,7 @@
   background: #f5f7fb;
   min-height: 100vh;
   padding-bottom: 80px;
+      margin-top: 10px;
 }
 
 /* HEADER */
@@ -351,4 +352,11 @@
     font-size: 11px;
     padding: 5px 12px;
   }
+}
+
+.students-root {
+  min-height: 100vh;
+  background: #f5f7fb;
+  padding-top: 88px;     /* ✅ navbar height */
+  padding-bottom: 80px;
 }
