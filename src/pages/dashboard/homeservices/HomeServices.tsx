@@ -1,51 +1,85 @@
 // src/pages/.../HomeServices.tsx
-import React, { useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+
 import ServiceCategoryScreenWeb from "./ServiceCategoryScreenWeb";
 import HomeSubWeb from "./HomeSubWeb";
 import HomeSubCatWeb from "./HomeSubCatWeb";
 import BookCleaningScreenWeb from "./BookCleaningScreenWeb";
 import CommercialSubWeb from "./CommercialSubWeb";
 import VehicleSubWeb from "./VehicleSubWeb";
-import { useEffect } from "react";
-import "./HomeServices.css"
-
-import "./CleaningCategoryWeb.css";
-import "./ServiceCategoryScreenWeb.css";
 import CleaningServicesScreenWeb from "./CleaningServicesScreenWeb";
 
-interface HomeServicesProps {
-  searchQuery?: string;
-  clearSearch?: () => void;
-}
+import "./HomeServices.css";
+import "./CleaningCategoryWeb.css";
+import "./ServiceCategoryScreenWeb.css";
 
-const HomeServices: React.FC<HomeServicesProps> = () => {
-  // const navigate = useNavigate();
+/* ================= TYPES ================= */
 
+type SelectedService = {
+  id: string;
+  title: string;
+  price: number;
+};
+
+type ServiceContext = "home" | "commercial" | "vehicle";
+
+type CommercialType =
+  | "small"
+  | "medium"
+  | "large"
+  | "retail"
+  | "warehouse";
+
+/* ================= COMPONENT ================= */
+
+const HomeServices: React.FC = () => {
+  /* ---------- POPUP STATES ---------- */
   const [openCleaningPopup, setOpenCleaningPopup] = useState(false);
   const [openHomeSubPopup, setOpenHomeSubPopup] = useState(false);
   const [openHomeSubCatPopup, setOpenHomeSubCatPopup] = useState(false);
-const [selectedPropertyType, setSelectedPropertyType] = useState<string[]>([]);
-const [openbookcleaningweb, setOpenbookcleaningweb] = useState(false);
-const [openCommercialPopup, setOpenCommercialPopup] = useState(false);
-const [openHomePopup, setOpenHomePopup] = useState(false);
-const [openVehiclePopup, setOpenVehiclePopup] = useState(false);
+  const [openCommercialPopup, setOpenCommercialPopup] = useState(false);
+  const [openVehiclePopup, setOpenVehiclePopup] = useState(false);
+  const [openHomePopup, setOpenHomePopup] = useState(false);
+  const [openBookCleaning, setOpenBookCleaning] = useState(false);
+
+  /* ---------- FLOW DATA ---------- */
+  const [selectedPropertyType, setSelectedPropertyType] =
+    useState<SelectedService[]>([]);
+
+  const [serviceContext, setServiceContext] =
+    useState<ServiceContext>("home");
+
+  const [bookingPayload, setBookingPayload] = useState<{
+    selectedServices: string[] | SelectedService[];
+    consultationCharge: number;
+    meta?: any;
+  } | null>(null);
+
   const [showAll, setShowAll] = useState(false);
-  const [bookingPayload, setBookingPayload] = useState<any>(null);
 
   useEffect(() => {
     setOpenCleaningPopup(false);
     setOpenHomeSubPopup(false);
     setOpenHomeSubCatPopup(false);
-    setOpenbookcleaningweb(false);
+    setOpenBookCleaning(false);
   }, []);
 
+  /* ---------- COMMERCIAL MAP ---------- */
+  const COMMERCIAL_SERVICE_MAP: Record<
+    CommercialType,
+    { title: string; price: number }
+  > = {
+    small: { title: "Small Office Cleaning", price: 3999 },
+    medium: { title: "Medium Office Cleaning", price: 7999 },
+    large: { title: "Large Corporate Office Cleaning", price: 0 },
+    retail: { title: "Retail / Showroom Cleaning", price: 5999 },
+    warehouse: { title: "Warehouse / Clinic Cleaning", price: 11999 },
+  };
 
+  /* ================= RENDER ================= */
 
   return (
     <>
-
-
       {/* ===== CLEANING SECTION ===== */}
       <section className="cleaning-section">
         <div className="cleaning-header">
@@ -56,7 +90,7 @@ const [openVehiclePopup, setOpenVehiclePopup] = useState(false);
 
           <button
             className="cleaning-viewall-btn"
-            onClick={() => setShowAll(prev => !prev)}
+            onClick={() => setShowAll((p) => !p)}
           >
             {showAll ? "Show Less" : "View All"}
           </button>
@@ -95,184 +129,134 @@ const [openVehiclePopup, setOpenVehiclePopup] = useState(false);
         </div>
       </section>
 
-
-
-      {/* 🔥 POPUP 1 — SERVICE CATEGORY */}
+      {/* ===== POPUP 1 — SERVICE CATEGORY ===== */}
       {openCleaningPopup && (
         <div className="sc_popupOverlay">
           <div className="sc_popupContent">
             <ServiceCategoryScreenWeb
               onClose={() => setOpenCleaningPopup(false)}
-
               onSelectHomeCleaning={() => {
-                setOpenCleaningPopup(false);   // close current
-                setOpenHomeSubPopup(true);     // open home flow
+                setServiceContext("home");
+                setOpenCleaningPopup(false);
+                setOpenHomeSubPopup(true);
               }}
-
               onSelectCommercialCleaning={() => {
-                setOpenCleaningPopup(false);   // ✅ close service category
-                setOpenCommercialPopup(true);  // ✅ open commercial popup
+                setServiceContext("commercial");
+                setOpenCleaningPopup(false);
+                setOpenCommercialPopup(true);
               }}
-
               onSelectVehicleCleaning={() => {
+                setServiceContext("vehicle");
                 setOpenCleaningPopup(false);
                 setOpenVehiclePopup(true);
               }}
             />
-
-
-            {/* <button
-              className="sc_popupClose"
-              onClick={() => setOpenCleaningPopup(false)}
-              aria-label="Close"
-            >
-              ✕
-            </button> */}
           </div>
         </div>
       )}
+
+      {/* ===== HOME SERVICES LIST ===== */}
       {openHomePopup && (
         <div className="sc_popupOverlay">
           <div className="sc_popupContent">
             <CleaningServicesScreenWeb />
-
-
-            {/* <button
-              className="sc_popupClose"
-              onClick={() => setOpenCleaningPopup(false)}
-              aria-label="Close"
-            >
-              ✕
-            </button> */}
           </div>
         </div>
       )}
 
-      {/* 🔥 POPUP 2 — HOME CLEANING SUB */}
+      {/* ===== HOME CLEANING SUB ===== */}
       {openHomeSubPopup && (
         <div className="sc_popupOverlay">
           <div className="sc_popupContent">
-           <HomeSubWeb
-  onBack={() => setOpenHomeSubPopup(false)}
-  onContinue={(propertyType) => {
-    setSelectedPropertyType([propertyType]);
-   // setOpenHomeSubPopup(false);
-    setOpenHomeSubCatPopup(true);
-  }}
-/>
-
-            {/* <button
-              className="sc_popupClose"
-              onClick={() => setOpenHomeSubPopup(false)}
-              aria-label="Close"
-            >
-              ✕
-            </button> */}
+            <HomeSubWeb
+              onBack={() => setOpenHomeSubPopup(false)}
+              onContinue={(services) => {
+                setSelectedPropertyType(services);
+                setOpenHomeSubCatPopup(true);
+              }}
+            />
           </div>
-          {/* 🔥 POPUP 3 — HOME CLEANING SERVICE OPTIONS */}
-
-
-
         </div>
       )}
+
+      {/* ===== HOME CLEANING CATEGORY ===== */}
       {openHomeSubCatPopup && (
-  <div className="sc_popupOverlay">
-    <div className="sc_popupContent">
-     <HomeSubCatWeb
-  propertyType={selectedPropertyType as any}
-  onClose={() => setOpenHomeSubCatPopup(false)}
-  onContinue={(data) => {
-    setOpenHomeSubCatPopup(false);
-
-    // ✅ STORE DATA HERE
-    setBookingPayload({
-      selectedServices: data.selectedServices,
-      consultationCharge: Number(data.totalPrice),
-    });
-
-    setOpenbookcleaningweb(true);
-  }}
-/>
-
-
-            {/* <button
-        className="sc_popupClose"
-        onClick={() => setOpenHomeSubCatPopup(false)}
-      >
-        ✕
-      </button> */}
+        <div className="sc_popupOverlay">
+          <div className="sc_popupContent">
+            <HomeSubCatWeb
+              propertyType={selectedPropertyType as any}
+              onClose={() => setOpenHomeSubCatPopup(false)}
+              onContinue={(data) => {
+                setOpenHomeSubCatPopup(false);
+                setBookingPayload({
+                  selectedServices: data.selectedServices,
+                  consultationCharge: Number(data.totalPrice),
+                });
+                setOpenBookCleaning(true);
+              }}
+            />
           </div>
         </div>
       )}
 
-{openbookcleaningweb && bookingPayload && (
-  <div className="sc_popupOverlay">
-    <div className="sc_popupContent">
-      <BookCleaningScreenWeb
-        selectedServices={bookingPayload.selectedServices}
-        consultationCharge={bookingPayload.consultationCharge}
-        onClose={() => {
-          setOpenbookcleaningweb(false);
-          setOpenHomeSubCatPopup(true); // 👈 BACK TO PREVIOUS POPUP
-        }}
-      />
-    </div>
-  </div>
-)}
+      {/* ===== COMMERCIAL ===== */}
+      {openCommercialPopup && (
+        <div className="sc_popupOverlay">
+          <div className="sc_popupContent">
+            <CommercialSubWeb
+              onClose={() => setOpenCommercialPopup(false)}
+              onContinue={(type: CommercialType) => {
+                const service = COMMERCIAL_SERVICE_MAP[type];
+                setOpenCommercialPopup(false);
+                setBookingPayload({
+                  selectedServices: [service.title],
+                  consultationCharge: service.price,
+                });
+                setOpenBookCleaning(true);
+              }}
+            />
+          </div>
+        </div>
+      )}
 
-{openCommercialPopup && (
-  <div className="sc_popupOverlay">
-    <div className="sc_popupContent">
-      <CommercialSubWeb
-        onClose={() => setOpenCommercialPopup(false)}
-        onContinue={(propertyType) => {
-          // 1️⃣ Close commercial popup
-          setOpenCommercialPopup(false);
+      {/* ===== VEHICLE ===== */}
+      {openVehiclePopup && (
+        <div className="sc_popupOverlay">
+          <div className="sc_popupContent">
+            <VehicleSubWeb
+              onClose={() => setOpenVehiclePopup(false)}
+              onContinue={(data) => {
+                setOpenVehiclePopup(false);
+                setBookingPayload({
+                  selectedServices: data.selectedServices,
+                  consultationCharge: data.consultationCharge,
+                  meta: data.meta,
+                });
+                setOpenBookCleaning(true);
+              }}
+            />
+          </div>
+        </div>
+      )}
 
-          // 2️⃣ Set booking payload (REQUIRED)
-          setBookingPayload({
-            selectedServices: [`Commercial Cleaning - ${propertyType}`],
-            consultationCharge: 0, // or your commercial base price
-          });
+      {/* ===== BOOK CLEANING (COMMON) ===== */}
+      {openBookCleaning && bookingPayload && (
+        <div className="sc_popupOverlay">
+          <div className="sc_popupContent">
+            <BookCleaningScreenWeb
+  selectedServices={
+    bookingPayload.selectedServices.map((s: any) =>
+      typeof s === "string" ? s : s.title
+    )
+  }
+  consultationCharge={bookingPayload.consultationCharge}
+  serviceContext={serviceContext}
+  onClose={() => setOpenBookCleaning(false)}
+/>
 
-          // 3️⃣ Open booking popup
-          setOpenbookcleaningweb(true);
-        }}
-      />
-    </div>
-  </div>
-)}
-
-
-{openVehiclePopup && (
-  <div className="sc_popupOverlay">
-    <div className="sc_popupContent">
-      <VehicleSubWeb
-        onClose={() => setOpenVehiclePopup(false)}
-        onContinue={(data) => {
-          // 1️⃣ close vehicle popup
-          setOpenVehiclePopup(false);
-
-          // 2️⃣ SET BOOKING PAYLOAD (THIS WAS THE CORE ISSUE)
-          setBookingPayload({
-            selectedServices: [
-              `Vehicle Cleaning - ${data.categoryId} (${data.serviceType})`,
-            ],
-            consultationCharge: data.price,
-            duration: data.duration,
-          });
-
-          // 3️⃣ open booking popup
-          setOpenbookcleaningweb(true);
-        }}
-      />
-    </div>
-  </div>
-)}
-
-
-
-
+          </div>
+        </div>
+      )}
     </>
   );
 };
