@@ -26,16 +26,16 @@ interface Service {
   category: string;
 }
 
-interface Professional {
-  id: string;
-  name: string;
-  role: string;
-  rating: string;
-  distance: string;
-  image?: string;
-  verified?: boolean;
-  mobileNumber: string;
-}
+// interface Professional {
+//   id: string;
+//   name: string;
+//   role: string;
+//   rating: string;
+//   distance: string;
+//   image?: string;
+//   verified?: boolean;
+//   mobileNumber: string;
+// }
 
 
 type ServiceContext = "home" | "vehicle" | "commercial";
@@ -90,6 +90,7 @@ const extractPropertyType = (services: Service[]) => {
   if (!services.length) return "N/A";
 
   const title = services[0].title;
+  console.log("Extracting property type from title:", title,extractPropertyType);
 
   // Vehicle Service - CAR (Standard Service)
   if (title.startsWith("Vehicle")) {
@@ -104,7 +105,7 @@ const extractPropertyType = (services: Service[]) => {
 
 
 const BASE_PRICE = 80;
-const ADDON_PRICE = 25;
+//const ADDON_PRICE = 25;
 const EXTRA_HOUR_PRICE = 30;
 const FLOOR_AREA_RATE = 0.05;
 
@@ -146,8 +147,8 @@ const BookCleaningScreenWeb: React.FC<Props> = ({
 
 
   const mainService = services[0];
-  const propertyType = extractPropertyType(services);
-  const addonServices = services.slice(1);
+  // const propertyType = extractPropertyType(services);
+  // const addonServices = services.slice(1);
   const [selectedAddons, setSelectedAddons] = useState<Addon[]>([]);
 
 
@@ -189,8 +190,8 @@ const BookCleaningScreenWeb: React.FC<Props> = ({
   const [allocationType, setAllocationType] =
     useState<"auto" | "manual">("auto");
 
-  const [allocatedEmployee, setAllocatedEmployee] =
-    useState<Professional | null>(null);
+  // const [allocatedEmployee, setAllocatedEmployee] =
+  //   useState<Professional | null>(null);
 
   /* ---------- JOB DETAILS ---------- */
   const [floorArea, setFloorArea] = useState("");
@@ -254,6 +255,7 @@ const totalPrice =
   const removeService = (id: string) => {
     setServices((prev) => prev.filter((s) => s.id !== id));
   };
+  console.log("Selected Addons:", addService,removeService);
 
   const validateAndCheckout = () => {
     if (extraHours > 0 && !reason.trim()) {
