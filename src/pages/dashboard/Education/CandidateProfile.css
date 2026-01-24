@@ -1,10 +1,19 @@
+/* ================= GLOBAL BACKGROUND ================= */
+body {
+  margin: 0;
+  background: #f5f7fb; /* same as Students page */
+  font-family: Inter, system-ui, sans-serif;
+}
+
+/* ================= ROOT ================= */
 .cp-root {
   max-width: 1200px;
   margin: 110px auto 60px;
-  padding: 0 20px;
+  padding: 0 32px; /* ⬅ prevents edge cutting */
+  background: transparent;
 }
 
-/* HEADER */
+/* ================= HEADER ================= */
 .cp-header {
   display: flex;
   align-items: center;
@@ -22,8 +31,9 @@
   font-size: 18px;
 }
 
-/* TOP PROFILE */
+/* ================= TOP PROFILE ================= */
 .cp-top {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 28px;
@@ -34,6 +44,7 @@
   box-shadow: 0 12px 30px rgba(0,0,0,0.08);
 }
 
+/* Avatar */
 .cp-avatar-wrap {
   position: relative;
   width: 140px;
@@ -59,6 +70,7 @@
   border: 2px solid white;
 }
 
+/* Main Info */
 .cp-main h3 {
   margin: 0;
   font-size: 22px;
@@ -73,7 +85,7 @@
   color: #6b7280;
 }
 
-/* ACTIONS */
+/* ================= ACTION BUTTONS ================= */
 .cp-actions {
   display: flex;
   gap: 14px;
@@ -98,11 +110,46 @@
   background: #e5e7eb;
 }
 
-/* GRID */
+/* ================= RESUME BUTTONS (RIGHT) ================= */
+.cp-resume-right {
+  position: absolute;
+  right: 32px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cp-resume-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: #f9fafb;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+  cursor: pointer;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cp-resume-btn:hover {
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.cp-resume-btn .icon {
+  color: #2563eb;
+}
+
+/* ================= GRID ================= */
 .cp-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 28px;
+  gap: 32px; /* ⬅ more breathing room */
 }
 
 .cp-section {
@@ -114,26 +161,18 @@
   color: #111827;
 }
 
-/* CARD */
+/* ================= CARDS ================= */
 .cp-card {
   background: white;
   border-radius: 16px;
   padding: 16px;
   margin-bottom: 12px;
+  margin-left: 2px;  /* ⬅ shadow safety */
+  margin-right: 2px;
   box-shadow: 0 8px 22px rgba(0,0,0,0.06);
 }
 
-.cp-card.status {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.approved {
-  color: #16a34a;
-  font-weight: 700;
-}
-
+.approved,
 .active {
   color: #16a34a;
   font-weight: 700;
@@ -144,42 +183,14 @@
   font-weight: 700;
 }
 
-/* RESPONSIVE */
-@media (max-width: 900px) {
-  .cp-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .cp-top {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .cp-actions {
-    justify-content: center;
-  }
-
-  /* NOC */
-.noc-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 8px 0;
-}
-
-.noc-row select {
-  padding: 6px 10px;
-  border-radius: 8px;
-  border: 1px solid #d1d5db;
-}
-
-/* Inputs */
+/* ================= INPUTS ================= */
 .cp-input {
   width: 100%;
   margin-top: 8px;
-  padding: 10px;
-  border-radius: 10px;
-  border: 1px solid #d1d5db;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid #cbd5f5;
+  font-size: 14px;
 }
 
 .cp-upload {
@@ -190,236 +201,7 @@
   cursor: pointer;
 }
 
-
-/* Right side resume buttons - vertical */
-.cp-resume-right {
-  position: absolute;
-  right: 32px;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-/* Ensure parent allows absolute positioning */
-.cp-top {
-  position: relative;
-}
-
-
-}
-
-
-/* Ensure parent is relative */
-.cp-top {
-  position: relative;
-}
-
-/* Move resume buttons further right */
-.cp-resume-right {
-  position: absolute;
-  right: 0;          /* move to extreme right */
-  margin-right: 32px; /* small padding from edge */
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-
-/* ============================= */
-/* 🖥️ LARGE DESKTOP (1280px+) */
-/* ============================= */
-@media (min-width: 1280px) {
-  .cp-root {
-    max-width: 1200px;
-  }
-
-  .cp-grid {
-    gap: 32px;
-  }
-}
-
-/* ============================= */
-/* 💻 LAPTOP (1024px – 1279px) */
-/* ============================= */
-@media (max-width: 1279px) and (min-width: 1024px) {
-  .cp-root {
-    margin-top: 100px;
-  }
-
-  .cp-top {
-    padding: 22px;
-  }
-
-  .cp-avatar-wrap {
-    width: 120px;
-    height: 120px;
-  }
-
-  .cp-resume-right {
-    margin-right: 20px;
-  }
-}
-
-/* ============================= */
-/* 📱 TABLET (768px – 1023px) */
-/* ============================= */
-@media (max-width: 1023px) and (min-width: 768px) {
-  .cp-root {
-    margin-top: 96px;
-    padding: 0 16px;
-  }
-
-  .cp-top {
-    flex-direction: column;
-    text-align: center;
-    gap: 20px;
-  }
-
-  .cp-avatar-wrap {
-    width: 110px;
-    height: 110px;
-  }
-
-  .cp-actions {
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-
-  .cp-grid {
-    grid-template-columns: 1fr;
-    gap: 24px;
-  }
-
-  /* Resume buttons move below on tablet */
-  .cp-resume-right {
-    position: static;
-    transform: none;
-    flex-direction: row;
-    justify-content: center;
-    margin-top: 10px;
-  }
-}
-
-/* ============================= */
-/* 📲 MOBILE (≤ 767px) */
-/* ============================= */
-@media (max-width: 767px) {
-  .cp-root {
-    margin-top: 84px;
-    padding: 0 14px;
-  }
-
-  .cp-header {
-    gap: 10px;
-    margin-bottom: 22px;
-  }
-
-  .cp-back {
-    width: 36px;
-    height: 36px;
-    font-size: 16px;
-  }
-
-  .cp-top {
-    padding: 18px;
-    border-radius: 16px;
-  }
-
-  .cp-avatar-wrap {
-    width: 96px;
-    height: 96px;
-  }
-
-  .cp-main h3 {
-    font-size: 20px;
-  }
-
-  .cp-actions {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
-  }
-
-  .cp-btn {
-    width: 100%;
-  }
-
-  .cp-grid {
-    grid-template-columns: 1fr;
-  }
-
-  /* Resume buttons → stacked below profile */
-  .cp-resume-right {
-    position: static;
-    transform: none;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 12px;
-  }
-}
-
-.cp-resume-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-
-  padding: 10px 16px;
-  border-radius: 999px;
-
-  background: #f9fafb;
-  border: 1px solid #d1d5db;
-
-  font-size: 14px;
-  font-weight: 600;
-  color: #111827;
-
-  cursor: pointer;
-  transition: background 0.2s ease, box-shadow 0.2s ease;
-}
-
-.cp-resume-btn:hover {
-  background: #ffffff;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-}
-
-.cp-resume-btn .icon {
-  font-size: 14px;
-  color: #2563eb;
-}
-/* Edit Profile Button */
-.cp-edit-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-
-  background: #2563eb;
-  color: #ffffff;
-
-  font-weight: 600;
-  font-size: 14px;
-  border-radius: 999px;
-  padding: 0 20px;
-
-  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.25);
-}
-
-/* Pencil icon */
-.cp-edit-icon {
-  font-size: 14px;
-  line-height: 1;
-  opacity: 0.95;
-}
-
-/* Hover – subtle, premium */
-.cp-edit-btn:hover {
-  background: #1d4ed8;
-  box-shadow: 0 8px 22px rgba(37, 99, 235, 0.35);
-}
-/* MODAL */
+/* ================= MODAL ================= */
 .cp-modal-overlay {
   position: fixed;
   inset: 0;
@@ -439,8 +221,8 @@
   box-shadow: 0 20px 40px rgba(0,0,0,0.2);
 }
 
-.cp-modal h3 {
-  margin-bottom: 16px;
+.cp-modal.large {
+  max-width: 600px;
 }
 
 .cp-modal-actions {
@@ -449,9 +231,8 @@
   gap: 12px;
   margin-top: 20px;
 }
-.cp-modal.large {
-  max-width: 600px;
-}
+
+/* ================= PHOTO EDIT ================= */
 .cp-photo-edit {
   display: flex;
   align-items: center;
@@ -463,8 +244,8 @@
   width: 96px;
   height: 96px;
   border-radius: 50%;
-  object-fit: cover;
   border: 3px solid #2563eb;
+  object-fit: cover;
 }
 
 .cp-photo-btn {
@@ -475,45 +256,70 @@
   font-weight: 600;
   cursor: pointer;
 }
+
+/* ================= FORM GRID ================= */
 .cp-form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 14px;
   margin-bottom: 20px;
 }
-.cp-input {
-  padding: 12px 14px;
-  border-radius: 12px;
-  border: 1px solid #cbd5f5;
-  font-size: 14px;
+
+/* ================= RESPONSIVE ================= */
+
+/* Tablets */
+@media (max-width: 1023px) {
+  .cp-root {
+    padding: 0 20px;
+  }
+
+  .cp-top {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .cp-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cp-resume-right {
+    position: static;
+    transform: none;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 10px;
+  }
 }
-@media (max-width: 640px) {
-  .cp-modal.large {
-    width: 92%;
-    padding: 20px;
+
+/* Mobile */
+@media (max-width: 767px) {
+  .cp-root {
+    padding: 0 16px;
+    margin-top: 84px;
+  }
+
+  .cp-actions {
+    flex-direction: column;
+  }
+
+  .cp-btn {
+    width: 100%;
+  }
+
+  .cp-resume-right {
+    flex-direction: column;
+    align-items: center;
   }
 
   .cp-form-grid {
     grid-template-columns: 1fr;
   }
-
-  .cp-photo-edit {
-    flex-direction: column;
-    text-align: center;
-  }
 }
 
-
-/* ============================= */
-/* 📲 SMALL MOBILE (≤ 480px) */
-/* ============================= */
+/* Small Mobile */
 @media (max-width: 480px) {
   .cp-root {
     margin-top: 72px;
-  }
-
-  .cp-top {
-    padding: 16px;
   }
 
   .cp-avatar-wrap {
@@ -524,21 +330,40 @@
   .cp-main h3 {
     font-size: 18px;
   }
+}
+/* 🔥 Page background layer */
+.cp-root::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: #f5f7fb;
+  z-index: -1;
+}
+/* Space below top profile card */
+.cp-top {
+  margin-bottom: 40px;
+}
 
-  .cp-sub {
-    font-size: 13px;
+/* Space between sections */
+.cp-section {
+  margin-bottom: 32px;
+}
+/* Extra safe horizontal padding */
+@media (min-width: 1280px) {
+  .cp-root {
+    padding-left: 40px;
+    padding-right: 40px;
   }
+}
 
-  .cp-card {
-    padding: 14px;
+@media (max-width: 480px) {
+  .cp-root {
+    padding-left: 16px;
+    padding-right: 16px;
   }
-
-  .cp-section h4 {
-    font-size: 15px;
-  }
-
-  .cp-btn {
-    height: 40px;
-    font-size: 14px;
-  }
+}
+/* Subtle lift effect */
+.cp-top,
+.cp-card {
+  background: #ffffff;
 }
