@@ -196,23 +196,20 @@ export default function Companies({ onBack }: Props) {
               <span>👥 {company.size}</span>
             </div>
 
-            <div className="card-footer">
-              <span
-                className={`status ${
-                  company.status === "Active" ? "active" : "frozen"
-                }`}
-              >
-                {company.status}
-              </span>
+           <div className="card-footer">
+  <span className={`company-status ${company.status === "Active" ? "active" : "frozen"}`}>
+    {company.status}
+  </span>
 
-              <button
-                type="button"
-                className="primary-btn"
-                onClick={() => setSelectedCompanyId(company.id)}
-              >
-                View Opportunities
-              </button>
-            </div>
+  <button
+    type="button"
+    className="primary-btn"
+    onClick={() => setSelectedCompanyId(company.id)}
+  >
+    View Opportunities
+  </button>
+</div>
+
           </div>
         ))}
       </div>
