@@ -8,12 +8,19 @@ import {
   MdCheck,
 } from "react-icons/md";
 import "./HomeSubWeb.css";
-
+import kitchen from "../../../assets/CleaningServices/kitchen.png";
+ import bathroom from "../../../assets/CleaningServices/bathroom.png";
+ import sofa from "../../../assets/CleaningServices/sofa.png";
+ import bedroom from "../../../assets/CleaningServices/bedroom.png";
+ //import window from "../../../assets/CleaningServices/window.png";
+ //import home from "../../../assets/CleaningServices/home.png";
 type PropertyOption = {
   id: string;
   icon: React.ReactNode;
   title: string;
   price: string;
+  image?: string;
+  description?: string;
 };
 
 type HomeSubWebProps = {
@@ -25,13 +32,19 @@ const HomeSubWeb: React.FC<HomeSubWebProps> = ({ onBack, onContinue }) => {
   const [selectedProperty, setSelectedProperty] = useState("1bhk");
   const [search, setSearch] = useState("");
 
+
+
+
+  
   const options: PropertyOption[] = useMemo(
     () => [
-      { id: "1bhk", icon: <MdBed />, title: "1 BHK", price: "₹80" },
-      { id: "2bhk", icon: <MdBed />, title: "2 BHK", price: "₹120" },
-      { id: "3bhk", icon: <MdApartment />, title: "3 BHK+", price: "₹180" },
-      { id: "studio", icon: <MdApartment />, title: "Studio", price: "₹65" },
-      { id: "villa", icon: <MdVilla />, title: "Villa / Penthouse", price: "₹250" },
+      { id: "1bhk", icon: <MdBed />, title: "kitchen", price: "₹80", image: kitchen,description:"Degreasing, cabinets & appliances" },
+      { id: "2bhk", icon: <MdBed />, title: "bathroom", price: "₹120", image: bathroom,description:"Sanitization & tile scrubbing" },
+      { id: "3bhk", icon: <MdApartment />, title: "sofa", price: "₹180",image: sofa ,description:"Deep vacuuming & stain removal" },
+      { id: "studio", icon: <MdApartment />, title: "bedroom", price: "₹65",image: bedroom,description:"Dusting, bedding & floor care" },
+      { id: "villa", icon: <MdVilla />, title: "window", price: "₹250",image: kitchen,description:"Interior & exterior glass shine" },
+    //   { id: "villa", icon: <MdVilla />, title: "Villa / Penthouse", price: "₹250",  },
+
     ],
     []
   );
@@ -77,6 +90,13 @@ const HomeSubWeb: React.FC<HomeSubWebProps> = ({ onBack, onContinue }) => {
                 <div>
                   <h3>{opt.title}</h3>
                   <p>Starting from {opt.price}</p>
+                  {opt.image && (
+  <div className="hsw_imageWrap">
+    <img src={opt.image} alt={opt.title} />
+  </div>
+)}
+<div>{opt.description}</div>
+
                 </div>
               </div>
 
