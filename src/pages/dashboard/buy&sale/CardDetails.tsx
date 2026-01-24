@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import "./BuysaleProducts.css";
 import {
   MdArrowBackIos,
-  
   MdStar,
   MdLocationOn,
   MdShoppingCart,
@@ -16,26 +15,29 @@ export default function BuyerPageWeb({ property, onBack }: any) {
   const [showSuccess, setShowSuccess] = useState(false);
   const [activeImage, setActiveImage] = useState(0);
   const [docPopup, setDocPopup] = useState<string | null>(null);
+
   const isLand = property.category === "land";
+  const isHostel = property.category === "hostel";
+
+  const Amenity = ({ icon, label }: { icon: string; label: string }) => (
+    <div className="amenityCard">
+      <span className="amenityIcon">{icon}</span>
+      <span>{label}</span>
+    </div>
+  );
+
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [toast, setToast] = useState<{
-  message: string;
-  type: "success" | "remove";
-} | null>(null);
+    message: string;
+    type: "success" | "remove";
+  } | null>(null);
 
-
-
-useEffect(() => {
-  const stored = JSON.parse(
-    localStorage.getItem("marketplace_wishlist") || "[]"
-  );
-
-  setIsWishlisted(
-    stored.some((item: any) => item.id === property.id)
-  );
-}, [property.id]);
-
-
+  useEffect(() => {
+    const stored = JSON.parse(
+      localStorage.getItem("marketplace_wishlist") || "[]"
+    );
+    setIsWishlisted(stored.some((item: any) => item.id === property.id));
+  }, [property.id]);
 
   const images =
     property.images?.length > 0
@@ -52,71 +54,55 @@ useEffect(() => {
     }
     setShowSuccess(true);
   };
-const toggleWishlist = () => {
-  const stored = JSON.parse(
-    localStorage.getItem("marketplace_wishlist") || "[]"
-  );
 
-  const exists = stored.some((item: any) => item.id === property.id);
+  const toggleWishlist = () => {
+    const stored = JSON.parse(
+      localStorage.getItem("marketplace_wishlist") || "[]"
+    );
 
-  let updated;
+    const exists = stored.some((item: any) => item.id === property.id);
+    const updated = exists
+      ? stored.filter((item: any) => item.id !== property.id)
+      : [...stored, property];
 
-  if (exists) {
-    updated = stored.filter((item: any) => item.id !== property.id);
-    setIsWishlisted(false);
-  } else {
-    updated = [...stored, property];
-    setIsWishlisted(true);
-    
-  }
-
-  localStorage.setItem(
-    "marketplace_wishlist",
-    JSON.stringify(updated)
-  );
-
-  // ✅ THIS IS THE FIX
-  window.dispatchEvent(new CustomEvent("wishlist-change"));
+    setIsWishlisted(!exists);
+    localStorage.setItem("marketplace_wishlist", JSON.stringify(updated));
+    window.dispatchEvent(new CustomEvent("wishlist-change"));
     setTimeout(() => setToast(null), 2000);
-
-};
-
-
-
-
-
-  
+  };
 
   return (
     <div className="buyerOverlay">
       <div className="buyerPage web">
-
         {/* HEADER */}
         <header className="buyerHeader">
           <button className="buyerBackBtn" onClick={onBack}>
             <MdArrowBackIos />
           </button>
           <h2>Property Details</h2>
-<button
-  className={`buyerFavIcon ${isWishlisted ? "active" : ""}`}
-  onClick={toggleWishlist}
->
-  {isWishlisted ? "❤️" : "🤍"}
-</button>
+
+          <button
+            className={`buyerFavIcon ${isWishlisted ? "active" : ""}`}
+            onClick={toggleWishlist}
+          >
+            {isWishlisted ? "❤️" : "🤍"}
+          </button>
         </header>
 
         {/* CONTENT */}
         <div className="buyerContent invisible-scroll buyerSplit">
-
-          {/* LEFT – IMAGE + DETAILS */}
+          {/* LEFT */}
           <div className="buyerLeft imageSide">
+            {/* IMAGE */}
             <div className="buyerImageSection">
               <img src={images[activeImage]} alt="property" />
 
               <div className="buyerBadges">
                 <span
                   className={
-                    property.listingType === "buy" ? "badgeSale" : "badgeRent"
+                    property.listingType === "buy"
+                      ? "badgeSale"
+                      : "badgeRent"
                   }
                 >
                   {property.listingType === "buy" ? "FOR SALE" : "FOR RENT"}
@@ -133,74 +119,72 @@ const toggleWishlist = () => {
                 ))}
               </div>
             </div>
+            <h1 className="imageTitle imageTitleBelow">
+  {property.title}
+</h1>
 
-            {/* IMAGE BOTTOM INFO */}
+            {/* ✅ PRICE MOVED HERE — IMAGE DOWN */}
+            <div className="priceRow imagePriceBlock">
+              <span className="imagePrice">₹{Number(property.price).toLocaleString("en-IN")}
+</span>
+              {property.rating && (
+                <span className="imageRating">
+                  <MdStar /> {property.rating}
+                </span>
+              )}
+            </div>
+
+            <div className="buyerInfo">
+              <MdLocationOn /> {property.area}
+            </div>
+
+            {/* IMAGE INFO */}
             <div className="imageInfo">
 
-              {/* ✅ TITLE MOVED HERE */}
-              <h1 className="imageTitle">{property.title}</h1>
-
-              <div className="priceRow">
-                <span className="imagePrice">{property.price}</span>
-                {property.rating && (
-                  <span className="imageRating">
-                    <MdStar /> {property.rating}
-                  </span>
-                )}
-              </div>
-
-              <div className="buyerInfo">
-                <MdLocationOn /> {property.area}
-              </div>
-
-             
-{/* LEFT INFO COLUMN */}
-
-
-
-{/* NORMAL PROPERTY SPECS */}
-<div className="buyerSpecs">
-  {property.sqft && (
-    <div className="specBox">
+              {isHostel && (
+                <div className="hostelBadge">
+                  🏢 {property.hostelType} Hostel
+                </div>
+              )}
+{/* LAND SUMMARY CARDS (MOBILE STYLE) */}
+{isLand && (
+  <div className="landSummaryGrid">
+    <div className="landSummaryCard">
+      <div className="landIcon">📐</div>
       <strong>{property.sqft}</strong>
-      <span>SQFT</span>
+      <span>Sq. Ft.</span>
     </div>
-  )}
 
-  {property.bhk && (
-    <div className="specBox">
-      <strong>{property.bhk}</strong>
-      <span>BHK</span>
-    </div>
-  )}
-</div>
-{/* OWNER DETAILS – LEFT SIDE */}
-{isLand && property.ownerName && (
-  <div className="infoCard ownerCardNew">
-    <h3 className="cardTitle">Owner Details</h3>
-
-    <div className="ownerRow">
-      <div className="ownerAvatar">👤</div>
-      <div className="ownerText">
-        <strong>{property.ownerName}</strong>
-      </div>
-      <button className="callBtnNew">📞</button>
+    <div className="landSummaryCard">
+      <div className="landIcon">⛰</div>
+      <strong>{property.landType}</strong>
     </div>
   </div>
 )}
+{/* OWNER DETAILS – MOBILE CARD */}
+{isLand && property.ownerName && (
+  <div className="ownerMobileCard">
+    <div className="ownerAvatarMobile">👤</div>
 
-{/* LAND DOCUMENTS – LEFT SIDE */}
+    <div className="ownerTextMobile">
+      <strong>{property.ownerName}</strong>
+    </div>
+
+    <button className="ownerCallBtn">📞</button>
+  </div>
+)}
+{/* LAND DOCUMENTS */}
 {isLand && property.documents?.length > 0 && (
-  <div className="infoCard">
-    <h3 className="cardTitle">Land Documents</h3>
+  <div className="landDocsSection">
+    <h3>Land Documents</h3>
 
-    <div className="docGrid">
-      {property.documents.map((img: string, i: number) => (
+    <div className="landDocsGrid">
+      {property.documents.map((doc: string, i: number) => (
         <img
           key={i}
-          src={img}
-          className="docThumb"
-          onClick={() => setDocPopup(img)}
+          src={doc}
+          className="landDocThumb"
+          onClick={() => setDocPopup(doc)}
         />
       ))}
     </div>
@@ -208,81 +192,113 @@ const toggleWishlist = () => {
 )}
 
 
+              {property.category === "hostel" && (
+                <>
+                  <div className="hostelStatsGrid">
+                    <div className="hostelStatCard">
+                      <strong>{property.totalRooms}</strong>
+                      <p>Total Rooms</p>
+                    </div>
 
+                    <div className="hostelStatCard">
+                      <strong>{property.availableRooms}</strong>
+                      <p>Available</p>
+                    </div>
 
+                    <div className="hostelStatCard">
+                      <strong>{property.foodIncluded}</strong>
+                      <p>Food</p>
+                    </div>
+
+                    <div className="hostelStatCard">
+                      <strong>New</strong>
+                      <p>Condition</p>
+                    </div>
+                  </div>
+
+                  <h3 className="sectionTitle">Amenities & Services</h3>
+
+                  <div className="amenitiesGrid">
+                    {property.hasAC && <Amenity icon="❄️" label="AC" />}
+                    {property.hasWifi && <Amenity icon="📶" label="WiFi" />}
+                    {property.hasLaundry && <Amenity icon="🧺" label="Laundry" />}
+                    {property.hasParking && <Amenity icon="🅿️" label="Parking" />}
+                    {property.hasSecurity && (
+                      <Amenity icon="🛡️" label="Security" />
+                    )}
+                  </div>
+                </>
+              )}
             </div>
           </div>
 
-          {/* RIGHT – FORM ONLY */}
-          {/* RIGHT – FORM + LAND DETAILS */}
-{/* RIGHT COLUMN */}
-<div className="buyerRight formSide">
+          {/* RIGHT */}
+          <div className="buyerRight formSide">
+            <h3>Your Information</h3>
 
-  {/* BUYER FORM */}
-  <h3>Your Information</h3>
+            <input
+              placeholder="Full Name"
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+            />
 
-  <input
-    placeholder="Full Name"
-    value={fullName}
-    onChange={(e) => setFullName(e.target.value)}
-  />
+            <input
+              placeholder="Mobile Number"
+              value={mobile}
+              onChange={(e) => setMobile(e.target.value)}
+            />
 
-  <input
-    placeholder="Mobile Number"
-    value={mobile}
-    onChange={(e) => setMobile(e.target.value)}
-  />
+            <textarea
+              placeholder="Delivery Address"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+            />
 
-  <textarea
-    placeholder="Delivery Address"
-    value={address}
-    onChange={(e) => setAddress(e.target.value)}
-  />
+            {isLand && (
+              <div className="infoCard landDetailsRight">
+                <h3 className="cardTitle">Land Details</h3>
 
-  {/* LAND DETAILS – RIGHT */}
-  {isLand && (
-    <div className="infoCard landDetailsRight">
-      <h3 className="cardTitle">Land Details</h3>
+                <div className="detailRow">
+                  <span>Land Type</span>
+                  <strong>{property.landType}</strong>
+                </div>
 
-      <div className="detailRow">
-        <span>Land Type</span>
-        <strong>{property.landType}</strong>
-      </div>
+                <div className="detailRow">
+                  <span>Registration</span>
+                  <strong>{property.registrationStatus}</strong>
+                </div>
 
-      <div className="detailRow">
-        <span>Registration</span>
-        <strong>{property.registrationStatus}</strong>
-      </div>
+                {property.registrationValue && (
+                  <div className="detailRow">
+                    <span>Registration Value</span>
+                    <strong>₹{property.registrationValue}</strong>
+                  </div>
+                )}
 
-      {property.registrationValue && (
-        <div className="detailRow">
-          <span>Registration Value</span>
-          <strong>₹{property.registrationValue}</strong>
-        </div>
-      )}
+                {property.marketValue && (
+                  <div className="detailRow">
+                    <span>Market Value</span>
+                    <strong>₹{property.marketValue}</strong>
+                  </div>
+                )}
 
-      {property.marketValue && (
-        <div className="detailRow">
-          <span>Market Value</span>
-          <strong>₹{property.marketValue}</strong>
-        </div>
-      )}
-
-      {property.description && (
-        <p className="descriptionText">{property.description}</p>
-      )}
-    </div>
-  )}
-</div>
-
-
+                {property.description && (
+                  <p className="descriptionText">{property.description}</p>
+                )}
+              </div>
+            )}
+          </div>
         </div>
 
         {/* BOTTOM BAR */}
         <footer className="buyerBottom">
           <div>
             <span>Total Amount</span>
-            <strong>{property.price}</strong>
+            <strong>
+              ₹{Number(property.price).toLocaleString("en-IN")}
+
+              {isHostel && " / month"}
+            </strong>
           </div>
 
           <button onClick={handleBuy}>
@@ -302,25 +318,24 @@ const toggleWishlist = () => {
             </div>
           </div>
         )}
+
         {docPopup && (
-  <div className="imagePopupOverlay" onClick={() => setDocPopup(null)}>
-    <img
-      src={docPopup}
-      className="imagePopup"
-      onClick={(e) => e.stopPropagation()}
-    />
-  </div>
-)}
-
-
+          <div
+            className="imagePopupOverlay"
+            onClick={() => setDocPopup(null)}
+          >
+            <img
+              src={docPopup}
+              className="imagePopup"
+              onClick={(e) => e.stopPropagation()}
+            />
+          </div>
+        )}
       </div>
-      {toast && (
-  <div className={`wishlistToast ${toast.type}`}>
-    {toast.message}
-  </div>
-)}
 
+      {toast && (
+        <div className={`wishlistToast ${toast.type}`}>{toast.message}</div>
+      )}
     </div>
-    
   );
 }
