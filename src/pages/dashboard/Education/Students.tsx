@@ -104,6 +104,9 @@ const Students: React.FC<StudentsProps> = ({ onBack, onSelectStudent }) => {
     if (aggregate === "90+") data = data.filter((s) => s.attendance >= 90);
     if (aggregate === "80-90")
       data = data.filter((s) => s.attendance >= 80 && s.attendance < 90);
+    if (aggregate === "60-80") {
+  data = data.filter((s) => s.attendance >= 60 && s.attendance < 80);
+}
 
     if (certificate) data = data.filter((s) => s.certs.includes(certificate));
     if (internship) data = data.filter((s) => s.status === internship);

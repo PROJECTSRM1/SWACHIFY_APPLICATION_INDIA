@@ -1,12 +1,15 @@
-/* ROOT */
+/* ================= ROOT ================= */
 .edu-wrapper {
   min-height: 100vh;
   background: #f5f7fb;
   color: #1f2937;
+  padding-top: 88px;        /* below fixed navbar */
   padding-bottom: 80px;
+  overflow-x: hidden;       /* 🔥 prevents card cutting */
+  box-sizing: border-box;
 }
 
-/* FEATURED */
+/* ================= FEATURED ================= */
 .edu-featured {
   max-width: 1200px;
   height: 360px;
@@ -17,21 +20,14 @@
 }
 
 .edu-featured img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-/* .blue-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    90deg,
-    rgba(37, 99, 235, 0.85),
-    rgba(37, 99, 235, 0.35)
-  );
-} */
-
+/* CONTENT ON IMAGE (ALWAYS) */
 .featured-content {
   position: absolute;
   inset: 0;
@@ -39,18 +35,19 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: #fff;
+  color: #ffffff;
+  z-index: 1;
 }
 
 .featured-left {
-  max-width: 500px;
+  max-width: 520px;
 }
 
-/* SEARCH */
+/* ================= SEARCH ================= */
 .featured-search {
   width: 320px;
   height: 48px;
-  background: #fff;
+  background: #ffffff;
   border-radius: 999px;
   display: flex;
   overflow: hidden;
@@ -60,6 +57,7 @@
   flex: 1;
   border: none;
   padding: 0 16px;
+  font-size: 14px;
   color: #111;
 }
 
@@ -67,16 +65,18 @@
   width: 52px;
   background: #2563eb;
   border: none;
-  color: #fff;
+  color: #ffffff;
 }
 
-/* SECTIONS */
+/* ================= SECTIONS ================= */
 .edu-section {
   max-width: 1200px;
   margin: 40px auto;
+  padding: 0 16px;          /* 🔥 prevents mobile overflow */
+  box-sizing: border-box;
 }
 
-/* ✅ FIXED GRID */
+/* ================= CATEGORIES ================= */
 .category-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -84,40 +84,29 @@
 }
 
 .category-grid div {
+  width: 100%;
   background: #ffffff;
-  padding: 18px;
-  border-radius: 16px;
+  padding: 20px;
+  border-radius: 18px;
   text-align: center;
-
-  /* ✅ LIGHTER LOOK */
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04); /* reduced darkness */
+  border: 1px solid #eef2f7;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+  box-sizing: border-box;
 }
 
-
 .category-grid span {
-  width: 48px;
-  height: 48px;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: auto;
-  color: #fff;
-
-  filter: brightness(1.1); /* 🌤️ lighter icons */
+  font-size: 30px;
+  color: #ffffff;
 }
-.category-grid div {
-  border: 1px solid #eef2f7;
-}
-
-
-/* .blue { background: #3b82f6; }
-.purple { background: #8b5cf6; }
-.orange { background: #f97316; }
-.green { background: #10b981; } */
 
 /* ================= TRENDING ================= */
-
 .trending-header {
   display: flex;
   justify-content: space-between;
@@ -138,41 +127,28 @@
   cursor: pointer;
 }
 
-
-/* ✅ TWO PER ROW GRID */
 .trending-list {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 16px;
 }
 
-/* CARD */
 .trending-row-card {
+  position: relative; /* 🔥 important */
   display: flex;
   gap: 14px;
   background: #ffffff;
   padding: 14px;
   border-radius: 16px;
   border: 1px solid #e5e7eb;
-  transition: box-shadow 0.2s ease;
 }
 
-.trending-row-card:hover {
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
-}
 
-/* AVATAR */
 .trending-avatar {
   width: 56px;
   height: 56px;
   border-radius: 50%;
   object-fit: cover;
-  flex-shrink: 0;
-}
-
-/* INFO */
-.trending-info {
-  flex: 1;
 }
 
 .trending-info h4 {
@@ -184,7 +160,6 @@
 .program {
   font-size: 12px;
   color: #2563eb;
-  margin: 2px 0;
 }
 
 .score,
@@ -193,39 +168,31 @@
   color: #6b7280;
 }
 
-/* FOOTER */
 .trending-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 6px;
 }
 
-/* RATING (INSIDE CARD, NO FLOATING) */
 .rating {
   display: flex;
   align-items: center;
   gap: 4px;
   font-size: 12px;
   font-weight: 600;
-  color: dark black;
-
-  /* 🔴 IMPORTANT */
-  position: static;   /* remove fixed / absolute */
 }
 
-.rating .star {
-  color: #facc15; /* yellow star */
-}
-
-
-/* STATUS */
 .status {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+
   font-size: 10px;
   font-weight: 700;
   padding: 4px 10px;
   border-radius: 999px;
 }
+
 
 .status.active {
   background: #dcfce7;
@@ -237,69 +204,35 @@
   color: #6b7280;
 }
 
-/* 📱 MOBILE → ONE PER ROW */
-@media (max-width: 640px) {
-  .trending-list {
-    grid-template-columns: 1fr;
-  }
-}
-
-
-/* ============================= */
-/* 🖥️ LARGE DESKTOP (1280px+) */
-/* ============================= */
+/* ================= LARGE DESKTOP (≥1280px) ================= */
 @media (min-width: 1280px) {
   .edu-featured {
     height: 380px;
   }
-
-  .featured-left {
-    max-width: 560px;
-  }
-
-  .category-grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
-
-  .trending-list {
-    grid-template-columns: repeat(2, 1fr);
-  }
 }
 
-/* ============================= */
-/* 💻 LAPTOP (1024px – 1279px) */
-/* ============================= */
+/* ================= LAPTOP (1024px – 1279px) ================= */
 @media (max-width: 1279px) and (min-width: 1024px) {
   .edu-featured {
     height: 340px;
     margin: 24px;
   }
 
-  .featured-search {
-    width: 300px;
-  }
-
   .category-grid {
     grid-template-columns: repeat(3, 1fr);
   }
-
-  .trending-list {
-    grid-template-columns: repeat(2, 1fr);
-  }
 }
 
-/* ============================= */
-/* 📱 TABLET (768px – 1023px) */
-/* ============================= */
+/* ================= TABLET (768px – 1023px) ================= */
 @media (max-width: 1023px) and (min-width: 768px) {
   .edu-featured {
     height: 300px;
-    margin: 20px;
   }
 
   .featured-content {
     flex-direction: column;
     align-items: flex-start;
+    justify-content: center;
     gap: 16px;
   }
 
@@ -315,123 +248,46 @@
   .trending-list {
     grid-template-columns: 1fr;
   }
-
-  .trending-row-card {
-    padding: 16px;
-  }
 }
 
-/* ============================= */
-/* 📲 MOBILE (≤ 767px) */
-/* ============================= */
+/* ================= MOBILE (≤767px) ================= */
 @media (max-width: 767px) {
-  .edu-wrapper {
-    padding-bottom: 60px;
-  }
-
   .edu-featured {
-    height: auto;
+    height: 260px;          /* 🔥 keeps text on image */
     margin: 16px;
-    border-radius: 16px;
   }
 
   .featured-content {
-    position: relative;
     flex-direction: column;
     align-items: flex-start;
-    padding: 20px;
+    justify-content: center;
     gap: 14px;
-  }
-
-  .featured-left {
-    max-width: 100%;
+    padding: 20px;
   }
 
   .featured-search {
     width: 100%;
-    height: 44px;
-  }
-
-  .edu-section {
-    margin: 28px 16px;
   }
 
   .category-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
     gap: 16px;
   }
 
   .trending-list {
     grid-template-columns: 1fr;
   }
-
-  .trending-row-card {
-    flex-direction: row;
-    padding: 14px;
-  }
-
-  .trending-avatar {
-    width: 48px;
-    height: 48px;
-  }
-
-  .trending-info h4 {
-    font-size: 14px;
-  }
 }
 
-/* ============================= */
-/* 📲 SMALL MOBILE (≤ 480px) */
-/* ============================= */
-@media (max-width: 480px) {
-  .category-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .featured-search {
-    height: 42px;
-  }
-
-  .featured-search input {
-    padding: 0 12px;
-    font-size: 14px;
-  }
-
-  .trending-row-card {
-    gap: 10px;
-  }
-
-  .rating {
-    font-size: 11px;
-  }
-
-  .status {
-    font-size: 9px;
-    padding: 3px 8px;
-  }
-}
-
-.edu-wrapper {
-  min-height: 100vh;
-  background: #f5f7fb;
-  color: #1f2937;
-
-  padding-top: 88px;   /* 🔥 FIX: below fixed navbar */
-  padding-bottom: 80px;
-}
-
+/* ================= BUTTON ================= */
 .edu-featured .view-details-btn {
   background: #ffffff;
-  color: #000000;              /* ✅ BLACK TEXT */
-  border: 1px solid #000000;   /* ✅ BLACK BORDER */
-
+  color: #000000;
+  border: 1px solid #000000;
   padding: 10px 18px;
   border-radius: 999px;
   font-weight: 600;
-  font-size: 14px;
   cursor: pointer;
-
-  transition: background 0.2s ease, color 0.2s ease;
 }
 
 .edu-featured .view-details-btn:hover {
