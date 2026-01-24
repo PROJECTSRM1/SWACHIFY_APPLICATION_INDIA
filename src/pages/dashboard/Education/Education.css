@@ -134,14 +134,15 @@
 }
 
 .trending-row-card {
+  position: relative; /* 🔥 important */
   display: flex;
   gap: 14px;
   background: #ffffff;
   padding: 14px;
   border-radius: 16px;
   border: 1px solid #e5e7eb;
-  box-sizing: border-box;
 }
+
 
 .trending-avatar {
   width: 56px;
@@ -182,11 +183,16 @@
 }
 
 .status {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+
   font-size: 10px;
   font-weight: 700;
   padding: 4px 10px;
   border-radius: 999px;
 }
+
 
 .status.active {
   background: #dcfce7;
