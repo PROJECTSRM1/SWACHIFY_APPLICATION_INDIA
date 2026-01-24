@@ -20,10 +20,19 @@ type PropertyOption = {
   isQuote?: boolean;
 };
 
+export type CommercialType =
+  | "small"
+  | "medium"
+  | "large"
+  | "retail"
+  | "warehouse";
+
 type CommercialSubWebProps = {
   onClose: () => void;
-  onContinue: (propertyType: PropertyType) => void;
+  onContinue: (propertyType: CommercialType) => void;
 };
+
+
 
 const CommercialSubWeb: React.FC<CommercialSubWebProps> = ({
   onClose,
@@ -128,12 +137,14 @@ const CommercialSubWeb: React.FC<CommercialSubWebProps> = ({
 
         {/* CONTINUE BUTTON (INSIDE CONTAINER) */}
         <div className="cs_continueWrapper">
-          <button
-            className="cs_continueBtn"
-            onClick={() => onContinue(selectedProperty)}
-          >
-            Continue
-          </button>
+         <button
+  className="cs_continueBtn"
+  onClick={() => onContinue(selectedProperty)}
+>
+  Continue
+</button>
+
+
         </div>
       </main>
     </div>
