@@ -13,6 +13,20 @@ export default function SellItemWeb({ onClose }: SellItemWebProps) {
   const [price, setPrice] = useState<string>("");
 
   /* ================= HOUSE ================= */
+  const formatIndianNumber = (value: string) => {
+  // remove anything that is not a digit
+  const numeric = value.replace(/[^0-9]/g, "");
+
+  // add Indian commas
+  return numeric.replace(/\B(?=(\d{2})+(?!\d))/g, ",");
+};
+const handleNumericChange =
+  (setter: React.Dispatch<React.SetStateAction<string>>) =>
+  (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formatted = formatIndianNumber(e.target.value);
+    setter(formatted);
+  };
+
   const [sqft, setSqft] = useState("");
   const [bhk, setBhk] = useState("1 BHK");
   const [location, setLocation] = useState("");
@@ -43,7 +57,6 @@ export default function SellItemWeb({ onClose }: SellItemWebProps) {
   const [landDocuments, setLandDocuments] = useState<string[]>([]);
 
   /* ================= COMMERCIAL (BASIC) ================= */
-const [commercialSqft, setCommercialSqft] = useState("");
 const [commercialLocation, setCommercialLocation] = useState("");
 const [commercialArea, setCommercialArea] = useState("");
 
@@ -51,7 +64,22 @@ const [commercialArea, setCommercialArea] = useState("");
   /* ================= COMMON ================= */
   const [description, setDescription] = useState("");
   const [images, setImages] = useState<string[]>([]);
-  const cleanPrice = price.replace(/,/g, "");
+  // const cleanPrice = price.replace(/,/g, "");
+
+  /* ================= HOSTEL ================= */
+const [hostelType, setHostelType] = useState("Boys");
+const [totalRooms, setTotalRooms] = useState("");
+const [availableRooms, setAvailableRooms] = useState("");
+const [foodIncluded, setFoodIncluded] = useState("Yes");
+
+const [hasAC, setHasAC] = useState(false);
+const [hasWifi, setHasWifi] = useState(false);
+const [hasLaundry, setHasLaundry] = useState(false);
+const [hasParking, setHasParking] = useState(false);
+const [hasSecurity, setHasSecurity] = useState(false);
+const [hasTV, setHasTV] = useState(false);
+
+
   
 
   
@@ -59,10 +87,13 @@ const [commercialArea, setCommercialArea] = useState("");
   const isHouse = ["Apartment", "Villa", "Independent House"].includes(propertyType);
   const isVehicle = ["Bike", "Car", "Lorry", "Auto", "Bus"].includes(propertyType);
   const isLand = propertyType === "Land";
+
   const isCommercial =
   propertyType === "Office" ||
   propertyType === "Hospital" ||
   propertyType === "Commercial Space";
+    const isHostel = propertyType === "Hostel";
+
 
 
   const wordCount = description.trim().split(/\s+/).filter(Boolean).length;
@@ -72,11 +103,11 @@ const [commercialArea, setCommercialArea] = useState("");
     reader.onload = () => resolve(reader.result as string);
     reader.readAsDataURL(file);
   });
-const formatIndianPrice = (value: string) => {
-  const numeric = value.replace(/[^0-9]/g, "");
+// const formatIndianPrice = (value: string) => {
+//   const numeric = value.replace(/[^0-9]/g, "");
 
-  return numeric.replace(/\B(?=(\d{2})+(?!\d))/g, ",");
-};
+//   return numeric.replace(/\B(?=(\d{2})+(?!\d))/g, ",");
+// };
 
 
   /* ================= IMAGE UPLOAD ================= */
@@ -111,6 +142,7 @@ const handleLandDocs = async (e: ChangeEvent<HTMLInputElement>) => {
   const removeImage = (index: number) => {
     setImages((prev) => prev.filter((_, i) => i !== index));
   };
+const unformatNumber = (value: string) => value.replace(/,/g, "");
 
   /* ================= SUBMIT ================= */
   const handleSubmit = () => {
@@ -120,30 +152,43 @@ const handleLandDocs = async (e: ChangeEvent<HTMLInputElement>) => {
   }
 
   const listing = {
-    id: Date.now(),
-    listingType,
-    propertyType,
-    itemCondition,
-    
-    sqft,
-    bhk,
-    location,
-    area,
-    description,
-    images,
-    registrationStatus,
-    registrationValue,
-    marketValue,
-    landSqft,
-    landType,
-    landLocation,
-    landArea,
-    registeredOwner,
-    price: cleanPrice,
+  id: Date.now(),
+  listingType,
+  propertyType,
+  itemCondition,
 
-    documents: landDocuments,
-    createdAt: new Date().toISOString(),
-  };
+  price: unformatNumber(price),
+  sqft: unformatNumber(sqft),
+  landSqft: unformatNumber(landSqft),
+  registrationValue: unformatNumber(registrationValue),
+  marketValue: unformatNumber(marketValue),
+  distance: unformatNumber(distance),
+
+  bhk,
+  location,
+  area,
+  description,
+  images,
+
+  landType,
+  landLocation,
+  landArea,
+  registeredOwner,
+  documents: landDocuments,
+  hostelType,
+totalRooms,
+availableRooms,
+foodIncluded,
+hasAC,
+hasWifi,
+hasLaundry,
+hasParking,
+hasSecurity,
+hasTV,
+
+  createdAt: new Date().toISOString(),
+};
+
 
   const existing = JSON.parse(
     localStorage.getItem("marketplace_listings") || "[]"
@@ -237,6 +282,8 @@ const handleLandDocs = async (e: ChangeEvent<HTMLInputElement>) => {
               <option>Office</option>
               <option>Hospital</option>
               <option>Commercial Space</option>
+              <option>Hostel</option>
+
             </select>
 
             {/* CONDITION */}
@@ -250,16 +297,15 @@ const handleLandDocs = async (e: ChangeEvent<HTMLInputElement>) => {
             </select>
 
             {/* PRICE */}
-            <label>PRICE (₹)</label>
+            <label>{isHostel ? "PRICE PER MONTH (₹)" : "PRICE (₹)"}</label>
+
 <input
   inputMode="numeric"
   value={price}
   placeholder="Enter price"
-  onChange={(e) => {
-    const formatted = formatIndianPrice(e.target.value);
-    setPrice(formatted);
-  }}
+  onChange={handleNumericChange(setPrice)}
 />
+
 
 
 
@@ -268,11 +314,10 @@ const handleLandDocs = async (e: ChangeEvent<HTMLInputElement>) => {
   <>
     <label>SQFT</label>
     <input
-      placeholder="Enter SQFT"
-      value={commercialSqft}
-      onChange={(e) => setCommercialSqft(e.target.value)}
-    />
-
+  inputMode="numeric"
+  value={sqft}
+  onChange={handleNumericChange(setSqft)}
+/>
     <label>LOCATION</label>
     <input
       placeholder="Full Address"
@@ -312,7 +357,12 @@ const handleLandDocs = async (e: ChangeEvent<HTMLInputElement>) => {
     <div className="sellRow">
       <div>
         <label>SQFT</label>
-        <input value={landSqft} onChange={(e) => setLandSqft(e.target.value)} />
+        <input
+  inputMode="numeric"
+  value={landSqft}
+  onChange={handleNumericChange(setLandSqft)}
+/>
+
       </div>
 
       <div>
@@ -326,15 +376,18 @@ const handleLandDocs = async (e: ChangeEvent<HTMLInputElement>) => {
 
     <label>REGISTRATION VALUE (₹)</label>
     <input
-      value={registrationValue}
-      onChange={(e) => setRegistrationValue(e.target.value)}
-    />
+  inputMode="numeric"
+  value={registrationValue}
+  onChange={handleNumericChange(setRegistrationValue)}
+/>
+
 
     <label>MARKET VALUE (₹)</label>
     <input
-      value={marketValue}
-      onChange={(e) => setMarketValue(e.target.value)}
-    />
+  inputMode="numeric"
+  value={marketValue}
+  onChange={handleNumericChange(setMarketValue)}
+/>
 
     <label>LOCATION</label>
     <input value={landLocation} onChange={(e) => setLandLocation(e.target.value)} />
@@ -390,10 +443,11 @@ const handleLandDocs = async (e: ChangeEvent<HTMLInputElement>) => {
                   <div>
                     <label>DISTANCE (KM)</label>
                     <input
-                      placeholder="10000"
-                      value={distance}
-                      onChange={(e) => setDistance(e.target.value)}
-                    />
+  inputMode="numeric"
+  value={distance}
+  onChange={handleNumericChange(setDistance)}
+/>
+
                   </div>
                 </div>
 
@@ -475,8 +529,102 @@ const handleLandDocs = async (e: ChangeEvent<HTMLInputElement>) => {
                 </div>
               </>
             )}
+            {/* ================= HOSTEL FIELDS ================= */}
+{isHostel && (
+  <>
+    <label>HOSTEL TYPE</label>
+    <select value={hostelType} onChange={(e) => setHostelType(e.target.value)}>
+      <option>Boys</option>
+      <option>Girls</option>
+      <option>Co-living</option>
+    </select>
 
-            {/* DESCRIPTION */}
+    <div className="sellRow">
+      <div>
+        <label>TOTAL ROOMS</label>
+        <input
+          inputMode="numeric"
+          value={totalRooms}
+          onChange={(e) => setTotalRooms(e.target.value)}
+        />
+      </div>
+
+      <div>
+        <label>AVAILABLE ROOMS</label>
+        <input
+          inputMode="numeric"
+          value={availableRooms}
+          onChange={(e) => setAvailableRooms(e.target.value)}
+        />
+      </div>
+    </div>
+
+    <label>FOOD INCLUDED</label>
+    <select
+      value={foodIncluded}
+      onChange={(e) => setFoodIncluded(e.target.value)}
+    >
+      <option>Yes</option>
+      <option>No</option>
+    </select>
+
+    <label>SERVICES & AMENITIES</label>
+
+<div className="amenitiesGrid sellAmenities">
+
+  <div
+    className={`amenityCard ${hasAC ? "active" : ""}`}
+    onClick={() => setHasAC(!hasAC)}
+  >
+    <span className="amenityIcon">❄️</span>
+    <span>AC</span>
+  </div>
+
+  <div
+    className={`amenityCard ${hasWifi ? "active" : ""}`}
+    onClick={() => setHasWifi(!hasWifi)}
+  >
+    <span className="amenityIcon">📶</span>
+    <span>WiFi</span>
+  </div>
+
+  <div
+    className={`amenityCard ${hasLaundry ? "active" : ""}`}
+    onClick={() => setHasLaundry(!hasLaundry)}
+  >
+    <span className="amenityIcon">🧺</span>
+    <span>Laundry</span>
+  </div>
+
+  <div
+    className={`amenityCard ${hasParking ? "active" : ""}`}
+    onClick={() => setHasParking(!hasParking)}
+  >
+    <span className="amenityIcon">🅿️</span>
+    <span>Parking</span>
+  </div>
+
+  {/* ✅ NEW TV CARD */}
+  <div
+    className={`amenityCard ${hasTV ? "active" : ""}`}
+    onClick={() => setHasTV(!hasTV)}
+  >
+    <span className="amenityIcon">📺</span>
+    <span>TV</span>
+  </div>
+
+  <div
+    className={`amenityCard ${hasSecurity ? "active" : ""}`}
+    onClick={() => setHasSecurity(!hasSecurity)}
+  >
+    <span className="amenityIcon">🛡️</span>
+    <span>Security</span>
+  </div>
+
+</div>
+
+  </>
+)}
             <label>DESCRIPTION (MAX 250 WORDS)</label>
             <textarea
               value={description}

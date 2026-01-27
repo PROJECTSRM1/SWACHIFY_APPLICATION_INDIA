@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./CandidateProfile.css";
 
 export type Student = {
@@ -10,7 +10,7 @@ export type Student = {
   status: "Active" | "Completed";
   attendance: number;
   shift: string;
-  resumeUrl?: string;
+  resumeUrl?: string; // ✅ FIX 1
 };
 
 type Props = {
@@ -20,11 +20,72 @@ type Props = {
 
 const CandidateProfile: React.FC<Props> = ({ student, onBack }) => {
   const [criminal, setCriminal] = useState<"YES" | "NO">("NO");
- const [isEditing, setIsEditing] = useState(false);
-const [form, setForm] = useState<Student>(student);
-const [preview, setPreview] = useState(student.avatar);
+  const [isEditing, setIsEditing] = useState(false);
 
+  // 🔹 PROFILE DATA
+  const [aadhaar, setAadhaar] = useState("");
+  const [pan, setPan] = useState("");
+  const [location, setLocation] = useState("");
+  const [education, setEducation] = useState<any[]>([]);
+  const [certificates, setCertificates] = useState<any[]>([]);
+  const [noc, setNoc] = useState<any>(null);
 
+  // 🔹 SAVE APIs
+  const saveFullProfile = async () => {
+    await fetch(
+      `https://swachify-india-be-1-mcrb.onrender.com/api/education/students/${student.id}/full-profile`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ education, certificates, noc }),
+      }
+    );
+  };
+
+  const saveAttendance = async () => {
+    await fetch(
+      `https://swachify-india-be-1-mcrb.onrender.com/api/education/students/${student.id}/attendance`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          attendance_percentage: student.attendance,
+        }),
+      }
+    );
+  };
+
+  const saveInternshipStatus = async () => {
+    await fetch(
+      `https://swachify-india-be-1-mcrb.onrender.com/api/education/students/${student.id}/internship-status`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          internship_status: student.status,
+        }),
+      }
+    );
+  };
+
+  // 🔹 FETCH PROFILE
+  useEffect(() => {
+    fetch(
+      `https://swachify-india-be-1-mcrb.onrender.com/api/education/students/${student.id}/full-profile`
+    )
+      .then((r) => r.json())
+      .then((data) => {
+        const ids = data.profile?.government_id || [];
+
+        setAadhaar(ids.find((i: any) => i.id_type === "Aadhaar")?.id_number || "—");
+        setPan(ids.find((i: any) => i.id_type === "PAN")?.id_number || "—");
+        setLocation(data.profile?.location || "—");
+
+        setEducation(data.education || []);
+        setCertificates(data.certificates || []);
+        setNoc(data.noc || null);
+      });
+  }, [student.id]);
 
   return (
     <div className="cp-root">
@@ -34,10 +95,10 @@ const [preview, setPreview] = useState(student.avatar);
         <h2>Candidate Profile</h2>
       </div>
 
-      {/* PROFILE TOP */}
+      {/* TOP CARD */}
       <div className="cp-top">
         <div className="cp-avatar-wrap">
-          <img src={student.avatar} alt={student.name} />
+          <img src={student.avatar} />
           {student.status === "Active" && <span className="cp-dot" />}
         </div>
 
@@ -48,116 +109,91 @@ const [preview, setPreview] = useState(student.avatar);
 
           <div className="cp-actions">
             <button className="cp-btn secondary">⬇ PDF Report</button>
-          <button className="cp-btn primary cp-edit-btn" onClick={() => setIsEditing(true)}>
-  ✎ Edit Profile
-</button>
-
-
-
+            <button className="cp-btn primary" onClick={() => setIsEditing(true)}>
+              ✎ Edit Profile
+            </button>
           </div>
         </div>
 
-        {/* ✅ RIGHT SIDE – VERTICAL RESUME BUTTONS */}
-       <div className="cp-resume-right">
-  <label className="cp-resume-btn">
-    <span className="icon">⬆</span>
-    Upload Resume
-    <input type="file" hidden />
-  </label>
+        {/* ✅ RESUME ACTIONS */}
+        <div className="cp-resume-right">
+          <label className="cp-resume-btn">
+            <span className="icon">⬆</span>
+            Upload Resume
+            <input type="file" hidden />
+          </label>
 
-  <button className="cp-resume-btn">
-    <span className="icon">⬇</span>
-    Download Resume
-  </button>
-</div>
-
+          <a
+            className="cp-resume-btn"
+            href={student.resumeUrl || "#"}
+            download
+          >
+            <span className="icon">⬇</span>
+            Download Resume
+          </a>
+        </div>
       </div>
 
-      {/* CONTENT GRID */}
+      {/* GRID */}
       <div className="cp-grid">
-        {/* LEFT COLUMN */}
+        {/* LEFT */}
         <div className="cp-col">
           <section className="cp-section">
             <h4>Personal Identity</h4>
 
-            <div className="cp-card">
-              <strong>Aadhaar Card</strong>
-              <p>XXXX-XXXX-1234</p>
-            </div>
-
-            <div className="cp-card">
-              <strong>PAN Card</strong>
-              <p>ABCDE1234F</p>
-            </div>
+            <div className="cp-card"><strong>Aadhaar</strong><p>{aadhaar}</p></div>
+            <div className="cp-card"><strong>PAN</strong><p>{pan}</p></div>
+            <div className="cp-card"><strong>Location</strong><p>{location}</p></div>
 
             <div className="cp-card">
               <strong>NOC Details</strong>
+              {noc ? (
+                <>
+                  <p>NOC No: {noc.noc_number}</p>
+                  <p>{noc.police_station_name}</p>
+                  <p>Year: {noc.issue_year}</p>
+                  <p className="approved">NOC Verified</p>
+
+                  <a className="cp-upload" href={noc.upload_noc} download>
+                    ⬇ Download NOC
+                  </a>
+                </>
+              ) : (
+                <p className="approved">No criminal cases</p>
+              )}
 
               <div className="noc-row">
                 <span>Criminal Background</span>
                 <select
                   value={criminal}
-                  onChange={(e) =>
-                    setCriminal(e.target.value as "YES" | "NO")
-                  }
+                  onChange={(e) => setCriminal(e.target.value as any)}
                 >
                   <option value="NO">NO</option>
                   <option value="YES">YES</option>
                 </select>
               </div>
-
-              {criminal === "NO" && (
-                <p className="approved">No criminal cases reported</p>
-              )}
-
-              {criminal === "YES" && (
-                <>
-                  <input
-                    className="cp-input"
-                    placeholder="Enter Case Number"
-                  />
-                  <label className="cp-upload">
-                    ⬆ Upload Clean Sheet Certificate
-                    <input type="file" hidden />
-                  </label>
-                </>
-              )}
             </div>
           </section>
 
           <section className="cp-section">
             <h4>Education</h4>
-
-           <div className="cp-card">
-  <strong>B.Tech Computer Science</strong>
-  <p>Score: 92%</p>
-  <p className="cp-muted">Duration: Aug 2020 – May 2024</p>
-</div>
-
-<div className="cp-card">
-  <strong>Bachelor of Science (IT)</strong>
-  <p>Score: 9.2 CGPA</p>
-  <p className="cp-muted">Duration: Jul 2017 – Apr 2021</p>
-</div>
-
+            {education.map((e, i) => (
+              <div className="cp-card" key={i}>
+                <strong>{e.degree}</strong>
+                <p>Score: {e.percentage}%</p>
+                <p className="cp-muted">{e.institute}</p>
+              </div>
+            ))}
           </section>
         </div>
 
-        {/* RIGHT COLUMN */}
+        {/* RIGHT */}
         <div className="cp-col">
           <section className="cp-section">
             <h4>Work Details</h4>
 
-            <div className="cp-card">
-              <strong>Attendance</strong>
-              <p>{student.attendance}%</p>
-            </div>
-
-            <div className="cp-card">
-              <strong>Shift</strong>
-              <p>{student.shift}</p>
-            </div>
-
+            <div className="cp-card"><strong>Attendance</strong><p>{student.attendance}%</p></div>
+            <div className="cp-card"><strong>Shift</strong><p>{student.shift}</p></div>
             <div className="cp-card">
               <strong>Status</strong>
               <p className={student.status === "Active" ? "active" : "completed"}>
@@ -167,113 +203,39 @@ const [preview, setPreview] = useState(student.avatar);
           </section>
 
           <section className="cp-section">
-            <h4>Family Details</h4>
+            <h4>Certificates</h4>
+            {certificates.map((c, i) => (
+              <div className="cp-card" key={i}>
+                <strong>{c.certificate_name}</strong>
+                <p>{c.issued_by} · {c.year}</p>
 
-            <div className="cp-card">
-              <strong>Father</strong>
-              <p>Suresh Reddy</p>
-              <p>📞 +91 91234 56789</p>
-            </div>
-
-            <div className="cp-card">
-              <strong>Mother</strong>
-              <p>Lakshmi Reddy</p>
-              <p>📞 +91 99876 54321</p>
-            </div>
+                <a className="cp-upload" href={c.upload_certificate} download>
+                  ⬇ Download Certificate
+                </a>
+              </div>
+            ))}
           </section>
         </div>
       </div>
+
+      {/* SAVE */}
       {isEditing && (
-  <div className="cp-modal-overlay">
-    <div className="cp-modal large">
-      <h3>Edit Profile</h3>
-
-      {/* PHOTO */}
-      <div className="cp-photo-edit">
-        <img src={preview} alt="preview" />
-        <label className="cp-photo-btn">
-          Change Photo
-          <input
-            type="file"
-            accept="image/*"
-            hidden
-            onChange={(e) => {
-              const file = e.target.files?.[0];
-              if (file) {
-                setPreview(URL.createObjectURL(file));
-                setForm({ ...form, avatar: URL.createObjectURL(file) });
-              }
-            }}
-          />
-        </label>
-      </div>
-
-      {/* FORM GRID */}
-      <div className="cp-form-grid">
-        <input
-          className="cp-input"
-          placeholder="Full Name"
-          value={form.name}
-          onChange={(e) => setForm({ ...form, name: e.target.value })}
-        />
-
-        <input
-          className="cp-input"
-          placeholder="Program"
-          value={form.program}
-          onChange={(e) => setForm({ ...form, program: e.target.value })}
-        />
-
-        <input
-          className="cp-input"
-          type="number"
-          placeholder="Attendance %"
-          value={form.attendance}
-          onChange={(e) =>
-            setForm({ ...form, attendance: Number(e.target.value) })
-          }
-        />
-
-        <input
-          className="cp-input"
-          placeholder="Shift"
-          value={form.shift}
-          onChange={(e) => setForm({ ...form, shift: e.target.value })}
-        />
-
-        <select
-          className="cp-input"
-          value={form.status}
-          onChange={(e) =>
-            setForm({ ...form, status: e.target.value as "Active" | "Completed" })
-          }
-        >
-          <option value="Active">Active</option>
-          <option value="Completed">Completed</option>
-        </select>
-      </div>
-
-      {/* ACTIONS */}
-      <div className="cp-modal-actions">
-        <button className="cp-btn secondary" onClick={() => setIsEditing(false)}>
-          Cancel
-        </button>
-
-        <button
-          className="cp-btn primary"
-          onClick={() => {
-            Object.assign(student, form);
-            setIsEditing(false);
-          }}
-        >
-          Save Changes
-        </button>
-      </div>
-    </div>
-  </div>
-)}
-
-    
+        <div className="cp-modal-overlay">
+          <div className="cp-modal">
+            <button
+              className="cp-btn primary"
+              onClick={async () => {
+                await saveFullProfile();
+                await saveAttendance();
+                await saveInternshipStatus();
+                setIsEditing(false);
+              }}
+            >
+              Save Changes
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
