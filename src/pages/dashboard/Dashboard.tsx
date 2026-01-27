@@ -27,6 +27,7 @@ const userServiceIds: number[] = (JSON.parse(localStorage.getItem("service_ids")
   const serviceIdToName: Record<number, string> = {
   1: "Home Services",
   2: "Packers and Movers / Transport",
+  // 2:"Just Ride",
   // 3: "House & Commercial Rentals",
     3: "Buy & Sale Products", 
   4: "Building & Construction Raw Materials",
@@ -416,3 +417,8 @@ return (
 };
 
 export default Dashboard;
+
+
+
+
+
