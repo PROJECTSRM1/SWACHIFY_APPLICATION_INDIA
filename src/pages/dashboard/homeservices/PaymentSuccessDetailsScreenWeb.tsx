@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   MdCheckCircle,
   MdClose,
@@ -10,6 +10,7 @@ import {
 import "./PaymentSuccessDetailsScreenWeb.css";
 
 /* ================= TYPES ================= */
+const LS_RECENT_BOOKINGS_KEY = "recent_bookings";
 
 type AllocatedEmployee = {
   name?: string;
@@ -24,6 +25,7 @@ type BookingDetails = {
   date?: string;
   time?: string;
   address?: string;
+  amount?: number;
 };
 
 type PaymentSuccessDetailsProps = {
@@ -67,6 +69,34 @@ const InfoRow = ({
 );
 
 /* ================= COMPONENT ================= */
+const saveBookingToLocalStorage = (
+  bookingDetails?: BookingDetails,
+  transactionId?: string
+) => {
+  if (!bookingDetails) return;
+
+  // 1️⃣ Read existing bookings
+  const raw = localStorage.getItem(LS_RECENT_BOOKINGS_KEY);
+  const existing = raw ? JSON.parse(raw) : [];
+
+  // 2️⃣ Create new booking
+  const newBooking = {
+    id: Date.now(),
+    title: bookingDetails.serviceName || "Home Service",
+    date: bookingDetails.date,
+    time: bookingDetails.time,
+    amount: bookingDetails.amount || 0,
+    paymentDone: true,
+    transactionId,
+  };
+
+  // 3️⃣ Save back to localStorage
+  localStorage.setItem(
+    LS_RECENT_BOOKINGS_KEY,
+    JSON.stringify([...existing, newBooking])
+  );
+};
+
 
 const PaymentSuccessDetailsScreenWeb: React.FC<
   PaymentSuccessDetailsProps
@@ -76,6 +106,10 @@ const PaymentSuccessDetailsScreenWeb: React.FC<
   transactionId = "N/A",
   onClose,
 }) => {
+    useEffect(() => {
+  saveBookingToLocalStorage(bookingDetails, transactionId);
+}, []);
+
   return (
     <div className="psw_page">
       {/* HEADER */}
