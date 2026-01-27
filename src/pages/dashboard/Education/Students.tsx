@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import "./Students.css";
 
 export interface Student {
@@ -18,81 +18,35 @@ type StudentsProps = {
   onSelectStudent: (student: Student) => void;
 };
 
-const studentsData: Student[] = [
-  {
-    id: 2045,
-    name: "Sarah Jenkins",
-    program: "B.Tech Computer Science",
-    rating: 4.8,
-    status: "Active",
-    attendance: 92,
-    shift: "10:00 AM - 07:00 PM",
-    certs: ["Java", "Python"],
-    avatar: "https://randomuser.me/api/portraits/women/44.jpg",
-  },
-  {
-    id: 1988,
-    name: "Michael Chen",
-    program: "M.S. Data Science",
-    rating: 4.5,
-    status: "Completed",
-    attendance: 88,
-    shift: "10:00 AM - 07:00 PM",
-    certs: ["Python"],
-    avatar: "https://randomuser.me/api/portraits/men/32.jpg",
-  },
-  {
-    id: 2092,
-    name: "Emily Rodriguez",
-    program: "B.E. Information Technology",
-    rating: 4.9,
-    status: "Active",
-    attendance: 95,
-    shift: "10:00 AM - 07:00 PM",
-    certs: ["React"],
-    avatar: "https://randomuser.me/api/portraits/women/68.jpg",
-  },
-  {
-    id: 2101,
-    name: "David Kim",
-    program: "B.S. Software Engineering",
-    rating: 4.7,
-    status: "Completed",
-    attendance: 90,
-    shift: "09:30 AM - 06:30 PM",
-    certs: ["Java"],
-    avatar: "https://randomuser.me/api/portraits/men/45.jpg",
-  },
-  {
-    id: 2112,
-    name: "Ananya Rao",
-    program: "B.Tech AI & ML",
-    rating: 4.6,
-    status: "Active",
-    attendance: 91,
-    shift: "10:00 AM - 07:00 PM",
-    certs: ["Python", "React"],
-    avatar: "https://randomuser.me/api/portraits/women/12.jpg",
-  },
-  {
-    id: 2125,
-    name: "Rahul Mehta",
-    program: "B.E. Computer Engineering",
-    rating: 4.4,
-    status: "Completed",
-    attendance: 87,
-    shift: "09:00 AM - 06:00 PM",
-    certs: ["Angular"],
-    avatar: "https://randomuser.me/api/portraits/men/77.jpg",
-  },
-];
-
 const Students: React.FC<StudentsProps> = ({ onBack, onSelectStudent }) => {
+  const [studentsData, setStudentsData] = useState<Student[]>([]);
   const [search, setSearch] = useState("");
   const [tab, setTab] = useState<"all" | "top" | "recent">("all");
   const [aggregate, setAggregate] = useState("");
   const [certificate, setCertificate] = useState("");
   const [internship, setInternship] = useState("");
+
+  // ✅ FETCH STUDENTS LIST
+  useEffect(() => {
+    fetch("https://swachify-india-be-1-mcrb.onrender.com/api/education/students-list")
+      .then((res) => res.json())
+      .then((data) => {
+        const mapped: Student[] = data.map((item: any, index: number) => ({
+          id: item.user_id,
+          name: item.student_name,
+          program: item.degree,
+          rating: item.rating,
+          status: item.internship_status,
+          attendance: item.attendance_percentage,
+          certs: [item.skill],
+          shift: "10:00 AM - 07:00 PM",
+          avatar: `https://randomuser.me/api/portraits/men/${index + 10}.jpg`,
+        }));
+
+        setStudentsData(mapped);
+      })
+      .catch((err) => console.error(err));
+  }, []);
 
   const filtered = useMemo(() => {
     let data = [...studentsData];
@@ -104,9 +58,8 @@ const Students: React.FC<StudentsProps> = ({ onBack, onSelectStudent }) => {
     if (aggregate === "90+") data = data.filter((s) => s.attendance >= 90);
     if (aggregate === "80-90")
       data = data.filter((s) => s.attendance >= 80 && s.attendance < 90);
-    if (aggregate === "60-80") {
-  data = data.filter((s) => s.attendance >= 60 && s.attendance < 80);
-}
+    if (aggregate === "60-80")
+      data = data.filter((s) => s.attendance >= 60 && s.attendance < 80);
 
     if (certificate) data = data.filter((s) => s.certs.includes(certificate));
     if (internship) data = data.filter((s) => s.status === internship);
@@ -121,7 +74,7 @@ const Students: React.FC<StudentsProps> = ({ onBack, onSelectStudent }) => {
     }
 
     return data;
-  }, [search, tab, aggregate, certificate, internship]);
+  }, [studentsData, search, tab, aggregate, certificate, internship]);
 
   return (
     <div className="students-root">
@@ -156,15 +109,13 @@ const Students: React.FC<StudentsProps> = ({ onBack, onSelectStudent }) => {
             <option value="">Aggregate</option>
             <option value="90+">90%+</option>
             <option value="80-90">80–90%</option>
-             <option value="60-80">60–80%</option>
+            <option value="60-80">60–80%</option>
           </select>
 
           <select onChange={(e) => setCertificate(e.target.value)}>
             <option value="">Certificate</option>
-            <option value="Java">Java</option>
             <option value="Python">Python</option>
-            <option value="React">React</option>
-            <option value="Angular">Angular</option>
+            <option value="CSS">CSS</option>
           </select>
 
           <select onChange={(e) => setInternship(e.target.value)}>
