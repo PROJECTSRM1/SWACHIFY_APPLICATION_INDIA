@@ -2397,3 +2397,24 @@
   }
 }
 
+
+
+@media (max-width: 425px) {
+  .mobile-trending-actions {
+    margin-top: 8px;
+    display: flex;
+    gap: 10px;
+    padding-left: 34px; /* align under text */
+  }
+
+  .mobile-trending-actions button {
+    flex: 1;
+    border: none;
+    background: #eaf7f2;
+    color: #2f6f6d;
+    font-weight: 800;
+    padding: 10px;
+    border-radius: 14px;
+    font-size: 14px;
+  }
+}
