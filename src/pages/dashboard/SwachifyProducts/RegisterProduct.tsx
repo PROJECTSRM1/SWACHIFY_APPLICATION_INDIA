@@ -111,7 +111,7 @@ const RegisterProduct: React.FC<RegisterProductProps> = ({ onBack }) => {
                     onClick={onBack}
                     className="sw-register-dashboard-back-btn"
                 >
-                    Back
+
                 </Button>
                 <h1 className="sw-register-dashboard-title">Register Product</h1>
             </div>

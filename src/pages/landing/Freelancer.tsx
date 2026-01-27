@@ -411,9 +411,8 @@ const Freelancer: React.FC = () => {
         {filteredProviders.map((p) => (
           <div
   key={p.id}
- className={`card ${
-  p.status !== "WAITING" ? "disabled" : ""
-}`}
+className="card"
+
 
 >
 
