@@ -65,6 +65,21 @@ const [commercialArea, setCommercialArea] = useState("");
   const [description, setDescription] = useState("");
   const [images, setImages] = useState<string[]>([]);
   // const cleanPrice = price.replace(/,/g, "");
+
+  /* ================= HOSTEL ================= */
+const [hostelType, setHostelType] = useState("Boys");
+const [totalRooms, setTotalRooms] = useState("");
+const [availableRooms, setAvailableRooms] = useState("");
+const [foodIncluded, setFoodIncluded] = useState("Yes");
+
+const [hasAC, setHasAC] = useState(false);
+const [hasWifi, setHasWifi] = useState(false);
+const [hasLaundry, setHasLaundry] = useState(false);
+const [hasParking, setHasParking] = useState(false);
+const [hasSecurity, setHasSecurity] = useState(false);
+const [hasTV, setHasTV] = useState(false);
+
+
   
 
   
@@ -72,10 +87,13 @@ const [commercialArea, setCommercialArea] = useState("");
   const isHouse = ["Apartment", "Villa", "Independent House"].includes(propertyType);
   const isVehicle = ["Bike", "Car", "Lorry", "Auto", "Bus"].includes(propertyType);
   const isLand = propertyType === "Land";
+
   const isCommercial =
   propertyType === "Office" ||
   propertyType === "Hospital" ||
   propertyType === "Commercial Space";
+    const isHostel = propertyType === "Hostel";
+
 
 
   const wordCount = description.trim().split(/\s+/).filter(Boolean).length;
@@ -157,6 +175,16 @@ const unformatNumber = (value: string) => value.replace(/,/g, "");
   landArea,
   registeredOwner,
   documents: landDocuments,
+  hostelType,
+totalRooms,
+availableRooms,
+foodIncluded,
+hasAC,
+hasWifi,
+hasLaundry,
+hasParking,
+hasSecurity,
+hasTV,
 
   createdAt: new Date().toISOString(),
 };
@@ -254,6 +282,8 @@ const unformatNumber = (value: string) => value.replace(/,/g, "");
               <option>Office</option>
               <option>Hospital</option>
               <option>Commercial Space</option>
+              <option>Hostel</option>
+
             </select>
 
             {/* CONDITION */}
@@ -267,7 +297,8 @@ const unformatNumber = (value: string) => value.replace(/,/g, "");
             </select>
 
             {/* PRICE */}
-            <label>PRICE (₹)</label>
+            <label>{isHostel ? "PRICE PER MONTH (₹)" : "PRICE (₹)"}</label>
+
 <input
   inputMode="numeric"
   value={price}
@@ -498,8 +529,102 @@ const unformatNumber = (value: string) => value.replace(/,/g, "");
                 </div>
               </>
             )}
+            {/* ================= HOSTEL FIELDS ================= */}
+{isHostel && (
+  <>
+    <label>HOSTEL TYPE</label>
+    <select value={hostelType} onChange={(e) => setHostelType(e.target.value)}>
+      <option>Boys</option>
+      <option>Girls</option>
+      <option>Co-living</option>
+    </select>
 
-            {/* DESCRIPTION */}
+    <div className="sellRow">
+      <div>
+        <label>TOTAL ROOMS</label>
+        <input
+          inputMode="numeric"
+          value={totalRooms}
+          onChange={(e) => setTotalRooms(e.target.value)}
+        />
+      </div>
+
+      <div>
+        <label>AVAILABLE ROOMS</label>
+        <input
+          inputMode="numeric"
+          value={availableRooms}
+          onChange={(e) => setAvailableRooms(e.target.value)}
+        />
+      </div>
+    </div>
+
+    <label>FOOD INCLUDED</label>
+    <select
+      value={foodIncluded}
+      onChange={(e) => setFoodIncluded(e.target.value)}
+    >
+      <option>Yes</option>
+      <option>No</option>
+    </select>
+
+    <label>SERVICES & AMENITIES</label>
+
+<div className="amenitiesGrid sellAmenities">
+
+  <div
+    className={`amenityCard ${hasAC ? "active" : ""}`}
+    onClick={() => setHasAC(!hasAC)}
+  >
+    <span className="amenityIcon">❄️</span>
+    <span>AC</span>
+  </div>
+
+  <div
+    className={`amenityCard ${hasWifi ? "active" : ""}`}
+    onClick={() => setHasWifi(!hasWifi)}
+  >
+    <span className="amenityIcon">📶</span>
+    <span>WiFi</span>
+  </div>
+
+  <div
+    className={`amenityCard ${hasLaundry ? "active" : ""}`}
+    onClick={() => setHasLaundry(!hasLaundry)}
+  >
+    <span className="amenityIcon">🧺</span>
+    <span>Laundry</span>
+  </div>
+
+  <div
+    className={`amenityCard ${hasParking ? "active" : ""}`}
+    onClick={() => setHasParking(!hasParking)}
+  >
+    <span className="amenityIcon">🅿️</span>
+    <span>Parking</span>
+  </div>
+
+  {/* ✅ NEW TV CARD */}
+  <div
+    className={`amenityCard ${hasTV ? "active" : ""}`}
+    onClick={() => setHasTV(!hasTV)}
+  >
+    <span className="amenityIcon">📺</span>
+    <span>TV</span>
+  </div>
+
+  <div
+    className={`amenityCard ${hasSecurity ? "active" : ""}`}
+    onClick={() => setHasSecurity(!hasSecurity)}
+  >
+    <span className="amenityIcon">🛡️</span>
+    <span>Security</span>
+  </div>
+
+</div>
+
+  </>
+)}
             <label>DESCRIPTION (MAX 250 WORDS)</label>
             <textarea
               value={description}
