@@ -16,7 +16,6 @@ type Props = {
   onConfirm: () => void;
 };
 
-/* ✅ BRANCHES BY QUALIFICATION */
 const BRANCHES: Record<string, string[]> = {
   "B.Tech": [
     "Computer Science",
@@ -27,13 +26,7 @@ const BRANCHES: Record<string, string[]> = {
     "Mechanical Engineering",
     "Civil Engineering",
   ],
-  "B.E": [
-    "Computer Science",
-    "Electronics",
-    "Electrical",
-    "Mechanical",
-    "Civil",
-  ],
+  "B.E": ["Computer Science", "Electronics", "Electrical", "Mechanical", "Civil"],
   "B.Sc": [
     "Computer Science",
     "Information Technology",
@@ -48,14 +41,14 @@ const BRANCHES: Record<string, string[]> = {
     "Power Systems",
     "Structural Engineering",
   ],
-  "MCA": [
-    "Computer Applications",
-    "Software Engineering",
-    "Data Science",
-  ],
+  MCA: ["Computer Applications", "Software Engineering", "Data Science"],
 };
 
-export default function CourseEnroll({ course, onBack, onConfirm }: Props) {
+export default function CourseEnroll({
+  course,
+  onBack,
+  onConfirm,
+}: Props) {
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -63,11 +56,17 @@ export default function CourseEnroll({ course, onBack, onConfirm }: Props) {
     qualification: "",
     branch: "",
     year: "",
+    documents: [] as File[],
   });
 
   const branches = BRANCHES[form.qualification] || [];
 
-  /* ✅ STRICT VALIDATION */
+  const handleFiles = (files: FileList | null) => {
+    if (!files) return;
+    const selected = Array.from(files).slice(0, 10);
+    setForm({ ...form, documents: selected });
+  };
+
   const isValid =
     form.name.trim() !== "" &&
     form.email.trim() !== "" &&
@@ -76,24 +75,23 @@ export default function CourseEnroll({ course, onBack, onConfirm }: Props) {
     (branches.length === 0 || form.branch.trim() !== "") &&
     /^\d{4}$/.test(form.year) &&
     Number(form.year) >= 1990 &&
-    Number(form.year) <= 2030;
+    Number(form.year) <= 2030 &&
+    form.documents.length > 0;
 
   return (
     <div className="enroll-page">
       <div className="enroll-container">
         {/* HEADER */}
-       <div className="enroll-header">
-  <button className="back-btn back-btn-fixed" onClick={onBack}>
-    ← 
-  </button>
+        <div className="enroll-header">
+          <button className="back-btn back-btn-fixed" onClick={onBack}>
+            ←
+          </button>
 
-  <div className="enroll-title">
-    <h2>Enrollment Details</h2>
-    <span className="step">Step 3 of 3</span>
-  </div>
-</div>
-
-
+          <div className="enroll-title">
+            <h2>Enrollment Details</h2>
+            <span className="step">Step 3 of 3</span>
+          </div>
+        </div>
 
         {/* COURSE CARD */}
         <div className="course-card-enroll">
@@ -151,7 +149,6 @@ export default function CourseEnroll({ course, onBack, onConfirm }: Props) {
           />
 
           <div className="row">
-            {/* QUALIFICATION */}
             <select
               value={form.qualification}
               onChange={(e) =>
@@ -170,20 +167,16 @@ export default function CourseEnroll({ course, onBack, onConfirm }: Props) {
               <option value="MCA">MCA</option>
             </select>
 
-            {/* YEAR */}
             <input
               type="number"
               placeholder="Graduation Year (YYYY)"
               value={form.year}
-              min={1990}
-              max={2030}
               onChange={(e) =>
                 setForm({ ...form, year: e.target.value })
               }
             />
           </div>
 
-          {/* 🔥 BRANCHES FOR ALL QUALIFICATIONS */}
           {branches.length > 0 && (
             <select
               value={form.branch}
@@ -198,6 +191,53 @@ export default function CourseEnroll({ course, onBack, onConfirm }: Props) {
                 </option>
               ))}
             </select>
+          )}
+
+          {/* UPLOAD */}
+          <h3>Upload Certificates / ID Proof</h3>
+
+          <label className="upload-card">
+            <input
+              type="file"
+              multiple
+              accept="image/*,.pdf"
+              hidden
+              onChange={(e) => handleFiles(e.target.files)}
+            />
+            <div className="upload-inner">
+              <div className="upload-cloud">☁️</div>
+              <div className="upload-text">UPLOAD</div>
+              <div className="upload-sub">Max 10 files</div>
+            </div>
+          </label>
+
+          {/* FILE LIST WITH CANCEL */}
+          {form.documents.length > 0 && (
+            <div className="file-list">
+              {form.documents.map((file, index) => (
+                <div
+                  className="file-chip"
+                  key={`${file.name}-${index}`}
+                >
+                  <span className="file-name">{file.name}</span>
+
+                  <button
+                    type="button"
+                    className="file-remove"
+                    onClick={() => {
+                      const updated = [...form.documents];
+                      updated.splice(index, 1);
+                      setForm({
+                        ...form,
+                        documents: updated,
+                      });
+                    }}
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
+            </div>
           )}
         </div>
 

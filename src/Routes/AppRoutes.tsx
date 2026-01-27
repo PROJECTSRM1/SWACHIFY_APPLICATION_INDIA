@@ -10,7 +10,10 @@ import SwachifyProducts from "../pages/landing/Swachifyproducts";
 import CommonHeader from "../pages/landing/Header";
 import ResumePendingCart from "../pages/ResumePendingCart";
 import ProfilePage from "../pages/freelancer/ProfilePage";
-// import { ProductsListing, RegisterProduct } from "../pages/Swachify_Products";
+import SwiftParcel from "../pages/dashboard/PackersAndMovers/SwiftParcel";
+import AllServices from "../pages/dashboard/PackersAndMovers/AllServices";
+import BookRide from "../pages/dashboard/PackersAndMovers/BookRide";
+import MetroHubPage from "../pages/dashboard/PackersAndMovers/MetroHubPage";
 
 
 
@@ -24,6 +27,13 @@ export const AppRoutes = () => {
       <Routes>
         <Route path="/*" element={<NonSecureRoutes />} />
         <Route path="/freelancer/profile" element={<ProfilePage />} />
+        <Route path="/allservices" element={<AllServices/>}/>
+        <Route path = "/swiftparcel" element={<SwiftParcel/>}/>
+         <Route path = "/metrohub" element={<MetroHubPage/>}/>
+        <Route path = "/bookride" element={<BookRide/>}/>
+         
+         
+        
 
 
         <Route

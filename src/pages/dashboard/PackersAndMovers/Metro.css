@@ -1,0 +1,657 @@
+/* ============================================
+   JUST RIDE – MODERN PROFESSIONAL UI THEME
+   Smooth, minimal, white background theme
+   Designed for Landing + MetroHub + PlanTrip + QR
+   Clean, consistent, fully responsive
+============================================ */
+
+/* --------------------------------------------
+   THEME TOKENS
+-------------------------------------------- */
+
+:root {
+  --bg: #ffffff;
+
+  --text-strong: #0f172a;
+  --text-medium: #334155;
+  --text-light: #64748b;
+
+  --primary: #6366f1;
+  --primary-light: #eef2ff;
+
+  --surface: #ffffff;
+  --surface-alt: #f8fafc;
+
+  --border: #e2e8f0;
+  --shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+
+  --radius-lg: 24px;
+  --radius-md: 18px;
+
+  --transition: 0.25s ease;
+  --space: 20px;
+  --font: "Inter", sans-serif;
+}
+
+/* --------------------------------------------
+   GLOBAL PAGE
+-------------------------------------------- */
+.sw-jr-page {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--bg);
+  padding: 24px;
+  box-sizing: border-box;
+  color: var(--text-strong);
+  font-family: var(--font);
+
+  overflow-y: auto;          /* 👍 Scroll stays inside */
+  max-height: 100vh;         /* 👍 don't exceed screen */
+}
+
+.sw-jr-center-box {
+    max-width: 900px !important;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 20px;
+
+    padding-bottom: 80px !important;   /* ⭐ Fix: keeps PAY & BOOK visible */
+}
+
+
+
+/* --------------------------------------------
+   HEADER
+-------------------------------------------- */
+.sw-jr-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.sw-jr-header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.sw-jr-icon-box {
+  width: 52px;
+  height: 52px;
+  background: var(--primary);
+  border-radius: var(--radius-md);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 26px;
+  color: white;
+  box-shadow: var(--shadow);
+}
+
+.sw-jr-title {
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--text-strong);
+}
+
+.sw-jr-location {
+  font-size: 12px;
+  color: var(--text-medium);
+  letter-spacing: 1px;
+}
+
+.sw-jr-history-btn {
+  width: 46px;
+  height: 46px;
+  background: var(--surface-alt);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: var(--text-medium);
+  transition: var(--transition);
+}
+
+.sw-jr-history-btn:hover {
+  background: var(--primary-light);
+}
+
+/* --------------------------------------------
+   BOOK TICKET CARD
+-------------------------------------------- */
+/* FULL-WIDTH SLIM BOOK CARD */
+.sw-jr-book-card {
+  width: calc(100% - 40px);   /* stretches left & right more */
+  margin: 0 auto;             /* center alignment */
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  color: white;
+
+  padding: 18px 24px;         /* reduced height TOP-BOTTOM */
+  position: relative;
+  height: 90px;               /* SAME height as below cards */
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;    /* center text vertically */
+
+  border-radius: 22px;
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.25);
+
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.sw-jr-book-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(99, 102, 241, 0.35);
+}
+
+/* BOOK TITLE */
+.sw-jr-book-title {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/* SUBTITLE */
+.sw-jr-book-sub {
+  font-size: 13px;
+  margin-top: 4px;
+  opacity: 0.95;
+}
+
+/* ARROW RIGHT SIDE */
+.sw-jr-arrow {
+  position: absolute;
+  right: 28px;
+  font-size: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* --------------------------------------------
+   RECENT TICKETS (clean white theme)
+-------------------------------------------- */
+.sw-jr-section-title {
+  margin-top: 32px;
+  font-size: 14px;
+  letter-spacing: 2px;
+  color: var(--text-light);
+  font-weight: 600;
+}
+
+.sw-jr-ticket-card {
+  background: var(--surface-alt);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  padding: 18px 20px;
+  margin-top: 14px;
+  box-shadow: var(--shadow);
+}
+
+.sw-jr-ticket-place {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-strong);
+}
+
+.sw-jr-ticket-meta {
+  margin-top: 6px;
+  font-size: 14px;
+  color: var(--text-light);
+}
+
+/* --------------------------------------------
+   PLAN TRIP — INPUTS
+-------------------------------------------- */
+
+.sw-jr-back-btn {
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: var(--primary);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.sw-jr-big-title {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--text-strong);
+  margin-bottom: 24px;
+}
+
+/* Single card */
+.sw-jr-input-card {
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 22px 20px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+}
+
+.sw-jr-input-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-light);
+  margin-bottom: 6px;
+}
+
+.sw-jr-input-box {
+  background: white;
+  border-radius: var(--radius-md);
+  padding: 14px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  color: var(--text-strong);
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.sw-jr-input-box:hover {
+  border-color: var(--primary);
+}
+
+/* Swap */
+.sw-jr-swap-wrap {
+  text-align: center;
+  margin: 14px 0;
+}
+
+.sw-jr-swap-arrow {
+  font-size: 26px;
+  color: var(--primary);
+}
+
+/* --------------------------------------------
+   TRIP TABS
+-------------------------------------------- */
+
+.sw-jr-trip-tabs {
+  display: flex;
+  background: var(--surface-alt);
+  padding: 6px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  margin-top: 16px;
+}
+
+.sw-jr-trip-tab {
+  flex: 1;
+  padding: 12px 0;
+  text-align: center;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--text-light);
+  transition: var(--transition);
+}
+
+.sw-jr-trip-tab.active {
+  background: var(--primary);
+  color: white;
+  box-shadow: var(--shadow);
+}
+
+/* --------------------------------------------
+   FARE + PAY BUTTON
+-------------------------------------------- */
+.sw-jr-fare-box {
+  margin-top: 20px;
+}
+
+.sw-jr-fare-label {
+  font-size: 14px;
+  color: var(--text-light);
+}
+
+.sw-jr-fare-amount {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-strong);
+}
+
+.sw-jr-pay-btn {
+  width: 100%;
+  background: var(--primary);
+  padding: 16px;
+  margin-top: 28px;
+  text-align: center;
+  border-radius: var(--radius-lg);
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.2);
+  transition: var(--transition);
+}
+
+.sw-jr-pay-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px rgba(99, 102, 241, 0.35);
+}
+
+/* --------------------------------------------
+   STATION PICKER POPUP (WHITE THEME)
+-------------------------------------------- */
+
+.sw-jr-popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(6px);
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  padding-top: 40px;
+
+  /* FIX: MAKE OVERLAY NON-SCROLLABLE */
+  overflow: hidden !important;
+
+  height: 100vh;
+  width: 100vw;
+
+  z-index: 2000;
+}
+
+
+
+
+
+
+.sw-jr-popup-station {
+  display: flex;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.sw-jr-popup-station:hover {
+  background: var(--primary-light);
+}
+
+
+
+
+
+
+
+.sw-jr-popup-metrohub {
+  width: 100%;
+  max-width: 720px;
+  background: white;
+  border-radius: 32px;
+  padding: 32px;
+
+  max-height: 90vh;
+  overflow-y: auto;           /* 👍 scrollbar stays inside */
+  box-shadow: 0 20px 40px rgba(0,0,0,0.18);
+
+  animation: slideUp 0.28s ease;
+}
+
+
+
+
+/* --------------------------------------------
+   QR TICKET POPUP
+-------------------------------------------- */
+
+.sw-jr-ticket-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3000;
+}
+
+.sw-jr-qr-card {
+  background: white;
+  width: 90%;
+  max-width: 430px;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+/* Header */
+.sw-jr-qr-header {
+  background: var(--primary);
+  color: white;
+  padding: 18px 22px;
+  font-weight: 700;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Route */
+.sw-jr-qr-route {
+  background: var(--primary-light);
+  padding: 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;   /* center vertically */
+  text-align: center;    /* cleaner look */
+}
+
+
+.sw-jr-qr-label {
+  color: var(--text-medium);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.sw-jr-qr-value {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text-strong);
+}
+
+.sw-jr-qr-arrow {
+  font-size: 22px;
+  color: var(--primary);
+  margin: 0 12px;
+}
+
+/* QR Box */
+.sw-jr-qr-whitebox {
+  padding: 30px 24px;
+  text-align: center;
+}
+
+.sw-jr-qr-img {
+  width: 190px;
+  height: 190px;
+  margin: auto;
+}
+
+/* Info */
+.sw-jr-qr-info {
+  text-align: center;       /* center text */
+  font-size: 14px;
+  color: var(--text-medium);
+  margin-top: 10px;
+  margin-bottom: 12px;
+}
+
+
+/* DONE BUTTON */
+.sw-jr-qr-done-btn {
+  width: 100%;
+  background: var(--primary);
+  padding: 16px 0;
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: center;    /* center the text */
+  border-radius: 0 0 24px 24px;
+}
+
+
+
+.sw-jr-popup-list {
+  max-height: none;     /* remove limit */
+  overflow: visible;    /* remove inner scrolling */
+  padding-right: 0;
+}
+
+
+.sw-jr-popup-station {
+  padding: 14px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+
+.sw-jr-popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding: 6px 2px;
+}
+
+/* --------------------------------------------
+   Animations
+-------------------------------------------- */
+@keyframes slideUp {
+  from { transform: translateY(60px); opacity: 0; }
+  to   { transform: translateY(0);   opacity: 1; }
+}
+
+
+/* WRAPPER WIDTH CONTROL */
+
+
+/* BOOK TICKET CARD – slim + full width */
+.sw-jr-book-card {
+  width: 100%;
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  color: white;
+
+  padding: 22px 26px;       /* 🔥 Reduced height */
+  border-radius: 22px;
+
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.25);
+  cursor: pointer;
+  transition: 0.25s ease;
+
+  margin-top: 10px;
+}
+
+.sw-jr-book-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(99, 102, 241, 0.35);
+}
+
+/* BOOK TEXT — reduced & clean */
+.sw-jr-book-title {
+  font-size: 22px;      /* smaller */
+  font-weight: 700;
+}
+
+.sw-jr-book-sub {
+  font-size: 13px;
+  margin-top: 4px;
+  opacity: 0.95;
+}
+
+.sw-jr-arrow {
+  font-size: 22px;      /* smaller arrow */
+  margin-top: 10px;
+  text-align: right;
+}
+
+
+
+
+.sw-jr-popup-metrohub .sw-jr-page {
+  height: auto !important;
+  min-height: auto !important;
+  overflow: visible !important;
+  padding: 0;
+}
+
+
+
+.sw-jr-page {
+    max-height: 95vh !important;
+}
+
+
+
+
+
+
+/* FIX: WIDER POPUP + SCROLLBAR INSIDE + NO DOUBLE SCROLL */
+
+
+/* POPUP MAIN BOX – fixed height rectangle */
+.sw-jr-popup-box {
+    width: 100%;
+    max-width: 480px !important;   /* slightly wider for better layout */
+    background: #ffffff;
+    border-radius: 20px;           /* 🔥 Rectangle feel */
+    padding: 26px 28px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.18);
+
+    max-height: 70vh !important;   /* ⭐ Fixed rectangle height */
+    overflow: hidden !important;   /* Prevent outer scroll */
+}
+
+/* SCROLLABLE LIST INSIDE POPUP */
+.sw-jr-popup-list {
+    max-height: 55vh !important;   /* fits inside rectangle perfectly */
+    overflow-y: scroll !important;
+    overflow-x: hidden;
+
+    /* ⭐ Invisible scrollbar */
+    scrollbar-width: none;
+}
+.sw-jr-popup-list::-webkit-scrollbar {
+    display: none;
+}
+
+/* FORCE POPUP TO BE SQUARE-WIDE */
+.sw-jr-popup-overlay {
+    align-items: center !important;     /* Center vertically */
+    justify-content: center !important; /* Center horizontally */
+}
+
+/* MAIN POPUP BOX — RECTANGLE SHAPE */
+.sw-jr-popup-box {
+    width: 480px !important;            /* ⭐ REAL FIX: fixed wide rectangle */
+    max-width: 90vw !important;         /* for smaller screens */
+    background: #fff;
+    border-radius: 20px;
+    padding: 24px 26px;
+    max-height: 75vh !important;
+    overflow: hidden !important;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.18);
+}
+
+/* SCROLL AREA INSIDE POPUP */
+.sw-jr-popup-list {
+    max-height: 60vh !important;
+    overflow-y: auto !important;
+    scrollbar-width: none;
+}
+.sw-jr-popup-list::-webkit-scrollbar { 
+    display: none;
+}
+
+/* VERY IMPORTANT FIX: REMOVE WIDTH LIMIT */
+.sw-jr-page, .sw-jr-center-box {
+    max-width: none !important;
+}
+
+

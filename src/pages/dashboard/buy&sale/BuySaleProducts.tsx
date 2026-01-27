@@ -50,6 +50,8 @@ sqft?: string;
   distance: string;
   listingType: "buy" | "rent";
   category: "land" | "apartment" | "house" | "vehicle" | "commercial"| "hostel";
+  itemCondition?: "New Item" | "Old Item";
+
   landType?: string;
   ownerName?: string;
   documents?: string[];
@@ -203,6 +205,23 @@ const PROPERTY_TYPE_OPTIONS = [
   { label: "Hostel", category: "hostel" },
 ];
 
+const formatIndianPrice = (value?: string | number) => {
+  if (!value) return "0";
+
+  const numeric = String(value).replace(/[^0-9]/g, "");
+  if (!numeric) return "0";
+
+  return numeric.replace(/\B(?=(\d{2})+(?!\d))/g, ",");
+};
+
+const getRandomDistance = () => {
+  const km = (Math.random() * 8 + 0.5).toFixed(1); 
+  return `${km} km away`;
+};
+
+
+
+
 // ✅ READ USER POSTED LISTINGS FROM LOCAL STORAGE
 const getUserListings = (): (Property & { isUserListing: boolean })[] => {
   const stored = JSON.parse(
@@ -211,60 +230,81 @@ const getUserListings = (): (Property & { isUserListing: boolean })[] => {
 
   return stored.map((item: any) => {
     const isHostel = item.propertyType === "Hostel";
+    const isHouse =
+  ["Apartment", "Villa", "Independent House"].includes(item.propertyType);
+
 
     return {
-      id: String(item.id),
+  id: String(item.id),
 
-      // ✅ TITLE
-      title: isHostel ? `${item.hostelType} Hostel` : "Land for Sale",
+  // ✅ TITLE
+  title: isHostel
+    ? `${item.hostelType} Hostel`
+    : isHouse
+    ? `${item.bhk || ""} ${item.propertyType}`
+    : item.propertyType === "Land"
+    ? "Land for Sale"
+    : item.propertyType,
+    itemCondition: item.itemCondition,
 
-      // ✅ PRICE FORMAT
-      price:
-        item.listingType === "rent"
-          ? `₹${item.price} / month`
-          : `₹${item.price}`,
+  // ✅ PRICE
+  price:
+    item.listingType === "rent"
+      ? `₹${formatIndianPrice(item.price)} / month`
+      : `₹${formatIndianPrice(item.price)}`,
 
-      image: item.images?.[0],
-      images: item.images,
+  image: item.images?.[0],
+  images: item.images,
 
-      rating: 4.5,
-      area: item.landArea || item.area || "Near Your Area",
-      distance: "Just now",
+  rating: 4.5,
+  area: item.landArea || item.area || "Near Your Area",
+  distance: getRandomDistance(),
 
-      // =========================
-      // 🔑 CATEGORY FIX
-      // =========================
-      category: isHostel ? "hostel" : "land",
+  // ✅ CATEGORY (FIXED)
+  category: isHostel
+    ? "hostel"
+    : item.propertyType === "Land"
+    ? "land"
+    : item.propertyType === "Bike" ||
+      item.propertyType === "Car" ||
+      item.propertyType === "Auto" ||
+      item.propertyType === "Lorry"
+    ? "vehicle"
+    : isHouse
+    ? "house"
+    : "commercial",
 
-      listingType: item.listingType === "rent" ? "rent" : "buy",
+  listingType: item.listingType === "rent" ? "rent" : "buy",
 
-      // =========================
-      // HOSTEL DATA (REAL POSTS)
-      // =========================
-      hostelType: item.hostelType,
-      totalRooms: item.totalRooms,
-      availableRooms: item.availableRooms,
-      foodIncluded: item.foodIncluded,
-      hasAC: item.hasAC,
-      hasWifi: item.hasWifi,
-      hasLaundry: item.hasLaundry,
-      hasParking: item.hasParking,
-      hasSecurity: item.hasSecurity,
+  // ===== HOUSE =====
+  bhk: isHouse ? item.bhk : undefined,
+  sqft: isHouse ? item.sqft : item.landSqft,
 
-      // =========================
-      // LAND DATA (ONLY IF LAND)
-      // =========================
-sqft: item.landSqft || item.sqft,
-      landType: item.landType,
-      ownerName: item.registeredOwner,
-      documents: item.documents,
-      registrationStatus: item.registrationStatus,
-      registrationValue: item.registrationValue,
-      marketValue: item.marketValue,
-      description: item.description,
+  // ===== LAND (ONLY LAND) =====
+  landType: item.propertyType === "Land" ? item.landType : undefined,
+  ownerName: item.propertyType === "Land" ? item.registeredOwner : undefined,
+  documents: item.propertyType === "Land" ? item.documents : undefined,
+  registrationStatus:
+    item.propertyType === "Land" ? item.registrationStatus : undefined,
+  registrationValue:
+    item.propertyType === "Land" ? item.registrationValue : undefined,
+  marketValue:
+    item.propertyType === "Land" ? item.marketValue : undefined,
 
-      isUserListing: true,
-    };
+  // ===== HOSTEL =====
+  hostelType: item.hostelType,
+  totalRooms: item.totalRooms,
+  availableRooms: item.availableRooms,
+  foodIncluded: item.foodIncluded,
+  hasAC: item.hasAC,
+  hasWifi: item.hasWifi,
+  hasLaundry: item.hasLaundry,
+  hasParking: item.hasParking,
+  hasSecurity: item.hasSecurity,
+
+  isUserListing: true,
+};
+
   });
 };
 
@@ -680,9 +720,22 @@ const filteredProperties = properties.filter((p: Property) => {
                   <div className="mp-image-wrapper">
   <img src={p.image} alt={p.title} />
 
+  <div className="mp-badges">
   <span className="mp-badge">
     {p.listingType === "buy" ? "FOR SALE" : "FOR RENT"}
   </span>
+
+  {p.itemCondition && (
+    <span
+      className={`mp-condition ${
+        p.itemCondition === "New Item" ? "new" : "used"
+      }`}
+    >
+      {p.itemCondition === "New Item" ? "NEW" : "USED"}
+    </span>
+  )}
+</div>
+
 
   <div className="mp-rating">
     <MdStar /> {p.rating}
