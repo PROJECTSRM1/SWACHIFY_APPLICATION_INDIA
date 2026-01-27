@@ -11,6 +11,8 @@ export default function SellItemWeb({ onClose }: SellItemWebProps) {
   const [propertyType, setPropertyType] = useState<string>("Apartment");
   const [itemCondition, setItemCondition] = useState<string>("New Item");
   const [price, setPrice] = useState<string>("");
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
 
   /* ================= HOUSE ================= */
   const formatIndianNumber = (value: string) => {
@@ -34,6 +36,21 @@ const handleNumericChange =
   const [furnishingType, setFurnishingType] = useState<
     "No Furn" | "Semi" | "Full"
   >("No Furn");
+  const validateNumeric = (value: string) => /^[0-9,]*$/.test(value);
+const validateAlpha = (value: string) => /^[a-zA-Z\s]*$/.test(value);
+
+const setFieldError = (field: string, message: string) => {
+  setErrors((prev) => ({ ...prev, [field]: message }));
+};
+
+const clearFieldError = (field: string) => {
+  setErrors((prev) => {
+    const copy = { ...prev };
+    delete copy[field];
+    return copy;
+  });
+};
+
 
   /* ================= VEHICLE ================= */
   const [brand, setBrand] = useState("");
@@ -156,13 +173,19 @@ const unformatNumber = (value: string) => value.replace(/,/g, "");
   listingType,
   propertyType,
   itemCondition,
+  
 
   price: unformatNumber(price),
+    ownerName,
+  ownerPhone: mobileNumber,
   sqft: unformatNumber(sqft),
-  landSqft: unformatNumber(landSqft),
+    landSqft: unformatNumber(landSqft),
   registrationValue: unformatNumber(registrationValue),
   marketValue: unformatNumber(marketValue),
   distance: unformatNumber(distance),
+  category: ["Bike", "Car", "Lorry", "Auto", "Bus"].includes(propertyType)
+    ? "vehicle"
+    : "property",
 
   bhk,
   location,
@@ -205,6 +228,33 @@ hasTV,
   alert("Listing posted successfully!");
   onClose?.();
 };
+const handleNumericValidated =
+  (setter: React.Dispatch<React.SetStateAction<string>>, field: string) =>
+  (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+
+    if (!validateNumeric(value)) {
+      setFieldError(field, "Only numbers are allowed");
+      return;
+    }
+
+    clearFieldError(field);
+    setter(formatIndianNumber(value));
+  };
+const handleAlphaValidated =
+  (setter: React.Dispatch<React.SetStateAction<string>>, field: string) =>
+  (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+
+    if (!validateAlpha(value)) {
+      setFieldError(field, "Only alphabets are allowed");
+      return;
+    }
+
+    clearFieldError(field);
+    setter(value);
+  };
+
 
 
   return (
@@ -298,13 +348,13 @@ hasTV,
 
             {/* PRICE */}
             <label>{isHostel ? "PRICE PER MONTH (₹)" : "PRICE (₹)"}</label>
-
 <input
   inputMode="numeric"
   value={price}
   placeholder="Enter price"
-  onChange={handleNumericChange(setPrice)}
+  onChange={handleNumericValidated(setPrice, "price")}
 />
+{errors.price && <p className="errorText">{errors.price}</p>}
 
 
 
@@ -347,11 +397,15 @@ hasTV,
         Registered Land
       </button>
       <button
-        className={registrationStatus === "Non-Registered" ? "active" : ""}
-        onClick={() => setRegistrationStatus("Non-Registered")}
-      >
-        Non-Registered
-      </button>
+  className={registrationStatus === "Non-Registered" ? "active" : ""}
+  onClick={() => {
+    setRegistrationStatus("Non-Registered");
+    setRegistrationValue(""); // 🔥 clear value
+  }}
+>
+  Non-Registered
+</button>
+
     </div>
 
     <div className="sellRow">
@@ -375,11 +429,17 @@ hasTV,
     </div>
 
     <label>REGISTRATION VALUE (₹)</label>
-    <input
+<input
   inputMode="numeric"
   value={registrationValue}
-  onChange={handleNumericChange(setRegistrationValue)}
+  onChange={handleNumericValidated(setRegistrationValue, "registrationValue")}
+  disabled={registrationStatus === "Non-Registered"}
 />
+{errors.registrationValue && (
+  <p className="errorText">{errors.registrationValue}</p>
+)}
+
+
 
 
     <label>MARKET VALUE (₹)</label>
@@ -390,16 +450,34 @@ hasTV,
 />
 
     <label>LOCATION</label>
-    <input value={landLocation} onChange={(e) => setLandLocation(e.target.value)} />
+    <input
+  value={landLocation}
+  onChange={handleAlphaValidated(setLandLocation, "landLocation")}
+/>
+{errors.landLocation && (
+  <p className="errorText">{errors.landLocation}</p>
+)}
+
 
     <label>AREA</label>
-    <input value={landArea} onChange={(e) => setLandArea(e.target.value)} />
+    <input
+  value={landArea}
+  onChange={handleAlphaValidated(setLandArea, "landArea")}
+/>
+{errors.landArea && (
+  <p className="errorText">{errors.landArea}</p>
+)}
+
 
     <label>REGISTERED OWNER NAME</label>
     <input
-      value={registeredOwner}
-      onChange={(e) => setRegisteredOwner(e.target.value)}
-    />
+  value={registeredOwner}
+  onChange={handleAlphaValidated(setRegisteredOwner, "registeredOwner")}
+/>
+{errors.registeredOwner && (
+  <p className="errorText">{errors.registeredOwner}</p>
+)}
+
 
     <label>UPLOAD LAND DOCUMENTS</label>
     <input type="file" multiple accept="image/*" onChange={handleLandDocs} />
@@ -414,10 +492,11 @@ hasTV,
                   <div>
                     <label>BRAND</label>
                     <input
-                      placeholder="Brand Name"
-                      value={brand}
-                      onChange={(e) => setBrand(e.target.value)}
-                    />
+  value={brand}
+  onChange={handleAlphaValidated(setBrand, "brand")}
+/>
+{errors.brand && <p className="errorText">{errors.brand}</p>}
+
                   </div>
 
                   <div>
@@ -453,10 +532,12 @@ hasTV,
 
                 <label>VEHICLE OWNER NAME</label>
                 <input
-                  placeholder="Owner Name"
-                  value={ownerName}
-                  onChange={(e) => setOwnerName(e.target.value)}
-                />
+  placeholder="Owner Name"
+  value={ownerName}
+  onChange={handleAlphaValidated(setOwnerName, "ownerName")}
+/>
+{errors.ownerName && <p className="errorText">{errors.ownerName}</p>}
+
 
                 <label>MOBILE NUMBER</label>
                 <input
@@ -494,17 +575,19 @@ hasTV,
 
                 <label>LOCATION</label>
                 <input
-                  placeholder="Enter location"
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
-                />
+  value={location}
+  onChange={handleAlphaValidated(setLocation, "location")}
+/>
+{errors.location && <p className="errorText">{errors.location}</p>}
+
 
                 <label>AREA</label>
                 <input
-                  placeholder="Downtown / Suburb"
-                  value={area}
-                  onChange={(e) => setArea(e.target.value)}
-                />
+  value={area}
+  onChange={handleAlphaValidated(setArea, "area")}
+/>
+{errors.area && <p className="errorText">{errors.area}</p>}
+
 
                 <label>FURNISHING TYPE</label>
                 <div className="sellToggle">
@@ -543,19 +626,27 @@ hasTV,
       <div>
         <label>TOTAL ROOMS</label>
         <input
-          inputMode="numeric"
-          value={totalRooms}
-          onChange={(e) => setTotalRooms(e.target.value)}
-        />
+  inputMode="numeric"
+  value={totalRooms}
+  onChange={handleNumericValidated(setTotalRooms, "totalRooms")}
+/>
+{errors.totalRooms && (
+  <p className="errorText">{errors.totalRooms}</p>
+)}
+
       </div>
 
       <div>
         <label>AVAILABLE ROOMS</label>
         <input
-          inputMode="numeric"
-          value={availableRooms}
-          onChange={(e) => setAvailableRooms(e.target.value)}
-        />
+  inputMode="numeric"
+  value={availableRooms}
+  onChange={handleNumericValidated(setAvailableRooms, "availableRooms")}
+/>
+{errors.availableRooms && (
+  <p className="errorText">{errors.availableRooms}</p>
+)}
+
       </div>
     </div>
 

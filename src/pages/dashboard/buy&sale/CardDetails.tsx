@@ -7,6 +7,9 @@ import {
   MdShoppingCart,
   MdCheckCircle,
 } from "react-icons/md";
+import { MdCall } from "react-icons/md";
+
+
 
 export default function BuyerPageWeb({ property, onBack }: any) {
   const [fullName, setFullName] = useState("");
@@ -15,9 +18,60 @@ export default function BuyerPageWeb({ property, onBack }: any) {
   const [showSuccess, setShowSuccess] = useState(false);
   const [activeImage, setActiveImage] = useState(0);
   const [docPopup, setDocPopup] = useState<string | null>(null);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
 
   const isLand = property.category === "land";
   const isHostel = property.category === "hostel";
+  const isHouse =
+  property.category === "house" || property.category === "apartment";
+
+const isVehicle = property.category === "vehicle";
+
+
+  const extractNumber = (value?: string) => {
+  if (!value) return 0;
+  const numeric = value.replace(/[^0-9]/g, "");
+  return numeric ? Number(numeric) : 0;
+};
+const setFieldError = (field: string, message: string) => {
+  setErrors((prev) => ({ ...prev, [field]: message }));
+};
+
+const clearFieldError = (field: string) => {
+  setErrors((prev) => {
+    const copy = { ...prev };
+    delete copy[field];
+    return copy;
+  });
+};
+
+const handleAlphaValidated =
+  (setter: React.Dispatch<React.SetStateAction<string>>, field: string) =>
+  (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+
+    if (/[^a-zA-Z\s]/.test(value)) {
+      setFieldError(field, "Only alphabets are allowed");
+      return;
+    }
+
+    clearFieldError(field);
+    setter(value);
+  };
+
+  const handleMobileValidated = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const value = e.target.value.replace(/\D/g, "");
+
+  if (value.length > 10) {
+    setFieldError("mobile", "Mobile number must be 10 digits");
+    return;
+  }
+
+  clearFieldError("mobile");
+  setMobile(value);
+};
+
 
   const Amenity = ({ icon, label }: { icon: string; label: string }) => (
     <div className="amenityCard">
@@ -25,6 +79,8 @@ export default function BuyerPageWeb({ property, onBack }: any) {
       <span>{label}</span>
     </div>
   );
+
+  
 
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [toast, setToast] = useState<{
@@ -70,6 +126,8 @@ export default function BuyerPageWeb({ property, onBack }: any) {
     window.dispatchEvent(new CustomEvent("wishlist-change"));
     setTimeout(() => setToast(null), 2000);
   };
+
+  
 
   return (
     <div className="buyerOverlay">
@@ -124,8 +182,9 @@ export default function BuyerPageWeb({ property, onBack }: any) {
 </h1>
 
             {/* ✅ PRICE MOVED HERE — IMAGE DOWN */}
-            <div className="priceRow imagePriceBlock">
-              <span className="imagePrice">₹{Number(property.price).toLocaleString("en-IN")}
+            <div className="priceRow imagePriceBlock">              
+              <span className="imagePrice">₹{extractNumber(property.price).toLocaleString("en-IN")}
+
 </span>
               {property.rating && (
                 <span className="imageRating">
@@ -134,33 +193,75 @@ export default function BuyerPageWeb({ property, onBack }: any) {
               )}
             </div>
 
-            <div className="buyerInfo">
-              <MdLocationOn /> {property.area}
-            </div>
-
+            {!isVehicle && property.area && (
+  <div className="buyerInfo">
+    <MdLocationOn /> {property.area}
+  </div>
+)}
             {/* IMAGE INFO */}
             <div className="imageInfo">
-
               {isHostel && (
                 <div className="hostelBadge">
                   🏢 {property.hostelType} Hostel
                 </div>
               )}
-{/* LAND SUMMARY CARDS (MOBILE STYLE) */}
-{isLand && (
+{(isLand || isHouse) && (
   <div className="landSummaryGrid">
-    <div className="landSummaryCard">
-      <div className="landIcon">📐</div>
-      <strong>{property.sqft}</strong>
-      <span>Sq. Ft.</span>
+    {property.sqft && (
+      <div className="landSummaryCard">
+        <div className="landIcon">📐</div>
+        <strong>{property.sqft}</strong>
+        <span>Sq. Ft.</span>
+      </div>
+    )}
+
+    {isLand && property.landType && (
+      <div className="landSummaryCard">
+        <div className="landIcon">⛰</div>
+        <strong>{property.landType}</strong>
+      </div>
+    )}
+
+    {isHouse && property.bhk && (
+      <div className="landSummaryCard">
+        <div className="landIcon">🛏</div>
+        <strong>{property.bhk}</strong>
+      </div>
+    )}
+   
+  </div>
+  
+)}
+
+{/* 🚗 VEHICLE OWNER CONTACT CARD */}
+{isVehicle && (
+  <div className="vehicleContactHeader">
+    {/* LEFT SIDE */}
+    <div className="vehicleContactLeft">
+      <div className="vehicleContactAvatar">
+        <MdCall size={20} />
+      </div>
+
+      <div className="vehicleContactText">
+        <strong>{property.ownerName || "Vanamala"}</strong>
+      </div>
     </div>
 
-    <div className="landSummaryCard">
-      <div className="landIcon">⛰</div>
-      <strong>{property.landType}</strong>
-    </div>
+    {/* RIGHT SIDE CALL ICON */}
+    {property.ownerPhone && (
+      <a
+        href={`tel:${property.ownerPhone}`}
+        className="vehicleContactCall"
+      >
+        <MdCall size={22} />
+      </a>
+    )}
   </div>
 )}
+
+
+
+
 {/* OWNER DETAILS – MOBILE CARD */}
 {isLand && property.ownerName && (
   <div className="ownerMobileCard">
@@ -234,60 +335,70 @@ export default function BuyerPageWeb({ property, onBack }: any) {
 
           {/* RIGHT */}
           <div className="buyerRight formSide">
-            <h3>Your Information</h3>
+  <h3>Your Information</h3>
 
-            <input
-              placeholder="Full Name"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-            />
+  <input
+    placeholder="Full Name"
+    value={fullName}
+    onChange={handleAlphaValidated(setFullName, "fullName")}
+  />
+  {errors.fullName && (
+    <p className="errorText">{errors.fullName}</p>
+  )}
 
-            <input
-              placeholder="Mobile Number"
-              value={mobile}
-              onChange={(e) => setMobile(e.target.value)}
-            />
+  <input
+    placeholder="Mobile Number"
+    inputMode="numeric"
+    value={mobile}
+    onChange={handleMobileValidated}
+  />
+  {errors.mobile && (
+    <p className="errorText">{errors.mobile}</p>
+  )}
 
-            <textarea
-              placeholder="Delivery Address"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-            />
+  <textarea
+    placeholder="Delivery Address"
+    value={address}
+    onChange={(e) => setAddress(e.target.value)}
+  />
 
-            {isLand && (
-              <div className="infoCard landDetailsRight">
-                <h3 className="cardTitle">Land Details</h3>
+  {/* LAND DETAILS ONLY FOR LAND */}
+  {isLand && (
+    <div className="infoCard landDetailsRight">
+      <h3 className="cardTitle">Land Details</h3>
 
-                <div className="detailRow">
-                  <span>Land Type</span>
-                  <strong>{property.landType}</strong>
-                </div>
+      <div className="detailRow">
+        <span>Land Type</span>
+        <strong>{property.landType}</strong>
+      </div>
 
-                <div className="detailRow">
-                  <span>Registration</span>
-                  <strong>{property.registrationStatus}</strong>
-                </div>
+      <div className="detailRow">
+        <span>Registration</span>
+        <strong>{property.registrationStatus}</strong>
+      </div>
 
-                {property.registrationValue && (
-                  <div className="detailRow">
-                    <span>Registration Value</span>
-                    <strong>₹{property.registrationValue}</strong>
-                  </div>
-                )}
+      {property.registrationValue && (
+        <div className="detailRow">
+          <span>Registration Value</span>
+          <strong>₹{property.registrationValue}</strong>
+        </div>
+      )}
 
-                {property.marketValue && (
-                  <div className="detailRow">
-                    <span>Market Value</span>
-                    <strong>₹{property.marketValue}</strong>
-                  </div>
-                )}
+      {property.marketValue && (
+        <div className="detailRow">
+          <span>Market Value</span>
+          <strong>₹{property.marketValue}</strong>
+        </div>
+      )}
 
-                {property.description && (
-                  <p className="descriptionText">{property.description}</p>
-                )}
-              </div>
-            )}
-          </div>
+      {property.description && (
+        <p className="descriptionText">{property.description}</p>
+      )}
+    </div>
+  )}
+</div>
+
+
         </div>
 
         {/* BOTTOM BAR */}
@@ -295,7 +406,7 @@ export default function BuyerPageWeb({ property, onBack }: any) {
           <div>
             <span>Total Amount</span>
             <strong>
-              ₹{Number(property.price).toLocaleString("en-IN")}
+  ₹{extractNumber(property.price).toLocaleString("en-IN")}
 
               {isHostel && " / month"}
             </strong>

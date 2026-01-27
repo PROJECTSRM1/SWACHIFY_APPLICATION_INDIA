@@ -29,6 +29,29 @@ const CandidateProfile: React.FC<Props> = ({ student, onBack }) => {
   const [education, setEducation] = useState<any[]>([]);
   const [certificates, setCertificates] = useState<any[]>([]);
   const [noc, setNoc] = useState<any>(null);
+  // EDITABLE COPIES (for modal)
+const [editLocation, setEditLocation] = useState("");
+const [editAadhaar, setEditAadhaar] = useState("");
+const [editPan, setEditPan] = useState("");
+const [profilePhoto, setProfilePhoto] = useState(student.avatar);
+
+const [resumeFile, setResumeFile] = useState<File | null>(null);
+const [resumeUrl, setResumeUrl] = useState<string | null>(student.resumeUrl || null);
+const handleResumeUpload = (file: File) => {
+  setResumeFile(file);
+  setResumeUrl(URL.createObjectURL(file)); // 👈 instant preview & download
+};
+
+
+const [family, setFamily] = useState({
+  fatherName: "Suresh Reddy",
+  fatherPhone: "+91 91234 56789",
+  motherName: "Lakshmi Reddy",
+  motherPhone: "+91 99876 54321",
+});
+
+const [editEducation, setEditEducation] = useState<any[]>([]);
+
 
   // 🔹 SAVE APIs
   const saveFullProfile = async () => {
@@ -107,31 +130,76 @@ const CandidateProfile: React.FC<Props> = ({ student, onBack }) => {
           <p className="cp-id">#{student.id}</p>
           <p className="cp-sub">{student.program}</p>
 
-          <div className="cp-actions">
-            <button className="cp-btn secondary">⬇ PDF Report</button>
-            <button className="cp-btn primary" onClick={() => setIsEditing(true)}>
-              ✎ Edit Profile
-            </button>
-          </div>
+          <button
+  className="cp-btn primary"
+  onClick={() => {
+    setEditLocation(location);
+    setEditAadhaar(aadhaar);
+    setEditPan(pan);
+    setEditEducation([...education]);
+    setIsEditing(true);
+  }}
+>
+  ✎ Edit Profile
+</button>
+
         </div>
 
         {/* ✅ RESUME ACTIONS */}
-        <div className="cp-resume-right">
-          <label className="cp-resume-btn">
-            <span className="icon">⬆</span>
-            Upload Resume
-            <input type="file" hidden />
-          </label>
+       <div className="cp-resume-right">
 
-          <a
-            className="cp-resume-btn"
-            href={student.resumeUrl || "#"}
-            download
-          >
-            <span className="icon">⬇</span>
-            Download Resume
-          </a>
-        </div>
+  {/* Upload / Replace */}
+  <label className="cp-resume-upload">
+    <span className="cp-cloud">☁️</span>
+    <span>{resumeFile ? "Replace Resume" : "Upload Resume"}</span>
+
+    <input
+      type="file"
+      accept=".pdf,.doc,.docx"
+      hidden
+      onChange={(e) => {
+        if (e.target.files?.[0]) {
+          handleResumeUpload(e.target.files[0]);
+        }
+      }}
+    />
+  </label>
+
+  {/* File info */}
+  {resumeFile && (
+    <div className="cp-resume-row">
+
+      <span className="cp-resume-filename">
+        📄 {resumeFile.name}
+      </span>
+
+      <div className="cp-resume-controls">
+        <a
+          href={resumeUrl!}
+          download
+          className="cp-download-btn"
+          title="Download resume"
+        >
+          ⬇️ Download
+        </a>
+
+        <button
+          className="cp-remove-btn"
+          title="Remove resume"
+          onClick={() => {
+            setResumeFile(null);
+            setResumeUrl(null);
+          }}
+        >
+          ✕
+        </button>
+      </div>
+
+    </div>
+  )}
+</div>
+
+
       </div>
 
       {/* GRID */}
@@ -201,6 +269,26 @@ const CandidateProfile: React.FC<Props> = ({ student, onBack }) => {
               </p>
             </div>
           </section>
+           {/* ✅ Family Details — CORRECT POSITION */}
+  <section className="cp-section">
+    <h4>Family Details</h4>
+
+    <div className="cp-card cp-family-card">
+      <div className="cp-family-row">
+        <strong>Father</strong>
+        <span>Suresh Reddy</span>
+        <span className="cp-phone">📞 +91 91234 56789</span>
+      </div>
+    </div>
+
+    <div className="cp-card cp-family-card">
+      <div className="cp-family-row">
+        <strong>Mother</strong>
+        <span>Lakshmi Reddy</span>
+        <span className="cp-phone">📞 +91 99876 54321</span>
+      </div>
+    </div>
+  </section>
 
           <section className="cp-section">
             <h4>Certificates</h4>
@@ -217,25 +305,205 @@ const CandidateProfile: React.FC<Props> = ({ student, onBack }) => {
           </section>
         </div>
       </div>
+      
 
       {/* SAVE */}
-      {isEditing && (
-        <div className="cp-modal-overlay">
-          <div className="cp-modal">
-            <button
-              className="cp-btn primary"
-              onClick={async () => {
-                await saveFullProfile();
-                await saveAttendance();
-                await saveInternshipStatus();
-                setIsEditing(false);
+    {isEditing && (
+  <div className="cp-modal-overlay">
+    <div className="cp-modal large">
+
+      {/* 🔒 FIXED HEADER */}
+      <div className="cp-modal-fixed-header">
+        <h3>Edit Profile</h3>
+
+        <button
+          className="cp-close"
+          onClick={() => setIsEditing(false)}
+        >
+          ✕
+        </button>
+      </div>
+
+      {/* 📜 SCROLLABLE BODY */}
+      <div className="cp-modal-body">
+
+        {/* PHOTO EDIT */}
+        <div className="cp-photo-edit">
+          <img src={profilePhoto} />
+
+          <label className="cp-photo-btn">
+            Change Photo
+            <input
+              type="file"
+              accept="image/*"
+              hidden
+              onChange={(e) => {
+                if (e.target.files?.[0]) {
+                  setProfilePhoto(URL.createObjectURL(e.target.files[0]));
+                }
               }}
-            >
-              Save Changes
-            </button>
-          </div>
+            />
+          </label>
         </div>
-      )}
+
+        {/* FORM GRID */}
+        <div className="cp-edit-grid">
+
+          <h4>Personal Details</h4>
+
+          <div className="cp-field">
+            <label>Location</label>
+            <input
+              className="cp-input"
+              value={editLocation}
+              onChange={(e) => setEditLocation(e.target.value)}
+            />
+          </div>
+
+          <div className="cp-field">
+            <label>Aadhaar</label>
+            <input
+              className="cp-input"
+              value={editAadhaar}
+              onChange={(e) => setEditAadhaar(e.target.value)}
+            />
+          </div>
+
+          <div className="cp-field">
+            <label>PAN</label>
+            <input
+              className="cp-input"
+              value={editPan}
+              onChange={(e) => setEditPan(e.target.value)}
+            />
+          </div>
+
+          <h4>Family Details</h4>
+
+          <div className="cp-field">
+            <label>Father Name</label>
+            <input
+              className="cp-input"
+              value={family.fatherName}
+              onChange={(e) =>
+                setFamily({ ...family, fatherName: e.target.value })
+              }
+            />
+          </div>
+
+          <div className="cp-field">
+            <label>Father Phone</label>
+            <input
+              className="cp-input"
+              value={family.fatherPhone}
+              onChange={(e) =>
+                setFamily({ ...family, fatherPhone: e.target.value })
+              }
+            />
+          </div>
+
+          <div className="cp-field">
+            <label>Mother Name</label>
+            <input
+              className="cp-input"
+              value={family.motherName}
+              onChange={(e) =>
+                setFamily({ ...family, motherName: e.target.value })
+              }
+            />
+          </div>
+
+          <div className="cp-field">
+            <label>Mother Phone</label>
+            <input
+              className="cp-input"
+              value={family.motherPhone}
+              onChange={(e) =>
+                setFamily({ ...family, motherPhone: e.target.value })
+              }
+            />
+          </div>
+
+          <h4>Education</h4>
+
+          {editEducation.map((e, i) => (
+            <div key={i} className="cp-edu-card">
+              <div className="cp-field">
+                <label>Degree</label>
+                <input
+                  className="cp-input"
+                  value={e.degree}
+                  onChange={(ev) => {
+                    const copy = [...editEducation];
+                    copy[i].degree = ev.target.value;
+                    setEditEducation(copy);
+                  }}
+                />
+              </div>
+
+              <div className="cp-field">
+                <label>Institute</label>
+                <input
+                  className="cp-input"
+                  value={e.institute}
+                  onChange={(ev) => {
+                    const copy = [...editEducation];
+                    copy[i].institute = ev.target.value;
+                    setEditEducation(copy);
+                  }}
+                />
+              </div>
+
+              <div className="cp-field">
+                <label>Percentage</label>
+                <input
+                  className="cp-input"
+                  value={e.percentage}
+                  onChange={(ev) => {
+                    const copy = [...editEducation];
+                    copy[i].percentage = ev.target.value;
+                    setEditEducation(copy);
+                  }}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* 🔒 FIXED FOOTER */}
+      <div className="cp-modal-fixed-footer">
+        <button
+          className="cp-btn secondary"
+          onClick={() => setIsEditing(false)}
+        >
+          Cancel
+        </button>
+
+        <button
+          className="cp-btn primary"
+          onClick={async () => {
+            setLocation(editLocation);
+            setAadhaar(editAadhaar);
+            setPan(editPan);
+            setEducation(editEducation);
+
+            await saveFullProfile();
+            await saveAttendance();
+            await saveInternshipStatus();
+
+            setIsEditing(false);
+          }}
+        >
+          Save Changes
+        </button>
+      </div>
+
+    </div>
+  </div>
+)}
+
+
     </div>
   );
 };
