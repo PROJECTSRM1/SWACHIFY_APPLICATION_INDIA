@@ -1,0 +1,2255 @@
+
+/* =======================
+   PAGE & CONTAINER
+======================= */
+.mp-page {
+  min-height: 100vh;
+  background: #f8fafc;
+}
+
+.mp-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px 24px 80px; /* reduced top padding */
+}
+
+/* =======================
+   HEADER
+======================= */
+.mp-web-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 12px; /* reduced to remove gap */
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.mp-header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.mp-web-header h1 {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.mp-dropdown {
+  background: #f1f5f9;
+  border: 1px solid #e5e7eb;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.mp-sell-btn {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* =======================
+   FILTER BAR
+======================= */
+.mp-filter-bar {
+  display: flex;
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.mp-filter-bar button {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* =======================
+   SEARCH
+======================= */
+.mp-search-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: white;
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  margin-bottom: 20px;
+}
+
+.mp-search-box input {
+  border: none;
+  outline: none;
+  flex: 1;
+  font-size: 15px;
+}
+
+/* =======================
+   LOCATION
+======================= */
+.mp-location-bar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 25px;
+}
+
+.mp-label {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.mp-loc-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+}
+
+.mp-change {
+  margin-left: 6px;
+  color: #2563eb;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+/* =======================
+   CATEGORIES
+======================= */
+.mp-categories {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.mp-categories button {
+  background: white;
+  border: 1px solid #e5e7eb;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.mp-categories .active {
+  background: #2563eb;
+  color: white;
+  border-color: #2563eb;
+}
+
+/* =======================
+   TITLE
+======================= */
+.mp-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.mp-title-row h2 {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.mp-sort {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #64748b;
+}
+
+/* =======================
+   GRID
+======================= */
+.mp-property-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+/* =======================
+   CARD
+======================= */
+.mp-property-card {
+  background: white;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.mp-property-card:hover {
+  box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+  transform: translateY(-3px);
+}
+
+/* IMAGE */
+.mp-image-wrapper {
+  position: relative;
+}
+
+.mp-image-wrapper img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+/* BADGES */
+.mp-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: #2563eb;
+  color: white;
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.mp-image-wrapper .mp-rating {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  background: rgba(0,0,0,0.7);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 12px;
+  display: flex;
+  gap: 4px;
+}
+
+
+/* CONTENT */
+.mp-card-body {
+  padding: 14px;
+}
+
+.mp-card-body h3 {
+  font-size: 15px;
+  margin-bottom: 6px;
+}
+
+.mp-price {
+  font-size: 18px;
+  font-weight: 700;
+  color: #2563eb;
+  margin-bottom: 8px;
+}
+
+.mp-meta {
+  font-size: 13px;
+  color: #64748b;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* =======================
+   FULL WIDTH BACKGROUND
+======================= */
+.mp-marketplace-section {
+  width: 100%;
+  min-height: 100vh;
+  background: #f8fafc;
+  padding-top: 0;
+}
+.mp-dropdown-wrapper {
+  position: relative;
+}
+
+.mp-dropdown-menu {
+  position: absolute;
+  top: 38px;
+  left: 0;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+  overflow: hidden;
+  z-index: 20;
+  margin-top: 13px;
+}
+
+.mp-dropdown-menu div {
+      padding: 11px 24px;
+    cursor: pointer;
+    font-size: 15px;
+    margin-left: 10px;
+}
+
+.mp-dropdown-menu div:hover {
+  background: #f1f5f9;
+}
+/* ===========================
+   SEARCH + FILTER BAR (CLEAN UI)
+=========================== */
+.mp-search-filter-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 20px 0;
+    margin-bottom: 10px;
+
+}
+
+/* SEARCH BAR */
+.mp-search-box.wide {
+  flex: 1.5;
+  height: 52px;
+
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+
+  padding: 0 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mp-search-box.wide svg {
+  font-size: 20px;
+  color: #64748b;
+}
+
+.mp-search-box.wide input {
+  border: none;
+  outline: none;
+  font-size: 15px;
+  width: 100%;
+}
+
+/* FILTER BUTTON GROUP */
+.mp-top-filters {
+  display: flex;
+  gap: 4px;
+  flex: 1;
+  margin-top: -19px;
+}
+
+
+/* LOCATION – FIXED */
+.mp-location-bar.compact {
+  margin-top: 6px;   /* reduced gap from search */
+  margin-bottom: 18px;
+}
+
+
+.mp-label {
+  font-size: 12px;
+  color: #64748b;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.mp-loc-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+}
+
+.mp-change {
+  margin-left: 8px;
+  color: #2563eb;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+
+/* FILTER BUTTON */
+.mp-top-filters button {
+  height: 52px;
+  min-width: 160px;
+
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+
+  padding: 0 16px;
+  font-size: 14px;
+  font-weight: 500;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  cursor: pointer;
+  position: relative;
+
+  transition: all 0.2s ease;
+}
+
+.mp-top-filters button svg {
+  font-size: 20px;
+  color: #64748b;
+}
+
+/* HOVER */
+.mp-top-filters button:hover {
+  border-color: #c7d2fe;
+  background: #f8fafc;
+}
+
+/* ACTIVE */
+.mp-top-filters button.active {
+  border-color: #2563eb;
+  background: #eef2ff;
+  color: #2563eb;
+}
+
+/* ===========================
+   FILTER DROPDOWN (ALIGNED)
+=========================== */
+.mp-filter-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 160px;           /* optional – keeps it neat */
+  max-height: 280px;      /* ✅ KEY: limit height */
+  overflow-y: auto;       /* ✅ enable scroll */
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  z-index: 100;
+  margin-top: 5px;
+    z-index: 9999; /* 🔑 KEY FIX */
+
+}
+
+.mp-filter-dropdown div {
+  padding: 14px 18px;
+  font-size: 14px;
+  font-weight: 500;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  cursor: pointer;
+}
+
+.mp-filter-dropdown div:not(:last-child) {
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.mp-filter-dropdown div:hover {
+  background: #f8fafc;
+}
+
+.mp-filter-dropdown div.active {
+  background: #eef2ff;
+  color: #2563eb;
+  font-weight: 600;
+}
+
+/* ===========================
+   DROPDOWN ANIMATION
+=========================== */
+@keyframes dropdownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===========================
+   RESPONSIVE (TABLET & MOBILE)
+=========================== */
+@media (max-width: 900px) {
+  .mp-search-filter-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .mp-search-box.wide {
+    width: 100%;
+    flex: 1;
+  }
+
+  .mp-top-filters {
+    width: 100%;
+  }
+
+  .mp-filter-dropdown {
+    width: 100%;
+    left: 0;
+    right: 0;
+  }
+}
+
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .mp-web-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .mp-sell-btn {
+    width: 100%;
+  }
+
+  .mp-property-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.mp-location-input {
+  background: transparent;
+  border: none;
+  border-bottom: px solid #2563eb;
+  outline: none;
+
+  color: #0f172a;
+  font-size: 15px;
+  font-weight: 600;
+
+  min-width: 160px;
+}
+
+
+/* for form */
+/* =======================
+   GLOBAL RESET
+======================= */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: Inter, system-ui, sans-serif;
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+/* =======================
+   SELL MODAL OVERLAY
+======================= */
+.sellModalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* =======================
+   MODAL CONTAINER
+======================= */
+.sellModalContainer {
+  width: 100%;
+  max-width: 460px;
+  height: 90vh;
+  background: #ffffff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.25);
+  display: flex;
+  flex-direction: column;
+  animation: fadeUp 0.25s ease;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =======================
+   FORM WRAPPER
+======================= */
+.sellForm {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #ffffff;
+}
+
+/* =======================
+   HEADER
+======================= */
+.sellFormHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid #e5e7eb;
+  flex-shrink: 0;
+}
+
+.sellFormHeader h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.sellFormHeader button {
+  border: none;
+  background: transparent;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* =======================
+   BODY (SCROLLABLE)
+======================= */
+.sellFormBody {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.sellFormBody::-webkit-scrollbar {
+  display: none;
+}
+
+/* =======================
+   LABELS
+======================= */
+.sellFormBody label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748b;
+  margin: 0px 0 8px;
+}
+
+/* =======================
+   INPUTS
+======================= */
+.sellFormBody input,
+.sellFormBody select,
+.sellFormBody textarea {
+  width: 100%;
+  height: 52px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  font-size: 14px;
+  color: #0f172a;
+  margin-bottom: 14px;
+}
+
+.sellFormBody textarea {
+  height: auto;
+  min-height: 140px;
+  resize: none;
+}
+
+.sellFormBody input:focus,
+.sellFormBody select:focus,
+.sellFormBody textarea:focus {
+  outline: none;
+  border-color: #2563eb;
+  background: #ffffff;
+}
+
+/* =======================
+   SELECT ARROW FIX
+======================= */
+.sellFormBody select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='%2364748b' viewBox='0 0 20 20'%3E%3Cpath d='M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.25a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 18px;
+  padding-right: 42px;
+}
+
+/* =======================
+   TOGGLE
+======================= */
+.sellToggle {
+  display: flex;
+  gap: 12px;
+}
+
+.sellToggle button {
+  flex: 1;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  background: #f1f5f9;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+}
+
+.sellToggle .active {
+  background: #2563eb;
+  color: #ffffff;
+  border-color: #2563eb;
+}
+
+/* =======================
+   ROW (SQFT + BHK)
+======================= */
+.sellRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+/* =======================
+   ROW BETWEEN
+======================= */
+.sellRowBetween {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+/* =======================
+   PHOTO UPLOAD
+======================= */
+.sellPhotoRow {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.sellPhotoRow::-webkit-scrollbar {
+  display: none;
+}
+
+.sellUploadBox {
+  width: 110px;
+  height: 110px;
+  border: 2px dashed #c7d2fe;
+  border-radius: 16px;
+  background: #eef2ff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #2563eb;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.sellUploadBox span {
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.sellImageBox {
+  position: relative;
+}
+
+.sellImageBox img {
+  width: 110px;
+  height: 110px;
+  border-radius: 16px;
+  object-fit: cover;
+}
+
+.sellImageBox button {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: rgba(0,0,0,0.6);
+  color: #ffffff;
+  border: none;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+}
+
+/* =======================
+   FOOTER
+======================= */
+.sellFormFooter {
+  padding: 16px;
+  border-top: 1px solid #e5e7eb;
+  background: #ffffff;
+  flex-shrink: 0;
+}
+
+.sellPrimaryBtn {
+  width: 100%;
+  padding: 16px;
+  background: #2563eb;
+  border-radius: 16px;
+  border: none;
+  font-size: 16px;
+  font-weight: 800;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.sellPrimaryBtn:hover {
+  background: #1e40af;
+}
+
+/* =======================
+   MOBILE
+======================= */
+@media (max-width: 480px) {
+  .sellModalContainer {
+    width: 100%;
+    height: 100vh;
+    border-radius: 0;
+  }
+}
+
+/* card css */
+
+/* OVERLAY */
+.buyerOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+/* WEB MODAL */
+.buyerPage.web {
+  width: 100%;
+  max-width: 880px;
+  height: 90vh;
+  background: #ffffff;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.35);
+}
+
+/* HEADER */
+.buyerHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 22px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.buyerHeader h2 {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.buyerBackBtn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.buyerFavIcon {
+  font-size: 22px;
+}
+
+/* SCROLLABLE CONTENT */
+.buyerContent {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 12px;
+}
+
+/* INVISIBLE SCROLLBAR */
+.invisible-scroll::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+.invisible-scroll {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE */
+}
+
+/* IMAGE */
+.buyerImageSection img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+/* BADGES */
+.buyerBadges {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+}
+
+.badgeSale {
+  background: #2563eb;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+}
+
+/* DOTS */
+.buyerDots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: -20px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  background: #cbd5f5;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.dot.active {
+  width: 24px;
+  background: #2563eb;
+}
+
+/* DETAILS */
+.buyerDetails {
+  padding: 22px;
+}
+
+.buyerTitleRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.buyerTitleRow h1 {
+  font-size: 22px;
+}
+
+.buyerRating {
+  background: #f1f5f9;
+  padding: 6px 10px;
+  border-radius: 8px;
+  display: flex;
+  gap: 4px;
+}
+
+.buyerPrice {
+  font-size: 30px;
+  font-weight: 700;
+  color: #2563eb;
+  margin: 12px 0;
+}
+
+.buyerInfo {
+  color: #475569;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin-top: -21px;
+}
+
+/* SPECS */
+.buyerSpecs {
+  display: flex;
+  gap: 14px;
+  margin: 18px 0;
+}
+
+.specBox {
+  flex: 1;
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 16px;
+  text-align: center;
+  margin-top: -27px;
+}
+
+/* FORM */
+.buyerDetails input,
+.buyerDetails textarea {
+  width: 100%;
+  padding: 14px;
+  margin-top: 12px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  font-size: 14px;
+}
+
+.buyerDetails textarea {
+  min-height: 110px;
+}
+
+/* BOTTOM BAR */
+.buyerBottom {
+      position: static;
+  border-top: 1px solid #e5e7eb;
+  padding: 18px 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
+}
+
+.buyerBottom button {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 14px 24px;
+  border-radius: 14px;
+  font-weight: 600;
+  display: flex;
+  gap: 8px;
+  cursor: pointer;
+}
+
+/* SUCCESS MODAL */
+.buyerModalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.buyerSuccessModal {
+  background: #ffffff;
+  padding: 34px;
+  border-radius: 22px;
+  text-align: center;
+}
+
+.buyerSuccessModal button {
+  margin-top: 20px;
+  padding: 12px 26px;
+  background: #2563eb;
+  border: none;
+  color: white;
+  border-radius: 10px;
+}
+
+.imageTitle {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #0f172a;
+  margin-top: 15px;
+}
+
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .buyerPage.web {
+    max-width: 100%;
+    height: 100vh;
+    border-radius: 0;
+  }
+}
+
+/* SPLIT LAYOUT */
+/* SPLIT LAYOUT */
+.buyerSplit {
+  display: flex;
+  gap: 28px;
+  padding: 22px;
+}
+
+/* LEFT – IMAGE SIDE */
+.imageSide {
+  width: 45%;
+}
+
+/* RIGHT – FORM SIDE */
+.formSide {
+  flex: 1;
+}
+
+
+
+/* IMAGE INFO */
+.imageInfo {
+  display: flex;
+  flex-direction: column;
+  gap: -24px; /* ✅ adds clean space between cards */
+}
+
+
+.priceRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: -46px;
+}
+
+.imagePrice {
+  font-size: 18px;
+  font-weight: 700;
+  color: #2563eb;
+  margin-top: 31px;
+}
+
+
+/* SPECS */
+.buyerSpecs {
+  display: flex;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.specBox {
+  flex: 1;
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 14px;
+  text-align: center;
+}
+
+/* FORM */
+.formSide input,
+.formSide textarea {
+  width: 100%;
+  padding: 14px;
+  margin-top: 12px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  font-size: 14px;
+}
+
+.formSide textarea {
+  min-height: 120px;
+}
+
+/* MOBILE */
+@media (max-width: 900px) {
+  .buyerSplit {
+    flex-direction: column;
+  }
+
+  .imageSide,
+  .formSide {
+    width: 100%;
+  }
+
+  .buyerImageSection img {
+    height: 260px;
+  }
+}
+
+
+.mp-delete-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0,0,0,0.7);
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.mp-delete-btn:hover {
+  background: #ef4444;
+}
+.sectionTitle {
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+.ownerCard {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px;
+  background: #111827;
+  border-radius: 10px;
+}
+
+.docThumbRow {
+  display: flex;
+  gap: 10px;
+}
+
+.docThumb {
+  width: 70px;
+  height: 70px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.imagePopupOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.imagePopup {
+  max-width: 90%;
+  max-height: 90%;
+}
+
+/* LEFT COLUMN */
+.landInfoColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* COMMON CARD */
+.infoCard {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  width: 100%;
+  margin-top: -18px;
+}
+
+
+/* CARD TITLE */
+.cardTitle {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 14px;
+  color: #0f172a;
+}
+
+/* LAND DETAILS ROW */
+.detailRow {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 15px;
+}
+
+.detailRow:last-child {
+  border-bottom: none;
+}
+
+.detailRow span {
+  color: #64748b;
+}
+
+/* DESCRIPTION */
+.descriptionText {
+  margin-top: 12px;
+  color: #475569;
+  line-height: 1.5;
+}
+
+/* OWNER CARD – DIFFERENT THEME */
+.ownerCardNew {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  color: white;
+  margin-top: -30px;
+}
+
+.ownerCardNew .cardTitle {
+  color: white;
+  font-size: 12px;
+  margin-bottom: 16px;
+}
+
+/* OWNER ROW */
+.ownerRow {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  height: 8px;
+  margin-bottom: 10px;
+}
+
+.ownerAvatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.25);
+  font-size: 20px;
+}
+
+.ownerText span {
+  font-size: 13px;
+  opacity: 0.85;
+}
+
+/* CALL BUTTON */
+.callBtnNew {
+  margin-left: auto;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  padding: 0;                 /* ❗ removes extra height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* DOCUMENT GRID */
+.docGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 80px);
+  gap: 10px;
+  height: 30px;
+}
+
+.docThumb {
+  width: 58px;                /* ✅ mobile size */
+  height: 58px;
+  border-radius: 8px;
+  margin-top: -14px;
+  gap: 10px;
+}
+
+
+.landDetailsRight {
+  margin-top: 10px;
+}
+
+/* =========================================
+   PRO THEME – PREMIUM MARKETPLACE LOOK
+   (ADD ONLY – SAFE OVERRIDES)
+========================================= */
+
+/* ---- Background ---- */
+.mp-page,
+.mp-marketplace-section {
+  background: linear-gradient(
+    180deg,
+    #f4f6fb 0%,
+    #eef2f7 100%
+  );
+}
+
+/* ---- Header ---- */
+.mp-web-header {
+  background: transparent;
+}
+
+.mp-web-header h1 {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.6px;
+  color: #0b1220;
+}
+
+/* ---- Primary CTA (Sell / Rent) ---- */
+.mp-sell-btn {
+  background: linear-gradient(
+    135deg,
+    #1d4ed8,
+    #2563eb,
+    #3b82f6
+  );
+  border-radius: 14px;
+  box-shadow: 0 12px 30px rgba(37, 99, 235, 0.35);
+}
+
+.mp-sell-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px rgba(37, 99, 235, 0.45);
+}
+
+/* ---- Search (Premium Field) ---- */
+.mp-search-box.wide {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  border: none;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.08);
+  border-radius: 18px;
+}
+
+/* ---- Filter Buttons (Pro Pills) ---- */
+.mp-top-filters button {
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(10px);
+  border: none;
+  border-radius: 18px;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.06);
+  font-weight: 600;
+}
+
+.mp-top-filters button:hover {
+  transform: translateY(-1px);
+}
+
+/* ---- Category Pills ---- */
+.mp-categories button {
+  background: rgba(255,255,255,0.8);
+  border: none;
+  border-radius: 999px;
+  font-weight: 600;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+}
+
+.mp-categories .active {
+  background: linear-gradient(
+    135deg,
+    #2563eb,
+    #3b82f6
+  );
+  color: #ffffff;
+}
+
+/* ---- PROPERTY CARD (MAIN UPGRADE) ---- */
+.mp-property-card {
+  border: none;
+  border-radius: 22px;
+  overflow: hidden;
+  background: #ffffff;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.12);
+}
+
+.mp-property-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 40px 80px rgba(0,0,0,0.18);
+}
+
+/* ---- Image: Cinematic ---- */
+.mp-image-wrapper img {
+  height: 240px;
+  filter: contrast(1.05) saturate(1.05);
+}
+
+/* ---- Badge (Pro Chip) ---- */
+.mp-badge {
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(6px);
+  font-weight: 700;
+  letter-spacing: 0.4px;
+}
+
+/* ---- Rating Pill ---- */
+.mp-rating {
+  background: rgba(15,23,42,0.85);
+  font-weight: 700;
+}
+
+/* ---- Card Content ---- */
+.mp-card-body {
+  padding: 18px 18px 20px;
+}
+
+.mp-card-body h3 {
+  font-size: 17px;
+  font-weight: 700;
+  color: #0b1220;
+  line-height: 1.35;
+}
+
+/* ---- Price = Hero Element ---- */
+.mp-price {
+  font-size: 22px;
+  font-weight: 800;
+  color: #1d4ed8;
+  letter-spacing: -0.4px;
+}
+
+/* ---- Meta Text ---- */
+.mp-meta {
+  color: #475569;
+  font-weight: 500;
+}
+
+/* ---- Delete Button (Subtle Pro) ---- */
+.mp-delete-btn {
+  background: rgba(15,23,42,0.85);
+  backdrop-filter: blur(6px);
+}
+
+.mp-delete-btn:hover {
+  background: #dc2626;
+}
+
+/* ---- Mobile: App-like Feel ---- */
+@media (max-width: 768px) {
+  .mp-property-card {
+    border-radius: 18px;
+  }
+
+  .mp-image-wrapper img {
+    height: 210px;
+  }
+
+  .mp-price {
+    font-size: 20px;
+  }
+}
+/* =========================================
+   MOBILE MARKETPLACE FIX – PRO APP LAYOUT
+========================================= */
+
+@media (max-width: 768px) {
+
+  /* ---- Container tightening ---- */
+  .mp-container {
+    padding: 14px 14px 90px;
+  }
+
+  /* ---- Header becomes app-style ---- */
+  .mp-web-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+
+  /* Marketplace + All in one row */
+  .mp-header-left {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .mp-web-header h1 {
+    font-size: 26px;
+    font-weight: 900;
+  }
+
+  /* Dropdown compact */
+  .mp-dropdown-wrapper {
+    padding: 4px;
+    border-radius: 999px;
+  }
+
+  .mp-dropdown {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+
+  /* ---- Sell / Rent becomes primary CTA ---- */
+  .mp-sell-btn {
+    width: 100%;
+    height: 54px;
+    border-radius: 16px;
+    font-size: 16px;
+    font-weight: 800;
+    box-shadow: 0 18px 40px rgba(37,99,235,0.35);
+  }
+
+  /* ---- Search + filters grouped visually ---- */
+  .mp-search-filter-row {
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 14px;
+    padding: 16px;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(14px);
+    border-radius: 22px;
+    box-shadow: 0 20px 45px rgba(0,0,0,0.08);
+  }
+
+  .mp-search-box.wide {
+    height: 56px;
+    border-radius: 999px;
+    box-shadow: none;
+  }
+
+  /* Filters become horizontal scroll pills */
+  .mp-top-filters {
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 12px;
+    margin-top: 0;
+    padding-bottom: 4px;
+  }
+
+  .mp-top-filters::-webkit-scrollbar {
+    display: none;
+  }
+
+  .mp-top-filters button {
+    min-width: auto;
+    white-space: nowrap;
+    height: 48px;
+    padding: 0 18px;
+    border-radius: 999px;
+    font-size: 13px;
+  }
+
+  /* ---- Location section cleaner ---- */
+  .mp-location-bar.compact {
+    margin-top: 16px;
+    padding: 14px 16px;
+    background: #ffffff;
+    border-radius: 18px;
+    box-shadow: 0 14px 30px rgba(0,0,0,0.06);
+  }
+
+  .mp-loc-row {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  /* ---- Category pills scrollable ---- */
+  .mp-categories {
+    overflow-x: auto;
+    gap: 12px;
+    padding-bottom: 6px;
+  }
+
+  .mp-categories::-webkit-scrollbar {
+    display: none;
+  }
+
+  .mp-categories button {
+    white-space: nowrap;
+    border-radius: 999px;
+    padding: 10px 18px;
+    font-size: 14px;
+  }
+
+  /* ---- Cards spacing ---- */
+  .mp-property-grid {
+    gap: 20px;
+  }
+
+  .mp-property-card {
+    border-radius: 20px;
+  }
+
+  .mp-image-wrapper img {
+    height: 220px;
+  }
+}
+.buyerFavIcon {
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.buyerFavIcon.active {
+  color: #ef4444;
+}
+/* =========================================
+   FIX FILTER DROPDOWN OVERLAPPING
+   (PROPERTY TYPE / UPDATED DATE / RATINGS)
+========================================= */
+
+
+/* Create proper stacking context */
+.mp-search-filter-row {
+  position: relative;
+  z-index: 5;
+}
+
+
+/* Filter container */
+.mp-top-filters {
+  position: relative;
+  z-index: 6;
+}
+
+
+/* Each filter button becomes anchor */
+.mp-top-filters button {
+  position: relative;
+  z-index: 7;
+}
+
+
+
+
+
+/* Prevent dropdown from overlapping search */
+.mp-search-box.wide {
+  position: relative;
+  z-index: 4;
+}
+
+
+/* Ensure dropdown text wraps cleanly */
+.mp-filter-dropdown div {
+  white-space: nowrap;
+}
+
+
+/* =========================================
+   DESKTOP-SPECIFIC ADJUSTMENT
+========================================= */
+@media (min-width: 901px) {
+
+
+  /* Space between filters to avoid clash */
+  .mp-top-filters {
+    gap: 12px;
+  }
+
+
+  /* Align dropdown under button center */
+  .mp-top-filters button .mp-filter-dropdown {
+    left: 0;
+  }
+}
+
+
+/* =========================================
+   MOBILE FIX – FULL WIDTH DROPDOWNS
+========================================= */
+@media (max-width: 768px) {
+
+
+  .mp-filter-dropdown {
+    position: fixed;
+    left: 16px;
+    right: 16px;
+    top: auto;
+    margin-top: 8px;
+
+
+    max-width: none;
+    width: calc(100% - 32px);
+  }
+}
+
+.wishlistToast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+
+  background: #111;
+  color: #fff;
+  padding: 12px 18px;
+  border-radius: 10px;
+
+  font-weight: 500;
+  font-size: 14px;
+
+  animation: slideIn 0.3s ease, fadeOut 0.3s ease 1.7s;
+}
+
+.wishlistToast.success {
+  background: #16a34a;
+}
+
+.wishlistToast.remove {
+  background: #dc2626;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+  }
+}
+/* Hostel badge – softer */
+.hostelBadge {
+  background: #1e3a8a;
+  color: #eeeff3;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 12px;
+  border-radius: 10px;
+}
+
+
+.amenitiesGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.amenity {
+  background: #0f172a;
+  border-radius: 12px;
+  padding: 14px;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* HOSTEL DETAILS UI */
+.hostelStatsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin: 20px 0;
+  margin-top: 9px;
+}
+
+.hostelStatCard {
+  background: #e1e6eb;
+  border: 1px solid #e1e6eb;
+  border-radius: 14px;
+  padding: 18px;
+  text-align: center;
+}
+
+.hostelStatCard .icon {
+  font-size: 22px;
+  color: #121213;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.hostelStatCard strong {
+  font-size: 20px;
+  color: #282727;
+}
+
+.hostelStatCard p {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.sectionTitle {
+  margin: 28px 0 14px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #000207;
+  margin-top: 0px;
+}
+
+.amenitiesGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.amenityCard {
+  background: #e1e6eb;
+  border: 1px solid #e1e6eb;
+  border-radius: 14px;
+  padding: 18px 12px;
+  text-align: center;
+}
+
+.amenityIcon {
+  display: block;
+  font-size: 22px;
+  color: #3b82f6;
+  margin-bottom: 6px;
+}
+
+.amenityCard span:last-child {
+  font-size: 12px;
+  font-weight: 600;
+  color: #202021;
+}
+
+.imagePriceBlock {
+  padding: 14px 6px 6px;
+}
+
+.priceRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.imagePrice {
+  font-size: 22px;
+  font-weight: 800;
+  color: #2563eb;
+}
+
+.imageRating {
+  background: #f1f5f9;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  margin-top: 25px;
+}
+
+.buyerInfo {
+  margin-top: 6px;
+  font-size: 14px;
+  color: #475569;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+/* SMALLER HOSTEL AMENITY CARDS */
+
+.sellAmenities {
+  gap: 12px;
+}
+
+.sellAmenities .amenityCard {
+  background: #e1e6eb;
+  border: 1px solid #e1e6eb;
+  border-radius: 14px;
+
+  padding: 14px 10px;        /* 🔽 reduced */
+  min-height: 90px;          /* 🔽 reduced */
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sellAmenities .amenityCard.active {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 1.5px rgba(59,130,246,0.4);
+}
+
+.sellAmenities .amenityIcon {
+  font-size: 20px;           /* 🔽 smaller icon */
+  margin-bottom: 6px;
+  color: #cbd5f5;
+}
+
+.sellAmenities span:last-child {
+  font-size: 13px;           /* 🔽 smaller text */
+  font-weight: 600;
+  color: #303031;
+}
+/* ===== MOBILE DARK LAND UI ===== */
+
+.landSummaryGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin: 18px 0;
+}
+
+.landSummaryCard {
+  background:#f8fafc;
+  border-radius: 16px;
+  padding: 18px;
+  text-align: center;
+  color: #47484c;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
+}
+
+.landSummaryCard strong {
+  font-size: 20px;
+  color: #3b82f6;
+}
+
+.landSummaryCard span {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.landIcon {
+  font-size: 22px;
+  margin-bottom: 6px;
+}
+
+/* OWNER CARD */
+.ownerMobileCard {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  margin-top: 20px;
+  background:#f8fafc;
+  border-radius: 18px;
+  color: rgb(36, 35, 35);
+  margin-top: -6px;
+}
+
+.ownerAvatarMobile {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(59,130,246,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.ownerTextMobile span {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.ownerTextMobile strong {
+  font-size: 16px;
+}
+
+.ownerCallBtn {
+  margin-left: auto;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: #3b82f6;
+  color: white;
+  font-size: 18px;
+}
+
+/* LAND DOCUMENTS */
+.landDocsSection {
+  margin-top: 24px;
+}
+
+.landDocsSection h3 {
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+
+.landDocsGrid {
+  display: flex;
+  gap: 10px;
+      margin-top: -9px;
+}
+
+.landDocThumb {
+  width: 70px;
+  height: 70px;
+  border-radius: 12px;
+  object-fit: cover;
+  cursor: pointer;
+}
+/* ===============================
+   OWNER DETAILS – BLUE THEME
+================================ */
+
+.ownerMobileCard,
+.ownerCardNew {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  color: #ffffff;
+  border-radius: 18px;
+}
+
+/* Avatar */
+.ownerAvatarMobile,
+.ownerAvatar {
+  background: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}
+
+/* Text */
+.ownerTextMobile span,
+.ownerText span {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.ownerTextMobile strong,
+.ownerText strong {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+/* Call Button */
+.ownerCallBtn,
+.callBtnNew {
+  background: #ffffff;
+  color: #2563eb;
+}
+
+.ownerCallBtn:hover,
+.callBtnNew:hover {
+  transform: scale(1.05);
+}
+/* ===============================
+   LAND DOCUMENTS – BLUE THEME
+================================ */
+
+.landDocsSection {
+  background:  #e4e7ee;
+  border-radius: 18px;
+  padding: 8px;
+  margin-top: 9px;
+}
+
+.landDocsSection h3 {
+  color: #3a3838;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+/* Document thumbnails */
+.landDocThumb {
+  border-radius: 12px;
+  border: 2px solid rgba(255,255,255,0.2);
+}
+/* HEADER ACTIONS */
+.mp-header-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+/* BUY BUTTON (OUTLINED) */
+.mp-buy-btn {
+  height: 40px;
+  padding: 0 20px;
+
+  background: #ffffff;
+  color: #2563eb;
+
+  border: 2px solid #2563eb;
+  border-radius: 999px;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mp-buy-btn svg {
+  font-size: 16px;
+}
+
+/* HOVER */
+.mp-buy-btn:hover {
+  background: #eef2ff;
+  transform: translateY(-1px);
+}
+
+/* SELL BUTTON – MATCH HEIGHT */
+.mp-sell-btn {
+  height: 40px;
+  padding: 0 22px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+}
+/* ===============================
+   BUY / RENT DROPDOWN – CLEAN FIX
+================================ */
+
+/* Dropdown container */
+.mp-dropdown-menu {
+  min-width: 120px;
+  padding: 6px;
+  margin-top: 8px;
+
+  border-radius: 14px;
+  background: #ffffff;
+
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* Dropdown items (Buy / Rent) */
+.mp-dropdown-menu div {
+  padding: 10px 14px;
+  margin: 4px 0;
+
+  font-size: 14px;
+  font-weight: 600;
+  color: #0f172a;
+
+  border-radius: 10px;
+  text-align: center;
+
+  transition: all 0.2s ease;
+}
+
+/* Hover */
+.mp-dropdown-menu div:hover {
+  background: #eef2ff;
+  color: #2563eb;
+}
+
+/* Active (selected) */
+.mp-dropdown-menu div.active {
+  background: linear-gradient(135deg, #2563eb, #3b82f6);
+  color: #ffffff;
+}
+/* ===============================
+   BUY / RENT SEGMENTED CONTROL
+================================ */
+
+.mp-buy-toggle {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+
+  background: #eef2ff;
+  border-radius: 999px;
+}
+
+.mp-buy-toggle button {
+  height: 36px;
+  padding: 0 22px;
+
+  border: none;
+  background: transparent;
+
+  font-size: 13px;
+  font-weight: 700;
+  color: #2563eb;
+
+  border-radius: 999px;
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+/* ACTIVE */
+.mp-buy-toggle button.active {
+  background: linear-gradient(135deg, #2563eb, #3b82f6);
+  color: #ffffff;
+  box-shadow: 0 6px 16px rgba(37,99,235,0.35);
+}
+
+/* HOVER */
+.mp-buy-toggle button:not(.active):hover {
+  background: rgba(37,99,235,0.08);
+}
+.mp-card-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: #0f172a;
+}
+
+.mp-card-row {
+  font-size: 14px;
+  color: #475569;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mp-card-row.muted {
+  color: #64748b;
+}

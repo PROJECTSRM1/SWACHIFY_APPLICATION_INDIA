@@ -1,0 +1,296 @@
+.success-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f8fafc;
+  padding: 40px;
+  font-family: Inter, system-ui, sans-serif;
+}
+
+.success-container {
+  background: #ffffff;
+  max-width: 520px;
+  width: 100%;
+  padding: 48px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.08);
+}
+
+.check-circle {
+  width: 72px;
+  height: 72px;
+  background: #2563eb;
+  color: #ffffff;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 32px;
+  font-weight: 800;
+  margin: 0 auto 24px;
+}
+
+.success-container h1 {
+  font-size: 26px;
+  margin-bottom: 12px;
+}
+
+.subtitle {
+  color: #475569;
+  font-size: 15px;
+  margin-bottom: 28px;
+}
+
+/* Card */
+.success-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 20px;
+  text-align: left;
+  margin-bottom: 28px;
+  position: relative;
+}
+
+.success-card .row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  font-size: 14px;
+  margin-top: 13px;
+}
+
+.success-card span {
+  color: #64748b;
+}
+
+.app-id {
+  color: #2563eb;
+}
+
+.status-pill {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: #dcfce7;
+  color: #166534;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+      margin-top: -10px;
+}
+
+/* Buttons */
+.primary-btn {
+  width: 100%;
+  height: 48px;
+  background: #2563eb;
+  color: #ffffff;
+  border: none;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-bottom: 12px;
+}
+
+.secondary-btn {
+  width: 100%;
+  height: 48px;
+  background: #f1f5f9;
+  color: #0f172a;
+  border: none;
+  border-radius: 14px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ============================= */
+/* 🖥️ LARGE DESKTOP (1280px+) */
+/* ============================= */
+@media (min-width: 1280px) {
+  .success-container {
+    padding: 56px;
+  }
+
+  .success-container h1 {
+    font-size: 28px;
+  }
+}
+
+/* ============================= */
+/* 💻 LAPTOP (1024px – 1279px) */
+/* ============================= */
+@media (max-width: 1279px) and (min-width: 1024px) {
+  .success-page {
+    padding: 32px;
+  }
+
+  .success-container {
+    padding: 44px;
+  }
+
+  .success-container h1 {
+    font-size: 26px;
+  }
+}
+
+/* ============================= */
+/* 📱 TABLET (768px – 1023px) */
+/* ============================= */
+@media (max-width: 1023px) and (min-width: 768px) {
+  .success-page {
+    padding: 28px;
+  }
+
+  .success-container {
+    padding: 36px;
+  }
+
+  .check-circle {
+    width: 64px;
+    height: 64px;
+    font-size: 28px;
+  }
+
+  .success-container h1 {
+    font-size: 24px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+  }
+}
+
+/* ============================= */
+/* 📲 MOBILE (≤ 767px) */
+/* ============================= */
+@media (max-width: 767px) {
+  .success-page {
+    padding: 20px;
+    align-items: flex-start;   /* 🔥 avoid vertical squeeze */
+  }
+
+  .success-container {
+    padding: 28px 22px;
+    border-radius: 16px;
+  }
+
+  .check-circle {
+    width: 56px;
+    height: 56px;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .success-container h1 {
+    font-size: 22px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+
+  .success-card {
+    padding: 16px;
+  }
+
+  .success-card .row {
+    font-size: 13px;
+  }
+
+  .status-pill {
+    font-size: 11px;
+    padding: 3px 10px;
+  }
+
+  .primary-btn,
+  .secondary-btn {
+    height: 44px;
+    font-size: 15px;
+    border-radius: 12px;
+  }
+}
+
+/* ============================= */
+/* 📲 SMALL MOBILE (≤ 480px) */
+/* ============================= */
+@media (max-width: 480px) {
+  .success-page {
+    padding: 16px;
+  }
+
+  .success-container {
+    padding: 24px 18px;
+  }
+
+  .success-container h1 {
+    font-size: 20px;
+  }
+
+  .subtitle {
+    font-size: 13px;
+  }
+
+  .success-card .row {
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 10px;
+  }
+
+  .status-pill {
+    top: 10px;
+    right: 10px;
+  }
+
+  .primary-btn,
+  .secondary-btn {
+    height: 42px;
+    font-size: 14px;
+  }
+}
+/* ================= FIX SUCCESS PAGE LAYOUT ================= */
+
+/* DESKTOP + LAPTOP + TABLET */
+@media (min-width: 768px) {
+  .success-page {
+    min-height: calc(100vh - 80px); /* 🔥 account for header */
+    align-items: flex-start;        /* stop fake centering */
+    padding-top: 60px;              /* real visual center */
+  }
+
+  .success-container {
+    margin: 0 auto;
+  }
+}
+
+/* LARGE DESKTOP REFINEMENT */
+@media (min-width: 1280px) {
+  .success-page {
+    padding-top: 80px;
+  }
+}
+
+
+/* ================= HARD FIX: SUCCESS PAGE DESKTOP CENTERING ================= */
+
+/* DESKTOP + LAPTOP + TABLET */
+@media (min-width: 768px) {
+  .success-page {
+    align-items: stretch !important;   /* 🔥 KILL FLEX CENTERING */
+    justify-content: flex-start !important;
+
+    min-height: auto !important;
+    padding-top: 64px !important;
+    padding-bottom: 64px !important;
+  }
+
+  .success-container {
+    margin: 0 auto !important;
+  }
+}
+
+

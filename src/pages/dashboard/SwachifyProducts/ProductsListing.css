@@ -1,0 +1,385 @@
+/* Products Listing Page - Dashboard Subpage */
+
+.sw-products-listing-page {
+    min-height: 100vh;
+    background: #f5f5f5;
+}
+
+/* Header with Back Button */
+.sw-products-listing-header {
+    background: #fff;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    border-bottom: 1px solid #e8e8e8;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.sw-products-back-btn {
+    font-size: 16px;
+    font-weight: 600;
+    color: #005cfa;
+}
+
+.sw-products-back-btn:hover {
+    color: #0047cc;
+}
+
+.sw-products-listing-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0;
+    color: #1a1a1a;
+}
+
+/* Container */
+.sw-products-listing-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 24px;
+}
+
+/* Search and Actions */
+.sw-products-listing-actions {
+    margin-bottom: 24px;
+}
+
+.sw-products-listing-search {
+    max-width: 600px;
+}
+
+.sw-products-listing-search .ant-input-affix-wrapper {
+    border-radius: 8px;
+    padding: 10px 14px;
+}
+
+/* Filters */
+.sw-products-listing-filters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.sw-products-listing-filter-tabs {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.sw-products-listing-filter-tab {
+    padding: 8px 20px;
+    border: 2px solid #e8e8e8;
+    background: #fff;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.sw-products-listing-filter-tab:hover {
+    border-color: #005cfa;
+    background: #f5f8ff;
+}
+
+.sw-products-listing-filter-tab.active {
+    background: #005cfa;
+    color: #fff;
+    border-color: #005cfa;
+}
+
+.sw-products-listing-sort-btn {
+    border-radius: 8px;
+    height: 36px;
+}
+
+/* Products Count */
+.sw-products-listing-count {
+    margin-bottom: 20px;
+}
+
+.sw-products-listing-count p {
+    color: #666;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Products Grid */
+.sw-products-listing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+/* Product Card */
+.sw-product-listing-card {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #e8e8e8;
+    transition: all 0.3s ease;
+}
+
+.sw-product-listing-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.sw-product-listing-card .ant-card-body {
+    padding: 14px;
+}
+
+.sw-product-listing-image-wrapper {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+    background: #f5f5f5;
+}
+
+.sw-product-listing-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.sw-product-listing-featured-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 16px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+/* Wishlist Button */
+.sw-product-wishlist-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.sw-product-wishlist-btn:hover {
+    background: #fff;
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.sw-product-wishlist-btn .anticon {
+    font-size: 18px;
+    color: #999;
+    transition: color 0.3s ease;
+}
+
+.sw-product-wishlist-btn:hover .anticon {
+    color: #ff4d4f;
+}
+
+.sw-product-wishlist-btn.active .anticon {
+    color: #ff4d4f;
+}
+
+/* Product Content */
+.sw-product-listing-content {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.sw-product-listing-category {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 10px;
+}
+
+.sw-product-listing-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0;
+}
+
+.sw-product-listing-company {
+    font-size: 12px;
+    color: #666;
+    margin: 0;
+}
+
+.sw-product-listing-rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 4px;
+}
+
+.sw-product-listing-stars {
+    font-size: 13px;
+}
+
+.sw-product-listing-rating-text {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.sw-product-listing-reviews {
+    font-size: 11px;
+    color: #999;
+}
+
+.sw-product-listing-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.sw-product-listing-location {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #666;
+    font-size: 12px;
+}
+
+.sw-product-listing-price {
+    font-size: 16px;
+    font-weight: 800;
+    color: #005cfa;
+}
+
+.sw-product-listing-cart-btn {
+    margin-top: 10px;
+    background: #000;
+    border-color: #000;
+    border-radius: 8px;
+    height: 36px;
+    font-weight: 600;
+}
+
+.sw-product-listing-cart-btn:hover {
+    background: #333;
+    border-color: #333;
+}
+
+/* Featured Entrepreneurs */
+.sw-products-listing-entrepreneurs {
+    margin-top: 40px;
+    padding: 30px;
+    background: #fff;
+    border-radius: 12px;
+}
+
+.sw-products-listing-section-title {
+    font-size: 22px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.sw-entrepreneurs-listing-grid {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.sw-entrepreneur-listing-card {
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.sw-entrepreneur-listing-card:hover {
+    transform: translateY(-4px);
+}
+
+.sw-entrepreneur-listing-avatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    object-fit: cover;
+}
+
+.sw-entrepreneur-listing-name {
+    margin-top: 8px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* Loading and Empty States */
+.sw-products-listing-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+}
+
+.sw-products-listing-empty {
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .sw-products-listing-header {
+        padding: 12px 16px;
+    }
+
+    .sw-products-listing-container {
+        padding: 16px;
+    }
+
+    .sw-products-listing-search {
+        max-width: 100%;
+    }
+
+    .sw-products-listing-filters {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .sw-products-listing-filter-tabs {
+        justify-content: center;
+    }
+
+    .sw-products-listing-grid {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .sw-products-listing-grid {
+        grid-template-columns: 1fr;
+    }
+}

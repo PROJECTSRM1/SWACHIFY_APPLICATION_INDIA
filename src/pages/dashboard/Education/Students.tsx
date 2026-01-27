@@ -1,239 +1,168 @@
-import React, { useState } from "react";
-import { Card, Button, Space, Tag } from "antd";
-import {
-  EnvironmentOutlined,
-  IdcardOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
+import React, { useEffect, useMemo, useState } from "react";
 import "./Students.css";
 
-interface Student {
-  id: string;
+export interface Student {
+  id: number;
   name: string;
-  degree: string;
-  location: string;
-  distance: string;
-  institute: string;
-  aggregate: number;
+  program: string;
+  avatar: string;
+  rating: number;
+  status: "Active" | "Completed";
+  attendance: number;
+  shift: string;
+  certs: string[];
 }
 
 type StudentsProps = {
-  onBack?: () => void;
+  onBack: () => void;
+  onSelectStudent: (student: Student) => void;
 };
 
-const students: Student[] = [
-  {
-    id: "STU002",
-    name: "Rohan Kumar",
-    degree: "MBA Finance",
-    location: "Mumbai",
-    distance: "5.2 km away",
-    institute: "IIM Mumbai",
-    aggregate: 9.2,
-  },
-  {
-    id: "STU004",
-    name: "Arjun Reddy",
-    degree: "B.Tech Computer Science",
-    location: "Hyderabad",
-    distance: "8.4 km away",
-    institute: "IIIT Hyderabad",
-    aggregate: 9,
-  },
-  {
-    id: "STU001",
-    name: "Ananya Sharma",
-    degree: "B.Tech Computer Science",
-    location: "Bangalore",
-    distance: "2.5 km away",
-    institute: "IIT Bangalore",
-    aggregate: 8.9,
-  },
-  {
-    id: "STU005",
-    name: "Sneha Singh",
-    degree: "BBA Marketing",
-    location: "Delhi",
-    distance: "12 km away",
-    institute: "Delhi University",
-    aggregate: 8.7,
-  },
-  {
-    id: "STU003",
-    name: "Priya Patel",
-    degree: "B.Sc Data Science",
-    location: "Pune",
-    distance: "3.1 km away",
-    institute: "MIT Pune",
-    aggregate: 8.5,
-  },
-  {
-    id: "STU006",
-    name: "Vikram Joshi",
-    degree: "B.Tech Mechanical",
-    location: "Chennai",
-    distance: "15.5 km away",
-    institute: "Anna University",
-    aggregate: 8.3,
-  },
- 
-];
+const Students: React.FC<StudentsProps> = ({ onBack, onSelectStudent }) => {
+  const [studentsData, setStudentsData] = useState<Student[]>([]);
+  const [search, setSearch] = useState("");
+  const [tab, setTab] = useState<"all" | "top" | "recent">("all");
+  const [aggregate, setAggregate] = useState("");
+  const [certificate, setCertificate] = useState("");
+  const [internship, setInternship] = useState("");
 
-const colleges = [
-  "All Colleges",
-  "IIT Bangalore",
-  "IIM Mumbai",
-  "MIT Pune",
-  "IIIT Hyderabad",
-  "Delhi University",
-  "Anna University",
-];
+  // ✅ FETCH STUDENTS LIST
+  useEffect(() => {
+    fetch("https://swachify-india-be-1-mcrb.onrender.com/api/education/students-list")
+      .then((res) => res.json())
+      .then((data) => {
+        const mapped: Student[] = data.map((item: any, index: number) => ({
+          id: item.user_id,
+          name: item.student_name,
+          program: item.degree,
+          rating: item.rating,
+          status: item.internship_status,
+          attendance: item.attendance_percentage,
+          certs: [item.skill],
+          shift: "10:00 AM - 07:00 PM",
+          avatar: `https://randomuser.me/api/portraits/men/${index + 10}.jpg`,
+        }));
 
-const getDistanceValue = (distance: string): number => {
-  return parseFloat(distance); // "5.2 km away" → 5.2
-};
+        setStudentsData(mapped);
+      })
+      .catch((err) => console.error(err));
+  }, []);
 
+  const filtered = useMemo(() => {
+    let data = [...studentsData];
 
+    if (tab === "top") data = data.filter((s) => s.rating >= 4.7);
+    if (tab === "recent")
+      data = [...data].sort((a, b) => b.id - a.id).slice(0, 4);
 
-const Students: React.FC<StudentsProps> = ({ onBack }) => {
+    if (aggregate === "90+") data = data.filter((s) => s.attendance >= 90);
+    if (aggregate === "80-90")
+      data = data.filter((s) => s.attendance >= 80 && s.attendance < 90);
+    if (aggregate === "60-80")
+      data = data.filter((s) => s.attendance >= 60 && s.attendance < 80);
 
-  // State for selected filters
-  const [selectedCollege, setSelectedCollege] = useState("All Colleges");
-  const [selectedSort, setSelectedSort] = useState("Student Aggregate");
+    if (certificate) data = data.filter((s) => s.certs.includes(certificate));
+    if (internship) data = data.filter((s) => s.status === internship);
 
-  const filteredAndSortedStudents = students
-  // FILTER BY COLLEGE
-  .filter((student) => {
-    if (selectedCollege === "All Colleges") return true;
-    return student.institute === selectedCollege;
-  })
-  // SORT
-  .sort((a, b) => {
-    if (selectedSort === "Student Aggregate") {
-      return b.aggregate - a.aggregate; // DESCENDING
+    if (search) {
+      const q = search.toLowerCase();
+      data = data.filter(
+        (s) =>
+          s.name.toLowerCase().includes(q) ||
+          s.id.toString().includes(q)
+      );
     }
 
-    if (selectedSort === "Location (Nearby)") {
-      return (
-        getDistanceValue(a.distance) - getDistanceValue(b.distance)
-      ); // NEAREST FIRST
-    }
-
-    return 0;
-  });
-
+    return data;
+  }, [studentsData, search, tab, aggregate, certificate, internship]);
 
   return (
-   
-   <div>
-    <div className="sw-s-header">
-  <div className="sw-s-header-inner">
-<span
-  className="sw-s-back-arrow"
-  onClick={() => onBack?.()}
->
-  ←
-</span>
-    <span className="sw-s-header-title">Students</span>
-  </div>
-</div>
-     <div className="sw-s-wrapper">
-      {/* Page Header */}
-   
+    <div className="students-root">
+      {/* HEADER */}
+      <div className="students-header">
+        <button className="students-back" onClick={onBack}>←</button>
+        <h2>Students</h2>
+        <input
+          className="students-search"
+          placeholder="Search by name or ID"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+      </div>
 
-      {/* Filter by College */}
-      <Card className="sw-s-card">
-        <h3>Filter by College</h3>
-        <Space wrap>
-          {colleges.map((college) => (
-            <Tag
-              key={college}
-              className={`sw-s-filter-tag ${
-                selectedCollege === college ? "sw-s-active" : ""
-              }`}
-              onClick={() => setSelectedCollege(college)}
-            >
-              {college}
-            </Tag>
-          ))}
-        </Space>
-      </Card>
-
-      {/* Sort By */}
-      <Card className="sw-s-card">
-        <h3>Sort By</h3>
-        <div className="sw-s-sort-container">
-             <Space>
-          <Button
-           type="text"
-            className={`sw-s-sort-btn ${
-              selectedSort === "Location (Nearby)" ? "sw-s-active" : ""
-            }`}
-            onClick={() => setSelectedSort("Location (Nearby)")}
-          >
-            Location (Nearby)
-          </Button>
-          <Button
-            className={`sw-s-sort-btn ${
-              selectedSort === "Student Aggregate" ? "sw-s-active" : ""
-            }`}
-            onClick={() => setSelectedSort("Student Aggregate")}
-          >
-            Student Aggregate
-          </Button>
-        </Space>
+      {/* FILTERS */}
+      <div className="students-filters">
+        <div className="students-tabs">
+          <button onClick={() => setTab("all")} className={tab === "all" ? "active" : ""}>
+            All Students
+          </button>
+          <button onClick={() => setTab("top")} className={tab === "top" ? "active" : ""}>
+            Top Performers
+          </button>
+          <button onClick={() => setTab("recent")} className={tab === "recent" ? "active" : ""}>
+            Recent Joiners
+          </button>
         </div>
-       
-      </Card>
 
-      {/* Student Cards */}
-      {filteredAndSortedStudents.map((student) => (
-        <Card key={student.id} className="sw-s-card">
-          {/* DETAILS + AGGREGATE ROW */}
-          <div className="sw-s-top-row">
-            {/* Details (includes name) */}
-            <div className="sw-s-details">
-              <h2 className="sw-s-name">{student.name}</h2>
+        <div className="students-dropdowns">
+          <select onChange={(e) => setAggregate(e.target.value)}>
+            <option value="">Aggregate</option>
+            <option value="90+">90%+</option>
+            <option value="80-90">80–90%</option>
+            <option value="60-80">60–80%</option>
+          </select>
 
-              <div className="sw-s-row">
-                <UserOutlined />
-                <span>{student.degree}</span>
+          <select onChange={(e) => setCertificate(e.target.value)}>
+            <option value="">Certificate</option>
+            <option value="Python">Python</option>
+            <option value="CSS">CSS</option>
+          </select>
+
+          <select onChange={(e) => setInternship(e.target.value)}>
+            <option value="">Internship</option>
+            <option value="Active">In Progress</option>
+            <option value="Completed">Completed</option>
+          </select>
+        </div>
+      </div>
+
+      {/* GRID */}
+      <div className="students-grid">
+        {filtered.map((s) => (
+          <div
+            key={s.id}
+            className="students-card"
+            onClick={() => onSelectStudent(s)}
+            style={{ cursor: "pointer" }}
+          >
+            <img src={s.avatar} alt={s.name} />
+
+            <div className="students-info">
+              <div className="students-top">
+                <h3>{s.name}</h3>
+                <span className="students-rating">⭐ {s.rating}</span>
               </div>
 
-              <div className="sw-s-row">
-                <IdcardOutlined />
-                <span>ID: {student.id}</span>
-              </div>
+              <p className="students-program">{s.program}</p>
+              <p className="students-meta">{s.attendance}% Attendance</p>
+              <p className="students-meta">{s.shift}</p>
 
-              <div className="sw-s-row">
-                <EnvironmentOutlined />
-                <span>
-                  {student.location} ({student.distance})
+              <div className="students-footer">
+                <span>ID: {s.id}</span>
+                <span className={`students-status ${s.status.toLowerCase()}`}>
+                  {s.status}
                 </span>
               </div>
-
-              <div className="sw-s-institute">{student.institute}</div>
-            </div>
-
-            {/* Aggregate */}
-            <div className="sw-s-aggregate-box">
-              <div className="sw-s-aggregate-score">{student.aggregate}</div>
-              <div className="sw-s-aggregate-label">Aggregate</div>
             </div>
           </div>
+        ))}
 
-          {/* Divider */}
-          <div className="sw-s-divider" />
-
-          {/* Button */}
-          <Button className="sw-s-btn" block>
-            View Profile
-          </Button>
-        </Card>
-      ))}
+        {filtered.length === 0 && (
+          <p className="students-empty">No students found</p>
+        )}
+      </div>
     </div>
-   </div>
   );
 };
 
-export default Students;  
+export default Students;

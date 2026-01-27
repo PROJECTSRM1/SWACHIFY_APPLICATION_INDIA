@@ -1,0 +1,369 @@
+/* ================= GLOBAL BACKGROUND ================= */
+body {
+  margin: 0;
+  background: #f5f7fb; /* same as Students page */
+  font-family: Inter, system-ui, sans-serif;
+}
+
+/* ================= ROOT ================= */
+.cp-root {
+  max-width: 1200px;
+  margin: 110px auto 60px;
+  padding: 0 32px; /* ⬅ prevents edge cutting */
+  background: transparent;
+}
+
+/* ================= HEADER ================= */
+.cp-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 30px;
+}
+
+.cp-back {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: none;
+  background: #eef2ff;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+/* ================= TOP PROFILE ================= */
+.cp-top {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 24px;
+  margin-bottom: 36px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+}
+
+/* Avatar */
+.cp-avatar-wrap {
+  position: relative;
+  width: 140px;
+  height: 140px;
+}
+
+.cp-avatar-wrap img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 4px solid #2563eb;
+  object-fit: cover;
+}
+
+.cp-dot {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  width: 16px;
+  height: 16px;
+  background: #22c55e;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+/* Main Info */
+.cp-main h3 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.cp-id {
+  color: #2563eb;
+  font-weight: 600;
+}
+
+.cp-sub {
+  color: #6b7280;
+}
+
+/* ================= ACTION BUTTONS ================= */
+.cp-actions {
+  display: flex;
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.cp-btn {
+  height: 42px;
+  padding: 0 18px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.cp-btn.primary {
+  background: #2563eb;
+  color: white;
+}
+
+.cp-btn.secondary {
+  background: #e5e7eb;
+}
+
+/* ================= RESUME BUTTONS (RIGHT) ================= */
+.cp-resume-right {
+  position: absolute;
+  right: 32px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cp-resume-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: #f9fafb;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+  cursor: pointer;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cp-resume-btn:hover {
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.cp-resume-btn .icon {
+  color: #2563eb;
+}
+
+/* ================= GRID ================= */
+.cp-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px; /* ⬅ more breathing room */
+}
+
+.cp-section {
+  margin-bottom: 24px;
+}
+
+.cp-section h4 {
+  margin-bottom: 14px;
+  color: #111827;
+}
+
+/* ================= CARDS ================= */
+.cp-card {
+  background: white;
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 12px;
+  margin-left: 2px;  /* ⬅ shadow safety */
+  margin-right: 2px;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.06);
+}
+
+.approved,
+.active {
+  color: #16a34a;
+  font-weight: 700;
+}
+
+.completed {
+  color: #6b7280;
+  font-weight: 700;
+}
+
+/* ================= INPUTS ================= */
+.cp-input {
+  width: 100%;
+  margin-top: 8px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid #cbd5f5;
+  font-size: 14px;
+}
+
+.cp-upload {
+  display: inline-block;
+  margin-top: 10px;
+  font-weight: 600;
+  color: #2563eb;
+  cursor: pointer;
+}
+
+/* ================= MODAL ================= */
+.cp-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.cp-modal {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 24px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+.cp-modal.large {
+  max-width: 600px;
+}
+
+.cp-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+/* ================= PHOTO EDIT ================= */
+.cp-photo-edit {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.cp-photo-edit img {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  border: 3px solid #2563eb;
+  object-fit: cover;
+}
+
+.cp-photo-btn {
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: #f1f5f9;
+  border: 1px solid #d1d5db;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ================= FORM GRID ================= */
+.cp-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+/* ================= RESPONSIVE ================= */
+
+/* Tablets */
+@media (max-width: 1023px) {
+  .cp-root {
+    padding: 0 20px;
+  }
+
+  .cp-top {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .cp-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cp-resume-right {
+    position: static;
+    transform: none;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 10px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  .cp-root {
+    padding: 0 16px;
+    margin-top: 84px;
+  }
+
+  .cp-actions {
+    flex-direction: column;
+  }
+
+  .cp-btn {
+    width: 100%;
+  }
+
+  .cp-resume-right {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cp-form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+  .cp-root {
+    margin-top: 72px;
+  }
+
+  .cp-avatar-wrap {
+    width: 84px;
+    height: 84px;
+  }
+
+  .cp-main h3 {
+    font-size: 18px;
+  }
+}
+/* 🔥 Page background layer */
+.cp-root::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: #f5f7fb;
+  z-index: -1;
+}
+/* Space below top profile card */
+.cp-top {
+  margin-bottom: 40px;
+}
+
+/* Space between sections */
+.cp-section {
+  margin-bottom: 32px;
+}
+/* Extra safe horizontal padding */
+@media (min-width: 1280px) {
+  .cp-root {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cp-root {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+/* Subtle lift effect */
+.cp-top,
+.cp-card {
+  background: #ffffff;
+}

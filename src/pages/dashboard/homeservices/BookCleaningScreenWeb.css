@@ -1,0 +1,496 @@
+/* ===============================
+   ROOT & RESET
+================================ */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  /* overflow: hidden; */
+}
+
+/* ===============================
+   PAGE (INSIDE MODAL)
+================================ */
+.bc_page {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  color: #111827;
+  overflow: hidden; /* important */
+}
+
+/* ===============================
+   HEADER (STICKY)
+================================ */
+.bc_header {
+  height: 64px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.bc_headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 16px;
+}
+
+.bc_iconBtn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.bc_iconBtn:hover {
+  background: #f3f4f6;
+}
+
+.bc_headerTitle {
+  font-size: 18px;
+  font-weight: 800;
+}
+
+/* ===============================
+   SCROLLABLE CONTENT AREA
+================================ */
+.bc_container {
+  flex: 1;
+  width: 100%;
+  padding: 24px 24px 120px;
+  overflow-y: auto;
+
+  /* hide scrollbar */
+  scrollbar-width: none; /* Firefox */
+}
+
+.bc_container::-webkit-scrollbar {
+  display: none; /* Chrome / Edge */
+}
+
+/* ===============================
+   SECTIONS
+================================ */
+.bc_sectionTitle {
+  margin: 32px 0 12px;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.bc_sectionBlock {
+  margin-bottom: 32px;
+}
+
+.bc_label {
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #6b7280;
+}
+
+/* ===============================
+   INPUTS
+================================ */
+.bc_input,
+.bc_floorField,
+.bc_iconInputField,
+.bc_select {
+  width: 100%;
+  height: 56px;
+  padding: 0 16px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  font-size: 16px;
+}
+
+.bc_input:focus,
+.bc_floorField:focus,
+.bc_iconInputField:focus,
+.bc_select:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+.bc_textarea,
+.bc_reasonTextarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  font-size: 14px;
+  resize: none;
+}
+
+.bc_textarea:focus,
+.bc_reasonTextarea:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+/* ===============================
+   LOCATION
+================================ */
+.bc_detectedLocationBox {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 14px 16px;
+  background: #f9fafb;
+}
+
+.bc_locationRow {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.bc_locationIconActive {
+  color: #2563eb;
+}
+
+/* ===============================
+   EXTRA HOURS
+================================ */
+.bc_extraHoursCard {
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 20px;
+  background: #f9fafb;
+}
+
+.bc_counter {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.bc_counterBtn,
+.bc_counterBtnPlus {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.bc_counterBtn {
+  background: #e5e7eb;
+}
+
+.bc_counterBtnPlus {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+/* ===============================
+   PHOTO UPLOAD (FIXED)
+================================ */
+.bc_photoGrid {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.bc_photoBoxDashed {
+  width: 120px;
+  height: 120px;
+  border-radius: 16px;
+  border: 2px dashed #c7d2fe;
+  background: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  position: relative;
+  text-align: center;
+}
+
+.bc_photoBoxDashed:hover {
+  background: #eff6ff;
+  border-color: #2563eb;
+}
+
+.bc_photoIcon {
+  color: #2563eb;
+}
+
+.bc_photoText {
+  font-size: 13px;
+  font-weight: 600;
+  color: #2563eb;
+}
+
+.bc_fileInput {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.bc_photoPreview {
+  width: 120px;
+  height: 120px;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+}
+
+.bc_photoImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.bc_removePhoto {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.7);
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+/* ===============================
+   SUMMARY
+================================ */
+.bc_summary {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.bc_summaryTotalValue {
+  font-size: 24px;
+  font-weight: 900;
+  color: #2563eb;
+}
+
+/* ===============================
+   BOTTOM CTA (FIXED)
+================================ */
+/* ===============================
+   FIXED BOTTOM CTA (CORRECT)
+================================ */
+.bc_bottomBar {
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  background: #ffffff;
+  padding: 16px 24px;
+  border-top: 1px solid #e5e7eb;
+  z-index: 20;
+}
+
+.bc_ctaBtn {
+  width: 100%;
+  height: 56px;
+  border-radius: 14px;
+  border: none;
+  background: #2563eb;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+
+/* ===============================
+   MODAL FULL WIDTH FIX
+================================ */
+.bc_modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 200;
+}
+
+.bc_modalCard {
+  width: 100%;
+  height: 100%;
+  max-width: 900px;
+  border-radius: 16px;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.bc_paymentModal {
+  max-width: 900px;
+}
+.bc_photoActions {
+  display: flex;
+  gap: 16px;
+  margin: 12px 0 16px;
+}
+
+.bc_photoActionCard {
+  flex: 1;
+  border: 2px dashed #1f2937;
+  border-radius: 14px;
+  padding: 20px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: #60a5fa;
+  cursor: pointer;
+  background: transparent;
+}
+
+.bc_photoActionCard span {
+  font-size: 14px;
+  color: #cbd5f5;
+}
+
+.bc_photoGrid {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.bc_photoPreview {
+  position: relative;
+  width: 88px;
+  height: 88px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.bc_photoPreview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.bc_removePhoto {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: rgba(0, 0, 0, 0.6);
+  border: none;
+  border-radius: 50%;
+  color: white;
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+}
+/* ===============================
+   ADDON SERVICES (CHECKLIST)
+================================ */
+
+.bc_addonList {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 8px;
+}
+
+/* Whole row clickable */
+.bc_addonCheckbox {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1.5px solid #e5e7eb;
+  background: #ffffff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* Hover effect */
+.bc_addonCheckbox:hover {
+  border-color: #2563eb;
+  background: #f8fafc;
+}
+
+/* Checkbox itself */
+.bc_addonCheckbox input {
+  width: 20px;
+  height: 20px;
+  accent-color: #2563eb;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* Right side content */
+.bc_addonInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  gap: 12px;
+}
+
+/* Label */
+.bc_addonLabel {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111827;
+}
+
+/* Price */
+.bc_addonPrice {
+  font-size: 14px;
+  font-weight: 700;
+  color: #2563eb;
+  white-space: nowrap;
+}
+
+/* Checked state (pure CSS, no JS needed) */
+.bc_addonCheckbox input:checked + .bc_addonInfo {
+  color: #2563eb;
+}
+
+.bc_addonCheckbox input:checked ~ .bc_addonInfo .bc_addonLabel {
+  font-weight: 700;
+}
+
+/* Optional: subtle glow when checked */
+.bc_addonCheckbox input:checked {
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+  border-radius: 6px;
+}
+
+
+
+/* ===============================
+   MOBILE RESPONSIVE
+================================ */
+@media (max-width: 768px) {
+  .bc_modalCard {
+    max-width: 100%;
+    border-radius: 0;
+  }
+
+  .bc_container {
+    padding: 16px 16px 120px;
+  }
+}

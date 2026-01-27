@@ -1,301 +1,362 @@
-/* ================= PAGE WRAPPER ================= */
-.sw-s-wrapper {
-  margin: 0 auto;
-  padding: 16px;
-  background: #f3f6fd;
+.students-root {
+  margin-top: 140px;
+  background: #f5f7fb;
+  min-height: 100vh;
+  padding-bottom: 80px;
+      margin-top: 10px;
 }
 
-/* ================= HEADER ================= */
-.sw-s-header {
-  top: 0;
-  z-index: 10;
-  background: #fff;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
-}
-
-.sw-s-header-inner {
+/* HEADER */
+.students-root .students-header {
   max-width: 1200px;
-  margin: 0 auto;
-  height: 56px;
-  padding: 0 16px;
+  margin: 0 auto 24px;
+  padding: 18px 24px;
+  background: #fff;
   display: flex;
   align-items: center;
-  gap: 17px;
-  margin-left: 30px;
- 
-}
-
-.sw-s-header-title {
-  font-size: 24px;
-  font-weight: 600;
-  color: #000;
-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, "Helvetica Neue", Arial, sans-serif;
-
-}
-
-.sw-s-back-arrow {
-  font-size: 25px;
-  cursor: pointer;
-  font-weight: 800;
-}
-
-
-
-
-/* ================= COMMON CARD ================= */
-.sw-s-card {
-  max-width: 1100px;
-  margin: 0 auto 18px;
-  border-radius: 14px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-  padding: 18px;
-}
-
-/* Remove AntD default padding */
-.sw-s-card .ant-card-body {
-  padding: 0;
-}
-
-/* ================= FILTER / SORT ================= */
-
-.sw-s-card h3 {
-  font-size: 16px;          /* Screenshot size */
-  font-weight: 600;
-  margin-bottom: 14px;
-}
-
-
-
-/* Tags (Filter pills) */
-
-.sw-s-filter-tag {
-  border-radius: 12px;
-  padding: 6px 16px;
-  font-size: 14px;
-  font-weight: 500;
-  background: #eef0f3;
-  color: #000;
-  border: none;
-  cursor: pointer;
-}
-
-.sw-s-filter-tag.sw-s-active {
-  background: #000;
-  color: #fff;
-}
-
-.ant-btn.sw-s-sort-btn {
-  height: 38px;
-  padding: 0 18px;
-  border-radius: 12px;
-  font-size: 14px;
-  background: #eef0f3;
-  color: #000;
-  border: none;
-  box-shadow: none;
-  transition: all 0.2s ease;
-}
-
-/* Normal hover */
-.ant-btn.sw-s-sort-btn:hover,
-.ant-btn.sw-s-sort-btn:focus {
-  background: #dfe3e8;
-  color: #000;
-}
-
-/* Active button */
-.ant-btn.sw-s-sort-btn.sw-s-active {
-  background: #000;
-  color: #fff;
-}
-
-/* Active hover (important!) */
-.ant-btn.sw-s-sort-btn.sw-s-active:hover,
-.ant-btn.sw-s-sort-btn.sw-s-active:focus {
-  background: #000;
-  color: #fff;
-}
-
-
-
-/* ================= STUDENT CARD ================= */
-
-/* TOP ROW – DETAILS + AGGREGATE */
-.sw-s-top-row {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
   gap: 16px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
 }
 
-/* Details block */
-.sw-s-details {
-  flex: 1;
-}
-
-/* Name */
-.sw-s-name {
-  margin: 0 0 10px 0;
-  font-size: 18px;
-  font-weight: 600;
-  line-height: 1.25;
-  color: #1a1a1a;
-}
-
-/* Info rows */
-.sw-s-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  color: #555;
-  margin-bottom: 8px;
-}
-
-.sw-s-row svg {
-  font-size: 14px;
-  color: #666;
-}
-
-/* Institute */
-.sw-s-institute {
-  margin-top: 6px;
-  font-size: 13px;
-  font-weight: 500;
-  color: #444;
-}
-
-/* Aggregate box */
-.sw-s-aggregate-box {
-  background: #e9fbe9;
-  border-radius: 12px;
-  padding: 8px 5px;      /* Slightly taller (screenshot) */
-  min-width: 96px;
-  text-align: center;
-  flex-shrink: 0;
-}
-
-.sw-s-aggregate-score {
-  font-size: 22px;
-  font-weight: 700;
-  color: #1d7f1d;
-  line-height: 1.2;
-}
-
-.sw-s-aggregate-label {
-  font-size: 12px;
-  color: #1d7f1d;
-}
-
-/* Divider */
-.sw-s-divider {
-  margin: 14px 0 12px;
-  height: 1px;
-  background: #eaeaea;
-}
-
-/* Button */
-/* ===== BUTTON BASE ===== */
-.ant-btn.sw-s-btn {
+.students-root .students-back {
+  width: 38px;
   height: 38px;
   border-radius: 10px;
-  background: linear-gradient(90deg, #000, #111) !important;
-  background-color: #000 !important;
-  color: #fff !important;
-  font-size: 14px;
-  border: none !important;
+  border: none;
+  background: #eef2ff;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.students-root .students-search {
+  margin-left: auto;
+  width: 300px;
+  height: 42px;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  padding: 0 14px;
+}
+
+/* FILTERS */
+.students-root .students-filters {
+  max-width: 1200px;
+  margin: 0 auto 24px;
+  padding: 0 24px;
+}
+
+.students-root .students-tabs {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.students-root .students-tabs button {
+  padding: 8px 18px;
+  border-radius: 20px;
+  border: none;
+  background: #e5e7eb;
+  cursor: pointer;
+}
+
+.students-root .students-tabs .active {
+  background: #2563eb;
+  color: #fff;
+}
+
+.students-root .students-dropdowns {
+  display: flex;
+  gap: 12px;
+}
+
+.students-root .students-dropdowns select {
+  flex: 1;
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid #d1d5db;
+  padding: 0 12px;
+}
+
+/* GRID */
+.students-root .students-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 22px;
+}
+
+/* CARD */
+.students-root .students-card {
+  background: #fff;
+  border-radius: 18px;
+  padding: 18px;
+  display: flex;
+  gap: 16px;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+}
+
+.students-root .students-card img {
+  width: 64px;
+  height: 64px;
+  border-radius: 14px;
+}
+
+.students-root .students-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ⭐ RATING — SCOPED */
+.students-root .students-rating {
+  background: #3f3f46;
+  color: #facc15;
+  font-weight: 700;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;         /* 🔥 PREVENT OVERLAP */
+}
+.students-root .students-top h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  flex: 1;                /* 🔥 KEY FIX */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* 🔥 FORCE CLEAN COMPLETED BADGE (NO GREEN) */
+.students-root .students-status.completed {
+  background: #ffffff !important;   /* full white */
+  color: #6b7280 !important;
+
+  /* REMOVE ANY LEFT STRIP / SHADOW */
+  border: 1px solid #e5e7eb !important;
+  border-left: 1px solid #e5e7eb !important;
   box-shadow: none !important;
-}
-
-/* ===== HOVER ===== */
-.ant-btn.sw-s-btn:hover {
-  background: linear-gradient(90deg, #000, #111) !important;
-  background-color: #000 !important;
-  color: #fff !important;
-  border: none !important;
-}
-
-/* ===== ACTIVE / FOCUS ===== */
-.ant-btn.sw-s-btn:active,
-.ant-btn.sw-s-btn:focus,
-.ant-btn.sw-s-btn:focus-visible {
-  background: linear-gradient(90deg, #111, #222) !important;
-  background-color: #111 !important;
-  color: #fff !important;
-  border: none !important;
   outline: none !important;
-  box-shadow: none !important;
 }
 
-/* ===== REMOVE ANT CLICK EFFECT ===== */
-.ant-btn.sw-s-btn::after {
-  display: none !important;
+/* PROGRAM */
+.students-root .students-program {
+  font-size: 13px;
+  color: #2563eb;
+  margin: 2px 0;
+}
+
+/* META */
+.students-root .students-meta {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* FOOTER */
+.students-root .students-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+/* STATUS */
+.students-root .students-status {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 999px;
+}
+
+.students-root .students-status.active {
+  background: #dcfce7;
+  color: #059669;
+}
+
+.students-root .students-status.completed {
+  background: #e5e7eb;
+  color: #6b7280;
+}
+
+/* EMPTY */
+.students-root .students-empty {
+  text-align: center;
+  grid-column: 1 / -1;
+  color: #6b7280;
 }
 
 
-/* ================= RESPONSIVE ================= */
-
-/* Tablet */
-@media (max-width: 768px) {
-  .sw-s-card {
-    padding: 16px;
+/* ============================= */
+/* 🖥️ LARGE DESKTOP (1280px+) */
+/* ============================= */
+@media (min-width: 1280px) {
+  .students-root .students-grid {
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
   }
 
-  .sw-s-top-row {
+  .students-root .students-search {
+    width: 340px;
+  }
+}
+
+/* ============================= */
+/* 💻 LAPTOP (1024px – 1279px) */
+/* ============================= */
+@media (max-width: 1279px) and (min-width: 1024px) {
+  .students-root {
+    margin-top: 120px;
+  }
+
+  .students-root .students-header {
+    padding: 16px 20px;
+  }
+
+  .students-root .students-search {
+    width: 280px;
+  }
+
+  .students-root .students-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+}
+
+/* ============================= */
+/* 📱 TABLET (768px – 1023px) */
+/* ============================= */
+@media (max-width: 1023px) and (min-width: 768px) {
+  .students-root {
+    margin-top: 110px;
+  }
+
+  .students-root .students-header {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .students-root .students-search {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .students-root .students-dropdowns {
+    flex-wrap: wrap;
+  }
+
+  .students-root .students-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    padding: 0 20px;
+  }
+
+  .students-root .students-card {
+    padding: 16px;
+  }
+}
+
+/* ============================= */
+/* 📲 MOBILE (≤ 767px) */
+/* ============================= */
+@media (max-width: 767px) {
+  .students-root {
+    margin-top: 96px;
+    padding-bottom: 60px;
+  }
+
+  .students-root .students-header {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .students-root .students-back {
+    align-self: flex-start;
+  }
+
+  .students-root .students-search {
+    width: 100%;
+  }
+
+  .students-root .students-filters {
+    padding: 0 16px;
+  }
+
+  .students-root .students-tabs {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .students-root .students-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .students-root .students-dropdowns {
     flex-direction: column;
   }
 
-  .sw-s-aggregate-box {
-    margin-top: 10px;
+  .students-root .students-grid {
+    grid-template-columns: 1fr;
+    padding: 0 16px;
+  }
+
+  .students-root .students-card {
+    gap: 14px;
+  }
+
+  .students-root .students-card img {
+    width: 56px;
+    height: 56px;
+  }
+
+  .students-root .students-top h3 {
+    font-size: 15px;
   }
 }
 
-/* Mobile */
+/* ============================= */
+/* 📲 SMALL MOBILE (≤ 480px) */
+/* ============================= */
 @media (max-width: 480px) {
-  .sw-page-title {
-    font-size: 20px;
+  .students-root {
+    margin-top: 84px;
   }
 
-  .sw-s-card {
+  .students-root .students-header {
+    padding: 14px;
+    border-radius: 14px;
+  }
+
+  .students-root .students-search {
+    height: 40px;
+    font-size: 14px;
+  }
+
+  .students-root .students-tabs button {
+    padding: 6px 14px;
+    font-size: 13px;
+  }
+
+  .students-root .students-card {
     padding: 14px;
   }
 
-  .sw-s-name {
-    font-size: 16px;
+  .students-root .students-rating {
+    font-size: 11px;
+    padding: 3px 8px;
   }
 
-  .sw-s-row,
-  .sw-s-institute {
-    font-size: 12px;
-  }
-
-  .sw-s-btn {
-    height: 36px;
-    font-size: 13px;
+  .students-root .students-status {
+    font-size: 11px;
+    padding: 5px 12px;
   }
 }
 
-
-/* ================= SORT RESPONSIVE ================= */
-
-@media (max-width: 360px) {
-  .sw-s-sort-container {
-    width: 100%;
-  }
-
-  .sw-s-sort-container .ant-space {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .sw-s-sort-btn {
-    width: 100%;
-    justify-content: center;
-  }
+.students-root {
+  min-height: 100vh;
+  background: #f5f7fb;
+  padding-top: 88px;     /* ✅ navbar height */
+  padding-bottom: 80px;
 }
-
-
-
-

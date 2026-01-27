@@ -53,6 +53,8 @@ export const AppRoutes = () => {
         <Route path="/freelancer-dashboard" element={<FreelancerDashboard />} />
         <Route path="/adminshell/*" element={<App />} />
         <Route path="/swachify-products" element={<SwachifyProducts />} />
+        {/* <Route path="/products" element={<ProductsListing />} /> */}
+        {/* <Route path="/products/register" element={<RegisterProduct />} /> */}
       </Routes>
     </>
   );

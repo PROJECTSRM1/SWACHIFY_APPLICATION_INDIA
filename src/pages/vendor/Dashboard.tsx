@@ -40,9 +40,8 @@ const StatCard: React.FC<{
       <div className="sw-vd-stat-label">{label}</div>
       {trend !== undefined && (
         <div
-          className={`sw-vd-stat-trend ${
-            trendType === "up" ? "sw-vd-trend-up" : trendType === "down" ? "sw-vd-trend-down" : "sw-vd-trend-neutral"
-          }`}
+          className={`sw-vd-stat-trend ${trendType === "up" ? "sw-vd-trend-up" : trendType === "down" ? "sw-vd-trend-down" : "sw-vd-trend-neutral"
+            }`}
         >
           {trendType === "up" ? "▲" : trendType === "down" ? "▼" : ""}
           <span className="sw-vd-trend-text">{trend}</span>
@@ -116,7 +115,7 @@ const RevenueChart: React.FC<{ labels: string[]; values: number[] }> = ({ labels
           type="monotone"
           dataKey="value"
           // stroke="#ef4444"
-          stroke = "#4F9CF9"
+          stroke="#4F9CF9"
           strokeWidth={2}
           dot={{ r: 5, stroke: "#6EE7F0", strokeWidth: 2, fill: "#fff" }}
           activeDot={{ r: 6 }}
@@ -152,9 +151,9 @@ const FleetPie: React.FC<{ out: number; inNum: number }> = ({ out, inNum }) => {
           {data.map((_, index) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
-          
+
         </Pie>
-        <ReTooltip formatter={(value: number, name: string) => [`${value}`, name]} />
+        {/* <ReTooltip formatter={(value: number | undefined, name: string | undefined) => [`${value ?? 0}`, name ?? '']} /> */}
       </PieChart>
     </ResponsiveContainer>
   );

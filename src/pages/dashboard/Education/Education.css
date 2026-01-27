@@ -1,179 +1,296 @@
-/* =========================
-   EDUCATION CONTAINER
-========================= */
-.education-container {
-  width: 100%;
+/* ================= ROOT ================= */
+.edu-wrapper {
+  min-height: 100vh;
+  background: #f5f7fb;
+  color: #1f2937;
+  padding-top: 88px;        /* below fixed navbar */
+  padding-bottom: 80px;
+  overflow-x: hidden;       /* 🔥 prevents card cutting */
+  box-sizing: border-box;
 }
 
-/* =========================
-   EDUCATION NAV BAR
-   (MATCH PACKERS & MOVERS)
-========================= */
-.education-header {
+/* ================= FEATURED ================= */
+.edu-featured {
+  max-width: 1200px;
+  height: 360px;
+  margin: 32px auto;
+  border-radius: 22px;
+  overflow: hidden;
+  position: relative;
+}
+
+.edu-featured img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* CONTENT ON IMAGE (ALWAYS) */
+.featured-content {
+  position: absolute;
+  inset: 0;
+  padding: 28px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  width: 100%;
-  max-width: 1200px;          /* SAME AS PM */
-  margin: 65px auto 24px;     /* SAME AS PM */
-
-  padding: 22px 28px;         /* SAME AS PM */
-  background: #005cfa;
-  color: #fff;
-  border-radius: 12px;        /* SAME AS PM */
-  gap: 10px;
+  color: #ffffff;
+  z-index: 1;
 }
 
-.education-header h2 {
-  margin: 0;
-  font-size: 20px;            /* SAME AS PM */
-  font-weight: 700;
+.featured-left {
+  max-width: 520px;
 }
 
-.education-header p {
-  margin: 4px 0 0;
-  font-size: 13px;            /* SAME AS PM */
-  opacity: 0.95;
-}
-
-.education-header .view-all-btn {
-  background: #fff;
-  color: #000;
-  border: none;
-  padding: 8px 14px;
-  border-radius: 6px;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-/* =========================
-   EDUCATION CARDS GRID
-========================= */
-.education-grid {
-  max-width: 1200px;  
-  margin: 0 auto 28px;
-  padding: 0 14px;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 18px;
-
-}
-.education-grid > .education-card:last-child {
-  width: 260px; 
-  max-width: 260px;
-  justify-self: center; 
-}
-
-.education-card {
-  height: 340px;              
-  max-width: 260px;           
-  margin: 0 auto;
-  border-radius: 12px;
-  background: #fff;
-  border-radius: 4px;
-  box-shadow: 0 6px 18px rgba(20, 20, 20, 0.06);
-  border: 1px solid #f0f0f0;
-  border-radius: 15px !important;
-  overflow: hidden !important;
+/* ================= SEARCH ================= */
+.featured-search {
+  width: 320px;
+  height: 48px;
+  background: #ffffff;
+  border-radius: 999px;
   display: flex;
-  flex-direction: column;
   overflow: hidden;
 }
 
-/* Icon / Image area */
-.icon-box {
-  height: 150px;              /* SAME AS PM IMAGE */
+.featured-search input {
+  flex: 1;
+  border: none;
+  padding: 0 16px;
+  font-size: 14px;
+  color: #111;
+}
+
+.featured-search button {
+  width: 52px;
+  background: #2563eb;
+  border: none;
+  color: #ffffff;
+}
+
+/* ================= SECTIONS ================= */
+.edu-section {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 16px;          /* 🔥 prevents mobile overflow */
+  box-sizing: border-box;
+}
+
+/* ================= CATEGORIES ================= */
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 28px;
+}
+
+.category-grid div {
+  width: 100%;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 18px;
+  text-align: center;
+  border: 1px solid #eef2f7;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+  box-sizing: border-box;
+}
+
+.category-grid span {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 38px;
-  background: #f5f8ff;
+  margin: auto;
+  font-size: 30px;
+  color: #ffffff;
 }
 
-/* Card body */
-.education-card h3 {
-  margin: 12px 12px 0;
-  font-size: 16px;
-  font-weight: 600;
-  text-align: center;
+/* ================= TRENDING ================= */
+.trending-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
 }
 
-.education-card p {
-  margin: 8px 12px 0;
-  font-size: 13px;
-  color: #6b7785;
-  text-align: center;
-}
-
-/* Footer */
-.details-btn {
-  margin: auto 12px 12px;
-  height: 40px;               /* SAME AS PM */
-  background: #000;
-  color: #fff;
-  border: none;
-  border-radius: 5px !important;
-  font-size: 15px;
+.trending-title {
+  font-size: 22px;
   font-weight: 700;
+}
+
+.view-all-btn {
+  background: none;
+  border: none;
+  color: #2563eb;
+  font-weight: 600;
   cursor: pointer;
 }
 
-.fullscreen-page {
-  position: fixed;
-  inset: 0;
-  background: #fff;
-  z-index: 9999;
-  overflow-y: auto;
+.trending-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.trending-row-card {
+  position: relative; /* 🔥 important */
+  display: flex;
+  gap: 14px;
+  background: #ffffff;
+  padding: 14px;
+  border-radius: 16px;
+  border: 1px solid #e5e7eb;
 }
 
 
-/* =========================
-   RESPONSIVE (MATCH PM)
-========================= */
-@media (max-width: 1200px) {
-  .education-card {
-    max-width: 240px;
+.trending-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.trending-info h4 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.program {
+  font-size: 12px;
+  color: #2563eb;
+}
+
+.score,
+.shift {
+  font-size: 11px;
+  color: #6b7280;
+}
+
+.trending-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status1 {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+
+  font-size: 10px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+
+.status.active {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.status.completed {
+  background: #e5e7eb;
+  color: #6b7280;
+}
+
+/* ================= LARGE DESKTOP (≥1280px) ================= */
+@media (min-width: 1280px) {
+  .edu-featured {
+    height: 380px;
   }
 }
 
-@media (max-width: 1024px) {
-  .education-card {
-    max-width: 230px;
+/* ================= LAPTOP (1024px – 1279px) ================= */
+@media (max-width: 1279px) and (min-width: 1024px) {
+  .edu-featured {
+    height: 340px;
+    margin: 24px;
+  }
+
+  .category-grid {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
-@media (max-width: 768px) {
-  .education-header {
-    padding: 14px;
+/* ================= TABLET (768px – 1023px) ================= */
+@media (max-width: 1023px) and (min-width: 768px) {
+  .edu-featured {
+    height: 300px;
   }
 
-  .education-card {
-    max-width: 100%;
-    height: auto;
+  .featured-content {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 16px;
   }
 
-  .icon-box {
-    height: 140px;
+  .featured-search {
+    width: 100%;
+    max-width: 360px;
   }
 
-  .details-btn {
+  .category-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .trending-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ================= MOBILE (≤767px) ================= */
+@media (max-width: 767px) {
+  .edu-featured {
+    height: 260px;          /* 🔥 keeps text on image */
+    margin: 16px;
+  }
+
+  .featured-content {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 14px;
+    padding: 20px;
+  }
+
+  .featured-search {
     width: 100%;
   }
+
+  .category-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .trending-list {
+    grid-template-columns: 1fr;
+  }
 }
 
-/* 🔥 FORCE EDUCATION CONTENT ABOVE ANY OVERLAY */
-.education-container,
-.education-grid,
-.education-card {
-  position: relative;
-  z-index: 5;
+/* ================= BUTTON ================= */
+.edu-featured .view-details-btn {
+  background: #ffffff;
+  color: #000000;
+  border: 1px solid #000000;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
 }
 
-/* 🔥 ENSURE BUTTON RECEIVES CLICKS */
-.details-btn {
-  position: relative;
-  z-index: 10;
-  pointer-events: auto;
+.edu-featured .view-details-btn:hover {
+  background: #000000;
+  color: #ffffff;
 }
