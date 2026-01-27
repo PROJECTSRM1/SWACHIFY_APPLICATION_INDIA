@@ -734,30 +734,48 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
               </Form.Item>
 
 
-              <Form.Item
-                label="First Name"
-                name="firstName"
-                normalize={(value) => allowOnlyLetters(value || "")}
-                rules={[
-                  { required: true },
-                  { pattern: /^[A-Za-z ]+$/, message: "Only letters allowed" },
-                ]}
-              >
-                <Input />
-              </Form.Item>
+             <Form.Item
+  label="First Name"
+  name="firstName"
+  normalize={(value) =>
+    value
+      ?.replace(/[^A-Za-z ]/g, "")
+      .replace(/\s+/g, " ")
+      .trim()
+  }
+  rules={[
+    { required: true, message: "First name is required" },
+    {
+      pattern: /^[A-Za-z]+( [A-Za-z]+)*$/,
+      message: "Only letters allowed",
+    },
+  ]}
+>
+  <Input placeholder="Enter first name" />
+</Form.Item>
 
 
-              <Form.Item
-                label="Last Name"
-                name="lastName"
-                normalize={(value) => allowOnlyLetters(value || "")}
-                rules={[
-                  { required: true, message: "Last name is required" },
-                  { pattern: /^[A-Za-z ]+$/, message: "Only letters allowed" },
-                ]}
-              >
-                <Input placeholder="Enter last name" />
-              </Form.Item>
+
+             <Form.Item
+  label="Last Name"
+  name="lastName"
+  normalize={(value) =>
+    value
+      ?.replace(/[^A-Za-z ]/g, "")
+      .replace(/\s+/g, " ")
+      .trim()
+  }
+  rules={[
+    { required: true, message: "Last name is required" },
+    {
+      pattern: /^[A-Za-z]+( [A-Za-z]+)*$/,
+      message: "Only letters allowed",
+    },
+  ]}
+>
+  <Input placeholder="Enter last name" />
+</Form.Item>
+
 
 
               <Form.Item
@@ -773,16 +791,18 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
               </Form.Item>
 
 
-              <Form.Item
-                label="Email"
-                name="email"
-                normalize={(value) => allowEmailChars(value || "")}
-                rules={[
-                  { required: true, type: "email", message: "Invalid email" },
-                ]}
-              >
-                <Input />
-              </Form.Item>
+           <Form.Item
+  name="email"
+  label="Email"
+  normalize={(value) => value?.toLowerCase().replace(/\s+/g, "")}
+  rules={[
+    { required: true, message: "Please input the email!" },
+    { type: "email", message: "Please enter a valid email!" },
+  ]}
+>
+  <Input placeholder="Enter email" />
+</Form.Item>
+
 
 
 
@@ -969,24 +989,23 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
 
 
 
-                  <Form.Item
-                    label="Expertise in Additional Service"
-                    name="expertise"
-                    rules={[
-                      { required: true, message: "Expertise is required" },
-                      {
-                        min: 3,
-                        message: "Minimum 3 characters required",
-                      },
-                      {
-                        pattern: /^[A-Za-z ]+$/,
-                        message: "Only letters and spaces are allowed",
-                      },
-                    ]}
-                    hasFeedback
-                  >
-                    <Input placeholder="Enter your expertise" />
-                  </Form.Item>
+                <Form.Item
+  label="Expertise in Additional Service"
+  name="expertise"
+  normalize={(value) => value?.replace(/^\s+/, "")}
+  rules={[
+    { required: true, message: "Expertise is required" },
+    { min: 3, message: "Minimum 3 characters required" },
+    {
+      pattern: /^[A-Za-z ]+$/,
+      message: "Only letters and spaces are allowed",
+    },
+  ]}
+  hasFeedback
+>
+  <Input placeholder="Enter your expertise" />
+</Form.Item>
+
 
                   <Form.Item
                     label="Upload Work / ID Images"
