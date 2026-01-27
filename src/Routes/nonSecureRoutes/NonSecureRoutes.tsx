@@ -51,6 +51,7 @@ useEffect(() => {
   return (
     <Routes>
      <Route path="/" element={<Landing />} />
+     <Route path="/landing" element={<Landing />} />
 
       {/* <Route path="/forgotpasswordlink" element={<ForgotPasswordLink />} /> */}
       {/* <Route path="/forgotpassword/:id" element={<ForgotPassword />} /> */}
