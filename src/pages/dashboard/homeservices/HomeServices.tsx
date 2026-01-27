@@ -243,16 +243,16 @@ const HomeServices: React.FC = () => {
       {openBookCleaning && bookingPayload && (
         <div className="sc_popupOverlay">
           <div className="sc_popupContent">
-            <BookCleaningScreenWeb
-  selectedServices={
-    bookingPayload.selectedServices.map((s: any) =>
-      typeof s === "string" ? s : s.title
-    )
-  }
+           <BookCleaningScreenWeb
+  selectedServices={bookingPayload.selectedServices.map(
+    (s: any) => (typeof s === "string" ? s : s.title)
+  )}
   consultationCharge={bookingPayload.consultationCharge}
   serviceContext={serviceContext}
+  meta={bookingPayload.meta} // ✅ ADD THIS
   onClose={() => setOpenBookCleaning(false)}
 />
+
 
           </div>
         </div>

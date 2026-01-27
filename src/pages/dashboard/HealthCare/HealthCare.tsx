@@ -2,6 +2,8 @@ import React, { useMemo, useState, useEffect } from "react";
 import "./HealthCare.css";
 import { Tooltip } from "antd";
 import { AppstoreOutlined } from "@ant-design/icons";
+
+
 // import { AppstoreOutlined } from "@ant-design/icons";
 
 type Doctor = {
@@ -14,6 +16,7 @@ type Doctor = {
   availability: string;
   price: string;
   image: string;
+  slots: string[];
 };
 
 
@@ -29,6 +32,7 @@ const doctors: Doctor[] = [
     availability: "2:00 PM",
     price: "$120/hr",
     image: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?auto=format&fit=crop&w=800&q=80",
+    slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
   },
   {
     id: 2,
@@ -40,6 +44,7 @@ const doctors: Doctor[] = [
     availability: "5:00 PM",
     price: "$140/hr",
     image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=800&q=80",
+    slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
   },
   {
     id: 3,
@@ -51,6 +56,7 @@ const doctors: Doctor[] = [
     availability: "7:15 PM",
     price: "$110/hr",
     image: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&w=800&q=80",
+    slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
   },
   {
     id: 4,
@@ -62,6 +68,7 @@ const doctors: Doctor[] = [
     availability: "Tomorrow 10:30 AM",
     price: "$115/hr",
     image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=800&q=80",
+    slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
   },
   {
     id: 5,
@@ -73,6 +80,7 @@ const doctors: Doctor[] = [
     availability: "Today 8:00 PM",
     price: "$125/hr",
     image: "https://images.unsplash.com/photo-1527613426441-4da17471b66d?auto=format&fit=crop&w=800&q=80",
+    slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
   },
 
   // ================= SKIN (Dermatologists) =================
@@ -86,6 +94,7 @@ const doctors: Doctor[] = [
     availability: "4:30 PM",
     price: "$95/hr",
     image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=800&q=80",
+    slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
   },
   {
     id: 7,
@@ -97,6 +106,7 @@ const doctors: Doctor[] = [
     availability: "1:00 PM",
     price: "$100/hr",
     image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=80",
+    slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
   },
   {
     id: 8,
@@ -108,6 +118,7 @@ const doctors: Doctor[] = [
     availability: "Tomorrow 3:30 PM",
     price: "$92/hr",
     image: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&w=800&q=80",
+    slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
   },
   {
     id: 9,
@@ -119,6 +130,7 @@ const doctors: Doctor[] = [
     availability: "Today 8:30 PM",
     price: "$90/hr",
     image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=800&q=80",
+    slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
   },
   {
     id: 10,
@@ -130,6 +142,7 @@ const doctors: Doctor[] = [
     availability: "Tomorrow 1:15 PM",
     price: "$98/hr",
     image: "https://images.unsplash.com/photo-1638202993928-7267aad84c31?auto=format&fit=crop&w=800&q=80",
+    slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
   },
 
   // ================= MENTAL (Mental Health) =================
@@ -143,6 +156,7 @@ const doctors: Doctor[] = [
     availability: "6:00 PM",
     price: "$130/hr",
     image: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=800&q=80",
+    slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
   },
   {
     id: 12,
@@ -154,6 +168,7 @@ const doctors: Doctor[] = [
     availability: "Tomorrow 10:00 AM",
     price: "$125/hr",
     image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=80",
+    slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
   },
   {
     id: 13,
@@ -165,6 +180,7 @@ const doctors: Doctor[] = [
     availability: "Tomorrow 7:15 PM",
     price: "$135/hr",
     image: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&w=800&q=80",
+    slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
   },
   {
     id: 14,
@@ -176,6 +192,7 @@ const doctors: Doctor[] = [
     availability: "Today 9:00 PM",
     price: "$120/hr",
     image: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?auto=format&fit=crop&w=800&q=80",
+    slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
   },
   {
     id: 15,
@@ -187,6 +204,7 @@ const doctors: Doctor[] = [
     availability: "Tomorrow 4:45 PM",
     price: "$128/hr",
     image: "https://images.unsplash.com/photo-1550831107-1553da8c8464?auto=format&fit=crop&w=800&q=80",
+    slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
   },
 
   // ================= EYES (Ophthalmologists) =================
@@ -200,6 +218,7 @@ const doctors: Doctor[] = [
     availability: "Tomorrow",
     price: "$100/hr",
     image: "https://images.unsplash.com/photo-1579154203451-0d2d83d2f4a2?auto=format&fit=crop&w=1200&q=80",
+    slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
   },
   {
     id: 17,
@@ -211,6 +230,7 @@ const doctors: Doctor[] = [
     availability: "Today 6:15 PM",
     price: "$105/hr",
     image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=800&q=80",
+    slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
   },
   {
     id: 18,
@@ -222,6 +242,7 @@ const doctors: Doctor[] = [
     availability: "Today 5:45 PM",
     price: "$98/hr",
     image: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&w=800&q=80",
+    slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
   },
 
   // ================= BONES (Orthopedics) =================
@@ -235,6 +256,7 @@ const doctors: Doctor[] = [
     availability: "3:00 PM",
     price: "$150/hr",
     image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=800&q=80",
+    slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
   },
   {
     id: 22,
@@ -246,6 +268,7 @@ const doctors: Doctor[] = [
     availability: "Tomorrow 12:30 PM",
     price: "$155/hr",
     image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=80",
+    slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
   },
 
   // ================= CHILD (Pediatricians) =================
@@ -259,6 +282,7 @@ const doctors: Doctor[] = [
     availability: "11:00 AM",
     price: "$90/hr",
     image: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?auto=format&fit=crop&w=800&q=80",
+    slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
   },
   {
     id: 27,
@@ -270,6 +294,7 @@ const doctors: Doctor[] = [
     availability: "Today 4:00 PM",
     price: "$95/hr",
     image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=800&q=80",
+    slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
   },
 
   // ================= DENTAL (Dentists) =================
@@ -283,6 +308,7 @@ const doctors: Doctor[] = [
     availability: "1:00 PM",
     price: "$80/hr",
     image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=800&q=80",
+    slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
   },
   {
     id: 35,
@@ -294,6 +320,7 @@ const doctors: Doctor[] = [
     availability: "Today 8:40 PM",
     price: "$92/hr",
     image: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=800&q=80",
+    slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
   },
 ];
 
@@ -525,6 +552,7 @@ const ambulanceHospitals = [
     distance: "2.3 km away • 8 mins arrival",
     available: "3 ambulances available",
     phone: "+91-40-23607777",
+    availableSlots: ["10:00 AM - 01:00 PM", "02:00 PM - 05:00 PM"],
   },
   {
     id: 2,
@@ -534,6 +562,7 @@ const ambulanceHospitals = [
     distance: "3.1 km away • 12 mins arrival",
     available: "2 ambulances available",
     phone: "+91-40-61656565",
+    availableSlots: ["10:00 AM - 01:00 PM", "05:00 PM - 08:00 PM"],
   },
   {
     id: 3,
@@ -543,6 +572,7 @@ const ambulanceHospitals = [
     distance: "4.4 km away • 15 mins arrival",
     available: "4 ambulances available",
     phone: "+91-40-45674567",
+    availableSlots: ["02:00 PM - 05:00 PM"],
   },
   {
     id: 4,
@@ -552,6 +582,7 @@ const ambulanceHospitals = [
     distance: "5.2 km away • 18 mins arrival",
     available: "2 ambulances available",
     phone: "+91-40-44885000",
+    availableSlots: ["10:00 AM - 01:00 PM"],
   },
 ];
 
@@ -560,7 +591,11 @@ const HealthCare: React.FC = () => {
   const [searchText, setSearchText] = useState("");
   const [activeCategory, setActiveCategory] = useState<string>("All");
 
+
   const [openConsultation, setOpenConsultation] = useState<boolean>(false);
+
+  const [openOnlinePopup, setOpenOnlinePopup] = useState(false);
+
 
   // form states
   const [doctorSpecialized, setDoctorSpecialized] = useState<string>("");
@@ -573,8 +608,13 @@ const HealthCare: React.FC = () => {
   const [openAmbulancePopup, setOpenAmbulancePopup] = useState(false);
 
   const [openAmbulanceScreen, setOpenAmbulanceScreen] = useState(false);
+  const trendingSearches = ["Fever", "Cough", "Cold", "Vomit", "Sinus"];
 
+  const [showTrending, setShowTrending] = useState(false);
+  const [hoveredTrending, setHoveredTrending] = useState<string | null>(null);
 
+  // ✅ MOBILE TAP SUPPORT (DO NOT REMOVE)
+  const [mobileActionItem, setMobileActionItem] = useState<string | null>(null);
 
   const [doctorProfile, setDoctorProfile] = useState({
     name: "Dr. Sarah Jenkins",
@@ -584,9 +624,19 @@ const HealthCare: React.FC = () => {
     contact: "+91 98765 43210",
     opTime: "10:00 AM - 01:00 PM",
   });
+  const [openOfflinePopup, setOpenOfflinePopup] = useState(false);
+
+  const [editOfflineTime, setEditOfflineTime] = useState(false);
+  const [tempOfflineTime, setTempOfflineTime] = useState(doctorProfile.opTime);
+
+  const [patientAssist, setPatientAssist] = useState<"yes" | "no" | "">("");
+  const [showAssistSuccess, setShowAssistSuccess] = useState(false);
 
   const [editOpTime, setEditOpTime] = useState(false);
   const [newOpTime, setNewOpTime] = useState(doctorProfile.opTime);
+  const [onlineSuccessPopup, setOnlineSuccessPopup] = useState(false);
+  const [bookedDoctorName, setBookedDoctorName] = useState("");
+
 
 
   const selectedSpecialist = specialistByType[doctorSpecialized];
@@ -616,6 +666,22 @@ const HealthCare: React.FC = () => {
   const [openNearbyPharmacies, setOpenNearbyPharmacies] = useState(false);
   const [openNearbyLabs, setOpenNearbyLabs] = useState(false);
 
+  const placeholders = [
+    "Search Doctor",
+    "Search Speciality",
+    "Search Condition",
+  ];
+
+  const [placeholderIndex, setPlaceholderIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setPlaceholderIndex((prev) => (prev + 1) % placeholders.length);
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, []);
+
 
 
 
@@ -634,7 +700,11 @@ const HealthCare: React.FC = () => {
   const canBookAppointment = isFormCompleted && selectedDoctorId !== null;
 
   const filteredDoctors = useMemo(() => {
-    const q = searchText.toLowerCase();
+    const q = searchText
+      .toLowerCase()
+      .replace("(online)", "")
+      .replace("(offline)", "")
+      .trim();
 
     return doctors.filter((doc) => {
       const matchesCategory =
@@ -658,21 +728,7 @@ const HealthCare: React.FC = () => {
   const [openLabTest, setOpenLabTest] = useState(false);
 
 
-  useEffect(() => {
-    if (!openConfirmedScreen) return;
 
-    const interval = setInterval(() => {
-      setSecondsLeft((prev) => {
-        if (prev <= 1) {
-          clearInterval(interval);
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [openConfirmedScreen]);
 
   useEffect(() => {
     if (!openConfirmedScreen) return;
@@ -694,6 +750,12 @@ const HealthCare: React.FC = () => {
     const s = totalSeconds % 60;
     return `${m}:${s.toString().padStart(2, "0")}`;
   };
+  const availableAmbulancesByTime = useMemo(() => {
+    return ambulanceHospitals.filter((h) =>
+      h.availableSlots.includes(doctorProfile.opTime)
+    );
+  }, [doctorProfile.opTime]);
+
 
 
 
@@ -714,49 +776,177 @@ const HealthCare: React.FC = () => {
             Submit your Health Condition
           </button>
         </div>
-<div className="healthcare-banner-icon">
-  {/* Profile Icon with Tooltip */}
-  <Tooltip title="Customize your Available Time" placement="bottom">
-    <button
-      type="button"
-      className="banner-profile-btn"
-      onClick={() => setOpenDoctorProfile(true)}
-    >
-      👤
-    </button>
-  </Tooltip>
-
-          {/* Plus Icon */}
-          <button type="button" className="banner-plus-btn">
-            ➕
-          </button>
+        <div className="healthcare-banner-icon">
+          {/* Profile Icon with Tooltip */}
+          <Tooltip title="Customize your Available Time" placement="bottom">
+            <button
+              type="button"
+              className="banner-profile-btn"
+              onClick={() => setOpenDoctorProfile(true)}
+            >
+              👤
+            </button>
+          </Tooltip>
         </div>
 
 
 
       </div>
 
-      {/* Search */}
-      <div className="healthcare-search">
-        <input
-          type="text"
-          placeholder="Search doctor, specialty, or condition"
-          value={searchText}
-          onChange={(e) => setSearchText(e.target.value)}
-        />
+
+{/* Search */}
+<div className="healthcare-search">
+  <div className="search-box-wrap">
+    <input
+      type="text"
+      className="search-input"
+      placeholder={placeholders[placeholderIndex]}
+      value={searchText}
+      onChange={(e) => {
+        const value = e.target.value;
+        if (/^[a-zA-Z\s]*$/.test(value)) {
+          setSearchText(value);
+        }
+      }}
+      onFocus={() => setShowTrending(true)}
+      onBlur={() => setTimeout(() => setShowTrending(false), 150)}
+    />
+
+    {showTrending && (
+      <div className="trending-dropdown">
+        <p className="trending-title">Searches</p>
+
+{trendingSearches.map((item) => (
+  <div
+    key={item}
+    className="trending-item-wrap"
+    onMouseEnter={() => setHoveredTrending(item)}   // ✅ DESKTOP
+    onMouseLeave={() => setHoveredTrending(null)}  // ✅ DESKTOP
+  >
+    {/* MAIN ITEM */}
+<div
+  className="trending-item"
+onMouseDown={(e) => {
+  if (window.innerWidth <= 425) {
+    // 📱 MOBILE: block mouse event completely
+    e.preventDefault();
+    return;
+  }
+
+  // 🖥 DESKTOP ONLY
+  setSearchText(item);
+}}
+  onClick={() => {
+    // 📱 MOBILE ONLY: prevent auto-select
+    if (window.innerWidth <= 425) {
+      // e.preventDefault();
+      setMobileActionItem((prev) =>
+        prev === item ? null : item
+      );
+    }
+  }}
+>
+
+      <span className="trending-icon">📈</span>
+      <span className="trending-text">{item}</span>
+    </div>
+
+    {/* 🖥 DESKTOP HOVER MENU (UNCHANGED) */}
+    {hoveredTrending === item && window.innerWidth > 425 && (
+      <div className="trending-submenu">
+        <button
+          className="submenu-btn"
+          onClick={() => {
+            setSearchText(`${item} (Online)`);
+            setShowTrending(false);
+            setOpenOnlinePopup(true);
+          }}
+        >
+          🌐 Online
+        </button>
+
+        <button
+          className="submenu-btn"
+          onClick={() => {
+            setSearchText(`${item} (Offline)`);
+            setShowTrending(false);
+            setTempOfflineTime(doctorProfile.opTime);
+            setOpenOfflinePopup(true);
+          }}
+        >
+          🏥 Offline
+        </button>
+      </div>
+    )}
+
+    {/* 📱 MOBILE TAP MENU */}
+    {mobileActionItem === item && (
+      <div className="mobile-trending-actions">
+        <button
+          onClick={() => {
+            setSearchText(`${item} (Online)`);
+            setMobileActionItem(null);
+            setShowTrending(false);
+            setOpenOnlinePopup(true);
+          }}
+        >
+          🌐 Online
+        </button>
+
+        <button
+          onClick={() => {
+            setSearchText(`${item} (Offline)`);
+            setMobileActionItem(null);
+            setShowTrending(false);
+            setTempOfflineTime(doctorProfile.opTime);
+            setOpenOfflinePopup(true);
+          }}
+        >
+          🏥 Offline
+        </button>
+      </div>
+    )}
+  </div>
+))}
 
       </div>
+    )}
+  </div>
+    {/* Ambulance Button */}
+  <button
+    type="button"
+    className="emergency-btn search-ambulance-btn"
+    onClick={() => setOpenAmbulanceScreen(true)}
+  >
+    Book Ambulance Now →
+  </button>
+</div>
+
+
+
+
+
+
+
+
 
       {/* Categories */}
       <div className="healthcare-cards">
         {/* SEE ALL CARD */}
-{/* SEE ALL CARD */}
-<div className="healthcare-card">
-  <span className="see-all-icon">
-    <AppstoreOutlined />
-  </span>
-  <p>See All</p>
-</div>
+        {/* SEE ALL CARD */}
+        <div
+          className={`healthcare-card ${activeCategory === "All" ? "active" : ""}`}
+          onClick={() => {
+            setActiveCategory("All");
+            setSearchText(""); // ✅ clear search so all doctors show
+          }}
+        >
+          <span className="see-all-icon">
+            <AppstoreOutlined />
+          </span>
+          <p>See All</p>
+        </div>
+
 
         {[
           { label: "Heart", icon: "❤️" },
@@ -778,39 +968,23 @@ const HealthCare: React.FC = () => {
         ))}
       </div>
       {/* Categories */}
-     
-      {/* ✅ Emergency Ambulance Card (ADD THIS) */}
-      <div className="emergency-card">
-        <div className="emergency-left">
-          <div className="emergency-icon-wrap">
-            <div className="emergency-icon">✚</div>
-          </div>
 
-          <div className="emergency-text">
-            <h4>Emergency</h4>
-            <h3>Ambulance</h3>
-            <p>Available 24/7 for urgent care</p>
-          </div>
-        </div>
-
-        <button
-          type="button"
-          className="emergency-btn"
-          onClick={() => setOpenAmbulanceScreen(true)}
-        >
-          Book Now →
-        </button>
-
-      </div>
 
 
 
       {/* Available Doctors */}
       <div className="available-doctors-header">
         <h3>Available Doctors</h3>
-        <span className="see-all" onClick={() => setActiveCategory("All")}>
+        <span
+          className="see-all"
+          onClick={() => {
+            setActiveCategory("All");
+            setSearchText("");
+          }}
+        >
           See all
         </span>
+
 
       </div>
 
@@ -1434,6 +1608,7 @@ const HealthCare: React.FC = () => {
 
 
 
+
         </div>
       )
       }
@@ -1615,6 +1790,257 @@ const HealthCare: React.FC = () => {
           </div>
         </div>
       )}
+      {openOfflinePopup && (
+        <div className="profile-overlay" onClick={() => setOpenOfflinePopup(false)}>
+          <div className="profile-popup" onClick={(e) => e.stopPropagation()}>
+            <div className="profile-header">
+              <h2>Offline Consultation</h2>
+
+              <button
+                className="profile-close"
+                onClick={() => setOpenOfflinePopup(false)}
+              >
+                ✖
+              </button>
+            </div>
+
+            <div className="profile-body">
+              {/* 1) Consultation Time */}
+              <div className="op-time-box">
+                <p><b>What is your consultation time?</b></p>
+
+                {!editOfflineTime ? (
+                  <div className="op-time-row">
+                    <span className="op-time">{doctorProfile.opTime}</span>
+
+                    <button
+                      className="edit-btn"
+                      onClick={() => {
+                        setEditOfflineTime(true);
+                        setTempOfflineTime(doctorProfile.opTime);
+                      }}
+                    >
+                      Edit
+                    </button>
+                  </div>
+                ) : (
+                  <div className="op-time-edit">
+                    <input
+                      type="text"
+                      value={tempOfflineTime}
+                      onChange={(e) => setTempOfflineTime(e.target.value)}
+                      placeholder="Ex: 10:00 AM - 01:00 PM"
+                    />
+
+                    <div className="op-time-actions">
+                      <button
+                        className="cancel-btn"
+                        onClick={() => setEditOfflineTime(false)}
+                      >
+                        Cancel
+                      </button>
+
+                      <button
+                        className="save-btn"
+                        onClick={() => {
+                          setDoctorProfile((prev) => ({
+                            ...prev,
+                            opTime: tempOfflineTime,
+                          }));
+                          setEditOfflineTime(false);
+                        }}
+                      >
+                        Save
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+              <div style={{ marginTop: "16px" }}>
+                <p style={{ fontWeight: 800, marginBottom: "8px" }}>
+                  🚑 Available Ambulances for {doctorProfile.opTime}
+                </p>
+
+                {availableAmbulancesByTime.length > 0 ? (
+                  <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                    {availableAmbulancesByTime.map((h) => (
+                      <div
+                        key={h.id}
+                        style={{
+                          padding: "10px",
+                          borderRadius: "12px",
+                          background: "#f9fafb",
+                          border: "1px solid #e5e7eb",
+                        }}
+                      >
+                        <p style={{ fontWeight: 800, margin: 0 }}>{h.name}</p>
+                        <p style={{ margin: "4px 0", color: "#6b7280" }}>{h.location}</p>
+                        <p style={{ margin: 0, fontWeight: 700, color: "#2f6f6d" }}>
+                          {h.available}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div
+                    style={{
+                      padding: "10px",
+                      borderRadius: "12px",
+                      background: "#fff7ed",
+                      border: "1px solid #fed7aa",
+                      fontWeight: 700,
+                    }}
+                  >
+                    ⚠ No ambulances available for this time slot
+                  </div>
+                )}
+              </div>
+
+
+              {/* 2) Book Ambulance Button */}
+              <button
+                type="button"
+                className="emergency-btn"
+                style={{ width: "100%", marginTop: "14px" }}
+                onClick={() => {
+                  setOpenOfflinePopup(false);
+                  setOpenAmbulanceScreen(true);
+                }}
+              >
+                Book Ambulance Now →
+              </button>
+
+              {/* 3) Patient Assistance */}
+              <div style={{ marginTop: "18px" }}>
+                <p style={{ fontWeight: 800, marginBottom: "10px" }}>
+                  Do you want patient assistance?
+                </p>
+
+                <div style={{ display: "flex", gap: "10px" }}>
+                  <button
+                    type="button"
+                    className={`insurance-btn ${patientAssist === "yes" ? "active" : ""}`}
+                    onClick={() => {
+                      setPatientAssist("yes");
+                      setShowAssistSuccess(true);
+                    }}
+                  >
+                    Yes
+                  </button>
+
+                  <button
+                    type="button"
+                    className={`insurance-btn ${patientAssist === "no" ? "active" : ""}`}
+                    onClick={() => {
+                      setPatientAssist("no");
+                      setShowAssistSuccess(true);
+                    }}
+                  >
+                    No
+                  </button>
+                </div>
+
+                {/* 4) Success Message */}
+                {showAssistSuccess && patientAssist !== "" && (
+                  <div
+                    style={{
+                      marginTop: "12px",
+                      padding: "10px",
+                      borderRadius: "12px",
+                      background: "#eaf7f2",
+                      fontWeight: 800,
+                      color: "#2f6f6d",
+                    }}
+                  >
+                    ✅ Success: You selected {patientAssist.toUpperCase()}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      {openOnlinePopup && (
+        <div className="profile-overlay" onClick={() => setOpenOnlinePopup(false)}>
+          <div className="profile-popup" onClick={(e) => e.stopPropagation()}>
+
+            {/* Header */}
+            <div className="profile-header">
+              <h2>Online Consultation</h2>
+              <button
+                className="profile-close"
+                onClick={() => setOpenOnlinePopup(false)}
+              >
+                ✖
+              </button>
+            </div>
+
+            {/* Body */}
+            <div className="profile-body">
+              <p style={{ fontWeight: 800, marginBottom: "12px" }}>
+                Available Doctors
+              </p>
+
+              <div className="online-doctor-list">
+                {doctors.map((doc) => (
+                  <div key={doc.id} className="online-doctor-card">
+                    <div className="online-doc-top">
+                      <img src={doc.image} alt={doc.name} />
+                      <div>
+                        <h4>{doc.name}</h4>
+                        <p className="spec">{doc.speciality}</p>
+                        <p className="rating">⭐ {doc.rating}</p>
+                      </div>
+                    </div>
+
+                    {/* Slots */}
+                    <div className="online-slots">
+                      {doc.slots.map((slot) => (
+                        <span key={slot} className="slot-pill">
+                          {slot}
+                        </span>
+                      ))}
+                    </div>
+
+                    {/* Book */}
+                    <button
+                      className="online-book-btn"
+                      onClick={() => {
+                        setBookedDoctorName(doc.name);
+                        setOpenOnlinePopup(false);
+                        setOnlineSuccessPopup(true);
+                      }}
+                    >
+                      Book Now →
+                    </button>
+
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      {onlineSuccessPopup && (
+        <div className="success-overlay">
+          <div className="success-popup">
+            <h2 className="success-title">Success ✅</h2>
+
+            <p className="success-text">
+              Your online consultation is booked with <b>{bookedDoctorName}</b>.
+            </p>
+
+            <button
+              type="button"
+              className="success-ok"
+              onClick={() => setOnlineSuccessPopup(false)}
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      )}
+
 
 
 

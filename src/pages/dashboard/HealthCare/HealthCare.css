@@ -49,10 +49,7 @@
   gap: 12px;
 }
 
-/* Search */
-.healthcare-search {
-  margin: 16px 0;
-}
+
 
 .healthcare-search input {
   width: 100%;
@@ -96,10 +93,14 @@
 }
 
 .healthcare-card span {
-  display: flex;              /* 🔑 important */
-  align-items: center;        /* vertical center */
-  justify-content: center;    /* horizontal center */
-  height: 32px;               /* same for all icons */
+  display: flex;
+  /* 🔑 important */
+  align-items: center;
+  /* vertical center */
+  justify-content: center;
+  /* horizontal center */
+  height: 32px;
+  /* same for all icons */
   font-size: 26px;
   margin-bottom: 6px;
 }
@@ -1711,11 +1712,7 @@
 }
 
 /* Doctor card vertical layout in grid */
-.doctor-card {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
+
 
 /* doctor image full width */
 .doctor-card img {
@@ -2082,7 +2079,8 @@
 
 /* ---------- FIX CATEGORY TEXT ALIGNMENT ---------- */
 .healthcare-card p {
-  margin-top: 12px;   /* force same vertical spacing */
+  margin-top: 12px;
+  /* force same vertical spacing */
   line-height: 1.2;
 }
 
@@ -2094,7 +2092,8 @@
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  height: 32px !important;     /* EXACT same as emoji icons */
+  height: 32px !important;
+  /* EXACT same as emoji icons */
   margin-bottom: 6px !important;
 }
 
@@ -2102,6 +2101,320 @@
 .healthcare-card .see-all-icon svg {
   width: 26px !important;
   height: 26px !important;
-  color: #22c55e !important;   /* GREEN */
+  color: #22c55e !important;
+  /* GREEN */
   display: block;
+}
+
+/* ===== SEARCH BASE (DESKTOP & TABLET) ===== */
+.healthcare-search {
+  margin: 16px 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.search-box-wrap {
+  position: relative;
+  flex: 1;
+}
+
+.search-input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  font-size: 14px;
+  outline: none;
+}
+
+
+/* Trending Dropdown */
+.trending-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+  padding: 10px;
+  z-index: 9999;
+}
+
+.trending-title {
+  margin: 6px 10px 10px;
+  font-size: 13px;
+  font-weight: 800;
+  color: #6b7280;
+}
+
+.trending-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 10px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.trending-item:hover {
+  background: #f3f4f6;
+}
+
+.trending-icon {
+  font-size: 16px;
+}
+
+.trending-text {
+  font-size: 14px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.trending-item-wrap {
+  position: relative;
+}
+
+.trending-submenu {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 6px;
+  display: flex;
+  gap: 6px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+  z-index: 99999;
+}
+
+.submenu-btn {
+  border: none;
+  background: #f3f4f6;
+  padding: 8px 10px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.submenu-btn:hover {
+  background: #eaf7f2;
+  color: #2f6f6d;
+}
+
+.profile-popup {
+  max-height: 90vh;
+  /* popup should not exceed screen */
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-body {
+  overflow-y: auto;
+  /* enable scroll */
+  max-height: calc(90vh - 80px);
+  /* header height adjust */
+  padding-right: 6px;
+  /* avoid scrollbar overlap */
+}
+
+.online-doctor-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.online-doctor-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 14px;
+  background: #fff;
+}
+
+.online-doc-top {
+  display: flex;
+  gap: 12px;
+}
+
+.online-doc-top img {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.online-doc-top h4 {
+  margin: 0;
+  font-weight: 800;
+}
+
+.spec {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.rating {
+  font-weight: 700;
+}
+
+.online-slots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.slot-pill {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #eaf7f2;
+  font-weight: 700;
+  font-size: 13px;
+  color: #2f6f6d;
+}
+
+.online-book-btn {
+  width: 100%;
+  border: none;
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: 800;
+  background: #2f6f6d;
+  color: white;
+  cursor: pointer;
+}
+
+
+/* ===============================
+   MOBILE SEARCH – FINAL FIX
+   =============================== */
+/* ===============================
+   MOBILE SEARCH – FINAL FIX
+   =============================== */
+@media (max-width: 425px) {
+
+  .healthcare-search {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+    padding: 0 16px;
+  }
+
+  .search-box-wrap {
+    position: relative;
+    width: 100%;
+  }
+/* 
+  .search-input {
+    width: 100%;
+    height: 54px;
+    padding-left: 52px;
+    border-radius: 18px;
+    font-size: 16px;
+    background: #f3f4f6;
+    border: 1px solid #e5e7eb;
+  } */
+
+    .search-input {
+    width: 100%;
+    height: 54px;
+    padding-left: 16px; /* 🔑 since no icon */
+    padding-right: 16px;
+    border-radius: 18px;
+    font-size: 16px;
+    background: #f3f4f6;
+    border: 1px solid #e5e7eb;
+  }
+
+  .search-box-wrap::before {
+    /* content: "🔍"; */
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
+  .search-ambulance-btn {
+    width: 100%;
+    height: 54px;
+    border-radius: 18px;
+    font-size: 16px;
+  }
+}
+
+
+
+@media (max-width: 375px) {
+
+  .search-input {
+    height: 50px;
+    font-size: 15px;
+    border-radius: 16px;
+  }
+
+  .search-ambulance-btn {
+    height: 50px;
+    font-size: 15px;
+    border-radius: 16px;
+  }
+}
+
+
+
+@media (max-width: 320px) {
+
+  .healthcare-search {
+    gap: 12px;
+    padding: 0 12px;
+  }
+
+  .search-input {
+    height: 46px;
+    font-size: 14px;
+    border-radius: 14px;
+    padding: 0 14px;
+  }
+
+  /* 🔥 FIX AMBULANCE BUTTON FOR 320px */
+  .search-ambulance-btn {
+    width: 100%;
+    height: 40px;              /* smaller height */
+    font-size: 12px;           /* readable but compact */
+    font-weight: 700;          /* slightly lighter */
+    border-radius: 14px;
+    padding: 0 12px;
+    letter-spacing: 0.2px;
+  }
+}
+
+
+
+@media (max-width: 425px) {
+  .mobile-trending-actions {
+    margin-top: 8px;
+    display: flex;
+    gap: 10px;
+    padding-left: 34px; /* align under text */
+  }
+
+  .mobile-trending-actions button {
+    flex: 1;
+    border: none;
+    background: #eaf7f2;
+    color: #2f6f6d;
+    font-weight: 800;
+    padding: 10px;
+    border-radius: 14px;
+    font-size: 14px;
+  }
 }

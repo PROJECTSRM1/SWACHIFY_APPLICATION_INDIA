@@ -13,7 +13,6 @@ import {
 } from "@ant-design/icons";
 import { Menu, message, Button, Dropdown, Badge, Avatar, Modal, Empty, Card } from "antd";
 import { useNavigate } from "react-router-dom";
-
 import { customerLogout } from "../../api/customerAuth";
 import "../../index.css";
 import { useCart } from "../../context/CartContext";
