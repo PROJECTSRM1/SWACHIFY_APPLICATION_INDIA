@@ -6,31 +6,34 @@ import "../index.css";
 import { Spin } from "antd";
 
 
-import cleaningImg from "../assets/HomeServices/cleaningservices.jpg";
-import electricalImg from "../assets/HomeServices/electricalservices.jpg";
-import plumbingImg from "../assets/HomeServices/plumbingservices.jpg";
-import { getLoggedInUserIdSafe } from "../api/customerAuth";
+//import cleaningImg from "../assets/HomeServices/cleaningservices.jpg";
+//import electricalImg from "../assets/HomeServices/electricalservices.jpg";
+//import plumbingImg from "../assets/HomeServices/plumbingservices.jpg";
+//import { getLoggedInUserIdSafe } from "../api/customerAuth";
 
 
-import { api } from "../api/client";
+//import { api } from "../api/client";
 
-const SERVICE_IMAGE_MAP: Record<number, string> = {
-  1: cleaningImg,     // Cleaning
-  2: electricalImg,   // Electrical
-  3: plumbingImg,     // Plumbing
-};
-
-const DEFAULT_IMAGE = cleaningImg;
+const LS_RECENT_BOOKINGS_KEY = "recent_bookings";
 
 
+// const SERVICE_IMAGE_MAP: Record<number, string> = {
+//   1: cleaningImg,     // Cleaning
+//   2: electricalImg,   // Electrical
+//   3: plumbingImg,     // Plumbing
+// };
 
-const TIME_SLOT_LABELS: Record<number, string> = {
-  1: "09:00",
-  2: "11:00",
-  3: "13:00",
-  4: "15:00",
-  5: "17:00",
-};
+// const DEFAULT_IMAGE = cleaningImg;
+
+
+
+// const TIME_SLOT_LABELS: Record<number, string> = {
+//   1: "09:00",
+//   2: "11:00",
+//   3: "13:00",
+//   4: "15:00",
+//   5: "17:00",
+// };
 
 dayjs.extend(customParseFormat);
 
@@ -125,51 +128,37 @@ const RecentBookingPage: React.FC = () => {
   //     console.error(err);
   //   }
   // }, []);
+// 
 useEffect(() => {
-  const fetchRecentBookings = async () => {
-    const userId = getLoggedInUserIdSafe();
+  try {
+    setLoading(true);
 
-    // 🚫 Guest user
-    if (!userId) {
+    const raw = localStorage.getItem(LS_RECENT_BOOKINGS_KEY);
+
+    if (!raw) {
       setBookings([]);
-      setLoading(false); // ✅ IMPORTANT
       return;
     }
 
-    try {
-      setLoading(true); // ✅ START LOADER
-
-      const res = await api.post(
-        "api/admin/by-user",
-        {
-          created_by: userId,
-          payment_done: true,
-        }
-      );
-
-      const data = res.data;
-
-      const mapped: Booking[] = data.map((b: any) => ({
-        id: b.id,
-        title: b.full_name || "Home Service",
-        date: b.preferred_date,
-        time: TIME_SLOT_LABELS[b.time_slot_id] || "09:00",
-        amount: b.service_price,
-        paymentDone: b.payment_done,
-        image: SERVICE_IMAGE_MAP[b.service_id] || DEFAULT_IMAGE,
-      }));
-
-      setBookings(mapped);
-    } catch (err) {
-      console.error("Failed to fetch recent bookings", err);
-      setBookings([]);
-    } finally {
-      setLoading(false); // ✅ STOP LOADER
-    }
+    const parsed: Booking[] = JSON.parse(raw);
+    setBookings(parsed);
+  } catch (err) {
+    console.error("Failed to load recent bookings", err);
+    setBookings([]);
+  } finally {
+    setLoading(false);
+  }
+}, []);
+useEffect(() => {
+  const onStorageChange = () => {
+    const raw = localStorage.getItem(LS_RECENT_BOOKINGS_KEY);
+    if (raw) setBookings(JSON.parse(raw));
   };
 
-  fetchRecentBookings();
+  window.addEventListener("storage", onStorageChange);
+  return () => window.removeEventListener("storage", onStorageChange);
 }, []);
+
 
 
   /* ⏱ Re-render every 30 seconds (auto complete / expiry) */

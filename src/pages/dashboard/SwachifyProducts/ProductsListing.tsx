@@ -228,7 +228,6 @@ const ProductsListing: React.FC<ProductsListingProps> = ({ onBack, searchQuery: 
                     onClick={onBack}
                     className="sw-products-back-btn"
                 >
-                    Back
                 </Button>
                 <h1 className="sw-products-listing-title">Browse Products</h1>
             </div>
