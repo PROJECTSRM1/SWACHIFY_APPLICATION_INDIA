@@ -14,6 +14,7 @@ import {
   message,
   //Radio,
   Upload,
+  InputNumber,
 } from "antd";
 
 import { Select, TreeSelect } from "antd";
@@ -32,6 +33,8 @@ import axios from "axios";
 import { customerRegister, customerLogin } from "../../api/customerAuth";
 
 import "./Header.css";
+
+
 
 // ================= INPUT SANITIZERS =================
 
@@ -104,7 +107,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
   const [userRole, setUserRole] = useState<UserRole>(null);
   const [partnerModalVisible, setPartnerModalVisible] = useState(false);
 
-  
+
 
 
   const [activeAuthTab, setActiveAuthTab] = useState<"login" | "register">(
@@ -148,6 +151,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
   console.log(emailValue);
   const hideSkipLogin =
     localStorage.getItem("loginSource") === "addToCart";
+
 
 
 
@@ -531,21 +535,21 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
           className="swl-hs-navbar-menu"
           items={navItems}
         />
-<Select
-  placeholder="Role"
-  style={{ width: 150, marginRight: 12 }}
-  onChange={(value: UserRole) => {
-    setUserRole(value);
+        <Select
+          placeholder="Role"
+          style={{ width: 150, marginRight: 12 }}
+          onChange={(value: UserRole) => {
+            setUserRole(value);
 
-    if (value === "customer" || value === "employee") {
-      openAuthModal("register");
-    }
+            if (value === "customer" || value === "employee") {
+              openAuthModal("register");
+            }
 
-    if (value === "partner") {
-      setPartnerModalVisible(true); // ✅ auto open popup
-    }
-  }}
->
+            if (value === "partner") {
+              setPartnerModalVisible(true); // ✅ auto open popup
+            }
+          }}
+        >
 
 
           <Select.Option value="customer">Customer</Select.Option>
@@ -723,7 +727,29 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
 
           {/* REGISTER TAB */}
           <TabPane tab="Register" key="register">
-            <Form layout="vertical" onFinish={onRegister} preserve={false}>
+            <Form
+              layout="vertical"
+              onFinish={(values) => {
+                console.log("Partner Register:", values);
+
+                // Save partner session (temporary)
+                localStorage.setItem("partner_role", "partner");
+                localStorage.setItem("partner_module", values.module);
+
+                // 🔥 ROUTING BASED ON MODULE
+                if (values.module === "healthcare") {
+                  setPartnerModalVisible(false);
+                  navigate("/partner/healthcare");
+                } else if (values.module === "education") {
+                  navigate("/partner/education");
+                } else if (values.module === "realestate") {
+                  navigate("/partner/realestate");
+                } else {
+                  message.info("Dashboard coming soon");
+                }
+              }}
+            >
+
 
               <Form.Item
                 label="Select Services"
@@ -1752,128 +1778,155 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
 
         </Tabs>
       </Modal>
-<Modal
-  open={partnerModalVisible}
-  onCancel={() => setPartnerModalVisible(false)}
-  footer={null}
-  centered
-  width={380}                 // ✅ reduced width
-  bodyStyle={{
-    background: "#fff",
-    borderRadius: 16,
-    padding: 20,
-    maxHeight: "70vh",         // ✅ limit height
-    overflowY: "auto",         // ✅ enable scroll
-  }}
->
+      <Modal
+        open={partnerModalVisible}
+        onCancel={() => setPartnerModalVisible(false)}
+        footer={null}
+        centered
+        width={380}                 // ✅ reduced width
+        bodyStyle={{
+          background: "#fff",
+          borderRadius: 16,
+          padding: 20,
+          maxHeight: "70vh",         // ✅ limit height
+          overflowY: "auto",         // ✅ enable scroll
+        }}
+      >
 
-  <Tabs defaultActiveKey="register" centered>
-    <Tabs.TabPane tab="Login" key="login">
-      <Form layout="vertical">
-        <Form.Item
-          label="Email ID"
-          name="email"
-          rules={[{ required: true, type: "email" }]}
-        >
-          <Input placeholder="Enter email id" />
-        </Form.Item>
+        <Tabs defaultActiveKey="register" centered>
+          <Tabs.TabPane tab="Login" key="login">
+            <Form layout="vertical">
+              <Form.Item
+                label="Email ID"
+                name="email"
+                rules={[{ required: true, type: "email" }]}
+              >
+                <Input placeholder="Enter email id" />
+              </Form.Item>
 
-        <Form.Item
-          label="Password"
-          name="password"
-          rules={[{ required: true }]}
-        >
-          <Input.Password placeholder="Enter password" />
-        </Form.Item>
+              <Form.Item
+                label="Password"
+                name="password"
+                rules={[{ required: true }]}
+              >
+                <Input.Password placeholder="Enter password" />
+              </Form.Item>
 
-        <Button type="primary" block>
-          Login
-        </Button>
-      </Form>
-    </Tabs.TabPane>
+              <Button type="primary" block>
+                Login
+              </Button>
+            </Form>
+          </Tabs.TabPane>
 
-    <Tabs.TabPane tab="Register" key="register">
-      <h2 style={{ textAlign: "center", marginBottom: 20 }}>
-        Partner Registration
-      </h2>
+          <Tabs.TabPane tab="Register" key="register">
+            <h2 style={{ textAlign: "center", marginBottom: 20 }}>
+              Partner Registration
+            </h2>
 
-      <Form layout="vertical">
-        <Form.Item
-          label="Partner Name"
-          name="partnerName"
-          rules={[{ required: true }]}
-        >
-          <Input placeholder="Enter partner name" />
-        </Form.Item>
+            <Form
+              layout="vertical"
+              onFinish={(values) => {
+                console.log("Partner Register:", values);
 
-        <Form.Item
-          label="Company / Firm Name"
-          name="company"
-          rules={[{ required: true }]}
-        >
-          <Input placeholder="Enter company / firm name" />
-        </Form.Item>
+                localStorage.setItem("partner_role", "partner");
+                localStorage.setItem("partner_module", values.module);
 
-        <Form.Item
-          label="GST Number"
-          name="gst"
-        >
-          <Input placeholder="Enter gst number" />
-        </Form.Item>
+                setPartnerModalVisible(false);
 
-        <Form.Item
-          label="Number of Partners"
-          name="partnersCount"
-          rules={[
-            { required: true },
-            {
-              type: "number",
-              min: 2,
-              max: 20,
-              message: "Min 2, Max 20",
-            },
-          ]}
-        >
-          <Input type="number" placeholder="Min 2, Max 20" />
-        </Form.Item>
+                if (values.module === "healthcare") {
+                  navigate("/partner/healthcare");
+                } else if (values.module === "education") {
+                  navigate("/partner/education");
+                } else if (values.module === "realestate") {
+                  navigate("/partner/realestate");
+                } else {
+                  message.info("Dashboard coming soon");
+                }
+              }}
+            >
+              <Form.Item
+                label="Partner Name"
+                name="partnerName"
+                rules={[{ required: true }]}
+              >
+                <Input placeholder="Enter partner name" />
+              </Form.Item>
 
-        <Form.Item
-          label="Email ID"
-          name="email"
-          rules={[{ required: true, type: "email" }]}
-        >
-          <Input placeholder="Enter email id" />
-        </Form.Item>
+              <Form.Item
+                label="Company / Firm Name"
+                name="company"
+                rules={[{ required: true }]}
+              >
+                <Input placeholder="Enter company / firm name" />
+              </Form.Item>
 
-        <Form.Item
-          label="Password"
-          name="password"
-          rules={[{ required: true }]}
-        >
-          <Input.Password placeholder="Enter password" />
-        </Form.Item>
+              <Form.Item
+                label="GST Number"
+                name="gst"
+              >
+                <Input placeholder="Enter gst number" />
+              </Form.Item>
 
-        <Form.Item
-          label="Select Module"
-          name="module"
-          rules={[{ required: true }]}
-        >
-          <Select placeholder="Choose module">
-            <Select.Option value="education">Education</Select.Option>
-            <Select.Option value="realestate">Buy / Sell / Rent</Select.Option>
-            <Select.Option value="healthcare">Health Care</Select.Option>
-            <Select.Option value="products">Swachify Products</Select.Option>
-            <Select.Option value="ride">Just Ride</Select.Option>
-          </Select>
-        </Form.Item>
+              <Form.Item
+                label="Number of Partners"
+                name="partnersCount"
+                rules={[
+                  { required: true, message: "Please enter number of partners" },
+                  {
+                    type: "number",
+                    min: 2,
+                    max: 20,
+                    message: "Min 2, Max 20",
+                  },
+                ]}
+              >
+                <InputNumber
+                  min={2}
+                  max={20}
+                  style={{ width: "100%" }}
+                  placeholder="Min 2, Max 20"
+                />
+              </Form.Item>
 
-        <Button type="primary" block style={{ marginTop: 12 }}>
-          Register
-        </Button>
-      </Form>
-    </Tabs.TabPane>
-  </Tabs>
-</Modal>
+
+              <Form.Item
+                label="Email ID"
+                name="email"
+                rules={[{ required: true, type: "email" }]}
+              >
+                <Input placeholder="Enter email id" />
+              </Form.Item>
+
+              <Form.Item
+                label="Password"
+                name="password"
+                rules={[{ required: true }]}
+              >
+                <Input.Password placeholder="Enter password" />
+              </Form.Item>
+
+              <Form.Item
+                label="Select Module"
+                name="module"
+                rules={[{ required: true }]}
+              >
+                <Select placeholder="Choose module">
+                  <Select.Option value="education">Education</Select.Option>
+                  <Select.Option value="realestate">Buy / Sell / Rent</Select.Option>
+                  <Select.Option value="healthcare">Health Care</Select.Option>
+                  <Select.Option value="products">Swachify Products</Select.Option>
+                  <Select.Option value="ride">Just Ride</Select.Option>
+                </Select>
+              </Form.Item>
+
+              <Button type="primary" block htmlType="submit" style={{ marginTop: 12 }}>
+                Register
+              </Button>
+
+            </Form>
+          </Tabs.TabPane>
+        </Tabs>
+      </Modal>
 
 
 
@@ -1882,13 +1935,3 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
 };
 
 export default CommonHeader;
-
-
-
-
-
-
-
-
-
-
