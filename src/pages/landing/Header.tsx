@@ -249,6 +249,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
       setAuthLoading(false);
     }
   };
+
   const onAdminLogin = async (values: any) => {
     try {
       setAuthLoading(true);
@@ -333,6 +334,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
   ];
 
 // ✅ Partner Register/Login handler (Education only)
+
 const onPartnerRegister = (values: any) => {
   setPartnerModalVisible(false);
 
@@ -341,8 +343,8 @@ const onPartnerRegister = (values: any) => {
       navigate("/partner/education/dashboard");
       break;
 
-    case "realestate":
-      navigate("/partner/realestate/dashboard");
+    case "realestate": // ✅ Buy / Sell
+      navigate("/partner/dashboard");
       break;
 
     case "healthcare":
@@ -1900,6 +1902,7 @@ const onPartnerRegister = (values: any) => {
           <Select placeholder="Choose module">
             <Select.Option value="education">Education</Select.Option>
             <Select.Option value="realestate">Buy / Sell / Rent</Select.Option>
+
             <Select.Option value="healthcare">Health Care</Select.Option>
             <Select.Option value="products">Swachify Products</Select.Option>
             <Select.Option value="ride">Just Ride</Select.Option>
