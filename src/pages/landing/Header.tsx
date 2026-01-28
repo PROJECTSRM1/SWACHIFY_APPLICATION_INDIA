@@ -14,7 +14,6 @@ import {
   message,
   //Radio,
   Upload,
-  InputNumber,
 } from "antd";
 
 import { Select, TreeSelect } from "antd";
@@ -253,6 +252,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
       setAuthLoading(false);
     }
   };
+
   const onAdminLogin = async (values: any) => {
     try {
       setAuthLoading(true);
@@ -335,6 +335,37 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
     { title: "Swachify Products", value: 6 },
     { title: "HealthCare", value: 7 },
   ];
+
+  // ✅ Partner Register/Login handler (Education only)
+
+  const onPartnerRegister = (values: any) => {
+    setPartnerModalVisible(false);
+
+    switch (values.module) {
+      case "education":
+        navigate("/partner/education/dashboard");
+        break;
+
+      case "realestate": // ✅ Buy / Sell
+        navigate("/partner/dashboard");
+        break;
+
+      case "healthcare":
+        navigate("/partner/healthcare/dashboard");
+        break;
+
+      case "products":
+        navigate("/partner/products/dashboard");
+        break;
+
+      case "ride":
+        navigate("/partner/ride/dashboard");
+        break;
+
+      default:
+        message.info("Module dashboard not configured yet");
+    }
+  };
 
 
 
@@ -1795,7 +1826,9 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
 
         <Tabs defaultActiveKey="register" centered>
           <Tabs.TabPane tab="Login" key="login">
-            <Form layout="vertical">
+            <Form layout="vertical" onFinish={onPartnerRegister}>
+
+
               <Form.Item
                 label="Email ID"
                 name="email"
@@ -1812,9 +1845,10 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
                 <Input.Password placeholder="Enter password" />
               </Form.Item>
 
-              <Button type="primary" block>
+              <Button type="primary" block htmlType="submit">
                 Login
               </Button>
+
             </Form>
           </Tabs.TabPane>
 
@@ -1823,27 +1857,8 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
               Partner Registration
             </h2>
 
-            <Form
-              layout="vertical"
-              onFinish={(values) => {
-                console.log("Partner Register:", values);
+            <Form layout="vertical" onFinish={onPartnerRegister}>
 
-                localStorage.setItem("partner_role", "partner");
-                localStorage.setItem("partner_module", values.module);
-
-                setPartnerModalVisible(false);
-
-                if (values.module === "healthcare") {
-                  navigate("/partner/healthcare");
-                } else if (values.module === "education") {
-                  navigate("/partner/education");
-                } else if (values.module === "realestate") {
-                  navigate("/partner/realestate");
-                } else {
-                  message.info("Dashboard coming soon");
-                }
-              }}
-            >
               <Form.Item
                 label="Partner Name"
                 name="partnerName"
@@ -1851,6 +1866,29 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
               >
                 <Input placeholder="Enter partner name" />
               </Form.Item>
+
+
+
+              <Form.Item
+                label="Number of Partners"
+                name="partnersCount"
+                rules={[
+                  { required: true, message: "Required" },
+                  {
+                    validator: (_, value) => {
+                      const num = Number(value);
+                      if (!num) return Promise.reject("Enter number");
+                      if (num < 2 || num > 20) {
+                        return Promise.reject("Min 2, Max 20");
+                      }
+                      return Promise.resolve();
+                    },
+                  },
+                ]}
+              >
+                <Input type="number" min={2} max={20} />
+              </Form.Item>
+
 
               <Form.Item
                 label="Company / Firm Name"
@@ -1868,44 +1906,6 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
               </Form.Item>
 
               <Form.Item
-                label="Number of Partners"
-                name="partnersCount"
-                rules={[
-                  { required: true, message: "Please enter number of partners" },
-                  {
-                    type: "number",
-                    min: 2,
-                    max: 20,
-                    message: "Min 2, Max 20",
-                  },
-                ]}
-              >
-                <InputNumber
-                  min={2}
-                  max={20}
-                  style={{ width: "100%" }}
-                  placeholder="Min 2, Max 20"
-                />
-              </Form.Item>
-
-
-              <Form.Item
-                label="Email ID"
-                name="email"
-                rules={[{ required: true, type: "email" }]}
-              >
-                <Input placeholder="Enter email id" />
-              </Form.Item>
-
-              <Form.Item
-                label="Password"
-                name="password"
-                rules={[{ required: true }]}
-              >
-                <Input.Password placeholder="Enter password" />
-              </Form.Item>
-
-              <Form.Item
                 label="Select Module"
                 name="module"
                 rules={[{ required: true }]}
@@ -1913,13 +1913,19 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
                 <Select placeholder="Choose module">
                   <Select.Option value="education">Education</Select.Option>
                   <Select.Option value="realestate">Buy / Sell / Rent</Select.Option>
+
                   <Select.Option value="healthcare">Health Care</Select.Option>
                   <Select.Option value="products">Swachify Products</Select.Option>
                   <Select.Option value="ride">Just Ride</Select.Option>
                 </Select>
               </Form.Item>
 
-              <Button type="primary" block htmlType="submit" style={{ marginTop: 12 }}>
+              <Button
+                type="primary"
+                block
+                htmlType="submit"   // 🔥 THIS WAS MISSING
+                style={{ marginTop: 12 }}
+              >
                 Register
               </Button>
 

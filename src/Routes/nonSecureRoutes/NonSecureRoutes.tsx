@@ -20,8 +20,12 @@ import Education from '../../pages/landing/EducationPage';
 import Freelancerlogin from '../../pages/login/Freelancerlogin';
 import FreelancerRegistration from '../../pages/login/FreelancerRegistration';
 import ServiceRequests from '../../pages/landing/ServiceRequests';
+import PartnerDashboard from "../../pages/dashboard/buy&sale/PartnerDashboard";
 // import Vendor from '../../pages/vendor/Vendor';
 import HealthcarePartner from "../../pages/WebHospital/HealthcarePartnerDashboard";
+import EducationPartnerDashboard
+  from "../../pages/landing/EducationPartnerDashboard";
+
 
 export const NonSecureRoutes = () => {
   const navigate = useNavigate();
@@ -53,6 +57,7 @@ export const NonSecureRoutes = () => {
     <Routes>
       <Route path="/" element={<Landing />} />
       <Route path="/landing" element={<Landing />} />
+      <Route path="/partner/dashboard" element={<PartnerDashboard />} />
 
       {/* <Route path="/forgotpasswordlink" element={<ForgotPasswordLink />} /> */}
       {/* <Route path="/forgotpassword/:id" element={<ForgotPassword />} /> */}
@@ -79,7 +84,10 @@ export const NonSecureRoutes = () => {
         element={<HealthcarePartner />}
       />
 
-
+      <Route
+        path="/partner/education/dashboard"
+        element={<EducationPartnerDashboard />}
+      />
 
     </Routes>
   );

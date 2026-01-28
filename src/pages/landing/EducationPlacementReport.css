@@ -1,0 +1,286 @@
+/* ROOT */
+.epr2-page {
+  background: #f8fafc;
+  min-height: 100vh;
+  padding-bottom: 32px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont;
+}
+
+/* HEADER */
+.epr2-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 20px;
+}
+
+.epr2-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.epr2-back-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #2563eb;
+}
+
+.epr2-college {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.epr2-college-icon {
+  width: 36px;
+  height: 36px;
+  background: #e0edff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2563eb;
+}
+
+.epr2-college-name {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.epr2-premium {
+  font-size: 11px;
+  color: #2563eb;
+  font-weight: 600;
+}
+
+/* YEAR */
+.epr2-year-chip {
+  background: #fff;
+  padding: 6px 12px;
+  border-radius: 14px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* KPI */
+.epr2-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  padding: 0 16px;
+}
+
+.epr2-kpi-card {
+  background: #fff;
+  padding: 14px;
+  border-radius: 14px;
+}
+
+.epr2-kpi-label {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.epr2-kpi-value {
+  display: block;
+  font-size: 20px;
+  margin-top: 4px;
+}
+
+.epr2-kpi-sub {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.epr2-kpi-positive {
+  font-size: 12px;
+  color: #22c55e;
+}
+
+/* CARD */
+.epr2-card {
+  background: #fff;
+  margin: 14px 16px;
+  padding: 16px;
+  border-radius: 16px;
+}
+
+.epr2-card-title {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.epr2-card-sub {
+  font-size: 13px;
+  color: #64748b;
+}
+
+/* CHART */
+.epr2-chart {
+  height: 120px;
+  margin: 12px 0;
+  background: linear-gradient(to bottom, #f1f6ff, #f8fafc);
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.epr2-chart svg {
+  width: 100%;
+  height: 100%;
+}
+
+.epr2-chart-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+/* DEPARTMENT */
+.epr2-dept {
+  margin-top: 12px;
+}
+
+.epr2-dept-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+}
+
+.epr2-dept-bar {
+  height: 6px;
+  background: #e5e7eb;
+  border-radius: 6px;
+  margin-top: 6px;
+}
+
+.epr2-dept-bar div {
+  height: 6px;
+  background: #2563eb;
+  border-radius: 6px;
+}
+
+/* RECENT */
+.epr2-recent {
+  padding: 0 16px;
+}
+
+.epr2-recent-header {
+  display: flex;
+  justify-content: space-between;
+  margin: 12px 0;
+}
+
+.epr2-recent-header h4 {
+  font-size: 15px;
+}
+
+.epr2-recent-header span {
+  font-size: 13px;
+  color: #2563eb;
+}
+
+/* PLACEMENT */
+.epr2-placement {
+  background: #fff;
+  margin: 10px 0;
+  padding: 14px;
+  border-radius: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.epr2-placement-left {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.epr2-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.epr2-blue {
+  background: #e0edff;
+  color: #2563eb;
+}
+
+.epr2-orange {
+  background: #fff3e0;
+  color: #f59e0b;
+}
+
+.epr2-red {
+  background: #fee2e2;
+  color: #ef4444;
+}
+
+.epr2-placement p {
+  font-size: 13px;
+  color: #64748b;
+}
+
+.epr2-placement-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.epr2-ctc {
+  font-size: 14px;
+  font-weight: 700;
+  color: #16a34a;
+}
+
+.epr2-job-type {
+  font-size: 11px;
+  color: #94a3b8;
+}
+
+/* DOWNLOAD */
+.epr2-download {
+  margin: 20px 16px;
+  padding: 14px;
+  border-radius: 14px;
+  border: none;
+  background: #2563eb;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+/* TREND METRIC (85% + ↑12%) */
+.epr2-trend-metric {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.epr2-trend-value {
+  font-size: 22px;
+  font-weight: 700;
+  color: #2563eb;
+  line-height: 1.1;
+}
+
+.epr2-trend-growth {
+  font-size: 12px;
+  font-weight: 600;
+  color: #22c55e;
+  margin-top: 2px;
+}
