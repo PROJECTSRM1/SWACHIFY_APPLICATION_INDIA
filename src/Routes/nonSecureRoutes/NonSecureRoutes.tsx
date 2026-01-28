@@ -21,6 +21,9 @@ import Freelancerlogin from '../../pages/login/Freelancerlogin';
 import FreelancerRegistration from '../../pages/login/FreelancerRegistration';
 import ServiceRequests from '../../pages/landing/ServiceRequests';
 // import Vendor from '../../pages/vendor/Vendor';
+import EducationPartnerDashboard 
+  from "../../pages/landing/EducationPartnerDashboard";
+
 
 export const NonSecureRoutes = () => {
   const navigate = useNavigate();
@@ -73,6 +76,10 @@ useEffect(() => {
       <Route path="/freelancerregistration" element={<FreelancerRegistration />} />
       <Route path="/servicerequests" element={<ServiceRequests />} />
       {/* <Route path="/Vendor" element={<Vendor/>}/> */}
+      <Route
+  path="/partner/education/dashboard"
+  element={<EducationPartnerDashboard />}
+/>
 
       
     </Routes>

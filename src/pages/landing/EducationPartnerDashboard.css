@@ -1,0 +1,333 @@
+.epd-container {
+  background: #f8fafc;
+  min-height: 100vh;
+  padding-bottom: 40px;
+}
+
+/* HEADER */
+.epd-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+}
+
+.epd-header-left {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.epd-back-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #2563eb;
+  display: flex;
+  align-items: center;
+}
+
+.epd-header h2 {
+  margin: 0;
+  font-weight: 800;
+}
+
+.epd-header p {
+  color: #64748b;
+  margin-top: 4px;
+}
+
+.epd-header-icon {
+  background: #e0edff;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2563eb;
+}
+
+/* STATS */
+.epd-stats {
+  display: flex;
+  gap: 12px;
+  padding: 0 16px;
+}
+
+.epd-stat-card {
+  background: #fff;
+  border-radius: 18px;
+  padding: 16px;
+  flex: 1;
+}
+
+.epd-stat-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.epd-stat-icon.blue {
+  background: #e0edff;
+  color: #2563eb;
+}
+
+.epd-stat-icon.orange {
+  background: #fff7ed;
+  color: #f59e0b;
+}
+
+/* SECTION HEADER */
+.epd-section-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  font-weight: 700;
+  color: #64748b;
+}
+
+/* BRANCH */
+.epd-branches {
+  display: flex;
+  gap: 12px;
+  padding: 0 16px;
+}
+
+.epd-branch-card {
+  background: #fff;
+  border-radius: 18px;
+  padding: 14px;
+  flex: 1;
+}
+
+.epd-progress {
+  height: 6px;
+  background: #e5e7eb;
+  border-radius: 3px;
+}
+
+.epd-progress div {
+  height: 6px;
+  background: #2563eb;
+  border-radius: 3px;
+}
+
+/* INTERNSHIP */
+.epd-internship-card {
+  background: #fff;
+  margin: 12px 16px;
+  padding: 16px;
+  border-radius: 18px;
+}
+
+.epd-internship-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.epd-status {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.epd-status.green {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.epd-status.blue {
+  background: #e0edff;
+  color: #2563eb;
+}
+
+.epd-internship-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 14px;
+}
+
+.epd-internship-footer label {
+  font-size: 12px;
+  color: #94a3b8;
+}
+.epd-info-block {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.epd-info-block.align-right {
+  text-align: right;
+}
+
+.epd-label {
+  font-size: 12px;
+  color: #94a3b8;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.epd-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.epd-type {
+  color: #2563eb;
+}
+
+
+.epd-type {
+  color: #2563eb;
+  font-weight: 700;
+}
+
+/* PARTNER CARD */
+.epd-partner-card {
+  background: #eff6ff;
+  margin: 16px;
+  padding: 16px;
+  border-radius: 20px;
+}
+
+.epd-partner-header {
+  display: flex;
+  gap: 12px;
+}
+
+.epd-partner-icon {
+  background: #e0edff;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.epd-premium {
+  color: #2563eb;
+}
+
+.epd-partner-stats {
+  display: flex;
+  justify-content: space-between;
+  margin: 16px 0;
+}
+
+.epd-report-btn {
+  width: 100%;
+  background: #2563eb;
+  border: none;
+  color: #fff;
+  padding: 14px;
+  border-radius: 14px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+@media (max-width: 480px) {
+  .epd-header {
+    padding: 16px;
+  }
+
+  .epd-header h2 {
+    font-size: 18px;
+  }
+
+  .epd-header p {
+    font-size: 12px;
+  }
+
+  .epd-stats {
+    flex-direction: column;
+  }
+
+  .epd-branches {
+    flex-direction: column;
+  }
+
+  .epd-section-header {
+    padding: 16px;
+    font-size: 13px;
+  }
+
+  .epd-internship-card {
+    margin: 12px;
+  }
+
+  .epd-internship-footer {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .epd-info-block.align-right {
+    text-align: left;
+  }
+
+  .epd-report-btn {
+    font-size: 14px;
+    padding: 12px;
+  }
+}
+@media (max-width: 768px) {
+  .epd-stats {
+    gap: 10px;
+  }
+
+  .epd-stat-card {
+    padding: 14px;
+  }
+
+  .epd-branches {
+    flex-wrap: wrap;
+  }
+
+  .epd-branch-card {
+    flex: 1 1 100%;
+  }
+
+  .epd-internship-footer {
+    gap: 16px;
+  }
+
+  .epd-header-icon {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .epd-container {
+    padding-bottom: 32px;
+  }
+
+  .epd-stats {
+    padding: 0 12px;
+  }
+
+  .epd-branches {
+    padding: 0 12px;
+  }
+
+  .epd-internship-card {
+    margin: 12px;
+  }
+
+  .epd-partner-card {
+    margin: 12px;
+  }
+}
+

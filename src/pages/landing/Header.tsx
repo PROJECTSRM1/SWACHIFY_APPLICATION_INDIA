@@ -332,6 +332,36 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
     { title: "HealthCare", value: 7 },
   ];
 
+// ✅ Partner Register/Login handler (Education only)
+const onPartnerRegister = (values: any) => {
+  setPartnerModalVisible(false);
+
+  switch (values.module) {
+    case "education":
+      navigate("/partner/education/dashboard");
+      break;
+
+    case "realestate":
+      navigate("/partner/realestate/dashboard");
+      break;
+
+    case "healthcare":
+      navigate("/partner/healthcare/dashboard");
+      break;
+
+    case "products":
+      navigate("/partner/products/dashboard");
+      break;
+
+    case "ride":
+      navigate("/partner/ride/dashboard");
+      break;
+
+    default:
+      message.info("Module dashboard not configured yet");
+  }
+};
+
 
 
   const onRegister = async (values: any) => {
@@ -1769,7 +1799,9 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
 
   <Tabs defaultActiveKey="register" centered>
     <Tabs.TabPane tab="Login" key="login">
-      <Form layout="vertical">
+ <Form layout="vertical" onFinish={onPartnerRegister}>
+
+
         <Form.Item
           label="Email ID"
           name="email"
@@ -1786,18 +1818,20 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
           <Input.Password placeholder="Enter password" />
         </Form.Item>
 
-        <Button type="primary" block>
-          Login
-        </Button>
+      <Button type="primary" block htmlType="submit">
+  Login
+</Button>
+
       </Form>
     </Tabs.TabPane>
 
-    <Tabs.TabPane tab="Register" key="register">
-      <h2 style={{ textAlign: "center", marginBottom: 20 }}>
-        Partner Registration
-      </h2>
+   <Tabs.TabPane tab="Register" key="register">
+  <h2 style={{ textAlign: "center", marginBottom: 20 }}>
+    Partner Registration
+  </h2>
 
-      <Form layout="vertical">
+  <Form layout="vertical" onFinish={onPartnerRegister}>
+
         <Form.Item
           label="Partner Name"
           name="partnerName"
@@ -1821,21 +1855,26 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
           <Input placeholder="Enter gst number" />
         </Form.Item>
 
-        <Form.Item
-          label="Number of Partners"
-          name="partnersCount"
-          rules={[
-            { required: true },
-            {
-              type: "number",
-              min: 2,
-              max: 20,
-              message: "Min 2, Max 20",
-            },
-          ]}
-        >
-          <Input type="number" placeholder="Min 2, Max 20" />
-        </Form.Item>
+       <Form.Item
+  label="Number of Partners"
+  name="partnersCount"
+  rules={[
+    { required: true, message: "Required" },
+    {
+      validator: (_, value) => {
+        const num = Number(value);
+        if (!num) return Promise.reject("Enter number");
+        if (num < 2 || num > 20) {
+          return Promise.reject("Min 2, Max 20");
+        }
+        return Promise.resolve();
+      },
+    },
+  ]}
+>
+  <Input type="number" min={2} max={20} />
+</Form.Item>
+
 
         <Form.Item
           label="Email ID"
@@ -1867,9 +1906,15 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
           </Select>
         </Form.Item>
 
-        <Button type="primary" block style={{ marginTop: 12 }}>
-          Register
-        </Button>
+       <Button
+  type="primary"
+  block
+  htmlType="submit"   // 🔥 THIS WAS MISSING
+  style={{ marginTop: 12 }}
+>
+  Register
+</Button>
+
       </Form>
     </Tabs.TabPane>
   </Tabs>
