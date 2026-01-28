@@ -1,0 +1,222 @@
+.epd-container {
+  background: #f8fafc;
+  min-height: 100vh;
+  padding-bottom: 80px;
+}
+
+/* HEADER */
+.epd-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.epd-header h2 {
+  margin: 0;
+  font-weight: 800;
+}
+
+.epd-header p {
+  color: #64748b;
+  margin-top: 4px;
+}
+
+.epd-header-icon {
+  background: #e0edff;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2563eb;
+}
+
+/* STATS */
+.epd-stats {
+  display: flex;
+  gap: 12px;
+  padding: 0 16px;
+}
+
+.epd-stat-card {
+  background: #fff;
+  border-radius: 18px;
+  padding: 16px;
+  flex: 1;
+}
+
+.epd-stat-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.epd-stat-icon.blue {
+  background: #e0edff;
+  color: #2563eb;
+}
+
+.epd-stat-icon.orange {
+  background: #fff7ed;
+  color: #f59e0b;
+}
+
+/* SECTION HEADER */
+.epd-section-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  font-weight: 700;
+  color: #64748b;
+}
+
+.epd-section-header a {
+  color: #2563eb;
+  cursor: pointer;
+}
+
+/* BRANCH */
+.epd-branches {
+  display: flex;
+  gap: 12px;
+  padding: 0 16px;
+}
+
+.epd-branch-card {
+  background: #fff;
+  border-radius: 18px;
+  padding: 14px;
+  flex: 1;
+}
+
+.epd-progress {
+  height: 6px;
+  background: #e5e7eb;
+  border-radius: 3px;
+}
+
+.epd-progress div {
+  height: 6px;
+  background: #2563eb;
+  border-radius: 3px;
+}
+
+/* INTERNSHIP */
+.epd-internship-card {
+  background: #fff;
+  margin: 12px 16px;
+  padding: 16px;
+  border-radius: 18px;
+}
+
+.epd-internship-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.epd-status {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.epd-status.green {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.epd-status.blue {
+  background: #e0edff;
+  color: #2563eb;
+}
+
+.epd-internship-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 14px;
+}
+
+.epd-internship-footer label {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.epd-type {
+  color: #2563eb;
+  font-weight: 700;
+}
+
+/* PARTNER CARD */
+.epd-partner-card {
+  background: #eff6ff;
+  margin: 16px;
+  padding: 16px;
+  border-radius: 20px;
+}
+
+.epd-partner-header {
+  display: flex;
+  gap: 12px;
+}
+
+.epd-partner-icon {
+  background: #e0edff;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.epd-premium {
+  color: #2563eb;
+}
+
+.epd-partner-stats {
+  display: flex;
+  justify-content: space-between;
+  margin: 16px 0;
+}
+
+.epd-report-btn {
+  width: 100%;
+  background: #2563eb;
+  border: none;
+  color: #fff;
+  padding: 14px;
+  border-radius: 14px;
+  display: flex;              /* ✅ FIXED */
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* BOTTOM NAV */
+.epd-bottom-nav {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: #fff;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: space-around;
+  padding: 12px 0;
+}
+
+.epd-bottom-nav svg {
+  color: #9ca3af;
+  font-size: 26px;
+}
+
+.epd-bottom-nav svg.active {
+  color: #2563eb;
+}
