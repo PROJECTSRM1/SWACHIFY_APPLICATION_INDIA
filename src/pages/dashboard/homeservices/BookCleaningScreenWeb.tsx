@@ -43,7 +43,8 @@ type ServiceContext = "home" | "vehicle" | "commercial";
 type Props = {
   selectedServices: string[] | Service[];
   consultationCharge: number;
-  serviceContext: ServiceContext; // ✅ NEW
+  serviceContext: ServiceContext; 
+   meta?: any;
   onClose: () => void;
 };
 type Addon = {
@@ -126,6 +127,7 @@ const BookCleaningScreenWeb: React.FC<Props> = ({
   selectedServices,
   consultationCharge,
   serviceContext,
+  meta,
   onClose,
 }) => {
   /* ---------- SERVICES ---------- */
@@ -187,8 +189,12 @@ const BookCleaningScreenWeb: React.FC<Props> = ({
   }, [locationType]);
 
   /* ---------- ALLOCATION ---------- */
-  const [allocationType, setAllocationType] =
-    useState<"auto" | "manual">("auto");
+ const [allocationType, setAllocationType] = useState<
+  "auto" | "manual" | null
+>(
+  serviceContext === "vehicle" ? null : "auto"
+);
+
 
   // const [allocatedEmployee, setAllocatedEmployee] =
   //   useState<Professional | null>(null);
@@ -240,11 +246,13 @@ const [manualAddress, setManualAddress] = useState("");
 const extraHoursCost = extraHours * EXTRA_HOUR_PRICE;
 
 const totalPrice =
-  BASE_PRICE +
-  addonsCost +
-  floorAreaCost +
-  extraHoursCost +
-  consultationCharge;
+  serviceContext === "vehicle"
+    ? consultationCharge
+    : BASE_PRICE +
+      addonsCost +
+      floorAreaCost +
+      extraHoursCost +
+      consultationCharge;
 
   /* ---------- ACTIONS ---------- */
   const addService = (id: string) => {
@@ -264,6 +272,12 @@ const totalPrice =
     }
     setShowPaymentModal(true);
   };
+  const selectedEmployee =
+  serviceContext === "vehicle" ? meta?.employee : null;
+
+  const vehicleSubServices =
+  serviceContext === "vehicle" ? meta?.subServices || [] : [];
+
 
   const [showPaymentModal, setShowPaymentModal] = useState(false);
 
@@ -325,48 +339,74 @@ const totalPrice =
 )}
 
 
+
         {/* ALLOCATION */}
-        <p className="bc_label">Allocation Type</p>
-        <select
-          className="bc_select"
-          value={allocationType}
-          onChange={(e) => setAllocationType(e.target.value as any)}
-        >
-          <option value="auto">Auto Allocation</option>
-          <option value="manual">Manual Allocation</option>
-        </select>
+        {serviceContext !== "vehicle" && (
+  <>
+    <p className="bc_label">Allocation Type</p>
+    <select
+      className="bc_select"
+      value={allocationType || "auto"}
+      onChange={(e) =>
+        setAllocationType(e.target.value as "auto" | "manual")
+      }
+    >
+      <option value="auto">Auto Allocation</option>
+      <option value="manual">Manual Allocation</option>
+    </select>
+  </>
+)}
+
+       {serviceContext === "vehicle" && selectedEmployee && (
+  <>
+    <p className="bc_label">Assigned Professional</p>
+    <div className="bc_detectBox">
+      {selectedEmployee.name} ⭐ {selectedEmployee.rating}
+    </div>
+  </>
+)}
+
 
         {/* FLOOR AREA */}
-        <p className="bc_label">Floor Area (sqft)</p>
-        <input
-          className="bc_input"
-          value={floorArea}
-          onChange={(e) => setFloorArea(e.target.value)}
-          placeholder="1400"
-        />
+       {serviceContext !== "vehicle" && (
+  <>
+    <p className="bc_label">Floor Area (sqft)</p>
+    <input
+      className="bc_input"
+      value={floorArea}
+      onChange={(e) => setFloorArea(e.target.value)}
+      placeholder="1400"
+    />
+  </>
+)}
+
         {/* ADDON SERVICES */}
-<p className="bc_label">Additional Services</p>
+{serviceContext !== "vehicle" && (
+  <>
+    <p className="bc_label">Additional Services</p>
 
-<div className="bc_addonList">
-  {ADDONS_BY_TYPE[serviceContext].map((addon) => {
-    const checked = selectedAddons.some((a) => a.id === addon.id);
+    <div className="bc_addonList">
+      {ADDONS_BY_TYPE[serviceContext].map((addon) => {
+        const checked = selectedAddons.some((a) => a.id === addon.id);
 
-    return (
-      <label key={addon.id} className="bc_addonCheckbox">
-        <input
-          type="checkbox"
-          checked={checked}
-          onChange={() => toggleAddon(addon)}
-        />
+        return (
+          <label key={addon.id} className="bc_addonCheckbox">
+            <input
+              type="checkbox"
+              checked={checked}
+              onChange={() => toggleAddon(addon)}
+            />
+            <div className="bc_addonInfo">
+              <span className="bc_addonLabel">{addon.label}</span>
+              <span className="bc_addonPrice">₹{addon.price}</span>
+            </div>
+          </label>
+        );
+      })}
+    </div>
+  </>
+)}
 
-        <div className="bc_addonInfo">
-          <span className="bc_addonLabel">{addon.label}</span>
-          <span className="bc_addonPrice">₹{addon.price}</span>
-        </div>
-      </label>
-    );
-  })}
-</div>
 
 
 
@@ -461,24 +501,63 @@ const totalPrice =
         </div>
 
         {/* SUMMARY */}
-       <h3>Service Summary</h3>
+       {/* SUMMARY */}
+{/* ================= SERVICE SUMMARY ================= */}
+<h3>Service Summary</h3>
 
-<p>Main Service: <strong>{mainService?.title}</strong></p>
+{/* MAIN SERVICE */}
+<p>
+  Main Service: <strong>{mainService?.title}</strong>
+</p>
 
-{selectedAddons.map((a) => (
-  <p key={a.id}>
-    {a.label}: {formatMoney(a.price)}
-  </p>
-))}
+{/* VEHICLE FLOW */}
+{serviceContext === "vehicle" && (
+  <>
+    {vehicleSubServices.length > 0 && (
+      <>
+        <h4>Included Services</h4>
+        {vehicleSubServices.map((s: any) => (
+          <p key={s.id}>
+            {s.name} – ₹{s.price}
+          </p>
+        ))}
+      </>
+    )}
 
-<p>Floor Area: {formatMoney(floorAreaCost)}</p>
-<p>Extra Hours: {formatMoney(extraHoursCost)}</p>
-<p>Consultation: {formatMoney(consultationCharge)}</p>
+    <p>
+      Service Charges: <strong>{formatMoney(consultationCharge)}</strong>
+    </p>
 
-<strong>Total: {formatMoney(totalPrice)}</strong>
+    <p style={{ marginTop: 8, fontSize: 16 }}>
+      <strong>Total Payable: {formatMoney(totalPrice)}</strong>
+    </p>
+  </>
+)}
+
+{/* HOME / COMMERCIAL FLOW */}
+{serviceContext !== "vehicle" && (
+  <>
+    {selectedAddons.map((a) => (
+      <p key={a.id}>
+        {a.label}: {formatMoney(a.price)}
+      </p>
+    ))}
+
+    <p>Floor Area: {formatMoney(floorAreaCost)}</p>
+    <p>Extra Hours: {formatMoney(extraHoursCost)}</p>
+    <p>Consultation: {formatMoney(consultationCharge)}</p>
+
+    <p style={{ marginTop: 8, fontSize: 16 }}>
+      <strong>Total Payable: {formatMoney(totalPrice)}</strong>
+    </p>
+  </>
+)}
+
+ 
 
 
       </div>
+      
 
       {/* CTA */}
       <div className="bc_bottomBar">

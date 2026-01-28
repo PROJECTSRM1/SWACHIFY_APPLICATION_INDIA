@@ -99,8 +99,12 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
   const [isHealthCareSelected, setIsHealthCareSelected] = useState(false);
   const [doctorRoleSelected, setDoctorRoleSelected] = useState(false);
 
+  type UserRole = "customer" | "employee" | "partner" | null;
 
+  const [userRole, setUserRole] = useState<UserRole>(null);
+  const [partnerModalVisible, setPartnerModalVisible] = useState(false);
 
+  
 
 
   const [activeAuthTab, setActiveAuthTab] = useState<"login" | "register">(
@@ -328,6 +332,36 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
     { title: "HealthCare", value: 7 },
   ];
 
+// ✅ Partner Register/Login handler (Education only)
+const onPartnerRegister = (values: any) => {
+  setPartnerModalVisible(false);
+
+  switch (values.module) {
+    case "education":
+      navigate("/partner/education/dashboard");
+      break;
+
+    case "realestate":
+      navigate("/partner/realestate/dashboard");
+      break;
+
+    case "healthcare":
+      navigate("/partner/healthcare/dashboard");
+      break;
+
+    case "products":
+      navigate("/partner/products/dashboard");
+      break;
+
+    case "ride":
+      navigate("/partner/ride/dashboard");
+      break;
+
+    default:
+      message.info("Module dashboard not configured yet");
+  }
+};
+
 
 
   const onRegister = async (values: any) => {
@@ -376,6 +410,16 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
         navigate("/adminshell/dashboard");
         return;
       }
+      const roleMap = {
+        customer: 1,
+        employee: 2,
+      };
+
+      const selectedRole =
+        userRole === "employee"
+          ? roleMap.employee
+          : roleMap.customer;
+
 
       // ================= CUSTOMER REGISTER =================
       const customerPayload = {
@@ -384,6 +428,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
         last_name: values.lastName?.trim() || "DefaultLast",
         email: values.email?.trim() || "user@example.com",
         mobile: values.mobile?.trim() || "9999999999",
+        role_id: selectedRole,
         password: values.password || "Default@123",
         confirm_password: values.confirmPassword || "Default@123",
         work_type:
@@ -516,6 +561,28 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
           className="swl-hs-navbar-menu"
           items={navItems}
         />
+<Select
+  placeholder="Role"
+  style={{ width: 150, marginRight: 12 }}
+  onChange={(value: UserRole) => {
+    setUserRole(value);
+
+    if (value === "customer" || value === "employee") {
+      openAuthModal("register");
+    }
+
+    if (value === "partner") {
+      setPartnerModalVisible(true); // ✅ auto open popup
+    }
+  }}
+>
+
+
+          <Select.Option value="customer">Customer</Select.Option>
+          <Select.Option value="employee">Employee</Select.Option>
+          <Select.Option value="partner">Partner</Select.Option>
+        </Select>
+
 
         <Button
           className="swl-hs-contact-btn swl-signup-btn"
@@ -734,47 +801,47 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
               </Form.Item>
 
 
-             <Form.Item
-  label="First Name"
-  name="firstName"
-  normalize={(value) =>
-    value
-      ?.replace(/[^A-Za-z ]/g, "")
-      .replace(/\s+/g, " ")
-      .trim()
-  }
-  rules={[
-    { required: true, message: "First name is required" },
-    {
-      pattern: /^[A-Za-z]+( [A-Za-z]+)*$/,
-      message: "Only letters allowed",
-    },
-  ]}
->
-  <Input placeholder="Enter first name" />
-</Form.Item>
+              <Form.Item
+                label="First Name"
+                name="firstName"
+                normalize={(value) =>
+                  value
+                    ?.replace(/[^A-Za-z ]/g, "")
+                    .replace(/\s+/g, " ")
+                    .trim()
+                }
+                rules={[
+                  { required: true, message: "First name is required" },
+                  {
+                    pattern: /^[A-Za-z]+( [A-Za-z]+)*$/,
+                    message: "Only letters allowed",
+                  },
+                ]}
+              >
+                <Input placeholder="Enter first name" />
+              </Form.Item>
 
 
 
-             <Form.Item
-  label="Last Name"
-  name="lastName"
-  normalize={(value) =>
-    value
-      ?.replace(/[^A-Za-z ]/g, "")
-      .replace(/\s+/g, " ")
-      .trim()
-  }
-  rules={[
-    { required: true, message: "Last name is required" },
-    {
-      pattern: /^[A-Za-z]+( [A-Za-z]+)*$/,
-      message: "Only letters allowed",
-    },
-  ]}
->
-  <Input placeholder="Enter last name" />
-</Form.Item>
+              <Form.Item
+                label="Last Name"
+                name="lastName"
+                normalize={(value) =>
+                  value
+                    ?.replace(/[^A-Za-z ]/g, "")
+                    .replace(/\s+/g, " ")
+                    .trim()
+                }
+                rules={[
+                  { required: true, message: "Last name is required" },
+                  {
+                    pattern: /^[A-Za-z]+( [A-Za-z]+)*$/,
+                    message: "Only letters allowed",
+                  },
+                ]}
+              >
+                <Input placeholder="Enter last name" />
+              </Form.Item>
 
 
 
@@ -791,17 +858,17 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
               </Form.Item>
 
 
-           <Form.Item
-  name="email"
-  label="Email"
-  normalize={(value) => value?.toLowerCase().replace(/\s+/g, "")}
-  rules={[
-    { required: true, message: "Please input the email!" },
-    { type: "email", message: "Please enter a valid email!" },
-  ]}
->
-  <Input placeholder="Enter email" />
-</Form.Item>
+              <Form.Item
+                name="email"
+                label="Email"
+                normalize={(value) => value?.toLowerCase().replace(/\s+/g, "")}
+                rules={[
+                  { required: true, message: "Please input the email!" },
+                  { type: "email", message: "Please enter a valid email!" },
+                ]}
+              >
+                <Input placeholder="Enter email" />
+              </Form.Item>
 
 
 
@@ -989,22 +1056,22 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
 
 
 
-                <Form.Item
-  label="Expertise in Additional Service"
-  name="expertise"
-  normalize={(value) => value?.replace(/^\s+/, "")}
-  rules={[
-    { required: true, message: "Expertise is required" },
-    { min: 3, message: "Minimum 3 characters required" },
-    {
-      pattern: /^[A-Za-z ]+$/,
-      message: "Only letters and spaces are allowed",
-    },
-  ]}
-  hasFeedback
->
-  <Input placeholder="Enter your expertise" />
-</Form.Item>
+                  <Form.Item
+                    label="Expertise in Additional Service"
+                    name="expertise"
+                    normalize={(value) => value?.replace(/^\s+/, "")}
+                    rules={[
+                      { required: true, message: "Expertise is required" },
+                      { min: 3, message: "Minimum 3 characters required" },
+                      {
+                        pattern: /^[A-Za-z ]+$/,
+                        message: "Only letters and spaces are allowed",
+                      },
+                    ]}
+                    hasFeedback
+                  >
+                    <Input placeholder="Enter your expertise" />
+                  </Form.Item>
 
 
                   <Form.Item
@@ -1715,6 +1782,145 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
 
         </Tabs>
       </Modal>
+<Modal
+  open={partnerModalVisible}
+  onCancel={() => setPartnerModalVisible(false)}
+  footer={null}
+  centered
+  width={380}                 // ✅ reduced width
+  bodyStyle={{
+    background: "#fff",
+    borderRadius: 16,
+    padding: 20,
+    maxHeight: "70vh",         // ✅ limit height
+    overflowY: "auto",         // ✅ enable scroll
+  }}
+>
+
+  <Tabs defaultActiveKey="register" centered>
+    <Tabs.TabPane tab="Login" key="login">
+ <Form layout="vertical" onFinish={onPartnerRegister}>
+
+
+        <Form.Item
+          label="Email ID"
+          name="email"
+          rules={[{ required: true, type: "email" }]}
+        >
+          <Input placeholder="Enter email id" />
+        </Form.Item>
+
+        <Form.Item
+          label="Password"
+          name="password"
+          rules={[{ required: true }]}
+        >
+          <Input.Password placeholder="Enter password" />
+        </Form.Item>
+
+      <Button type="primary" block htmlType="submit">
+  Login
+</Button>
+
+      </Form>
+    </Tabs.TabPane>
+
+   <Tabs.TabPane tab="Register" key="register">
+  <h2 style={{ textAlign: "center", marginBottom: 20 }}>
+    Partner Registration
+  </h2>
+
+  <Form layout="vertical" onFinish={onPartnerRegister}>
+
+        <Form.Item
+          label="Partner Name"
+          name="partnerName"
+          rules={[{ required: true }]}
+        >
+          <Input placeholder="Enter partner name" />
+        </Form.Item>
+
+        <Form.Item
+          label="Company / Firm Name"
+          name="company"
+          rules={[{ required: true }]}
+        >
+          <Input placeholder="Enter company / firm name" />
+        </Form.Item>
+
+        <Form.Item
+          label="GST Number"
+          name="gst"
+        >
+          <Input placeholder="Enter gst number" />
+        </Form.Item>
+
+       <Form.Item
+  label="Number of Partners"
+  name="partnersCount"
+  rules={[
+    { required: true, message: "Required" },
+    {
+      validator: (_, value) => {
+        const num = Number(value);
+        if (!num) return Promise.reject("Enter number");
+        if (num < 2 || num > 20) {
+          return Promise.reject("Min 2, Max 20");
+        }
+        return Promise.resolve();
+      },
+    },
+  ]}
+>
+  <Input type="number" min={2} max={20} />
+</Form.Item>
+
+
+        <Form.Item
+          label="Email ID"
+          name="email"
+          rules={[{ required: true, type: "email" }]}
+        >
+          <Input placeholder="Enter email id" />
+        </Form.Item>
+
+        <Form.Item
+          label="Password"
+          name="password"
+          rules={[{ required: true }]}
+        >
+          <Input.Password placeholder="Enter password" />
+        </Form.Item>
+
+        <Form.Item
+          label="Select Module"
+          name="module"
+          rules={[{ required: true }]}
+        >
+          <Select placeholder="Choose module">
+            <Select.Option value="education">Education</Select.Option>
+            <Select.Option value="realestate">Buy / Sell / Rent</Select.Option>
+            <Select.Option value="healthcare">Health Care</Select.Option>
+            <Select.Option value="products">Swachify Products</Select.Option>
+            <Select.Option value="ride">Just Ride</Select.Option>
+          </Select>
+        </Form.Item>
+
+       <Button
+  type="primary"
+  block
+  htmlType="submit"   // 🔥 THIS WAS MISSING
+  style={{ marginTop: 12 }}
+>
+  Register
+</Button>
+
+      </Form>
+    </Tabs.TabPane>
+  </Tabs>
+</Modal>
+
+
 
     </>
   );

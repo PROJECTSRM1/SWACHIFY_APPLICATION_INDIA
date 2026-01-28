@@ -2,6 +2,8 @@ import React, { useMemo, useState, useEffect } from "react";
 import "./HealthCare.css";
 import { Tooltip } from "antd";
 import { AppstoreOutlined } from "@ant-design/icons";
+
+
 // import { AppstoreOutlined } from "@ant-design/icons";
 
 type Doctor = {
@@ -589,6 +591,7 @@ const HealthCare: React.FC = () => {
   const [searchText, setSearchText] = useState("");
   const [activeCategory, setActiveCategory] = useState<string>("All");
 
+
   const [openConsultation, setOpenConsultation] = useState<boolean>(false);
 
   const [openOnlinePopup, setOpenOnlinePopup] = useState(false);
@@ -610,6 +613,8 @@ const HealthCare: React.FC = () => {
   const [showTrending, setShowTrending] = useState(false);
   const [hoveredTrending, setHoveredTrending] = useState<string | null>(null);
 
+  // ✅ MOBILE TAP SUPPORT (DO NOT REMOVE)
+  const [mobileActionItem, setMobileActionItem] = useState<string | null>(null);
 
   const [doctorProfile, setDoctorProfile] = useState({
     name: "Dr. Sarah Jenkins",
@@ -788,91 +793,141 @@ const HealthCare: React.FC = () => {
 
       </div>
 
-      {/* Search */}
-      <div className="healthcare-search">
-        <div className="search-box-wrap">
-          <input
-            type="text"
-            placeholder={placeholders[placeholderIndex]}
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
-            onClick={() => setShowTrending((prev) => !prev)}   // ✅ toggle on click
-            onBlur={() => setTimeout(() => setShowTrending(false), 150)} // close when outside
-          />
 
-          {showTrending && (
-            <div className="trending-dropdown">
-              <p className="trending-title">Searches</p>
+{/* Search */}
+<div className="healthcare-search">
+  <div className="search-box-wrap">
+    <input
+      type="text"
+      className="search-input"
+      placeholder={placeholders[placeholderIndex]}
+      value={searchText}
+      onChange={(e) => {
+        const value = e.target.value;
+        if (/^[a-zA-Z\s]*$/.test(value)) {
+          setSearchText(value);
+        }
+      }}
+      onFocus={() => setShowTrending(true)}
+      onBlur={() => setTimeout(() => setShowTrending(false), 150)}
+    />
 
-              {trendingSearches.map((item) => (
-                <div
-                  key={item}
-                  className="trending-item-wrap"
-                  onMouseEnter={() => setHoveredTrending(item)}
-                  onMouseLeave={() => setHoveredTrending(null)}
-                >
-                  <div
-                    className="trending-item"
-                    onMouseDown={() => setSearchText(item)}
-                  >
-                    <span className="trending-icon">📈</span>
-                    <span className="trending-text">{item}</span>
-                  </div>
+    {showTrending && (
+      <div className="trending-dropdown">
+        <p className="trending-title">Searches</p>
 
-                  {hoveredTrending === item && (
-                    <div className="trending-submenu">
-                      <button
-                        type="button"
-                        className="submenu-btn"
-                        onMouseDown={(e) => e.preventDefault()}
-                        onClick={() => {
-                          setSearchText(`${item} (Online)`);
-                          setShowTrending(false);
-                          setOpenOnlinePopup(true); // ✅ OPEN ONLINE POPUP
-                        }}
-                      >
-                        🌐 Online
-                      </button>
+{trendingSearches.map((item) => (
+  <div
+    key={item}
+    className="trending-item-wrap"
+    onMouseEnter={() => setHoveredTrending(item)}   // ✅ DESKTOP
+    onMouseLeave={() => setHoveredTrending(null)}  // ✅ DESKTOP
+  >
+    {/* MAIN ITEM */}
+<div
+  className="trending-item"
+onMouseDown={(e) => {
+  if (window.innerWidth <= 425) {
+    // 📱 MOBILE: block mouse event completely
+    e.preventDefault();
+    return;
+  }
 
+  // 🖥 DESKTOP ONLY
+  setSearchText(item);
+}}
+  onClick={() => {
+    // 📱 MOBILE ONLY: prevent auto-select
+    if (window.innerWidth <= 425) {
+      // e.preventDefault();
+      setMobileActionItem((prev) =>
+        prev === item ? null : item
+      );
+    }
+  }}
+>
 
-                      <button
-                        type="button"
-                        className="submenu-btn"
-                        onMouseDown={(e) => e.preventDefault()}
-                        onClick={() => {
-                          setSearchText(`${item} (Offline)`);
-                          setShowTrending(false);
+      <span className="trending-icon">📈</span>
+      <span className="trending-text">{item}</span>
+    </div>
 
-                          setTempOfflineTime(doctorProfile.opTime);
-                          setEditOfflineTime(false);
-
-                          setPatientAssist("");
-                          setShowAssistSuccess(false);
-
-                          setOpenOfflinePopup(true);
-                        }}
-
-
-                      >
-                        🏥 Offline
-                      </button>
-                    </div>
-                  )}
-                </div>
-              ))}
-
-            </div>
-          )}
-        </div>
+    {/* 🖥 DESKTOP HOVER MENU (UNCHANGED) */}
+    {hoveredTrending === item && window.innerWidth > 425 && (
+      <div className="trending-submenu">
+        <button
+          className="submenu-btn"
+          onClick={() => {
+            setSearchText(`${item} (Online)`);
+            setShowTrending(false);
+            setOpenOnlinePopup(true);
+          }}
+        >
+          🌐 Online
+        </button>
 
         <button
-          type="button"
-          className="emergency-btn search-ambulance-btn"
-          onClick={() => setOpenAmbulanceScreen(true)}
+          className="submenu-btn"
+          onClick={() => {
+            setSearchText(`${item} (Offline)`);
+            setShowTrending(false);
+            setTempOfflineTime(doctorProfile.opTime);
+            setOpenOfflinePopup(true);
+          }}
         >
-          Book Ambulance Now  →
+          🏥 Offline
         </button>
       </div>
+    )}
+
+    {/* 📱 MOBILE TAP MENU */}
+    {mobileActionItem === item && (
+      <div className="mobile-trending-actions">
+        <button
+          onClick={() => {
+            setSearchText(`${item} (Online)`);
+            setMobileActionItem(null);
+            setShowTrending(false);
+            setOpenOnlinePopup(true);
+          }}
+        >
+          🌐 Online
+        </button>
+
+        <button
+          onClick={() => {
+            setSearchText(`${item} (Offline)`);
+            setMobileActionItem(null);
+            setShowTrending(false);
+            setTempOfflineTime(doctorProfile.opTime);
+            setOpenOfflinePopup(true);
+          }}
+        >
+          🏥 Offline
+        </button>
+      </div>
+    )}
+  </div>
+))}
+
+      </div>
+    )}
+  </div>
+    {/* Ambulance Button */}
+  <button
+    type="button"
+    className="emergency-btn search-ambulance-btn"
+    onClick={() => setOpenAmbulanceScreen(true)}
+  >
+    Book Ambulance Now →
+  </button>
+</div>
+
+
+
+
+
+
+
 
 
       {/* Categories */}

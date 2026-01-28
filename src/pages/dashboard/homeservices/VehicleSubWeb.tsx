@@ -146,6 +146,8 @@ const VehicleSubWeb: React.FC<Props> = ({ onClose, onContinue }) => {
       )
     );
   };
+  const selectedSubServices = services.filter((s) => s.selected);
+
 
   const handleVehicleChange = (type: VehicleType) => {
     setVehicleType(type);
@@ -279,6 +281,7 @@ const VehicleSubWeb: React.FC<Props> = ({ onClose, onContinue }) => {
                         fuel,
                         package: selectedPackage,
                         services: services.filter((s) => s.selected),
+                        subServices: selectedSubServices,
                         employee: selectedEmp,
                         description,
                       },
