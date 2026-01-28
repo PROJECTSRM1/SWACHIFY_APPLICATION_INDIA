@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Card, Row, Col, Input, Select } from "antd";
+import { useNavigate } from "react-router-dom";
+import { LeftOutlined } from "@ant-design/icons";
+
 
 const { Option } = Select;
 
@@ -94,7 +97,7 @@ const services = [
 
 
 const AllServices: React.FC = () => {
-
+  const navigate = useNavigate(); 
   const [pickupType, setPickupType] = useState<"myself" | "others">("myself");
 const [pickupValue, setPickupValue] = useState("");
 const [dropValue, setDropValue] = useState("");
@@ -133,6 +136,20 @@ useEffect(() => {
    <Col xs={24} sm={24} md={20} lg={18} xl={16}>
 
       <Card className="sw-js-as-card">
+
+       <div className="sw-js-as-header">
+  <button
+    className="sw-js-as-back-btn"
+    onClick={() => navigate(-1)}
+    aria-label="Go back"
+  >
+    <LeftOutlined />
+  </button>
+
+  <h2 className="sw-js-as-header-title">All Services</h2>
+</div>
+
+
 
         {/* LOCATIONS */}
 
