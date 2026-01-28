@@ -1,15 +1,17 @@
 .epd-container {
-  background: #f8fafc;
+  background: linear-gradient(180deg, #f8fafc, #f1f5f9);
   min-height: 100vh;
-  padding-bottom: 40px;
+  padding-bottom: 48px;
 }
 
 /* HEADER */
 .epd-header {
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 20px 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
 }
 
 .epd-header-left {
@@ -23,16 +25,17 @@
   border: none;
   cursor: pointer;
   color: #2563eb;
-  display: flex;
-  align-items: center;
 }
 
 .epd-header h2 {
   margin: 0;
+  font-size: 22px;
   font-weight: 800;
+  color: #0f172a;
 }
 
 .epd-header p {
+  font-size: 13px;
   color: #64748b;
   margin-top: 4px;
 }
@@ -51,15 +54,16 @@
 /* STATS */
 .epd-stats {
   display: flex;
-  gap: 12px;
-  padding: 0 16px;
+  gap: 14px;
+  padding: 20px 16px;
 }
 
 .epd-stat-card {
-  background: #fff;
+  background: #ffffff;
   border-radius: 18px;
-  padding: 16px;
+  padding: 18px;
   flex: 1;
+  box-shadow: 0 6px 20px rgba(15, 23, 42, 0.06);
 }
 
 .epd-stat-icon {
@@ -84,25 +88,33 @@
 
 /* SECTION HEADER */
 .epd-section-header {
+  padding: 24px 20px 12px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  color: #475569;
   display: flex;
   justify-content: space-between;
-  padding: 20px;
-  font-weight: 700;
-  color: #64748b;
+}
+
+.epd-link {
+  color: #2563eb;
+  cursor: pointer;
 }
 
 /* BRANCH */
 .epd-branches {
   display: flex;
-  gap: 12px;
+  gap: 14px;
   padding: 0 16px;
 }
 
 .epd-branch-card {
-  background: #fff;
-  border-radius: 18px;
-  padding: 14px;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 16px;
   flex: 1;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
 }
 
 .epd-progress {
@@ -119,10 +131,11 @@
 
 /* INTERNSHIP */
 .epd-internship-card {
-  background: #fff;
-  margin: 12px 16px;
-  padding: 16px;
+  background: #ffffff;
+  margin: 14px 16px;
+  padding: 18px;
   border-radius: 18px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
 }
 
 .epd-internship-header {
@@ -131,9 +144,9 @@
 }
 
 .epd-status {
-  padding: 4px 12px;
-  border-radius: 12px;
-  font-size: 12px;
+  padding: 5px 14px;
+  border-radius: 999px;
+  font-size: 11px;
   font-weight: 700;
 }
 
@@ -153,10 +166,6 @@
   margin-top: 14px;
 }
 
-.epd-internship-footer label {
-  font-size: 12px;
-  color: #94a3b8;
-}
 .epd-info-block {
   display: flex;
   flex-direction: column;
@@ -171,7 +180,6 @@
   font-size: 12px;
   color: #94a3b8;
   font-weight: 600;
-  letter-spacing: 0.3px;
 }
 
 .epd-value {
@@ -182,20 +190,16 @@
 
 .epd-type {
   color: #2563eb;
-}
-
-
-.epd-type {
-  color: #2563eb;
   font-weight: 700;
 }
 
 /* PARTNER CARD */
 .epd-partner-card {
-  background: #eff6ff;
-  margin: 16px;
-  padding: 16px;
-  border-radius: 20px;
+  background: linear-gradient(135deg, #eff6ff, #e0edff);
+  margin: 20px 16px;
+  padding: 20px;
+  border-radius: 22px;
+  box-shadow: 0 10px 30px rgba(37, 99, 235, 0.15);
 }
 
 .epd-partner-header {
@@ -204,7 +208,7 @@
 }
 
 .epd-partner-icon {
-  background: #e0edff;
+  background: #ffffff;
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -214,6 +218,8 @@
 }
 
 .epd-premium {
+  font-size: 12px;
+  font-weight: 700;
   color: #2563eb;
 }
 
@@ -227,45 +233,22 @@
   width: 100%;
   background: #2563eb;
   border: none;
-  color: #fff;
+  color: #ffffff;
   padding: 14px;
-  border-radius: 14px;
+  border-radius: 16px;
+  font-weight: 700;
   display: flex;
   gap: 8px;
   align-items: center;
   justify-content: center;
-  font-weight: 700;
   cursor: pointer;
 }
 
-@media (max-width: 480px) {
-  .epd-header {
-    padding: 16px;
-  }
-
-  .epd-header h2 {
-    font-size: 18px;
-  }
-
-  .epd-header p {
-    font-size: 12px;
-  }
-
-  .epd-stats {
-    flex-direction: column;
-  }
-
+/* MOBILE */
+@media (max-width: 768px) {
+  .epd-stats,
   .epd-branches {
     flex-direction: column;
-  }
-
-  .epd-section-header {
-    padding: 16px;
-    font-size: 13px;
-  }
-
-  .epd-internship-card {
-    margin: 12px;
   }
 
   .epd-internship-footer {
@@ -276,58 +259,4 @@
   .epd-info-block.align-right {
     text-align: left;
   }
-
-  .epd-report-btn {
-    font-size: 14px;
-    padding: 12px;
-  }
 }
-@media (max-width: 768px) {
-  .epd-stats {
-    gap: 10px;
-  }
-
-  .epd-stat-card {
-    padding: 14px;
-  }
-
-  .epd-branches {
-    flex-wrap: wrap;
-  }
-
-  .epd-branch-card {
-    flex: 1 1 100%;
-  }
-
-  .epd-internship-footer {
-    gap: 16px;
-  }
-
-  .epd-header-icon {
-    width: 40px;
-    height: 40px;
-  }
-}
-
-@media (max-width: 1024px) {
-  .epd-container {
-    padding-bottom: 32px;
-  }
-
-  .epd-stats {
-    padding: 0 12px;
-  }
-
-  .epd-branches {
-    padding: 0 12px;
-  }
-
-  .epd-internship-card {
-    margin: 12px;
-  }
-
-  .epd-partner-card {
-    margin: 12px;
-  }
-}
-

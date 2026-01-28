@@ -257,16 +257,16 @@ const trendingStudents: TrendingStudent[] = studentsData
           <p className="program">{student.program}</p>
           <p className="score">{student.academicScore}% Academic Score</p>
 
-          <div className="trending-footer">
-            <div className="rating">
-  <span className="star">⭐</span>
-  <span>{student.rating}</span>
+       <div className="trending-footer">
+  <div className="rating">
+    <span className="star">⭐</span>
+    <span>{student.rating}</span>
+  </div>
 </div>
 
-            <span className={`status ${student.status}`}>
-              {student.status.toUpperCase()}
-            </span>
-          </div>
+<span className={`status-badge ${student.status}`}>
+  {student.status.toUpperCase()}
+</span>
 
           <p className="shift">{student.shift}</p>
         </div>

@@ -143,6 +143,12 @@
   border: 1px solid #e5e7eb;
 }
 
+/* ===== TRENDING CARD WIDTH FIX ===== */
+.trending-row-card {
+  max-width: 520px;     /* 👈 controls card width */
+  width: 100%;
+  margin: 0 auto;      /* 👈 centers card in grid */
+}
 
 .trending-avatar {
   width: 56px;
@@ -193,17 +199,30 @@
   border-radius: 999px;
 }
 
+/* ===== STATUS BADGE (RIGHT SIDE FIX) ===== */
+.status-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
 
-.status.active {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 999px;
+  letter-spacing: 0.4px;
+}
+
+/* Active */
+.status-badge.active {
   background: #dcfce7;
   color: #16a34a;
 }
 
-.status.completed {
+/* Completed */
+.status-badge.completed {
   background: #e5e7eb;
   color: #6b7280;
 }
-
 /* ================= LARGE DESKTOP (≥1280px) ================= */
 @media (min-width: 1280px) {
   .edu-featured {
@@ -252,10 +271,15 @@
 
 /* ================= MOBILE (≤767px) ================= */
 @media (max-width: 767px) {
-  .edu-featured {
-    height: 260px;          /* 🔥 keeps text on image */
-    margin: 16px;
+  /* FIX SEARCH BAR POSITION IN MOBILE */
+  .featured-search-wrapper {
+    margin-top: 12px;      /* 👈 lifts search bar up */
   }
+
+  .featured-search {
+    height: 44px;          /* 👈 cleaner mobile height */
+  }
+}
 
   .featured-content {
     flex-direction: column;
@@ -277,13 +301,12 @@
   .trending-list {
     grid-template-columns: 1fr;
   }
-}
-
+ 
 /* ================= BUTTON ================= */
 .edu-featured .view-details-btn {
-  background: #ffffff;
-  color: #000000;
-  border: 1px solid #000000;
+  background: #000000;     /* 👈 black button */
+  color: #ffffff;          /* 👈 white text */
+  border: 1px solid #0f172a;
   padding: 10px 18px;
   border-radius: 999px;
   font-weight: 600;
@@ -291,6 +314,6 @@
 }
 
 .edu-featured .view-details-btn:hover {
-  background: #000000;
-  color: #ffffff;
+  background: #ffffff;     /* 👈 optional hover invert */
+  color: #0f172a;
 }
