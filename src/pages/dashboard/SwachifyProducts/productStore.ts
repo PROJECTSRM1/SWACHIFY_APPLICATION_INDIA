@@ -13,6 +13,7 @@ export interface Product {
     isNew?: boolean;
     shopAddress?: string;
     description?: string;
+    stock?: number;
 }
 
 const STORAGE_KEY = 'swachify_products';
