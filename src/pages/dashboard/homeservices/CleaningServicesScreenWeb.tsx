@@ -114,7 +114,7 @@ const CleaningServicesScreenWeb: React.FC = () => {
       <BookCleaningScreenWeb
         selectedServices={bookingData.selectedServices}
         consultationCharge={bookingData.consultationCharge}
-        serviceContext="home"
+        serviceContext="homeServices"
         onClose={() => {
           setOpenBooking(false);
           setBookingData(null);

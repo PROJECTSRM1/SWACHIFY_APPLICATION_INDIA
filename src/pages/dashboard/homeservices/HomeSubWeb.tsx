@@ -101,7 +101,7 @@ const HomeSubWeb: React.FC<HomeSubWebProps> = ({ onBack, onContinue }) => {
   );
 
   return (
-    <div className="hsw_page">
+    <div className="hsw_page hsw_animateIn">
       {/* HEADER */}
       <header className="hsw_header">
         <button onClick={onBack} className="hsw_backBtn">
@@ -123,27 +123,28 @@ const HomeSubWeb: React.FC<HomeSubWebProps> = ({ onBack, onContinue }) => {
 
       {/* LIST */}
       <div className="hsw_list">
-        {filtered.map((opt) => {
+        {filtered.map((opt, index) => {
           const active = selectedProperties.includes(opt.id);
 
           return (
             <div
               key={opt.id}
+              style={{ animationDelay: `${index * 0.06}s` }}
               className={`hsw_card ${active ? "active" : ""}`}
               onClick={() => toggleSelect(opt.id)}
             >
+              {opt.image && (
+                <div className="hsw_imageWrap">
+                  <img src={opt.image} alt={opt.title} />
+                </div>
+              )}
+
               <div className="hsw_left">
                 <div className="hsw_icon">{opt.icon}</div>
+
                 <div>
                   <h3>{opt.title}</h3>
                   <p>Starting from {opt.price}</p>
-
-                  {opt.image && (
-                    <div className="hsw_imageWrap">
-                      <img src={opt.image} alt={opt.title} />
-                    </div>
-                  )}
-
                   <small>{opt.description}</small>
                 </div>
               </div>
