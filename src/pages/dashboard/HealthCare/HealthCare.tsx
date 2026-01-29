@@ -2,6 +2,7 @@ import React, { useMemo, useState, useEffect } from "react";
 import "./HealthCare.css";
 import { Tooltip } from "antd";
 import { AppstoreOutlined } from "@ant-design/icons";
+import healthcareService from "../../../api/healthcare";
 
 
 // import { AppstoreOutlined } from "@ant-design/icons";
@@ -19,310 +20,6 @@ type Doctor = {
   slots: string[];
 };
 
-
-const doctors: Doctor[] = [
-  // ================= HEART (Cardiologists) =================
-  {
-    id: 1,
-    name: "Dr. Sarah Jenkins",
-    speciality: "CARDIOLOGIST",
-    category: "Heart",
-    conditions: ["heart pain", "bp", "cholesterol"],
-    rating: 4.9,
-    availability: "2:00 PM",
-    price: "$120/hr",
-    image: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?auto=format&fit=crop&w=800&q=80",
-    slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
-  },
-  {
-    id: 2,
-    name: "Dr. Kevin Moore",
-    speciality: "CARDIOLOGIST",
-    category: "Heart",
-    conditions: ["chest pain", "angioplasty"],
-    rating: 4.8,
-    availability: "5:00 PM",
-    price: "$140/hr",
-    image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=800&q=80",
-    slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
-  },
-  {
-    id: 3,
-    name: "Dr. Neha Sharma",
-    speciality: "CARDIOLOGIST",
-    category: "Heart",
-    conditions: ["ECG", "high bp", "heart checkup"],
-    rating: 4.7,
-    availability: "7:15 PM",
-    price: "$110/hr",
-    image: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&w=800&q=80",
-    slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
-  },
-  {
-    id: 4,
-    name: "Dr. Arvind Mehta",
-    speciality: "CARDIOLOGIST",
-    category: "Heart",
-    conditions: ["pulse issues", "bp", "cholesterol"],
-    rating: 4.6,
-    availability: "Tomorrow 10:30 AM",
-    price: "$115/hr",
-    image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=800&q=80",
-    slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
-  },
-  {
-    id: 5,
-    name: "Dr. Priya Reddy",
-    speciality: "CARDIOLOGIST",
-    category: "Heart",
-    conditions: ["heart burn", "chest pressure", "ECG"],
-    rating: 4.8,
-    availability: "Today 8:00 PM",
-    price: "$125/hr",
-    image: "https://images.unsplash.com/photo-1527613426441-4da17471b66d?auto=format&fit=crop&w=800&q=80",
-    slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
-  },
-
-  // ================= SKIN (Dermatologists) =================
-  {
-    id: 6,
-    name: "Dr. Marcus Chen",
-    speciality: "DERMATOLOGIST",
-    category: "Skin",
-    conditions: ["acne", "eczema", "rash"],
-    rating: 4.8,
-    availability: "4:30 PM",
-    price: "$95/hr",
-    image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=800&q=80",
-    slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
-  },
-  {
-    id: 7,
-    name: "Dr. Priya Nair",
-    speciality: "DERMATOLOGIST",
-    category: "Skin",
-    conditions: ["hair fall", "pigmentation"],
-    rating: 4.7,
-    availability: "1:00 PM",
-    price: "$100/hr",
-    image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=80",
-    slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
-  },
-  {
-    id: 8,
-    name: "Dr. Ananya Rao",
-    speciality: "DERMATOLOGIST",
-    category: "Skin",
-    conditions: ["skin rash", "itching", "dark spots"],
-    rating: 4.8,
-    availability: "Tomorrow 3:30 PM",
-    price: "$92/hr",
-    image: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&w=800&q=80",
-    slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
-  },
-  {
-    id: 9,
-    name: "Dr. Arjun Reddy",
-    speciality: "DERMATOLOGIST",
-    category: "Skin",
-    conditions: ["fungal infection", "allergy", "psoriasis"],
-    rating: 4.6,
-    availability: "Today 8:30 PM",
-    price: "$90/hr",
-    image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=800&q=80",
-    slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
-  },
-  {
-    id: 10,
-    name: "Dr. Meera Iyer",
-    speciality: "DERMATOLOGIST",
-    category: "Skin",
-    conditions: ["eczema", "skin peeling", "redness"],
-    rating: 4.7,
-    availability: "Tomorrow 1:15 PM",
-    price: "$98/hr",
-    image: "https://images.unsplash.com/photo-1638202993928-7267aad84c31?auto=format&fit=crop&w=800&q=80",
-    slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
-  },
-
-  // ================= MENTAL (Mental Health) =================
-  {
-    id: 11,
-    name: "Dr. Aaron Patel",
-    speciality: "PSYCHIATRIST",
-    category: "Mental",
-    conditions: ["anxiety", "depression"],
-    rating: 4.7,
-    availability: "6:00 PM",
-    price: "$130/hr",
-    image: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=800&q=80",
-    slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
-  },
-  {
-    id: 12,
-    name: "Dr. Aisha Khan",
-    speciality: "PSYCHOLOGIST",
-    category: "Mental",
-    conditions: ["stress", "panic attack", "sleep issues"],
-    rating: 4.8,
-    availability: "Tomorrow 10:00 AM",
-    price: "$125/hr",
-    image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=80",
-    slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
-  },
-  {
-    id: 13,
-    name: "Dr. Pooja Kulkarni",
-    speciality: "PSYCHIATRIST",
-    category: "Mental",
-    conditions: ["depression", "anxiety", "mood swings"],
-    rating: 4.9,
-    availability: "Tomorrow 7:15 PM",
-    price: "$135/hr",
-    image: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&w=800&q=80",
-    slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
-  },
-  {
-    id: 14,
-    name: "Dr. Olivia Green",
-    speciality: "PSYCHOLOGIST",
-    category: "Mental",
-    conditions: ["therapy", "stress", "anger"],
-    rating: 4.7,
-    availability: "Today 9:00 PM",
-    price: "$120/hr",
-    image: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?auto=format&fit=crop&w=800&q=80",
-    slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
-  },
-  {
-    id: 15,
-    name: "Dr. Daniel Thomas",
-    speciality: "PSYCHIATRIST",
-    category: "Mental",
-    conditions: ["sleep issues", "panic", "mental health"],
-    rating: 4.6,
-    availability: "Tomorrow 4:45 PM",
-    price: "$128/hr",
-    image: "https://images.unsplash.com/photo-1550831107-1553da8c8464?auto=format&fit=crop&w=800&q=80",
-    slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
-  },
-
-  // ================= EYES (Ophthalmologists) =================
-  {
-    id: 16,
-    name: "Dr. Sophia Lee",
-    speciality: "OPHTHALMOLOGIST",
-    category: "Eyes",
-    conditions: ["vision", "eye pain"],
-    rating: 4.6,
-    availability: "Tomorrow",
-    price: "$100/hr",
-    image: "https://images.unsplash.com/photo-1579154203451-0d2d83d2f4a2?auto=format&fit=crop&w=1200&q=80",
-    slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
-  },
-  {
-    id: 17,
-    name: "Dr. Varun Mehta",
-    speciality: "OPHTHALMOLOGIST",
-    category: "Eyes",
-    conditions: ["eye dryness", "blur vision", "eye redness"],
-    rating: 4.7,
-    availability: "Today 6:15 PM",
-    price: "$105/hr",
-    image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=800&q=80",
-    slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
-  },
-  {
-    id: 18,
-    name: "Dr. Kavita Singh",
-    speciality: "OPHTHALMOLOGIST",
-    category: "Eyes",
-    conditions: ["glasses", "eye infection", "eye pain"],
-    rating: 4.8,
-    availability: "Today 5:45 PM",
-    price: "$98/hr",
-    image: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&w=800&q=80",
-    slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
-  },
-
-  // ================= BONES (Orthopedics) =================
-  {
-    id: 21,
-    name: "Dr. John Williams",
-    speciality: "ORTHOPEDIC",
-    category: "Bones",
-    conditions: ["joint pain", "fracture"],
-    rating: 4.8,
-    availability: "3:00 PM",
-    price: "$150/hr",
-    image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=800&q=80",
-    slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
-  },
-  {
-    id: 22,
-    name: "Dr. Kavya Iyer",
-    speciality: "ORTHOPEDIC",
-    category: "Bones",
-    conditions: ["back pain", "knee pain", "sports injury"],
-    rating: 4.9,
-    availability: "Tomorrow 12:30 PM",
-    price: "$155/hr",
-    image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=80",
-    slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
-  },
-
-  // ================= CHILD (Pediatricians) =================
-  {
-    id: 26,
-    name: "Dr. Emma Wilson",
-    speciality: "PEDIATRICIAN",
-    category: "Child",
-    conditions: ["child fever", "vaccination"],
-    rating: 4.9,
-    availability: "11:00 AM",
-    price: "$90/hr",
-    image: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?auto=format&fit=crop&w=800&q=80",
-    slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
-  },
-  {
-    id: 27,
-    name: "Dr. Rahul Verma",
-    speciality: "PEDIATRICIAN",
-    category: "Child",
-    conditions: ["cold", "fever", "stomach pain"],
-    rating: 4.8,
-    availability: "Today 4:00 PM",
-    price: "$95/hr",
-    image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=800&q=80",
-    slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
-  },
-
-  // ================= DENTAL (Dentists) =================
-  {
-    id: 31,
-    name: "Dr. Robert Brown",
-    speciality: "DENTIST",
-    category: "Dental",
-    conditions: ["tooth pain", "gum bleeding"],
-    rating: 4.6,
-    availability: "1:00 PM",
-    price: "$80/hr",
-    image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=800&q=80",
-    slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
-  },
-  {
-    id: 35,
-    name: "Dr. Aditya Menon",
-    speciality: "DENTIST",
-    category: "Dental",
-    conditions: ["root canal", "cavity", "gum swelling"],
-    rating: 4.9,
-    availability: "Today 8:40 PM",
-    price: "$92/hr",
-    image: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=800&q=80",
-    slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
-  },
-];
 
 
 
@@ -543,48 +240,88 @@ const labs = [
     buttonText: "Book Test",
   },
 ];
-const ambulanceHospitals = [
-  {
-    id: 1,
-    name: "Apollo Hospital",
-    type: "MULTI-SPECIALITY",
-    location: "Jubilee Hills, Hyderabad",
-    distance: "2.3 km away • 8 mins arrival",
-    available: "3 ambulances available",
-    phone: "+91-40-23607777",
-    availableSlots: ["10:00 AM - 01:00 PM", "02:00 PM - 05:00 PM"],
-  },
-  {
-    id: 2,
-    name: "Care Hospital",
-    type: "MULTI-SPECIALITY",
-    location: "Banjara Hills, Hyderabad",
-    distance: "3.1 km away • 12 mins arrival",
-    available: "2 ambulances available",
-    phone: "+91-40-61656565",
-    availableSlots: ["10:00 AM - 01:00 PM", "05:00 PM - 08:00 PM"],
-  },
-  {
-    id: 3,
-    name: "Yashoda Hospitals",
-    type: "MULTI-SPECIALITY",
-    location: "Somajiguda, Hyderabad",
-    distance: "4.4 km away • 15 mins arrival",
-    available: "4 ambulances available",
-    phone: "+91-40-45674567",
-    availableSlots: ["02:00 PM - 05:00 PM"],
-  },
-  {
-    id: 4,
-    name: "KIMS Hospital",
-    type: "MULTI-SPECIALITY",
-    location: "Secunderabad, Hyderabad",
-    distance: "5.2 km away • 18 mins arrival",
-    available: "2 ambulances available",
-    phone: "+91-40-44885000",
-    availableSlots: ["10:00 AM - 01:00 PM"],
-  },
-];
+
+type AmbulanceHospital = {
+  hospital_id: number;
+  hospital_name: string;
+  specialty_type: string;
+  location: string;
+  latitude: number | null;
+  longitude: number | null;
+  hospital_contact: string;
+  ambulance_id: number;
+  service_provider: string;
+  ambulance_contact: string;
+  availability_status: string;
+};
+
+
+
+// new functions related to apis
+const getSpecialityName = (id: number) => {
+  switch (id) {
+    case 1: return "CARDIOLOGIST";
+    case 2: return "DERMATOLOGIST";
+    case 3: return "PSYCHIATRIST";
+    case 4: return "OPHTHALMOLOGIST";
+    case 5: return "ORTHOPEDIC";
+    default: return "GENERAL";
+  }
+};
+
+const getCategoryBySpecialization = (id: number) => {
+  switch (id) {
+    case 1: return "Heart";
+    case 2: return "Skin";
+    case 3: return "Mental";
+    case 4: return "Eyes";
+    case 5: return "Bones";
+    default: return "All";
+  }
+};
+
+
+// API availability
+const formatAvailabilityTime = (from: string, to: string) => {
+  const f = new Date(from).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+  const t = new Date(to).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+  return `${f} - ${t}`;
+};
+
+
+const getDoctorImage = (id: number) => {
+  switch (id) {
+    case 1:
+      return "https://images.unsplash.com/photo-1582750433449-648ed127bb54?auto=format&fit=crop&w=800&q=80";
+    case 2:
+      return "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=800&q=80";
+    case 3:
+      return "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=800&q=80";
+    case 4:
+      return "https://images.unsplash.com/photo-1579154203451-0d2d83d2f4a2?auto=format&fit=crop&w=800&q=80";
+    case 5:
+      return "https://images.unsplash.com/photo-1550831107-1553da8c8464?auto=format&fit=crop&w=800&q=80";
+    default:
+      return "https://images.unsplash.com/photo-1550831107-1553da8c8464?auto=format&fit=crop&w=800&q=80";
+  }
+};
+
+
+
+
+const doctorNameMap: Record<number, string> = {
+  45: "Dr. Rahul Verma",
+  1: "Dr. Sarah Jenkins",
+  319: "Dr. Neha Sharma",
+  13: "Dr. Arvind Mehta",
+  133: "Dr. Priya Reddy",
+  101: "Dr. Marcus Chen",
+  421: "Dr. Aisha Khan",
+};
+
+
+
+
 
 
 const HealthCare: React.FC = () => {
@@ -595,6 +332,24 @@ const HealthCare: React.FC = () => {
   const [openConsultation, setOpenConsultation] = useState<boolean>(false);
 
   const [openOnlinePopup, setOpenOnlinePopup] = useState(false);
+
+  const [ambulanceList, setAmbulanceList] = useState<AmbulanceHospital[]>([]);
+  const [loadingAmbulance, setLoadingAmbulance] = useState(false);
+
+  const fetchAmbulances = async () => {
+    try {
+      setLoadingAmbulance(true);
+
+      const data = await healthcareService.getAmbulances(-1);
+
+      setAmbulanceList(data);
+    } catch (error) {
+      console.error("Failed to fetch ambulances", error);
+    } finally {
+      setLoadingAmbulance(false);
+    }
+  };
+
 
 
   // form states
@@ -615,6 +370,53 @@ const HealthCare: React.FC = () => {
 
   // ✅ MOBILE TAP SUPPORT (DO NOT REMOVE)
   const [mobileActionItem, setMobileActionItem] = useState<string | null>(null);
+
+  const [doctors, setDoctors] = useState<Doctor[]>([]);
+
+  const [loadingDoctors, setLoadingDoctors] = useState<boolean>(false);
+
+
+
+  useEffect(() => {
+    const fetchDoctors = async () => {
+      try {
+        setLoadingDoctors(true); // ✅ ADD
+
+        const data = await healthcareService.getAvailableDoctors();
+
+        const mappedDoctors: Doctor[] = data
+          .filter((item) => item.is_available)
+          .map((item) => ({
+            id: item.id,
+            name: doctorNameMap[item.user_id] ?? "Dr. Unknown",
+            speciality: getSpecialityName(item.specialization_id),
+            category: getCategoryBySpecialization(item.specialization_id),
+            conditions: [getSpecialityName(item.specialization_id)],
+            rating: Number(item.rating) || 4.5,
+            availability:
+              item.available_from && item.available_to
+                ? formatAvailabilityTime(item.available_from, item.available_to)
+                : "Available Today",
+            price: `₹${item.fees_per_hour ?? 500}/hr`,
+            image: getDoctorImage(item.specialization_id),
+            slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
+          }));
+
+        setDoctors(mappedDoctors);
+      } catch (error) {
+        console.error("Doctor fetch failed", error);
+      } finally {
+        setLoadingDoctors(false); // ✅ ADD
+      }
+    };
+
+    fetchDoctors();
+  }, []);
+
+
+
+
+
 
   const [doctorProfile, setDoctorProfile] = useState({
     name: "Dr. Sarah Jenkins",
@@ -640,6 +442,8 @@ const HealthCare: React.FC = () => {
 
 
   const selectedSpecialist = specialistByType[doctorSpecialized];
+
+
 
   // select doctor card
   const [selectedDoctorId, setSelectedDoctorId] = useState<number | null>(null);
@@ -717,7 +521,7 @@ const HealthCare: React.FC = () => {
 
       return matchesCategory && matchesSearch;
     });
-  }, [searchText, activeCategory]);
+  }, [searchText, activeCategory, doctors]);
 
 
 
@@ -750,11 +554,7 @@ const HealthCare: React.FC = () => {
     const s = totalSeconds % 60;
     return `${m}:${s.toString().padStart(2, "0")}`;
   };
-  const availableAmbulancesByTime = useMemo(() => {
-    return ambulanceHospitals.filter((h) =>
-      h.availableSlots.includes(doctorProfile.opTime)
-    );
-  }, [doctorProfile.opTime]);
+
 
 
 
@@ -794,133 +594,137 @@ const HealthCare: React.FC = () => {
       </div>
 
 
-{/* Search */}
-<div className="healthcare-search">
-  <div className="search-box-wrap">
-    <input
-      type="text"
-      className="search-input"
-      placeholder={placeholders[placeholderIndex]}
-      value={searchText}
-      onChange={(e) => {
-        const value = e.target.value;
-        if (/^[a-zA-Z\s]*$/.test(value)) {
-          setSearchText(value);
-        }
-      }}
-      onFocus={() => setShowTrending(true)}
-      onBlur={() => setTimeout(() => setShowTrending(false), 150)}
-    />
+      {/* Search */}
+      <div className="healthcare-search">
+        <div className="search-box-wrap">
+          <input
+            type="text"
+            className="search-input"
+            placeholder={placeholders[placeholderIndex]}
+            value={searchText}
+            onChange={(e) => {
+              const value = e.target.value;
+              if (/^[a-zA-Z\s]*$/.test(value)) {
+                setSearchText(value);
+              }
+            }}
+            onFocus={() => setShowTrending(true)}
+            onBlur={() => setTimeout(() => setShowTrending(false), 150)}
+          />
 
-    {showTrending && (
-      <div className="trending-dropdown">
-        <p className="trending-title">Searches</p>
+          {showTrending && (
+            <div className="trending-dropdown">
+              <p className="trending-title">Searches</p>
 
-{trendingSearches.map((item) => (
-  <div
-    key={item}
-    className="trending-item-wrap"
-    onMouseEnter={() => setHoveredTrending(item)}   // ✅ DESKTOP
-    onMouseLeave={() => setHoveredTrending(null)}  // ✅ DESKTOP
-  >
-    {/* MAIN ITEM */}
-<div
-  className="trending-item"
-onMouseDown={(e) => {
-  if (window.innerWidth <= 425) {
-    // 📱 MOBILE: block mouse event completely
-    e.preventDefault();
-    return;
-  }
+              {trendingSearches.map((item) => (
+                <div
+                  key={item}
+                  className="trending-item-wrap"
+                  onMouseEnter={() => setHoveredTrending(item)}   // ✅ DESKTOP
+                  onMouseLeave={() => setHoveredTrending(null)}  // ✅ DESKTOP
+                >
+                  {/* MAIN ITEM */}
+                  <div
+                    className="trending-item"
+                    onMouseDown={(e) => {
+                      if (window.innerWidth <= 425) {
+                        // 📱 MOBILE: block mouse event completely
+                        e.preventDefault();
+                        return;
+                      }
 
-  // 🖥 DESKTOP ONLY
-  setSearchText(item);
-}}
-  onClick={() => {
-    // 📱 MOBILE ONLY: prevent auto-select
-    if (window.innerWidth <= 425) {
-      // e.preventDefault();
-      setMobileActionItem((prev) =>
-        prev === item ? null : item
-      );
-    }
-  }}
->
+                      // 🖥 DESKTOP ONLY
+                      setSearchText(item);
+                    }}
+                    onClick={() => {
+                      // 📱 MOBILE ONLY: prevent auto-select
+                      if (window.innerWidth <= 425) {
+                        // e.preventDefault();
+                        setMobileActionItem((prev) =>
+                          prev === item ? null : item
+                        );
+                      }
+                    }}
+                  >
 
-      <span className="trending-icon">📈</span>
-      <span className="trending-text">{item}</span>
-    </div>
+                    <span className="trending-icon">📈</span>
+                    <span className="trending-text">{item}</span>
+                  </div>
 
-    {/* 🖥 DESKTOP HOVER MENU (UNCHANGED) */}
-    {hoveredTrending === item && window.innerWidth > 425 && (
-      <div className="trending-submenu">
+                  {/* 🖥 DESKTOP HOVER MENU (UNCHANGED) */}
+                  {hoveredTrending === item && window.innerWidth > 425 && (
+                    <div className="trending-submenu">
+                      <button
+                        className="submenu-btn"
+                        onClick={() => {
+                          setSearchText(`${item} (Online)`);
+                          setShowTrending(false);
+                          setOpenOnlinePopup(true);
+                        }}
+                      >
+                        🌐 Online
+                      </button>
+
+                      <button
+                        className="submenu-btn"
+                        onClick={() => {
+                          setSearchText(`${item} (Offline)`);
+                          setShowTrending(false);
+                          setTempOfflineTime(doctorProfile.opTime);
+                          setOpenOfflinePopup(true);
+                        }}
+                      >
+                        🏥 Offline
+                      </button>
+                    </div>
+                  )}
+
+                  {/* 📱 MOBILE TAP MENU */}
+                  {mobileActionItem === item && (
+                    <div className="mobile-trending-actions">
+                      <button
+                        onClick={() => {
+                          setSearchText(`${item} (Online)`);
+                          setMobileActionItem(null);
+                          setShowTrending(false);
+                          setOpenOnlinePopup(true);
+                        }}
+                      >
+                        🌐 Online
+                      </button>
+
+                      <button
+                        onClick={() => {
+                          setSearchText(`${item} (Offline)`);
+                          setMobileActionItem(null);
+                          setShowTrending(false);
+                          setTempOfflineTime(doctorProfile.opTime);
+                          setOpenOfflinePopup(true);
+                        }}
+                      >
+                        🏥 Offline
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ))}
+
+            </div>
+          )}
+        </div>
+        {/* Ambulance Button */}
         <button
-          className="submenu-btn"
+          type="button"
+          className="emergency-btn search-ambulance-btn"
           onClick={() => {
-            setSearchText(`${item} (Online)`);
-            setShowTrending(false);
-            setOpenOnlinePopup(true);
+            fetchAmbulances();        // ✅ API call
+            setOpenAmbulanceScreen(true);
           }}
         >
-          🌐 Online
+          Book Ambulance Now →
         </button>
 
-        <button
-          className="submenu-btn"
-          onClick={() => {
-            setSearchText(`${item} (Offline)`);
-            setShowTrending(false);
-            setTempOfflineTime(doctorProfile.opTime);
-            setOpenOfflinePopup(true);
-          }}
-        >
-          🏥 Offline
-        </button>
       </div>
-    )}
-
-    {/* 📱 MOBILE TAP MENU */}
-    {mobileActionItem === item && (
-      <div className="mobile-trending-actions">
-        <button
-          onClick={() => {
-            setSearchText(`${item} (Online)`);
-            setMobileActionItem(null);
-            setShowTrending(false);
-            setOpenOnlinePopup(true);
-          }}
-        >
-          🌐 Online
-        </button>
-
-        <button
-          onClick={() => {
-            setSearchText(`${item} (Offline)`);
-            setMobileActionItem(null);
-            setShowTrending(false);
-            setTempOfflineTime(doctorProfile.opTime);
-            setOpenOfflinePopup(true);
-          }}
-        >
-          🏥 Offline
-        </button>
-      </div>
-    )}
-  </div>
-))}
-
-      </div>
-    )}
-  </div>
-    {/* Ambulance Button */}
-  <button
-    type="button"
-    className="emergency-btn search-ambulance-btn"
-    onClick={() => setOpenAmbulanceScreen(true)}
-  >
-    Book Ambulance Now →
-  </button>
-</div>
 
 
 
@@ -987,6 +791,19 @@ onMouseDown={(e) => {
 
 
       </div>
+
+      {loadingDoctors && (
+        <div
+          style={{
+            padding: "20px",
+            textAlign: "center",
+            fontWeight: 600,
+          }}
+        >
+          ⏳ Loading available doctors...
+        </div>
+      )}
+
 
       <div className="doctor-list grid-view">
         {filteredDoctors.map((doc) => (
@@ -1749,37 +1566,56 @@ onMouseDown={(e) => {
 
             {/* Hospital Cards */}
             <div className="ambulance-hospital-list">
-              {ambulanceHospitals.map((h) => (
-                <div key={h.id} className="ambulance-hospital-card">
+
+              {loadingAmbulance && (
+                <p style={{ textAlign: "center", fontWeight: 700 }}>
+                  🚑 Loading ambulances...
+                </p>
+              )}
+
+              {!loadingAmbulance && ambulanceList.length === 0 && (
+                <p style={{ textAlign: "center", fontWeight: 700 }}>
+                  ❌ No ambulances available
+                </p>
+              )}
+
+              {ambulanceList.map((h) => (
+                <div key={h.ambulance_id} className="ambulance-hospital-card">
                   <div className="ambulance-hospital-top">
                     <div className="ambulance-hospital-icon-wrap">
                       <div className="ambulance-hospital-icon">✚</div>
                     </div>
 
                     <div className="ambulance-hospital-info">
-                      <h2>{h.name}</h2>
-                      <p className="ambulance-hospital-type">{h.type}</p>
+                      <h2>{h.hospital_name}</h2>
+                      <p className="ambulance-hospital-type">
+                        {h.specialty_type}
+                      </p>
                     </div>
                   </div>
 
                   <div className="ambulance-details">
                     <p>📍 {h.location}</p>
-                    <p>🚑 {h.distance}</p>
-                    <p>🚐 {h.available}</p>
-                    <p>📞 {h.phone}</p>
+                    <p>🚑 {h.service_provider}</p>
+                    <p>✅ {h.availability_status}</p>
+                    <p>📞 {h.ambulance_contact}</p>
                   </div>
 
                   <div className="ambulance-actions-row">
                     <button
                       className="ambulance-call-btn"
-                      onClick={() => window.open(`tel:${h.phone.replace(/[^0-9+]/g, "")}`)}
+                      onClick={() =>
+                        window.open(`tel:${h.ambulance_contact}`)
+                      }
                     >
                       📞 Call
                     </button>
 
                     <button
                       className="ambulance-book-btn"
-                      onClick={() => alert(`✅ Ambulance booked from ${h.name}`)}
+                      onClick={() =>
+                        alert(`✅ Ambulance booked from ${h.hospital_name}`)
+                      }
                     >
                       Book Now →
                     </button>
@@ -1787,6 +1623,7 @@ onMouseDown={(e) => {
                 </div>
               ))}
             </div>
+
           </div>
         </div>
       )}
@@ -1853,203 +1690,166 @@ onMouseDown={(e) => {
                         Save
                       </button>
                     </div>
-                  </div>
                 )}
-              </div>
-              <div style={{ marginTop: "16px" }}>
-                <p style={{ fontWeight: 800, marginBottom: "8px" }}>
-                  🚑 Available Ambulances for {doctorProfile.opTime}
-                </p>
+                  </div>
 
-                {availableAmbulancesByTime.length > 0 ? (
-                  <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-                    {availableAmbulancesByTime.map((h) => (
-                      <div
-                        key={h.id}
-                        style={{
-                          padding: "10px",
-                          borderRadius: "12px",
-                          background: "#f9fafb",
-                          border: "1px solid #e5e7eb",
-                        }}
-                      >
-                        <p style={{ fontWeight: 800, margin: 0 }}>{h.name}</p>
-                        <p style={{ margin: "4px 0", color: "#6b7280" }}>{h.location}</p>
-                        <p style={{ margin: 0, fontWeight: 700, color: "#2f6f6d" }}>
-                          {h.available}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <div
-                    style={{
-                      padding: "10px",
-                      borderRadius: "12px",
-                      background: "#fff7ed",
-                      border: "1px solid #fed7aa",
-                      fontWeight: 700,
-                    }}
-                  >
-                    ⚠ No ambulances available for this time slot
-                  </div>
-                )}
-              </div>
 
 
               {/* 2) Book Ambulance Button */}
-              <button
-                type="button"
-                className="emergency-btn"
-                style={{ width: "100%", marginTop: "14px" }}
-                onClick={() => {
-                  setOpenOfflinePopup(false);
-                  setOpenAmbulanceScreen(true);
-                }}
-              >
-                Book Ambulance Now →
-              </button>
+                <button
+                  type="button"
+                  className="emergency-btn"
+                  style={{ width: "100%", marginTop: "14px" }}
+                  onClick={() => {
+                    setOpenOfflinePopup(false);
+                    fetchAmbulances();
+                    setOpenAmbulanceScreen(true);
+                  }}
 
-              {/* 3) Patient Assistance */}
-              <div style={{ marginTop: "18px" }}>
-                <p style={{ fontWeight: 800, marginBottom: "10px" }}>
-                  Do you want patient assistance?
-                </p>
+                >
+                  Book Ambulance Now →
+                </button>
 
-                <div style={{ display: "flex", gap: "10px" }}>
+                {/* 3) Patient Assistance */}
+                <div style={{ marginTop: "18px" }}>
+                  <p style={{ fontWeight: 800, marginBottom: "10px" }}>
+                    Do you want patient assistance?
+                  </p>
+
+                  <div style={{ display: "flex", gap: "10px" }}>
+                    <button
+                      type="button"
+                      className={`insurance-btn ${patientAssist === "yes" ? "active" : ""}`}
+                      onClick={() => {
+                        setPatientAssist("yes");
+                        setShowAssistSuccess(true);
+                      }}
+                    >
+                      Yes
+                    </button>
+
+                    <button
+                      type="button"
+                      className={`insurance-btn ${patientAssist === "no" ? "active" : ""}`}
+                      onClick={() => {
+                        setPatientAssist("no");
+                        setShowAssistSuccess(true);
+                      }}
+                    >
+                      No
+                    </button>
+                  </div>
+
+                  {/* 4) Success Message */}
+                  {showAssistSuccess && patientAssist !== "" && (
+                    <div
+                      style={{
+                        marginTop: "12px",
+                        padding: "10px",
+                        borderRadius: "12px",
+                        background: "#eaf7f2",
+                        fontWeight: 800,
+                        color: "#2f6f6d",
+                      }}
+                    >
+                      ✅ Success: You selected {patientAssist.toUpperCase()}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+      )}
+          {openOnlinePopup && (
+            <div className="profile-overlay" onClick={() => setOpenOnlinePopup(false)}>
+              <div className="profile-popup" onClick={(e) => e.stopPropagation()}>
+
+                {/* Header */}
+                <div className="profile-header">
+                  <h2>Online Consultation</h2>
                   <button
-                    type="button"
-                    className={`insurance-btn ${patientAssist === "yes" ? "active" : ""}`}
-                    onClick={() => {
-                      setPatientAssist("yes");
-                      setShowAssistSuccess(true);
-                    }}
+                    className="profile-close"
+                    onClick={() => setOpenOnlinePopup(false)}
                   >
-                    Yes
-                  </button>
-
-                  <button
-                    type="button"
-                    className={`insurance-btn ${patientAssist === "no" ? "active" : ""}`}
-                    onClick={() => {
-                      setPatientAssist("no");
-                      setShowAssistSuccess(true);
-                    }}
-                  >
-                    No
+                    ✖
                   </button>
                 </div>
 
-                {/* 4) Success Message */}
-                {showAssistSuccess && patientAssist !== "" && (
-                  <div
-                    style={{
-                      marginTop: "12px",
-                      padding: "10px",
-                      borderRadius: "12px",
-                      background: "#eaf7f2",
-                      fontWeight: 800,
-                      color: "#2f6f6d",
-                    }}
-                  >
-                    ✅ Success: You selected {patientAssist.toUpperCase()}
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-      {openOnlinePopup && (
-        <div className="profile-overlay" onClick={() => setOpenOnlinePopup(false)}>
-          <div className="profile-popup" onClick={(e) => e.stopPropagation()}>
+                {/* Body */}
+                <div className="profile-body">
+                  <p style={{ fontWeight: 800, marginBottom: "12px" }}>
+                    Available Doctors
+                  </p>
 
-            {/* Header */}
-            <div className="profile-header">
-              <h2>Online Consultation</h2>
-              <button
-                className="profile-close"
-                onClick={() => setOpenOnlinePopup(false)}
-              >
-                ✖
-              </button>
-            </div>
+                  <div className="online-doctor-list">
+                    {doctors.map((doc) => (
+                      <div key={doc.id} className="online-doctor-card">
+                        <div className="online-doc-top">
+                          <img src={doc.image} alt={doc.name} />
+                          <div>
+                            <h4>{doc.name}</h4>
+                            <p className="spec">{doc.speciality}</p>
+                            <p className="rating">⭐ {doc.rating}</p>
+                          </div>
+                        </div>
 
-            {/* Body */}
-            <div className="profile-body">
-              <p style={{ fontWeight: 800, marginBottom: "12px" }}>
-                Available Doctors
-              </p>
+                        {/* Slots */}
+                        <div className="online-slots">
+                          {doc.slots.map((slot) => (
+                            <span key={slot} className="slot-pill">
+                              {slot}
+                            </span>
+                          ))}
+                        </div>
 
-              <div className="online-doctor-list">
-                {doctors.map((doc) => (
-                  <div key={doc.id} className="online-doctor-card">
-                    <div className="online-doc-top">
-                      <img src={doc.image} alt={doc.name} />
-                      <div>
-                        <h4>{doc.name}</h4>
-                        <p className="spec">{doc.speciality}</p>
-                        <p className="rating">⭐ {doc.rating}</p>
+                        {/* Book */}
+                        <button
+                          className="online-book-btn"
+                          onClick={() => {
+                            setBookedDoctorName(doc.name);
+                            setOpenOnlinePopup(false);
+                            setOnlineSuccessPopup(true);
+                          }}
+                        >
+                          Book Now →
+                        </button>
+
                       </div>
-                    </div>
-
-                    {/* Slots */}
-                    <div className="online-slots">
-                      {doc.slots.map((slot) => (
-                        <span key={slot} className="slot-pill">
-                          {slot}
-                        </span>
-                      ))}
-                    </div>
-
-                    {/* Book */}
-                    <button
-                      className="online-book-btn"
-                      onClick={() => {
-                        setBookedDoctorName(doc.name);
-                        setOpenOnlinePopup(false);
-                        setOnlineSuccessPopup(true);
-                      }}
-                    >
-                      Book Now →
-                    </button>
-
+                    ))}
                   </div>
-                ))}
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-      )}
-      {onlineSuccessPopup && (
-        <div className="success-overlay">
-          <div className="success-popup">
-            <h2 className="success-title">Success ✅</h2>
+          )}
+          {onlineSuccessPopup && (
+            <div className="success-overlay">
+              <div className="success-popup">
+                <h2 className="success-title">Success ✅</h2>
 
-            <p className="success-text">
-              Your online consultation is booked with <b>{bookedDoctorName}</b>.
-            </p>
+                <p className="success-text">
+                  Your online consultation is booked with <b>{bookedDoctorName}</b>.
+                </p>
 
-            <button
-              type="button"
-              className="success-ok"
-              onClick={() => setOnlineSuccessPopup(false)}
-            >
-              OK
-            </button>
-          </div>
-        </div>
-      )}
+                <button
+                  type="button"
+                  className="success-ok"
+                  onClick={() => setOnlineSuccessPopup(false)}
+                >
+                  OK
+                </button>
+              </div>
+            </div>
+          )}
 
 
 
 
-    </div >
+        </div >
 
 
-  );
+      );
 
 };
 
 
-export default HealthCare;
+      export default HealthCare;

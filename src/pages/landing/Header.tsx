@@ -345,7 +345,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
     setPartnerModalVisible(true);
   };
 
-  const onPartnerLogin = (values: any) => {
+  const onPartnerLogin = () => {
     const module = localStorage.getItem("partner_module");
     console.log("PARTNER MODULE:", module);
 
@@ -355,6 +355,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
     }
 
     setPartnerModalVisible(false);
+
 
     // ✅ SAME NAVIGATION YOU ALREADY HAD
     switch (module) {
