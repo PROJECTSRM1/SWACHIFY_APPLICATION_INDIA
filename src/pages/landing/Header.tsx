@@ -348,6 +348,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
   const onPartnerLogin = (values: any) => {
     const module = localStorage.getItem("partner_module");
     console.log("PARTNER MODULE:", module);
+    console.log("Partner Login:", values);  
 
     if (!module) {
       message.error("Module not found. Please register again.");
