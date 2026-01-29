@@ -110,7 +110,7 @@ const Header: React.FC = () => {
   // const centerMenu = [
   //   { key: "packers", label: <span className="sw-menu-item">Transport</span> },
   //   { key: "homeservices", label: <span className="sw-menu-item">Home & Cleaning Services</span> },
-  //   { key: "commercial", label: <span className="sw-menu-item">Buy/Sale/Rentals</span> },
+  //   { key: "commercial", label: <span className="sw-menu-item">Buy/Sale/Rent</span> },
   //   { key: "construction", label: <span className="sw-menu-item">Construction Raw Materials</span> },
   //   { key: "swachify_products", label: <span className="sw-menu-item">Swachify Products</span> },
   //   { key: "education", label: <span className="sw-menu-item">Education</span> },

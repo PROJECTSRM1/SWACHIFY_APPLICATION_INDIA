@@ -57,7 +57,7 @@ const navItems = [
   { key: "home", label: <Link to="/landing">Home</Link> },
   { key: "cleaning", label: <Link to="/cleaningservice">Cleaning & Home Services</Link> },
   { key: "packers", label: <Link to="/LandingPackers">Transport</Link> },
-  { key: "commercial", label: <Link to="/commercial-plots">Buy/Sale/Rentals</Link> },
+  { key: "commercial", label: <Link to="/commercial-plots">Buy/Sale/Rent</Link> },
   { key: "materials", label: <Link to="/ConstructionMaterials">Raw Materials</Link> },
   { key: "education", label: <Link to="/education">Education</Link> },
   {
@@ -326,7 +326,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
   const serviceOptions = [
     { title: "Cleaning & Home Services", value: 1 },
     { title: "Transport", value: 2 },
-    { title: "Buy/Sell/Rental", value: 3 },
+    { title: "Buy/Sell/Rent", value: 3 },
     { title: "Raw Materials", value: 4 },
     { title: "Education", value: 5 },
     { title: "Swachify Products", value: 6 },
