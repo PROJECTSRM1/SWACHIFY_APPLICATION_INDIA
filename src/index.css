@@ -21879,6 +21879,35 @@ position: sticky;
 
 /* MAIN LAYOUT */
 
+.justride-page-root {
+  position: relative;
+  top: -60px;
+}
+
+/* Tablets */
+@media (max-width: 1024px) {
+  .justride-page-root {
+    top: -40px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .justride-page-root {
+    top: -20px;
+  }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+  .justride-page-root {
+    top: -10px;
+  }
+}
+
+
+
+
  
 
 
@@ -22344,7 +22373,7 @@ color:#00A73E !important;
 
 
 /* All services in just ride */
-
+/* All services in just ride */
 
 
 /* ========== LIGHT THEME WRAP ========== */
@@ -23453,6 +23482,90 @@ color:#00A73E !important;
   .ant-modal-body {
     height: calc(100vh - 120px);
     overflow-y: auto;
+  }
+}
+
+@media (max-width: 360px) {
+
+  /* Root */
+  .justride-page-root {
+    top: -10px;
+  }
+
+  /* Hero */
+  .sw-pm-hero-inner {
+    height: auto !important;
+    padding: 12px 10px;
+  }
+
+  .sw-pm-hero-title {
+    font-size: 18px;
+  }
+
+  /* Layout */
+  .sw-jr-layout {
+    flex-direction: column !important;
+  }
+
+  /* Left panel (Sider) */
+  .sw-jr-left-panel {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 10px;
+  }
+
+  .sw-jr-title {
+    font-size: 18px;
+  }
+
+  /* Mode pills */
+  .sw-jr-modes {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .sw-jr-mode-pill {
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+
+  /* Inputs */
+  .sw-jr-location-block input {
+    font-size: 13px;
+  }
+
+  /* Rider pill */
+  .sw-jr-rider-pill {
+    font-size: 12px;
+    padding: 4px 10px;
+  }
+
+  /* Map */
+  .sw-jr-map-panel {
+    height: 220px;
+  }
+
+  .sw-jr-leaflet-map {
+    height: 220px;
+  }
+
+  /* Ride cards */
+  .sw-jr-ride-card {
+    padding: 8px;
+  }
+
+  .sw-jr-ride-type {
+    font-size: 13px;
+  }
+
+  .sw-jr-ride-price {
+    font-size: 13px;
+  }
+
+  /* Modals */
+  .sw-jr-rider-selector-modal,
+  .sw-jr-details-modal {
+    width: 95% !important;
   }
 }
 

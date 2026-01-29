@@ -308,10 +308,6 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
   };
 
 
-
-
-
-
   // ==========================
   // VENDOR LOGIN (still local)
   // ==========================
@@ -327,7 +323,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
 
   const serviceOptions = [
     { title: "Cleaning & Home Services", value: 1 },
-    { title: "Transport", value: 2 },
+    { title: "Just Ride", value: 2 },
     { title: "Buy/Sell/Rental", value: 3 },
     { title: "Raw Materials", value: 4 },
     { title: "Education", value: 5 },
