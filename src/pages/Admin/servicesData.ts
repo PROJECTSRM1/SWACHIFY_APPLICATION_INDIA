@@ -87,7 +87,7 @@ export const ServiceCategories: Category[] = [
   // ------------------------------------------------------------------
   {
     id: "CAT003",
-    name: "Buy/Sale/Rentals",
+    name: "Buy/Sale/Rent",
     description: "Buy or rent properties and vehicles",
     subcategories: [
       {

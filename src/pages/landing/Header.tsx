@@ -26,7 +26,7 @@ import {
   PlusOutlined,
 } from "@ant-design/icons";
 
-import axios from "axios";
+// import axios from "axios";
 
 
 import { customerRegister, customerLogin } from "../../api/customerAuth";
@@ -40,8 +40,8 @@ const allowOnlyNumbers = (value: string) =>
   value.replace(/[^0-9]/g, "");
 
 // Only letters + spaces
-const allowOnlyLetters = (value: string) =>
-  value.replace(/[^A-Za-z ]/g, "");
+// const allowOnlyLetters = (value: string) =>
+//   value.replace(/[^A-Za-z ]/g, "");
 
 // Letters + numbers (no special chars)
 const allowAlphaNumeric = (value: string) =>
@@ -99,7 +99,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
   const [isHealthCareSelected, setIsHealthCareSelected] = useState(false);
   const [doctorRoleSelected, setDoctorRoleSelected] = useState(false);
 
-  type UserRole = "customer" | "employee" | "partner" | null;
+  type UserRole = "customer" | "employee" | "partner" |"admin" |null;
 
   const [userRole, setUserRole] = useState<UserRole>(null);
   const [partnerModalVisible, setPartnerModalVisible] = useState(false);
@@ -188,30 +188,30 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
       setAuthLoading(true);
 
       // ================= ADMIN LOGIN =================
-      if (roleType === "admin") {
-        const res = await axios.post(
-          "https://swachify-india-be-1-mcrb.onrender.com/api/admin/login",
-          {
-            username_or_email: values.username.trim(),
-            password: values.password,
-          }
-        );
+      // if (roleType === "admin") {
+      //   const res = await axios.post(
+      //     "https://swachify-india-be-1-mcrb.onrender.com/api/admin/login",
+      //     {
+      //       username_or_email: values.username.trim(),
+      //       password: values.password,
+      //     }
+      //   );
 
 
-        console.log("ADMIN LOGIN RESPONSE:", res.data);
+      //   console.log("ADMIN LOGIN RESPONSE:", res.data);
 
-        localStorage.setItem("token", res.data.access_token);
-        localStorage.setItem("user_role", "freelancer");
-        localStorage.setItem("user_role", "customer");
-
-
+      //   localStorage.setItem("token", res.data.access_token);
+      //   localStorage.setItem("user_role", "freelancer");
+      //   localStorage.setItem("user_role", "customer");
 
 
-        message.success("Admin login successful");
-        setVendorModalVisible(false);
-        navigate("/adminshell/dashboard");
-        return;
-      }
+
+
+      //   message.success("Admin login successful");
+      //   setVendorModalVisible(false);
+      //   navigate("/adminshell/dashboard");
+      //   return;
+      // }
 
       // ================= CUSTOMER LOGIN =================
       const res: any = await customerLogin({
@@ -252,45 +252,82 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
     }
   };
 
-  const onAdminLogin = async (values: any) => {
-    try {
-      setAuthLoading(true);
+  // const onAdminLogin = async (values: any) => {
+  //   try {
+  //     setAuthLoading(true);
 
-      const res = await axios.post(
-        "https://swachify-india-be-1-mcrb.onrender.com/api/admin/login",
-        {
-          username_or_email: values.username.trim(),
-          password: values.password,
-        }
-      );
+  //     const res = await axios.post(
+  //       "https://swachify-india-be-1-mcrb.onrender.com/api/admin/login",
+  //       {
+  //         username_or_email: values.username.trim(),
+  //         password: values.password,
+  //       }
+  //     );
 
-      console.log("ADMIN LOGIN RESPONSE:", res.data);
+  //     console.log("ADMIN LOGIN RESPONSE:", res.data);
 
-      const token =
-        res.data?.access_token ||
-        res.data?.token ||
-        res.data?.accessToken;
+  //     const token =
+  //       res.data?.access_token ||
+  //       res.data?.token ||
+  //       res.data?.accessToken;
 
-      if (!token) {
-        message.error("Admin token not received");
-        return;
-      }
+  //     if (!token) {
+  //       message.error("Admin token not received");
+  //       return;
+  //     }
 
-      localStorage.setItem("token", token);
+  //     localStorage.setItem("token", token);
+
+  //     message.success("Admin login successful");
+  //     setVendorModalVisible(false);
+  //     navigate("/adminshell/dashboard");
+  //   } catch (err: any) {
+  //     message.error(
+  //       err?.response?.data?.message || "Admin login failed"
+  //     );
+  //   } finally {
+  //     setAuthLoading(false);
+  //   }
+  // };
+
+const onAdminLogin = async (values: any) => {
+  setAuthLoading(true);
+
+
+  try {
+    const savedAdmin = localStorage.getItem("STATIC_ADMIN");
+
+
+    if (!savedAdmin) {
+      message.error("No admin registered. Please register first.");
+      return;
+    }
+
+
+    const admin = JSON.parse(savedAdmin);
+
+
+    if (
+      values.email === admin.email &&
+      values.password === admin.password
+    ) {
+      // fake token
+      localStorage.setItem("token", "STATIC_ADMIN_TOKEN");
+      localStorage.setItem("user_role", "admin");
+
 
       message.success("Admin login successful");
+
+
       setVendorModalVisible(false);
-      navigate("/adminshell/dashboard");
-    } catch (err: any) {
-      message.error(
-        err?.response?.data?.message || "Admin login failed"
-      );
-    } finally {
-      setAuthLoading(false);
+      navigate("/admin/dashboard");
+    } else {
+      message.error("Invalid admin credentials");
     }
-  };
-
-
+  } finally {
+    setAuthLoading(false);
+  }
+};
   const handleSkipLogin = () => {
     localStorage.setItem("isGuest", "true");
 
@@ -347,8 +384,28 @@ const onPartnerRegister = (values: any) => {
   setPartnerActiveTab("login");
 };
 
+const onAdminRegister = async (values: any) => {
+  const adminData = {
+    email: values.email,
+    password: values.password,
+    firstName: values.firstName,
+    lastName: values.lastName,
+    mobile: values.mobile,
+  };
 
-  const onPartnerLogin = (values: any) => {
+
+  // ✅ SAVE ADMIN DETAILS LOCALLY
+  localStorage.setItem("STATIC_ADMIN", JSON.stringify(adminData));
+
+
+  message.success("Admin registered successfully");
+
+
+  // 👉 Go to login tab
+  setVendorActiveTab("login");
+};
+
+  const onPartnerLogin = () => {
     const module = localStorage.getItem("partner_module");
     console.log("PARTNER MODULE:", module);
 
@@ -393,48 +450,48 @@ const onPartnerRegister = (values: any) => {
     try {
       setAuthLoading(true);
 
-      if (roleType === "admin") {
-        const res = await axios.post(
-          "https://swachify-india-be-1-mcrb.onrender.com/api/admin/login",
-          {
-            first_name: values.first_name,
-            last_name: values.last_name,
-            email: values.email,
-            mobile: values.mobile,
-            gender: values.gender,
-            address: values.address,
-            password: values.password,
-            confirm_password: values.confirm_password,
-          }
-        );
+      // if (roleType === "admin") {
+      //   const res = await axios.post(
+      //     "https://swachify-india-be-1-mcrb.onrender.com/api/admin/login",
+      //     {
+      //       first_name: values.first_name,
+      //       last_name: values.last_name,
+      //       email: values.email,
+      //       mobile: values.mobile,
+      //       gender: values.gender,
+      //       address: values.address,
+      //       password: values.password,
+      //       confirm_password: values.confirm_password,
+      //     }
+      //   );
 
 
-        // 🔍 SEE REAL RESPONSE
-        console.log("ADMIN LOGIN RESPONSE:", res.data);
+      //   // 🔍 SEE REAL RESPONSE
+      //   console.log("ADMIN LOGIN RESPONSE:", res.data);
 
 
-        // ✅ EXTRACT TOKEN SAFELY
-        const token =
-          res.data?.access_token ||
-          res.data?.token ||
-          res.data?.accessToken;
+      //   // ✅ EXTRACT TOKEN SAFELY
+      //   const token =
+      //     res.data?.access_token ||
+      //     res.data?.token ||
+      //     res.data?.accessToken;
 
 
-        if (!token) {
-          message.error("Admin token not received from backend");
-          return;
-        }
+      //   if (!token) {
+      //     message.error("Admin token not received from backend");
+      //     return;
+      //   }
 
 
-        // ✅ STORE TOKEN USING CORRECT KEY
-        localStorage.setItem("token", token);
+      //   // ✅ STORE TOKEN USING CORRECT KEY
+      //   localStorage.setItem("token", token);
 
 
-        message.success("Admin login successful");
-        setVendorModalVisible(false);
-        navigate("/adminshell/dashboard");
-        return;
-      }
+      //   message.success("Admin login successful");
+      //   setVendorModalVisible(false);
+      //   navigate("/adminshell/dashboard");
+      //   return;
+      // }
       const roleMap = {
         customer: 1,
         employee: 2,
@@ -600,6 +657,12 @@ const onPartnerRegister = (values: any) => {
   setPartnerActiveTab("register");
   setPartnerModalVisible(true);
 }
+if (value === "admin") {
+      setRoleType("admin");          // 🔥 important
+      setVendorActiveTab("admin_register");
+      setShowRegisterHint(null);
+      setVendorModalVisible(true);   // 🔥 open admin modal
+    }
 
           }}
         >
@@ -608,6 +671,7 @@ const onPartnerRegister = (values: any) => {
           <Select.Option value="customer">Customer</Select.Option>
           <Select.Option value="employee">Employee</Select.Option>
           <Select.Option value="partner">Partner</Select.Option>
+          <Select.Option value="admin">Admin</Select.Option>
         </Select>
 
 
@@ -1579,55 +1643,47 @@ const onPartnerRegister = (values: any) => {
               </Form>
             )}
 
-            {/* ADMIN LOGIN */}
-            {roleType === "admin" && (
-              <Form layout="vertical" onFinish={onAdminLogin}>
+           {roleType === "admin" && (
+  <Form layout="vertical" onFinish={onAdminLogin}>
 
 
-
-                <Form.Item
-                  label="Email"
-                  name="email"
-                  normalize={(value) => allowEmailChars(value || "")}
-                  rules={[
-                    { required: true, type: "email", message: "Invalid email" },
-                  ]}
-                >
-                  <Input />
-                </Form.Item>
+    <Form.Item
+      label="Email"
+      name="email"
+      rules={[{ required: true, type: "email" }]}
+    >
+      <Input />
+    </Form.Item>
 
 
+    <Form.Item
+      label="Password"
+      name="password"
+      rules={[{ required: true }]}
+    >
+      <Input.Password />
+    </Form.Item>
 
 
-                <Form.Item
-                  label="Password"
-                  name="password"
-                  rules={[{ required: true }]}
-                >
-                  <Input.Password />
-                </Form.Item>
-
-                <Button type="primary" danger block htmlType="submit">
-                  Login as Admin
-                </Button>
-                {showRegisterHint === "admin" && (
-                  <div style={{ marginTop: 12, textAlign: "center" }}>
-                    <span>Not registered? </span>
-                    <a
-                      onClick={() => {
-                        setVendorActiveTab("admin_register");
-                        setShowRegisterHint(null);
-                      }}
-                      style={{ fontWeight: 500 }}
-                    >
-                      Register as Admin
-                    </a>
-                  </div>
-                )}
+    <Button type="primary" danger block htmlType="submit">
+      Login as Admin
+    </Button>
 
 
-              </Form>
-            )}
+    {/* ✅ ALWAYS SHOW REGISTER LINK */}
+    <div style={{ marginTop: 12, textAlign: "center" }}>
+      <span>Not registered? </span>
+      <a
+        onClick={() => setVendorActiveTab("admin_register")}
+        style={{ fontWeight: 500 }}
+      >
+        Register as Admin
+      </a>
+    </div>
+
+
+  </Form>
+)}
 
           </Tabs.TabPane>
 
@@ -1703,109 +1759,87 @@ const onPartnerRegister = (values: any) => {
             </Tabs.TabPane>
           )}
           {/* ADMIN REGISTER TAB */}
-          {roleType === "admin" && (
-            <Tabs.TabPane tab="Register" key="admin_register">
-              <Form layout="vertical" onFinish={onRegister} preserve={false}>
-
-                <Form.Item
-                  label="First Name"
-                  name="firstName"
-                  normalize={(value) => allowOnlyLetters(value || "")}
-                  rules={[
-                    { required: true },
-                    { pattern: /^[A-Za-z ]+$/, message: "Only letters allowed" },
-                  ]}
-                >
-                  <Input />
-                </Form.Item>
-
-                <Form.Item
-                  label="Last Name"
-                  name="lastName"
-                  normalize={(value) => allowOnlyLetters(value || "")}
-                  rules={[
-                    { required: true, message: "Last name is required" },
-                    { pattern: /^[A-Za-z ]+$/, message: "Only letters allowed" },
-                  ]}
-                >
-                  <Input placeholder="Enter last name" />
-                </Form.Item>
+  {roleType === "admin" && vendorActiveTab === "admin_register" && (
+  <Tabs.TabPane tab="Register" key="admin_register">
+    <Form layout="vertical" onFinish={onAdminRegister}>
 
 
-
-                <Form.Item
-                  label="Email"
-                  name="email"
-                  normalize={(value) => allowEmailChars(value || "")}
-                  rules={[
-                    { required: true, type: "email", message: "Invalid email" },
-                  ]}
-                >
-                  <Input />
-                </Form.Item>
+      <Form.Item
+        label="First Name"
+        name="firstName"
+        rules={[{ required: true }]}
+      >
+        <Input />
+      </Form.Item>
 
 
-                <Form.Item
-                  label="Mobile Number"
-                  name="mobile"
-                  normalize={(value) => allowOnlyNumbers(value || "").slice(0, 10)}
-                  rules={[
-                    { required: true },
-                    { pattern: /^[6-9][0-9]{9}$/, message: "Invalid mobile number" },
-                  ]}
-                >
-                  <Input inputMode="numeric" />
-                </Form.Item>
+      <Form.Item
+        label="Last Name"
+        name="lastName"
+        rules={[{ required: true }]}
+      >
+        <Input />
+      </Form.Item>
 
 
-                <Form.Item
-                  label="Gender"
-                  name="gender"
-                  rules={[{ required: true, message: "Please select gender" }]}
-                >
-                  <Select placeholder="Select Gender">
-                    <Select.Option value={1}>Male</Select.Option>
-                    <Select.Option value={2}>Female</Select.Option>
-                    <Select.Option value={3}>Other</Select.Option>
-                  </Select>
-                </Form.Item>
+      <Form.Item
+        label="Email"
+        name="email"
+        rules={[{ required: true, type: "email" }]}
+      >
+        <Input />
+      </Form.Item>
 
 
+      <Form.Item
+        label="Mobile Number"
+        name="mobile"
+        rules={[
+          { required: true },
+          { pattern: /^[6-9][0-9]{9}$/, message: "Invalid mobile number" }
+        ]}
+      >
+        <Input />
+      </Form.Item>
 
 
-                <Form.Item label="Address" name="address" rules={[{ required: true }]}>
-                  <Input.TextArea rows={3} />
-                </Form.Item>
+      <Form.Item
+        label="Password"
+        name="password"
+        rules={[{ required: true }]}
+      >
+        <Input.Password />
+      </Form.Item>
 
-                <Form.Item label="Password" name="password" rules={[{ required: true }]}>
-                  <Input.Password />
-                </Form.Item>
 
-                <Form.Item
-                  label="Confirm Password"
-                  name="confirm_password"
-                  dependencies={["password"]}
-                  rules={[
-                    { required: true },
-                    ({ getFieldValue }) => ({
-                      validator(_, value) {
-                        return !value || getFieldValue("password") === value
-                          ? Promise.resolve()
-                          : Promise.reject("Passwords do not match");
-                      },
-                    }),
-                  ]}
-                >
-                  <Input.Password />
-                </Form.Item>
+      <Form.Item
+        label="Confirm Password"
+        name="confirmPassword"
+        dependencies={["password"]}
+        rules={[
+          { required: true },
+          ({ getFieldValue }) => ({
+            validator(_, value) {
+              if (!value || getFieldValue("password") === value) {
+                return Promise.resolve();
+              }
+              return Promise.reject("Passwords do not match");
+            },
+          }),
+        ]}
+      >
+        <Input.Password />
+      </Form.Item>
 
-                <Button type="primary" block htmlType="submit" loading={authLoading}>
-                  Register as Admin
-                </Button>
 
-              </Form>
-            </Tabs.TabPane>
-          )}
+      <Button type="primary" block htmlType="submit">
+        Register as Admin
+      </Button>
+
+
+    </Form>
+  </Tabs.TabPane>
+)}
 
         </Tabs>
       </Modal>
@@ -1960,13 +1994,3 @@ const onPartnerRegister = (values: any) => {
 };
 
 export default CommonHeader;
-
-
-
-
-
-
-
-
-
-
