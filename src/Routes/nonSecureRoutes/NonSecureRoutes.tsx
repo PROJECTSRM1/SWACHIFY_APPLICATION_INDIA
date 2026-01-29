@@ -25,6 +25,8 @@ import PartnerDashboard from "../../pages/dashboard/buy&sale/PartnerDashboard";
 import EducationPartnerDashboard
   from "../../pages/landing/EducationPartnerDashboard";
 import HealthcarePartner from '../../pages/WebHospital/HealthcarePartnerDashboard';
+import DriverDashboard from '../../pages/landing/JustRidePartnerDashboard';
+import { MOCK_NOTIFICATIONS } from '../../pages/landing/JRPData';
 
 export const NonSecureRoutes = () => {
   const navigate = useNavigate();
@@ -87,6 +89,12 @@ export const NonSecureRoutes = () => {
         path="/partner/healthcare/dashboard"
         element={<HealthcarePartner />}
       />
+
+       <Route
+       path="/partner/ride/dashboard"
+       element={<DriverDashboard MOCK_NOTIFICATIONS={MOCK_NOTIFICATIONS} />}
+      />
+
 
 
 
