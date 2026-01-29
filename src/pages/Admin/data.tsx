@@ -396,7 +396,7 @@ export const initialServiceCategories: ServiceCategory[] = [
   },
   {
     id: 'CAT003',
-    name: 'Buy/Sale/Rentals',
+    name: 'Buy/Sale/Rent',
     description: 'Platform to buy, sell or rent properties and assets',
     status: 'inactive',
     subcategories: emptySubCategories,

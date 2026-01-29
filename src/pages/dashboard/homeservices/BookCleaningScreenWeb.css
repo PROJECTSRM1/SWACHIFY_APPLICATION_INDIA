@@ -5,7 +5,8 @@ html,
 body {
   height: 100%;
   margin: 0;
-  /* overflow: hidden; */
+  background: #f8fafc;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont;
 }
 
 /* ===============================
@@ -17,28 +18,42 @@ body {
   flex-direction: column;
   background: #ffffff;
   color: #111827;
-  overflow: hidden; /* important */
+  overflow: hidden;
+  animation: bcPageEnter 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes bcPageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 /* ===============================
-   HEADER (STICKY)
+   HEADER
 ================================ */
 .bc_header {
   height: 64px;
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.95);
   border-bottom: 1px solid #e5e7eb;
-  display: flex;
-  align-items: center;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
-
-.bc_headerLeft {
   display: flex;
   align-items: center;
   gap: 12px;
   padding: 0 16px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  backdrop-filter: blur(8px);
+}
+
+.bc_header h1 {
+  font-size: 18px;
+  font-weight: 800;
+  margin: 0;
 }
 
 .bc_iconBtn {
@@ -50,49 +65,36 @@ body {
   display: grid;
   place-items: center;
   cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease;
 }
 
 .bc_iconBtn:hover {
   background: #f3f4f6;
 }
 
-.bc_headerTitle {
-  font-size: 18px;
-  font-weight: 800;
+.bc_iconBtn:active {
+  transform: scale(0.92);
 }
 
 /* ===============================
-   SCROLLABLE CONTENT AREA
+   SCROLLABLE CONTENT
 ================================ */
 .bc_container {
   flex: 1;
-  width: 100%;
-  padding: 24px 24px 120px;
+  padding: 24px 24px 140px;
   overflow-y: auto;
-
-  /* hide scrollbar */
-  scrollbar-width: none; /* Firefox */
+  scrollbar-width: none;
 }
 
 .bc_container::-webkit-scrollbar {
-  display: none; /* Chrome / Edge */
+  display: none;
 }
 
 /* ===============================
-   SECTIONS
+   LABELS
 ================================ */
-.bc_sectionTitle {
-  margin: 32px 0 12px;
-  font-size: 20px;
-  font-weight: 800;
-}
-
-.bc_sectionBlock {
-  margin-bottom: 32px;
-}
-
 .bc_label {
-  margin-bottom: 8px;
+  margin: 20px 0 8px;
   font-size: 14px;
   font-weight: 600;
   color: #6b7280;
@@ -102,248 +104,126 @@ body {
    INPUTS
 ================================ */
 .bc_input,
-.bc_floorField,
-.bc_iconInputField,
 .bc_select {
   width: 100%;
-  height: 56px;
+  height: 54px;
   padding: 0 16px;
-  border-radius: 12px;
-  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  border: 1.5px solid #e5e7eb;
   background: #ffffff;
-  font-size: 16px;
+  font-size: 15px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .bc_input:focus,
-.bc_floorField:focus,
-.bc_iconInputField:focus,
 .bc_select:focus {
   outline: none;
   border-color: #2563eb;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
 }
 
-.bc_textarea,
-.bc_reasonTextarea {
+.bc_textarea {
   width: 100%;
   min-height: 120px;
   padding: 14px 16px;
-  border-radius: 12px;
-  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  border: 1.5px solid #e5e7eb;
   font-size: 14px;
   resize: none;
 }
 
-.bc_textarea:focus,
-.bc_reasonTextarea:focus {
+.bc_textarea:focus {
   outline: none;
   border-color: #2563eb;
 }
 
 /* ===============================
-   LOCATION
+   LOCATION BOX
 ================================ */
-.bc_detectedLocationBox {
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
+.bc_detectBox {
   padding: 14px 16px;
+  border-radius: 14px;
   background: #f9fafb;
-}
-
-.bc_locationRow {
-  display: flex;
-  gap: 8px;
-  align-items: flex-start;
-}
-
-.bc_locationIconActive {
-  color: #2563eb;
+  border: 1px solid #e5e7eb;
+  font-size: 14px;
 }
 
 /* ===============================
    EXTRA HOURS
 ================================ */
-.bc_extraHoursCard {
-  border: 1px solid #e5e7eb;
-  border-radius: 14px;
-  padding: 20px;
-  background: #f9fafb;
-}
-
-.bc_counter {
+.bc_extraHours {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
+  margin-top: 10px;
 }
 
-.bc_counterBtn,
-.bc_counterBtnPlus {
+.bc_extraHours button {
   width: 36px;
   height: 36px;
   border-radius: 50%;
   border: none;
+  background: #e5e7eb;
   cursor: pointer;
   font-size: 18px;
 }
 
-.bc_counterBtn {
-  background: #e5e7eb;
-}
-
-.bc_counterBtnPlus {
+.bc_extraHours button:last-child {
   background: #2563eb;
   color: #ffffff;
 }
 
 /* ===============================
-   PHOTO UPLOAD (FIXED)
+   ADDON SERVICES
 ================================ */
-.bc_photoGrid {
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-.bc_photoBoxDashed {
-  width: 120px;
-  height: 120px;
-  border-radius: 16px;
-  border: 2px dashed #c7d2fe;
-  background: #f8fafc;
+.bc_addonList {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  cursor: pointer;
-  position: relative;
-  text-align: center;
+  gap: 14px;
 }
 
-.bc_photoBoxDashed:hover {
-  background: #eff6ff;
+.bc_addonCheckbox {
+  display: flex;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  border: 1.5px solid #e5e7eb;
+  background: #ffffff;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.bc_addonCheckbox:hover {
   border-color: #2563eb;
+  background: #f8fafc;
 }
 
-.bc_photoIcon {
-  color: #2563eb;
+.bc_addonCheckbox input {
+  width: 20px;
+  height: 20px;
+  accent-color: #2563eb;
 }
 
-.bc_photoText {
-  font-size: 13px;
+.bc_addonInfo {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.bc_addonLabel {
+  font-size: 15px;
   font-weight: 600;
-  color: #2563eb;
 }
 
-.bc_fileInput {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  cursor: pointer;
-}
-
-.bc_photoPreview {
-  width: 120px;
-  height: 120px;
-  border-radius: 16px;
-  overflow: hidden;
-  position: relative;
-}
-
-.bc_photoImage {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.bc_removePhoto {
-  position: absolute;
-  top: 6px;
-  right: 6px;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: rgba(0, 0, 0, 0.7);
-  border: none;
-  color: #ffffff;
-  cursor: pointer;
-}
-
-/* ===============================
-   SUMMARY
-================================ */
-.bc_summary {
-  background: #f9fafb;
-  border: 1px solid #e5e7eb;
-  border-radius: 16px;
-  padding: 20px;
-}
-
-.bc_summaryTotalValue {
-  font-size: 24px;
-  font-weight: 900;
+.bc_addonPrice {
+  font-size: 14px;
+  font-weight: 700;
   color: #2563eb;
 }
 
 /* ===============================
-   BOTTOM CTA (FIXED)
+   PHOTO UPLOAD
 ================================ */
-/* ===============================
-   FIXED BOTTOM CTA (CORRECT)
-================================ */
-.bc_bottomBar {
-  position: sticky;
-  bottom: 0;
-  width: 100%;
-  background: #ffffff;
-  padding: 16px 24px;
-  border-top: 1px solid #e5e7eb;
-  z-index: 20;
-}
-
-.bc_ctaBtn {
-  width: 100%;
-  height: 56px;
-  border-radius: 14px;
-  border: none;
-  background: #2563eb;
-  color: #ffffff;
-  font-size: 16px;
-  font-weight: 800;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  cursor: pointer;
-}
-
-
-/* ===============================
-   MODAL FULL WIDTH FIX
-================================ */
-.bc_modalOverlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.6);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 200;
-}
-
-.bc_modalCard {
-  width: 100%;
-  height: 100%;
-  max-width: 900px;
-  border-radius: 16px;
-  background: #ffffff;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-.bc_paymentModal {
-  max-width: 900px;
-}
 .bc_photoActions {
   display: flex;
   gap: 16px;
@@ -352,21 +232,24 @@ body {
 
 .bc_photoActionCard {
   flex: 1;
-  border: 2px dashed #1f2937;
-  border-radius: 14px;
-  padding: 20px 12px;
+  border: 2px dashed #2563eb;
+  border-radius: 16px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  color: #60a5fa;
+  color: #2563eb;
   cursor: pointer;
-  background: transparent;
+  transition: background 0.25s ease, transform 0.15s ease;
 }
 
-.bc_photoActionCard span {
-  font-size: 14px;
-  color: #cbd5f5;
+.bc_photoActionCard:hover {
+  background: #eff6ff;
+}
+
+.bc_photoActionCard:active {
+  transform: scale(0.96);
 }
 
 .bc_photoGrid {
@@ -376,11 +259,11 @@ body {
 }
 
 .bc_photoPreview {
-  position: relative;
   width: 88px;
   height: 88px;
-  border-radius: 12px;
+  border-radius: 14px;
   overflow: hidden;
+  position: relative;
 }
 
 .bc_photoPreview img {
@@ -393,104 +276,117 @@ body {
   position: absolute;
   top: 4px;
   right: 4px;
-  background: rgba(0, 0, 0, 0.6);
-  border: none;
-  border-radius: 50%;
-  color: white;
   width: 22px;
   height: 22px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.65);
+  color: #ffffff;
+  border: none;
   cursor: pointer;
 }
+
 /* ===============================
-   ADDON SERVICES (CHECKLIST)
+   SUMMARY
 ================================ */
-
-.bc_addonList {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  margin-top: 8px;
+.bc_summary {
+  margin-top: 24px;
+  background: #f9fafb;
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px solid #e5e7eb;
 }
-
-/* Whole row clickable */
-.bc_addonCheckbox {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 14px 16px;
-  border-radius: 14px;
-  border: 1.5px solid #e5e7eb;
-  background: #ffffff;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-/* Hover effect */
-.bc_addonCheckbox:hover {
-  border-color: #2563eb;
-  background: #f8fafc;
-}
-
-/* Checkbox itself */
-.bc_addonCheckbox input {
-  width: 20px;
-  height: 20px;
-  accent-color: #2563eb;
-  cursor: pointer;
-  flex-shrink: 0;
-}
-
-/* Right side content */
-.bc_addonInfo {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  gap: 12px;
-}
-
-/* Label */
-.bc_addonLabel {
-  font-size: 15px;
-  font-weight: 600;
-  color: #111827;
-}
-
-/* Price */
-.bc_addonPrice {
-  font-size: 14px;
-  font-weight: 700;
-  color: #2563eb;
-  white-space: nowrap;
-}
-
-/* Checked state (pure CSS, no JS needed) */
-.bc_addonCheckbox input:checked + .bc_addonInfo {
-  color: #2563eb;
-}
-
-.bc_addonCheckbox input:checked ~ .bc_addonInfo .bc_addonLabel {
-  font-weight: 700;
-}
-
-/* Optional: subtle glow when checked */
-.bc_addonCheckbox input:checked {
-  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
-  border-radius: 6px;
-}
-
-
 
 /* ===============================
-   MOBILE RESPONSIVE
+   BOTTOM CTA
+================================ */
+.bc_bottomBar {
+  position: sticky;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  padding: 16px 24px;
+  border-top: 1px solid #e5e7eb;
+  z-index: 20;
+}
+
+.bc_ctaBtn {
+  width: 100%;
+  height: 56px;
+  border-radius: 18px;
+  border: none;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+.bc_ctaBtn:hover {
+  box-shadow: 0 16px 40px rgba(37, 99, 235, 0.4);
+}
+
+.bc_ctaBtn:active {
+  transform: scale(0.96);
+}
+
+/* ===============================
+   MODAL
+================================ */
+.bc_modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 200;
+  animation: bcOverlayFade 0.35s ease;
+}
+
+@keyframes bcOverlayFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.bc_modalCard {
+  width: 100%;
+  max-width: 900px;
+  height: 100%;
+  background: #ffffff;
+  border-radius: 18px;
+  overflow: hidden;
+  animation: bcModalEnter 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes bcModalEnter {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ===============================
+   MOBILE
 ================================ */
 @media (max-width: 768px) {
   .bc_modalCard {
-    max-width: 100%;
     border-radius: 0;
   }
 
   .bc_container {
-    padding: 16px 16px 120px;
+    padding: 16px 16px 140px;
   }
 }

@@ -22345,6 +22345,8 @@ color:#00A73E !important;
 
 /* All services in just ride */
 
+
+
 /* ========== LIGHT THEME WRAP ========== */
 .sw-js-as-wrap {
   min-height: 100vh;
@@ -22352,6 +22354,7 @@ color:#00A73E !important;
   padding: 16px 12px !important;
   color: #0f172a;
 }
+
 
 /* Card */
 .sw-js-as-card {
@@ -22362,9 +22365,11 @@ color:#00A73E !important;
   padding: 14px 16px !important;
 }
 
+
 .sw-js-as-card .ant-card-body {
   padding: 14px 16px !important;
 }
+
 
 /* Locations */
 .sw-js-as-loc {
@@ -22374,11 +22379,13 @@ color:#00A73E !important;
   margin-bottom: 14px;
 }
 
+
 .sw-js-as-loc-row {
   display: flex;
   align-items: center;
   gap: 10px;
 }
+
 
 .sw-js-as-dot {
   width: 10px;
@@ -22388,6 +22395,7 @@ color:#00A73E !important;
 .sw-js-as-dot.blue { background: #2563eb; }
 .sw-js-as-dot.green { background: #16a34a; }
 
+
 .sw-js-as-input {
   background: #f8fafc !important;
   border: 1px solid #e2e8f0 !important;
@@ -22396,12 +22404,14 @@ color:#00A73E !important;
   height: 42px;
 }
 
+
 /* Tabs */
 .sw-js-as-tabs {
   display: flex;
   gap: 10px;
   margin-bottom: 14px;
 }
+
 
 .sw-js-as-tab {
   background: #f1f5f9;
@@ -22413,10 +22423,12 @@ color:#00A73E !important;
   cursor: pointer;
 }
 
+
 .sw-js-as-tab.active {
   background: linear-gradient(135deg, #2563eb, #3b82f6);
   color: #fff;
 }
+
 
 /* Title */
 .sw-js-as-title {
@@ -22425,6 +22437,7 @@ color:#00A73E !important;
   color: #64748b;
   margin-bottom: 14px;
 }
+
 
 /* List Rows */
 .sw-js-as-row {
@@ -22437,10 +22450,12 @@ color:#00A73E !important;
   transition: all 0.2s ease;
 }
 
+
 .sw-js-as-row:hover {
   box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
   transform: translateY(-2px);
 }
+
 
 
 .sw-js-as-left {
@@ -22448,6 +22463,7 @@ color:#00A73E !important;
   gap: 14px;
   align-items: center;
 }
+
 
 .sw-js-as-icon {
   width: 46px;
@@ -22460,11 +22476,13 @@ color:#00A73E !important;
   font-size: 22px;
 }
 
+
 .sw-js-as-name {
   color: #0f172a;
   font-size: 15px;
   font-weight: 500;
 }
+
 
 .sw-js-as-sub {
   margin: 2px 0 0;
@@ -22472,10 +22490,12 @@ color:#00A73E !important;
   color: #2563eb;
 }
 
+
 /* Right */
 .sw-js-as-right {
   text-align: right;
 }
+
 
 .sw-js-as-price {
   font-size: 15px;
@@ -22483,17 +22503,20 @@ color:#00A73E !important;
   color: #0f172a;
 }
 
+
 .sw-js-as-km {
   display: block;
   font-size: 12px;
   color: #64748b;
 }
 
+
 /* Bottom CTA */
 .sw-js-as-cta-wrap {
   margin-top: 18px;
   padding-top: 14px;
 }
+
 
 .sw-js-as-cta-btn {
   width: 100%;
@@ -22512,9 +22535,11 @@ color:#00A73E !important;
   cursor: pointer;
 }
 
+
 .sw-js-as-cta-arrow {
   font-size: 18px;
 }
+
 
 /* ========== WEB FRIENDLY GRID LAYOUT ========== */
 .sw-js-as-list {
@@ -22522,6 +22547,7 @@ color:#00A73E !important;
   grid-template-columns: 1fr;
   gap: 12px;
 }
+
 
 /* Tablet / Desktop */
 @media (min-width: 768px) {
@@ -22531,12 +22557,23 @@ color:#00A73E !important;
   }
 }
 
+
 /* Large Desktop */
 @media (min-width: 1200px) {
   .sw-js-as-list {
     grid-template-columns: repeat(3, 1fr);
   }
 }
+
+
+/* Smaller Search Bar */
+.sw-js-as-input.search-small {
+  height: 34px !important;
+  padding: 4px 10px !important;
+  font-size: 14px !important;
+  border-radius: 10px !important;
+}
+
 
 
 /* ============================================================

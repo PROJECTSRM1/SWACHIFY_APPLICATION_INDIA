@@ -1,0 +1,555 @@
+
+.ad-root {
+  --sidebar-width: 260px;
+  --primary: #2563eb;
+  --bg-light: #f4f6fb;
+  --card-bg: #ffffff;
+  --text-main: #1f2937;
+  --text-muted: #6b7280;
+}
+
+/* RESET */
+.ad-root *,
+.ad-root *::before,
+.ad-root *::after {
+  box-sizing: border-box;
+}
+
+/* ================= LAYOUT ================= */
+.ad-layout {
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg-light);
+}
+
+/* ================= SIDEBAR ================= */
+.ad-sidebar {
+  width: var(--sidebar-width);
+  background: var(--sidebar-bg);
+  color: var(--sidebar-text);
+  position: fixed;
+  inset: 0 auto 0 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  transition: transform 0.3s ease;
+  border-right: 1px solid var(--sidebar-border);
+}
+.ad-sidebar-header {
+  display: flex;
+  gap: 12px;
+  padding: 20px;
+  border-bottom: 1px solid var(--sidebar-border);
+}
+
+.ad-sidebar-title h3 {
+  color: #111827;
+}
+
+.ad-sidebar-title span {
+  font-size: 12px;
+  color: var(--sidebar-muted);
+}
+.ad-menu button {
+  width: 100%;
+  background: none;
+  border: none;
+  color: var(--sidebar-text);
+  padding: 12px 14px;
+  border-radius: 10px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.2s ease;
+}
+
+.ad-menu button:hover {
+  background: #f3f4f6;
+}
+
+.ad-menu button.active {
+  background: var(--sidebar-active-bg);
+  color: var(--sidebar-active-text);
+}
+.ad-sidebar-footer {
+  margin-top: auto;
+  padding: 16px;
+  border-top: 1px solid var(--sidebar-border);
+}
+.ad-hamburger {
+  display: none;
+  font-size: 24px;
+  cursor: pointer;
+  user-select: none;
+  line-height: 1;
+}
+.ad-topbar {
+  position: relative;
+  z-index: 1100; /* higher than sidebar */
+}
+.ad-sidebar-close {
+  margin-left: auto;
+  font-size: 20px;
+  cursor: pointer;
+}
+/* ===== ADMIN SIDEBAR – FORCE WHITE BACKGROUND ===== */
+.ad-sidebar,
+.ad-sidebar-header,
+.ad-menu,
+.ad-sidebar-footer {
+  background-color: #ffffff !important;
+}
+/* ===== ADMIN SIDEBAR – FORCE TEXT VISIBILITY ===== */
+.ad-sidebar * {
+  color: #111111 !important;
+  opacity: 1 !important;          /* 🔥 removes faded look */
+  visibility: visible !important;
+}
+/* ===== SIDEBAR MENU BUTTONS ===== */
+.ad-menu button {
+  color: #111111 !important;
+  font-weight: 500;
+  background: transparent;
+}
+.ad-menu button:hover {
+  background-color: #f3f4f6 !important;
+}
+.ad-menu button.active {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+}
+.ad-sidebar-header,
+.ad-sidebar-footer {
+  border-color: #e5e7eb !important;
+}
+
+
+.ad-sidebar.hidden {
+  transform: translateX(-100%);
+}
+
+.ad-sidebar-header {
+  display: flex;
+  gap: 12px;
+  padding: 20px;
+  border-bottom: 1px solid #1e293b;
+}
+
+.ad-logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--primary);
+}
+
+.ad-sidebar-title span {
+  font-size: 12px;
+  color: #93c5fd;
+}
+
+.ad-menu {
+  padding: 16px;
+}
+
+.ad-menu button {
+  width: 100%;
+  background: none;
+  border: none;
+  color: #cbd5f5;
+  padding: 12px 14px;
+  border-radius: 10px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.ad-menu button.active {
+  background: var(--primary);
+  color: #fff;
+}
+
+.ad-sidebar-footer {
+  margin-top: auto;
+  padding: 16px;
+  border-top: 1px solid #1e293b;
+}
+
+/* ================= MAIN ================= */
+.ad-main {
+  margin-left: var(--sidebar-width);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ================= TOPBAR ================= */
+.ad-topbar {
+  height: 68px;
+  background: #ffffff;
+  padding: 0 24px;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ad-hamburger {
+  display: none;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.ad-top-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.ad-search {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+}
+
+/* ================= CONTENT ================= */
+.ad-content {
+  padding: 32px;
+}
+
+/* ================= FILTER BAR ================= */
+.ad-filters {
+  display: flex;
+  gap: 20px;
+  background: var(--card-bg);
+  padding: 20px;
+  border-radius: 18px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+
+.ad-filter-item {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+}
+
+.ad-filter-label {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.ad-select {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+}
+
+.ad-btn-primary {
+  margin-left: auto;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 12px;
+}
+
+/* ================= MAIN CARD ================= */
+.ad-card {
+  background: var(--card-bg);
+  border-radius: 20px;
+  padding: 28px;
+  margin-bottom: 36px;
+}
+
+.ad-card-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.ad-muted {
+  color: var(--text-muted);
+}
+
+/* Chart placeholder */
+.ad-chart {
+  height: 300px;
+  border-radius: 16px;
+  border: 1px dashed #d1d5db;
+  margin: 26px 0;
+}
+
+/* ================= KPI CARDS ================= */
+.ad-kpis {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.ad-kpi {
+  background: var(--card-bg);
+  border-radius: 20px;
+  padding: 26px;
+  position: relative;
+  min-height: 120px;
+}
+
+.ad-kpi-icon {
+  font-size: 26px;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+.ad-kpi-label {
+  margin-left: 44px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.ad-kpi-value {
+  margin-left: 44px;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+/* ================= FREELANCER HEADER ================= */
+.ad-page-title {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.ad-page-desc {
+  font-size: 16px;
+  color: var(--text-muted);
+  max-width: 700px;
+}
+
+/* ================= RESPONSIVE ================= */
+
+/* Tablets */
+@media (max-width: 1024px) {
+  .ad-kpis {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .ad-sidebar {
+    transform: translateX(-100%);
+  }
+
+  .ad-sidebar.open {
+    transform: translateX(0);
+  }
+
+  .ad-main {
+    margin-left: 0;
+  }
+
+  .ad-hamburger {
+    display: block;
+  }
+
+  .ad-filters {
+    flex-direction: column;
+  }
+
+  .ad-btn-primary {
+    width: 100%;
+  }
+
+  .ad-kpis {
+    grid-template-columns: 1fr;
+  }
+
+  .ad-content {
+    padding: 20px;
+  }
+
+  .ad-page-title {
+    font-size: 28px;
+  }
+}
+
+.ad-topbar {
+  min-height: 68px; /* allow growth safely */
+  height: auto;
+  background: #ffffff;
+  padding: 0 20px;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.ad-topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+.ad-top-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.ad-user-name {
+  max-width: 110px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ad-search {
+  width: 220px;
+}
+@media (max-width: 768px) {
+  .ad-search {
+    display: none;
+  }
+}
+@media (max-width: 768px) {
+  .ad-topbar {
+    padding: 0 14px;
+  }
+
+  .ad-page-title {
+    font-size: 20px;
+    margin: 0;
+  }
+
+  .ad-top-actions {
+    gap: 10px;
+  }
+
+  .ad-hamburger {
+    display: block;
+    font-size: 22px;
+  }
+}
+body {
+  overflow-x: hidden;
+}
+
+.ad-root {
+  overflow-x: hidden;
+}
+
+/* ================= FREELANCER KPI GRID ================= */
+
+.freelancer-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 🔥 ONE ROW */
+  gap: 24px;
+  margin: 28px 0 36px;
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .freelancer-kpis {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .freelancer-kpis {
+    grid-template-columns: 1fr;
+  }
+}
+/* ================= TABLE ================= */
+
+.ad-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+}
+
+.ad-table thead th {
+  text-align: left;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  padding: 14px 12px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.ad-table tbody td {
+  padding: 16px 12px;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 14px;
+}
+
+.ad-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* STATUS BADGES */
+.status {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status.verified {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.status.pending {
+  background: #fef3c7;
+  color: #b45309;
+}
+.freelancer-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin: 28px 0 36px;
+}
+/* ===== PROFILE DROPDOWN ===== */
+.ad-profile {
+  position: relative;
+}
+
+.ad-avatar {
+  width: 36px;
+  height: 36px;
+  background: #2563eb;
+  color: #fff;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.ad-profile-menu {
+  position: absolute;
+  right: 0;
+  top: 44px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  min-width: 120px;
+  z-index: 2000;
+}
+
+.ad-profile-menu button {
+  width: 100%;
+  padding: 10px 14px;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.ad-profile-menu button:hover {
+  background: #f3f4f6;
+}
