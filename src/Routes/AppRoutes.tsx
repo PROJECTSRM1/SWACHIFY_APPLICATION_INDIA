@@ -14,9 +14,7 @@ import SwiftParcel from "../pages/dashboard/PackersAndMovers/SwiftParcel";
 import AllServices from "../pages/dashboard/PackersAndMovers/AllServices";
 import BookRide from "../pages/dashboard/PackersAndMovers/BookRide";
 import MetroHubPage from "../pages/dashboard/PackersAndMovers/MetroHubPage";
-
-
-
+import ProductPartnerDashboard from "../pages/dashboard/SwachifyProducts/ProductPartnerDashboard";
 
 export const AppRoutes = () => {
   return (
@@ -27,14 +25,10 @@ export const AppRoutes = () => {
       <Routes>
         <Route path="/*" element={<NonSecureRoutes />} />
         <Route path="/freelancer/profile" element={<ProfilePage />} />
-        <Route path="/allservices" element={<AllServices/>}/>
-        <Route path = "/swiftparcel" element={<SwiftParcel/>}/>
-         <Route path = "/metrohub" element={<MetroHubPage/>}/>
-        <Route path = "/bookride" element={<BookRide/>}/>
-         
-         
-        
-
+        <Route path="/allservices" element={<AllServices />} />
+        <Route path="/swiftparcel" element={<SwiftParcel />} />
+        <Route path="/metrohub" element={<MetroHubPage />} />
+        <Route path="/bookride" element={<BookRide />} />
 
         <Route
           path="/app/*"
@@ -55,6 +49,10 @@ export const AppRoutes = () => {
         <Route path="/swachify-products" element={<SwachifyProducts />} />
         {/* <Route path="/products" element={<ProductsListing />} /> */}
         {/* <Route path="/products/register" element={<RegisterProduct />} /> */}
+        <Route
+          path="/partner/products/dashboard"
+          element={<ProductPartnerDashboard />}
+        />
       </Routes>
     </>
   );
