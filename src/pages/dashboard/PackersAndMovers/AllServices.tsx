@@ -101,6 +101,7 @@ const AllServices: React.FC = () => {
   const [pickupType, setPickupType] = useState<"myself" | "others">("myself");
 const [pickupValue, setPickupValue] = useState("");
 const [dropValue, setDropValue] = useState("");
+const [searchQuery, setSearchQuery] = useState("");
 
 const getCurrentLocation = () => {
   if (!navigator.geolocation) return;
@@ -125,6 +126,13 @@ useEffect(() => {
     setPickupValue("");
   }
 }, [pickupType]);
+
+
+const filteredServices = services.filter((service) =>
+  service.name.toLowerCase().includes(searchQuery.toLowerCase())
+);
+
+
 
 
 
@@ -186,6 +194,15 @@ useEffect(() => {
   />
 </div>
 
+{/* SEARCH BAR */}
+<Input
+  placeholder="Search services..."
+  className="sw-js-as-input"
+  style={{ marginTop: "12px", marginBottom: "16px" }}
+  value={searchQuery}
+  onChange={(e) => setSearchQuery(e.target.value)}
+/>
+
 
 
         {/* TABS */}
@@ -196,11 +213,28 @@ useEffect(() => {
           <button className="sw-js-as-tab">Luxury</button>
         </div>
 
-        <div className="sw-js-as-title">AVAILABLE TRANSPORT & DELIVERY</div>
+      <div
+  className="sw-js-as-title"
+  style={{ display: "flex", justifyContent: "space-between" }}
+>
+  <span>AVAILABLE TRANSPORT & DELIVERY</span>
+
+  <span
+    style={{
+      background: "#eef2ff",
+      color: "#6366f1",
+      padding: "2px 10px",
+      borderRadius: "12px",
+      fontWeight: "600",
+    }}
+  >
+    {filteredServices.length}
+  </span>
+</div>
 
         {/* LIST */}
         <div className="sw-js-as-list">
-          {services.map((s, i) => (
+          {filteredServices.map((s, i) => (
             <div key={i} className="sw-js-as-row">
               <div className="sw-js-as-left">
                 <div className="sw-js-as-icon">{s.icon}</div>
