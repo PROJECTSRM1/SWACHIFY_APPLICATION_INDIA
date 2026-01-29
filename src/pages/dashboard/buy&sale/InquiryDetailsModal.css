@@ -53,6 +53,8 @@
 .idm-body {
   overflow-y: auto;
   max-height: calc(85vh - 150px);
+  margin-top: 3px;
+    margin-bottom: 3px;
 }
 
 /* TOP GRID */
