@@ -20,6 +20,8 @@ import {
   CheckCircleOutlined,
   ClockCircleOutlined,
 } from "@ant-design/icons";
+import type { ColumnsType } from "antd/es/table";
+
 import "./Orders.css";
 
 const { Option } = Select;
@@ -234,11 +236,12 @@ const Orders: React.FC<OrdersProps> = ({ onBack }) => {
     });
   };
 
-  const columns = [
+  const columns: ColumnsType<Order> = [
     {
       title: "Order Number",
       dataIndex: "orderNumber",
       key: "orderNumber",
+      responsive: ["xs", "sm", "md", "lg"],
       render: (orderNumber: string) => (
         <span className="orders-number">{orderNumber}</span>
       ),
@@ -246,6 +249,7 @@ const Orders: React.FC<OrdersProps> = ({ onBack }) => {
     {
       title: "Customer",
       key: "customer",
+      responsive: ["md", "lg"],
       render: (record: Order) => (
         <div>
           <div className="orders-customer-name">{record.customerName}</div>
@@ -267,6 +271,7 @@ const Orders: React.FC<OrdersProps> = ({ onBack }) => {
       title: "Total Amount",
       dataIndex: "totalAmount",
       key: "totalAmount",
+      responsive: ["xs", "sm", "md", "lg"],
       render: (amount: number) => (
         <span className="orders-amount">₹{amount.toLocaleString()}</span>
       ),
@@ -275,6 +280,7 @@ const Orders: React.FC<OrdersProps> = ({ onBack }) => {
       title: "Status",
       dataIndex: "status",
       key: "status",
+      responsive: ["xs", "sm", "md", "lg"],
       render: (status: string) => (
         <Tag color={getStatusColor(status)}>{status.toUpperCase()}</Tag>
       ),
@@ -283,6 +289,7 @@ const Orders: React.FC<OrdersProps> = ({ onBack }) => {
       title: "Payment",
       dataIndex: "paymentStatus",
       key: "paymentStatus",
+      responsive: ["md", "lg"],
       render: (status: string) => (
         <Tag color={getPaymentStatusColor(status)}>{status.toUpperCase()}</Tag>
       ),
@@ -291,11 +298,13 @@ const Orders: React.FC<OrdersProps> = ({ onBack }) => {
       title: "Order Date",
       dataIndex: "orderDate",
       key: "orderDate",
+      responsive: ["md", "lg"],
       render: (date: string) => formatDate(date),
     },
     {
       title: "Actions",
       key: "actions",
+      responsive: ["xs", "sm", "md", "lg"],
       render: (record: Order) => (
         <Button
           type="link"
@@ -391,6 +400,7 @@ const Orders: React.FC<OrdersProps> = ({ onBack }) => {
               rowKey="id"
               loading={loading}
               pagination={{ pageSize: 10 }}
+              scroll={{ x: 900 }}
             />
           )}
         </Card>

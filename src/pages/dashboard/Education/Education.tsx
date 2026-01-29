@@ -4,14 +4,9 @@ import "./Education.css";
 import Companies from "../Education/Companies";
 import Students from "../Education/Students";
 import type { Student } from "../Education/Students";
-
-// import JobsPage from "./TrainingPage";
 import Internship from "../Education/Internships";
 import CandidateProfile from "../Education/CandidateProfile";
 import TrainingPage from "./TrainingPage";
-// import { useLocation } from "react-router-dom";c
-
-
 
 type Page =
   | "home"
@@ -20,7 +15,8 @@ type Page =
   | "companies"
   | "training"
   | "candidateProfile";
-  type TrendingStudent = {
+
+type TrendingStudent = {
   id: number;
   name: string;
   program: string;
@@ -83,6 +79,7 @@ const studentsData: TrendingStudent[] = [
     avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200",
   },
 ];
+
 const searchableItems = [
   "Students",
   "Internships",
@@ -98,24 +95,23 @@ const Education: React.FC = () => {
   const [searched, setSearched] = useState(false);
   const [selectedStudent, setSelectedStudent] =
     useState<Student | null>(null);
-    const [showAllTrending, setShowAllTrending] = useState<boolean>(false);
-const trendingStudents: TrendingStudent[] = studentsData
-  .filter((student) => student.academicScore > 80)
-  .sort((a, b) => b.academicScore - a.academicScore);
+  const [showAllTrending, setShowAllTrending] = useState(false);
 
+  const trendingStudents = studentsData
+    .filter((s) => s.academicScore > 80)
+    .sort((a, b) => b.academicScore - a.academicScore);
 
   const filteredResults = searchableItems.filter((item) =>
     item.toLowerCase().includes(query.toLowerCase())
   );
 
-  /* ================= FULLSCREEN PAGES ================= */
   if (page !== "home") {
     return (
-      <div className="fullscreen-page">
+      <div className="edu-fullscreen-page">
         {page === "students" && (
           <Students
             onBack={() => setPage("home")}
-            onSelectStudent={(student: Student) => {
+            onSelectStudent={(student) => {
               setSelectedStudent(student);
               setPage("candidateProfile");
             }}
@@ -138,38 +134,36 @@ const trendingStudents: TrendingStudent[] = studentsData
         )}
 
         {page === "training" && (
-  <TrainingPage onBack={() => setPage("home")} />
-)}
-
+          <TrainingPage onBack={() => setPage("home")} />
+        )}
       </div>
     );
   }
 
-  /* ================= HOME ================= */
   return (
     <div className="edu-wrapper">
-      {/* ================= FEATURED ================= */}
+      {/* FEATURED */}
       <div className="edu-featured">
         <img
           src="https://images.unsplash.com/photo-1562774053-701939374585?w=1400"
           alt="featured"
         />
 
-        <div className="blue-overlay" />
+        <div className="edu-blue-overlay" />
 
-        <div className="featured-content">
-          <div className="featured-left">
-            <span className="tag">FEATURED</span>
+        <div className="edu-featured-content">
+          <div className="edu-featured-left">
+            <span className="edu-tag">FEATURED</span>
             <h2>Top University of the Week</h2>
             <p>Discover the latest computer science programs...</p>
-           <button className="view-details-btn">
-  View Details →
-</button>
 
+            <button className="edu-view-details-btn">
+              View Details →
+            </button>
           </div>
 
-          <div className="featured-search-wrapper">
-            <div className="featured-search">
+          <div className="edu-featured-search-wrapper">
+            <div className="edu-featured-search">
               <input
                 placeholder="Search colleges, jobs..."
                 value={query}
@@ -184,13 +178,13 @@ const trendingStudents: TrendingStudent[] = studentsData
             </div>
 
             {searched && (
-              <div className="search-result">
+              <div className="edu-search-result">
                 {filteredResults.length ? (
                   <span>
                     Found: <b>{filteredResults.join(", ")}</b>
                   </span>
                 ) : (
-                  <span className="not-found">Not available</span>
+                  <span className="edu-not-found">Not available</span>
                 )}
               </div>
             )}
@@ -198,83 +192,84 @@ const trendingStudents: TrendingStudent[] = studentsData
         </div>
       </div>
 
-      {/* ================= CATEGORIES ================= */}
+      {/* CATEGORIES */}
       <div className="edu-section">
-        <h3 className="section-title">Explore Categories</h3>
+        <h3 className="edu-section-title">Explore Categories</h3>
 
-        <div className="category-grid">
+        <div className="edu-category-grid">
           <div onClick={() => setPage("students")}>
-            <span className="blue">🎓</span>
+            <span className="edu-blue">🎓</span>
             <p>Students</p>
           </div>
 
           <div onClick={() => setPage("internships")}>
-            <span className="purple">💼</span>
+            <span className="edu-purple">💼</span>
             <p>Internships</p>
           </div>
 
           <div onClick={() => setPage("companies")}>
-            <span className="orange">🏢</span>
+            <span className="edu-orange">🏢</span>
             <p>Companies</p>
           </div>
 
           <div onClick={() => setPage("training")}>
-  <span className="green">🧭</span>
-  <p>Training</p>
-</div>
-
-        </div>
-      </div>
-
-      {/* ================= TRENDING (MISSING CARDS FIXED) ================= */}
-      {/* ================= TRENDING ================= */}
-<div className="edu-section">
-  <div className="trending-header">
-    <h3 className="trending-title">Trending Now</h3>
-
-    <button
-      className="view-all-btn"
-      onClick={() => setShowAllTrending(!showAllTrending)}
-    >
-      {showAllTrending ? "Show Less" : "View All"}
-    </button>
-  </div>
-
-  <div className="trending-list">
-    {(showAllTrending
-      ? trendingStudents
-      : trendingStudents.slice(0, 4)
-    ).map((student) => (
-      <div key={student.id} className="trending-row-card">
-        <img
-          src={student.avatar}
-          alt={student.name}
-          className="trending-avatar"
-        />
-
-        <div className="trending-info">
-          <h4>{student.name}</h4>
-          <p className="program">{student.program}</p>
-          <p className="score">{student.academicScore}% Academic Score</p>
-
-          <div className="trending-footer">
-            <div className="rating">
-  <span className="star">⭐</span>
-  <span>{student.rating}</span>
-</div>
-
-            <span className={`status ${student.status}`}>
-              {student.status.toUpperCase()}
-            </span>
+            <span className="edu-green">🧭</span>
+            <p>Training</p>
           </div>
-
-          <p className="shift">{student.shift}</p>
         </div>
       </div>
-    ))}
-  </div>
-</div>
 
+      {/* TRENDING */}
+      <div className="edu-section">
+        <div className="edu-trending-header">
+          <h3 className="edu-trending-title">Trending Now</h3>
+
+          <button
+            className="edu-view-all-btn"
+            onClick={() => setShowAllTrending(!showAllTrending)}
+          >
+            {showAllTrending ? "Show Less" : "View All"}
+          </button>
+        </div>
+
+        <div className="edu-trending-list">
+          {(showAllTrending
+            ? trendingStudents
+            : trendingStudents.slice(0, 4)
+          ).map((student) => (
+            <div key={student.id} className="edu-trending-row-card">
+              <img
+                src={student.avatar}
+                alt={student.name}
+                className="edu-trending-avatar"
+              />
+
+              <div className="edu-trending-info">
+                <h4>{student.name}</h4>
+                <p className="edu-program">{student.program}</p>
+                <p className="edu-score">
+                  {student.academicScore}% Academic Score
+                </p>
+
+                <div className="edu-trending-footer">
+                  <div className="edu-rating">
+                    <span className="edu-star">⭐</span>
+                    <span>{student.rating}</span>
+                  </div>
+                </div>
+
+                <span
+                  className={`edu-status ${student.status}`}
+                >
+                  {student.status.toUpperCase()}
+                </span>
+
+                <p className="edu-shift">{student.shift}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };

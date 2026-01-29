@@ -203,15 +203,15 @@
 
 /* BADGES */
 .mp-badge {
-  position: absolute;
-  top: 12px;
-  left: 12px;
   background: #2563eb;
   color: white;
   font-size: 11px;
   padding: 4px 10px;
   border-radius: 999px;
+  font-weight: 600;
+  white-space: nowrap;
 }
+
 
 .mp-image-wrapper .mp-rating {
   position: absolute;
@@ -2252,4 +2252,86 @@ html, body {
 
 .mp-card-row.muted {
   color: #64748b;
+}
+
+.vehicleContactHeader {
+  display: flex;
+  align-items: center;
+  width: 100%;
+
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  padding: 16px 20px;
+  border-radius: 22px;
+  margin: 18px 0;
+
+  color: #ffffff;
+}
+
+.vehicleContactLeft {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* LEFT ICON */
+.vehicleContactAvatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.25);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* TEXT */
+.vehicleContactText strong {
+  font-size: 16px;
+  font-weight: 700;
+}
+.vehicleContactText span {
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+/* 🔥 RIGHT CALL BUTTON */
+.vehicleContactCall {
+  margin-left: auto;   /* THIS pushes it to the right */
+
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #2563eb;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.mp-badges {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  gap: 8px;
+}
+
+.mp-condition {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  color: white;
+}
+
+.mp-condition.new {
+  background: #22c55e;
+}
+
+.mp-condition.used {
+  background: #6b7280;
 }

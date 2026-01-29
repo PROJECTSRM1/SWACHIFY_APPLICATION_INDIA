@@ -4,8 +4,8 @@ interface Props {
 }
 
 import React, { useState, useEffect } from "react";
-import { Input, Layout,  } from "antd";
-import { AimOutlined, BankOutlined, EnvironmentOutlined, HomeOutlined, SearchOutlined, ThunderboltOutlined } from "@ant-design/icons";
+import { Avatar, Button, Input, Layout, Modal, Radio, Select,  } from "antd";
+import { AimOutlined, BankOutlined, DownOutlined, EnvironmentOutlined, HomeOutlined, SearchOutlined, ThunderboltOutlined, UserAddOutlined, UserOutlined } from "@ant-design/icons";
 import { MapContainer, TileLayer, Marker, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -71,7 +71,35 @@ const Packersandmovers: React.FC<Props> = () => {
   const [recentPlaces, setRecentPlaces] = useState<any[]>([]);
     const [justSelectedPickup, setJustSelectedPickup] = useState(false);
   const [justSelectedDestination, setJustSelectedDestination] = useState(false);
+  const [isRiderModalVisible, setIsRiderModalVisible] = useState(false);
+  const [isNewRiderModalVisible, setIsNewRiderModalVisible] = useState(false);
+  const [selectedRider, setSelectedRider] = useState("Me");
+  
+  // Dynamic list of riders
+  const [riders, setRiders] = useState([
+    { id: 'me', name: 'Me', phone: '', isMe: true }
+  ]);
+  
+  // Form state for adding a new rider
+  const [newRiderForm, setNewRiderForm] = useState({ firstName: '', lastName: '', phone: '' });
 
+
+  const handleAddNewRider = () => {
+  if (newRiderForm.firstName && newRiderForm.phone) {
+    const fullName = `${newRiderForm.firstName} ${newRiderForm.lastName}`.trim();
+    const newUser = {
+      id: Date.now().toString(),
+      name: fullName,
+      phone: newRiderForm.phone,
+      isMe: false
+    };
+    
+    setRiders([...riders, newUser]); // Add new rider to list
+    setSelectedRider(fullName);      // Set them as the active choice
+    setIsNewRiderModalVisible(false); // Close form
+    setNewRiderForm({ firstName: '', lastName: '', phone: '' }); // Reset form
+  }
+};
 
     const recentStaticPlaces = [
     {
@@ -254,7 +282,7 @@ useEffect(() => {
            <Layout className="sw-jr-layout">
                   <Sider width={420} className="sw-jr-left-panel">
           <h1 className="sw-jr-title">
-            Just Ride
+         Just Ride
           
           </h1>
           
@@ -428,6 +456,36 @@ useEffect(() => {
               </div>
             )}
           </div>
+
+
+          
+{/* THE "FOR ME" TRIGGER PILL */}
+<div style={{ marginTop: '16px', marginBottom: '16px' }}>
+  <div 
+    className="sw-jr-rider-pill"
+    onClick={() => setIsRiderModalVisible(true)}
+    style={{
+      display: 'inline-flex',
+      alignItems: 'center',
+      padding: '6px 12px',
+      backgroundColor: '#f3f3f3',
+      borderRadius: '20px',
+      cursor: 'pointer',
+      fontSize: '14px',
+      fontWeight: '500',
+      gap: '8px',
+      border: '1px solid #e8e8e8'
+    }}
+  >
+    <UserOutlined />
+    <span>{selectedRider === "Me" ? "For me" : selectedRider}</span>
+    <DownOutlined style={{ fontSize: '10px' }} />
+  </div>
+</div>
+
+
+
+
           
           {!pickup && !destination && (
             <div className="sw-jr-pre-booking">
@@ -549,6 +607,171 @@ useEffect(() => {
           
                   </Content>
                 </Layout>
+
+
+                      {/* MODAL 1: CHOOSE A RIDER */}
+                <Modal
+                  title={null}
+                  open={isRiderModalVisible}
+                  onCancel={() => setIsRiderModalVisible(false)}
+                  footer={[
+                    <div key="footer" style={{ padding: '0 24px 24px 24px' }}>
+                      <Button 
+                        className="sw-jr-done-btn" 
+                        block 
+                        onClick={() => setIsRiderModalVisible(false)}
+                      >
+                        Done
+                      </Button>
+                    </div>
+                  ]}
+                  width={500} // Matches the wider look in image_3e8e75.png
+                  centered
+                  className="sw-jr-rider-selector-modal"
+                  closeIcon={<span style={{ fontSize: '20px', color: '#000' }}>✕</span>}
+                >
+                  <div style={{ padding: '24px 0 0 0' }}>
+                    <h2 style={{ fontSize: '22px', fontWeight: 'bold', padding: '0 24px', marginBottom: '20px' }}>
+                      Choose a rider
+                    </h2>
+                
+                    <Radio.Group 
+                      onChange={(e) => setSelectedRider(e.target.value)} 
+                      value={selectedRider} 
+                      style={{ width: '100%' }}
+                      className="sw-jr-premium-radio-group"
+                    >
+                      {riders.map((r) => (
+                        <div key={r.id} className="sw-jr-rider-selection-row" onClick={() => setSelectedRider(r.name)}>
+                          <div className="sw-jr-rider-avatar-container">
+                             <Avatar 
+                               size={44} 
+                               className={r.isMe ? "sw-jr-avatar-black" : "sw-jr-avatar-grey"}
+                             >
+                               {r.isMe ? "M" : r.name.split(' ').map(n => n[0]).join('').toUpperCase()}
+                             </Avatar>
+                          </div>
+                          <div className="sw-jr-rider-details">
+                            <div className="sw-jr-rider-main-name">{r.name}</div>
+                            {r.phone && <div className="sw-jr-rider-sub-phone">{r.phone}</div>}
+                          </div>
+                          <div className="sw-jr-rider-radio-wrapper">
+                            <Radio value={r.name} />
+                          </div>
+                        </div>
+                      ))}
+                
+                      {/* Trigger for Modal 2 */}
+                      <div 
+                        className="sw-jr-rider-selection-row add-rider-row" 
+                        onClick={() => {
+                          setIsRiderModalVisible(false);
+                          setIsNewRiderModalVisible(true);
+                        }}
+                      >
+                        <div className="sw-jr-rider-avatar-container">
+                          <div className="sw-jr-add-rider-icon-bg">
+                            <UserAddOutlined style={{ fontSize: '20px' }} />
+                          </div>
+                        </div>
+                        <div className="sw-jr-rider-details">
+                          <div className="sw-jr-rider-main-name">Order ride for someone else</div>
+                        </div>
+                      </div>
+                    </Radio.Group>
+                  </div>
+                </Modal>
+                
+                {/* MODAL 2: NEW RIDER FORM */}
+                <Modal
+                  title={<div style={{ fontSize: '22px', fontWeight: 'bold'}}>New rider</div>}
+                  open={isNewRiderModalVisible}
+                  onCancel={() => {
+                    setIsNewRiderModalVisible(false); // Close New Rider
+                    setIsRiderModalVisible(true);     // Open Choose Rider
+                  }}
+                  footer={null}
+                  width={550} // Increased width to match reference
+                  centered
+                  className="sw-jr-details-modal"
+                >
+                  <div style={{ padding: '0 4px' }}>
+                    <p style={{ color: '#000', fontSize: '18px', marginBottom: '20px' }}>
+                      Drivers will see this name.
+                    </p>
+                    
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                      <div>
+                        <label style={{ fontWeight: 500, display: 'block', marginBottom: '8px' }}>First name</label>
+                        <Input 
+                          placeholder="First name" 
+                          className="premium-input"
+                          value={newRiderForm.firstName}
+                          onChange={e => setNewRiderForm({...newRiderForm, firstName: e.target.value})} 
+                        />
+                      </div>
+                
+                      <div>
+                        <label style={{ fontWeight: 500, display: 'block', marginBottom: '8px' }}>Last name</label>
+                        <Input 
+                          placeholder="Last name" 
+                          className="sw-jr-premium-input"
+                          value={newRiderForm.lastName}
+                          onChange={e => setNewRiderForm({...newRiderForm, lastName: e.target.value})} 
+                        />
+                      </div>
+                
+                      <div>
+                        <label style={{ fontWeight: 500, display: 'block', marginBottom: '8px' }}>Phone number</label>
+                        <div style={{ display: 'flex', gap: '10px' }}>
+                          {/* Country Selector - matches image_3e257b.png */}
+                          <Select
+                            defaultValue="IN"
+                            style={{ width: 100, height: '48px' }}
+                            className="sw-jrpremium-select"
+                            suffixIcon={<DownOutlined />}
+                          >
+                            <Select.Option value="IN">IN +91</Select.Option>
+                            {/* <Select.Option value="US">US +1</Select.Option> */}
+                          </Select>
+                          <Input 
+                            placeholder="Phone number" 
+                            className="sw-jr-premium-input"
+                            style={{ flex: 1 }}
+                            value={newRiderForm.phone}
+                            onChange={e => setNewRiderForm({...newRiderForm, phone: e.target.value})} 
+                          />
+                        </div>
+                      </div>
+                      
+                      {/* THE ADDITIONAL TEXT (Legal/Disclaimer) */}
+                      <div style={{ color: '#666', fontSize: '14px', lineHeight: '1.5', marginTop: '10px' }}>
+                        <p>JustRide won't share this phone number with drivers.</p>
+                        <p style={{ marginTop: '15px' }}>
+                          By tapping "Add rider", you confirm that your friend agreed to share 
+                          their contact information with JustRide and to receive SMS about this trip.
+                        </p>
+                      </div>
+                
+                      <Button 
+                        type="primary" 
+                        block 
+                        className="sw-jr-details-button"
+                        disabled={!newRiderForm.firstName || !newRiderForm.phone}
+                        onClick={() => {
+                          handleAddNewRider();
+                          setIsNewRiderModalVisible(false);
+                          setIsRiderModalVisible(true); // Return to list after adding
+                          
+                        }}
+                      >
+                        Add rider
+                      </Button>
+                    </div>
+                  </div>
+                </Modal>
+
+
 
       
 
