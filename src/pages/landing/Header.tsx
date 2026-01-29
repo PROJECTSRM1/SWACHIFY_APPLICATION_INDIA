@@ -103,6 +103,8 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
 
   const [userRole, setUserRole] = useState<UserRole>(null);
   const [partnerModalVisible, setPartnerModalVisible] = useState(false);
+  const [partnerActiveTab, setPartnerActiveTab] = useState<"login" | "register">("register");
+
 
 
 
@@ -335,15 +337,16 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
 
   // ✅ Partner Register/Login handler (Education only)
 
-  const onPartnerRegister = (values: any) => {
-    // store selected module
-    localStorage.setItem("partner_module", values.module);
+const onPartnerRegister = (values: any) => {
+  // store selected module
+  localStorage.setItem("partner_module", values.module);
 
-    message.success("Registration successful. Please login.");
+  message.success("Registration successful. Please login.");
 
-    // stay in modal → user must login
-    setPartnerModalVisible(true);
-  };
+  // ✅ switch to login tab
+  setPartnerActiveTab("login");
+};
+
 
   const onPartnerLogin = (values: any) => {
     const module = localStorage.getItem("partner_module");
@@ -593,9 +596,11 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
               openAuthModal("register");
             }
 
-            if (value === "partner") {
-              setPartnerModalVisible(true); // ✅ auto open popup
-            }
+          if (value === "partner") {
+  setPartnerActiveTab("register");
+  setPartnerModalVisible(true);
+}
+
           }}
         >
 
@@ -1819,7 +1824,12 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
         }}
       >
 
-        <Tabs defaultActiveKey="register" centered>
+        <Tabs
+  activeKey={partnerActiveTab}
+  onChange={(key) => setPartnerActiveTab(key as "login" | "register")}
+  centered
+>
+
           <Tabs.TabPane tab="Login" key="login">
             <Form layout="vertical" onFinish={onPartnerLogin}>
 
