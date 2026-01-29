@@ -257,7 +257,8 @@ useEffect(() => {
 
   return (
     <>
-   
+   <div className="justride-page-root">
+
       <section className="sw-pm-hero" aria-hidden={false} >
         <div className="sw-pm-container sw-pm-hero-inner" style={{height:"110px"}}>
           <div className="sw-pm-hero-left">
@@ -776,6 +777,9 @@ useEffect(() => {
       
 
     </div>
+
+   </div>
+    
   
 
 

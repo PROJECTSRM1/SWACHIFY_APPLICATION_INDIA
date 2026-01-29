@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import type { ActiveRide } from './JRPtypes';
 import { SERVICE_CONFIG } from './JRPData';
-import { FaShieldAlt, FaUser, FaPhone, FaComment, FaStar, FaTimes, FaMapMarkerAlt, FaCheckCircle, FaLocationArrow } from 'react-icons/fa';
+import { FaShieldAlt, FaUser, FaPhone, FaComment, FaStar, FaTimes, FaCheckCircle, FaLocationArrow } from 'react-icons/fa';
 import './JustRidePartnerDashboard.css';
 
 interface Props {
@@ -71,23 +71,40 @@ const LiveRideTrackingWeb: React.FC<Props> = ({ ride, onComplete, onCancel }) =>
       </div>
 
       {/* Route Info */}
-      <div className="ride-route-card">
-        <div className="pickup-row">
-          <FaMapMarkerAlt color="#2563EB" />
-          <div className="route-text">
-            <span>PICKUP</span>
-            <span>{ride.pickup}</span>
-          </div>
-          {stage === 'pickup' && <span>{ride.estimatedArrival}</span>}
-        </div>
-        <div className="drop-row">
-          <FaMapMarkerAlt color="#EF4444" />
-          <div className="route-text">
-            <span>DROP</span>
-            <span>{ride.dropoff}</span>
-          </div>
-        </div>
+<div className="ride-route-card">
+
+  {/* PICKUP */}
+  <div className="route-row">
+    <div className="route-row-left">
+      <div className="route-dot blue"></div>
+      <div className="route-details">
+        <label>PICKUP</label>
+        <p>{ride.pickup}</p>
       </div>
+    </div>
+
+    {stage === 'pickup' && (
+      <span className="route-time">{ride.estimatedArrival}</span>
+    )}
+  </div>
+
+  {/* Divider */}
+  <div className="route-vertical-line"></div>
+
+
+  {/* DROP */}
+  <div className="route-row">
+    <div className="route-row-left">
+      <div className="route-dot red"></div>
+      <div className="route-details">
+        <label>DROP</label>
+        <p>{ride.dropoff}</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
 
       {/* OTP */}
       {ride.otp && stage !== 'dropoff' && (
@@ -115,9 +132,15 @@ const LiveRideTrackingWeb: React.FC<Props> = ({ ride, onComplete, onCancel }) =>
             </div>
           </div>
           <div className="customer-actions">
-            <FaPhone className="action-icon" />
-            <FaComment className="action-icon" />
-          </div>
+  <button className="action-btn call-btn">
+    <FaPhone />
+  </button>
+
+  <button className="action-btn msg-btn">
+    <FaComment />
+  </button>
+</div>
+
         </div>
       )}
 
