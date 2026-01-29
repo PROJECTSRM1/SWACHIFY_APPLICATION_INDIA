@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { useNavigate} from "react-router-dom";
+// import { useNavigate} from "react-router-dom";
 import "./PartnerDashboard.css";
 import InquiryDetailsModal from "../../../pages/dashboard/buy&sale/InquiryDetailsModal";
 
@@ -14,7 +14,7 @@ interface Inquiry {
 
 
 const PartnerDashboard: React.FC = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 const [selectedInquiry, setSelectedInquiry] = useState<any>(null);
   const inquiries: Inquiry[] = [
     {
