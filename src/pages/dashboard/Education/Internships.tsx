@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import "./Internships.css";
 import InternshipDetails from "./InternshipDetails";
 import ReviewApplication from "./ReviewApplication";
@@ -22,73 +22,64 @@ type Props = {
   onBack?: () => void;
 };
 
-/* ================= DATA ================= */
-
-const internships: Internship[] = [
-  {
-    id: 1,
-    title: "UX Design Intern",
-    company: "Spotify",
-    logoColor: "#1DB954",
-    location: "Stockholm",
-    duration: "6 Months",
-    type: "Paid",
-    isRemote: false,
-    description:
-      "Join our design team to help shape the future of audio streaming. You will work closely with researchers, product managers.",
-    category: "design",
-  },
-  {
-    id: 2,
-    title: "Software Engineer Intern",
-    company: "Google",
-    logoColor: "#4285F4",
-    location: "Remote",
-    duration: "3 Months",
-    type: null,
-    isRemote: true,
-    description:
-      "Work on large-scale systems and help build the future of search. We are looking for students with strong algorithmic skills.",
-    category: "engineering",
-  },
-  {
-    id: 3,
-    title: "Product Design Intern",
-    company: "Apple",
-    logoColor: "#000000",
-    location: "Cupertino",
-    duration: "Summer 2024",
-    type: null,
-    isRemote: false,
-    description:
-      "Define the user experience for Apple products. You'll work on everything from hardware interactions to software interfaces.",
-    category: "design",
-  },
-  {
-    id: 4,
-    title: "Marketing Intern",
-    company: "Airbnb",
-    logoColor: "#FF5A5F",
-    location: "Remote",
-    duration: "12 Weeks",
-    type: null,
-    isRemote: true,
-    description:
-      "Support our global marketing campaigns and help tell the story of belonging anywhere.",
-    category: "marketing",
-  },
-];
+/* ================= FILTERS ================= */
 
 const filters = ["All", "Design", "Engineering", "Marketing", "Remote"];
 
 /* ================= COMPONENT ================= */
 
 const Internships = ({ onBack }: Props) => {
+  const [internships, setInternships] = useState<Internship[]>([]);
+  const [loading, setLoading] = useState(true);
+
   const [activeFilter, setActiveFilter] = useState(0);
   const [search, setSearch] = useState("");
   const [selectedInternship, setSelectedInternship] =
     useState<Internship | null>(null);
   const [showReview, setShowReview] = useState(false);
+
+  /* ================= FETCH API ================= */
+
+  useEffect(() => {
+    const fetchInternships = async () => {
+      try {
+        const res = await fetch(
+          "https://swachify-india-be-1-mcrb.onrender.com/internship/application"
+        );
+        const json = await res.json();
+
+        if (json.status && Array.isArray(json.data)) {
+          const mapped: Internship[] = json.data.map((item: any) => ({
+            id: item.id,
+            title: item.role_description,
+            company: item.company_name,
+            logoColor: "#4F46E5", // fallback brand color
+            location: item.company_address || "Remote",
+            duration: item.internship_duration_id
+              ? `Duration ${item.internship_duration_id}`
+              : "Flexible",
+            type: item.internship_stipend ? "Paid" : null,
+            isRemote: item.location_type_id === 2, // adjust if backend enum changes
+            description: item.requirements,
+            category:
+              item.sub_module_id === 4
+                ? "engineering"
+                : item.sub_module_id === 7
+                ? "marketing"
+                : "design",
+          }));
+
+          setInternships(mapped);
+        }
+      } catch (err) {
+        console.error("Failed to load internships", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchInternships();
+  }, []);
 
   /* ================= FILTER LOGIC ================= */
 
@@ -112,93 +103,96 @@ const Internships = ({ onBack }: Props) => {
     }
 
     return data;
-  }, [activeFilter, search]);
+  }, [activeFilter, search, internships]);
 
   /* ================= RENDER ================= */
 
   return (
     <div className="internships-web">
       {showReview ? (
-        /* ================= REVIEW SCREEN ================= */
         <ReviewApplication onBack={() => setShowReview(false)} />
       ) : selectedInternship ? (
-        /* ================= DETAILS SCREEN ================= */
         <InternshipDetails
           internship={selectedInternship}
           onBack={() => setSelectedInternship(null)}
           onApply={() => setShowReview(true)}
         />
       ) : (
-        /* ================= LIST SCREEN ================= */
         <>
-  {/* ===== HEADER (Students Style) ===== */}
-  <div className="internships-header">
-    <button className="internships-back" onClick={() => onBack?.()}>
-      ←
-    </button>
+          {/* ===== HEADER ===== */}
+          <div className="internships-header">
+            <button className="internships-back" onClick={() => onBack?.()}>
+              ←
+            </button>
 
-    <h1>Internships</h1>
+            <h1>Internships</h1>
 
-    <input
-      className="internships-search"
-      placeholder="Search role, company..."
-      value={search}
-      onChange={(e) => setSearch(e.target.value)}
-    />
-  </div>
-
-  {/* ===== FILTERS (Students Style Pills) ===== */}
-  <div className="internships-filters">
-    <div className="internships-tabs">
-      {filters.map((f, i) => (
-        <button
-          key={f}
-          className={i === activeFilter ? "active" : ""}
-          onClick={() => setActiveFilter(i)}
-        >
-          {f}
-        </button>
-      ))}
-    </div>
-  </div>
-
-          {/* Internship Grid */}
-          <div className="internship-grid">
-            {filteredData.map((i) => (
-              <div className="card" key={i.id}>
-                <div className="card-header">
-                  <div className="company">
-                    <div
-                      className="logo"
-                      style={{ backgroundColor: i.logoColor }}
-                    >
-                      {i.company[0]}
-                    </div>
-                    <div>
-                      <h3>{i.title}</h3>
-                      <p>{i.company}</p>
-                    </div>
-                  </div>
-                  <button className="bookmark">🔖</button>
-                </div>
-
-                <div className="tags">
-                  <span>📍 {i.location}</span>
-                  <span>⏳ {i.duration}</span>
-                  {i.type && <span>💰 {i.type}</span>}
-                </div>
-
-                <p className="desc">{i.description}</p>
-
-                <button
-                  className="apply-btn"
-                  onClick={() => setSelectedInternship(i)}
-                >
-                  Apply Now
-                </button>
-              </div>
-            ))}
+            <input
+              className="internships-search"
+              placeholder="Search role, company..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
           </div>
+
+          {/* ===== FILTERS ===== */}
+          <div className="internships-filters">
+            <div className="internships-tabs">
+              {filters.map((f, i) => (
+                <button
+                  key={f}
+                  className={i === activeFilter ? "active" : ""}
+                  onClick={() => setActiveFilter(i)}
+                >
+                  {f}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* ===== CONTENT ===== */}
+          {loading ? (
+            <div className="empty">Loading internships...</div>
+          ) : filteredData.length === 0 ? (
+            <div className="empty">No internships found</div>
+          ) : (
+            <div className="internship-grid">
+              {filteredData.map((i) => (
+                <div className="card" key={i.id}>
+                  <div className="card-header">
+                    <div className="company">
+                      <div
+                        className="logo"
+                        style={{ backgroundColor: i.logoColor }}
+                      >
+                        {i.company[0]}
+                      </div>
+                      <div>
+                        <h3>{i.title}</h3>
+                        <p>{i.company}</p>
+                      </div>
+                    </div>
+                    <button className="bookmark">🔖</button>
+                  </div>
+
+                  <div className="tags">
+                    <span>📍 {i.location}</span>
+                    <span>⏳ {i.duration}</span>
+                    {i.type && <span>💰 {i.type}</span>}
+                  </div>
+
+                  <p className="desc">{i.description}</p>
+
+                  <button
+                    className="apply-btn"
+                    onClick={() => setSelectedInternship(i)}
+                  >
+                    Apply Now
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
         </>
       )}
     </div>
