@@ -18,6 +18,7 @@ import {
 
 import { Select, TreeSelect } from "antd";
 
+
 import {
   MenuOutlined,
   CloseOutlined,
@@ -27,6 +28,7 @@ import {
 
 import axios from "axios";
 
+
 import { customerRegister, customerLogin } from "../../api/customerAuth";
 
 import "./Header.css";
@@ -34,33 +36,29 @@ import "./Header.css";
 // ================= INPUT SANITIZERS =================
 
 // Only numbers
-const allowOnlyNumbers = (value: string) => value.replace(/[^0-9]/g, "");
+const allowOnlyNumbers = (value: string) =>
+  value.replace(/[^0-9]/g, "");
 
 // Only letters + spaces
-const allowOnlyLetters = (value: string) => value.replace(/[^A-Za-z ]/g, "");
+const allowOnlyLetters = (value: string) =>
+  value.replace(/[^A-Za-z ]/g, "");
 
 // Letters + numbers (no special chars)
-const allowAlphaNumeric = (value: string) => value.replace(/[^A-Za-z0-9]/g, "");
+const allowAlphaNumeric = (value: string) =>
+  value.replace(/[^A-Za-z0-9]/g, "");
 
 // Email-safe characters
 const allowEmailChars = (value: string) =>
   value.replace(/[^A-Za-z0-9@._-]/g, "");
 
+
+
 const navItems = [
   { key: "home", label: <Link to="/landing">Home</Link> },
-  {
-    key: "cleaning",
-    label: <Link to="/cleaningservice">Cleaning & Home Services</Link>,
-  },
+  { key: "cleaning", label: <Link to="/cleaningservice">Cleaning & Home Services</Link> },
   { key: "packers", label: <Link to="/LandingPackers">Transport</Link> },
-  {
-    key: "commercial",
-    label: <Link to="/commercial-plots">Buy/Sale/Rent</Link>,
-  },
-  {
-    key: "materials",
-    label: <Link to="/ConstructionMaterials">Raw Materials</Link>,
-  },
+  { key: "commercial", label: <Link to="/commercial-plots">Buy/Sale/Rentals</Link> },
+  { key: "materials", label: <Link to="/ConstructionMaterials">Raw Materials</Link> },
   { key: "education", label: <Link to="/education">Education</Link> },
   {
     key: "Swachifyproducts",
@@ -79,7 +77,11 @@ const serviceIdToRoute: Record<number, string> = {
   7: "/app/dashboard/healthcare",
 };
 
+
+
 const { TabPane } = Tabs;
+
+
 
 const CommonHeader: React.FC<{ selectedKey?: string }> = ({
   selectedKey = "home",
@@ -90,9 +92,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
   const [vendorModalVisible, setVendorModalVisible] = useState(false);
   type RoleType = "vendor" | "admin";
   const [roleType, setRoleType] = useState<RoleType>("vendor");
-  const [showRegisterHint, setShowRegisterHint] = useState<
-    "vendor" | "admin" | null
-  >(null);
+  const [showRegisterHint, setShowRegisterHint] = useState<"vendor" | "admin" | null>(null);
 
   const [showProfessionalFields, setShowProfessionalFields] = useState(false);
 
@@ -103,18 +103,25 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
 
   const [userRole, setUserRole] = useState<UserRole>(null);
   const [partnerModalVisible, setPartnerModalVisible] = useState(false);
+  const [partnerActiveTab, setPartnerActiveTab] = useState<"login" | "register">("register");
+
+
+
+
 
   const [activeAuthTab, setActiveAuthTab] = useState<"login" | "register">(
-    "login",
+    "login"
   );
 
   const [vendorActiveTab, setVendorActiveTab] = useState<
     "login" | "vendor_register" | "admin_register"
   >("login");
 
+
   const [authLoading, setAuthLoading] = useState(false);
   const navigate = useNavigate();
   const [serviceOpen, setServiceOpen] = useState(false);
+
 
   const openAuthModal = (tab: "login" | "register" = "login") => {
     setActiveAuthTab(tab);
@@ -122,6 +129,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
     setMenuOpen(false);
   };
   const [hideWorkType, setHideWorkType] = useState(false);
+
 
   const closeAuthModal = () => {
     localStorage.removeItem("loginSource");
@@ -135,12 +143,15 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const [vendorForgotModalVisible, setVendorForgotModalVisible] =
-    useState(false);
+
+  const [vendorForgotModalVisible, setVendorForgotModalVisible] = useState(false);
   const [emailValue, setEmailValue] = useState("");
 
   console.log(emailValue);
-  const hideSkipLogin = localStorage.getItem("loginSource") === "addToCart";
+  const hideSkipLogin =
+    localStorage.getItem("loginSource") === "addToCart";
+
+
 
   useEffect(() => {
     (window as any).openAuthModal = (tab: "login" | "register" = "login") => {
@@ -154,7 +165,9 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
       try {
         delete (window as any).openAuthModal;
         delete (window as any).closeAuthModal;
-      } catch (e) {}
+      } catch (e) {
+
+      }
     };
   }, []);
 
@@ -181,14 +194,18 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
           {
             username_or_email: values.username.trim(),
             password: values.password,
-          },
+          }
         );
+
 
         console.log("ADMIN LOGIN RESPONSE:", res.data);
 
         localStorage.setItem("token", res.data.access_token);
         localStorage.setItem("user_role", "freelancer");
         localStorage.setItem("user_role", "customer");
+
+
+
 
         message.success("Admin login successful");
         setVendorModalVisible(false);
@@ -210,7 +227,8 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
       const serviceIds: number[] = res.service_ids || [];
 
       const firstServiceId = serviceIds[0];
-      const redirectPath = serviceIdToRoute[firstServiceId] || "/app/dashboard";
+      const redirectPath =
+        serviceIdToRoute[firstServiceId] || "/app/dashboard";
 
       console.log("Navigating to:", redirectPath);
       // After successful login
@@ -219,10 +237,15 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
       closeAuthModal();
       navigate(redirectPath);
 
+
+
+
+
+
       // navigate("/app/dashboard");
     } catch (err: any) {
       message.error(
-        err?.response?.data?.message || "Invalid login credentials",
+        err?.response?.data?.message || "Invalid login credentials"
       );
     } finally {
       setAuthLoading(false);
@@ -238,13 +261,15 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
         {
           username_or_email: values.username.trim(),
           password: values.password,
-        },
+        }
       );
 
       console.log("ADMIN LOGIN RESPONSE:", res.data);
 
       const token =
-        res.data?.access_token || res.data?.token || res.data?.accessToken;
+        res.data?.access_token ||
+        res.data?.token ||
+        res.data?.accessToken;
 
       if (!token) {
         message.error("Admin token not received");
@@ -257,11 +282,14 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
       setVendorModalVisible(false);
       navigate("/adminshell/dashboard");
     } catch (err: any) {
-      message.error(err?.response?.data?.message || "Admin login failed");
+      message.error(
+        err?.response?.data?.message || "Admin login failed"
+      );
     } finally {
       setAuthLoading(false);
     }
   };
+
 
   const handleSkipLogin = () => {
     localStorage.setItem("isGuest", "true");
@@ -269,12 +297,20 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
     localStorage.removeItem("accessToken");
     localStorage.removeItem("user");
 
+
+
     // ✅ Guest should see ONLY HealthCare
     localStorage.setItem("service_ids", JSON.stringify([7]));
+
 
     closeAuthModal();
     navigate("/app/dashboard");
   };
+
+
+
+
+
 
   // ==========================
   // VENDOR LOGIN (still local)
@@ -292,7 +328,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
   const serviceOptions = [
     { title: "Cleaning & Home Services", value: 1 },
     { title: "Transport", value: 2 },
-    { title: "Buy/Sell/Rent", value: 3 },
+    { title: "Buy/Sell/Rental", value: 3 },
     { title: "Raw Materials", value: 4 },
     { title: "Education", value: 5 },
     { title: "Swachify Products", value: 6 },
@@ -301,20 +337,20 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
 
   // ✅ Partner Register/Login handler (Education only)
 
-  const onPartnerRegister = (values: any) => {
-    // store selected module
-    localStorage.setItem("partner_module", values.module);
+const onPartnerRegister = (values: any) => {
+  // store selected module
+  localStorage.setItem("partner_module", values.module);
 
-    message.success("Registration successful. Please login.");
+  message.success("Registration successful. Please login.");
 
-    // stay in modal → user must login
-    setPartnerModalVisible(true);
-  };
+  // ✅ switch to login tab
+  setPartnerActiveTab("login");
+};
 
-  const onPartnerLogin = (values: any) => {
+
+  const onPartnerLogin = () => {
     const module = localStorage.getItem("partner_module");
     console.log("PARTNER MODULE:", module);
-    console.log("Partner Login:", values);
 
     if (!module) {
       message.error("Module not found. Please register again.");
@@ -350,6 +386,9 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
     }
   };
 
+
+
+
   const onRegister = async (values: any) => {
     try {
       setAuthLoading(true);
@@ -366,23 +405,30 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
             address: values.address,
             password: values.password,
             confirm_password: values.confirm_password,
-          },
+          }
         );
+
 
         // 🔍 SEE REAL RESPONSE
         console.log("ADMIN LOGIN RESPONSE:", res.data);
 
+
         // ✅ EXTRACT TOKEN SAFELY
         const token =
-          res.data?.access_token || res.data?.token || res.data?.accessToken;
+          res.data?.access_token ||
+          res.data?.token ||
+          res.data?.accessToken;
+
 
         if (!token) {
           message.error("Admin token not received from backend");
           return;
         }
 
+
         // ✅ STORE TOKEN USING CORRECT KEY
         localStorage.setItem("token", token);
+
 
         message.success("Admin login successful");
         setVendorModalVisible(false);
@@ -395,7 +441,10 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
       };
 
       const selectedRole =
-        userRole === "employee" ? roleMap.employee : roleMap.customer;
+        userRole === "employee"
+          ? roleMap.employee
+          : roleMap.customer;
+
 
       // ================= CUSTOMER REGISTER =================
       const customerPayload = {
@@ -408,32 +457,28 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
         password: values.password || "Default@123",
         confirm_password: values.confirmPassword || "Default@123",
         work_type:
-          values.workType === "assigning"
-            ? 1
-            : values.workType === "looking"
-              ? 2
-              : values.workType === "both"
-                ? 3
-                : 1,
-        service_ids:
-          selectedServices.length > 0
-            ? selectedServices.map(Number) // <--- Convert strings to numbers
-            : [1],
+          values.workType === "assigning" ? 1 :
+            values.workType === "looking" ? 2 :
+              values.workType === "both" ? 3 : 1,
+        service_ids: selectedServices.length > 0
+          ? selectedServices.map(Number) // <--- Convert strings to numbers
+          : [1],
+
 
         professional_details: values.experience
           ? {
-              experience_years: Number(values.experience) || 1,
-              expertise_in: Array.isArray(values.expertise)
-                ? values.expertise.map(Number)
-                : [1],
-              additional_service: values.additionalService?.trim() || "None",
-            }
+            experience_years: Number(values.experience) || 1,
+            expertise_in: Array.isArray(values.expertise)
+              ? values.expertise.map(Number)
+              : [1],
+            additional_service: values.additionalService?.trim() || "None",
+          }
           : undefined,
         government_id: [
           {
             id_type: "aadhaar",
-            id_number: values.aadhaar?.trim() || "000000000000",
-          },
+            id_number: values.aadhaar?.trim() || "000000000000"
+          }
         ],
 
         // Hard-coded values
@@ -451,7 +496,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
       // Save selected services for dashboard
       localStorage.setItem(
         "user_services",
-        JSON.stringify(customerPayload.service_ids),
+        JSON.stringify(customerPayload.service_ids)
       );
 
       // ✅ AUTO LOGIN AFTER REGISTER
@@ -465,7 +510,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
       localStorage.setItem("user", JSON.stringify(loginRes));
       localStorage.setItem(
         "service_ids",
-        JSON.stringify(loginRes.service_ids || customerPayload.service_ids),
+        JSON.stringify(loginRes.service_ids || customerPayload.service_ids)
       );
 
       // ✅ REDIRECT BASED ON FIRST SERVICE
@@ -485,15 +530,21 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
         return;
       }
 
+
       // ✅ OTHERWISE → NORMAL CUSTOMER FLOW
       const firstServiceId =
         (loginRes.service_ids && loginRes.service_ids[0]) ||
         customerPayload.service_ids[0];
 
-      const redirectPath = serviceIdToRoute[firstServiceId] || "/app/dashboard";
+      const redirectPath =
+        serviceIdToRoute[firstServiceId] || "/app/dashboard";
 
       closeAuthModal();
       navigate(redirectPath);
+
+
+
+
     } catch (err: any) {
       console.error("REGISTER ERROR:", err.response?.data);
 
@@ -504,8 +555,8 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
       } else {
         message.error(
           err.response?.data?.message ||
-            err.response?.data?.error ||
-            "Registration failed",
+          err.response?.data?.error ||
+          "Registration failed"
         );
       }
     } finally {
@@ -545,15 +596,20 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
               openAuthModal("register");
             }
 
-            if (value === "partner") {
-              setPartnerModalVisible(true); // ✅ auto open popup
-            }
+          if (value === "partner") {
+  setPartnerActiveTab("register");
+  setPartnerModalVisible(true);
+}
+
           }}
         >
+
+
           <Select.Option value="customer">Customer</Select.Option>
           <Select.Option value="employee">Employee</Select.Option>
           <Select.Option value="partner">Partner</Select.Option>
         </Select>
+
 
         <Button
           className="swl-hs-contact-btn swl-signup-btn"
@@ -562,6 +618,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
         >
           Sign Up
         </Button>
+
       </header>
 
       {/* Spacer so content starts below fixed navbar */}
@@ -609,6 +666,8 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
           overflowY: "auto",
         }}
       >
+
+
         <div className="auth-header">
           <UserOutlined className="auth-profile-icon" />
           <div className="auth-title">
@@ -617,6 +676,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
               : "Welcome Back"}
           </div>
         </div>
+
 
         <Tabs
           activeKey={activeAuthTab}
@@ -640,9 +700,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
                       ) {
                         return Promise.resolve();
                       }
-                      return Promise.reject(
-                        "Enter valid email or 10-digit phone number",
-                      );
+                      return Promise.reject("Enter valid email or 10-digit phone number");
                     },
                   },
                 ]}
@@ -677,6 +735,9 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
                 </Button>
               </Form.Item>
 
+
+
+
               {!hideSkipLogin && (
                 <Form.Item>
                   <Button block type="default" onClick={handleSkipLogin}>
@@ -686,9 +747,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
               )}
               {/* Vendor / Admin links */}
               <Form.Item>
-                <div
-                  style={{ display: "flex", justifyContent: "space-between" }}
-                >
+                <div style={{ display: "flex", justifyContent: "space-between" }}>
                   <a
                     onClick={() => {
                       setAuthModalVisible(false);
@@ -714,23 +773,22 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
                   </a>
                 </div>
               </Form.Item>
+
+
             </Form>
           </TabPane>
 
           {/* REGISTER TAB */}
           <TabPane tab="Register" key="register">
             <Form layout="vertical" onFinish={onRegister} preserve={false}>
+
               <Form.Item
                 label="Select Services"
                 name="service"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please select at least one service",
-                  },
-                ]}
+                rules={[{ required: true, message: "Please select at least one service" }]}
               >
                 <TreeSelect
+
                   treeCheckable
                   showSearch={false}
                   showArrow
@@ -739,9 +797,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
                   showCheckedStrategy={TreeSelect.SHOW_PARENT}
                   open={serviceOpen}
                   onDropdownVisibleChange={setServiceOpen}
-                  getPopupContainer={(triggerNode) =>
-                    triggerNode.parentElement!
-                  }
+                  getPopupContainer={(triggerNode) => triggerNode.parentElement!}
                   treeData={serviceOptions} // numeric values
                   onChange={(values: number[]) => {
                     setSelectedServices(values);
@@ -761,8 +817,16 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
                       setShowProfessionalFields(false);
                     }
                   }}
+
                 />
+
+
+
+
+
+
               </Form.Item>
+
 
               <Form.Item
                 label="First Name"
@@ -784,6 +848,8 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
                 <Input placeholder="Enter first name" />
               </Form.Item>
 
+
+
               <Form.Item
                 label="Last Name"
                 name="lastName"
@@ -804,22 +870,20 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
                 <Input placeholder="Enter last name" />
               </Form.Item>
 
+
+
               <Form.Item
                 label="Mobile Number"
                 name="mobile"
-                normalize={(value) =>
-                  allowOnlyNumbers(value || "").slice(0, 10)
-                }
+                normalize={(value) => allowOnlyNumbers(value || "").slice(0, 10)}
                 rules={[
                   { required: true },
-                  {
-                    pattern: /^[6-9][0-9]{9}$/,
-                    message: "Invalid mobile number",
-                  },
+                  { pattern: /^[6-9][0-9]{9}$/, message: "Invalid mobile number" },
                 ]}
               >
                 <Input inputMode="numeric" />
               </Form.Item>
+
 
               <Form.Item
                 name="email"
@@ -833,12 +897,13 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
                 <Input placeholder="Enter email" />
               </Form.Item>
 
+
+
+
               <Form.Item
                 label="Aadhaar Number"
                 name="aadhaar"
-                normalize={(value) =>
-                  allowOnlyNumbers(value || "").slice(0, 12)
-                }
+                normalize={(value) => allowOnlyNumbers(value || "").slice(0, 12)}
                 rules={[
                   { required: true },
                   { pattern: /^[0-9]{12}$/, message: "Enter 12 digit Aadhaar" },
@@ -846,6 +911,8 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
               >
                 <Input inputMode="numeric" />
               </Form.Item>
+
+
 
               <Form.Item
                 label="Location"
@@ -855,15 +922,12 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
                 <Input placeholder="Enter your location" />
               </Form.Item>
 
+
               {!isHealthCareSelected && (
                 <Form.Item
                   label="Select Work Type"
                   name="workType"
-                  rules={
-                    hideWorkType
-                      ? []
-                      : [{ required: true, message: "Please select work type" }]
-                  }
+                  rules={hideWorkType ? [] : [{ required: true, message: "Please select work type" }]}
                 >
                   <Select
                     placeholder="Choose work type"
@@ -872,16 +936,14 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
                       setShowProfessionalFields(value === "looking");
                     }}
                   >
-                    <Select.Option value="assigning">
-                      Assigning for work
-                    </Select.Option>
-                    <Select.Option value="looking">
-                      Looking for work
-                    </Select.Option>
+                    <Select.Option value="assigning">Assigning for work</Select.Option>
+                    <Select.Option value="looking">Looking for work</Select.Option>
                     <Select.Option value="both">Both</Select.Option>
                   </Select>
                 </Form.Item>
               )}
+
+
 
               {isHealthCareSelected && (
                 <Form.Item
@@ -900,6 +962,8 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
                 </Form.Item>
               )}
 
+
+
               {isHealthCareSelected && doctorRoleSelected && (
                 <div style={{ marginTop: 16 }}>
                   <h4 style={{ marginBottom: 12 }}>Doctor Details</h4>
@@ -908,9 +972,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
                   <Form.Item
                     label="Hospital Name"
                     name="hospitalName"
-                    rules={[
-                      { required: true, message: "Hospital name is required" },
-                    ]}
+                    rules={[{ required: true, message: "Hospital name is required" }]}
                   >
                     <Input placeholder="Enter hospital / clinic name" />
                   </Form.Item>
@@ -919,9 +981,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
                   <Form.Item
                     label="Designation"
                     name="designation"
-                    rules={[
-                      { required: true, message: "Designation is required" },
-                    ]}
+                    rules={[{ required: true, message: "Designation is required" }]}
                   >
                     <Input placeholder="e.g. Cardiologist" />
                   </Form.Item>
@@ -935,11 +995,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
                       { pattern: /^[0-9]+$/, message: "Only numbers allowed" },
                     ]}
                   >
-                    <Input
-                      inputMode="numeric"
-                      placeholder="e.g. 5"
-                      maxLength={2}
-                    />
+                    <Input inputMode="numeric" placeholder="e.g. 5" maxLength={2} />
                   </Form.Item>
 
                   {/* Working Type */}
@@ -961,15 +1017,9 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
                     name="doctorCertificate"
                     valuePropName="fileList"
                     getValueFromEvent={(e) => e?.fileList}
-                    rules={[
-                      { required: true, message: "Certificate is required" },
-                    ]}
+                    rules={[{ required: true, message: "Certificate is required" }]}
                   >
-                    <Upload
-                      listType="picture-card"
-                      beforeUpload={() => false}
-                      maxCount={2}
-                    >
+                    <Upload listType="picture-card" beforeUpload={() => false} maxCount={2}>
                       <div>
                         <PlusOutlined />
                         <div style={{ marginTop: 8 }}>Upload</div>
@@ -979,8 +1029,11 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
                 </div>
               )}
 
+
+
               {showProfessionalFields && (
                 <div style={{ marginTop: 16 }}>
+
                   <h4 style={{ marginBottom: 12 }}>Professional Details</h4>
 
                   <Form.Item
@@ -1001,9 +1054,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
                             return Promise.resolve();
                           }
                           return Promise.reject(
-                            new Error(
-                              "Experience must be between 0 and 50 years",
-                            ),
+                            new Error("Experience must be between 0 and 50 years")
                           );
                         },
                       },
@@ -1029,6 +1080,9 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
                     />
                   </Form.Item>
 
+
+
+
                   <Form.Item
                     label="Expertise in Additional Service"
                     name="expertise"
@@ -1045,6 +1099,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
                   >
                     <Input placeholder="Enter your expertise" />
                   </Form.Item>
+
 
                   <Form.Item
                     label="Upload Work / ID Images"
@@ -1064,6 +1119,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
                       </div>
                     </Upload>
                   </Form.Item>
+
                 </div>
               )}
 
@@ -1084,6 +1140,8 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
               >
                 <Input.Password />
               </Form.Item>
+
+
 
               {/* CONFIRM PASSWORD */}
               <Form.Item
@@ -1106,13 +1164,17 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
                 <Input.Password />
               </Form.Item>
 
+
+
               <Form.Item>
                 <Button block htmlType="submit" loading={authLoading}>
                   Register
                 </Button>
               </Form.Item>
+
             </Form>
           </TabPane>
+
         </Tabs>
       </Modal>
 
@@ -1217,12 +1279,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
                     <Input placeholder="yourmail@example.com" />
                   </Form.Item>
 
-                  <Button
-                    className="otp-btn"
-                    block
-                    type="primary"
-                    onClick={handleSendOTP}
-                  >
+                  <Button className="otp-btn" block type="primary" onClick={handleSendOTP}>
                     Send Reset OTP
                   </Button>
                 </>
@@ -1269,18 +1326,12 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
                     dependencies={["newPassword"]}
                     hasFeedback
                     rules={[
-                      {
-                        required: true,
-                        message: "Please confirm your password",
-                      },
+                      { required: true, message: "Please confirm your password" },
                       ({ getFieldValue }) => ({
                         validator(_, value) {
-                          return !value ||
-                            getFieldValue("newPassword") === value
+                          return !value || getFieldValue("newPassword") === value
                             ? Promise.resolve()
-                            : Promise.reject(
-                                new Error("Passwords do not match"),
-                              );
+                            : Promise.reject(new Error("Passwords do not match"));
                         },
                       }),
                     ]}
@@ -1425,12 +1476,9 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
                       { required: true },
                       ({ getFieldValue }) => ({
                         validator(_, value) {
-                          return !value ||
-                            getFieldValue("newPassword") === value
+                          return !value || getFieldValue("newPassword") === value
                             ? Promise.resolve()
-                            : Promise.reject(
-                                new Error("Passwords do not match"),
-                              );
+                            : Promise.reject(new Error("Passwords do not match"));
                         },
                       }),
                     ]}
@@ -1457,11 +1505,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
         centered
         width={550}
         destroyOnClose
-        title={
-          roleType === "vendor"
-            ? "Vendor Authentication"
-            : "Admin Authentication"
-        }
+        title={roleType === "vendor" ? "Vendor Authentication" : "Admin Authentication"}
         bodyStyle={{
           maxHeight: "65vh",
           overflowY: "auto",
@@ -1473,11 +1517,17 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
           onChange={(key) => setVendorActiveTab(key as any)}
           centered
         >
+
+
           {/* LOGIN TAB */}
           <Tabs.TabPane tab="Login" key="login">
+
             {/* VENDOR LOGIN */}
             {roleType === "vendor" && (
               <Form layout="vertical" onFinish={onVendorLogin}>
+
+
+
                 <Form.Item
                   label="Email / Phone"
                   name="identifier"
@@ -1488,10 +1538,13 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
                 <Form.Item
                   label="Password"
                   name="password"
-                  rules={[{ required: true, message: "Password is required" }]}
+                  rules={[
+                    { required: true, message: "Password is required" },
+                  ]}
                 >
                   <Input.Password />
                 </Form.Item>
+
 
                 <div style={{ textAlign: "right", marginBottom: 12 }}>
                   <a
@@ -1521,12 +1574,17 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
                     </a>
                   </div>
                 )}
+
+
               </Form>
             )}
 
             {/* ADMIN LOGIN */}
             {roleType === "admin" && (
               <Form layout="vertical" onFinish={onAdminLogin}>
+
+
+
                 <Form.Item
                   label="Email"
                   name="email"
@@ -1537,6 +1595,9 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
                 >
                   <Input />
                 </Form.Item>
+
+
+
 
                 <Form.Item
                   label="Password"
@@ -1563,9 +1624,13 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
                     </a>
                   </div>
                 )}
+
+
               </Form>
             )}
+
           </Tabs.TabPane>
+
 
           {/* VENDOR REGISTER TAB (UNCHANGED) */}
           {roleType === "vendor" && (
@@ -1582,11 +1647,8 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
                   />
                 </Form.Item>
 
-                <Form.Item
-                  label="Owner Name"
-                  name="ownerName"
-                  rules={[{ required: true }]}
-                >
+
+                <Form.Item label="Owner Name" name="ownerName" rules={[{ required: true }]}>
                   <Input />
                 </Form.Item>
 
@@ -1604,62 +1666,37 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
                 <Form.Item
                   label="Phone"
                   name="mobile"
-                  normalize={(value) =>
-                    allowOnlyNumbers(value || "").slice(0, 10)
-                  }
+                  normalize={(value) => allowOnlyNumbers(value || "").slice(0, 10)}
                   rules={[
                     { required: true },
-                    {
-                      pattern: /^[6-9][0-9]{9}$/,
-                      message: "Invalid mobile number",
-                    },
+                    { pattern: /^[6-9][0-9]{9}$/, message: "Invalid mobile number" },
                   ]}
                 >
                   <Input inputMode="numeric" />
                 </Form.Item>
 
+
                 <Form.Item label="PAN" name="pan" rules={[{ required: true }]}>
                   <Input />
                 </Form.Item>
 
-                <Form.Item
-                  label="TAN/GSTIN"
-                  name="tan/gstin"
-                  rules={[{ required: true }]}
-                >
+                <Form.Item label="TAN/GSTIN" name="tan/gstin" rules={[{ required: true }]}>
                   <Input />
                 </Form.Item>
 
-                <Form.Item
-                  label="Service Category"
-                  name="category"
-                  rules={[{ required: true }]}
-                >
+                <Form.Item label="Service Category" name="category" rules={[{ required: true }]}>
                   <Input />
                 </Form.Item>
 
-                <Form.Item
-                  label="Business Address"
-                  name="address"
-                  rules={[{ required: true }]}
-                >
+                <Form.Item label="Business Address" name="address" rules={[{ required: true }]}>
                   <Input.TextArea rows={3} />
                 </Form.Item>
 
-                <Form.Item
-                  label="Password"
-                  name="password"
-                  rules={[{ required: true }]}
-                >
+                <Form.Item label="Password" name="password" rules={[{ required: true }]}>
                   <Input.Password />
                 </Form.Item>
 
-                <Button
-                  type="primary"
-                  block
-                  htmlType="button" // ⬅️ IMPORTANT (not submit)
-                  onClick={() => navigate("/partner/products/dashboard")}
-                >
+                <Button type="primary" block htmlType="submit">
                   Register as Vendor
                 </Button>
               </Form>
@@ -1669,16 +1706,14 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
           {roleType === "admin" && (
             <Tabs.TabPane tab="Register" key="admin_register">
               <Form layout="vertical" onFinish={onRegister} preserve={false}>
+
                 <Form.Item
                   label="First Name"
                   name="firstName"
                   normalize={(value) => allowOnlyLetters(value || "")}
                   rules={[
                     { required: true },
-                    {
-                      pattern: /^[A-Za-z ]+$/,
-                      message: "Only letters allowed",
-                    },
+                    { pattern: /^[A-Za-z ]+$/, message: "Only letters allowed" },
                   ]}
                 >
                   <Input />
@@ -1690,14 +1725,13 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
                   normalize={(value) => allowOnlyLetters(value || "")}
                   rules={[
                     { required: true, message: "Last name is required" },
-                    {
-                      pattern: /^[A-Za-z ]+$/,
-                      message: "Only letters allowed",
-                    },
+                    { pattern: /^[A-Za-z ]+$/, message: "Only letters allowed" },
                   ]}
                 >
                   <Input placeholder="Enter last name" />
                 </Form.Item>
+
+
 
                 <Form.Item
                   label="Email"
@@ -1710,22 +1744,19 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
                   <Input />
                 </Form.Item>
 
+
                 <Form.Item
                   label="Mobile Number"
                   name="mobile"
-                  normalize={(value) =>
-                    allowOnlyNumbers(value || "").slice(0, 10)
-                  }
+                  normalize={(value) => allowOnlyNumbers(value || "").slice(0, 10)}
                   rules={[
                     { required: true },
-                    {
-                      pattern: /^[6-9][0-9]{9}$/,
-                      message: "Invalid mobile number",
-                    },
+                    { pattern: /^[6-9][0-9]{9}$/, message: "Invalid mobile number" },
                   ]}
                 >
                   <Input inputMode="numeric" />
                 </Form.Item>
+
 
                 <Form.Item
                   label="Gender"
@@ -1739,19 +1770,14 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
                   </Select>
                 </Form.Item>
 
-                <Form.Item
-                  label="Address"
-                  name="address"
-                  rules={[{ required: true }]}
-                >
+
+
+
+                <Form.Item label="Address" name="address" rules={[{ required: true }]}>
                   <Input.TextArea rows={3} />
                 </Form.Item>
 
-                <Form.Item
-                  label="Password"
-                  name="password"
-                  rules={[{ required: true }]}
-                >
+                <Form.Item label="Password" name="password" rules={[{ required: true }]}>
                   <Input.Password />
                 </Form.Item>
 
@@ -1773,17 +1799,14 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
                   <Input.Password />
                 </Form.Item>
 
-                <Button
-                  type="primary"
-                  block
-                  htmlType="submit"
-                  loading={authLoading}
-                >
+                <Button type="primary" block htmlType="submit" loading={authLoading}>
                   Register as Admin
                 </Button>
+
               </Form>
             </Tabs.TabPane>
           )}
+
         </Tabs>
       </Modal>
       <Modal
@@ -1791,18 +1814,26 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
         onCancel={() => setPartnerModalVisible(false)}
         footer={null}
         centered
-        width={380} // ✅ reduced width
+        width={380}                 // ✅ reduced width
         bodyStyle={{
           background: "#fff",
           borderRadius: 16,
           padding: 20,
-          maxHeight: "70vh", // ✅ limit height
-          overflowY: "auto", // ✅ enable scroll
+          maxHeight: "70vh",         // ✅ limit height
+          overflowY: "auto",         // ✅ enable scroll
         }}
       >
-        <Tabs defaultActiveKey="register" centered>
+
+        <Tabs
+  activeKey={partnerActiveTab}
+  onChange={(key) => setPartnerActiveTab(key as "login" | "register")}
+  centered
+>
+
           <Tabs.TabPane tab="Login" key="login">
             <Form layout="vertical" onFinish={onPartnerLogin}>
+
+
               <Form.Item
                 label="Email ID"
                 name="email"
@@ -1822,6 +1853,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
               <Button type="primary" block htmlType="submit">
                 Login
               </Button>
+
             </Form>
           </Tabs.TabPane>
 
@@ -1831,6 +1863,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
             </h2>
 
             <Form layout="vertical" onFinish={onPartnerRegister}>
+
               <Form.Item
                 label="Partner Name"
                 name="partnerName"
@@ -1847,7 +1880,10 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
                 <Input placeholder="Enter company / firm name" />
               </Form.Item>
 
-              <Form.Item label="GST Number" name="gst">
+              <Form.Item
+                label="GST Number"
+                name="gst"
+              >
                 <Input placeholder="Enter gst number" />
               </Form.Item>
 
@@ -1870,6 +1906,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
               >
                 <Input type="number" min={2} max={20} />
               </Form.Item>
+
 
               <Form.Item
                 label="Email ID"
@@ -1894,14 +1931,10 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
               >
                 <Select placeholder="Choose module">
                   <Select.Option value="education">Education</Select.Option>
-                  <Select.Option value="realestate">
-                    Buy / Sell / Rent
-                  </Select.Option>
+                  <Select.Option value="realestate">Buy / Sell / Rent</Select.Option>
 
                   <Select.Option value="healthcare">Health Care</Select.Option>
-                  <Select.Option value="products">
-                    Swachify Products
-                  </Select.Option>
+                  <Select.Option value="products">Swachify Products</Select.Option>
                   <Select.Option value="ride">Just Ride</Select.Option>
                 </Select>
               </Form.Item>
@@ -1909,15 +1942,19 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
               <Button
                 type="primary"
                 block
-                htmlType="submit" // 🔥 THIS WAS MISSING
+                htmlType="submit"   // 🔥 THIS WAS MISSING
                 style={{ marginTop: 12 }}
               >
                 Register
               </Button>
+
             </Form>
           </Tabs.TabPane>
         </Tabs>
       </Modal>
+
+
+
     </>
   );
 };

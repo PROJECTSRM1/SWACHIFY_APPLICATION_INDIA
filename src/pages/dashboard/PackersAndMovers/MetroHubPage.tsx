@@ -95,7 +95,15 @@ const [history, setHistory] = useState<MetroTicket[]>([]);
           </div>
         ) : (
           history.map((t, idx) => (
-            <div key={idx} className="sw-jr-ticket-card">
+          <div 
+            key={idx} 
+             className="sw-jr-ticket-card"
+            onClick={() => {
+            setQrData(t);          // load ticket data
+            setShowQRPopup(true);  // open QR popup
+            }}
+            >
+
               <div className="sw-jr-ticket-place">
                 {t.from} → {t.to}
               </div>
