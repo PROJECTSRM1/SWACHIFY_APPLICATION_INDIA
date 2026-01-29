@@ -69,7 +69,7 @@ const { RangePicker } = DatePicker;
 type ServiceKey =
   | "Home Service"
   | "Transport"
-  | "Buy/Sale/Rentals"
+  | "Buy/Sale/Rent"
   | "Raw Materials"
   | "Education";
 
@@ -167,7 +167,7 @@ vat: [
     ],
   },
 
-  "Buy/Sale/Rentals": {
+  "Buy/Sale/Rent": {
     sales: 25000,
     lastMonthSales: 21000,
     purchases: 5000,
@@ -391,7 +391,7 @@ const SMALL_SERVICES: ServiceKey[] = [
 
 const BIG_SERVICES: ServiceKey[] = [
   "Raw Materials",
-  "Buy/Sale/Rentals", // ✅ Vendors only
+  "Buy/Sale/Rent", // ✅ Vendors only
 ];
 
 
@@ -441,14 +441,14 @@ const ASSIGNEES: Assignee[] = [
 const FREELANCER_SKILLS: ServiceKey[] = [
   "Home Service",
   "Transport",
-  "Buy/Sale/Rentals",
+  "Buy/Sale/Rent",
   "Raw Materials",
   "Education",
 ];
 const SERVICE_TYPE_MAP: Record<number, ServiceKey> = {
   1: "Home Service",
   2: "Transport",
-  3: "Buy/Sale/Rentals",
+  3: "Buy/Sale/Rent",
   4: "Raw Materials",
   5: "Education",
 };
@@ -1235,7 +1235,7 @@ const filteredBookings = bookings.filter(b => {
 // const API_SUPPORTED_SERVICES: ServiceKey[] = [
 //   "Home Service",
 //   "Transport",
-//   "Buy/Sale/Rentals",
+//   "Buy/Sale/Rent",
 //   "Raw Materials",
 //   "Education",
 // ];
@@ -1336,7 +1336,7 @@ const bookingStats = useMemo(() => {
 >
               {k === "Home Service" && <ShoppingCartOutlined />}
               {k === "Transport" && <CarOutlined />}
-              {k === "Buy/Sale/Rentals" && <ThunderboltOutlined />}
+              {k === "Buy/Sale/Rent" && <ThunderboltOutlined />}
               {k === "Raw Materials" && <AppstoreOutlined />}
               {k === "Education" && <BookOutlined />}
               <span>{k}</span>

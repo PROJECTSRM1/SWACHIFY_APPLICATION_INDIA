@@ -17,7 +17,7 @@ const ServiceCategoryScreenWeb: React.FC<ServiceCategoryScreenWebProps> = ({
 }) => {
   return (
     <div className="scw_page">
-      {/* Header */}
+      {/* HEADER */}
       <header className="scw_header">
         <button className="scw_iconBtn" onClick={onClose}>
           <MdArrowBack size={22} />
@@ -30,11 +30,12 @@ const ServiceCategoryScreenWeb: React.FC<ServiceCategoryScreenWebProps> = ({
         </button>
       </header>
 
-      {/* Content */}
+      {/* CONTENT */}
       <main className="scw_content">
         <h2 className="scw_sectionTitle">Cleaning Categories</h2>
 
         <div className="scw_cards">
+          {/* HOME */}
           <div className="scw_card" onClick={onSelectHomeCleaning}>
             <img
               src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=900"
@@ -46,6 +47,7 @@ const ServiceCategoryScreenWeb: React.FC<ServiceCategoryScreenWebProps> = ({
             </div>
           </div>
 
+          {/* COMMERCIAL */}
           <div
             className="scw_card"
             onClick={() => onSelectCommercialCleaning?.()}
@@ -60,6 +62,7 @@ const ServiceCategoryScreenWeb: React.FC<ServiceCategoryScreenWebProps> = ({
             </div>
           </div>
 
+          {/* VEHICLE */}
           <div
             className="scw_card"
             onClick={() => onSelectVehicleCleaning?.()}

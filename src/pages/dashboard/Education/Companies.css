@@ -8,9 +8,10 @@ body {
 
 .companies-layout {
   min-height: 100vh;
-  padding: 16px 24px 48px;
-  padding-top: 88px;
+  padding: 88px 24px 48px;
   background: #f5f7fb;
+  max-width: 1280px;          /* 🔑 prevents ultra-wide stretch */
+  margin: 0 auto;             /* center like Naukri/LinkedIn */
 }
 
 /* ================= HEADER ================= */
@@ -61,6 +62,7 @@ body {
   border: none;
   background: #e5e7eb;
   font-size: 14px;
+  cursor: pointer;
 }
 
 .tab.active {
@@ -84,24 +86,23 @@ body {
   background: #ffffff;
 }
 
-/* ================= GRID ================= */
+/* ================= GRID (FIXED) ================= */
 
 .company-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr)); /* 🔑 stable 3-column */
   gap: 24px;
 }
 
 /* ================= CARD ================= */
 
 .company-card {
-  position: relative;
   background: #ffffff;
   border-radius: 18px;
   padding: 22px;
   display: flex;
   flex-direction: column;
-  min-height: 260px;
+  height: 100%;                /* 🔑 equal height cards */
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
 }
 
@@ -123,6 +124,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 .card-header h3 {
@@ -144,27 +146,28 @@ body {
   font-size: 14px;
   color: #4b5563;
   line-height: 1.6;
+  flex-grow: 1;                /* 🔑 pushes footer down */
 }
 
 /* ================= META ================= */
 
 .meta {
   display: flex;
-  gap: 16px;
+  gap: 18px;
   font-size: 12px;
   color: #6b7280;
+  margin-bottom: 14px;
 }
 
 /* ================= FOOTER ================= */
 
 .card-footer {
-  margin-top: auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-/* ================= ✅ STATUS (SAFE & SCOPED) ================= */
+/* ================= STATUS ================= */
 
 .company-status {
   font-size: 11px;
@@ -185,22 +188,17 @@ body {
   color: #6b7280;
 }
 
+/* ================= CTA BUTTON ================= */
 
-/* ================= VIEW OPPORTUNITIES (ORIGINAL, CLEAN) ================= */
-
-/* Smaller, LinkedIn-style CTA */
 .primary-btn {
-  padding: 6px 12px;      /* ↓ reduced */
-  font-size: 12px;        /* ↓ reduced */
+  padding: 6px 14px;
+  font-size: 12px;
   font-weight: 500;
-
-  border-radius: 6px;     /* slightly tighter */
+  border-radius: 6px;
   border: 1px solid #2563eb;
   background: transparent;
   color: #2563eb;
-
   cursor: pointer;
-  white-space: nowrap;
   transition: background 0.15s ease, color 0.15s ease;
 }
 
@@ -209,44 +207,42 @@ body {
   color: #ffffff;
 }
 
-/* prevent sticky active look */
-.primary-btn:active,
 .primary-btn:focus,
-.primary-btn:focus-visible {
+.primary-btn:active {
   outline: none;
   background: transparent;
   color: #2563eb;
 }
 
+/* ================= LOADING ================= */
 
-/* IMPORTANT: prevent sticky blue after click */
-.primary-btn:active,
-.primary-btn:focus,
-.primary-btn:focus-visible {
-  outline: none;
-  background: transparent;
-  color: #2563eb;
+.loading {
+  text-align: center;
+  font-size: 14px;
+  color: #6b7280;
+  padding: 40px 0;
 }
-
-
-
 
 /* ================= RESPONSIVE ================= */
 
-@media (max-width: 1100px) {
+/* Tablets */
+@media (max-width: 1024px) {
   .company-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media (max-width: 768px) {
+/* Mobile */
+@media (max-width: 640px) {
   .filters {
     grid-template-columns: 1fr;
   }
-}
 
-@media (max-width: 640px) {
   .company-grid {
     grid-template-columns: 1fr;
+  }
+
+  .companies-layout {
+    padding: 80px 16px 40px;
   }
 }

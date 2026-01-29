@@ -41,6 +41,17 @@ const HomeServices: React.FC = () => {
   const [openVehiclePopup, setOpenVehiclePopup] = useState(false);
   const [openHomePopup, setOpenHomePopup] = useState(false);
   const [openBookCleaning, setOpenBookCleaning] = useState(false);
+  
+  const closeAllPopups = () => {
+  setOpenCleaningPopup(false);
+  setOpenHomeSubPopup(false);
+  setOpenHomeSubCatPopup(false);
+  setOpenCommercialPopup(false);
+  setOpenVehiclePopup(false);
+  setOpenHomePopup(false);
+  setOpenBookCleaning(false);
+};
+
 
   /* ---------- FLOW DATA ---------- */
   const [selectedPropertyType, setSelectedPropertyType] =
@@ -55,7 +66,7 @@ const HomeServices: React.FC = () => {
     meta?: any;
   } | null>(null);
 
-  const [showAll, setShowAll] = useState(false);
+  // const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
     setOpenCleaningPopup(false);
@@ -88,12 +99,12 @@ const HomeServices: React.FC = () => {
             <p className="cleaning-subtitle">2 services available</p>
           </div>
 
-          <button
+          {/* <button
             className="cleaning-viewall-btn"
             onClick={() => setShowAll((p) => !p)}
           >
             {showAll ? "Show Less" : "View All"}
-          </button>
+          </button> */}
         </div>
 
         <div className="cleaning-cards">
@@ -250,7 +261,8 @@ const HomeServices: React.FC = () => {
   consultationCharge={bookingPayload.consultationCharge}
   serviceContext={serviceContext}
   meta={bookingPayload.meta} // ✅ ADD THIS
-  onClose={() => setOpenBookCleaning(false)}
+  //onClose={() => setOpenBookCleaning(false)}
+  onClose={closeAllPopups}
 />
 
 
