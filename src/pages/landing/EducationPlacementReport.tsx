@@ -59,54 +59,57 @@ const EducationPlacementReport: React.FC<Props> = ({ onBack }) => {
         </div>
       </section>
 
-      {/* TREND */}
-      <section className="epr2-card">
-        <div className="epr2-card-header">
-  <div>
-    <h4 className="epr2-card-title">Overall Placement Trend</h4>
-    <p className="epr2-card-sub">Monthly student hires vs targets</p>
+     {/* TREND + DEPARTMENTS (SIDE BY SIDE) */}
+<section className="epr2-dual-grid">
+
+  {/* LEFT – TREND */}
+  <div className="epr2-card">
+    <div className="epr2-card-header">
+      <div>
+        <h4 className="epr2-card-title">Overall Placement Trend</h4>
+        <p className="epr2-card-sub">Monthly student hires vs targets</p>
+      </div>
+
+      <div className="epr2-trend-metric">
+        <span className="epr2-trend-value">85%</span>
+        <span className="epr2-trend-growth">↑ 12%</span>
+      </div>
+    </div>
+
+    <div className="epr2-chart">
+<svg viewBox="0 0 300 120" preserveAspectRatio="none">
+  <path
+    d="
+      M10 78
+      C 60 70, 120 58, 170 60
+      C 220 62, 260 72, 290 74
+    "
+    fill="none"
+    stroke="#2563eb"
+    strokeWidth="3"
+    strokeLinecap="round"
+  />
+</svg>
+    </div>
+
+    <div className="epr2-chart-labels">
+      {["Jan", "Mar", "May", "Jul", "Sep"].map(m => (
+        <span key={m}>{m}</span>
+      ))}
+    </div>
   </div>
 
-  <div className="epr2-trend-metric">
-    <span className="epr2-trend-value">85%</span>
-    <span className="epr2-trend-growth">↑ 12%</span>
+  {/* RIGHT – DEPARTMENTS */}
+  <div className="epr2-card">
+    <h4 className="epr2-card-title">Placements by Department</h4>
+
+    <Dept label="Computer Science & IT" value="420 / 500" percent={84} />
+    <Dept label="Mechanical" value="280 / 450" percent={62} />
+    <Dept label="Electronics" value="310 / 400" percent={78} />
   </div>
-</div>
 
+</section>
 
-        <div className="epr2-chart">
-          <svg viewBox="0 0 300 120" preserveAspectRatio="none">
-            <path
-              d="
-                M10 75
-                C 70 65, 120 60, 160 60
-                C 210 60, 250 68, 290 72
-              "
-              fill="none"
-              stroke="#2563eb"
-              strokeWidth="2"
-              strokeLinecap="round"
-            />
-          </svg>
-        </div>
-
-        <div className="epr2-chart-labels">
-          {["Jan", "Mar", "May", "Jul", "Sep"].map(m => (
-            <span key={m}>{m}</span>
-          ))}
-        </div>
-      </section>
-
-      {/* DEPARTMENTS */}
-      <section className="epr2-card">
-        <h4 className="epr2-card-title">
-          Placements by Department
-        </h4>
-
-        <Dept label="Computer Science & IT" value="420 / 500" percent={84} />
-        <Dept label="Mechanical" value="280 / 450" percent={62} />
-        <Dept label="Electronics" value="310 / 400" percent={78} />
-      </section>
 
       {/* RECENT */}
       <section className="epr2-recent">
