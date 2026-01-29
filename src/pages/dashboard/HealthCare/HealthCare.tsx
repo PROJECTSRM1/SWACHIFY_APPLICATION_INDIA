@@ -1690,166 +1690,167 @@ const HealthCare: React.FC = () => {
                         Save
                       </button>
                     </div>
-                )}
                   </div>
+                )}
+              </div>
 
 
 
               {/* 2) Book Ambulance Button */}
-                <button
-                  type="button"
-                  className="emergency-btn"
-                  style={{ width: "100%", marginTop: "14px" }}
-                  onClick={() => {
-                    setOpenOfflinePopup(false);
-                    fetchAmbulances();
-                    setOpenAmbulanceScreen(true);
-                  }}
+              <button
+                type="button"
+                className="emergency-btn"
+                style={{ width: "100%", marginTop: "14px" }}
+                onClick={() => {
+                  setOpenOfflinePopup(false);
+                  fetchAmbulances();
+                  setOpenAmbulanceScreen(true);
+                }}
 
-                >
-                  Book Ambulance Now →
-                </button>
+              >
+                Book Ambulance Now →
+              </button>
 
-                {/* 3) Patient Assistance */}
-                <div style={{ marginTop: "18px" }}>
-                  <p style={{ fontWeight: 800, marginBottom: "10px" }}>
-                    Do you want patient assistance?
-                  </p>
+              {/* 3) Patient Assistance */}
+              <div style={{ marginTop: "18px" }}>
+                <p style={{ fontWeight: 800, marginBottom: "10px" }}>
+                  Do you want patient assistance?
+                </p>
 
-                  <div style={{ display: "flex", gap: "10px" }}>
-                    <button
-                      type="button"
-                      className={`insurance-btn ${patientAssist === "yes" ? "active" : ""}`}
-                      onClick={() => {
-                        setPatientAssist("yes");
-                        setShowAssistSuccess(true);
-                      }}
-                    >
-                      Yes
-                    </button>
-
-                    <button
-                      type="button"
-                      className={`insurance-btn ${patientAssist === "no" ? "active" : ""}`}
-                      onClick={() => {
-                        setPatientAssist("no");
-                        setShowAssistSuccess(true);
-                      }}
-                    >
-                      No
-                    </button>
-                  </div>
-
-                  {/* 4) Success Message */}
-                  {showAssistSuccess && patientAssist !== "" && (
-                    <div
-                      style={{
-                        marginTop: "12px",
-                        padding: "10px",
-                        borderRadius: "12px",
-                        background: "#eaf7f2",
-                        fontWeight: 800,
-                        color: "#2f6f6d",
-                      }}
-                    >
-                      ✅ Success: You selected {patientAssist.toUpperCase()}
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-      )}
-          {openOnlinePopup && (
-            <div className="profile-overlay" onClick={() => setOpenOnlinePopup(false)}>
-              <div className="profile-popup" onClick={(e) => e.stopPropagation()}>
-
-                {/* Header */}
-                <div className="profile-header">
-                  <h2>Online Consultation</h2>
+                <div style={{ display: "flex", gap: "10px" }}>
                   <button
-                    className="profile-close"
-                    onClick={() => setOpenOnlinePopup(false)}
+                    type="button"
+                    className={`insurance-btn ${patientAssist === "yes" ? "active" : ""}`}
+                    onClick={() => {
+                      setPatientAssist("yes");
+                      setShowAssistSuccess(true);
+                    }}
                   >
-                    ✖
+                    Yes
+                  </button>
+
+                  <button
+                    type="button"
+                    className={`insurance-btn ${patientAssist === "no" ? "active" : ""}`}
+                    onClick={() => {
+                      setPatientAssist("no");
+                      setShowAssistSuccess(true);
+                    }}
+                  >
+                    No
                   </button>
                 </div>
 
-                {/* Body */}
-                <div className="profile-body">
-                  <p style={{ fontWeight: 800, marginBottom: "12px" }}>
-                    Available Doctors
-                  </p>
-
-                  <div className="online-doctor-list">
-                    {doctors.map((doc) => (
-                      <div key={doc.id} className="online-doctor-card">
-                        <div className="online-doc-top">
-                          <img src={doc.image} alt={doc.name} />
-                          <div>
-                            <h4>{doc.name}</h4>
-                            <p className="spec">{doc.speciality}</p>
-                            <p className="rating">⭐ {doc.rating}</p>
-                          </div>
-                        </div>
-
-                        {/* Slots */}
-                        <div className="online-slots">
-                          {doc.slots.map((slot) => (
-                            <span key={slot} className="slot-pill">
-                              {slot}
-                            </span>
-                          ))}
-                        </div>
-
-                        {/* Book */}
-                        <button
-                          className="online-book-btn"
-                          onClick={() => {
-                            setBookedDoctorName(doc.name);
-                            setOpenOnlinePopup(false);
-                            setOnlineSuccessPopup(true);
-                          }}
-                        >
-                          Book Now →
-                        </button>
-
-                      </div>
-                    ))}
+                {/* 4) Success Message */}
+                {showAssistSuccess && patientAssist !== "" && (
+                  <div
+                    style={{
+                      marginTop: "12px",
+                      padding: "10px",
+                      borderRadius: "12px",
+                      background: "#eaf7f2",
+                      fontWeight: 800,
+                      color: "#2f6f6d",
+                    }}
+                  >
+                    ✅ Success: You selected {patientAssist.toUpperCase()}
                   </div>
-                </div>
+                )}
               </div>
             </div>
-          )}
-          {onlineSuccessPopup && (
-            <div className="success-overlay">
-              <div className="success-popup">
-                <h2 className="success-title">Success ✅</h2>
+          </div>
+        </div>
+      )}
+      {openOnlinePopup && (
+        <div className="profile-overlay" onClick={() => setOpenOnlinePopup(false)}>
+          <div className="profile-popup" onClick={(e) => e.stopPropagation()}>
 
-                <p className="success-text">
-                  Your online consultation is booked with <b>{bookedDoctorName}</b>.
-                </p>
+            {/* Header */}
+            <div className="profile-header">
+              <h2>Online Consultation</h2>
+              <button
+                className="profile-close"
+                onClick={() => setOpenOnlinePopup(false)}
+              >
+                ✖
+              </button>
+            </div>
 
-                <button
-                  type="button"
-                  className="success-ok"
-                  onClick={() => setOnlineSuccessPopup(false)}
-                >
-                  OK
-                </button>
+            {/* Body */}
+            <div className="profile-body">
+              <p style={{ fontWeight: 800, marginBottom: "12px" }}>
+                Available Doctors
+              </p>
+
+              <div className="online-doctor-list">
+                {doctors.map((doc) => (
+                  <div key={doc.id} className="online-doctor-card">
+                    <div className="online-doc-top">
+                      <img src={doc.image} alt={doc.name} />
+                      <div>
+                        <h4>{doc.name}</h4>
+                        <p className="spec">{doc.speciality}</p>
+                        <p className="rating">⭐ {doc.rating}</p>
+                      </div>
+                    </div>
+
+                    {/* Slots */}
+                    <div className="online-slots">
+                      {doc.slots.map((slot) => (
+                        <span key={slot} className="slot-pill">
+                          {slot}
+                        </span>
+                      ))}
+                    </div>
+
+                    {/* Book */}
+                    <button
+                      className="online-book-btn"
+                      onClick={() => {
+                        setBookedDoctorName(doc.name);
+                        setOpenOnlinePopup(false);
+                        setOnlineSuccessPopup(true);
+                      }}
+                    >
+                      Book Now →
+                    </button>
+
+                  </div>
+                ))}
               </div>
             </div>
-          )}
+          </div>
+        </div>
+      )}
+      {onlineSuccessPopup && (
+        <div className="success-overlay">
+          <div className="success-popup">
+            <h2 className="success-title">Success ✅</h2>
+
+            <p className="success-text">
+              Your online consultation is booked with <b>{bookedDoctorName}</b>.
+            </p>
+
+            <button
+              type="button"
+              className="success-ok"
+              onClick={() => setOnlineSuccessPopup(false)}
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      )}
 
 
 
 
-        </div >
+    </div >
 
 
-      );
+  );
 
 };
 
 
-      export default HealthCare;
+export default HealthCare;
