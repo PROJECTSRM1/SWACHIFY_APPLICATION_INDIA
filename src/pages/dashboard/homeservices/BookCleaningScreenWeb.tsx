@@ -24,6 +24,7 @@ interface Service {
   id: string;
   title: string;
   category: string;
+  price?: number;
 }
 
 // interface Professional {
@@ -38,7 +39,7 @@ interface Service {
 // }
 
 
-type ServiceContext = "home" | "vehicle" | "commercial";
+type ServiceContext = "home" | "vehicle" | "commercial" | "homeServices";
 
 type Props = {
   selectedServices: string[] | Service[];
@@ -67,6 +68,11 @@ const ADDONS_BY_TYPE: Record<ServiceContext, Addon[]> = {
   ],
 
   commercial: [
+    { id: "glass-polish", label: "Glass Polishing", price: 500 },
+    { id: "restroom-sanitize", label: "Restroom Sanitization", price: 400 },
+    { id: "machinery", label: "Machinery Cleaning", price: 700 },
+  ],
+   homeServices: [
     { id: "glass-polish", label: "Glass Polishing", price: 500 },
     { id: "restroom-sanitize", label: "Restroom Sanitization", price: 400 },
     { id: "machinery", label: "Machinery Cleaning", price: 700 },
@@ -103,7 +109,7 @@ const extractPropertyType = (services: Service[]) => {
   const parts = title.split("-");
   return parts.length > 1 ? parts[1].trim() : title;
 };
-
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const BASE_PRICE = 80;
 //const ADDON_PRICE = 25;
@@ -136,8 +142,14 @@ const BookCleaningScreenWeb: React.FC<Props> = ({
 
   // If already Service[]
   if (typeof selectedServices[0] === "object") {
-    return selectedServices as Service[];
-  }
+  return (selectedServices as any[]).map((s) => ({
+    id: s.id,
+    title: s.title,
+    price: s.price,
+    category: "homeServices",
+  }));
+}
+
 
   // If string-based (Vehicle / Commercial)
   return (selectedServices as string[]).map((title, idx) => ({
@@ -244,9 +256,18 @@ const [manualAddress, setManualAddress] = useState("");
 );
 
 const extraHoursCost = extraHours * EXTRA_HOUR_PRICE;
+const resolveServiceId = () => {
+  if (serviceContext === "home") return 1;
+  if (serviceContext === "vehicle") return 2;
+  if (serviceContext === "commercial") return 3;
+  if (serviceContext === "homeServices") return 4;
+  return 0;
+};
+
+
 
 const totalPrice =
-  serviceContext === "vehicle"
+  serviceContext === "vehicle" || serviceContext === "homeServices"
     ? consultationCharge
     : BASE_PRICE +
       addonsCost +
@@ -265,13 +286,20 @@ const totalPrice =
   };
   console.log("Selected Addons:", addService,removeService);
 
-  const validateAndCheckout = () => {
-    if (extraHours > 0 && !reason.trim()) {
-      setReasonError(true);
-      return;
-    }
+  const validateAndCheckout = async () => {
+  if (extraHours > 0 && !reason.trim()) {
+    setReasonError(true);
+    return;
+  }
+
+  try {
+    await createBooking();
     setShowPaymentModal(true);
-  };
+  } catch {
+    alert("Failed to create booking. Try again.");
+  }
+};
+
   const selectedEmployee =
   serviceContext === "vehicle" ? meta?.employee : null;
 
@@ -281,12 +309,92 @@ const totalPrice =
 
   const [showPaymentModal, setShowPaymentModal] = useState(false);
 
+  const closeAll = () => {
+  setShowPaymentModal(false); // close payment
+  onClose();                 // close booking + everything above
+};
+
+  const buildBookingPayload = () => {
+  return {
+    module_id: serviceContext === "vehicle" ? 2 : 1,
+    sub_module_id: 1,
+
+    service_id: resolveServiceId(),
+    // sub_service_id: selectedAddons[0]?.id
+    //   ? Number(selectedAddons[0].id)
+    //   : 0,
+    sub_service_id: selectedAddons.length > 0 ? 1 : 0,
+
+    full_name: customerName || "Guest User",
+    email: "user@example.com",
+   mobile:
+  contactNumber && /^[6-9]\d{9}$/.test(contactNumber)
+    ? contactNumber
+    : "9876543210",
+
+
+    address:
+      locationType === "default" ? currentAddress : manualAddress,
+
+    others_address: manualAddress || "",
+
+    latitude: meta?.latitude || 0,
+    longitude: meta?.longitude || 0,
+
+    service_type_id:
+      serviceContext === "vehicle" ? 2 : 1,
+
+    issue_id: extraHours > 0 ? 1 : 0,
+    problem_description: reason || "",
+
+    property_size_sqft: floorArea || "",
+
+    duration_id: extraHours||1,
+
+    preferred_date: date,
+    time_slot_id: time ? parseInt(time.replace(":", "")) : 0,
+
+    payment_type_id: 1, // online
+    service_price: totalPrice,
+    payment_done: false,
+  };
+};
+
+const createBooking = async () => {
+  const payload = buildBookingPayload();
+  const token = localStorage.getItem("accessToken");
+
+  try {
+    const res = await fetch(
+      `${API_BASE_URL}/api/master/home-service`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(payload),
+      }
+    );
+
+    if (!res.ok) {
+      throw new Error("Booking failed");
+    }
+
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    console.error("Booking Error:", err);
+    throw err;
+  }
+};
+
   /* ================= RENDER ================= */
   return (
     <div className="bc_page">
       {/* HEADER */}
       <header className="bc_header">
-        <button className="bc_iconBtn" onClick={onClose}>
+        <button className="bc_iconBtn" onClick={closeAll}>
           <MdArrowBack size={22} />
         </button>
         <h1>Book Cleaning</h1>
@@ -327,7 +435,6 @@ const totalPrice =
       onChange={(e) => setContactNumber(e.target.value)}
       placeholder="Enter mobile number"
     />
-
     <p className="bc_label">Location Details</p>
     <textarea
       className="bc_textarea"
@@ -368,7 +475,7 @@ const totalPrice =
 
 
         {/* FLOOR AREA */}
-       {serviceContext !== "vehicle" && (
+       {serviceContext !== "vehicle" && serviceContext !== "homeServices" && (
   <>
     <p className="bc_label">Floor Area (sqft)</p>
     <input
@@ -381,7 +488,7 @@ const totalPrice =
 )}
 
         {/* ADDON SERVICES */}
-{serviceContext !== "vehicle" && (
+{serviceContext !== "vehicle" && serviceContext !== "homeServices" && (
   <>
     <p className="bc_label">Additional Services</p>
 
@@ -577,7 +684,8 @@ const totalPrice =
     >
       <PaymentScreenWeb
         totalAmount={totalPrice}
-        onClose={() => setShowPaymentModal(false)}
+       // onClose={() => setShowPaymentModal(false)}
+       onClose={closeAll}
         bookingDetails={{
           serviceName: mainService?.title,
           date,
