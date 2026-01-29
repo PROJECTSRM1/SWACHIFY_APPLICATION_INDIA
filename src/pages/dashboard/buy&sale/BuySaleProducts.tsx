@@ -8,6 +8,7 @@ import {
   MdAdd,
 } from "react-icons/md";
 
+
 const handleDelete = (
   id: string,
   setProperties: React.Dispatch<React.SetStateAction<any[]>>
@@ -44,11 +45,13 @@ export interface Property {
   image: string;
   rating: number;
   area: string;
-  sqft: string;
+sqft?: string;
   bhk?: string;
   distance: string;
   listingType: "buy" | "rent";
-  category: "land" | "apartment" | "house" | "vehicle" | "commercial";
+  category: "land" | "apartment" | "house" | "vehicle" | "commercial"| "hostel";
+  itemCondition?: "New Item" | "Old Item";
+
   landType?: string;
   ownerName?: string;
   documents?: string[];
@@ -58,6 +61,16 @@ export interface Property {
   description?: string;
 
   isUserListing?: boolean;
+
+  hostelType?: string;
+  totalRooms?: string;
+  availableRooms?: string;
+  foodIncluded?: string;
+  hasAC?: boolean;
+  hasWifi?: boolean;
+  hasLaundry?: boolean;
+  hasParking?: boolean;
+  hasSecurity?: boolean;
 }
 
 /* =======================
@@ -146,6 +159,33 @@ const DUMMY_PROPERTIES: Property[] = [
     listingType: "buy",
     category: "vehicle",
   },
+ {
+  id: "hostel_101",
+  title: "Boys Hostel in Kukatpally",
+  price: "₹8,500 / month",
+  image: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=800&q=80",
+  rating: 4.6,
+  area: "Kukatpally",
+  distance: "1.2 km away",
+  listingType: "rent",
+  category: "hostel",
+
+  // Hostel-specific fields
+  hostelType: "Boys",
+  totalRooms: "25",
+  availableRooms: "5",
+  foodIncluded: "Yes",
+
+  // Amenities
+  hasAC: true,
+  hasWifi: true,
+  hasLaundry: true,
+  hasParking: false,
+  hasSecurity: true,
+}
+
+
+
 ];
 
 
@@ -162,7 +202,25 @@ const PROPERTY_TYPE_OPTIONS = [
   { label: "Car", category: "vehicle" },
   { label: "Lorry", category: "vehicle" },
   { label: "Auto", category: "vehicle" },
+  { label: "Hostel", category: "hostel" },
 ];
+
+const formatIndianPrice = (value?: string | number) => {
+  if (!value) return "0";
+
+  const numeric = String(value).replace(/[^0-9]/g, "");
+  if (!numeric) return "0";
+
+  return numeric.replace(/\B(?=(\d{2})+(?!\d))/g, ",");
+};
+
+const getRandomDistance = () => {
+  const km = (Math.random() * 8 + 0.5).toFixed(1); 
+  return `${km} km away`;
+};
+
+
+
 
 // ✅ READ USER POSTED LISTINGS FROM LOCAL STORAGE
 const getUserListings = (): (Property & { isUserListing: boolean })[] => {
@@ -170,40 +228,86 @@ const getUserListings = (): (Property & { isUserListing: boolean })[] => {
     localStorage.getItem("marketplace_listings") || "[]"
   );
 
-  return stored.map((item: any) => ({
-    id: String(item.id),
+  return stored.map((item: any) => {
+    const isHostel = item.propertyType === "Hostel";
+    const isHouse =
+  ["Apartment", "Villa", "Independent House"].includes(item.propertyType);
 
-    title: "Land for Sale",
 
-    price:
-      item.listingType === "rent"
-        ? `₹${item.price} / month`
-        : `₹${item.price}`,
+    return {
+  id: String(item.id),
 
-    image: item.images?.[0],
-    images: item.images,
+  // ✅ TITLE
+  title: isHostel
+    ? `${item.hostelType} Hostel`
+    : isHouse
+    ? `${item.bhk || ""} ${item.propertyType}`
+    : item.propertyType === "Land"
+    ? "Land for Sale"
+    : item.propertyType,
+    itemCondition: item.itemCondition,
 
-    rating: 4.5,
-    area: item.landArea || "Near Your Area",
-    sqft: item.landSqft || "",
+  // ✅ PRICE
+  price:
+    item.listingType === "rent"
+      ? `₹${formatIndianPrice(item.price)} / month`
+      : `₹${formatIndianPrice(item.price)}`,
 
-    landType: item.landType,
-    ownerName: item.registeredOwner,
-    documents: item.documents,
-    registrationStatus: item.registrationStatus,
-    registrationValue: item.registrationValue,
-    marketValue: item.marketValue,
-    description: item.description,
+  image: item.images?.[0],
+  images: item.images,
 
-    distance: "Just now",
+  rating: 4.5,
+  area: item.landArea || item.area || "Near Your Area",
+  distance: getRandomDistance(),
 
-    // ✅ THIS IS THE KEY FIX
-    listingType: item.listingType === "rent" ? "rent" : "buy",
+  // ✅ CATEGORY (FIXED)
+  category: isHostel
+    ? "hostel"
+    : item.propertyType === "Land"
+    ? "land"
+    : item.propertyType === "Bike" ||
+      item.propertyType === "Car" ||
+      item.propertyType === "Auto" ||
+      item.propertyType === "Lorry"
+    ? "vehicle"
+    : isHouse
+    ? "house"
+    : "commercial",
 
-    category: "land",
-    isUserListing: true,
-  }));
+  listingType: item.listingType === "rent" ? "rent" : "buy",
+
+  // ===== HOUSE =====
+  bhk: isHouse ? item.bhk : undefined,
+  sqft: isHouse ? item.sqft : item.landSqft,
+
+  // ===== LAND (ONLY LAND) =====
+  landType: item.propertyType === "Land" ? item.landType : undefined,
+  ownerName: item.propertyType === "Land" ? item.registeredOwner : undefined,
+  documents: item.propertyType === "Land" ? item.documents : undefined,
+  registrationStatus:
+    item.propertyType === "Land" ? item.registrationStatus : undefined,
+  registrationValue:
+    item.propertyType === "Land" ? item.registrationValue : undefined,
+  marketValue:
+    item.propertyType === "Land" ? item.marketValue : undefined,
+
+  // ===== HOSTEL =====
+  hostelType: item.hostelType,
+  totalRooms: item.totalRooms,
+  availableRooms: item.availableRooms,
+  foodIncluded: item.foodIncluded,
+  hasAC: item.hasAC,
+  hasWifi: item.hasWifi,
+  hasLaundry: item.hasLaundry,
+  hasParking: item.hasParking,
+  hasSecurity: item.hasSecurity,
+
+  isUserListing: true,
 };
+
+  });
+};
+
 
 
 
@@ -219,6 +323,9 @@ export default function MarketplaceWeb() {
   const [manualLocation, setManualLocation] = useState<string | null>(null);
   const [editingLocation, setEditingLocation] = useState(false);
 const [tempLocation, setTempLocation] = useState("");
+const [isWishlistActive, setIsWishlistActive] = useState(false);
+const [wishlistIds, setWishlistIds] = useState<string[]>([]);
+
 
 
   const [properties, setProperties] = useState<
@@ -244,6 +351,25 @@ const [tempLocation, setTempLocation] = useState("");
   const [dateLabel, setDateLabel] = useState("Updated Date");
   const [ratingLabel, setRatingLabel] = useState("Ratings");
 
+  useEffect(() => {
+  const syncWishlist = () => {
+    const stored = JSON.parse(
+      localStorage.getItem("marketplace_wishlist") || "[]"
+    );
+    setWishlistIds(stored.map((item: any) => item.id));
+  };
+
+  // initial sync
+  syncWishlist();
+
+  // 🔥 listen for wishlist updates
+  window.addEventListener("wishlist-change", syncWishlist);
+
+  return () =>
+    window.removeEventListener("wishlist-change", syncWishlist);
+}, []);
+
+
  useEffect(() => {
   const userListings = getUserListings();
   setProperties([...userListings, ...DUMMY_PROPERTIES]);
@@ -253,6 +379,13 @@ const [tempLocation, setTempLocation] = useState("");
   }
 }, [manualLocation]);
 
+useEffect(() => {
+  const stored = JSON.parse(
+    localStorage.getItem("marketplace_wishlist") || "[]"
+  );
+
+  setWishlistIds(stored.map((item: any) => item.id));
+}, []);
 
 
 useEffect(() => {
@@ -316,21 +449,24 @@ useEffect(() => {
      FILTER LOGIC (100% SAME)
   ======================= */
 const filteredProperties = properties.filter((p: Property) => {
-    const matchesType =
-      filterType === "all" ? true : p.listingType === filterType;
+  if (isWishlistActive && !wishlistIds.includes(p.id)) return false;
 
-    const matchesCategory =
-      activeCategory === "all" ? true : p.category === activeCategory;
+  const matchesType =
+    filterType === "all" ? true : p.listingType === filterType;
 
-    const matchesSearch = p.title
-      .toLowerCase()
-      .includes(searchQuery.toLowerCase());
+  const matchesCategory =
+    activeCategory === "all" ? true : p.category === activeCategory;
 
-    const matchesRating =
-      ratingFilter === null ? true : p.rating >= ratingFilter;
+  const matchesSearch = p.title
+    .toLowerCase()
+    .includes(searchQuery.toLowerCase());
 
-    return matchesType && matchesCategory && matchesSearch && matchesRating;
-  });
+  const matchesRating =
+    ratingFilter === null ? true : p.rating >= ratingFilter;
+
+  return matchesType && matchesCategory && matchesSearch && matchesRating;
+});
+
 
   return (
     <>
@@ -343,42 +479,53 @@ const filteredProperties = properties.filter((p: Property) => {
               <div className="mp-header-left">
                 <h1>Marketplace</h1>
 
-                <div className="mp-dropdown-wrapper">
-                  <button
-                    className="mp-dropdown"
-                    onClick={() => setShowDropdown(!showDropdown)}
-                  >
-                    {filterType === "all"
-                      ? "All"
-                      : filterType === "buy"
-                      ? "Buy"
-                      : "Rent"}{" "}
-                    <MdExpandMore />
-                  </button>
-
-                  {showDropdown && (
-                    <div className="mp-dropdown-menu">
-                      {(["all", "buy", "rent"] as const)
-                        .filter((t) => t !== filterType)
-                        .map((t) => (
-                          <div
-                            key={t}
-                            onClick={() => {
-                              setFilterType(t);
-                              setShowDropdown(false);
-                            }}
-                          >
-                            {t.toUpperCase()}
-                          </div>
-                        ))}
-                    </div>
-                  )}
-                </div>
+                
               </div>
 
-              <button className="mp-sell-btn" onClick={() => setOpenSellForm(true)}>
-                <MdAdd /> Sell / Rent
-              </button>
+             <div className="mp-header-actions">
+  {/* BUY / RENT DROPDOWN */}
+  <div className="mp-dropdown-wrapper">
+    <div className="mp-buy-toggle">
+  <button
+    className={filterType === "buy" ? "active" : ""}
+    onClick={() => setFilterType("buy")}
+  >
+    Buy
+  </button>
+
+  <button
+    className={filterType === "rent" ? "active" : ""}
+    onClick={() => setFilterType("rent")}
+  >
+    Rent
+  </button>
+</div>
+
+
+    {showDropdown && (
+      <div className="mp-dropdown-menu">
+        {["rent"].map((t) => (
+          <div
+            key={t}
+            onClick={() => {
+              setFilterType(t as any);
+              setShowDropdown(false);
+            }}
+          >
+            {t === "buy" ? "Buy" : "Rent"}
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+
+  {/* SELL / RENT BUTTON */}
+  <button className="mp-sell-btn" onClick={() => setOpenSellForm(true)}>
+    <MdAdd /> Sell / Rent
+  </button>
+</div>
+
+
             </header>
 
             {/* SEARCH + FILTERS */}
@@ -475,6 +622,15 @@ const filteredProperties = properties.filter((p: Property) => {
                     </div>
                   )}
                 </button>
+                {/* RATINGS */}
+<button
+  className={isWishlistActive ? "active" : ""}
+  onClick={() => setIsWishlistActive(!isWishlistActive)}
+>
+  ❤️ Wishlist
+</button>
+
+
 
               </div>
             </div>
@@ -540,7 +696,7 @@ const filteredProperties = properties.filter((p: Property) => {
 
             {/* CATEGORY BUTTONS */}
             <div className="mp-categories">
-              {["all", "land", "apartment", "house", "commercial", "vehicle"].map(
+              {["all", "land", "apartment", "house", "commercial", "vehicle","hostel"].map(
                 (c) => (
                   <button
                     key={c}
@@ -564,9 +720,22 @@ const filteredProperties = properties.filter((p: Property) => {
                   <div className="mp-image-wrapper">
   <img src={p.image} alt={p.title} />
 
+  <div className="mp-badges">
   <span className="mp-badge">
     {p.listingType === "buy" ? "FOR SALE" : "FOR RENT"}
   </span>
+
+  {p.itemCondition && (
+    <span
+      className={`mp-condition ${
+        p.itemCondition === "New Item" ? "new" : "used"
+      }`}
+    >
+      {p.itemCondition === "New Item" ? "NEW" : "USED"}
+    </span>
+  )}
+</div>
+
 
   <div className="mp-rating">
     <MdStar /> {p.rating}
@@ -588,15 +757,31 @@ const filteredProperties = properties.filter((p: Property) => {
 
 
                   <div className="mp-card-body">
-                    <h3>{p.title}</h3>
-                    <div className="mp-price">{p.price}</div>
-                    <div className="mp-meta">
-                      <span>📍 {p.area}</span>
-                      {p.sqft && <span>📐 {p.sqft} sqft</span>}
-                      {p.bhk && <span>🛏 {p.bhk}</span>}
-                      <span>📍 {p.distance}</span>
-                    </div>
-                  </div>
+  <h3 className="mp-card-title">{p.title}</h3>
+
+  <div className="mp-price">{p.price}</div>
+
+  <div className="mp-card-row">
+    📍 {p.area}
+  </div>
+
+  {p.sqft && (
+    <div className="mp-card-row">
+      📐 {p.sqft} sqft
+    </div>
+  )}
+
+  {p.bhk && (
+    <div className="mp-card-row">
+      🛏 {p.bhk}
+    </div>
+  )}
+
+  <div className="mp-card-row muted">
+    📍 {p.distance}
+  </div>
+</div>
+
                 </div>
               ))}
             </div>

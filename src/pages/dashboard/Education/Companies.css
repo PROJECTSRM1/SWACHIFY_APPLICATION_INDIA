@@ -9,41 +9,42 @@ body {
 .companies-layout {
   min-height: 100vh;
   padding: 16px 24px 48px;
+  padding-top: 88px;
+  background: #f5f7fb;
 }
 
 /* ================= HEADER ================= */
 
 .page-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   background: #ffffff;
-  padding: 16px 20px;
-  border-radius: 14px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
-  margin-bottom: 20px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  margin-bottom: 12px;
 }
 
 .header-left {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 10px;
 }
 
 .header-left h2 {
   margin: 0;
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 600;
+  color: #111827;
 }
 
-.back-btn {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  border: none;
-  background: #eef2ff;
+.companies-back-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
   cursor: pointer;
-  font-size: 16px;
 }
 
 /* ================= TABS ================= */
@@ -60,7 +61,6 @@ body {
   border: none;
   background: #e5e7eb;
   font-size: 14px;
-  cursor: pointer;
 }
 
 .tab.active {
@@ -82,7 +82,6 @@ body {
   border-radius: 12px;
   border: 1px solid #d1d5db;
   background: #ffffff;
-  font-size: 14px;
 }
 
 /* ================= GRID ================= */
@@ -96,33 +95,27 @@ body {
 /* ================= CARD ================= */
 
 .company-card {
+  position: relative;
   background: #ffffff;
   border-radius: 18px;
-  padding: 20px;
+  padding: 22px;
   display: flex;
   flex-direction: column;
   min-height: 260px;
-
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
-  transition: box-shadow 0.2s ease, transform 0.2s ease;
-}
-
-.company-card:hover {
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
-  transform: translateY(-2px);
 }
 
 /* ================= CARD HEADER ================= */
 
-.company-card .card-header {
+.card-header {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-.company-card .avatar {
-  width: 40px;
-  height: 40px;
+.avatar {
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   background: #2563eb;
   color: #ffffff;
@@ -132,22 +125,22 @@ body {
   justify-content: center;
 }
 
-.company-card .card-header h3 {
+.card-header h3 {
   margin: 0;
   font-size: 16px;
   font-weight: 600;
   color: #111827;
 }
 
-.company-card .industry {
+.industry {
   font-size: 12px;
   color: #2563eb;
 }
 
 /* ================= DESCRIPTION ================= */
 
-.company-card .desc {
-  margin: 12px 0;
+.desc {
+  margin: 14px 0;
   font-size: 14px;
   color: #4b5563;
   line-height: 1.6;
@@ -155,7 +148,7 @@ body {
 
 /* ================= META ================= */
 
-.company-card .meta {
+.meta {
   display: flex;
   gap: 16px;
   font-size: 12px;
@@ -164,57 +157,79 @@ body {
 
 /* ================= FOOTER ================= */
 
-.company-card .card-footer {
+.card-footer {
   margin-top: auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-/* ================= STATUS ================= */
+/* ================= ✅ STATUS (SAFE & SCOPED) ================= */
 
-.company-card .status {
-  font-size: 12px;
+.company-status {
+  font-size: 11px;
   font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #f3f4f6;
+  color: #374151;
 }
 
-.company-card .status.active {
-  color: #16a34a;
+.company-status.active {
+  background: #e6f9ed;
+  color: #15803d;
 }
 
-.company-card .status.frozen {
-  color: #9ca3af;
+.company-status.frozen {
+  background: #f3f4f6;
+  color: #6b7280;
 }
 
-/* ================= BUTTON ================= */
-/* SMALL, PROFESSIONAL (LIKE LINKEDIN) */
 
-.company-card .primary-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+/* ================= VIEW OPPORTUNITIES (ORIGINAL, CLEAN) ================= */
 
-  width: auto;
-  min-width: unset;
-  padding: 6px 12px;
-
-  font-size: 12px;
+/* Smaller, LinkedIn-style CTA */
+.primary-btn {
+  padding: 6px 12px;      /* ↓ reduced */
+  font-size: 12px;        /* ↓ reduced */
   font-weight: 500;
 
-  border-radius: 6px;
+  border-radius: 6px;     /* slightly tighter */
   border: 1px solid #2563eb;
   background: transparent;
   color: #2563eb;
 
   cursor: pointer;
   white-space: nowrap;
-  transition: all 0.15s ease;
+  transition: background 0.15s ease, color 0.15s ease;
 }
 
-.company-card .primary-btn:hover {
+.primary-btn:hover {
   background: #2563eb;
   color: #ffffff;
 }
+
+/* prevent sticky active look */
+.primary-btn:active,
+.primary-btn:focus,
+.primary-btn:focus-visible {
+  outline: none;
+  background: transparent;
+  color: #2563eb;
+}
+
+
+/* IMPORTANT: prevent sticky blue after click */
+.primary-btn:active,
+.primary-btn:focus,
+.primary-btn:focus-visible {
+  outline: none;
+  background: transparent;
+  color: #2563eb;
+}
+
+
+
 
 /* ================= RESPONSIVE ================= */
 

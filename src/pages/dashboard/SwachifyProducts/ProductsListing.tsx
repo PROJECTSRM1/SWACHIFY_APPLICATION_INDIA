@@ -17,11 +17,14 @@ import {
     EnvironmentOutlined,
     ShoppingCartOutlined,
     FilterOutlined,
-    ArrowLeftOutlined
+    ArrowLeftOutlined,
+    HeartOutlined,
+    HeartFilled
 } from '@ant-design/icons';
 import './ProductsListing.css';
 import { getProducts, initializeMockData, type Product } from './productStore';
 import { useCart } from '../../../context/CartContext';
+import { useWishlist } from '../../../context/WishlistContext';
 
 const { Search } = Input;
 
@@ -47,6 +50,9 @@ const ProductsListing: React.FC<ProductsListingProps> = ({ onBack, searchQuery: 
 
     // Cart context
     const { addToCart } = useCart();
+
+    // Wishlist context
+    const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
 
     // Filter modal state
     const [filterModalVisible, setFilterModalVisible] = useState(false);
@@ -174,6 +180,34 @@ const ProductsListing: React.FC<ProductsListingProps> = ({ onBack, searchQuery: 
         }
     };
 
+    const handleToggleWishlist = (product: Product) => {
+        try {
+            if (isInWishlist(product.id)) {
+                removeFromWishlist(product.id);
+                message.success(`${product.name} removed from wishlist`);
+            } else {
+                const wishlistItem = {
+                    id: product.id,
+                    name: product.name,
+                    image: product.image,
+                    price: product.price,
+                    company: product.company,
+                    category: product.category,
+                    rating: product.rating,
+                    reviews: product.reviews,
+                    distance: product.distance,
+                    isNew: product.isNew,
+                    isFeatured: product.isFeatured,
+                };
+                addToWishlist(wishlistItem);
+                message.success(`${product.name} added to wishlist!`);
+            }
+        } catch (error) {
+            console.error('Error toggling wishlist:', error);
+            message.error('Failed to update wishlist');
+        }
+    };
+
     const handleApplyFilters = () => {
         setFilterModalVisible(false);
         // Filters are already applied via useEffect
@@ -194,7 +228,6 @@ const ProductsListing: React.FC<ProductsListingProps> = ({ onBack, searchQuery: 
                     onClick={onBack}
                     className="sw-products-back-btn"
                 >
-                    Back
                 </Button>
                 <h1 className="sw-products-listing-title">Browse Products</h1>
             </div>
@@ -278,6 +311,15 @@ const ProductsListing: React.FC<ProductsListingProps> = ({ onBack, searchQuery: 
                                         {product.isFeatured && (
                                             <div className="sw-product-listing-featured-badge">Featured</div>
                                         )}
+                                        <Button
+                                            type="text"
+                                            icon={isInWishlist(product.id) ? <HeartFilled /> : <HeartOutlined />}
+                                            className={`sw-product-wishlist-btn ${isInWishlist(product.id) ? 'active' : ''}`}
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                handleToggleWishlist(product);
+                                            }}
+                                        />
                                     </div>
                                 }
                             >

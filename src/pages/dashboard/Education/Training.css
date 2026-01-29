@@ -1,6 +1,7 @@
 .training-scope .training-page {
   background: #f9fafb;
   padding: 28px;
+  padding-top: 56px;   /* 🔥 pushes whole page down */
   min-height: 100vh;
 }
 
@@ -171,4 +172,79 @@
   .training-scope .course-grid {
     grid-template-columns: 1fr;
   }
+}
+
+
+/* ================= TRAINING HEADER – STUDENTS STYLE ================= */
+
+.training-scope .training-header {
+  max-width: 1200px;
+  margin: 0 auto 28px;
+
+  padding: 18px 24px;
+  background: #ffffff;
+
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+/* Ensure back button is clearly visible */
+.training-scope .training-header .back-btn {
+  width: 38px;
+  height: 38px;
+
+  border-radius: 10px;
+  border: none;
+
+  background: #eef2ff;
+  color: #1f2937;
+
+  font-size: 18px;
+  cursor: pointer;
+
+  flex-shrink: 0;
+}
+
+/* Text alignment */
+.training-scope .training-header h1 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.training-scope .training-header p {
+  margin: 2px 0 0;
+  color: #6b7280;
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 767px) {
+  .training-scope .training-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px;
+  }
+}
+/* ================= FORCE ALIGN – TRAINING HEADER ================= */
+
+.training-scope .training-header {
+  display: flex !important;
+  align-items: flex-start !important;   /* 🔥 force override */
+}
+
+/* Back button alignment */
+.training-scope .training-header .back-btn {
+  margin-top: 2px !important;           /* 🔥 nudge up */
+  align-self: flex-start !important;
+}
+
+/* Text block alignment */
+.training-scope .training-header > div {
+  margin-top: 0 !important;
 }

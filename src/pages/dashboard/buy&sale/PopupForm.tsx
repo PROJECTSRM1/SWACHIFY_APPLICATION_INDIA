@@ -11,8 +11,24 @@ export default function SellItemWeb({ onClose }: SellItemWebProps) {
   const [propertyType, setPropertyType] = useState<string>("Apartment");
   const [itemCondition, setItemCondition] = useState<string>("New Item");
   const [price, setPrice] = useState<string>("");
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
 
   /* ================= HOUSE ================= */
+  const formatIndianNumber = (value: string) => {
+  // remove anything that is not a digit
+  const numeric = value.replace(/[^0-9]/g, "");
+
+  // add Indian commas
+  return numeric.replace(/\B(?=(\d{2})+(?!\d))/g, ",");
+};
+const handleNumericChange =
+  (setter: React.Dispatch<React.SetStateAction<string>>) =>
+  (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formatted = formatIndianNumber(e.target.value);
+    setter(formatted);
+  };
+
   const [sqft, setSqft] = useState("");
   const [bhk, setBhk] = useState("1 BHK");
   const [location, setLocation] = useState("");
@@ -20,6 +36,21 @@ export default function SellItemWeb({ onClose }: SellItemWebProps) {
   const [furnishingType, setFurnishingType] = useState<
     "No Furn" | "Semi" | "Full"
   >("No Furn");
+  const validateNumeric = (value: string) => /^[0-9,]*$/.test(value);
+const validateAlpha = (value: string) => /^[a-zA-Z\s]*$/.test(value);
+
+const setFieldError = (field: string, message: string) => {
+  setErrors((prev) => ({ ...prev, [field]: message }));
+};
+
+const clearFieldError = (field: string) => {
+  setErrors((prev) => {
+    const copy = { ...prev };
+    delete copy[field];
+    return copy;
+  });
+};
+
 
   /* ================= VEHICLE ================= */
   const [brand, setBrand] = useState("");
@@ -43,7 +74,6 @@ export default function SellItemWeb({ onClose }: SellItemWebProps) {
   const [landDocuments, setLandDocuments] = useState<string[]>([]);
 
   /* ================= COMMERCIAL (BASIC) ================= */
-const [commercialSqft, setCommercialSqft] = useState("");
 const [commercialLocation, setCommercialLocation] = useState("");
 const [commercialArea, setCommercialArea] = useState("");
 
@@ -51,14 +81,36 @@ const [commercialArea, setCommercialArea] = useState("");
   /* ================= COMMON ================= */
   const [description, setDescription] = useState("");
   const [images, setImages] = useState<string[]>([]);
+  // const cleanPrice = price.replace(/,/g, "");
+
+  /* ================= HOSTEL ================= */
+const [hostelType, setHostelType] = useState("Boys");
+const [totalRooms, setTotalRooms] = useState("");
+const [availableRooms, setAvailableRooms] = useState("");
+const [foodIncluded, setFoodIncluded] = useState("Yes");
+
+const [hasAC, setHasAC] = useState(false);
+const [hasWifi, setHasWifi] = useState(false);
+const [hasLaundry, setHasLaundry] = useState(false);
+const [hasParking, setHasParking] = useState(false);
+const [hasSecurity, setHasSecurity] = useState(false);
+const [hasTV, setHasTV] = useState(false);
+
+
+  
+
+  
 
   const isHouse = ["Apartment", "Villa", "Independent House"].includes(propertyType);
   const isVehicle = ["Bike", "Car", "Lorry", "Auto", "Bus"].includes(propertyType);
   const isLand = propertyType === "Land";
+
   const isCommercial =
   propertyType === "Office" ||
   propertyType === "Hospital" ||
   propertyType === "Commercial Space";
+    const isHostel = propertyType === "Hostel";
+
 
 
   const wordCount = description.trim().split(/\s+/).filter(Boolean).length;
@@ -68,6 +120,11 @@ const [commercialArea, setCommercialArea] = useState("");
     reader.onload = () => resolve(reader.result as string);
     reader.readAsDataURL(file);
   });
+// const formatIndianPrice = (value: string) => {
+//   const numeric = value.replace(/[^0-9]/g, "");
+
+//   return numeric.replace(/\B(?=(\d{2})+(?!\d))/g, ",");
+// };
 
 
   /* ================= IMAGE UPLOAD ================= */
@@ -102,6 +159,7 @@ const handleLandDocs = async (e: ChangeEvent<HTMLInputElement>) => {
   const removeImage = (index: number) => {
     setImages((prev) => prev.filter((_, i) => i !== index));
   };
+const unformatNumber = (value: string) => value.replace(/,/g, "");
 
   /* ================= SUBMIT ================= */
   const handleSubmit = () => {
@@ -111,28 +169,49 @@ const handleLandDocs = async (e: ChangeEvent<HTMLInputElement>) => {
   }
 
   const listing = {
-    id: Date.now(),
-    listingType,
-    propertyType,
-    itemCondition,
-    price,
-    sqft,
-    bhk,
-    location,
-    area,
-    description,
-    images,
-    registrationStatus,
-    registrationValue,
-    marketValue,
-    landSqft,
-    landType,
-    landLocation,
-    landArea,
-    registeredOwner,
-    documents: landDocuments,
-    createdAt: new Date().toISOString(),
-  };
+  id: Date.now(),
+  listingType,
+  propertyType,
+  itemCondition,
+  
+
+  price: unformatNumber(price),
+    ownerName,
+  ownerPhone: mobileNumber,
+  sqft: unformatNumber(sqft),
+    landSqft: unformatNumber(landSqft),
+  registrationValue: unformatNumber(registrationValue),
+  marketValue: unformatNumber(marketValue),
+  distance: unformatNumber(distance),
+  category: ["Bike", "Car", "Lorry", "Auto", "Bus"].includes(propertyType)
+    ? "vehicle"
+    : "property",
+
+  bhk,
+  location,
+  area,
+  description,
+  images,
+
+  landType,
+  landLocation,
+  landArea,
+  registeredOwner,
+  documents: landDocuments,
+  hostelType,
+totalRooms,
+availableRooms,
+foodIncluded,
+hasAC,
+hasWifi,
+hasLaundry,
+hasParking,
+hasSecurity,
+hasTV,
+
+  createdAt: new Date().toISOString(),
+};
+
 
   const existing = JSON.parse(
     localStorage.getItem("marketplace_listings") || "[]"
@@ -149,6 +228,33 @@ const handleLandDocs = async (e: ChangeEvent<HTMLInputElement>) => {
   alert("Listing posted successfully!");
   onClose?.();
 };
+const handleNumericValidated =
+  (setter: React.Dispatch<React.SetStateAction<string>>, field: string) =>
+  (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+
+    if (!validateNumeric(value)) {
+      setFieldError(field, "Only numbers are allowed");
+      return;
+    }
+
+    clearFieldError(field);
+    setter(formatIndianNumber(value));
+  };
+const handleAlphaValidated =
+  (setter: React.Dispatch<React.SetStateAction<string>>, field: string) =>
+  (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+
+    if (!validateAlpha(value)) {
+      setFieldError(field, "Only alphabets are allowed");
+      return;
+    }
+
+    clearFieldError(field);
+    setter(value);
+  };
+
 
 
   return (
@@ -226,6 +332,8 @@ const handleLandDocs = async (e: ChangeEvent<HTMLInputElement>) => {
               <option>Office</option>
               <option>Hospital</option>
               <option>Commercial Space</option>
+              <option>Hostel</option>
+
             </select>
 
             {/* CONDITION */}
@@ -239,23 +347,27 @@ const handleLandDocs = async (e: ChangeEvent<HTMLInputElement>) => {
             </select>
 
             {/* PRICE */}
-            <label>PRICE (₹)</label>
-            <input
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-              placeholder="Enter price"
-            />
+            <label>{isHostel ? "PRICE PER MONTH (₹)" : "PRICE (₹)"}</label>
+<input
+  inputMode="numeric"
+  value={price}
+  placeholder="Enter price"
+  onChange={handleNumericValidated(setPrice, "price")}
+/>
+{errors.price && <p className="errorText">{errors.price}</p>}
+
+
+
 
             {/* ============ COMMERCIAL BASIC FIELDS (AFTER PRICE) ============ */}
 {isCommercial && (
   <>
     <label>SQFT</label>
     <input
-      placeholder="Enter SQFT"
-      value={commercialSqft}
-      onChange={(e) => setCommercialSqft(e.target.value)}
-    />
-
+  inputMode="numeric"
+  value={sqft}
+  onChange={handleNumericChange(setSqft)}
+/>
     <label>LOCATION</label>
     <input
       placeholder="Full Address"
@@ -285,17 +397,26 @@ const handleLandDocs = async (e: ChangeEvent<HTMLInputElement>) => {
         Registered Land
       </button>
       <button
-        className={registrationStatus === "Non-Registered" ? "active" : ""}
-        onClick={() => setRegistrationStatus("Non-Registered")}
-      >
-        Non-Registered
-      </button>
+  className={registrationStatus === "Non-Registered" ? "active" : ""}
+  onClick={() => {
+    setRegistrationStatus("Non-Registered");
+    setRegistrationValue(""); // 🔥 clear value
+  }}
+>
+  Non-Registered
+</button>
+
     </div>
 
     <div className="sellRow">
       <div>
         <label>SQFT</label>
-        <input value={landSqft} onChange={(e) => setLandSqft(e.target.value)} />
+        <input
+  inputMode="numeric"
+  value={landSqft}
+  onChange={handleNumericChange(setLandSqft)}
+/>
+
       </div>
 
       <div>
@@ -308,28 +429,55 @@ const handleLandDocs = async (e: ChangeEvent<HTMLInputElement>) => {
     </div>
 
     <label>REGISTRATION VALUE (₹)</label>
-    <input
-      value={registrationValue}
-      onChange={(e) => setRegistrationValue(e.target.value)}
-    />
+<input
+  inputMode="numeric"
+  value={registrationValue}
+  onChange={handleNumericValidated(setRegistrationValue, "registrationValue")}
+  disabled={registrationStatus === "Non-Registered"}
+/>
+{errors.registrationValue && (
+  <p className="errorText">{errors.registrationValue}</p>
+)}
+
+
+
 
     <label>MARKET VALUE (₹)</label>
     <input
-      value={marketValue}
-      onChange={(e) => setMarketValue(e.target.value)}
-    />
+  inputMode="numeric"
+  value={marketValue}
+  onChange={handleNumericChange(setMarketValue)}
+/>
 
     <label>LOCATION</label>
-    <input value={landLocation} onChange={(e) => setLandLocation(e.target.value)} />
+    <input
+  value={landLocation}
+  onChange={handleAlphaValidated(setLandLocation, "landLocation")}
+/>
+{errors.landLocation && (
+  <p className="errorText">{errors.landLocation}</p>
+)}
+
 
     <label>AREA</label>
-    <input value={landArea} onChange={(e) => setLandArea(e.target.value)} />
+    <input
+  value={landArea}
+  onChange={handleAlphaValidated(setLandArea, "landArea")}
+/>
+{errors.landArea && (
+  <p className="errorText">{errors.landArea}</p>
+)}
+
 
     <label>REGISTERED OWNER NAME</label>
     <input
-      value={registeredOwner}
-      onChange={(e) => setRegisteredOwner(e.target.value)}
-    />
+  value={registeredOwner}
+  onChange={handleAlphaValidated(setRegisteredOwner, "registeredOwner")}
+/>
+{errors.registeredOwner && (
+  <p className="errorText">{errors.registeredOwner}</p>
+)}
+
 
     <label>UPLOAD LAND DOCUMENTS</label>
     <input type="file" multiple accept="image/*" onChange={handleLandDocs} />
@@ -344,10 +492,11 @@ const handleLandDocs = async (e: ChangeEvent<HTMLInputElement>) => {
                   <div>
                     <label>BRAND</label>
                     <input
-                      placeholder="Brand Name"
-                      value={brand}
-                      onChange={(e) => setBrand(e.target.value)}
-                    />
+  value={brand}
+  onChange={handleAlphaValidated(setBrand, "brand")}
+/>
+{errors.brand && <p className="errorText">{errors.brand}</p>}
+
                   </div>
 
                   <div>
@@ -373,19 +522,22 @@ const handleLandDocs = async (e: ChangeEvent<HTMLInputElement>) => {
                   <div>
                     <label>DISTANCE (KM)</label>
                     <input
-                      placeholder="10000"
-                      value={distance}
-                      onChange={(e) => setDistance(e.target.value)}
-                    />
+  inputMode="numeric"
+  value={distance}
+  onChange={handleNumericChange(setDistance)}
+/>
+
                   </div>
                 </div>
 
                 <label>VEHICLE OWNER NAME</label>
                 <input
-                  placeholder="Owner Name"
-                  value={ownerName}
-                  onChange={(e) => setOwnerName(e.target.value)}
-                />
+  placeholder="Owner Name"
+  value={ownerName}
+  onChange={handleAlphaValidated(setOwnerName, "ownerName")}
+/>
+{errors.ownerName && <p className="errorText">{errors.ownerName}</p>}
+
 
                 <label>MOBILE NUMBER</label>
                 <input
@@ -423,17 +575,19 @@ const handleLandDocs = async (e: ChangeEvent<HTMLInputElement>) => {
 
                 <label>LOCATION</label>
                 <input
-                  placeholder="Enter location"
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
-                />
+  value={location}
+  onChange={handleAlphaValidated(setLocation, "location")}
+/>
+{errors.location && <p className="errorText">{errors.location}</p>}
+
 
                 <label>AREA</label>
                 <input
-                  placeholder="Downtown / Suburb"
-                  value={area}
-                  onChange={(e) => setArea(e.target.value)}
-                />
+  value={area}
+  onChange={handleAlphaValidated(setArea, "area")}
+/>
+{errors.area && <p className="errorText">{errors.area}</p>}
+
 
                 <label>FURNISHING TYPE</label>
                 <div className="sellToggle">
@@ -458,8 +612,110 @@ const handleLandDocs = async (e: ChangeEvent<HTMLInputElement>) => {
                 </div>
               </>
             )}
+            {/* ================= HOSTEL FIELDS ================= */}
+{isHostel && (
+  <>
+    <label>HOSTEL TYPE</label>
+    <select value={hostelType} onChange={(e) => setHostelType(e.target.value)}>
+      <option>Boys</option>
+      <option>Girls</option>
+      <option>Co-living</option>
+    </select>
 
-            {/* DESCRIPTION */}
+    <div className="sellRow">
+      <div>
+        <label>TOTAL ROOMS</label>
+        <input
+  inputMode="numeric"
+  value={totalRooms}
+  onChange={handleNumericValidated(setTotalRooms, "totalRooms")}
+/>
+{errors.totalRooms && (
+  <p className="errorText">{errors.totalRooms}</p>
+)}
+
+      </div>
+
+      <div>
+        <label>AVAILABLE ROOMS</label>
+        <input
+  inputMode="numeric"
+  value={availableRooms}
+  onChange={handleNumericValidated(setAvailableRooms, "availableRooms")}
+/>
+{errors.availableRooms && (
+  <p className="errorText">{errors.availableRooms}</p>
+)}
+
+      </div>
+    </div>
+
+    <label>FOOD INCLUDED</label>
+    <select
+      value={foodIncluded}
+      onChange={(e) => setFoodIncluded(e.target.value)}
+    >
+      <option>Yes</option>
+      <option>No</option>
+    </select>
+
+    <label>SERVICES & AMENITIES</label>
+
+<div className="amenitiesGrid sellAmenities">
+
+  <div
+    className={`amenityCard ${hasAC ? "active" : ""}`}
+    onClick={() => setHasAC(!hasAC)}
+  >
+    <span className="amenityIcon">❄️</span>
+    <span>AC</span>
+  </div>
+
+  <div
+    className={`amenityCard ${hasWifi ? "active" : ""}`}
+    onClick={() => setHasWifi(!hasWifi)}
+  >
+    <span className="amenityIcon">📶</span>
+    <span>WiFi</span>
+  </div>
+
+  <div
+    className={`amenityCard ${hasLaundry ? "active" : ""}`}
+    onClick={() => setHasLaundry(!hasLaundry)}
+  >
+    <span className="amenityIcon">🧺</span>
+    <span>Laundry</span>
+  </div>
+
+  <div
+    className={`amenityCard ${hasParking ? "active" : ""}`}
+    onClick={() => setHasParking(!hasParking)}
+  >
+    <span className="amenityIcon">🅿️</span>
+    <span>Parking</span>
+  </div>
+
+  {/* ✅ NEW TV CARD */}
+  <div
+    className={`amenityCard ${hasTV ? "active" : ""}`}
+    onClick={() => setHasTV(!hasTV)}
+  >
+    <span className="amenityIcon">📺</span>
+    <span>TV</span>
+  </div>
+
+  <div
+    className={`amenityCard ${hasSecurity ? "active" : ""}`}
+    onClick={() => setHasSecurity(!hasSecurity)}
+  >
+    <span className="amenityIcon">🛡️</span>
+    <span>Security</span>
+  </div>
+
+</div>
+
+  </>
+)}
             <label>DESCRIPTION (MAX 250 WORDS)</label>
             <textarea
               value={description}

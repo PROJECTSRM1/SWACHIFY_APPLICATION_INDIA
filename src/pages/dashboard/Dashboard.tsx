@@ -29,14 +29,15 @@ const Dashboard: React.FC = () => {
 
 
   const serviceIdToName: Record<number, string> = {
-    1: "Home Services",
-    2: "Packers and Movers / Transport",
-    3: "Buy & Sale Products",
-    4: "Building & Construction Raw Materials",
-    5: "Education",
-    6: "Swachify Products",
-    7: "HealthCare",
-  };
+  1: "Home Services",
+  2: "Packers and Movers / Transport",
+  // 2:"Just Ride",
+  // 3: "House & Commercial Rentals",
+    3: "Buy & Sale Products", 
+  4: "Building & Construction Raw Materials",
+  5: "Education",
+  // 6: "Buy & Sale Products",
+};
 
 
 
@@ -409,3 +410,8 @@ const Dashboard: React.FC = () => {
 };
 
 export default Dashboard;
+
+
+
+
+

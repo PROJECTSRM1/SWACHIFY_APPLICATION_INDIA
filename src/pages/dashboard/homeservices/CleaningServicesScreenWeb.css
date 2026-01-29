@@ -54,6 +54,7 @@
   font-size: 18px;
 }
 
+
 .csw_back:hover {
   background: #e5e7eb;
 }
@@ -79,6 +80,7 @@
 
 /* GRID */
 .csw_grid {
+    width: 100%;
   max-width: 1100px;
   margin: 0 auto;
   padding: 24px;

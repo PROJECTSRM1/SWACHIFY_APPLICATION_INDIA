@@ -134,10 +134,11 @@ export default function Companies({ onBack }: Props) {
     <div className="companies-layout">
       <div className="page-header">
         <div className="header-left">
-          <button className="back-btn" onClick={onBack}>
+         <button className="companies-back-btn" onClick={onBack}>
+  ←
+</button>
 
-            ←
-          </button>
+
           <h2>Companies</h2>
         </div>
       </div>
@@ -195,23 +196,20 @@ export default function Companies({ onBack }: Props) {
               <span>👥 {company.size}</span>
             </div>
 
-            <div className="card-footer">
-              <span
-                className={`status ${
-                  company.status === "Active" ? "active" : "frozen"
-                }`}
-              >
-                {company.status}
-              </span>
+           <div className="card-footer">
+  <span className={`company-status ${company.status === "Active" ? "active" : "frozen"}`}>
+    {company.status}
+  </span>
 
-              <button
-                type="button"
-                className="primary-btn"
-                onClick={() => setSelectedCompanyId(company.id)}
-              >
-                View Opportunities
-              </button>
-            </div>
+  <button
+    type="button"
+    className="primary-btn"
+    onClick={() => setSelectedCompanyId(company.id)}
+  >
+    View Opportunities
+  </button>
+</div>
+
           </div>
         ))}
       </div>

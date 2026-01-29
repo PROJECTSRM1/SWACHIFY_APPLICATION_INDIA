@@ -203,15 +203,15 @@
 
 /* BADGES */
 .mp-badge {
-  position: absolute;
-  top: 12px;
-  left: 12px;
   background: #2563eb;
   color: white;
   font-size: 11px;
   padding: 4px 10px;
   border-radius: 999px;
+  font-weight: 600;
+  white-space: nowrap;
 }
+
 
 .mp-image-wrapper .mp-rating {
   position: absolute;
@@ -267,18 +267,21 @@
 
 .mp-dropdown-menu {
   position: absolute;
-  top: 42px;
+  top: 38px;
   left: 0;
   background: #fff;
   border-radius: 8px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.12);
   overflow: hidden;
   z-index: 20;
+  margin-top: 13px;
 }
 
 .mp-dropdown-menu div {
-  padding: 10px 16px;
-  cursor: pointer;
+      padding: 11px 24px;
+    cursor: pointer;
+    font-size: 15px;
+    margin-left: 10px;
 }
 
 .mp-dropdown-menu div:hover {
@@ -409,7 +412,7 @@
   position: absolute;
   top: 100%;
   left: 0;
-  width: 180px;           /* optional – keeps it neat */
+  width: 160px;           /* optional – keeps it neat */
   max-height: 280px;      /* ✅ KEY: limit height */
   overflow-y: auto;       /* ✅ enable scroll */
   background: #ffffff;
@@ -417,6 +420,8 @@
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
   z-index: 100;
   margin-top: 5px;
+    z-index: 9999; /* 🔑 KEY FIX */
+
 }
 
 .mp-filter-dropdown div {
@@ -1086,7 +1091,7 @@ html, body {
 .imageInfo {
   display: flex;
   flex-direction: column;
-  gap: 24px; /* ✅ adds clean space between cards */
+  gap: -24px; /* ✅ adds clean space between cards */
 }
 
 
@@ -1094,23 +1099,16 @@ html, body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: -26px;
+  margin-top: -46px;
 }
 
 .imagePrice {
   font-size: 18px;
   font-weight: 700;
   color: #2563eb;
+  margin-top: 31px;
 }
 
-.imageRating {
-  background: #f1f5f9;
-  padding: 6px 10px;
-  border-radius: 10px;
-  display: flex;
-  gap: 4px;
-  font-weight: 600;
-}
 
 /* SPECS */
 .buyerSpecs {
@@ -1640,4 +1638,700 @@ html, body {
   .mp-image-wrapper img {
     height: 220px;
   }
+}
+.buyerFavIcon {
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.buyerFavIcon.active {
+  color: #ef4444;
+}
+/* =========================================
+   FIX FILTER DROPDOWN OVERLAPPING
+   (PROPERTY TYPE / UPDATED DATE / RATINGS)
+========================================= */
+
+
+/* Create proper stacking context */
+.mp-search-filter-row {
+  position: relative;
+  z-index: 5;
+}
+
+
+/* Filter container */
+.mp-top-filters {
+  position: relative;
+  z-index: 6;
+}
+
+
+/* Each filter button becomes anchor */
+.mp-top-filters button {
+  position: relative;
+  z-index: 7;
+}
+
+
+
+
+
+/* Prevent dropdown from overlapping search */
+.mp-search-box.wide {
+  position: relative;
+  z-index: 4;
+}
+
+
+/* Ensure dropdown text wraps cleanly */
+.mp-filter-dropdown div {
+  white-space: nowrap;
+}
+
+
+/* =========================================
+   DESKTOP-SPECIFIC ADJUSTMENT
+========================================= */
+@media (min-width: 901px) {
+
+
+  /* Space between filters to avoid clash */
+  .mp-top-filters {
+    gap: 12px;
+  }
+
+
+  /* Align dropdown under button center */
+  .mp-top-filters button .mp-filter-dropdown {
+    left: 0;
+  }
+}
+
+
+/* =========================================
+   MOBILE FIX – FULL WIDTH DROPDOWNS
+========================================= */
+@media (max-width: 768px) {
+
+
+  .mp-filter-dropdown {
+    position: fixed;
+    left: 16px;
+    right: 16px;
+    top: auto;
+    margin-top: 8px;
+
+
+    max-width: none;
+    width: calc(100% - 32px);
+  }
+}
+
+.wishlistToast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+
+  background: #111;
+  color: #fff;
+  padding: 12px 18px;
+  border-radius: 10px;
+
+  font-weight: 500;
+  font-size: 14px;
+
+  animation: slideIn 0.3s ease, fadeOut 0.3s ease 1.7s;
+}
+
+.wishlistToast.success {
+  background: #16a34a;
+}
+
+.wishlistToast.remove {
+  background: #dc2626;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+  }
+}
+/* Hostel badge – softer */
+.hostelBadge {
+  background: #1e3a8a;
+  color: #eeeff3;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 12px;
+  border-radius: 10px;
+}
+
+
+.amenitiesGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.amenity {
+  background: #0f172a;
+  border-radius: 12px;
+  padding: 14px;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* HOSTEL DETAILS UI */
+.hostelStatsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin: 20px 0;
+  margin-top: 9px;
+}
+
+.hostelStatCard {
+  background: #e1e6eb;
+  border: 1px solid #e1e6eb;
+  border-radius: 14px;
+  padding: 18px;
+  text-align: center;
+}
+
+.hostelStatCard .icon {
+  font-size: 22px;
+  color: #121213;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.hostelStatCard strong {
+  font-size: 20px;
+  color: #282727;
+}
+
+.hostelStatCard p {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.sectionTitle {
+  margin: 28px 0 14px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #000207;
+  margin-top: 0px;
+}
+
+.amenitiesGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.amenityCard {
+  background: #e1e6eb;
+  border: 1px solid #e1e6eb;
+  border-radius: 14px;
+  padding: 18px 12px;
+  text-align: center;
+}
+
+.amenityIcon {
+  display: block;
+  font-size: 22px;
+  color: #3b82f6;
+  margin-bottom: 6px;
+}
+
+.amenityCard span:last-child {
+  font-size: 12px;
+  font-weight: 600;
+  color: #202021;
+}
+
+.imagePriceBlock {
+  padding: 14px 6px 6px;
+}
+
+.priceRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.imagePrice {
+  font-size: 22px;
+  font-weight: 800;
+  color: #2563eb;
+}
+
+.imageRating {
+  background: #f1f5f9;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  margin-top: 25px;
+}
+
+.buyerInfo {
+  margin-top: 6px;
+  font-size: 14px;
+  color: #475569;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+/* SMALLER HOSTEL AMENITY CARDS */
+
+.sellAmenities {
+  gap: 12px;
+}
+
+.sellAmenities .amenityCard {
+  background: #e1e6eb;
+  border: 1px solid #e1e6eb;
+  border-radius: 14px;
+
+  padding: 14px 10px;        /* 🔽 reduced */
+  min-height: 90px;          /* 🔽 reduced */
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sellAmenities .amenityCard.active {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 1.5px rgba(59,130,246,0.4);
+}
+
+.sellAmenities .amenityIcon {
+  font-size: 20px;           /* 🔽 smaller icon */
+  margin-bottom: 6px;
+  color: #cbd5f5;
+}
+
+.sellAmenities span:last-child {
+  font-size: 13px;           /* 🔽 smaller text */
+  font-weight: 600;
+  color: #303031;
+}
+/* ===== MOBILE DARK LAND UI ===== */
+
+.landSummaryGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin: 18px 0;
+}
+
+.landSummaryCard {
+  background:#f8fafc;
+  border-radius: 16px;
+  padding: 18px;
+  text-align: center;
+  color: #47484c;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
+}
+
+.landSummaryCard strong {
+  font-size: 20px;
+  color: #3b82f6;
+}
+
+.landSummaryCard span {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.landIcon {
+  font-size: 22px;
+  margin-bottom: 6px;
+}
+
+/* OWNER CARD */
+.ownerMobileCard {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  margin-top: 20px;
+  background:#f8fafc;
+  border-radius: 18px;
+  color: rgb(36, 35, 35);
+  margin-top: -6px;
+}
+
+.ownerAvatarMobile {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(59,130,246,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.ownerTextMobile span {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.ownerTextMobile strong {
+  font-size: 16px;
+}
+
+.ownerCallBtn {
+  margin-left: auto;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: #3b82f6;
+  color: white;
+  font-size: 18px;
+}
+
+/* LAND DOCUMENTS */
+.landDocsSection {
+  margin-top: 24px;
+}
+
+.landDocsSection h3 {
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+
+.landDocsGrid {
+  display: flex;
+  gap: 10px;
+      margin-top: -9px;
+}
+
+.landDocThumb {
+  width: 70px;
+  height: 70px;
+  border-radius: 12px;
+  object-fit: cover;
+  cursor: pointer;
+}
+/* ===============================
+   OWNER DETAILS – BLUE THEME
+================================ */
+
+.ownerMobileCard,
+.ownerCardNew {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  color: #ffffff;
+  border-radius: 18px;
+}
+
+/* Avatar */
+.ownerAvatarMobile,
+.ownerAvatar {
+  background: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}
+
+/* Text */
+.ownerTextMobile span,
+.ownerText span {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.ownerTextMobile strong,
+.ownerText strong {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+/* Call Button */
+.ownerCallBtn,
+.callBtnNew {
+  background: #ffffff;
+  color: #2563eb;
+}
+
+.ownerCallBtn:hover,
+.callBtnNew:hover {
+  transform: scale(1.05);
+}
+/* ===============================
+   LAND DOCUMENTS – BLUE THEME
+================================ */
+
+.landDocsSection {
+  background:  #e4e7ee;
+  border-radius: 18px;
+  padding: 8px;
+  margin-top: 9px;
+}
+
+.landDocsSection h3 {
+  color: #3a3838;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+/* Document thumbnails */
+.landDocThumb {
+  border-radius: 12px;
+  border: 2px solid rgba(255,255,255,0.2);
+}
+/* HEADER ACTIONS */
+.mp-header-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+/* BUY BUTTON (OUTLINED) */
+.mp-buy-btn {
+  height: 40px;
+  padding: 0 20px;
+
+  background: #ffffff;
+  color: #2563eb;
+
+  border: 2px solid #2563eb;
+  border-radius: 999px;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mp-buy-btn svg {
+  font-size: 16px;
+}
+
+/* HOVER */
+.mp-buy-btn:hover {
+  background: #eef2ff;
+  transform: translateY(-1px);
+}
+
+/* SELL BUTTON – MATCH HEIGHT */
+.mp-sell-btn {
+  height: 40px;
+  padding: 0 22px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+}
+/* ===============================
+   BUY / RENT DROPDOWN – CLEAN FIX
+================================ */
+
+/* Dropdown container */
+.mp-dropdown-menu {
+  min-width: 120px;
+  padding: 6px;
+  margin-top: 8px;
+
+  border-radius: 14px;
+  background: #ffffff;
+
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* Dropdown items (Buy / Rent) */
+.mp-dropdown-menu div {
+  padding: 10px 14px;
+  margin: 4px 0;
+
+  font-size: 14px;
+  font-weight: 600;
+  color: #0f172a;
+
+  border-radius: 10px;
+  text-align: center;
+
+  transition: all 0.2s ease;
+}
+
+/* Hover */
+.mp-dropdown-menu div:hover {
+  background: #eef2ff;
+  color: #2563eb;
+}
+
+/* Active (selected) */
+.mp-dropdown-menu div.active {
+  background: linear-gradient(135deg, #2563eb, #3b82f6);
+  color: #ffffff;
+}
+/* ===============================
+   BUY / RENT SEGMENTED CONTROL
+================================ */
+
+.mp-buy-toggle {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+
+  background: #eef2ff;
+  border-radius: 999px;
+}
+
+.mp-buy-toggle button {
+  height: 36px;
+  padding: 0 22px;
+
+  border: none;
+  background: transparent;
+
+  font-size: 13px;
+  font-weight: 700;
+  color: #2563eb;
+
+  border-radius: 999px;
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+/* ACTIVE */
+.mp-buy-toggle button.active {
+  background: linear-gradient(135deg, #2563eb, #3b82f6);
+  color: #ffffff;
+  box-shadow: 0 6px 16px rgba(37,99,235,0.35);
+}
+
+/* HOVER */
+.mp-buy-toggle button:not(.active):hover {
+  background: rgba(37,99,235,0.08);
+}
+.mp-card-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: #0f172a;
+}
+
+.mp-card-row {
+  font-size: 14px;
+  color: #475569;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mp-card-row.muted {
+  color: #64748b;
+}
+
+.vehicleContactHeader {
+  display: flex;
+  align-items: center;
+  width: 100%;
+
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  padding: 16px 20px;
+  border-radius: 22px;
+  margin: 18px 0;
+
+  color: #ffffff;
+}
+
+.vehicleContactLeft {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* LEFT ICON */
+.vehicleContactAvatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.25);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* TEXT */
+.vehicleContactText strong {
+  font-size: 16px;
+  font-weight: 700;
+}
+.vehicleContactText span {
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+/* 🔥 RIGHT CALL BUTTON */
+.vehicleContactCall {
+  margin-left: auto;   /* THIS pushes it to the right */
+
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #2563eb;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.mp-badges {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  gap: 8px;
+}
+
+.mp-condition {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  color: white;
+}
+
+.mp-condition.new {
+  background: #22c55e;
+}
+
+.mp-condition.used {
+  background: #6b7280;
 }

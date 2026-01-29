@@ -1,75 +1,100 @@
 /* ===============================
-   BASE
+   ROOT & RESET
 ================================ */
-.bc_page {
-  min-height: 100vh;
-  background: #ffffff;
-  color: #111827;
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
+html,
+body {
+  height: 100%;
+  margin: 0;
+  background: #f8fafc;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont;
 }
 
-.bc_page::-webkit-scrollbar {
-  width: 0;
-  height: 0;
+/* ===============================
+   PAGE (INSIDE MODAL)
+================================ */
+.bc_page {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  color: #111827;
+  overflow: hidden;
+  animation: bcPageEnter 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes bcPageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 /* ===============================
    HEADER
 ================================ */
 .bc_header {
-  background: #ffffff;
+  height: 64px;
+  background: rgba(255, 255, 255, 0.95);
   border-bottom: 1px solid #e5e7eb;
-  position: sticky;
-  top: 0;
-  z-index: 50;
-}
-
-.bc_headerLeft {
   display: flex;
   align-items: center;
   gap: 12px;
+  padding: 0 16px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  backdrop-filter: blur(8px);
 }
 
-.bc_headerTitle {
+.bc_header h1 {
   font-size: 18px;
   font-weight: 800;
-  color: #111827;
+  margin: 0;
 }
 
 .bc_iconBtn {
   width: 40px;
   height: 40px;
-  border-radius: 20px;
-  display: grid;
-  place-items: center;
+  border-radius: 50%;
   border: none;
   background: transparent;
+  display: grid;
+  place-items: center;
   cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease;
 }
 
 .bc_iconBtn:hover {
   background: #f3f4f6;
 }
 
+.bc_iconBtn:active {
+  transform: scale(0.92);
+}
+
 /* ===============================
-   CONTAINER
+   SCROLLABLE CONTENT
 ================================ */
 .bc_container {
-  padding: 24px;
-  max-width: 820px;
-  margin: 0 auto;
+  flex: 1;
+  padding: 24px 24px 140px;
+  overflow-y: auto;
+  scrollbar-width: none;
 }
 
-.bc_sectionTitle {
-  margin: 32px 0 12px;
-  font-size: 20px;
-  font-weight: 800;
+.bc_container::-webkit-scrollbar {
+  display: none;
 }
 
+/* ===============================
+   LABELS
+================================ */
 .bc_label {
-  margin-bottom: 8px;
+  margin: 20px 0 8px;
   font-size: 14px;
   font-weight: 600;
   color: #6b7280;
@@ -79,250 +104,234 @@
    INPUTS
 ================================ */
 .bc_input,
-.bc_floorField,
-.bc_iconInputField,
 .bc_select {
   width: 100%;
-  height: 56px;
+  height: 54px;
   padding: 0 16px;
-  border-radius: 12px;
-  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  border: 1.5px solid #e5e7eb;
   background: #ffffff;
-  color: #111827;
-  font-size: 16px;
-  outline: none;
+  font-size: 15px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .bc_input:focus,
-.bc_floorField:focus,
-.bc_iconInputField:focus,
 .bc_select:focus {
+  outline: none;
   border-color: #2563eb;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
 }
 
-.bc_textarea,
-.bc_reasonTextarea {
+.bc_textarea {
   width: 100%;
   min-height: 120px;
   padding: 14px 16px;
-  border-radius: 12px;
-  border: 1px solid #e5e7eb;
-  background: #ffffff;
-  color: #111827;
+  border-radius: 14px;
+  border: 1.5px solid #e5e7eb;
   font-size: 14px;
-  resize: vertical;
-  outline: none;
+  resize: none;
 }
 
-.bc_textarea:focus,
-.bc_reasonTextarea:focus {
+.bc_textarea:focus {
+  outline: none;
   border-color: #2563eb;
 }
 
 /* ===============================
-   SELECT WRAP
-================================ */
-.bc_selectWrap {
-  height: 56px;
-  border-radius: 12px;
-  margin-bottom: 16px;
-}
-
-/* ===============================
-   LOCATION
+   LOCATION BOX
 ================================ */
 .bc_detectBox {
-  margin-bottom: 24px;
-}
-
-.bc_detectedLocationBox {
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
   padding: 14px 16px;
-  background: #f9fafb;
-}
-
-.bc_locationRow {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-}
-
-.bc_locationRowBtn {
-  width: 100%;
-  display: flex;
-  gap: 8px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  text-align: left;
-}
-
-.bc_locationIconActive {
-  color: #2563eb;
-}
-
-.bc_detectText {
-  font-size: 14px;
-  color: #111827;
-}
-
-.bc_detectPlaceholder {
-  font-size: 14px;
-  color: #6b7280;
-}
-
-/* ===============================
-   ALLOCATION CARD
-================================ */
-.bc_allocatedCard {
-  border: 1px solid #2563eb;
   border-radius: 14px;
-  padding: 16px;
-  background: #f8fafc;
-  margin-bottom: 24px;
-}
-
-.bc_allocatedTitle {
-  font-size: 12px;
-  font-weight: 800;
-  color: #2563eb;
-}
-
-.bc_avatar {
-  width: 56px;
-  height: 56px;
-  border-radius: 28px;
-}
-
-.bc_allocatedName {
-  font-weight: 700;
-}
-
-.bc_star {
-  color: #facc15;
-}
-
-/* ===============================
-   FLOOR / DATE / TIME
-================================ */
-.bc_floorInput,
-.bc_iconInput {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.bc_suffix {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
   font-size: 14px;
-  color: #6b7280;
 }
 
 /* ===============================
    EXTRA HOURS
 ================================ */
-.bc_extraHoursCard {
-  border: 1px solid #e5e7eb;
-  border-radius: 14px;
-  padding: 20px;
-  background: #f9fafb;
-  margin-bottom: 32px;
-}
-
-.bc_counter {
+.bc_extraHours {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
+  margin-top: 10px;
 }
 
-.bc_counterBtn,
-.bc_counterBtnPlus {
+.bc_extraHours button {
   width: 36px;
   height: 36px;
   border-radius: 50%;
   border: none;
+  background: #e5e7eb;
   cursor: pointer;
   font-size: 18px;
 }
 
-.bc_counterBtn {
-  background: #e5e7eb;
-}
-
-.bc_counterBtnPlus {
+.bc_extraHours button:last-child {
   background: #2563eb;
   color: #ffffff;
 }
 
 /* ===============================
-   PHOTOS
+   ADDON SERVICES
 ================================ */
-.bc_photoBoxDashed {
-  width: 96px;
-  height: 96px;
-  border-radius: 14px;
-  border: 2px dashed #c7d2fe;
+.bc_addonList {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
-.bc_photoPreview {
-  width: 96px;
-  height: 96px;
-  border-radius: 14px;
+.bc_addonCheckbox {
+  display: flex;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  border: 1.5px solid #e5e7eb;
+  background: #ffffff;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.bc_addonCheckbox:hover {
+  border-color: #2563eb;
+  background: #f8fafc;
+}
+
+.bc_addonCheckbox input {
+  width: 20px;
+  height: 20px;
+  accent-color: #2563eb;
+}
+
+.bc_addonInfo {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.bc_addonLabel {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.bc_addonPrice {
+  font-size: 14px;
+  font-weight: 700;
+  color: #2563eb;
 }
 
 /* ===============================
-   ADDONS
+   PHOTO UPLOAD
 ================================ */
-.bc_addonCard {
-  border: 1px solid #e5e7eb;
-  border-radius: 14px;
-  background: #ffffff;
+.bc_photoActions {
+  display: flex;
+  gap: 16px;
+  margin: 12px 0 16px;
 }
 
-.bc_addBtn {
-  background: #eff6ff;
+.bc_photoActionCard {
+  flex: 1;
+  border: 2px dashed #2563eb;
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
   color: #2563eb;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.15s ease;
+}
+
+.bc_photoActionCard:hover {
+  background: #eff6ff;
+}
+
+.bc_photoActionCard:active {
+  transform: scale(0.96);
+}
+
+.bc_photoGrid {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.bc_photoPreview {
+  width: 88px;
+  height: 88px;
+  border-radius: 14px;
+  overflow: hidden;
+  position: relative;
+}
+
+.bc_photoPreview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.bc_removePhoto {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.65);
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
 }
 
 /* ===============================
    SUMMARY
 ================================ */
 .bc_summary {
+  margin-top: 24px;
   background: #f9fafb;
-  border: 1px solid #e5e7eb;
   border-radius: 16px;
   padding: 20px;
-}
-
-.bc_summaryTotalValue {
-  font-size: 24px;
-  font-weight: 900;
-  color: #2563eb;
+  border: 1px solid #e5e7eb;
 }
 
 /* ===============================
-   BOTTOM CTA (WEB FRIENDLY)
+   BOTTOM CTA
 ================================ */
 .bc_bottomBar {
   position: sticky;
   bottom: 0;
-  background: #ffffff;
-  padding: 16px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  padding: 16px 24px;
   border-top: 1px solid #e5e7eb;
-  margin-top: 32px;
+  z-index: 20;
 }
 
 .bc_ctaBtn {
   width: 100%;
   height: 56px;
-  border-radius: 14px;
+  border-radius: 18px;
   border: none;
-  cursor: pointer;
-  background: #2563eb;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
   color: #ffffff;
   font-size: 16px;
   font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+.bc_ctaBtn:hover {
+  box-shadow: 0 16px 40px rgba(37, 99, 235, 0.4);
+}
+
+.bc_ctaBtn:active {
+  transform: scale(0.96);
 }
 
 /* ===============================
@@ -331,33 +340,53 @@
 .bc_modalOverlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.6);
-  display: grid;
-  place-items: center;
+  background: rgba(0, 0, 0, 0.65);
+  display: flex;
+  justify-content: center;
+  align-items: center;
   z-index: 200;
+  animation: bcOverlayFade 0.35s ease;
+}
+
+@keyframes bcOverlayFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .bc_modalCard {
   width: 100%;
-  max-width: 640px;
-  border-radius: 20px;
-  padding: 24px;
+  max-width: 900px;
+  height: 100%;
   background: #ffffff;
+  border-radius: 18px;
+  overflow: hidden;
+  animation: bcModalEnter 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.bc_paymentModal {
-  max-width: 720px;
+@keyframes bcModalEnter {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 /* ===============================
-   RESPONSIVE
+   MOBILE
 ================================ */
-@media (max-width: 640px) {
-  .bc_container {
-    padding: 16px;
+@media (max-width: 768px) {
+  .bc_modalCard {
+    border-radius: 0;
   }
 
-  .bc_modalCard {
-    max-width: 100%;
+  .bc_container {
+    padding: 16px 16px 140px;
   }
 }

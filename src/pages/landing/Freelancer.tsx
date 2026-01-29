@@ -360,12 +360,17 @@ const Freelancer: React.FC = () => {
             onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
-        <button
-          className={`filter-btn ${showOnlyActive ? "active" : ""}`}
-          onClick={() => setShowOnlyActive((p) => !p)}
-        >
-          <Filter size={18} />
-        </button>
+         <button
+  className={`filter-btn ${showOnlyActive ? "active" : ""}`}
+  onClick={() => setShowOnlyActive((p) => !p)}
+  title={
+    showOnlyActive
+      ? "Show all freelancers"
+      : "Show active freelancers"
+  }
+>
+  <Filter size={18} />
+</button>
       </div>
 
       {/* Categories */}
@@ -406,9 +411,8 @@ const Freelancer: React.FC = () => {
         {filteredProviders.map((p) => (
           <div
   key={p.id}
- className={`card ${
-  p.status !== "WAITING" ? "disabled" : ""
-}`}
+className="card"
+
 
 >
 

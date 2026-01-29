@@ -35,7 +35,7 @@ const internships: Internship[] = [
     type: "Paid",
     isRemote: false,
     description:
-      "Join our design team to help shape the future of audio streaming. You will work closely with researchers, product managers...",
+      "Join our design team to help shape the future of audio streaming. You will work closely with researchers, product managers.",
     category: "design",
   },
   {
@@ -48,7 +48,7 @@ const internships: Internship[] = [
     type: null,
     isRemote: true,
     description:
-      "Work on large-scale systems and help build the future of search. We are looking for students with strong algorithmic skills...",
+      "Work on large-scale systems and help build the future of search. We are looking for students with strong algorithmic skills.",
     category: "engineering",
   },
   {
@@ -131,37 +131,36 @@ const Internships = ({ onBack }: Props) => {
       ) : (
         /* ================= LIST SCREEN ================= */
         <>
-          {/* Header */}
-          <header className="web-header">
-            <div className="left">
-              <button className="back-btn" onClick={() => onBack?.()}>
-                ←
-              </button>
-              <h1>Internships</h1>
-            </div>
+  {/* ===== HEADER (Students Style) ===== */}
+  <div className="internships-header">
+    <button className="internships-back" onClick={() => onBack?.()}>
+      ←
+    </button>
 
-            <div className="search-wrapper">
-              <input
-                placeholder="Search role, company..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
-              <span className="filter-icon">⚙</span>
-            </div>
-          </header>
+    <h1>Internships</h1>
 
-          {/* Filters */}
-          <div className="filter-bar">
-            {filters.map((f, i) => (
-              <button
-                key={f}
-                className={`filter-btn ${i === activeFilter ? "active" : ""}`}
-                onClick={() => setActiveFilter(i)}
-              >
-                {f}
-              </button>
-            ))}
-          </div>
+    <input
+      className="internships-search"
+      placeholder="Search role, company..."
+      value={search}
+      onChange={(e) => setSearch(e.target.value)}
+    />
+  </div>
+
+  {/* ===== FILTERS (Students Style Pills) ===== */}
+  <div className="internships-filters">
+    <div className="internships-tabs">
+      {filters.map((f, i) => (
+        <button
+          key={f}
+          className={i === activeFilter ? "active" : ""}
+          onClick={() => setActiveFilter(i)}
+        >
+          {f}
+        </button>
+      ))}
+    </div>
+  </div>
 
           {/* Internship Grid */}
           <div className="internship-grid">

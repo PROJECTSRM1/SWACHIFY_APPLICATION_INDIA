@@ -1,44 +1,54 @@
-/* Page */
+/* ================= PAGE ================= */
+
 .hsw_page {
-  background: #f9fafb;
-  min-height: 100%;
+  background: #ffffff;
+  height: 100%;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
-/* Header */
+/* ================= HEADER ================= */
+
 .hsw_header {
   display: grid;
   grid-template-columns: 40px 1fr 40px;
   align-items: center;
-  padding: 16px 20px;
+  padding: 16px 24px;
   border-bottom: 1px solid #e5e7eb;
   background: #ffffff;
-  /* position: sticky; */
 }
 
 .hsw_header h1 {
   margin: 0;
   text-align: center;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 800;
-  position: sticky;
+  color: #111827;
 }
 
 .hsw_backBtn {
   border: none;
   background: transparent;
   cursor: pointer;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
 }
 
-/* Search */
+.hsw_backBtn:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+/* ================= SEARCH ================= */
+
 .hsw_search {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin: 16px 20px;
-  padding: 12px 14px;
-  border-radius: 12px;
+  margin: 16px 24px 20px;
+  padding: 14px 16px;
+  border-radius: 14px;
   background: #ffffff;
   border: 1px solid #e5e7eb;
 }
@@ -46,108 +56,153 @@
 .hsw_search input {
   border: none;
   outline: none;
-  font-size: 14px;
+  font-size: 15px;
   flex: 1;
 }
 
-/* List */
+/* ================= LIST GRID ================= */
+
 .hsw_list {
-  padding: 0 20px 120px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  padding: 0 24px 120px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  overflow-y: auto;
 }
 
-/* Card */
+/* ================= CARD ================= */
+
 .hsw_card {
+  position: relative;
+  background: #ffffff;
+  border-radius: 18px;
+  border: 1.5px solid #e5e7eb;
+  cursor: pointer;
+
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 14px;
-  border-radius: 14px;
-  border: 1px solid #e5e7eb;
-  background: #ffffff;
-  cursor: pointer;
-  transition: all 0.2s ease;
+  gap: 14px;
+
+  padding: 14px 16px;
+  transition: all 0.25s ease;
 }
 
 .hsw_card:hover {
-  border-color: #2563eb;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
 }
 
 .hsw_card.active {
   border-color: #2563eb;
-  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.15);
+  background: #f5f9ff;
+  box-shadow: 0 12px 36px rgba(37, 99, 235, 0.25);
 }
+
+/* ================= IMAGE (FIXED & VISIBLE) ================= */
+
+.hsw_imageWrap {
+  width: 72px;
+  height: 72px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #f3f4f6;
+  flex-shrink: 0;
+}
+
+.hsw_imageWrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ================= LEFT CONTENT ================= */
 
 .hsw_left {
   display: flex;
   align-items: center;
   gap: 14px;
+  flex: 1;
 }
 
+/* ICON */
 .hsw_icon {
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   border-radius: 10px;
   background: #eef2ff;
   display: grid;
   place-items: center;
   color: #2563eb;
+  flex-shrink: 0;
 }
 
+/* TEXT */
 .hsw_card h3 {
   margin: 0;
-  font-size: 15px;
-  font-weight: 700;
+  font-size: 16px;
+  font-weight: 800;
+  color: #111827;
 }
 
 .hsw_card p {
-  margin: 2px 0 0;
-  font-size: 13px;
+  margin: 4px 0 0;
+  font-size: 14px;
   color: #6b7280;
 }
 
-/* Check */
+.hsw_card small {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+/* ================= CHECK ICON ================= */
+
 .hsw_check {
-  width: 28px;
-  height: 28px;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
   background: #2563eb;
   color: #ffffff;
   display: grid;
   place-items: center;
+  flex-shrink: 0;
 }
 
-/* Footer */
+/* ================= FOOTER ================= */
+
 .hsw_footer {
   position: sticky;
   bottom: 0;
+  padding: 16px 24px;
   background: #ffffff;
   border-top: 1px solid #e5e7eb;
-  padding: 16px 20px;
 }
 
 .hsw_footer button {
   width: 100%;
+  height: 52px;
+  border-radius: 16px;
   background: #2563eb;
   color: #ffffff;
   border: none;
-  border-radius: 14px;
-  padding: 14px;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 800;
   cursor: pointer;
+  transition: all 0.25s ease;
 }
 
 .hsw_footer button:hover {
   filter: brightness(1.05);
 }
 
-/* Desktop */
+.hsw_footer button:disabled {
+  background: #c7d2fe;
+  cursor: not-allowed;
+}
+
+/* ================= DESKTOP ================= */
+
 @media (min-width: 900px) {
-  .hsw_page {
-    max-width: 900px;
-    margin: 0 auto;
+  .hsw_list {
+    grid-template-columns: repeat(3, 1fr);
   }
 }

@@ -1,4 +1,3 @@
-
 .swl-hs-navbar {
   display: flex;
   align-items: center;
@@ -13,7 +12,7 @@
   right: 0;
   z-index: 1000;
 
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
 .swl-hs-navbar-logo {
@@ -82,7 +81,7 @@
   background: #fff;
   list-style: none;
   padding: 16px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.12);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.12);
 }
 
 .swl-mobile-menu li {
@@ -118,7 +117,7 @@
 
 .swl-hs-rf-classname .ant-modal-content {
   border-radius: 16px;
-  box-shadow: 0 25px 60px rgba(0,0,0,0.18);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.18);
 }
 
 
@@ -153,10 +152,10 @@
 .swl-hs-rf-classname .ant-input-password:focus-within,
 .swl-hs-rf-classname .ant-select-focused .ant-select-selector {
   border-color: var(--swl-gold);
-  box-shadow: 0 0 0 2px rgba(201,165,106,0.25);
+  box-shadow: 0 0 0 2px rgba(201, 165, 106, 0.25);
 }
 
-.swl-hs-rf-classname .ant-form-item-label > label {
+.swl-hs-rf-classname .ant-form-item-label>label {
   font-weight: 500;
   color: var(--swl-text-dark);
 }
@@ -207,7 +206,7 @@
 
 
 .swl-hs-rf-classname {
-  --auth-primary: #d2b06f;          
+  --auth-primary: #d2b06f;
   --auth-primary-hover: #c4a15f;
   --auth-text-dark: #1f2937;
   --auth-border: #e5e7eb;
@@ -216,9 +215,10 @@
   --auth-input-height: 56px;
   --auth-btn-height: 56px;
 }
+
 .swl-hs-rf-classname .ant-modal-content {
   border-radius: 22px;
-  box-shadow: 0 24px 60px rgba(0,0,0,0.18);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
 }
 
 .swl-hs-rf-classname .ant-modal-body {
@@ -250,7 +250,7 @@
   border-radius: 6px;
 }
 
-.swl-hs-rf-classname .ant-form-item-label > label {
+.swl-hs-rf-classname .ant-form-item-label>label {
   font-size: 15px;
   font-weight: 500;
   color: var(--auth-text-dark);
@@ -270,7 +270,7 @@
 .swl-hs-rf-classname .ant-input:focus,
 .swl-hs-rf-classname .ant-input-password:focus-within {
   border-color: var(--auth-primary);
-  box-shadow: 0 0 0 4px rgba(210,176,111,0.25);
+  box-shadow: 0 0 0 4px rgba(210, 176, 111, 0.25);
 }
 
 .swl-login-options-row {
@@ -330,8 +330,7 @@
 }
 
 
-.swl-hs-rf-classname
-.ant-tabs-tabpane:not(.ant-tabs-tabpane-active) {
+.swl-hs-rf-classname .ant-tabs-tabpane:not(.ant-tabs-tabpane-active) {
   overflow: auto;
 }
 
@@ -354,9 +353,7 @@
 }
 
 
-.swl-hs-rf-classname
-.ant-tabs-tabpane-active
-button[type="submit"] {
+.swl-hs-rf-classname .ant-tabs-tabpane-active button[type="submit"] {
   background-color: #d2b06f !important;
   border-color: #d2b06f !important;
   color: #ffffff !important;
@@ -370,17 +367,13 @@ button[type="submit"] {
 }
 
 
-.swl-hs-rf-classname
-.ant-tabs-tabpane-active
-button[type="submit"]:hover {
+.swl-hs-rf-classname .ant-tabs-tabpane-active button[type="submit"]:hover {
   background-color: #c4a15f !important;
   border-color: #c4a15f !important;
 }
 
 
-.swl-hs-rf-classname
-.ant-tabs-tabpane-active
-button[type="button"] {
+.swl-hs-rf-classname .ant-tabs-tabpane-active button[type="button"] {
   height: 56px;
   border-radius: 16px;
   font-size: 16px;
@@ -398,24 +391,21 @@ button[type="button"] {
    VENDOR & ADMIN BUTTON COLORS
    =============================== */
 
-.ant-modal
-.ant-tabs-tabpane-active
-button[type="submit"] {
-  background-color: #c4a15f!important;   /* 🔵 CHANGE COLOR HERE */
+.ant-modal .ant-tabs-tabpane-active button[type="submit"] {
+  background-color: #c4a15f !important;
+  /* 🔵 CHANGE COLOR HERE */
   border-color: #c4a15f !important;
   color: #ffffff !important;
 }
 
 /* Hover */
-.ant-modal
-.ant-tabs-tabpane-active
-button[type="submit"]:hover {
-  background-color:  #c4a15f !important;
-  border-color:  #c4a15f !important;
+.ant-modal .ant-tabs-tabpane-active button[type="submit"]:hover {
+  background-color: #c4a15f !important;
+  border-color: #c4a15f !important;
 }
 
 .ant-modal .ant-form a {
-  color:  #c4a15f !important;  
+  color: #c4a15f !important;
   font-weight: 600;
   cursor: pointer;
 }
@@ -439,6 +429,7 @@ button[type="submit"]:hover {
 .ant-tabs-tab:not(.ant-tabs-tab-active) .ant-tabs-tab-btn {
   color: #c4a15f !important;
 }
+
 .ant-tabs-ink-bar {
   background-color: #c4a15f !important;
 }
@@ -461,6 +452,7 @@ button[type="submit"]:hover {
   font-weight: 700;
   color: #1f2937;
 }
+
 /* ===============================
    AUTH INPUT ALIGNMENT FIX
 ================================ */
@@ -472,13 +464,15 @@ button[type="submit"]:hover {
 
 /* Fix Password wrapper alignment */
 .swl-hs-rf-classname .ant-input-password {
-  padding: 0 !important; /* remove uneven padding */
+  padding: 0 !important;
+  /* remove uneven padding */
 }
 
 /* Fix inner password input */
 .swl-hs-rf-classname .ant-input-password .ant-input {
   padding-left: 18px !important;
-  padding-right: 44px !important; /* space for eye icon */
+  padding-right: 44px !important;
+  /* space for eye icon */
   height: 56px;
 }
 
@@ -493,6 +487,7 @@ button[type="submit"]:hover {
   height: 56px;
   align-items: center;
 }
+
 /* ===============================
    FIX PASSWORD BLUE BACKGROUND
 ================================ */
@@ -502,7 +497,8 @@ button[type="submit"]:hover {
   height: 56px !important;
   border-radius: 16px !important;
   padding: 0 16px !important;
-  background-color: #eaf2ff !important; /* same as email */
+  background-color: #eaf2ff !important;
+  /* same as email */
   display: flex;
   align-items: center;
 }
@@ -642,7 +638,8 @@ button[type="submit"]:hover {
 
   /* Inner content fit */
   .swl-hs-rf-classname .ant-modal-content {
-    width: calc(100vw - 16px) !important; /* safe inset */
+    width: calc(100vw - 16px) !important;
+    /* safe inset */
     margin: 8px auto !important;
     border-radius: 12px !important;
   }
@@ -694,31 +691,30 @@ button[type="submit"]:hover {
     margin-bottom: 6px !important;
   }
 }
+
 /* =================================================
    FINAL FIX — TreeSelect MULTI auto height (SAFE)
 ================================================= */
 
 /* ONLY for multiple select */
 .swl-hs-rf-classname .ant-select-multiple .ant-select-selector {
-  min-height: 38px !important;   /* base input height */
-  height: auto !important;       /* 🔥 allow grow */
+  min-height: 38px !important;
+  /* base input height */
+  height: auto !important;
+  /* 🔥 allow grow */
   align-items: flex-start !important;
   padding-top: 6px !important;
   padding-bottom: 6px !important;
 }
 
 /* Chips wrap correctly */
-.swl-hs-rf-classname
-.ant-select-multiple
-.ant-select-selection-overflow {
+.swl-hs-rf-classname .ant-select-multiple .ant-select-selection-overflow {
   display: flex !important;
   flex-wrap: wrap !important;
 }
 
 /* Chip (tag) styling */
-.swl-hs-rf-classname
-.ant-select-multiple
-.ant-select-selection-item {
+.swl-hs-rf-classname .ant-select-multiple .ant-select-selection-item {
   height: 20px;
   line-height: 18px;
   font-size: 12px;
@@ -727,9 +723,131 @@ button[type="submit"]:hover {
 }
 
 /* Keep arrow vertically centered */
-.swl-hs-rf-classname
-.ant-select-multiple
-.ant-select-arrow {
+.swl-hs-rf-classname .ant-select-multiple .ant-select-arrow {
   top: 50%;
   transform: translateY(-50%);
+}
+
+.partner-form {
+  color: #ffffff;
+}
+
+.partner-form .ant-form-item-label>label {
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.partner-form input,
+.partner-form .ant-input-password,
+.partner-form .ant-select-selector {
+  background: #0b1220 !important;
+  border: none !important;
+  color: #ffffff !important;
+  border-radius: 14px;
+}
+
+.partner-form input::placeholder {
+  color: #94a3b8;
+}
+
+.partner-form .ant-select-arrow {
+  color: #ffffff;
+}
+
+.partner-title {
+  text-align: center;
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #ffffff;
+}
+
+.partner-register-btn {
+  background: #0b5cff;
+  height: 48px;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* =========================
+   Partner Registration Modal
+========================= */
+
+.partner-modal .ant-modal-content {
+  border-radius: 16px;
+  background: #ffffff;
+}
+
+.partner-modal .ant-modal-body {
+  padding: 20px;
+  max-height: 70vh;
+  /* ✅ control height */
+  overflow-y: auto;
+  /* ✅ enable scroll */
+}
+
+/* Reduce modal width feeling */
+.partner-modal {
+  max-width: 380px;
+}
+
+/* Mobile optimisation */
+@media (max-width: 480px) {
+  .partner-modal {
+    width: 92% !important;
+  }
+
+  .partner-modal .ant-modal-body {
+    max-height: 80vh;
+    padding: 16px;
+  }
+}
+
+/* Smooth scrollbar */
+.partner-modal .ant-modal-body::-webkit-scrollbar {
+  width: 4px;
+}
+
+.partner-modal .ant-modal-body::-webkit-scrollbar-thumb {
+  background-color: #d0d0d0;
+  border-radius: 4px;
+}
+
+/* Title styling */
+.partner-modal h2 {
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+/* ===============================
+   FIX Select dropdown inside modal
+================================ */
+
+.partner-modal .ant-select-dropdown {
+  z-index: 1055;
+  /* above modal content */
+}
+
+/* Prevent modal clipping dropdown */
+.partner-modal .ant-modal-body {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Dropdown height control */
+.partner-modal .ant-select-dropdown {
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+/* Smooth dropdown scroll */
+.partner-modal .ant-select-dropdown::-webkit-scrollbar {
+  width: 4px;
+}
+
+.partner-modal .ant-select-dropdown::-webkit-scrollbar-thumb {
+  background: #cfcfcf;
+  border-radius: 4px;
 }
