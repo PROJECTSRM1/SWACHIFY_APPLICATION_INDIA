@@ -44,21 +44,21 @@ const EducationPartnerDashboard: React.FC = () => {
           </div>
 
           {/* STATS */}
-          <div className="epd-stats">
-            <StatCard
-              icon={<MdGroups />}
-              value="2,310"
-              label="Total Students"
-              color="blue"
-            />
-            <StatCard
-              icon={<MdWork />}
-              value="64"
-              label="Active Internships"
-              color="orange"
-            />
-          </div>
+<div className="epd-stats">
+  <StatCard
+    icon={<MdGroups size={22} />}
+    value="2,310"
+    label="Total Students"
+    color="blue"
+  />
 
+  <StatCard
+    icon={<MdWork size={22} />}
+    value="64"
+    label="Active Internships"
+    color="orange"
+  />
+</div>
           {/* STUDENTS BY BRANCH */}
           <div className="epd-section-header">
             <span>STUDENTS BY BRANCH</span>
@@ -134,11 +134,20 @@ const EducationPartnerDashboard: React.FC = () => {
 
 /* ================= SUB COMPONENTS ================= */
 
+
+
 const StatCard = ({ icon, value, label, color }: any) => (
-  <div className="epd-stat-card">
-    <div className={`epd-stat-icon ${color}`}>{icon}</div>
-    <h3>{value}</h3>
-    <p>{label}</p>
+  <div className={`epd-stat-card epd-${color}`}>
+    <div className="epd-stat-left">
+      <div className="epd-stat-icon-wrap">
+        {icon}
+      </div>
+
+      <div className="epd-stat-text">
+        <h3>{value}</h3>
+        <p>{label}</p>
+      </div>
+    </div>
   </div>
 );
 

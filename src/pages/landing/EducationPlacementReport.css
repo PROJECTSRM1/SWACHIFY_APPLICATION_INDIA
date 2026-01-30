@@ -1,9 +1,10 @@
 /* ROOT */
 .epr2-page {
-  background: #f8fafc;
+  background: linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%);
   min-height: 100vh;
   padding-bottom: 32px;
   font-family: system-ui, -apple-system, BlinkMacSystemFont;
+  color: #1f2933;
 }
 
 /* HEADER */
@@ -45,15 +46,24 @@
 }
 
 .epr2-college-name {
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 700;
+  background: linear-gradient(90deg, #2563eb, #1e40af);
+  /* -webkit-background-clip: text; */
+  -webkit-text-fill-color: transparent;
 }
 
 .epr2-premium {
+  display: inline-block;
+  margin-top: 2px;
+  padding: 2px 8px;
   font-size: 11px;
-  color: #2563eb;
   font-weight: 600;
+  color: #2563eb;
+  background: #e0edff;
+  border-radius: 999px;
 }
+
 
 /* YEAR */
 .epr2-year-chip {
@@ -64,47 +74,110 @@
   font-weight: 600;
 }
 
-/* KPI */
 .epr2-kpi-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
+  gap: 16px;
   padding: 0 16px;
 }
 
+/* KPI CARD */
 .epr2-kpi-card {
-  background: #fff;
-  padding: 14px;
-  border-radius: 14px;
+  position: relative;
+  padding: 14px 16px 14px 22px;
+  border-radius: 16px;
+  min-height: 88px;
+
+  background: linear-gradient(180deg, #ffffff, #fafbff);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+}
+
+/* WOW KPI EFFECT (from reference) */
+.epr2-kpi-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.epr2-kpi-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 32px rgba(15, 23, 42, 0.15);
+}
+
+
+
+/* LEFT COLOR STRIP */
+.epr2-kpi-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 18px;
+  bottom: 18px;
+  width: 6px;
+  border-radius: 12px;
+}
+/* Placement Rate */
+.epr2-kpi-card:nth-child(1) {
+  background: linear-gradient(180deg, #eff6ff, #ffffff);
+  border-left: 6px solid #2563eb;
+}
+
+.epr2-kpi-card:nth-child(2) {
+  background: linear-gradient(180deg, #ecfdf5, #ffffff);
+  border-left: 6px solid #16a34a;
+}
+
+.epr2-kpi-card:nth-child(3) {
+  background: linear-gradient(180deg, #f5f3ff, #ffffff);
+  border-left: 6px solid #7c3aed;
+}
+.epr2-kpi-label {
+  font-size: 12px;
+  color: #475569;
+}
+
+.epr2-kpi-value {
+  font-size: 26px;
+  font-weight: 700;
+  margin-top: 4px;
 }
 
 .epr2-kpi-label {
   font-size: 12px;
-  color: #64748b;
+  color: #475569;
+  line-height: 1.2;
 }
 
 .epr2-kpi-value {
-  display: block;
-  font-size: 20px;
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.epr2-kpi-sub,
+.epr2-kpi-positive {
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.epr2-kpi-sub,
+.epr2-kpi-positive {
+  font-size: 12px;
   margin-top: 4px;
 }
 
-.epr2-kpi-sub {
-  font-size: 12px;
-  color: #64748b;
-}
-
-.epr2-kpi-positive {
-  font-size: 12px;
-  color: #22c55e;
-}
 
 /* CARD */
 .epr2-card {
-  background: #fff;
-  margin: 14px 16px;
-  padding: 16px;
-  border-radius: 16px;
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #f8fafc 100%
+  );
+  border-radius: 20px;
+  padding: 22px;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  box-shadow: 0 18px 36px rgba(15, 23, 42, 0.08);
 }
 
 .epr2-card-title {
@@ -283,4 +356,126 @@
   font-weight: 600;
   color: #22c55e;
   margin-top: 2px;
+}
+
+
+
+/* Responsive – stack on small screens */
+@media (max-width: 900px) {
+  .epr2-dual-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.epr2-dual-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 16px;
+
+  margin: 20px 16px;
+
+  border-radius: 22px;
+
+}
+.epr2-dual-grid .epr2-card {
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+}
+.epr2-chart {
+  background: linear-gradient(to bottom, #eef4ff, #ffffff);
+  border-radius: 14px;
+  padding: 14px;
+}
+.epr2-chart svg path {
+  filter: drop-shadow(0 4px 6px rgba(37, 99, 235, 0.25));
+}
+.epr2-dept-bar {
+  height: 7px;
+  background: #e5e7eb;
+  border-radius: 6px;
+}
+
+.epr2-dept-bar div {
+  height: 100%;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #2563eb, #3b82f6);
+}
+.epr2-card-title {
+  position: relative;
+  padding-left: 12px;
+}
+
+.epr2-card-title::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 4px;
+  width: 4px;
+  height: 16px;
+  background: #2563eb;
+  border-radius: 4px;
+}
+@media (max-width: 900px) {
+  .epr2-dual-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.epr2-chart svg path {
+  filter: drop-shadow(0 2px 6px rgba(37, 99, 235, 0.35));
+}
+
+.epr2-header {
+  background: linear-gradient(135deg, #0f766e, #2563eb);
+  border-radius: 14px;
+  padding: 20px 24px;
+  margin: 16px;
+  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.25);
+}
+
+.epr2-college-name {
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
+  background: none;
+}
+
+.epr2-premium {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+.epr2-card:hover {
+  box-shadow: 0 22px 44px rgba(15, 23, 42, 0.12);
+}
+
+/* ================= KPI MOBILE FIX ================= */
+@media (max-width: 425px) {
+  .epr2-kpi-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .epr2-kpi-card {
+    min-height: auto;
+    padding: 18px 18px 18px 28px;
+  }
+
+  .epr2-kpi-value {
+    font-size: 24px;
+    white-space: nowrap;      /* 🔥 PREVENT BREAK */
+  }
+
+  .epr2-kpi-label {
+    font-size: 13px;
+  }
+
+  .epr2-kpi-sub,
+  .epr2-kpi-positive {
+    font-size: 12px;
+  }
+}
+
+/* EXTRA SAFETY FOR VERY SMALL DEVICES */
+@media (max-width: 360px) {
+  .epr2-kpi-value {
+    font-size: 22px;
+  }
 }

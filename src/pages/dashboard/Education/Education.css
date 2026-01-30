@@ -126,9 +126,13 @@
 /* ================= CATEGORIES ================= */
 .edu-category-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 28px;
 }
+.edu-red {
+  background: #dc2626;
+}
+
 
 .edu-category-grid div {
   background: #fff;

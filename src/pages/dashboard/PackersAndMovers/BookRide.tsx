@@ -30,6 +30,10 @@ const BookRide: React.FC = () => {
   // 🚀 NEW STATES FOR PICKUP & DROPOFF
   const [pickup, setPickup] = useState("");
   const [dropoff, setDropoff] = useState("");
+  
+const [driverStatus, setDriverStatus] = useState("Finding driver...");
+const [arrivalTime, _setArrivalTime] = useState(7);
+
 
  const rideOptions = [
   { 
@@ -88,10 +92,34 @@ const BookRide: React.FC = () => {
   }, 1200);
 };
 
-  const handleConfirmBooking = () => {
-    if (!selectedRide) return;
-    setBookingConfirmed(true);
-  };
+ const handleConfirmBooking = () => {
+  if (!selectedRide) return;
+
+  setBookingConfirmed(true);
+
+  // Start dynamic driver status flow
+  setDriverStatus("Finding driver...");
+
+  let step = 0;
+
+  const interval = setInterval(() => {
+    step++;
+
+    if (step === 1) {
+      setDriverStatus("Finding driver...");
+    }
+    if (step === 2) {
+      setDriverStatus("Driver found! On the way...");
+    }
+    if (step === 3) {
+      setDriverStatus(`Driver arriving in ${arrivalTime} mins...`);
+    }
+
+    if (step >= 3) {
+      clearInterval(interval);
+    }
+  }, 2000);
+};
 
   const handleSelectReason = (reason: string) => {
     setSelectedReason(reason);
@@ -156,7 +184,7 @@ const BookRide: React.FC = () => {
           {bookingConfirmed ? (
             <div className="sw-jr-bk-fade-in">
               <div className="sw-jr-bk-status-badge">
-                <Badge color="#10b981" text="Driver found! On the way..." />
+                <Badge color="#10b981" text={driverStatus} />
               </div>
 
               <div className="sw-jr-bk-driver-header">

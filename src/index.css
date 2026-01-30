@@ -21879,6 +21879,35 @@ position: sticky;
 
 /* MAIN LAYOUT */
 
+.justride-page-root {
+  position: relative;
+  top: -60px;
+}
+
+/* Tablets */
+@media (max-width: 1024px) {
+  .justride-page-root {
+    top: -40px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .justride-page-root {
+    top: -20px;
+  }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+  .justride-page-root {
+    top: -10px;
+  }
+}
+
+
+
+
  
 
 
@@ -22344,6 +22373,8 @@ color:#00A73E !important;
 
 
 /* All services in just ride */
+/* All services in just ride */
+
 
 /* ========== LIGHT THEME WRAP ========== */
 .sw-js-as-wrap {
@@ -22352,6 +22383,7 @@ color:#00A73E !important;
   padding: 16px 12px !important;
   color: #0f172a;
 }
+
 
 /* Card */
 .sw-js-as-card {
@@ -22362,9 +22394,11 @@ color:#00A73E !important;
   padding: 14px 16px !important;
 }
 
+
 .sw-js-as-card .ant-card-body {
   padding: 14px 16px !important;
 }
+
 
 /* Locations */
 .sw-js-as-loc {
@@ -22374,11 +22408,13 @@ color:#00A73E !important;
   margin-bottom: 14px;
 }
 
+
 .sw-js-as-loc-row {
   display: flex;
   align-items: center;
   gap: 10px;
 }
+
 
 .sw-js-as-dot {
   width: 10px;
@@ -22388,6 +22424,7 @@ color:#00A73E !important;
 .sw-js-as-dot.blue { background: #2563eb; }
 .sw-js-as-dot.green { background: #16a34a; }
 
+
 .sw-js-as-input {
   background: #f8fafc !important;
   border: 1px solid #e2e8f0 !important;
@@ -22396,12 +22433,14 @@ color:#00A73E !important;
   height: 42px;
 }
 
+
 /* Tabs */
 .sw-js-as-tabs {
   display: flex;
   gap: 10px;
   margin-bottom: 14px;
 }
+
 
 .sw-js-as-tab {
   background: #f1f5f9;
@@ -22413,10 +22452,12 @@ color:#00A73E !important;
   cursor: pointer;
 }
 
+
 .sw-js-as-tab.active {
   background: linear-gradient(135deg, #2563eb, #3b82f6);
   color: #fff;
 }
+
 
 /* Title */
 .sw-js-as-title {
@@ -22425,6 +22466,7 @@ color:#00A73E !important;
   color: #64748b;
   margin-bottom: 14px;
 }
+
 
 /* List Rows */
 .sw-js-as-row {
@@ -22437,10 +22479,12 @@ color:#00A73E !important;
   transition: all 0.2s ease;
 }
 
+
 .sw-js-as-row:hover {
   box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
   transform: translateY(-2px);
 }
+
 
 
 .sw-js-as-left {
@@ -22448,6 +22492,7 @@ color:#00A73E !important;
   gap: 14px;
   align-items: center;
 }
+
 
 .sw-js-as-icon {
   width: 46px;
@@ -22460,11 +22505,13 @@ color:#00A73E !important;
   font-size: 22px;
 }
 
+
 .sw-js-as-name {
   color: #0f172a;
   font-size: 15px;
   font-weight: 500;
 }
+
 
 .sw-js-as-sub {
   margin: 2px 0 0;
@@ -22472,10 +22519,12 @@ color:#00A73E !important;
   color: #2563eb;
 }
 
+
 /* Right */
 .sw-js-as-right {
   text-align: right;
 }
+
 
 .sw-js-as-price {
   font-size: 15px;
@@ -22483,17 +22532,20 @@ color:#00A73E !important;
   color: #0f172a;
 }
 
+
 .sw-js-as-km {
   display: block;
   font-size: 12px;
   color: #64748b;
 }
 
+
 /* Bottom CTA */
 .sw-js-as-cta-wrap {
   margin-top: 18px;
   padding-top: 14px;
 }
+
 
 .sw-js-as-cta-btn {
   width: 100%;
@@ -22512,9 +22564,11 @@ color:#00A73E !important;
   cursor: pointer;
 }
 
+
 .sw-js-as-cta-arrow {
   font-size: 18px;
 }
+
 
 /* ========== WEB FRIENDLY GRID LAYOUT ========== */
 .sw-js-as-list {
@@ -22522,6 +22576,7 @@ color:#00A73E !important;
   grid-template-columns: 1fr;
   gap: 12px;
 }
+
 
 /* Tablet / Desktop */
 @media (min-width: 768px) {
@@ -22531,12 +22586,23 @@ color:#00A73E !important;
   }
 }
 
+
 /* Large Desktop */
 @media (min-width: 1200px) {
   .sw-js-as-list {
     grid-template-columns: repeat(3, 1fr);
   }
 }
+
+
+/* Smaller Search Bar */
+.sw-js-as-input.search-small {
+  height: 34px !important;
+  padding: 4px 10px !important;
+  font-size: 14px !important;
+  border-radius: 10px !important;
+}
+
 
 
 /* ============================================================
@@ -23416,6 +23482,90 @@ color:#00A73E !important;
   .ant-modal-body {
     height: calc(100vh - 120px);
     overflow-y: auto;
+  }
+}
+
+@media (max-width: 360px) {
+
+  /* Root */
+  .justride-page-root {
+    top: -10px;
+  }
+
+  /* Hero */
+  .sw-pm-hero-inner {
+    height: auto !important;
+    padding: 12px 10px;
+  }
+
+  .sw-pm-hero-title {
+    font-size: 18px;
+  }
+
+  /* Layout */
+  .sw-jr-layout {
+    flex-direction: column !important;
+  }
+
+  /* Left panel (Sider) */
+  .sw-jr-left-panel {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 10px;
+  }
+
+  .sw-jr-title {
+    font-size: 18px;
+  }
+
+  /* Mode pills */
+  .sw-jr-modes {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .sw-jr-mode-pill {
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+
+  /* Inputs */
+  .sw-jr-location-block input {
+    font-size: 13px;
+  }
+
+  /* Rider pill */
+  .sw-jr-rider-pill {
+    font-size: 12px;
+    padding: 4px 10px;
+  }
+
+  /* Map */
+  .sw-jr-map-panel {
+    height: 220px;
+  }
+
+  .sw-jr-leaflet-map {
+    height: 220px;
+  }
+
+  /* Ride cards */
+  .sw-jr-ride-card {
+    padding: 8px;
+  }
+
+  .sw-jr-ride-type {
+    font-size: 13px;
+  }
+
+  .sw-jr-ride-price {
+    font-size: 13px;
+  }
+
+  /* Modals */
+  .sw-jr-rider-selector-modal,
+  .sw-jr-details-modal {
+    width: 95% !important;
   }
 }
 

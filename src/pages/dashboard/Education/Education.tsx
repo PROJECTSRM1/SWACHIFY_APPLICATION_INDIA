@@ -7,6 +7,8 @@ import type { Student } from "../Education/Students";
 import Internship from "../Education/Internships";
 import CandidateProfile from "../Education/CandidateProfile";
 import TrainingPage from "./TrainingPage";
+import Institutions from "../Education/Institutions";
+
 
 type Page =
   | "home"
@@ -14,6 +16,7 @@ type Page =
   | "internships"
   | "companies"
   | "training"
+  | "institutions"
   | "candidateProfile";
 
 type TrendingStudent = {
@@ -135,7 +138,11 @@ const Education: React.FC = () => {
 
         {page === "training" && (
           <TrainingPage onBack={() => setPage("home")} />
+          
         )}
+        {page === "institutions" && (
+  <Institutions onBack={() => setPage("home")} />
+)}
       </div>
     );
   }
@@ -196,27 +203,34 @@ const Education: React.FC = () => {
       <div className="edu-section">
         <h3 className="edu-section-title">Explore Categories</h3>
 
-        <div className="edu-category-grid">
-          <div onClick={() => setPage("students")}>
-            <span className="edu-blue">🎓</span>
-            <p>Students</p>
-          </div>
+      <div className="edu-category-grid">
+  <div onClick={() => setPage("students")}>
+    <span className="edu-blue">🎓</span>
+    <p>Students</p>
+  </div>
 
-          <div onClick={() => setPage("internships")}>
-            <span className="edu-purple">💼</span>
-            <p>Internships</p>
-          </div>
+  <div onClick={() => setPage("internships")}>
+    <span className="edu-purple">💼</span>
+    <p>Internships</p>
+  </div>
 
-          <div onClick={() => setPage("companies")}>
-            <span className="edu-orange">🏢</span>
-            <p>Companies</p>
-          </div>
+  <div onClick={() => setPage("companies")}>
+    <span className="edu-orange">🏢</span>
+    <p>Companies</p>
+  </div>
 
-          <div onClick={() => setPage("training")}>
-            <span className="edu-green">🧭</span>
-            <p>Training</p>
-          </div>
-        </div>
+  <div onClick={() => setPage("training")}>
+    <span className="edu-green">🧭</span>
+    <p>Training</p>
+  </div>
+
+  {/* ✅ NEW */}
+  <div onClick={() => setPage("institutions")}>
+    <span className="edu-red">🏫</span>
+    <p>Institutions</p>
+  </div>
+</div>
+
       </div>
 
       {/* TRENDING */}
