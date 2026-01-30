@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import "../../dashboard/Education/InstitutionRegistration.css";
 import InstitutionBranchConfig from "../../dashboard/Education/InstitutionBranchConfig";
+import axios from "axios";
 
 interface InstitutionsProps {
   onBack: () => void;
 }
 
+const API_BASE = "https://swachify-india-be-1-mcrb.onrender.com";
+
 const Institutions: React.FC<InstitutionsProps> = ({ onBack }) => {
-  // ✅ STEP CONTROL (ADDED)
   const [step, setStep] = useState<"step1" | "step2">("step1");
+  const [loading, setLoading] = useState(false);
 
   const [form, setForm] = useState({
     institutionName: "",
@@ -24,6 +27,13 @@ const Institutions: React.FC<InstitutionsProps> = ({ onBack }) => {
 
   const [idProof, setIdProof] = useState<File | null>(null);
   const [addressProof, setAddressProof] = useState<File | null>(null);
+  const [institutionId, setInstitutionId] = useState<number | null>(null);
+
+  // 🔑 File input refs (THIS FIXES RE-UPLOAD ISSUE)
+  const idInputRef = useRef<HTMLInputElement | null>(null);
+  const addressInputRef = useRef<HTMLInputElement | null>(null);
+
+  /* ================= HANDLERS ================= */
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -32,78 +42,111 @@ const Institutions: React.FC<InstitutionsProps> = ({ onBack }) => {
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  // ✅ CONTINUE → GO TO STEP 2
- const handleContinue = () => {
-  const step1Payload = {
-    ...form,
-    idProof,
-    addressProof,
+  // Mobile number: digits only, max 10
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.replace(/\D/g, "").slice(0, 10);
+    setForm((prev) => ({ ...prev, phone: value }));
   };
 
-  console.log("Institution Step 1 Data:", step1Payload);
+  /* ================= SUBMIT ================= */
+// const fileToBase64 = (file: File): Promise<string> =>
+//   new Promise((resolve, reject) => {
+//     const reader = new FileReader();
+//     reader.readAsDataURL(file);
+//     reader.onload = () => resolve(reader.result as string);
+//     reader.onerror = reject;
+//   });
 
-  setStep("step2");
+const handleContinue = async () => {
+  setLoading(true);
+
+  try {
+    const payload = {
+      institution_name: form.institutionName,
+      institution_type_id: Number(form.institutionType),
+      identity_type_id: Number(form.identityType),
+      identity_number: form.registrationNumber,
+      location: form.address,
+      representative_name: form.contactPerson,
+      email: form.email,
+      phone_number: form.phone,
+      institute_website: form.website,
+
+      // ✅ STRING ONLY (NO BINARY)
+      upload_id_proof: idProof ? idProof.name : "",
+      upload_address_proof: addressProof ? addressProof.name : "",
+
+      total_branches: 0,
+      academic_year_start: "2026-01-30",
+      academic_year_end: "2026-01-30",
+      created_by: 1,
+      is_active: true,
+    };
+
+    const res = await axios.post(
+      `${API_BASE}/institution/student/register`,
+      payload,
+      { headers: { "Content-Type": "application/json" } }
+    );
+
+    setInstitutionId(res.data.institution_id);
+    setStep("step2");
+  } catch (err) {
+    console.error(err);
+    alert("Institution registration failed");
+  } finally {
+    setLoading(false);
+  }
 };
 
 
-  // ✅ STEP 2 RENDER
+
+  /* ================= STEP 2 ================= */
+
   if (step === "step2") {
     return (
       <InstitutionBranchConfig
+        institutionId={institutionId}
         onBack={() => setStep("step1")}
       />
     );
   }
 
-  // ✅ STEP 1 UI (UNCHANGED)
+  /* ================= UI ================= */
+
   return (
     <div className="inst-reg-page">
       <div className="inst-reg-container">
-        {/* HEADER */}
         <div className="inst-reg-header">
-          <button className="inst-reg-back" onClick={onBack}>
-            ←
-          </button>
+          <button className="inst-reg-back" onClick={onBack}>←</button>
           <div>
             <h2>Institution Registration</h2>
             <span className="inst-reg-step-text">STEP 1 OF 3</span>
           </div>
         </div>
 
-        {/* PROGRESS */}
-        <div className="inst-reg-progress">
-          <div className="inst-reg-progress-fill" />
-        </div>
-
-        {/* TITLE */}
         <h1 className="inst-reg-title">Institution Profile & KYC</h1>
-        <p className="inst-reg-subtitle">
-          Provide foundational details and verify your identity.
-        </p>
 
         {/* GENERAL INFO */}
         <div className="inst-reg-section">
           <h4>GENERAL INFORMATION</h4>
           <div className="inst-reg-grid-2">
             <input
-              className="inst-reg-input"
               name="institutionName"
-              placeholder="Enter full institution name"
+              placeholder="Institution name"
               value={form.institutionName}
               onChange={handleChange}
             />
-
             <select
-              className="inst-reg-select"
               name="institutionType"
               value={form.institutionType}
               onChange={handleChange}
             >
               <option value="">Select Type</option>
-              <option>University</option>
-              <option>College</option>
-              <option>Institute</option>
-              <option>Academy</option>
+              <option value="1">University</option>
+              <option value="2">College</option>
+              <option value="3">Institute</option>
+              <option value="4">Academy</option>
             </select>
           </div>
         </div>
@@ -113,47 +156,81 @@ const Institutions: React.FC<InstitutionsProps> = ({ onBack }) => {
           <h4>KYC VERIFICATION</h4>
           <div className="inst-reg-grid-2">
             <select
-              className="inst-reg-select"
               name="identityType"
               value={form.identityType}
               onChange={handleChange}
             >
-              <option value="">Select Identity Type</option>
-              <option>Registration Certificate</option>
-              <option>Government Approval</option>
+              <option value="">Select Identity</option>
+              <option value="1">Registration Certificate</option>
+              <option value="2">Government Approval</option>
             </select>
-
             <input
-              className="inst-reg-input"
               name="registrationNumber"
-              placeholder="Enter number as per document"
+              placeholder="Document number"
               value={form.registrationNumber}
               onChange={handleChange}
             />
           </div>
 
+          {/* FILE UPLOADS */}
           <div className="inst-reg-grid-2">
-            <label className="inst-reg-upload">
-              Upload ID Proof
-              <input
-                type="file"
-                hidden
-                onChange={(e) =>
-                  setIdProof(e.target.files?.[0] || null)
-                }
-              />
-            </label>
+          {/* ID PROOF */}
+<div className="inst-reg-upload-wrap">
+  <label className="inst-reg-upload">
+    Upload ID Proof
+    <input
+      type="file"
+      hidden
+      ref={idInputRef}
+      onChange={(e) => setIdProof(e.target.files?.[0] || null)}
+    />
+  </label>
 
-            <label className="inst-reg-upload">
-              Upload Address Proof
-              <input
-                type="file"
-                hidden
-                onChange={(e) =>
-                  setAddressProof(e.target.files?.[0] || null)
-                }
-              />
-            </label>
+  {idProof && (
+    <div className="inst-reg-file">
+      <span>{idProof.name}</span>
+      <button
+        type="button"
+        onClick={() => {
+          setIdProof(null);
+          if (idInputRef.current) idInputRef.current.value = "";
+        }}
+      >
+        ✕
+      </button>
+    </div>
+  )}
+</div>
+
+
+{/* ADDRESS PROOF */}
+<div className="inst-reg-upload-wrap">
+  <label className="inst-reg-upload">
+    Upload Address Proof
+    <input
+      type="file"
+      hidden
+      ref={addressInputRef}
+      onChange={(e) => setAddressProof(e.target.files?.[0] || null)}
+    />
+  </label>
+
+  {addressProof && (
+    <div className="inst-reg-file">
+      <span>{addressProof.name}</span>
+      <button
+        type="button"
+        onClick={() => {
+          setAddressProof(null);
+          if (addressInputRef.current) addressInputRef.current.value = "";
+        }}
+      >
+        ✕
+      </button>
+    </div>
+  )}
+</div>
+
           </div>
         </div>
 
@@ -161,9 +238,8 @@ const Institutions: React.FC<InstitutionsProps> = ({ onBack }) => {
         <div className="inst-reg-section">
           <h4>LOCATION</h4>
           <input
-            className="inst-reg-input"
             name="address"
-            placeholder="Street, Building, City, State, Zip Code"
+            placeholder="Full address"
             value={form.address}
             onChange={handleChange}
           />
@@ -174,30 +250,26 @@ const Institutions: React.FC<InstitutionsProps> = ({ onBack }) => {
           <h4>CONTACT DETAILS</h4>
           <div className="inst-reg-grid-2">
             <input
-              className="inst-reg-input"
               name="contactPerson"
-              placeholder="Full name of representative"
+              placeholder="Representative name"
               value={form.contactPerson}
               onChange={handleChange}
             />
             <input
-              className="inst-reg-input"
               name="phone"
-              placeholder="+1 (555) 000-0000"
+              placeholder="10 digit mobile number"
               value={form.phone}
-              onChange={handleChange}
+              onChange={handlePhoneChange}
             />
             <input
-              className="inst-reg-input"
               name="email"
-              placeholder="admin@institution.edu"
+              placeholder="Email"
               value={form.email}
               onChange={handleChange}
             />
             <input
-              className="inst-reg-input"
               name="website"
-              placeholder="https://www.institution.edu"
+              placeholder="Website"
               value={form.website}
               onChange={handleChange}
             />
@@ -206,12 +278,13 @@ const Institutions: React.FC<InstitutionsProps> = ({ onBack }) => {
 
         {/* ACTION */}
         <div className="inst-reg-footer">
-          <button className="inst-reg-submit" onClick={handleContinue}>
-            Verify & Continue →
+          <button
+            className="inst-reg-submit"
+            onClick={handleContinue}
+            disabled={loading}
+          >
+            {loading ? "Verifying..." : "Verify & Continue →"}
           </button>
-          <p className="inst-reg-terms">
-            By continuing, you agree to our Terms of Service and Privacy Policy.
-          </p>
         </div>
       </div>
     </div>

@@ -63,8 +63,8 @@ export default function Companies({ onBack }: Props) {
   const [industry, setIndustry] = useState("All");
   const [location, setLocation] = useState("All");
   const [size, setSize] = useState("All");
-  const [selectedCompanyId, setSelectedCompanyId] =
-    useState<number | null>(null);
+ const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
+
 
   /* =======================
      Fetch Companies
@@ -130,14 +130,15 @@ useEffect(() => {
      Job Details View
   ======================= */
 
-  if (selectedCompanyId !== null) {
-    return (
-      <JobDetails
-        companyId={selectedCompanyId}
-        onBack={() => setSelectedCompanyId(null)}
-      />
-    );
-  }
+ if (selectedCompany) {
+  return (
+    <JobDetails
+      company={selectedCompany}
+      onBack={() => setSelectedCompany(null)}
+    />
+  );
+}
+
 
   /* =======================
      UI
@@ -220,12 +221,13 @@ useEffect(() => {
                 </span>
 
                 <button
-                  type="button"
-                  className="primary-btn"
-                  onClick={() => setSelectedCompanyId(company.id)}
-                >
-                  View Opportunities
-                </button>
+  type="button"
+  className="primary-btn"
+  onClick={() => setSelectedCompany(company)}
+>
+  View Opportunities
+</button>
+
               </div>
             </div>
           ))}
