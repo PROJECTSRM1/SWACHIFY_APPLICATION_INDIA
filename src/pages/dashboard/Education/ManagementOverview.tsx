@@ -13,10 +13,12 @@ interface StudentForm {
 }
 
 const ManagementOverview: React.FC<ManagementOverviewProps> = ({ onBack }) => {
+  /* EXISTING STATES */
   const [showBus, setShowBus] = useState(false);
   const [showExam, setShowExam] = useState(false);
-  const [showAddStudent, setShowAddStudent] = useState(false);
 
+  /* NEW: ADD STUDENT STATES */
+  const [showAddStudent, setShowAddStudent] = useState(false);
   const [studentForm, setStudentForm] = useState<StudentForm>({
     name: "",
     studentId: "",
@@ -24,10 +26,12 @@ const ManagementOverview: React.FC<ManagementOverviewProps> = ({ onBack }) => {
     branch: "",
   });
 
+  /* EXISTING FUNCTION */
   const sendSMSAlert = () => {
     alert("📩 SMS Alert Sent to Parents Successfully!");
   };
 
+  /* NEW: SAVE STUDENT */
   const saveStudent = () => {
     if (
       !studentForm.name ||
@@ -39,18 +43,19 @@ const ManagementOverview: React.FC<ManagementOverviewProps> = ({ onBack }) => {
       return;
     }
 
-    const existingStudents = JSON.parse(
+    const existing = JSON.parse(
       localStorage.getItem("students") || "[]"
     );
 
-    const newStudent = {
-      id: Date.now(),
-      ...studentForm,
-    };
-
     localStorage.setItem(
       "students",
-      JSON.stringify([...existingStudents, newStudent])
+      JSON.stringify([
+        ...existing,
+        {
+          id: Date.now(),
+          ...studentForm,
+        },
+      ])
     );
 
     setStudentForm({
@@ -61,7 +66,7 @@ const ManagementOverview: React.FC<ManagementOverviewProps> = ({ onBack }) => {
     });
 
     setShowAddStudent(false);
-    alert("✅ New Student Added Successfully");
+    alert("✅ Student Added Successfully");
   };
 
   return (
@@ -69,23 +74,16 @@ const ManagementOverview: React.FC<ManagementOverviewProps> = ({ onBack }) => {
       {/* HEADER */}
       <header className="mgmtw-header">
         <div className="mgmtw-header-left">
-          <button className="mgmtw-back" onClick={onBack}>
-            ←
-          </button>
+          <button className="mgmtw-back" onClick={onBack}>←</button>
           <h2>Management Overview</h2>
         </div>
         <span className="mgmtw-bell">🔔</span>
       </header>
 
       <div className="mgmtw-container">
-        {/* ADD STUDENT BUTTON */}
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "flex-end",
-            marginBottom: 20,
-          }}
-        >
+
+        {/* 🔹 ADD NEW STUDENT (TOP ACTION) */}
+        <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 24 }}>
           <button
             className="mgmtw-action"
             onClick={() => setShowAddStudent(true)}
@@ -94,20 +92,51 @@ const ManagementOverview: React.FC<ManagementOverviewProps> = ({ onBack }) => {
           </button>
         </div>
 
+        {/* ENROLLMENT */}
+        <section>
+          <h3 className="mgmtw-section-title">Enrollment Status</h3>
+
+          <div className="mgmtw-grid-2">
+            <div className="mgmtw-card">
+              <div className="mgmtw-card-top">
+                <div className="mgmtw-icon blue">🎓</div>
+                <span className="mgmtw-muted">Total Capacity</span>
+              </div>
+
+              <h1 className="mgmtw-number">500</h1>
+
+              <div className="mgmtw-progress">
+                <span style={{ width: "84%" }} />
+              </div>
+
+              <span className="mgmtw-muted">84% Occupancy</span>
+            </div>
+
+            <div className="mgmtw-card">
+              <div className="mgmtw-card-top">
+                <div className="mgmtw-icon green">✔</div>
+                <span className="mgmtw-muted">Approved Seats</span>
+              </div>
+
+              <h1 className="mgmtw-number">420</h1>
+              <span className="mgmtw-pill success">+12 new</span>
+            </div>
+          </div>
+        </section>
+
         {/* OPERATIONS */}
         <section>
           <h3 className="mgmtw-section-title">Operations Status</h3>
 
           <div className="mgmtw-grid-2">
-            {/* BUS TRACKING */}
             <div className="mgmtw-card">
               <div className="mgmtw-card-top">
                 <div className="mgmtw-icon blue">🚌</div>
                 <span className="mgmtw-dot online" />
               </div>
 
-              <h4>Bus Tracking (GPS)</h4>
-              <p className="mgmtw-muted">3 Buses Live</p>
+              <h4>Bus Tracking</h4>
+              <p className="mgmtw-muted">3 Buses Online</p>
 
               <button
                 className="mgmtw-action"
@@ -117,7 +146,6 @@ const ManagementOverview: React.FC<ManagementOverviewProps> = ({ onBack }) => {
               </button>
             </div>
 
-            {/* SMS ALERT */}
             <div className="mgmtw-card">
               <div className="mgmtw-card-top">
                 <div className="mgmtw-icon blue">💬</div>
@@ -125,7 +153,7 @@ const ManagementOverview: React.FC<ManagementOverviewProps> = ({ onBack }) => {
               </div>
 
               <h4>SMS Alerts</h4>
-              <p className="mgmtw-muted">Parents Connected</p>
+              <p className="mgmtw-muted">System Online</p>
 
               <button
                 className="mgmtw-action success"
@@ -133,6 +161,47 @@ const ManagementOverview: React.FC<ManagementOverviewProps> = ({ onBack }) => {
               >
                 Send SMS Alert
               </button>
+            </div>
+          </div>
+        </section>
+
+        {/* PAYROLL */}
+        <section>
+          <h3 className="mgmtw-section-title">Staff & Payroll</h3>
+
+          <div className="mgmtw-card mgmtw-split">
+            <div>
+              <h4>Monthly Payroll</h4>
+              <p className="mgmtw-muted">September 2023</p>
+            </div>
+
+            <div className="mgmtw-pay">
+              <h2>$45,200</h2>
+              <span className="mgmtw-muted">Total Disbursement</span>
+            </div>
+          </div>
+        </section>
+
+        {/* MAINTENANCE */}
+        <section>
+          <h3 className="mgmtw-section-title">Maintenance Accountability</h3>
+
+          <div className="mgmtw-card">
+            <div className="mgmtw-card-top">
+              <span className="mgmtw-muted">Maintenance Budget</span>
+              <span className="mgmtw-pill warn">Under Budget</span>
+            </div>
+
+            <h2>$12,400 <span className="mgmtw-muted">/ $15k</span></h2>
+
+            <div className="mgmtw-progress">
+              <span style={{ width: "82%" }} />
+            </div>
+
+            <div className="mgmtw-budget-row">
+              <span>Facility</span>
+              <span>IT Infrastructure</span>
+              <span>Misc</span>
             </div>
           </div>
         </section>
@@ -145,9 +214,7 @@ const ManagementOverview: React.FC<ManagementOverviewProps> = ({ onBack }) => {
             <div className="mgmtw-icon orange">🔔</div>
             <div>
               <strong>Mid-Term Exams</strong>
-              <p>
-                Starts from <b>15 Oct 2026</b>
-              </p>
+              <p>Starts from <b>15 Oct 2026</b></p>
             </div>
           </div>
 
@@ -155,7 +222,7 @@ const ManagementOverview: React.FC<ManagementOverviewProps> = ({ onBack }) => {
             <div className="mgmtw-icon blue">📅</div>
             <div>
               <strong>Exam Schedule</strong>
-              <p>Click to view complete timetable</p>
+              <p>Draft version ready</p>
 
               <button
                 className="mgmtw-link"
@@ -191,7 +258,7 @@ const ManagementOverview: React.FC<ManagementOverviewProps> = ({ onBack }) => {
             />
 
             <input
-              placeholder="Year (e.g. 1st Year)"
+              placeholder="Year"
               value={studentForm.year}
               onChange={(e) =>
                 setStudentForm({ ...studentForm, year: e.target.value })
@@ -199,7 +266,7 @@ const ManagementOverview: React.FC<ManagementOverviewProps> = ({ onBack }) => {
             />
 
             <input
-              placeholder="Branch (e.g. CSE / ECE)"
+              placeholder="Branch (CSE / ECE / EEE)"
               value={studentForm.branch}
               onChange={(e) =>
                 setStudentForm({ ...studentForm, branch: e.target.value })
