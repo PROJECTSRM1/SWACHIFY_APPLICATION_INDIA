@@ -7,11 +7,12 @@ export interface Student {
   program: string;
   avatar: string;
   rating: number;
-  status: "Active" | "Completed";
+  status: "In Progress" | "Completed";
   attendance: number;
   shift: string;
   certs: string[];
 }
+
 
 type StudentsProps = {
   onBack: () => void;
@@ -48,17 +49,24 @@ const Students: React.FC<StudentsProps> = ({ onBack, onSelectStudent }) => {
 
       .then((res) => res.json())
       .then((data) => {
-        const mapped: Student[] = data.map((item: any, index: number) => ({
-          id: item.user_id,
-          name: item.student_name,
-          program: item.degree,
-          rating: item.rating,
-          status: item.internship_status,
-          attendance: item.attendance_percentage,
-          certs: item.skill ? [item.skill] : [],
-          shift: "10:00 AM - 07:00 PM",
-          avatar: `https://randomuser.me/api/portraits/men/${index + 10}.jpg`,
-        }));
+      const mapped: Student[] = data.map((item: any, index: number) => ({
+  id: item.user_id,
+  name: item.student_name,
+  program: item.degree,
+  rating: item.rating,
+
+  // ✅ NORMALIZATION HERE
+  status:
+    item.internship_status?.toLowerCase() === "in progress"
+      ? "In Progress"
+      : "Completed",
+
+  attendance: item.attendance_percentage,
+  certs: item.skill ? [item.skill] : [],
+  shift: "10:00 AM - 07:00 PM",
+  avatar: `https://randomuser.me/api/portraits/men/${index + 10}.jpg`,
+}));
+
 
         setStudentsData(mapped);
       })
@@ -146,11 +154,18 @@ const Students: React.FC<StudentsProps> = ({ onBack, onSelectStudent }) => {
             <option value="CSS">CSS</option>
           </select>
 
-          <select onChange={(e) => setInternship(e.target.value)}>
-            <option value="">Internship</option>
-            <option value="Active">In Progress</option>
-            <option value="Completed">Completed</option>
-          </select>
+        <select
+  value={internship}
+  onChange={(e) => setInternship(e.target.value)}
+>
+  <option value="" disabled hidden>
+    
+  </option>
+  <option value="In Progress">In Progress</option>
+  <option value="Completed">Completed</option>
+</select>
+
+
         </div>
       </div>
 

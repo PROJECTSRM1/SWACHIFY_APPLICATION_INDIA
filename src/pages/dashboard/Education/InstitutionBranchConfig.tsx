@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./InstitutionBranchConfig.css";
 import InstitutionAccessMode from "../../dashboard/Education/InstitutionAccessMode";
 
 interface Props {
   onBack: () => void;
+  institutionId: number | null; // ✅ ADDED
 }
 
 interface Branch {
@@ -13,8 +14,11 @@ interface Branch {
   head: string;
 }
 
-const InstitutionBranchConfig: React.FC<Props> = ({ onBack }) => {
-  // ✅ MOVE STEP STATE INSIDE COMPONENT
+const InstitutionBranchConfig: React.FC<Props> = ({
+  onBack,
+  institutionId,
+}) => {
+  // ✅ STEP STATE
   const [step, setStep] = useState<"step2" | "step3">("step2");
 
   const [branchesCount, setBranchesCount] = useState(1);
@@ -27,6 +31,14 @@ const InstitutionBranchConfig: React.FC<Props> = ({ onBack }) => {
   const [branches, setBranches] = useState<Branch[]>([
     { name: "", city: "", code: "", head: "" },
   ]);
+
+  // ✅ SAFE ACCESS TO INSTITUTION ID
+  useEffect(() => {
+    if (!institutionId) return;
+
+    console.log("Institution ID in Branch Config:", institutionId);
+    // 🔗 Later: use this institutionId for branch POST API
+  }, [institutionId]);
 
   // Sync branches with count
   const updateBranchCount = (count: number) => {
@@ -70,32 +82,25 @@ const InstitutionBranchConfig: React.FC<Props> = ({ onBack }) => {
     );
   };
 
-  // ✅ STEP 3 RENDER
+  // ✅ STEP 3
   if (step === "step3") {
-    return (
-   <InstitutionAccessMode onClose={onBack} />
-
-
-    );
+    return <InstitutionAccessMode onClose={onBack} />;
   }
 
-  // ✅ STEP 2 UI
+  // ✅ STEP 2 UI (UNCHANGED)
   return (
     <div className="branchcfg-page">
       <div className="branchcfg-container">
-        {/* HEADER */}
         <div className="branchcfg-header">
           <button onClick={onBack}>←</button>
           <h2>Branch Configuration</h2>
           <span className="branchcfg-step">Step 2 of 3</span>
         </div>
 
-        {/* PROGRESS */}
         <div className="branchcfg-progress">
           <div />
         </div>
 
-        {/* OPERATIONAL DETAILS */}
         <h3>Operational Details</h3>
 
         <div className="branchcfg-card">
@@ -147,7 +152,6 @@ const InstitutionBranchConfig: React.FC<Props> = ({ onBack }) => {
           </div>
         </div>
 
-        {/* BRANCH SETUP */}
         <h3>Define your branches</h3>
         <p className="branchcfg-sub">
           Add the specific locations and administrative heads.
@@ -192,12 +196,10 @@ const InstitutionBranchConfig: React.FC<Props> = ({ onBack }) => {
           </div>
         ))}
 
-        {/* ADD ANOTHER BRANCH */}
         <button className="branchcfg-add" onClick={addBranch}>
           + Add Another Branch
         </button>
 
-        {/* ACTIONS */}
         <div className="branchcfg-footer">
           <button className="secondary" onClick={onBack}>
             Back

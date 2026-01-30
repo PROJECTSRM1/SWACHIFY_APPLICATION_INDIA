@@ -8,6 +8,9 @@ import Internship from "../Education/Internships";
 import CandidateProfile from "../Education/CandidateProfile";
 import TrainingPage from "./TrainingPage";
 import Institutions from "../Education/Institutions";
+import InstitutionAccessMode from "./InstitutionAccessMode";
+
+import InstitutionAuthModal from "../../dashboard/Education/InstitutionAuthModal";
 
 
 type Page =
@@ -16,8 +19,11 @@ type Page =
   | "internships"
   | "companies"
   | "training"
-  | "institutions"
+  | "institution-login"   // access mode
+  | "institution-register"// registration form
   | "candidateProfile";
+
+
 
 type TrendingStudent = {
   id: number;
@@ -99,6 +105,9 @@ const Education: React.FC = () => {
   const [selectedStudent, setSelectedStudent] =
     useState<Student | null>(null);
   const [showAllTrending, setShowAllTrending] = useState(false);
+  const [showInstitutionPortal, setShowInstitutionPortal] = useState(false);
+
+
 
   const trendingStudents = studentsData
     .filter((s) => s.academicScore > 80)
@@ -111,6 +120,8 @@ const Education: React.FC = () => {
   if (page !== "home") {
     return (
       <div className="edu-fullscreen-page">
+  
+
         {page === "students" && (
           <Students
             onBack={() => setPage("home")}
@@ -140,9 +151,15 @@ const Education: React.FC = () => {
           <TrainingPage onBack={() => setPage("home")} />
           
         )}
-        {page === "institutions" && (
+   {page === "institution-login" && (
+  <InstitutionAccessMode onClose={() => setPage("home")} />
+)}
+
+{page === "institution-register" && (
   <Institutions onBack={() => setPage("home")} />
 )}
+
+
       </div>
     );
   }
@@ -183,6 +200,8 @@ const Education: React.FC = () => {
                 🔍
               </button>
             </div>
+   
+
 
             {searched && (
               <div className="edu-search-result">
@@ -225,10 +244,11 @@ const Education: React.FC = () => {
   </div>
 
   {/* ✅ NEW */}
-  <div onClick={() => setPage("institutions")}>
-    <span className="edu-red">🏫</span>
-    <p>Institutions</p>
-  </div>
+  <div onClick={() => setShowInstitutionPortal(true)}>
+  <span className="edu-red">🏫</span>
+  <p>Institutions</p>
+</div>
+
 </div>
 
       </div>
@@ -283,6 +303,25 @@ const Education: React.FC = () => {
             </div>
           ))}
         </div>
+   {showInstitutionPortal && (
+  <InstitutionAuthModal
+    onClose={() => setShowInstitutionPortal(false)}
+
+    // ✅ LOGIN → Access Mode
+    onLoginSuccess={() => {
+      setShowInstitutionPortal(false);
+      setPage("institution-login");
+    }}
+
+    // ✅ REGISTER → Registration Form (THIS FORM)
+    onRegister={() => {
+      setShowInstitutionPortal(false);
+      setPage("institution-register");
+    }}
+  />
+)}
+
+
       </div>
     </div>
   );

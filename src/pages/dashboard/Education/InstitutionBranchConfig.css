@@ -148,3 +148,160 @@
     grid-template-columns: 1fr;
   }
 }
+
+
+/* =====================================================
+   INSTITUTION BRANCH CONFIG – RESPONSIVE LAYER
+   Desktop → Laptop → Tablet → Mobile → Small Mobile
+===================================================== */
+
+/* =========================
+   💻 LAPTOP (≤ 1200px)
+========================= */
+@media (max-width: 1200px) {
+  .branchcfg-container {
+    max-width: 960px;
+    padding: 28px;
+  }
+}
+
+/* =========================
+   📱 TABLET (≤ 900px)
+========================= */
+@media (max-width: 900px) {
+
+  .branchcfg-page {
+    padding: 24px 16px;
+  }
+
+  .branchcfg-container {
+    padding: 24px;
+    border-radius: 12px;
+  }
+
+  /* HEADER */
+  .branchcfg-header {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .branchcfg-step {
+    margin-left: 0;
+    font-size: 14px;
+  }
+
+  /* GRID → SINGLE COLUMN */
+  .branchcfg-grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  /* BRANCH COUNT */
+  .branchcfg-branchcount {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}
+
+/* =========================
+   📲 MOBILE (≤ 640px)
+========================= */
+@media (max-width: 640px) {
+
+  .branchcfg-page {
+    padding: 16px 12px;
+  }
+
+  .branchcfg-container {
+    padding: 20px;
+    border-radius: 12px;
+  }
+
+  /* HEADER */
+  .branchcfg-header h2 {
+    font-size: 18px;
+  }
+
+  .branchcfg-header button {
+    font-size: 16px;
+  }
+
+  .branchcfg-step {
+    font-size: 13px;
+  }
+
+  /* PROGRESS BAR */
+  .branchcfg-progress {
+    height: 5px;
+    margin: 12px 0 24px;
+  }
+
+  /* CARD */
+  .branchcfg-card {
+    padding: 16px;
+  }
+
+  /* INPUTS */
+  .branchcfg-grid-2 input {
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  /* BRANCH CARD */
+  .branchcfg-branchcard {
+    padding: 16px;
+  }
+
+  .branchcfg-branchheader h4 {
+    font-size: 15px;
+  }
+
+  /* ADD BUTTON */
+  .branchcfg-add {
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  /* FOOTER ACTIONS */
+  .branchcfg-footer {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .branchcfg-footer .primary,
+  .branchcfg-footer .secondary {
+    width: 100%;
+    padding: 14px;
+    font-size: 15px;
+  }
+}
+
+/* =========================
+   📲 SMALL MOBILE (≤ 420px)
+========================= */
+@media (max-width: 420px) {
+
+  .branchcfg-container {
+    padding: 16px;
+  }
+
+  .branchcfg-header h2 {
+    font-size: 16px;
+  }
+
+  .branchcfg-sub {
+    font-size: 13px;
+  }
+
+  .branchcfg-counter button {
+    width: 28px;
+    height: 28px;
+    font-size: 16px;
+  }
+
+  .branchcfg-footer .primary,
+  .branchcfg-footer .secondary {
+    padding: 12px;
+    font-size: 14px;
+  }
+}
