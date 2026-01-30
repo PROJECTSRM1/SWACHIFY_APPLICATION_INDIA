@@ -1,0 +1,167 @@
+/* RESET */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, system-ui, sans-serif;
+  background: #f8fafc;
+}
+
+/* APP */
+.emp_app {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* HEADER */
+.emp_header {
+  height: 64px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+.emp_status {
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: none;
+  font-weight: 800;
+  cursor: pointer;
+  color: #fff;
+}
+
+.emp_status.online {
+  background: #16a34a;
+}
+
+.emp_status.offline {
+  background: #dc2626;
+}
+
+/* TABS */
+.emp_tabs {
+  display: flex;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.emp_tabs button {
+  flex: 1;
+  padding: 14px;
+  background: transparent;
+  border: none;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.emp_tabs button.active {
+  border-bottom: 3px solid #2563eb;
+  color: #2563eb;
+}
+
+/* CONTENT */
+.emp_content {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.emp_content::-webkit-scrollbar {
+  display: none;
+}
+
+/* GRID */
+.emp_grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+}
+
+/* STAT */
+.emp_stat {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 20px;
+  animation: pop 0.4s ease;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+.emp_stat p {
+  margin: 0;
+  color: #6b7280;
+}
+
+.emp_stat h2 {
+  margin: 6px 0 0;
+  font-size: 24px;
+}
+
+/* CARD */
+.emp_card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 20px;
+  margin-bottom: 16px;
+  animation: fadeUp 0.35s ease;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+}
+
+.emp_card h3 {
+  margin: 0 0 6px;
+}
+
+.muted {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+/* ACTIONS */
+.emp_actions {
+  margin-top: 14px;
+}
+
+.emp_actions button {
+  background: #2563eb;
+  color: #ffffff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.done {
+  color: #16a34a;
+  font-weight: 900;
+}
+
+/* ANIMATIONS */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pop {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
