@@ -6,14 +6,6 @@ import JobDetails from "./JobDetails";
    Types
 ======================= */
 
-type ApiCompany = {
-  company_id: number;
-  company_name: string;
-  location: string;
-  industry_name: string | null;
-  company_size: string | null;
-  hiring_status: "Active" | "Hiring Frozen";
-};
 
 type Company = {
   id: number;
@@ -24,6 +16,20 @@ type Company = {
   size: string;
   status: "Active" | "Hiring Frozen";
 };
+
+
+type ApiJobOpening = {
+  id: number;
+  job_id: number;
+  company_name: string;
+  company_address: string;
+  industry_id: number | null;
+  company_size_id: number | null;
+  role_description: string;
+  requirements: string;
+  is_active: boolean;
+};
+
 
 type Props = {
   onBack: () => void;
@@ -64,34 +70,47 @@ export default function Companies({ onBack }: Props) {
      Fetch Companies
   ======================= */
 
-  useEffect(() => {
-    const fetchCompanies = async () => {
-      try {
-        const res = await fetch(
-          "https://swachify-india-be-1-mcrb.onrender.com/api/companies"
-        );
-        const data: ApiCompany[] = await res.json();
+useEffect(() => {
+  const fetchJobs = async () => {
+    try {
+      const res = await fetch(
+        "https://swachify-india-be-1-mcrb.onrender.com/api/jobs/openings"
+      );
+      const data: ApiJobOpening[] = await res.json();
 
-        const mapped: Company[] = data.map(c => ({
-          id: c.company_id,
-          name: c.company_name,
-          industry: c.industry_name ?? "Not Specified",
-          description: "Explore opportunities and internships at this company.",
-          location: c.location || "Location not specified",
-          size: c.company_size ?? "Not specified",
-          status: c.hiring_status,
-        }));
+      // 🔹 group jobs by company name
+      const companyMap = new Map<string, Company>();
 
-        setCompanies(mapped);
-      } catch (error) {
-        console.error("Failed to fetch companies", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+      data.forEach(job => {
+        if (!companyMap.has(job.company_name)) {
+          companyMap.set(job.company_name, {
+            id: job.id, // first job id as company id
+            name: job.company_name,
+            industry: job.industry_id
+              ? `Industry ${job.industry_id}`
+              : "Not Specified",
+            description:
+              "Explore job openings and internships at this company.",
+            location: job.company_address || "Location not specified",
+            size: job.company_size_id
+              ? `Size ${job.company_size_id}`
+              : "Not specified",
+            status: job.is_active ? "Active" : "Hiring Frozen",
+          });
+        }
+      });
 
-    fetchCompanies();
-  }, []);
+      setCompanies(Array.from(companyMap.values()));
+    } catch (err) {
+      console.error("Failed to fetch job openings", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchJobs();
+}, []);
+
 
   /* =======================
      Filtering Logic
