@@ -5,6 +5,23 @@
   padding-bottom: 80px;
       margin-top: 10px;
 }
+.students-root {
+  background: linear-gradient(
+    135deg,
+    #f3f4f8 0%,
+    #f3f4f8 42%,
+    #ffffff 42%,
+    #ffffff 100%
+  ) !important;
+}
+.students-root .students-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.students-root .students-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.14);
+}
 
 /* HEADER */
 .students-root .students-header {
