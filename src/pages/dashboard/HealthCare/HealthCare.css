@@ -2119,13 +2119,19 @@
   flex: 1;
 }
 
-.search-input {
+/* .search-input {
   width: 100%;
   padding: 12px 14px;
   border-radius: 12px;
   border: 1px solid #e5e7eb;
   font-size: 14px;
   outline: none;
+} */
+
+.search-input {
+  height: 44px;        /* was ~54px */
+  font-size: 14px;
+  border-radius: 12px;
 }
 
 
@@ -2216,6 +2222,161 @@
   flex-direction: column;
 }
 
+
+
+.profile-popup {
+  background: #ffffff;
+  width: 92%;
+  max-width: 420px;
+  border-radius: 20px;
+  padding: 20px;
+  animation: slideUp 0.25s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.popup-title {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: 18px;
+  color: #2f6f6d;
+}
+
+
+
+.popup-section {
+  margin-bottom: 14px;
+}
+
+.popup-section label {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: #444;
+}
+
+.popup-section input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+}
+
+
+
+.pill-row {
+  display: flex;
+  gap: 10px;
+}
+
+.pill-row button {
+  flex: 1;
+  padding: 10px;
+  border-radius: 999px;
+  border: 1.5px solid #cfdedd;
+  background: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.pill-row button.active {
+  background: #2f6f6d;
+  color: #fff;
+  border-color: #2f6f6d;
+}
+
+
+.confirm-btn {
+  width: 100%;
+  margin-top: 16px;
+  padding: 14px;
+  border-radius: 14px;
+  border: none;
+  background: #2f6f6d;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.cancel-btn {
+  width: 100%;
+  margin-top: 10px;
+  padding: 12px;
+  border-radius: 14px;
+  border: none;
+  background: transparent;
+  color: #d9534f;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+
+.success-popup {
+  background: #2f2f2f;
+  color: #fff;
+  padding: 22px;
+  width: 92%;
+  max-width: 420px;
+  border-radius: 20px;
+  text-align: left;
+  animation: fadeIn 0.25s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.success-popup h2 {
+  font-size: 20px;
+  font-weight: 900;
+  margin-bottom: 14px;
+}
+
+.success-popup p {
+  margin: 6px 0;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+
+
+.view-doctors-btn {
+  width: 100%;
+  margin-top: 18px;
+  padding: 14px;
+  border-radius: 14px;
+  border: none;
+  background: #eaf7f2;
+  color: #2f6f6d;
+  font-size: 15px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+
+
+
 .profile-body {
   overflow-y: auto;
   /* enable scroll */
@@ -2298,59 +2459,6 @@
 /* ===============================
    MOBILE SEARCH – FINAL FIX
    =============================== */
-@media (max-width: 425px) {
-
-  .healthcare-search {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 14px;
-    padding: 0 16px;
-  }
-
-  .search-box-wrap {
-    position: relative;
-    width: 100%;
-  }
-/* 
-  .search-input {
-    width: 100%;
-    height: 54px;
-    padding-left: 52px;
-    border-radius: 18px;
-    font-size: 16px;
-    background: #f3f4f6;
-    border: 1px solid #e5e7eb;
-  } */
-
-    .search-input {
-    width: 100%;
-    height: 54px;
-    padding-left: 16px; /* 🔑 since no icon */
-    padding-right: 16px;
-    border-radius: 18px;
-    font-size: 16px;
-    background: #f3f4f6;
-    border: 1px solid #e5e7eb;
-  }
-
-  .search-box-wrap::before {
-    /* content: "🔍"; */
-    position: absolute;
-    left: 18px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 18px;
-    opacity: 0.55;
-    pointer-events: none;
-  }
-
-  .search-ambulance-btn {
-    width: 100%;
-    height: 54px;
-    border-radius: 18px;
-    font-size: 16px;
-  }
-}
 
 
 
@@ -2418,3 +2526,1086 @@
     font-size: 14px;
   }
 }
+
+
+.mode-toggle {
+  display: flex;
+  gap: 8px;
+}
+
+.mode-toggle button {
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.mode-toggle button.active {
+  background: #2f6f6d;
+  color: white;
+  border-color: #2f6f6d;
+}
+
+
+@media (max-width: 425px) {
+  .mode-toggle {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .mode-toggle button {
+    flex: 1;
+  }
+}
+
+
+
+.hospital-condition-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 6px 0;
+}
+
+.condition-chip {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #eaf7f2;
+  color: #2f6f6d;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+
+/* #FORCE Fever / trending text to BLUE /
+.trending-item .trending-text {
+  color: #2563eb !important;
+  / blue
+} */
+
+/* Even when hovered or active (orange background) */
+.trending-item:hover .trending-text,
+.trending-item.active .trending-text {
+  color: #2563eb !important;
+}
+
+/* Icon also blue */
+.trending-item .trending-icon {
+  color: #2563eb !important;
+}
+
+
+
+
+/* ===== DOCTOR LIST (HOSPITAL DOCTORS) ===== */
+
+.hospital-doctors-page {
+  padding: 16px;
+}
+
+.hospital-doctor-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 14px;
+  margin-bottom: 14px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.hospital-doctor-card:hover {
+  transform: translateY(-2px);
+}
+
+.hospital-doctor-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.hospital-doctor-card img {
+  width: 64px;
+  height: 64px;
+  border-radius: 14px;
+  object-fit: cover;
+}
+
+.hospital-doctor-info h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.hospital-doctor-info p {
+  margin: 4px 0;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.rating-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #fff4cc;
+  color: #b45309;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 6px 10px;
+  border-radius: 10px;
+}
+
+.arrow {
+  font-size: 22px;
+  color: #9ca3af;
+}
+
+
+
+
+/* ===== DOCTOR PROFILE SCREEN ===== */
+
+.doctor-profile-screen {
+  padding: 16px;
+  padding-bottom: 96px; /* space for fixed CTA */
+}
+
+.doctor-profile-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.doctor-profile-header button {
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.doctor-profile-header h2 {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/* Profile Card */
+.doctor-profile-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 18px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  text-align: center;
+}
+
+.doctor-profile-card img {
+  width: 120px;
+  height: 120px;
+  border-radius: 22px;
+  object-fit: cover;
+  margin-bottom: 12px;
+}
+
+.doctor-profile-card h2 {
+  margin: 8px 0 4px;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.doctor-profile-card .spec {
+  font-size: 14px;
+  color: #2f6f6d;
+  font-weight: 600;
+}
+
+.doctor-profile-card .rating {
+  margin-top: 8px;
+  background: #fff4cc;
+  padding: 8px 12px;
+  border-radius: 12px;
+  display: inline-block;
+  font-weight: 700;
+}
+
+/* Stats */
+.stats {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 16px;
+}
+
+.stats div {
+  text-align: center;
+}
+
+.stats p {
+  margin: 0;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.stats b {
+  font-size: 16px;
+}
+
+
+
+/* ===== BIOGRAPHY ===== */
+
+.bio {
+  margin-top: 16px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #374151;
+}
+
+
+
+
+/* ===== PERSONAL CARE ASSISTANT ===== */
+
+.assistant-box {
+  margin-top: 20px;
+  padding: 16px;
+  background: #f0faf7;
+  border-radius: 18px;
+  border: 1px solid #d1fae5;
+}
+
+.assistant-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.assistant-header .price {
+  color: #2563eb;
+  font-weight: 800;
+}
+
+.assistant-box ul {
+  padding-left: 18px;
+  margin-top: 10px;
+}
+
+.assistant-box li {
+  margin-bottom: 6px;
+  font-size: 14px;
+  color: #065f46;
+}
+
+/* Toggle Switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: #d1d5db;
+  border-radius: 999px;
+  transition: 0.3s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+.switch input:checked + .slider {
+  background-color: #2f6f6d;
+}
+
+.switch input:checked + .slider:before {
+  transform: translateX(20px);
+}
+
+
+/* ===== FIXED CTA ===== */
+/* 
+.confirm-btn {
+  position: fixed;
+  bottom: 16px;
+  left: 16px;
+  right: 16px;
+  background: #2563eb;
+  color: #ffffff;
+  border: none;
+  border-radius: 16px;
+  padding: 16px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 12px 30px rgba(37, 99, 235, 0.4);
+}
+
+.confirm-btn:hover {
+  background: #1d4ed8;
+}
+  */
+
+.doctor-list-screen,
+.doctor-profile-screen {
+  position: fixed;
+  inset: 0;
+  background: #fff;
+  z-index: 1200;
+  overflow-y: auto;
+}
+
+.hospital-doctor-card {
+  display: flex;
+  gap: 14px;
+  padding: 14px;
+  margin: 12px;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  align-items: center;
+  cursor: pointer;
+}
+
+.hospital-doctor-card img {
+  width: 64px;
+  height: 64px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.arrow {
+  margin-left: auto;
+  font-size: 22px;
+}
+
+.assistant-box {
+  background: #eef7f5;
+  padding: 16px;
+  border-radius: 18px;
+  margin: 18px 0;
+}
+
+
+
+
+
+
+
+/* =========================================
+   UI POLISH OVERRIDES (SAFE ADDITIONS ONLY)
+   ========================================= */
+
+/* ---------- Doctor Profile Header ---------- */
+.doctor-profile-header {
+  position: sticky;
+  top: 0;
+  background: #ffffff;
+  z-index: 10;
+  padding-bottom: 12px;
+}
+
+.doctor-profile-header h2 {
+  font-size: 22px;
+  font-weight: 900;
+}
+
+/* ---------- Doctor Profile Card ---------- */
+.doctor-profile-card {
+  margin-top: 10px;
+}
+
+.doctor-profile-card h2 {
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.doctor-profile-card .spec {
+  font-size: 15px;
+  letter-spacing: 0.3px;
+}
+
+.doctor-profile-card .rating {
+  margin-top: 10px;
+  font-size: 15px;
+}
+
+/* ---------- Stats (Exp / Patients) ---------- */
+.stats {
+  gap: 24px;
+}
+
+.stats div {
+  background: #f9fafb;
+  padding: 12px 16px;
+  border-radius: 14px;
+  min-width: 120px;
+}
+
+.stats b {
+  font-size: 18px;
+}
+
+/* ---------- Biography ---------- */
+.bio {
+  background: #f9fafb;
+  padding: 16px;
+  border-radius: 16px;
+  margin-top: 14px;
+  font-size: 15px;
+}
+
+/* ---------- Personal Care Assistant Card ---------- */
+.assistant-box {
+  background: linear-gradient(135deg, #f0faf7, #ecfeff);
+  border: 1.5px solid #ccfbf1;
+}
+
+.assistant-header {
+  font-size: 16px;
+}
+
+.assistant-header span:first-child {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.assistant-header .price {
+  background: #e0f2fe;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 14px;
+}
+
+/* Benefits list */
+.assistant-box ul {
+  margin-top: 12px;
+}
+
+.assistant-box li {
+  font-weight: 600;
+}
+
+/* ---------- Toggle Alignment ---------- */
+.assistant-box .switch {
+  margin-left: auto;
+  margin-top: 6px;
+}
+
+/* ---------- Book Appointment CTA (Doctor Profile ONLY) ---------- */
+.doctor-profile-screen .confirm-btn {
+  position: fixed;
+  bottom: 14px;
+  left: 14px;
+  right: 14px;
+  z-index: 50;
+
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  border-radius: 18px;
+  font-size: 17px;
+  font-weight: 900;
+  letter-spacing: 0.4px;
+  box-shadow: 0 14px 34px rgba(37, 99, 235, 0.45);
+}
+
+.doctor-profile-screen .confirm-btn:hover {
+  transform: translateY(-1px);
+}
+
+/* ---------- Hospital Doctor List Cards ---------- */
+.hospital-doctor-card {
+  border: 1px solid #f1f5f9;
+}
+
+.hospital-doctor-info h3 {
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.hospital-doctor-info p {
+  font-size: 14px;
+}
+
+/* ---------- Arrow Icon ---------- */
+.arrow {
+  font-size: 24px;
+  color: #94a3b8;
+}
+
+/* ---------- Mobile Polish ---------- */
+@media (max-width: 600px) {
+  .doctor-profile-card img {
+    width: 110px;
+    height: 110px;
+  }
+
+  .stats {
+    flex-direction: row;
+    gap: 12px;
+  }
+
+  .stats div {
+    flex: 1;
+  }
+}
+
+
+
+/* ============================
+   ASSISTANT SELECTION POPUP
+   ============================ */
+
+.assistant-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.assistant-popup {
+  width: 100%;
+  max-width: 420px;
+  background: #ffffff;
+  border-radius: 22px;
+  padding: 20px;
+  animation: scaleIn 0.25s ease;
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.assistant-popup h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.assistant-popup .subtitle {
+  margin: 6px 0 16px;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+/* Assistant list */
+.assistant-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.assistant-card {
+  display: flex;
+  gap: 14px;
+  padding: 12px;
+  border-radius: 16px;
+  border: 1.5px solid #e5e7eb;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.assistant-card img {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  object-fit: cover;
+}
+
+.assistant-card h4 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.assistant-card p {
+  margin: 2px 0;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.assistant-card span {
+  font-size: 14px;
+  font-weight: 700;
+  color: #f59e0b;
+}
+
+.assistant-card.active {
+  border-color: #2f6f6d;
+  background: #eaf7f2;
+}
+
+/* Bottom buttons */
+.assistant-confirm {
+  display: flex;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.no-btn,
+.yes-btn {
+  flex: 1;
+  padding: 14px;
+  border-radius: 14px;
+  border: none;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.no-btn {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+.yes-btn {
+  background: #2f6f6d;
+  color: white;
+}
+
+.yes-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+
+
+
+
+/* =========================
+   SELECTED ASSISTANT SUMMARY
+   ========================= */
+
+.assistant-selected-summary {
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: #ecfdf5;
+  border: 1.5px solid #2f6f6d;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #065f46;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+
+
+/* Selected Assistant Card */
+.assistant-selected-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px;
+  margin-top: 12px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #eafff7, #f6fffc);
+  border: 1.5px solid #2f6f6d;
+  box-shadow: 0 8px 18px rgba(47, 111, 109, 0.15);
+}
+
+/* Assistant Image */
+.assistant-avatar {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #2f6f6d;
+}
+
+/* Text Section */
+.assistant-details {
+  flex: 1;
+}
+
+.assistant-details h4 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: #134e4a;
+}
+
+.assistant-role {
+  font-size: 13px;
+  color: #2f6f6d;
+  margin: 2px 0 6px;
+}
+
+/* Rating + Contact */
+.assistant-meta {
+  display: flex;
+  gap: 14px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #065f46;
+}
+
+/* Assigned Badge */
+.assistant-badge {
+  background: #2f6f6d;
+  color: #fff;
+  font-size: 11px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+
+
+/* ===== HOSPITAL DOCTOR LIST – POLISHED ===== */
+
+.hospital-doctor-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 14px 16px;
+  margin: 12px;
+  border: 1px solid #eef2f7;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.06);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.hospital-doctor-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.10);
+}
+
+/* Left section */
+.hospital-doctor-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.hospital-doctor-card img {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  object-fit: cover;
+  border: 2px solid #e5e7eb;
+}
+
+/* Info */
+.hospital-doctor-info h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 800;
+  color: #111827;
+}
+
+.hospital-doctor-info .spec {
+  margin: 4px 0 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #2f6f6d;
+}
+
+/* Rating pill */
+.rating-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #fff7ed;
+  color: #b45309;
+  font-size: 13px;
+  font-weight: 800;
+  padding: 6px 10px;
+  border-radius: 999px;
+}
+
+/* Arrow */
+.arrow {
+  font-size: 26px;
+  color: #9ca3af;
+}
+
+
+
+/* ===============================
+   HOSPITAL DOCTOR LIST – POLISHED
+   =============================== */
+
+.doctor-list-screen {
+  padding: 12px;
+  background: #f8fafc;
+}
+
+/* Card */
+.hospital-doctor-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 16px 18px;
+  margin-bottom: 14px;
+  border: 1px solid #edf1f5;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.06);
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.hospital-doctor-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.10);
+}
+
+/* Left section */
+.hospital-doctor-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Doctor image */
+.hospital-doctor-card img {
+  width: 70px;
+  height: 70px;
+  border-radius: 18px;
+  object-fit: cover;
+  border: 2px solid #e5e7eb;
+}
+
+/* Info block */
+.hospital-doctor-info h3 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.hospital-doctor-info .spec {
+  margin: 4px 0 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #2f6f6d;
+}
+
+/* Rating */
+.rating-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #fff7ed;
+  color: #b45309;
+  font-size: 13px;
+  font-weight: 800;
+  padding: 6px 12px;
+  border-radius: 999px;
+}
+
+/* Arrow button */
+.arrow-circle {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 700;
+  color: #475569;
+  transition: all 0.25s ease;
+}
+
+.hospital-doctor-card:hover .arrow-circle {
+  background: #2f6f6d;
+  color: #ffffff;
+  transform: translateX(4px);
+}
+
+
+/* ===== DOCTOR LIST HEADER ===== */
+.doctor-list-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  background: #ffffff;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  border-bottom: 1px solid #eef2f7;
+}
+
+/* Back button */
+.back-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  border: none;
+  background: #f1f5f9;
+  color: #334155;
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: all 0.2s ease;
+}
+
+.back-btn:hover {
+  background: #2f6f6d;
+  color: #ffffff;
+  transform: translateX(-2px);
+}
+
+/* Title */
+.doctor-list-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+}
+
+
+.date-picker {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 2px solid #e5e7eb;
+  font-size: 16px;
+  outline: none;
+}
+
+.date-picker:focus {
+  border-color: #2563eb;
+}
+
+.time-slots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.time-slot {
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 2px solid #e5e7eb;
+  background: #fff;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.time-slot:hover {
+  border-color: #2563eb;
+  color: #2563eb;
+}
+
+.time-slot.active {
+  background: #2563eb;
+  color: #fff;
+  border-color: #2563eb;
+}
+
+
+
+
+
+
+/* ===== FIX TRENDING SEARCH VISIBILITY ===== */
+
+.trending-dropdown {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+}
+
+.trending-item {
+  background: transparent;
+}
+
+.trending-text {
+  color: #111827 !important;   /* DARK TEXT */
+  font-size: 15px;             /* slightly bigger */
+  font-weight: 700;
+}
+
+.trending-icon {
+  color: #2563eb !important;
+  font-size: 16px;
+}
+
+
+
+
+.trending-item:hover {
+  background: #f1f5f9;
+}
+
+.trending-item:hover .trending-text {
+  color: #1d4ed8 !important;   /* darker blue */
+}
+
+
+
+
+@media (max-width: 480px) {
+  .trending-text {
+    font-size: 16px;
+  }
+
+  .trending-item {
+    padding: 14px 12px;
+  }
+}
+
+
+
+.trending-item {
+  position: relative;
+}
+
+.trending-item::before {
+  content: "";
+  width: 4px;
+  height: 100%;
+  background: #2563eb;
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: 4px;
+  opacity: 0;
+}
+
+.trending-item:hover::before {
+  opacity: 1;
+}
+
+
