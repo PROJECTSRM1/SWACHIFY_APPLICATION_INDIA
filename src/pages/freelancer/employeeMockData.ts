@@ -1,44 +1,33 @@
-export type JobStatus = "new" | "ongoing" | "completed";
+import type { Job, EmployeeProfile } from "./employeeTypes";
 
-export type Job = {
-  id: number;
-  customer: string;
-  service: string;
-  address: string;
-  amount: number;
-  status: JobStatus;
-};
-
-export const employeeProfile = {
-  name: "Ramesh Kumar",
-  phone: "+91 9XXXXXXXXX",
-  rating: 4.7,
+export const employeeProfile: EmployeeProfile = {
+  name: "Ravi Kumar",
+  phone: "+91 9876543210",
+  rating: 4.6,
   verified: true,
+  incentives: 1200,
 };
 
 export const jobsMock: Job[] = [
   {
     id: 1,
-    customer: "Ravi Kumar",
     service: "Home Cleaning",
+    customer: "Suresh",
+    phone: "+91 9998887777",
     address: "Madhapur, Hyderabad",
-    amount: 850,
+    amount: 600,
     status: "new",
+    assignedAt: new Date().toISOString(),
   },
   {
     id: 2,
-    customer: "Anita Sharma",
-    service: "Office Cleaning",
-    address: "Gachibowli, Hyderabad",
-    amount: 1200,
-    status: "ongoing",
-  },
-  {
-    id: 3,
-    customer: "Suresh",
-    service: "Bathroom Cleaning",
-    address: "Kukatpally, Hyderabad",
-    amount: 650,
+    service: "Bathroom Deep Cleaning",
+    customer: "Anita",
+    phone: "+91 8887776666",
+    address: "Kondapur, Hyderabad",
+    amount: 900,
     status: "completed",
+    assignedAt: new Date().toISOString(),
+    completedAt: new Date().toISOString(),
   },
 ];
