@@ -1,0 +1,142 @@
+/* ================= PAGE ================= */
+.inst-reg-page {
+  width: 100%;
+  background: #f9fafb;
+  padding: 32px 40px;
+  box-sizing: border-box;
+}
+
+/* ================= CONTAINER ================= */
+.inst-reg-container {
+  max-width: 1100px;
+  background: #ffffff;
+  padding: 32px;
+  border-radius: 12px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
+}
+
+/* ================= HEADER ================= */
+.inst-reg-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.inst-reg-back {
+  border: 1px solid #d1d5db;
+  background: #fff;
+  border-radius: 8px;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+.inst-reg-step-text {
+  font-size: 12px;
+  font-weight: 600;
+  color: #2563eb;
+}
+
+/* ================= PROGRESS ================= */
+.inst-reg-progress {
+  height: 6px;
+  background: #e5e7eb;
+  border-radius: 999px;
+  margin-bottom: 28px;
+}
+
+.inst-reg-progress-fill {
+  width: 33%;
+  height: 100%;
+  background: #2563eb;
+}
+
+/* ================= TITLES ================= */
+.inst-reg-title {
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.inst-reg-subtitle {
+  color: #6b7280;
+  margin-bottom: 28px;
+}
+
+/* ================= SECTIONS ================= */
+.inst-reg-section {
+  margin-bottom: 32px;
+}
+
+.inst-reg-section h4 {
+  font-size: 13px;
+  font-weight: 700;
+  color: #2563eb;
+  margin-bottom: 14px;
+  letter-spacing: 0.04em;
+}
+
+/* ================= GRID ================= */
+.inst-reg-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+/* ================= INPUTS ================= */
+.inst-reg-input,
+.inst-reg-select {
+  width: 100%;
+  padding: 14px;
+  font-size: 14px;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+}
+
+/* ================= UPLOAD ================= */
+.inst-reg-upload {
+  border: 2px dashed #2563eb;
+  border-radius: 10px;
+  padding: 14px;
+  text-align: center;
+  font-weight: 600;
+  color: #2563eb;
+  cursor: pointer;
+}
+
+/* ================= FOOTER ================= */
+.inst-reg-footer {
+  margin-top: 32px;
+}
+
+.inst-reg-submit {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.inst-reg-terms {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 900px) {
+  .inst-reg-grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .inst-reg-page {
+    padding: 20px;
+  }
+
+  .inst-reg-container {
+    padding: 24px;
+  }
+}
