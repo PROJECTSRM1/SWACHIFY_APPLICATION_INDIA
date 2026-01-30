@@ -99,7 +99,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
   const [isHealthCareSelected, setIsHealthCareSelected] = useState(false);
   const [doctorRoleSelected, setDoctorRoleSelected] = useState(false);
 
-  type UserRole = "customer" | "employee" | "partner" |"admin" |null;
+  type UserRole = "customer" | "employee" | "partner" | "admin" | null;
 
   const [userRole, setUserRole] = useState<UserRole>(null);
   const [partnerModalVisible, setPartnerModalVisible] = useState(false);
@@ -290,44 +290,44 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
   //   }
   // };
 
-const onAdminLogin = async (values: any) => {
-  setAuthLoading(true);
+  const onAdminLogin = async (values: any) => {
+    setAuthLoading(true);
 
 
-  try {
-    const savedAdmin = localStorage.getItem("STATIC_ADMIN");
+    try {
+      const savedAdmin = localStorage.getItem("STATIC_ADMIN");
 
 
-    if (!savedAdmin) {
-      message.error("No admin registered. Please register first.");
-      return;
+      if (!savedAdmin) {
+        message.error("No admin registered. Please register first.");
+        return;
+      }
+
+
+      const admin = JSON.parse(savedAdmin);
+
+
+      if (
+        values.email === admin.email &&
+        values.password === admin.password
+      ) {
+        // fake token
+        localStorage.setItem("token", "STATIC_ADMIN_TOKEN");
+        localStorage.setItem("user_role", "admin");
+
+
+        message.success("Admin login successful");
+
+
+        setVendorModalVisible(false);
+        navigate("/admin/dashboard");
+      } else {
+        message.error("Invalid admin credentials");
+      }
+    } finally {
+      setAuthLoading(false);
     }
-
-
-    const admin = JSON.parse(savedAdmin);
-
-
-    if (
-      values.email === admin.email &&
-      values.password === admin.password
-    ) {
-      // fake token
-      localStorage.setItem("token", "STATIC_ADMIN_TOKEN");
-      localStorage.setItem("user_role", "admin");
-
-
-      message.success("Admin login successful");
-
-
-      setVendorModalVisible(false);
-      navigate("/admin/dashboard");
-    } else {
-      message.error("Invalid admin credentials");
-    }
-  } finally {
-    setAuthLoading(false);
-  }
-};
+  };
   const handleSkipLogin = () => {
     localStorage.setItem("isGuest", "true");
 
@@ -345,10 +345,6 @@ const onAdminLogin = async (values: any) => {
   };
 
 
-
-
-
-
   // ==========================
   // VENDOR LOGIN (still local)
   // ==========================
@@ -364,7 +360,7 @@ const onAdminLogin = async (values: any) => {
 
   const serviceOptions = [
     { title: "Cleaning & Home Services", value: 1 },
-    { title: "Transport", value: 2 },
+    { title: "Just Ride", value: 2 },
     { title: "Buy/Sell/Rental", value: 3 },
     { title: "Raw Materials", value: 4 },
     { title: "Education", value: 5 },
@@ -374,36 +370,36 @@ const onAdminLogin = async (values: any) => {
 
   // ✅ Partner Register/Login handler (Education only)
 
-const onPartnerRegister = (values: any) => {
-  // store selected module
-  localStorage.setItem("partner_module", values.module);
+  const onPartnerRegister = (values: any) => {
+    // store selected module
+    localStorage.setItem("partner_module", values.module);
 
-  message.success("Registration successful. Please login.");
+    message.success("Registration successful. Please login.");
 
-  // ✅ switch to login tab
-  setPartnerActiveTab("login");
-};
-
-const onAdminRegister = async (values: any) => {
-  const adminData = {
-    email: values.email,
-    password: values.password,
-    firstName: values.firstName,
-    lastName: values.lastName,
-    mobile: values.mobile,
+    // ✅ switch to login tab
+    setPartnerActiveTab("login");
   };
 
+  const onAdminRegister = async (values: any) => {
+    const adminData = {
+      email: values.email,
+      password: values.password,
+      firstName: values.firstName,
+      lastName: values.lastName,
+      mobile: values.mobile,
+    };
 
-  // ✅ SAVE ADMIN DETAILS LOCALLY
-  localStorage.setItem("STATIC_ADMIN", JSON.stringify(adminData));
+
+    // ✅ SAVE ADMIN DETAILS LOCALLY
+    localStorage.setItem("STATIC_ADMIN", JSON.stringify(adminData));
 
 
-  message.success("Admin registered successfully");
+    message.success("Admin registered successfully");
 
 
-  // 👉 Go to login tab
-  setVendorActiveTab("login");
-};
+    // 👉 Go to login tab
+    setVendorActiveTab("login");
+  };
 
   const onPartnerLogin = () => {
     const module = localStorage.getItem("partner_module");
@@ -415,6 +411,7 @@ const onAdminRegister = async (values: any) => {
     }
 
     setPartnerModalVisible(false);
+
 
     // ✅ SAME NAVIGATION YOU ALREADY HAD
     switch (module) {
@@ -653,16 +650,16 @@ const onAdminRegister = async (values: any) => {
               openAuthModal("register");
             }
 
-          if (value === "partner") {
-  setPartnerActiveTab("register");
-  setPartnerModalVisible(true);
-}
-if (value === "admin") {
-      setRoleType("admin");          // 🔥 important
-      setVendorActiveTab("admin_register");
-      setShowRegisterHint(null);
-      setVendorModalVisible(true);   // 🔥 open admin modal
-    }
+            if (value === "partner") {
+              setPartnerActiveTab("register");
+              setPartnerModalVisible(true);
+            }
+            if (value === "admin") {
+              setRoleType("admin");          // 🔥 important
+              setVendorActiveTab("admin_register");
+              setShowRegisterHint(null);
+              setVendorModalVisible(true);   // 🔥 open admin modal
+            }
 
           }}
         >
@@ -1643,47 +1640,47 @@ if (value === "admin") {
               </Form>
             )}
 
-           {roleType === "admin" && (
-  <Form layout="vertical" onFinish={onAdminLogin}>
+            {roleType === "admin" && (
+              <Form layout="vertical" onFinish={onAdminLogin}>
 
 
-    <Form.Item
-      label="Email"
-      name="email"
-      rules={[{ required: true, type: "email" }]}
-    >
-      <Input />
-    </Form.Item>
+                <Form.Item
+                  label="Email"
+                  name="email"
+                  rules={[{ required: true, type: "email" }]}
+                >
+                  <Input />
+                </Form.Item>
 
 
-    <Form.Item
-      label="Password"
-      name="password"
-      rules={[{ required: true }]}
-    >
-      <Input.Password />
-    </Form.Item>
+                <Form.Item
+                  label="Password"
+                  name="password"
+                  rules={[{ required: true }]}
+                >
+                  <Input.Password />
+                </Form.Item>
 
 
-    <Button type="primary" danger block htmlType="submit">
-      Login as Admin
-    </Button>
+                <Button type="primary" danger block htmlType="submit">
+                  Login as Admin
+                </Button>
 
 
-    {/* ✅ ALWAYS SHOW REGISTER LINK */}
-    <div style={{ marginTop: 12, textAlign: "center" }}>
-      <span>Not registered? </span>
-      <a
-        onClick={() => setVendorActiveTab("admin_register")}
-        style={{ fontWeight: 500 }}
-      >
-        Register as Admin
-      </a>
-    </div>
+                {/* ✅ ALWAYS SHOW REGISTER LINK */}
+                <div style={{ marginTop: 12, textAlign: "center" }}>
+                  <span>Not registered? </span>
+                  <a
+                    onClick={() => setVendorActiveTab("admin_register")}
+                    style={{ fontWeight: 500 }}
+                  >
+                    Register as Admin
+                  </a>
+                </div>
 
 
-  </Form>
-)}
+              </Form>
+            )}
 
           </Tabs.TabPane>
 
@@ -1759,87 +1756,87 @@ if (value === "admin") {
             </Tabs.TabPane>
           )}
           {/* ADMIN REGISTER TAB */}
-  {roleType === "admin" && vendorActiveTab === "admin_register" && (
-  <Tabs.TabPane tab="Register" key="admin_register">
-    <Form layout="vertical" onFinish={onAdminRegister}>
+          {roleType === "admin" && vendorActiveTab === "admin_register" && (
+            <Tabs.TabPane tab="Register" key="admin_register">
+              <Form layout="vertical" onFinish={onAdminRegister}>
 
 
-      <Form.Item
-        label="First Name"
-        name="firstName"
-        rules={[{ required: true }]}
-      >
-        <Input />
-      </Form.Item>
+                <Form.Item
+                  label="First Name"
+                  name="firstName"
+                  rules={[{ required: true }]}
+                >
+                  <Input />
+                </Form.Item>
 
 
-      <Form.Item
-        label="Last Name"
-        name="lastName"
-        rules={[{ required: true }]}
-      >
-        <Input />
-      </Form.Item>
+                <Form.Item
+                  label="Last Name"
+                  name="lastName"
+                  rules={[{ required: true }]}
+                >
+                  <Input />
+                </Form.Item>
 
 
-      <Form.Item
-        label="Email"
-        name="email"
-        rules={[{ required: true, type: "email" }]}
-      >
-        <Input />
-      </Form.Item>
+                <Form.Item
+                  label="Email"
+                  name="email"
+                  rules={[{ required: true, type: "email" }]}
+                >
+                  <Input />
+                </Form.Item>
 
 
-      <Form.Item
-        label="Mobile Number"
-        name="mobile"
-        rules={[
-          { required: true },
-          { pattern: /^[6-9][0-9]{9}$/, message: "Invalid mobile number" }
-        ]}
-      >
-        <Input />
-      </Form.Item>
+                <Form.Item
+                  label="Mobile Number"
+                  name="mobile"
+                  rules={[
+                    { required: true },
+                    { pattern: /^[6-9][0-9]{9}$/, message: "Invalid mobile number" }
+                  ]}
+                >
+                  <Input />
+                </Form.Item>
 
 
-      <Form.Item
-        label="Password"
-        name="password"
-        rules={[{ required: true }]}
-      >
-        <Input.Password />
-      </Form.Item>
+                <Form.Item
+                  label="Password"
+                  name="password"
+                  rules={[{ required: true }]}
+                >
+                  <Input.Password />
+                </Form.Item>
 
 
-      <Form.Item
-        label="Confirm Password"
-        name="confirmPassword"
-        dependencies={["password"]}
-        rules={[
-          { required: true },
-          ({ getFieldValue }) => ({
-            validator(_, value) {
-              if (!value || getFieldValue("password") === value) {
-                return Promise.resolve();
-              }
-              return Promise.reject("Passwords do not match");
-            },
-          }),
-        ]}
-      >
-        <Input.Password />
-      </Form.Item>
+                <Form.Item
+                  label="Confirm Password"
+                  name="confirmPassword"
+                  dependencies={["password"]}
+                  rules={[
+                    { required: true },
+                    ({ getFieldValue }) => ({
+                      validator(_, value) {
+                        if (!value || getFieldValue("password") === value) {
+                          return Promise.resolve();
+                        }
+                        return Promise.reject("Passwords do not match");
+                      },
+                    }),
+                  ]}
+                >
+                  <Input.Password />
+                </Form.Item>
 
 
-      <Button type="primary" block htmlType="submit">
-        Register as Admin
-      </Button>
+                <Button type="primary" block htmlType="submit">
+                  Register as Admin
+                </Button>
 
 
-    </Form>
-  </Tabs.TabPane>
-)}
+              </Form>
+            </Tabs.TabPane>
+          )}
 
         </Tabs>
       </Modal>
@@ -1859,10 +1856,10 @@ if (value === "admin") {
       >
 
         <Tabs
-  activeKey={partnerActiveTab}
-  onChange={(key) => setPartnerActiveTab(key as "login" | "register")}
-  centered
->
+          activeKey={partnerActiveTab}
+          onChange={(key) => setPartnerActiveTab(key as "login" | "register")}
+          centered
+        >
 
           <Tabs.TabPane tab="Login" key="login">
             <Form layout="vertical" onFinish={onPartnerLogin}>
