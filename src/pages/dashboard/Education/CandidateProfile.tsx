@@ -7,7 +7,8 @@ export type Student = {
   program: string;
   avatar: string;
   rating: number;
-  status: "Active" | "Completed";
+ status: "Active" | "Completed" | "In Progress";
+
   attendance: number;
   shift: string;
   resumeUrl?: string; // ✅ FIX 1
