@@ -118,7 +118,7 @@ const EducationPage = () => {
                 <Users size={20} />
               </div>
               <Counter end={15000} start={startCount} />
-              <span>Students Enrolled</span>
+              <span className="stat-label">Students Enrolled</span>
             </div>
 
             <div className="sw-ep-stat-item">
