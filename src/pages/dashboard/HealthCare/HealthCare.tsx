@@ -1,8 +1,10 @@
 import React, { useMemo, useState, useEffect } from "react";
 import "./HealthCare.css";
-import { Tooltip } from "antd";
+import { message, Tooltip } from "antd";
 import { AppstoreOutlined } from "@ant-design/icons";
 import healthcareService from "../../../api/healthcare";
+import { PaymentsAPI } from "../../../api/customerAuth";
+
 
 
 type AmbulanceHospital = {
@@ -871,6 +873,7 @@ const formatAvailabilityTime = (from: string, to: string) => {
 };
 
 
+
 const getDoctorImage = (id: number) => {
   switch (id) {
     case 1:
@@ -952,6 +955,7 @@ const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 const [showMonthPicker, setShowMonthPicker] = useState(false);
 const [selectedTime, setSelectedTime] = useState<string | null>(null);
 const [showConfirmPopup, setShowConfirmPopup] = useState(false);
+const [payLoading, setPayLoading] = useState(false);
 
 const getDaysInMonth = (date: Date) => {
   return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
@@ -1249,6 +1253,63 @@ const filteredHospitals = useMemo(() => {
     const s = totalSeconds % 60;
     return `${m}:${s.toString().padStart(2, "0")}`;
   };
+
+
+
+  const handlePayNow = async () => {
+  try {
+    setPayLoading(true);
+
+    // Temporary ID for now (since no booking API exists yet)
+    const tempHomeServiceId = 25; 
+
+    const amount = 5000; // ₹50 => 5000 paise
+
+    // 1️⃣ Create Razorpay order
+    const order = await PaymentsAPI.createOrder(tempHomeServiceId, amount);
+
+    const options = {
+      key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+      amount: order.amount,
+      currency: "INR",
+      name: "Swachify Healthcare",
+      description: "Online Video Consultation",
+      order_id: order.id,
+
+    
+
+      handler: async function (response: any) {
+        try {
+          // 2️⃣ Verify payment with backend
+          await PaymentsAPI.verifyPayment(
+            order.id,
+            response.razorpay_payment_id,
+            response.razorpay_signature,
+            tempHomeServiceId
+          );
+
+          message.success("Payment Successful 🎉");
+          setShowConfirmPopup(false);
+        } catch (err) {
+          message.error("Payment verification failed");
+        }
+      },
+
+      theme: {
+        color: "#065f46",
+      },
+    };
+
+    //@ts-ignore
+    const rzp = new window.Razorpay(options);
+    rzp.open();
+  } catch (err) {
+    message.error("Payment failed!");
+  } finally {
+    setPayLoading(false);
+  }
+};
+
 
 
 
@@ -3060,7 +3121,7 @@ const filteredHospitals = useMemo(() => {
       </div>
 
       {/* Pay Button */}
-      <button className="pay-btn">
+      <button className="pay-btn"  onClick={handlePayNow} disabled={payLoading}>
         Pay Now ($50.00)
       </button>
 
