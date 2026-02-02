@@ -3,9 +3,9 @@
   max-width: 1200px;
   margin: auto;
   padding: 28px;
- background: transparent !important;
   min-height: 100vh;
 }
+
 .sv-wrapper {
   min-height: 100vh;
   background: linear-gradient(
@@ -15,10 +15,9 @@
     #ffffff 42%,
     #ffffff 100%
   );
-  /* padding-top: 88px; */
   padding-bottom: 80px;
   overflow-x: hidden;
-  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont;
+  font-family: "Inter", system-ui, -apple-system;
 }
 
 /* HEADER */
@@ -61,13 +60,8 @@
   box-shadow: 0 10px 30px rgba(0,0,0,0.06);
 }
 
-.sv-stat-card.blue {
-  border-left: 6px solid #1677ff;
-}
-
-.sv-stat-card.orange {
-  border-left: 6px solid #fb923c;
-}
+.sv-stat-card.blue { border-left: 6px solid #1677ff; }
+.sv-stat-card.orange { border-left: 6px solid #fb923c; }
 
 .sv-stat-icon {
   width: 48px;
@@ -85,7 +79,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
 }
 
 .sv-updated {
@@ -93,13 +87,21 @@
   color: #1677ff;
 }
 
-/* BRANCH CARD */
+/* 🔥 GRID LAYOUT */
+.sv-branch-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+
+/* CARD */
 .sv-branch-card {
   background: #fff;
   padding: 22px;
   border-radius: 20px;
-  margin-bottom: 18px;
   box-shadow: 0 12px 30px rgba(0,0,0,0.06);
+  display: flex;
+  flex-direction: column;
 }
 
 .sv-branch-top {
@@ -143,14 +145,13 @@
 /* FOOTER */
 .sv-branch-footer {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   margin: 16px 0;
 }
 
 .sv-avatars {
   display: flex;
-  align-items: center;
 }
 
 .av {
@@ -172,9 +173,9 @@
   justify-content: center;
 }
 
-/* BUTTONS */
+/* BUTTON */
 .sv-primary {
-  width: 100%;
+  margin-top: auto;
   background: #1677ff;
   color: #fff;
   border: none;
@@ -198,34 +199,18 @@
   cursor: pointer;
 }
 
-/* =====================
-   RESPONSIVE
-===================== */
-
-/* TABLETS */
+/* RESPONSIVE */
 @media (max-width: 1024px) {
+  .sv-branch-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
   .sv-stats {
     grid-template-columns: 1fr;
   }
 }
 
-/* MOBILE */
 @media (max-width: 640px) {
-  .sv-page {
-    padding: 18px;
-  }
-
-  .sv-header h2 {
-    font-size: 22px;
-  }
-
-  .sv-branch-top {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .sv-active {
-    margin-left: 0;
-    margin-top: 8px;
+  .sv-branch-grid {
+    grid-template-columns: 1fr;
   }
 }

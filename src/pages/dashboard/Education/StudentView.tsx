@@ -33,7 +33,6 @@ const StudentView: React.FC<Props> = ({ onBack }) => {
   const [branchCount, setBranchCount] = useState(0);
   const [loading, setLoading] = useState(true);
 
-  /* ================= FETCH BRANCH DIRECTORY ================= */
   useEffect(() => {
     fetchBranches();
   }, []);
@@ -68,7 +67,6 @@ const StudentView: React.FC<Props> = ({ onBack }) => {
     }
   };
 
-  /* ================= STUDENTS VIEW ================= */
   if (view === "students" && selectedBranch) {
     return (
       <BranchStudents
@@ -82,7 +80,6 @@ const StudentView: React.FC<Props> = ({ onBack }) => {
     );
   }
 
-  /* ================= MAIN UI ================= */
   return (
     <div className="sv-wrapper">
       <div className="sv-page">
@@ -119,49 +116,51 @@ const StudentView: React.FC<Props> = ({ onBack }) => {
           <span className="sv-updated">Updated just now</span>
         </div>
 
-        {/* LOADING */}
         {loading && <p style={{ padding: 16 }}>Loading branches…</p>}
 
-        {/* BRANCH LIST */}
-        {!loading &&
-          branches.map((b) => (
-            <div key={b.id} className="sv-branch-card">
-              <div className="sv-branch-top">
-                <div className="sv-branch-icon">🎓</div>
+        {/* 🔥 GRID WRAPPER */}
+        {!loading && (
+          <div className="sv-branch-grid">
+            {branches.map((b) => (
+              <div key={b.id} className="sv-branch-card">
+                <div className="sv-branch-top">
+                  <div className="sv-branch-icon">🎓</div>
 
-                <div className="sv-branch-info">
-                  <h4>{b.name}</h4>
-                  <p>{b.location}</p>
+                  <div className="sv-branch-info">
+                    <h4>{b.name}</h4>
+                    <p>{b.location}</p>
+                  </div>
+
+                  <span className="sv-active">ACTIVE</span>
                 </div>
 
-                <span className="sv-active">ACTIVE</span>
-              </div>
+                <div className="sv-branch-footer">
+                  <div className="sv-avatars">
+                    <span className="av one" />
+                    <span className="av two" />
+                    <span className="av three">
+                      +{Math.floor(b.students / 100)}k
+                    </span>
+                  </div>
 
-              <div className="sv-branch-footer">
-                <div className="sv-avatars">
-                  <span className="av one" />
-                  <span className="av two" />
-                  <span className="av three">
-                    +{Math.floor(b.students / 100)}k
+                  <span className="sv-count">
+                    <b>{b.students}</b> Students enrolled
                   </span>
                 </div>
 
-                <span className="sv-count">
-                  <b>{b.students}</b> Students enrolled
-                </span>
+                <button
+                  className="sv-primary"
+                  onClick={() => {
+                    setSelectedBranch(b);
+                    setView("students");
+                  }}
+                >
+                  View Students →
+                </button>
               </div>
-
-              <button
-                className="sv-primary"
-                onClick={() => {
-                  setSelectedBranch(b);
-                  setView("students");
-                }}
-              >
-                View Students →
-              </button>
-            </div>
-          ))}
+            ))}
+          </div>
+        )}
 
         <button className="sv-back" onClick={onBack}>
           ← Back to Partner Portal
