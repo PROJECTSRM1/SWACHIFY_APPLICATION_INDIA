@@ -29,8 +29,10 @@
 .healthcare-banner-content p {
   margin: 8px 0 16px;
   font-size: 14px;
-  opacity: 0.9;
+  color: #e6fffa;       /* FIX: readable on dark green */
+  opacity: 1;           /* FIX */
 }
+
 
 .healthcare-btn {
   background: #ffffff;
@@ -3608,4 +3610,88 @@
   opacity: 1;
 }
 
+ /* ===== DOCTOR CARD NAME UNDER AVATAR FIX ===== */
 
+.doctor-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.doctor-top img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+.doctor-name {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 800;
+  text-align: center;
+}
+
+/* One-line meta info */
+.doctor-meta {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin: 6px 0;
+}
+
+.doctor-meta .dot {
+  color: #9ca3af;
+}
+
+
+
+
+
+/* =========================
+   HOSPITAL CARD TEXT ALIGN FIX
+   ========================= */
+.ambulance-details {
+  text-align: left;          /* 🔥 FORCE LEFT */
+}
+
+.ambulance-details p {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 6px 0;
+}
+
+/* =========================
+   OFFLINE EMPTY STATE – FINAL FIX
+   ========================= */
+.offline-empty-state {
+  text-align: left;
+  padding: 16px;
+
+  /* 🔥 REAL FIX */
+  align-self: flex-start;   /* ← NOT stretch */
+  width: 100%;
+  margin: 0;
+}
+
+/* =========================
+   OFFLINE EMPTY STATE – ABSOLUTE FIX
+   ========================= */
+
+/* override flex-centering parent */
+.confirmed-body {
+  justify-content: flex-start;
+}
+
+/* make empty state behave like normal content */
+.offline-empty-state {
+  width: 100%;
+  text-align: left;
+  padding: 16px;
+}
