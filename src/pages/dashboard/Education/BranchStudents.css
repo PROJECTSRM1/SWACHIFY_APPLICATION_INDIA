@@ -1,12 +1,8 @@
-.bsx-page {
-  max-width: 1200px;
-  margin: auto;
-  padding: 32px;
-  background: transparent !important;
-  min-height: 100vh;
-}
 .bsx-wrapper {
-  height: 100vh;
+  min-height: 100vh;
+  padding-top: 64px;
+  padding-bottom: 40px;
+  overflow-x: hidden;
   background: linear-gradient(
     135deg,
     #f3f4f8 0%,
@@ -14,11 +10,25 @@
     #ffffff 42%,
     #ffffff 100%
   );
-  padding-top: 88px;
-  padding-bottom: 80px;
-  overflow-x: hidden;
-  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont;
 }
+.bsx-search {
+  width: 100%;
+}
+
+.bsx-search input {
+  background: transparent;
+}
+.bsx-card {
+  position: relative;
+}
+
+.bsx-card .inactive {
+  margin-left: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #ef4444;
+}
+
 
 /* HEADER */
 .bsx-header {
@@ -153,13 +163,13 @@
     font-size: 20px;
   }
 }
-a.bsx-page {
+.bsx-page {
   max-width: 1200px;
   margin: auto;
   padding: 36px;
-  background: linear-gradient(180deg,#f7f9ff,#f1f5fb);
   min-height: 100vh;
 }
+
 
 /* HEADER */
 .bsx-header {

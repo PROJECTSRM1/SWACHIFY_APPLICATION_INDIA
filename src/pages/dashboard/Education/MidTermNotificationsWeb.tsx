@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import "./MidTermNotificationsWeb.css";
 
 /* ================= TYPES ================= */
@@ -43,50 +43,7 @@ interface Props {
   onBack: () => void;
 }
 
-/* ================= STATIC DATA (SAME AS RN) ================= */
-
-const examData: ExamData[] = [
-  {
-    id: "1",
-    subject: "Mathematics",
-    date: "Oct 02",
-    day: "Monday",
-    time: "09:00 AM - 11:30 AM",
-    location: "Hall A",
-    color: "#3B82F6",
-    category: "midterm",
-  },
-  {
-    id: "2",
-    subject: "English Literature",
-    date: "Oct 02",
-    day: "Monday",
-    time: "01:00 PM - 03:00 PM",
-    location: "Room 402",
-    color: "#A855F7",
-    category: "midterm",
-  },
-  {
-    id: "3",
-    subject: "Physical Sciences",
-    date: "Oct 03",
-    day: "Tuesday",
-    time: "10:00 AM - 12:30 PM",
-    location: "Lab 2",
-    color: "#10B981",
-    category: "midterm",
-  },
-  {
-    id: "4",
-    subject: "History & Civics",
-    date: "Oct 04",
-    day: "Wednesday",
-    time: "02:00 PM - 04:00 PM",
-    location: "Main Hall",
-    color: "#F59E0B",
-    category: "midterm",
-  },
-];
+/* ================= STATIC (NON-EXAM) DATA ================= */
 
 const logs: LogEntry[] = [
   {
@@ -109,21 +66,7 @@ const staff: StaffMember[] = [
     name: "Dr. Alice Johnson",
     email: "alice.j@school.edu",
     phone: "+1 234-567-8901",
-    assignedExams: ["1", "3"],
-  },
-  {
-    id: "2",
-    name: "Prof. Bob Smith",
-    email: "bob.s@school.edu",
-    phone: "+1 234-567-8902",
-    assignedExams: ["2", "4"],
-  },
-  {
-    id: "3",
-    name: "Dr. Carol Williams",
-    email: "carol.w@school.edu",
-    phone: "+1 234-567-8903",
-    assignedExams: ["1", "2"],
+    assignedExams: [],
   },
 ];
 
@@ -155,18 +98,70 @@ const MidTermNotificationsWeb: React.FC<Props> = ({ onBack }) => {
   >("timetable");
 
   const [activeTab] = useState<"midterm" | "final">("midterm");
+  const [examData, setExamData] = useState<ExamData[]>([]);
   const [selectedExam, setSelectedExam] = useState<ExamData | null>(null);
+  const [loading, setLoading] = useState(true);
 
   const [reminderEnabled, setReminderEnabled] = useState(true);
   const [triggerTime, setTriggerTime] = useState("1 day");
   const [notificationSound, setNotificationSound] = useState("Chime");
   const [savedReminders, setSavedReminders] = useState<ReminderData[]>([]);
 
+  /* ================= FETCH EXAM SCHEDULE ================= */
+
+  useEffect(() => {
+    fetchExamSchedule();
+  }, []);
+
+const fetchExamSchedule = async () => {
+  try {
+    setLoading(true);
+
+    const res = await fetch(
+      `https://swachify-india-be-1-mcrb.onrender.com/institution/student/exam-schedule?institution_id=1&student_id=1`
+    );
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch exam schedule");
+    }
+
+    const data = await res.json();
+
+    const formatted: ExamData[] = data.map((e: any) => {
+      const examDate = new Date(e.exam_date);
+
+      return {
+        id: String(e.id),
+        subject: e.subject_name ?? e.subject ?? "Unknown Subject",
+        date: examDate.toLocaleDateString("en-US", {
+          month: "short",
+          day: "2-digit",
+        }),
+        day: examDate.toLocaleDateString("en-US", {
+          weekday: "long",
+        }),
+        time: `${e.start_time} - ${e.end_time}`,
+        location: e.exam_hall ?? e.location ?? "Room TBD",
+        color: "#3B82F6",
+        category:
+          e.exam_type?.toLowerCase() === "final" ? "final" : "midterm",
+      };
+    });
+
+    setExamData(formatted);
+  } catch (error) {
+    console.error("Exam schedule load failed:", error);
+  } finally {
+    setLoading(false);
+  }
+};
+
+
   /* ================= DATA LOGIC ================= */
 
   const filteredExams = useMemo(
     () => examData.filter(e => e.category === activeTab),
-    [activeTab]
+    [examData, activeTab]
   );
 
   const groupedExams = useMemo(() => {
@@ -178,7 +173,7 @@ const MidTermNotificationsWeb: React.FC<Props> = ({ onBack }) => {
     }, {});
   }, [filteredExams]);
 
-  /* ================= HANDLERS ================= */
+  /* ================= REMINDER ================= */
 
   const saveReminder = () => {
     if (!selectedExam) return;
@@ -207,10 +202,10 @@ const MidTermNotificationsWeb: React.FC<Props> = ({ onBack }) => {
         <button onClick={() => setScreen("timetable")}>← Back</button>
         <h2>Notification Logs</h2>
 
-        {logs.map(log => (
-          <div key={log.id} className="examw-card">
-            <strong>{log.message}</strong>
-            <p>{log.timestamp}</p>
+        {logs.map(l => (
+          <div key={l.id} className="examw-card">
+            <strong>{l.message}</strong>
+            <p>{l.timestamp}</p>
           </div>
         ))}
       </div>
@@ -225,14 +220,9 @@ const MidTermNotificationsWeb: React.FC<Props> = ({ onBack }) => {
 
         {staff.map(s => (
           <div key={s.id} className="staff-card">
-            <div className="staff-avatar">
-              {s.name.split(" ").map(n => n[0]).join("")}
-            </div>
-            <div>
-              <strong>{s.name}</strong>
-              <p>{s.email}</p>
-              <p>{s.phone}</p>
-            </div>
+            <strong>{s.name}</strong>
+            <p>{s.email}</p>
+            <p>{s.phone}</p>
           </div>
         ))}
       </div>
@@ -260,6 +250,7 @@ const MidTermNotificationsWeb: React.FC<Props> = ({ onBack }) => {
     return (
       <div className="examw-page">
         <button onClick={() => setScreen("timetable")}>← Back</button>
+
         <h2>Set Exam Reminder</h2>
 
         <div className="examw-card">
@@ -284,15 +275,18 @@ const MidTermNotificationsWeb: React.FC<Props> = ({ onBack }) => {
           ))}
         </select>
 
-        <select value={notificationSound} onChange={e => setNotificationSound(e.target.value)}>
+        <select
+          value={notificationSound}
+          onChange={e => setNotificationSound(e.target.value)}
+        >
           {notificationSounds.map(s => (
             <option key={s}>{s}</option>
           ))}
         </select>
 
         <button className="btn-primary" onClick={saveReminder}>
-  Save Reminder
-</button>
+          Save Reminder
+        </button>
       </div>
     );
   }
@@ -301,45 +295,42 @@ const MidTermNotificationsWeb: React.FC<Props> = ({ onBack }) => {
 
   return (
     <div className="examw-page">
-     <button className="btn-back" onClick={onBack}>←</button>
+      <button className="btn-back" onClick={onBack}>←</button>
       <h2>Exam Timetable</h2>
 
-      <div className="tab-row">
-       <button className="tab-btn">Mid-term</button>
+      {loading && <p>Loading exam schedule…</p>}
 
-        {/* <button onClick={() => setActiveTab("final")}>Final</button> */}
-      </div>
+      {!loading &&
+        Object.entries(groupedExams).map(([date, exams]) => (
+          <div key={date} className="examw-card">
+            <strong>{date}</strong>
 
-      {Object.entries(groupedExams).map(([date, exams]) => (
-        <div key={date} className="examw-card">
-          <strong>{date}</strong>
-
-          {exams.map(exam => (
-            <div
-              key={exam.id}
-              className="examw-exam"
-              onClick={() => {
-                setSelectedExam(exam);
-                setScreen("reminder");
-              }}
-            >
-              <span
-                className="exam-color"
-                style={{ background: exam.color }}
-              />
-              <div>
-                <strong>{exam.subject}</strong>
-                <p>{exam.time}</p>
+            {exams.map(exam => (
+              <div
+                key={exam.id}
+                className="examw-exam"
+                onClick={() => {
+                  setSelectedExam(exam);
+                  setScreen("reminder");
+                }}
+              >
+                <span
+                  className="exam-color"
+                  style={{ background: exam.color }}
+                />
+                <div>
+                  <strong>{exam.subject}</strong>
+                  <p>{exam.time}</p>
+                </div>
+                <span>{exam.location}</span>
               </div>
-              <span>{exam.location}</span>
-            </div>
-          ))}
-        </div>
-      ))}
+            ))}
+          </div>
+        ))}
 
-     <button className="btn-primary" onClick={() => setScreen("staff")}>
-  Manage Staff
-</button>
+      <button className="btn-primary" onClick={() => setScreen("staff")}>
+        Manage Staff
+      </button>
     </div>
   );
 };
