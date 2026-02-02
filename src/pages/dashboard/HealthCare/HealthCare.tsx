@@ -5,6 +5,602 @@ import { AppstoreOutlined } from "@ant-design/icons";
 import healthcareService from "../../../api/healthcare";
 
 
+type AmbulanceHospital = {
+  hospital_id: number;
+  hospital_name: string;
+  specialty_type: string;
+  location: string;
+  conditions: string[]; // ✅ ADD THIS
+  latitude: number | null;
+  longitude: number | null;
+  hospital_contact: string;
+  ambulance_id: number;
+  service_provider: string;
+  ambulance_contact: string;
+  availability_status: string;
+};
+
+
+const STATIC_HOSPITALS: AmbulanceHospital[] = [
+  {
+    hospital_id: 1,
+    hospital_name: "Apollo Medical Center",
+    specialty_type: "MULTI-SPECIALTY",
+    location: "Banjara Hills",
+    conditions: ["fever", "cold", "infection", "covid"],
+    latitude: null,
+    longitude: null,
+    hospital_contact: "+91 90000 11111",
+    ambulance_id: 101,
+    service_provider: "Apollo Ambulance",
+    ambulance_contact: "+91 90000 11112",
+    availability_status: "Available 24x7",
+  },
+  {
+    hospital_id: 2,
+    hospital_name: "City General Hospital",
+    specialty_type: "GENERAL MEDICINE",
+    location: "Ameerpet",
+    conditions: ["fever", "cold", "cough", "vomit"],
+    latitude: null,
+    longitude: null,
+    hospital_contact: "+91 90000 22221",
+    ambulance_id: 102,
+    service_provider: "City Ambulance",
+    ambulance_contact: "+91 90000 22222",
+    availability_status: "Available",
+  },
+  {
+    hospital_id: 3,
+    hospital_name: "Sunrise Hospitals",
+    specialty_type: "ENT & GENERAL",
+    location: "Madhapur",
+    conditions: ["sinus", "cold", "fever"],
+    latitude: null,
+    longitude: null,
+    hospital_contact: "+91 90000 33331",
+    ambulance_id: 103,
+    service_provider: "Sunrise Ambulance",
+    ambulance_contact: "+91 90000 33332",
+    availability_status: "Available",
+  },
+  {
+    hospital_id: 4,
+    hospital_name: "Care & Cure Hospital",
+    specialty_type: "EMERGENCY",
+    location: "Gachibowli",
+    conditions: ["vomit", "infection", "fever"],
+    latitude: null,
+    longitude: null,
+    hospital_contact: "+91 90000 44441",
+    ambulance_id: 104,
+    service_provider: "Care Ambulance",
+    ambulance_contact: "+91 90000 44442",
+    availability_status: "Available",
+  },
+  {
+    hospital_id: 5,
+    hospital_name: "Rainbow Children Hospital",
+    specialty_type: "PEDIATRIC",
+    location: "Kondapur",
+    conditions: ["fever", "cold", "child"],
+    latitude: null,
+    longitude: null,
+    hospital_contact: "+91 90000 55551",
+    ambulance_id: 105,
+    service_provider: "Rainbow Ambulance",
+    ambulance_contact: "+91 90000 55552",
+    availability_status: "Available",
+  },
+  {
+    hospital_id: 6,
+    hospital_name: "Max Healthcare",
+    specialty_type: "MULTI-SPECIALTY",
+    location: "Secunderabad",
+    conditions: ["covid", "fever", "emergency"],
+    latitude: null,
+    longitude: null,
+    hospital_contact: "+91 90000 66661",
+    ambulance_id: 106,
+    service_provider: "Max Ambulance",
+    ambulance_contact: "+91 90000 66662",
+    availability_status: "Available",
+  },
+  {
+    hospital_id: 7,
+    hospital_name: "Star Hospitals",
+    specialty_type: "GENERAL",
+    location: "Begumpet",
+    conditions: ["fever", "cough"],
+    latitude: null,
+    longitude: null,
+    hospital_contact: "+91 90000 77771",
+    ambulance_id: 107,
+    service_provider: "Star Ambulance",
+    ambulance_contact: "+91 90000 77772",
+    availability_status: "Available",
+  },
+  {
+    hospital_id: 8,
+    hospital_name: "KIMS Hospital",
+    specialty_type: "GENERAL & EMERGENCY",
+    location: "Somajiguda",
+    conditions: ["infection", "vomit", "fever"],
+    latitude: null,
+    longitude: null,
+    hospital_contact: "+91 90000 88881",
+    ambulance_id: 108,
+    service_provider: "KIMS Ambulance",
+    ambulance_contact: "+91 90000 88882",
+    availability_status: "Available",
+  },
+  {
+    hospital_id: 9,
+    hospital_name: "Yashoda Hospitals",
+    specialty_type: "MULTI-SPECIALTY",
+    location: "Malakpet",
+    conditions: ["cold", "fever", "sinus"],
+    latitude: null,
+    longitude: null,
+    hospital_contact: "+91 90000 99991",
+    ambulance_id: 109,
+    service_provider: "Yashoda Ambulance",
+    ambulance_contact: "+91 90000 99992",
+    availability_status: "Available",
+  },
+  {
+    hospital_id: 10,
+    hospital_name: "Global Hospitals",
+    specialty_type: "CRITICAL CARE",
+    location: "Lakdikapul",
+    conditions: ["emergency", "infection", "fever"],
+    latitude: null,
+    longitude: null,
+    hospital_contact: "+91 90000 10101",
+    ambulance_id: 110,
+    service_provider: "Global Ambulance",
+    ambulance_contact: "+91 90000 10102",
+    availability_status: "Available",
+  },
+];
+
+
+
+
+type HospitalDoctor = {
+  id: number;
+  hospitalId: number;
+  name: string;
+  speciality: string;
+  rating: number;
+  experience: string;
+  patients: string;
+  image: string;
+  bio: string;
+};
+
+export const HOSPITAL_DOCTORS: HospitalDoctor[] = [
+  // 🏥 Apollo Medical Center (hospital_id: 1) → 3 doctors
+  {
+    id: 101,
+    hospitalId: 1,
+    name: "Dr. Suresh Rao",
+    speciality: "General Physician",
+    rating: 4.6,
+    experience: "12 Yrs",
+    patients: "4k+",
+    image: "https://randomuser.me/api/portraits/men/32.jpg",
+    bio: "Expert in internal medicine and lifestyle disorders.",
+  },
+  {
+    id: 102,
+    hospitalId: 1,
+    name: "Dr. Neha Kapoor",
+    speciality: "Dermatologist",
+    rating: 4.7,
+    experience: "9 Yrs",
+    patients: "2.3k+",
+    image: "https://randomuser.me/api/portraits/women/44.jpg",
+    bio: "Specializes in skin, hair, and cosmetic dermatology.",
+  },
+  {
+    id: 103,
+    hospitalId: 1,
+    name: "Dr. Arjun Malhotra",
+    speciality: "Pulmonologist",
+    rating: 4.8,
+    experience: "11 Yrs",
+    patients: "3.1k+",
+    image: "https://randomuser.me/api/portraits/men/65.jpg",
+    bio: "Treats respiratory disorders including asthma and COPD.",
+  },
+
+  // 🏥 City General Hospital (hospital_id: 2) → 4 doctors
+  {
+    id: 201,
+    hospitalId: 2,
+    name: "Dr. Rahul Verma",
+    speciality: "Cardiologist",
+    rating: 4.8,
+    experience: "8 Yrs",
+    patients: "2.1k+",
+    image: "https://randomuser.me/api/portraits/men/71.jpg",
+    bio: "Specialist in heart failure and preventive cardiology.",
+  },
+  {
+    id: 202,
+    hospitalId: 2,
+    name: "Dr. Anjali Mehta",
+    speciality: "Neurologist",
+    rating: 4.9,
+    experience: "10 Yrs",
+    patients: "3k+",
+    image: "https://randomuser.me/api/portraits/women/68.jpg",
+    bio: "Expert in epilepsy and stroke rehabilitation.",
+  },
+  {
+    id: 203,
+    hospitalId: 2,
+    name: "Dr. Sameer Khan",
+    speciality: "Orthopedic",
+    rating: 4.7,
+    experience: "9 Yrs",
+    patients: "1.8k+",
+    image: "https://randomuser.me/api/portraits/men/55.jpg",
+    bio: "Focuses on joint replacement and sports injuries.",
+  },
+  {
+    id: 204,
+    hospitalId: 2,
+    name: "Dr. Pooja Nair",
+    speciality: "General Physician",
+    rating: 4.6,
+    experience: "7 Yrs",
+    patients: "2k+",
+    image: "https://randomuser.me/api/portraits/women/22.jpg",
+    bio: "Provides comprehensive primary and preventive care.",
+  },
+
+  // 🏥 Sunrise Hospitals (hospital_id: 3) → 2 doctors
+  {
+    id: 301,
+    hospitalId: 3,
+    name: "Dr. Vinay Kumar",
+    speciality: "ENT Specialist",
+    rating: 4.5,
+    experience: "6 Yrs",
+    patients: "1.2k+",
+    image: "https://randomuser.me/api/portraits/men/41.jpg",
+    bio: "Treats sinus, hearing loss, and throat infections.",
+  },
+  {
+    id: 302,
+    hospitalId: 3,
+    name: "Dr. Sneha Reddy",
+    speciality: "General Physician",
+    rating: 4.4,
+    experience: "5 Yrs",
+    patients: "900+",
+    image: "https://randomuser.me/api/portraits/women/30.jpg",
+    bio: "Primary care specialist for common illnesses.",
+  },
+
+  // 🏥 Care & Cure Hospital (hospital_id: 4) → 6 doctors
+  {
+    id: 401,
+    hospitalId: 4,
+    name: "Dr. Ramesh Iyer",
+    speciality: "Emergency Medicine",
+    rating: 4.9,
+    experience: "15 Yrs",
+    patients: "6k+",
+    image: "https://randomuser.me/api/portraits/men/12.jpg",
+    bio: "Senior emergency physician handling critical cases.",
+  },
+  {
+    id: 402,
+    hospitalId: 4,
+    name: "Dr. Kavya Sharma",
+    speciality: "Anesthesiologist",
+    rating: 4.7,
+    experience: "10 Yrs",
+    patients: "2.5k+",
+    image: "https://randomuser.me/api/portraits/women/55.jpg",
+    bio: "Expert in anesthesia and pain management.",
+  },
+  {
+    id: 403,
+    hospitalId: 4,
+    name: "Dr. Mohit Jain",
+    speciality: "Critical Care",
+    rating: 4.8,
+    experience: "12 Yrs",
+    patients: "3.7k+",
+    image: "https://randomuser.me/api/portraits/men/89.jpg",
+    bio: "ICU specialist managing high-risk patients.",
+  },
+  {
+    id: 404,
+    hospitalId: 4,
+    name: "Dr. Ayesha Siddiqui",
+    speciality: "Internal Medicine",
+    rating: 4.6,
+    experience: "8 Yrs",
+    patients: "2k+",
+    image: "https://randomuser.me/api/portraits/women/77.jpg",
+    bio: "Handles complex adult medical conditions.",
+  },
+
+// 🏥 Rainbow Children Hospital (hospital_id: 5) → 3 doctors
+{
+  id: 501,
+  hospitalId: 5,
+  name: "Dr. Meera Joshi",
+  speciality: "Pediatrician",
+  rating: 4.9,
+  experience: "11 Yrs",
+  patients: "5k+",
+  image: "https://randomuser.me/api/portraits/women/12.jpg",
+  bio: "Senior pediatrician specializing in child growth and immunity.",
+},
+{
+  id: 502,
+  hospitalId: 5,
+  name: "Dr. Kunal Shah",
+  speciality: "Pediatric Pulmonologist",
+  rating: 4.7,
+  experience: "8 Yrs",
+  patients: "2.2k+",
+  image: "https://randomuser.me/api/portraits/men/23.jpg",
+  bio: "Treats asthma, allergies, and respiratory infections in children.",
+},
+{
+  id: 503,
+  hospitalId: 5,
+  name: "Dr. Riya Malhotra",
+  speciality: "Child Nutritionist",
+  rating: 4.6,
+  experience: "6 Yrs",
+  patients: "1.6k+",
+  image: "https://randomuser.me/api/portraits/women/39.jpg",
+  bio: "Focuses on nutrition, obesity prevention, and diet planning.",
+},
+
+// 🏥 Max Healthcare (hospital_id: 6) → 5 doctors
+{
+  id: 601,
+  hospitalId: 6,
+  name: "Dr. Pradeep Nair",
+  speciality: "Emergency Medicine",
+  rating: 4.8,
+  experience: "14 Yrs",
+  patients: "6.5k+",
+  image: "https://randomuser.me/api/portraits/men/45.jpg",
+  bio: "Handles trauma, cardiac emergencies, and critical care.",
+},
+{
+  id: 602,
+  hospitalId: 6,
+  name: "Dr. Swati Kulkarni",
+  speciality: "Infectious Disease",
+  rating: 4.7,
+  experience: "9 Yrs",
+  patients: "3k+",
+  image: "https://randomuser.me/api/portraits/women/48.jpg",
+  bio: "Specialist in viral infections including COVID-19.",
+},
+{
+  id: 603,
+  hospitalId: 6,
+  name: "Dr. Rohit Bansal",
+  speciality: "General Physician",
+  rating: 4.6,
+  experience: "10 Yrs",
+  patients: "3.8k+",
+  image: "https://randomuser.me/api/portraits/men/56.jpg",
+  bio: "Treats lifestyle diseases and acute illnesses.",
+},
+{
+  id: 604,
+  hospitalId: 6,
+  name: "Dr. Aditi Sengupta",
+  speciality: "Pulmonologist",
+  rating: 4.8,
+  experience: "11 Yrs",
+  patients: "2.9k+",
+  image: "https://randomuser.me/api/portraits/women/61.jpg",
+  bio: "Expert in lung disorders and post-COVID recovery.",
+},
+{
+  id: 605,
+  hospitalId: 6,
+  name: "Dr. Nikhil Arora",
+  speciality: "Cardiologist",
+  rating: 4.9,
+  experience: "13 Yrs",
+  patients: "4.4k+",
+  image: "https://randomuser.me/api/portraits/men/67.jpg",
+  bio: "Specializes in heart disease and preventive cardiology.",
+},
+
+// 🏥 Star Hospitals (hospital_id: 7) → 2 doctors
+{
+  id: 701,
+  hospitalId: 7,
+  name: "Dr. Vikas Chandra",
+  speciality: "General Physician",
+  rating: 4.5,
+  experience: "7 Yrs",
+  patients: "1.9k+",
+  image: "https://randomuser.me/api/portraits/men/72.jpg",
+  bio: "Primary care specialist for common infections.",
+},
+{
+  id: 702,
+  hospitalId: 7,
+  name: "Dr. Nandini Rao",
+  speciality: "Chest Physician",
+  rating: 4.6,
+  experience: "8 Yrs",
+  patients: "2.1k+",
+  image: "https://randomuser.me/api/portraits/women/70.jpg",
+  bio: "Treats cough, bronchitis, and respiratory conditions.",
+},
+
+// 🏥 KIMS Hospital (hospital_id: 8) → 4 doctors
+{
+  id: 801,
+  hospitalId: 8,
+  name: "Dr. Mahesh Patil",
+  speciality: "Internal Medicine",
+  rating: 4.7,
+  experience: "12 Yrs",
+  patients: "3.5k+",
+  image: "https://randomuser.me/api/portraits/men/81.jpg",
+  bio: "Manages chronic and acute adult medical conditions.",
+},
+{
+  id: 802,
+  hospitalId: 8,
+  name: "Dr. Farah Khan",
+  speciality: "Emergency Physician",
+  rating: 4.8,
+  experience: "10 Yrs",
+  patients: "4k+",
+  image: "https://randomuser.me/api/portraits/women/82.jpg",
+  bio: "Expert in emergency and trauma care.",
+},
+{
+  id: 803,
+  hospitalId: 8,
+  name: "Dr. Sandeep Reddy",
+  speciality: "Gastroenterologist",
+  rating: 4.6,
+  experience: "9 Yrs",
+  patients: "2.7k+",
+  image: "https://randomuser.me/api/portraits/men/85.jpg",
+  bio: "Treats digestive disorders and liver diseases.",
+},
+{
+  id: 804,
+  hospitalId: 8,
+  name: "Dr. Anu Thomas",
+  speciality: "General Physician",
+  rating: 4.5,
+  experience: "6 Yrs",
+  patients: "1.4k+",
+  image: "https://randomuser.me/api/portraits/women/88.jpg",
+  bio: "Provides holistic primary healthcare.",
+},
+
+// 🏥 Yashoda Hospitals (hospital_id: 9) → 3 doctors
+{
+  id: 901,
+  hospitalId: 9,
+  name: "Dr. Srinivas Rao",
+  speciality: "ENT Specialist",
+  rating: 4.7,
+  experience: "11 Yrs",
+  patients: "3.2k+",
+  image: "https://randomuser.me/api/portraits/men/90.jpg",
+  bio: "Expert in sinus, ear, and throat disorders.",
+},
+{
+  id: 902,
+  hospitalId: 9,
+  name: "Dr. Pallavi Deshmukh",
+  speciality: "General Physician",
+  rating: 4.6,
+  experience: "8 Yrs",
+  patients: "2.5k+",
+  image: "https://randomuser.me/api/portraits/women/91.jpg",
+  bio: "Treats fever, infections, and lifestyle disorders.",
+},
+{
+  id: 903,
+  hospitalId: 9,
+  name: "Dr. Ashok Menon",
+  speciality: "Pulmonologist",
+  rating: 4.8,
+  experience: "13 Yrs",
+  patients: "4k+",
+  image: "https://randomuser.me/api/portraits/men/92.jpg",
+  bio: "Specialist in respiratory and sleep disorders.",
+},
+
+// 🏥 Global Hospitals (hospital_id: 10) → 6 doctors
+{
+  id: 1001,
+  hospitalId: 10,
+  name: "Dr. Rajiv Khanna",
+  speciality: "Critical Care",
+  rating: 4.9,
+  experience: "16 Yrs",
+  patients: "7k+",
+  image: "https://randomuser.me/api/portraits/men/95.jpg",
+  bio: "Handles ICU and life-threatening conditions.",
+},
+{
+  id: 1002,
+  hospitalId: 10,
+  name: "Dr. Shalini Gupta",
+  speciality: "Infectious Disease",
+  rating: 4.8,
+  experience: "12 Yrs",
+  patients: "3.9k+",
+  image: "https://randomuser.me/api/portraits/women/96.jpg",
+  bio: "Expert in complex infections and sepsis.",
+},
+{
+  id: 1003,
+  hospitalId: 10,
+  name: "Dr. Ankit Verma",
+  speciality: "Emergency Medicine",
+  rating: 4.7,
+  experience: "9 Yrs",
+  patients: "3.1k+",
+  image: "https://randomuser.me/api/portraits/men/97.jpg",
+  bio: "Emergency response and trauma specialist.",
+},
+{
+  id: 1004,
+  hospitalId: 10,
+  name: "Dr. Leena Roy",
+  speciality: "Internal Medicine",
+  rating: 4.6,
+  experience: "10 Yrs",
+  patients: "2.8k+",
+  image: "https://randomuser.me/api/portraits/women/98.jpg",
+  bio: "Treats chronic illnesses and complex diagnoses.",
+},
+{
+  id: 1005,
+  hospitalId: 10,
+  name: "Dr. Harish Iyer",
+  speciality: "Cardiologist",
+  rating: 4.9,
+  experience: "14 Yrs",
+  patients: "4.6k+",
+  image: "https://randomuser.me/api/portraits/men/99.jpg",
+  bio: "Advanced cardiac care and interventions.",
+},
+{
+  id: 1006,
+  hospitalId: 10,
+  name: "Dr. Neelam Sethi",
+  speciality: "Nephrologist",
+  rating: 4.7,
+  experience: "11 Yrs",
+  patients: "2.4k+",
+  image: "https://randomuser.me/api/portraits/women/99.jpg",
+  bio: "Specialist in kidney disorders and dialysis.",
+},
+];
+
+
+
+
+
 // import { AppstoreOutlined } from "@ant-design/icons";
 
 type Doctor = {
@@ -241,20 +837,6 @@ const labs = [
   },
 ];
 
-type AmbulanceHospital = {
-  hospital_id: number;
-  hospital_name: string;
-  specialty_type: string;
-  location: string;
-  latitude: number | null;
-  longitude: number | null;
-  hospital_contact: string;
-  ambulance_id: number;
-  service_provider: string;
-  ambulance_contact: string;
-  availability_status: string;
-};
-
 
 
 // new functions related to apis
@@ -320,7 +902,41 @@ const doctorNameMap: Record<number, string> = {
 };
 
 
+// Assistants
 
+const assistants = [
+  {
+    id: 1,
+    name: "Emily Watson",
+    role: "Senior Care Assistant",
+    rating: 4.8,
+    image: "https://randomuser.me/api/portraits/women/44.jpg",
+  },
+  {
+    id: 2,
+    name: "John Miller",
+    role: "Patient Support Executive",
+    rating: 4.6,
+    image: "https://randomuser.me/api/portraits/men/32.jpg",
+  },
+  {
+    id: 3,
+    name: "Sophia Brown",
+    role: "Clinical Assistant",
+    rating: 4.9,
+    image: "https://randomuser.me/api/portraits/women/65.jpg",
+  },
+];
+
+const TIME_SLOTS = [
+  "09:00 AM",
+  "10:30 AM",
+  "11:48 AM",
+  "01:00 PM",
+  "02:30 PM",
+  "04:00 PM",
+  "05:30 PM",
+];
 
 
 
@@ -334,21 +950,56 @@ const HealthCare: React.FC = () => {
   const [openOnlinePopup, setOpenOnlinePopup] = useState(false);
 
   const [ambulanceList, setAmbulanceList] = useState<AmbulanceHospital[]>([]);
-  const [loadingAmbulance, setLoadingAmbulance] = useState(false);
 
-  const fetchAmbulances = async () => {
-    try {
-      setLoadingAmbulance(true);
+  useEffect(() => {
+  setAmbulanceList(STATIC_HOSPITALS);
+}, []);
 
-      const data = await healthcareService.getAmbulances(-1);
 
-      setAmbulanceList(data);
-    } catch (error) {
-      console.error("Failed to fetch ambulances", error);
-    } finally {
-      setLoadingAmbulance(false);
-    }
-  };
+
+
+// hospital booking
+const [selectedHospital, setSelectedHospital] =
+  useState<AmbulanceHospital | null>(null);
+
+const [openHospitalBooking, setOpenHospitalBooking] = useState(false);
+const [openHospitalSuccess, setOpenHospitalSuccess] = useState(false);
+
+
+// hospital → doctors flow
+const [openHospitalDoctors, setOpenHospitalDoctors] = useState(false);
+const [hospitalDoctors, setHospitalDoctors] = useState<HospitalDoctor[]>([]);
+const [selectedDoctor, setSelectedDoctor] = useState<HospitalDoctor | null>(null);
+
+// ✅ RESET ASSISTANT WHEN DOCTOR CHANGES
+useEffect(() => {
+  if (selectedDoctor) {
+    setPatientAssist("");
+    setSelectedAssistant(null);
+    setShowAssistantPopup(false);
+  }
+}, [selectedDoctor]);
+
+
+
+const [showAssistantPopup, setShowAssistantPopup] = useState(false);
+// const [selectedAssistant, setSelectedAssistant] = useState(null);
+
+type Assistant = {
+  id: number;
+  name: string;
+  role: string;
+  rating: number;
+  image: string;
+};
+
+const [selectedAssistant, setSelectedAssistant] = useState<Assistant | null>(null);
+
+
+// booking form
+const [bookingDate, setBookingDate] = useState("Friday, 30 Jan 2026");
+const [bookingTime, setBookingTime] = useState("11:48 AM");
+const [needAmbulance, setNeedAmbulance] = useState<"Yes" | "No">("No");
 
 
 
@@ -366,10 +1017,16 @@ const HealthCare: React.FC = () => {
   const trendingSearches = ["Fever", "Cough", "Cold", "Vomit", "Sinus"];
 
   const [showTrending, setShowTrending] = useState(false);
-  const [hoveredTrending, setHoveredTrending] = useState<string | null>(null);
+
+
+const [consultMode, setConsultMode] = useState<"online" | "offline">("online");
+
+
+
+
 
   // ✅ MOBILE TAP SUPPORT (DO NOT REMOVE)
-  const [mobileActionItem, setMobileActionItem] = useState<string | null>(null);
+
 
   const [doctors, setDoctors] = useState<Doctor[]>([]);
 
@@ -432,7 +1089,6 @@ const HealthCare: React.FC = () => {
   const [tempOfflineTime, setTempOfflineTime] = useState(doctorProfile.opTime);
 
   const [patientAssist, setPatientAssist] = useState<"yes" | "no" | "">("");
-  const [showAssistSuccess, setShowAssistSuccess] = useState(false);
 
   const [editOpTime, setEditOpTime] = useState(false);
   const [newOpTime, setNewOpTime] = useState(doctorProfile.opTime);
@@ -524,6 +1180,16 @@ const HealthCare: React.FC = () => {
   }, [searchText, activeCategory, doctors]);
 
 
+const filteredHospitals = useMemo(() => {
+  if (!searchText.trim()) return ambulanceList;
+
+  const q = searchText.toLowerCase().trim();
+
+  return ambulanceList.filter((h) =>
+    h.conditions.some((c) => c.toLowerCase().includes(q))
+  );
+}, [searchText, ambulanceList]);
+
 
   useEffect(() => {
     setSelectedDoctorId(null);
@@ -595,136 +1261,73 @@ const HealthCare: React.FC = () => {
 
 
       {/* Search */}
-      <div className="healthcare-search">
-        <div className="search-box-wrap">
-          <input
-            type="text"
-            className="search-input"
-            placeholder={placeholders[placeholderIndex]}
-            value={searchText}
-            onChange={(e) => {
-              const value = e.target.value;
-              if (/^[a-zA-Z\s]*$/.test(value)) {
-                setSearchText(value);
-              }
+<div className="healthcare-search">
+  {/* 🔍 Search Box */}
+  <div className="search-box-wrap">
+    <input
+      type="text"
+      className="search-input"
+      placeholder={placeholders[placeholderIndex]}
+      value={searchText}
+      onChange={(e) => {
+        const value = e.target.value;
+        if (/^[a-zA-Z\s]*$/.test(value)) {
+          setSearchText(value);
+        }
+      }}
+      onFocus={() => setShowTrending(true)}
+      onBlur={() => setTimeout(() => setShowTrending(false), 150)}
+    />
+
+    {showTrending && (
+      <div className="trending-dropdown">
+        <p className="trending-title">Searches</p>
+
+        {trendingSearches.map((item) => (
+          <div
+            key={item}
+            className="trending-item"
+            onMouseDown={() => {
+              setSearchText(item);
+              setShowTrending(false);
             }}
-            onFocus={() => setShowTrending(true)}
-            onBlur={() => setTimeout(() => setShowTrending(false), 150)}
-          />
-
-          {showTrending && (
-            <div className="trending-dropdown">
-              <p className="trending-title">Searches</p>
-
-              {trendingSearches.map((item) => (
-                <div
-                  key={item}
-                  className="trending-item-wrap"
-                  onMouseEnter={() => setHoveredTrending(item)}   // ✅ DESKTOP
-                  onMouseLeave={() => setHoveredTrending(null)}  // ✅ DESKTOP
-                >
-                  {/* MAIN ITEM */}
-                  <div
-                    className="trending-item"
-                    onMouseDown={(e) => {
-                      if (window.innerWidth <= 425) {
-                        // 📱 MOBILE: block mouse event completely
-                        e.preventDefault();
-                        return;
-                      }
-
-                      // 🖥 DESKTOP ONLY
-                      setSearchText(item);
-                    }}
-                    onClick={() => {
-                      // 📱 MOBILE ONLY: prevent auto-select
-                      if (window.innerWidth <= 425) {
-                        // e.preventDefault();
-                        setMobileActionItem((prev) =>
-                          prev === item ? null : item
-                        );
-                      }
-                    }}
-                  >
-
-                    <span className="trending-icon">📈</span>
-                    <span className="trending-text">{item}</span>
-                  </div>
-
-                  {/* 🖥 DESKTOP HOVER MENU (UNCHANGED) */}
-                  {hoveredTrending === item && window.innerWidth > 425 && (
-                    <div className="trending-submenu">
-                      <button
-                        className="submenu-btn"
-                        onClick={() => {
-                          setSearchText(`${item} (Online)`);
-                          setShowTrending(false);
-                          setOpenOnlinePopup(true);
-                        }}
-                      >
-                        🌐 Online
-                      </button>
-
-                      <button
-                        className="submenu-btn"
-                        onClick={() => {
-                          setSearchText(`${item} (Offline)`);
-                          setShowTrending(false);
-                          setTempOfflineTime(doctorProfile.opTime);
-                          setOpenOfflinePopup(true);
-                        }}
-                      >
-                        🏥 Offline
-                      </button>
-                    </div>
-                  )}
-
-                  {/* 📱 MOBILE TAP MENU */}
-                  {mobileActionItem === item && (
-                    <div className="mobile-trending-actions">
-                      <button
-                        onClick={() => {
-                          setSearchText(`${item} (Online)`);
-                          setMobileActionItem(null);
-                          setShowTrending(false);
-                          setOpenOnlinePopup(true);
-                        }}
-                      >
-                        🌐 Online
-                      </button>
-
-                      <button
-                        onClick={() => {
-                          setSearchText(`${item} (Offline)`);
-                          setMobileActionItem(null);
-                          setShowTrending(false);
-                          setTempOfflineTime(doctorProfile.opTime);
-                          setOpenOfflinePopup(true);
-                        }}
-                      >
-                        🏥 Offline
-                      </button>
-                    </div>
-                  )}
-                </div>
-              ))}
-
-            </div>
-          )}
-        </div>
-        {/* Ambulance Button */}
-        <button
-          type="button"
-          className="emergency-btn search-ambulance-btn"
-          onClick={() => {
-            fetchAmbulances();        // ✅ API call
-            setOpenAmbulanceScreen(true);
-          }}
-        >
-          Book Ambulance Now →
-        </button>
-
+          >
+            <span className="trending-icon">📈</span>
+            <span className="trending-text">{item}</span>
+          </div>
+        ))}
       </div>
+    )}
+  </div>
+
+  {/* 🔁 MODE SELECT */}
+  <div className="mode-toggle">
+    <button
+      className={consultMode === "online" ? "active" : ""}
+      onClick={() => setConsultMode("online")}
+    >
+      🌐 Online
+    </button>
+
+    <button
+      className={consultMode === "offline" ? "active" : ""}
+      onClick={() => setConsultMode("offline")}
+    >
+      🏥 Offline
+    </button>
+  </div>
+
+  {/* 🚑 Ambulance Button (API Integrated) */}
+  <button
+    type="button"
+    className="emergency-btn search-ambulance-btn"
+    onClick={() => {
+      setOpenAmbulanceScreen(true);
+    }}
+  >
+    Book Ambulance Now →
+  </button>
+</div>
 
 
 
@@ -777,61 +1380,153 @@ const HealthCare: React.FC = () => {
 
 
       {/* Available Doctors */}
-      <div className="available-doctors-header">
-        <h3>Available Doctors</h3>
-        <span
-          className="see-all"
-          onClick={() => {
-            setActiveCategory("All");
-            setSearchText("");
-          }}
-        >
-          See all
-        </span>
+{/* Online / Offline Result Section */}
+{consultMode === "online" ? (
+  <>
+    {/* ONLINE DOCTORS — NO CHANGE */}
+    <div className="available-doctors-header">
+      <h3>Available Doctors</h3>
+      <span
+        className="see-all"
+        onClick={() => {
+          setActiveCategory("All");
+          setSearchText("");
+        }}
+      >
+        See all
+      </span>
+    </div>
 
-
+    {loadingDoctors && (
+      <div style={{ padding: "20px", textAlign: "center", fontWeight: 600 }}>
+        ⏳ Loading available doctors...
       </div>
+    )}
 
-      {loadingDoctors && (
-        <div
-          style={{
-            padding: "20px",
-            textAlign: "center",
-            fontWeight: 600,
-          }}
-        >
-          ⏳ Loading available doctors...
-        </div>
-      )}
+    <div className="doctor-list grid-view">
+      {filteredDoctors.map((doc) => (
+        <div key={doc.id} className="doctor-card">
+          <img src={doc.image} alt={doc.name} />
 
+          <div className="doctor-info">
+            <div className="doctor-name-rating">
+              <h4>{doc.name}</h4>
+              <span className="rating">⭐ {doc.rating}</span>
+            </div>
 
-      <div className="doctor-list grid-view">
-        {filteredDoctors.map((doc) => (
-          <div key={doc.id} className="doctor-card">
-            <img src={doc.image} alt={doc.name} />
+            <p className="speciality">{doc.speciality}</p>
 
-            <div className="doctor-info">
-              <div className="doctor-name-rating">
-                <h4>{doc.name}</h4>
-                <span className="rating">⭐ {doc.rating}</span>
-              </div>
+            <p className="availability">
+              Next available: <span>{doc.availability}</span>
+            </p>
 
-              <p className="speciality">{doc.speciality}</p>
-
-              <p className="availability">
-                Next available: <span>{doc.availability}</span>
-              </p>
-
-              <div className="doctor-footer">
-                <span className="price">{doc.price}</span>
-                <button type="button" className="book-btn">
-                  Book Now
-                </button>
-              </div>
+            <div className="doctor-footer">
+              <span className="price">{doc.price}</span>
+              <button type="button" className="book-btn">
+                Book Now
+              </button>
             </div>
           </div>
-        ))}
+        </div>
+      ))}
+    </div>
+  </>
+) : (
+  <>
+    {/* OFFLINE FLOW — CONDITION REQUIRED */}
+    {!searchText.trim() ? (
+      <div className="offline-empty-state">
+        <h3>Select a condition to find nearby hospitals</h3>
+        <p>
+          Example: <b>Fever</b>, <b>Cold</b>, <b>Cough</b>, <b>Vomiting</b>
+        </p>
       </div>
+    ) : (
+      <>
+        <div className="available-doctors-header">
+          <h3>Nearby Hospitals</h3>
+          <span className="see-all" onClick={() => setSearchText("")}>
+            Clear
+          </span>
+        </div>
+
+        <div className="ambulance-hospital-list">
+          {filteredHospitals.length > 0 ? (
+            filteredHospitals.map((h) => (
+              <div key={h.ambulance_id} className="ambulance-hospital-card">
+                <div className="ambulance-hospital-top">
+                  <div className="ambulance-hospital-icon">✚</div>
+                  <div>
+                    <h2>{h.hospital_name}</h2>
+                    <p className="ambulance-hospital-type">
+                      {h.specialty_type}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="ambulance-details">
+                  <div className="hospital-condition-chips">
+                    {h.conditions.map((c) => (
+                      <span key={c} className="condition-chip">
+                        {c}
+                      </span>
+                    ))}
+                  </div>
+
+                  <p>📍 {h.location}</p>
+                  <p>🚑 {h.service_provider}</p>
+                  <p>📞 {h.ambulance_contact}</p>
+
+                  <button
+                    className="book-btn"
+                    onClick={() => {
+                      setSelectedHospital(h);
+                      setOpenHospitalBooking(true);
+                    }}
+                  >
+                    Book Now
+                  </button>
+                </div>
+              </div>
+            ))
+          ) : (
+            <div className="offline-empty-state">
+              <h3>No hospitals found</h3>
+              <p>Try another condition</p>
+            </div>
+          )}
+        </div>
+      </>
+    )}
+  </>
+)}
+
+
+
+
+
+
+            {/* <p>📍 {h.location}</p>
+            <p>🚑 {h.service_provider}</p>
+            <p>📞 {h.ambulance_contact}</p>
+
+<button
+  className="book-btn"
+  onClick={() => {
+    setSelectedHospital(h);
+    setOpenHospitalBooking(true);
+  }}
+>Book Now</button>
+
+          </div>
+        </div>
+      ))}
+    </div>
+  </>
+)} */}
+
+
+
 
       {/* FULL SCREEN OVERLAY */}
       {openConsultation && (
@@ -1560,26 +2255,17 @@ const HealthCare: React.FC = () => {
             </div>
 
             {/* Hospitals Found */}
-            <h3 className="ambulance-found-title">8 hospitals found within 30 km</h3>
+<h3 className="ambulance-found-title">
+  {filteredHospitals.length} hospitals found nearby
+</h3>
 
             <p className="ambulance-location">📍 Hyderabad, Telangana</p>
 
             {/* Hospital Cards */}
             <div className="ambulance-hospital-list">
 
-              {loadingAmbulance && (
-                <p style={{ textAlign: "center", fontWeight: 700 }}>
-                  🚑 Loading ambulances...
-                </p>
-              )}
 
-              {!loadingAmbulance && ambulanceList.length === 0 && (
-                <p style={{ textAlign: "center", fontWeight: 700 }}>
-                  ❌ No ambulances available
-                </p>
-              )}
-
-              {ambulanceList.map((h) => (
+              {filteredHospitals.map((h) => (
                 <div key={h.ambulance_id} className="ambulance-hospital-card">
                   <div className="ambulance-hospital-top">
                     <div className="ambulance-hospital-icon-wrap">
@@ -1627,6 +2313,154 @@ const HealthCare: React.FC = () => {
           </div>
         </div>
       )}
+
+
+
+
+{openHospitalBooking && selectedHospital && (
+  <div className="profile-overlay" onClick={() => setOpenHospitalBooking(false)}>
+    <div className="profile-popup" onClick={(e) => e.stopPropagation()}>
+      <h2 className="popup-title">Booking Details</h2>
+
+<div className="popup-section">
+  <label>Appointment Date</label>
+
+  <input
+    type="date"
+    className="date-picker"
+    value={bookingDate}
+    min={new Date().toISOString().split("T")[0]}
+    onChange={(e) => setBookingDate(e.target.value)}
+  />
+</div>
+
+
+<div className="popup-section">
+  <label>Select Time</label>
+
+
+
+
+
+  <div className="time-slots">
+    {TIME_SLOTS.map((slot) => (
+      <button
+        key={slot}
+        type="button"
+        className={`time-slot ${
+          bookingTime === slot ? "active" : ""
+        }`}
+        onClick={() => setBookingTime(slot)}
+      >
+        {slot}
+      </button>
+    ))}
+  </div>
+</div>
+
+      <div className="popup-section">
+        <label>Ambulance Required?</label>
+        <div className="pill-row">
+          <button
+            className={needAmbulance === "Yes" ? "active" : ""}
+            onClick={() => setNeedAmbulance("Yes")}
+          >
+            Yes
+          </button>
+          <button
+            className={needAmbulance === "No" ? "active" : ""}
+            onClick={() => setNeedAmbulance("No")}
+          >
+            No
+          </button>
+        </div>
+      </div>
+
+      <button
+        className="confirm-btn"
+        onClick={() => {
+          setOpenHospitalBooking(false);
+          setOpenHospitalSuccess(true);
+        }}
+      >
+        Confirm Booking
+      </button>
+
+      <button
+        className="cancel-btn"
+        onClick={() => setOpenHospitalBooking(false)}
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+)}
+
+
+{openHospitalSuccess && (
+  <div className="profile-overlay">
+    <div className="success-popup">
+      <h2>Booking Confirmed ✅</h2>
+
+      <p>Hospital: {selectedHospital?.hospital_name}</p>
+      <p>Speciality: {selectedHospital?.specialty_type}</p>
+      <p>Date: {bookingDate}</p>
+      <p>Time: {bookingTime}</p>
+      <p>Price: $150/hr</p>
+      <p>Ambulance: {needAmbulance}</p>
+
+      {/* ✅ THIS IS THE ONLY CORRECT PLACE */}
+      <button
+        className="view-doctors-btn"
+        onClick={() => {
+          const docs = HOSPITAL_DOCTORS.filter(
+            (d) => d.hospitalId === selectedHospital?.hospital_id
+          );
+
+          setHospitalDoctors(docs);
+          setOpenHospitalSuccess(false);
+          setOpenHospitalDoctors(true);
+        }}
+      >
+        VIEW HOSPITAL DOCTORS
+      </button>
+    </div>
+  </div>
+)}
+
+
+
+{/* 
+{openHospitalSuccess && selectedHospital && (
+  <div className="profile-overlay">
+    <div className="success-popup">
+      <h2>Booking Confirmed ✅</h2>
+
+      <p><b>Hospital:</b> {selectedHospital.hospital_name}</p>
+      <p><b>Speciality:</b> {selectedHospital.specialty_type}</p>
+      <p><b>Date:</b> {bookingDate}</p>
+      <p><b>Time:</b> {bookingTime}</p>
+      <p><b>Price:</b> $150/hr</p>
+      <p><b>Ambulance:</b> {needAmbulance}</p>
+
+      <button
+        className="view-doctors-btn"
+        onClick={() => {
+          setOpenHospitalSuccess(false);
+          setConsultMode("online");
+        }}
+      >
+        VIEW HOSPITAL DOCTORS
+      </button>
+    </div>
+  </div>
+)} */}
+
+
+
+
+
+
       {openOfflinePopup && (
         <div className="profile-overlay" onClick={() => setOpenOfflinePopup(false)}>
           <div className="profile-popup" onClick={(e) => e.stopPropagation()}>
@@ -1703,7 +2537,6 @@ const HealthCare: React.FC = () => {
                 style={{ width: "100%", marginTop: "14px" }}
                 onClick={() => {
                   setOpenOfflinePopup(false);
-                  fetchAmbulances();
                   setOpenAmbulanceScreen(true);
                 }}
 
@@ -1711,52 +2544,7 @@ const HealthCare: React.FC = () => {
                 Book Ambulance Now →
               </button>
 
-              {/* 3) Patient Assistance */}
-              <div style={{ marginTop: "18px" }}>
-                <p style={{ fontWeight: 800, marginBottom: "10px" }}>
-                  Do you want patient assistance?
-                </p>
-
-                <div style={{ display: "flex", gap: "10px" }}>
-                  <button
-                    type="button"
-                    className={`insurance-btn ${patientAssist === "yes" ? "active" : ""}`}
-                    onClick={() => {
-                      setPatientAssist("yes");
-                      setShowAssistSuccess(true);
-                    }}
-                  >
-                    Yes
-                  </button>
-
-                  <button
-                    type="button"
-                    className={`insurance-btn ${patientAssist === "no" ? "active" : ""}`}
-                    onClick={() => {
-                      setPatientAssist("no");
-                      setShowAssistSuccess(true);
-                    }}
-                  >
-                    No
-                  </button>
-                </div>
-
-                {/* 4) Success Message */}
-                {showAssistSuccess && patientAssist !== "" && (
-                  <div
-                    style={{
-                      marginTop: "12px",
-                      padding: "10px",
-                      borderRadius: "12px",
-                      background: "#eaf7f2",
-                      fontWeight: 800,
-                      color: "#2f6f6d",
-                    }}
-                  >
-                    ✅ Success: You selected {patientAssist.toUpperCase()}
-                  </div>
-                )}
-              </div>
+              
             </div>
           </div>
         </div>
@@ -1842,6 +2630,196 @@ const HealthCare: React.FC = () => {
         </div>
       )}
 
+
+      {/* ✅ HOSPITAL DOCTORS SCREEN (ADD HERE) */}
+{openHospitalDoctors && (
+  <div className="doctor-list-screen">
+    <div className="doctor-list-header">
+      <button
+        className="back-btn"
+        onClick={() => setOpenHospitalDoctors(false)}
+      >
+        ←
+      </button>
+
+      <h2 className="doctor-list-title">
+        {selectedHospital?.hospital_name} Doctors
+      </h2>
+    </div>
+
+{hospitalDoctors.map((doc) => (
+  <div
+    key={doc.id}
+    className="hospital-doctor-card"
+    onClick={() => setSelectedDoctor(doc)}
+  >
+    <div className="hospital-doctor-left">
+      <img src={doc.image} alt={doc.name} />
+
+      <div className="hospital-doctor-info">
+        <h3>{doc.name}</h3>
+        <p className="spec">{doc.speciality}</p>
+
+        <div className="rating-pill">
+          ⭐ {doc.rating}
+        </div>
+      </div>
+    </div>
+
+    <div className="arrow-circle">
+      →
+    </div>
+
+  </div>
+))}
+
+  </div>
+)}
+
+
+
+
+{selectedDoctor && (
+  <div className="doctor-profile-screen">
+    <div className="doctor-profile-header">
+      <button onClick={() => setSelectedDoctor(null)}>←</button>
+      <h2>Doctor Profile</h2>
+    </div>
+
+    <div className="doctor-profile-card">
+      <img src={selectedDoctor.image} />
+      <h2>{selectedDoctor.name}</h2>
+      <p className="spec">{selectedDoctor.speciality}</p>
+      <p className="rating">⭐ {selectedDoctor.rating}</p>
+
+      <div className="stats">
+        <div>
+          <p>Exp.</p>
+          <b>{selectedDoctor.experience}</b>
+        </div>
+        <div>
+          <p>Patients</p>
+          <b>{selectedDoctor.patients}</b>
+        </div>
+      </div>
+    </div>
+
+    <h3>Biography</h3>
+    <p className="bio">{selectedDoctor.bio}</p>
+
+    {/* Personal Care Assistant */}
+    <div className="assistant-box">
+      <div className="assistant-header">
+        <span>Personal Care Assistant</span>
+        <span className="price">+₹25</span>
+      </div>
+
+
+<label className="switch">
+  <input
+    type="checkbox"
+    checked={patientAssist === "yes"}
+    onChange={(e) => {
+      if (e.target.checked) {
+        setShowAssistantPopup(true);   // 🔥 OPEN POPUP
+      } else {
+        setPatientAssist("no");
+        setSelectedAssistant(null);
+      }
+    }}
+  />
+  <span className="slider" />
+</label>
+
+      <ul>
+        <li>✔ Queue Management</li>
+        <li>✔ Lab Report Collection</li>
+      </ul>
+    </div>
+
+
+{patientAssist === "yes" && selectedAssistant && (
+  <div className="assistant-selected-card">
+    <img
+      src={selectedAssistant.image}
+      alt={selectedAssistant.name}
+      className="assistant-avatar"
+    />
+
+    <div className="assistant-details">
+      <h4>{selectedAssistant.name}</h4>
+      <p className="assistant-role">{selectedAssistant.role}</p>
+
+      <div className="assistant-meta">
+        <span>⭐ {selectedAssistant.rating}</span>
+        <span>📞 +91 98XXX 12XXX</span>
+      </div>
+    </div>
+
+    <span className="assistant-badge">Assigned</span>
+  </div>
+)}
+
+
+
+    <button className="confirm-btn">Book Appointment</button>
+  </div>
+)}
+
+
+{showAssistantPopup && (
+  <div className="assistant-overlay">
+    <div className="assistant-popup">
+
+      <h2>Select Care Assistant</h2>
+      <p className="subtitle">Choose an assistant for your visit</p>
+
+      <div className="assistant-list">
+        {assistants.map((a) => (
+          <div
+            key={a.id}
+            className={`assistant-card ${
+              selectedAssistant?.id === a.id ? "active" : ""
+            }`}
+            onClick={() => setSelectedAssistant(a)}
+          >
+            <img src={a.image} alt={a.name} />
+            <div>
+              <h4>{a.name}</h4>
+              <p>{a.role}</p>
+              <span>⭐ {a.rating}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="assistant-confirm">
+        <button
+          className="no-btn"
+          onClick={() => {
+            setShowAssistantPopup(false);
+            setPatientAssist("no");
+            setSelectedAssistant(null);
+          }}
+        >
+          No
+        </button>
+
+        <button
+          className="yes-btn"
+          disabled={!selectedAssistant}
+          onClick={() => {
+            setPatientAssist("yes");
+            setShowAssistantPopup(false);
+          }}
+        >
+          Yes
+        </button>
+      </div>
+
+    </div>
+  </div>
+)}
 
 
 

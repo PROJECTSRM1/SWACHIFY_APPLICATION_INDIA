@@ -14,7 +14,7 @@ import ConstructionMaterials from '../../pages/landing/ConstructionMaterials';
 import LandingCleaningPage from "../../pages/landing/landingcleaningpage";
 //Import rentals page (file: src/pages/landing/landingrentals.tsx)
 import Landingrentals from "../../pages/landing/landingrentals";
-import Freelancer from '../../pages/landing/Freelancer';
+//import Freelancer from '../../pages/landing/Freelancer';
 import Education from '../../pages/landing/EducationPage';
 
 import Freelancerlogin from '../../pages/login/Freelancerlogin';
@@ -27,6 +27,7 @@ import EducationPartnerDashboard
 import HealthcarePartner from '../../pages/WebHospital/HealthcarePartnerDashboard';
 import DriverDashboard from '../../pages/landing/JustRidePartnerDashboard';
 import { MOCK_NOTIFICATIONS } from '../../pages/landing/JRPData';
+import EmployeeDashboard from '../../pages/freelancer/EmployeeDashboard';
 
 export const NonSecureRoutes = () => {
   const navigate = useNavigate();
@@ -74,7 +75,8 @@ export const NonSecureRoutes = () => {
       {/* rentals landing page */}
       <Route path="/rentals" element={<Landingrentals />} />
       <Route path="/Education" element={<Education />} />
-      <Route path="/freelancer" element={<Freelancer />} />
+      {/* <Route path="/freelancer" element={<Freelancer />} /> */}
+      <Route path="/freelancer" element={<EmployeeDashboard />} />
       <Route path="/freelancerlogin" element={<Freelancerlogin />} />
 
       <Route path="/freelancerregistration" element={<FreelancerRegistration />} />
