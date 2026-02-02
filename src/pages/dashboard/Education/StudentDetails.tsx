@@ -13,6 +13,7 @@ interface Props {
 
 const StudentDetails: React.FC<Props> = ({ student, onBack }) => {
   return (
+     <div className="sd-wrapper">
     <div className="sd-page">
       {/* HEADER */}
       <header className="sd-header">
@@ -129,6 +130,7 @@ const StudentDetails: React.FC<Props> = ({ student, onBack }) => {
       <button className="sd-secondary">
         ✉ Contact Administrator
       </button>
+    </div>
     </div>
   );
 };

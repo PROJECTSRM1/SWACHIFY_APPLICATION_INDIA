@@ -62,6 +62,7 @@ const BranchStudents: React.FC<Props> = ({ branch, onBack }) => {
   }
 
   return (
+     <div className="bsx-wrapper">
     <div className="bsx-page">
       {/* HEADER */}
       <header className="bsx-header">
@@ -113,6 +114,7 @@ const BranchStudents: React.FC<Props> = ({ branch, onBack }) => {
 
 
       <button className="bsx-load">⟳ Load More Students</button>
+    </div>
     </div>
   );
 };

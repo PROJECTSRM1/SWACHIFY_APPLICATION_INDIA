@@ -26,6 +26,7 @@ const InstitutionAccessMode: React.FC<InstitutionAccessModeProps> = ({
 
   /* ================= PARTNER PORTAL ================= */
   return (
+       <div className="access-wrapper">
     <div className="access-page">
       <div className="access-container">
         {/* HEADER */}
@@ -110,6 +111,7 @@ const InstitutionAccessMode: React.FC<InstitutionAccessModeProps> = ({
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 };

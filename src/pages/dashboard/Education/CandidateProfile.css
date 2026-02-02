@@ -4,7 +4,15 @@ body {
   background: #f5f7fb; /* same as Students page */
   font-family: Inter, system-ui, sans-serif;
 }
-
+.cp-root {
+  background: linear-gradient(
+    135deg,
+    #f3f4f8 0%,
+    #f3f4f8 42%,
+    #ffffff 42%,
+    #ffffff 100%
+  ) !important;
+}
 /* ================= ROOT ================= */
 .cp-root {
   max-width: 1200px;

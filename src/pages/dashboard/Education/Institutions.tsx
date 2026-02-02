@@ -57,6 +57,7 @@ const Institutions: React.FC<InstitutionsProps> = ({ onBack }) => {
 
   // ✅ STEP 1 UI (UNCHANGED)
   return (
+      <div className="inst-reg-wrapper">
     <div className="inst-reg-page">
       <div className="inst-reg-container">
         {/* HEADER */}
@@ -214,6 +215,7 @@ const Institutions: React.FC<InstitutionsProps> = ({ onBack }) => {
           </p>
         </div>
       </div>
+    </div>
     </div>
   );
 };

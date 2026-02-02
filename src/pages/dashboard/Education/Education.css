@@ -1,6 +1,6 @@
 /* ================= ROOT ================= */
 .edu-wrapper {
-  min-height: 100vh;
+  height: 100vh;
   background: linear-gradient(
     135deg,
     #f3f4f8 0%,

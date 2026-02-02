@@ -10,6 +10,20 @@
   font-weight: 700;
   color: #111827;
 }
+.training-wrapper {
+  height: 100vh;
+  background: linear-gradient(
+    135deg,
+    #f3f4f8 0%,
+    #f3f4f8 42%,
+    #ffffff 42%,
+    #ffffff 100%
+  );
+  padding-top: 88px;
+  padding-bottom: 80px;
+  overflow-x: hidden;
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont;
+}
 
 .training-scope .training-header p {
   color: #6b7280;
@@ -27,7 +41,7 @@
   padding: 7px 16px;
   border-radius: 999px;
   border: none;
-  background: #e5e7eb;
+  background: transparent !important;
   font-weight: 600;
 }
 

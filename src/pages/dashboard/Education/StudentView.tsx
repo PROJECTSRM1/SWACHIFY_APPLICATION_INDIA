@@ -35,6 +35,7 @@ const StudentView: React.FC<Props> = ({ onBack }) => {
   }
 
   return (
+       <div className="sv-wrapper">
     <div className="sv-page">
       {/* HEADER */}
       <header className="sv-header">
@@ -110,6 +111,7 @@ const StudentView: React.FC<Props> = ({ onBack }) => {
       <button className="sv-back" onClick={onBack}>
         ← Back to Partner Portal
       </button>
+    </div>
     </div>
   );
 };

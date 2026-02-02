@@ -81,6 +81,7 @@ const InstitutionBranchConfig: React.FC<Props> = ({ onBack }) => {
 
   // ✅ STEP 2 UI
   return (
+      <div className="branchcfg-wrapper">
     <div className="branchcfg-page">
       <div className="branchcfg-container">
         {/* HEADER */}
@@ -210,6 +211,7 @@ const InstitutionBranchConfig: React.FC<Props> = ({ onBack }) => {
           </button>
         </div>
       </div>
+    </div>
     </div>
   );
 };
