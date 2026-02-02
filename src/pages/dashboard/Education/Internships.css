@@ -79,7 +79,7 @@ body {
 }
 /* Push internships page below fixed navbar */
 .internships-web {
-  padding-top: 88px; /* 🔥 adjust to navbar height */
+  padding-top: 110px; /* 🔥 adjust to navbar height */
 }
 
 /* Ensure back button is on top inside header */
@@ -192,7 +192,46 @@ body {
   margin: 0;
   font-size: 16px;
   color: #0f172a;
+
+  /* 🔥 ONE LINE + ... FIX */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 220px;   /* adjust if needed */
 }
+/* ===== Internship Title ===== */
+.title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #0f172a;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 220px;
+}
+
+/* Expanded state */
+.title.expanded {
+  white-space: normal;
+  overflow: visible;
+}
+.view-more {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-top: 4px;
+
+  font-size: 13px;
+  color: #2563eb;
+  cursor: pointer;
+  align-self: flex-start;
+}
+
+.view-more:hover {
+  text-decoration: underline;
+}
+
 
 .company p {
   margin-top: 4px;

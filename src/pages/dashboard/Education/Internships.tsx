@@ -26,10 +26,13 @@ type Props = {
 
 const filters = ["All", "Design", "Engineering", "Marketing", "Remote"];
 
+
 /* ================= COMPONENT ================= */
 
 const Internships = ({ onBack }: Props) => {
   const [internships, setInternships] = useState<Internship[]>([]);
+  const [expandedId, setExpandedId] = useState<number | null>(null);
+
   const [loading, setLoading] = useState(true);
 
   const [activeFilter, setActiveFilter] = useState(0);
@@ -169,7 +172,21 @@ const Internships = ({ onBack }: Props) => {
                         {i.company[0]}
                       </div>
                       <div>
-                        <h3>{i.title}</h3>
+                     <h3 className={expandedId === i.id ? "title expanded" : "title"}>
+  {i.title}
+</h3>
+
+{i.title.length > 40 && (
+  <button
+    className="view-more"
+    onClick={() =>
+      setExpandedId(expandedId === i.id ? null : i.id)
+    }
+  >
+    {expandedId === i.id ? "View less" : "View more"}
+  </button>
+)}
+
                         <p>{i.company}</p>
                       </div>
                     </div>
