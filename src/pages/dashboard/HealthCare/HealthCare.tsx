@@ -1406,28 +1406,35 @@ const filteredHospitals = useMemo(() => {
     <div className="doctor-list grid-view">
       {filteredDoctors.map((doc) => (
         <div key={doc.id} className="doctor-card">
-          <img src={doc.image} alt={doc.name} />
+         <div className="doctor-top">
+  <img src={doc.image} alt={doc.name} />
 
-          <div className="doctor-info">
-            <div className="doctor-name-rating">
-              <h4>{doc.name}</h4>
-              <span className="rating">⭐ {doc.rating}</span>
-            </div>
+  <h4 className="doctor-name">{doc.name}</h4>
+</div>
 
-            <p className="speciality">{doc.speciality}</p>
+<div className="doctor-info">
+  <p className="doctor-meta">
+    {doc.speciality}
+    <span className="dot">•</span>
+    ⭐ {doc.rating}
+    <span className="dot">•</span>
+    Exp. 12 Yrs
+    <span className="dot">•</span>
+    Patients 4k+
+  </p>
 
-            <p className="availability">
-              Next available: <span>{doc.availability}</span>
-            </p>
+  <p className="availability">
+    Next available: <span>{doc.availability}</span>
+  </p>
 
-            <div className="doctor-footer">
-              <span className="price">{doc.price}</span>
-              <button type="button" className="book-btn">
-                Book Now
-              </button>
-            </div>
-          </div>
-        </div>
+  <div className="doctor-footer">
+    <span className="price">{doc.price}</span>
+    <button type="button" className="book-btn">
+      Book Now
+    </button>
+  </div>
+</div>
+    </div>
       ))}
     </div>
   </>
