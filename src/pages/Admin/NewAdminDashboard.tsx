@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import {
-  LineChart,
-  Line,
+
   XAxis,
   YAxis,
   Tooltip,
@@ -63,92 +62,100 @@ const handleLogout = () => {
   window.location.href = "/";
 };
 
-  return (
-    <div className="ad-root">
-      <div className="ad-layout">
-        {/* SIDEBAR */}
-        <aside className={`ad-sidebar ${open ? "open" : ""}`}>
-          <div className="ad-sidebar-header">
-            <div className="ad-logo" />
-            <div>
-              <h3>Admin Panel</h3>
-              <span>SUPER ADMIN</span>
-            </div>
+ return (
+  <div className="ad-root">
+    <div className="ad-layout">
+      {/* SIDEBAR */}
+      <aside className={`ad-sidebar ${open ? "open" : ""}`}>
+        <div className="ad-sidebar-header">
+          {/* LOGO WITH LETTER */}
+          <div className="ad-logo">S</div>
+          <div>
+            <span>SUPER ADMIN</span>
           </div>
+        </div>
 
-          <nav className="ad-menu">
-            {["dashboard", "users", "freelancers", "services"].map((item) => (
-              <button
-                key={item}
-                className={active === item ? "active" : ""}
-                onClick={() => {
-                  setActive(item as Menu);
-                  setOpen(false);
-                }}
-              >
-                {item.charAt(0).toUpperCase() + item.slice(1)}
-              </button>
-            ))}
-          </nav>
-
-          <div className="ad-sidebar-footer">
+        <nav className="ad-menu">
+          {["dashboard", "users", "freelancers", "services"].map((item) => (
             <button
-              className={active === "settings" ? "active" : ""}
-              onClick={() => setActive("settings")}
+              key={item}
+              className={active === item ? "active" : ""}
+              onClick={() => {
+                setActive(item as Menu);
+                setOpen(false);
+              }}
             >
-              Settings
+              {item.charAt(0).toUpperCase() + item.slice(1)}
             </button>
+          ))}
+        </nav>
+
+        <div className="ad-sidebar-footer">
+          <button
+            className={active === "settings" ? "active" : ""}
+            onClick={() => setActive("settings")}
+          >
+            Settings
+          </button>
+        </div>
+      </aside>
+
+      {/* MAIN */}
+      <div className="ad-main">
+        <header className="ad-topbar">
+          <div className="ad-left">
+            <div
+              className="ad-hamburger"
+onClick={() => {
+  setOpen(!open);
+  setTimeout(() => {
+    window.dispatchEvent(new Event("resize"));
+  }, 350);
+}}
+            >
+              {open ? "✖" : "☰"}
+            </div>
+
+            <h2>
+              {active === "freelancers"
+                ? "Freelancer Analytics"
+                : "Admin Dashboard"}
+            </h2>
           </div>
-        </aside>
 
-        {/* MAIN */}
-        <div className="ad-main">
-       <header className="ad-topbar">
-  <div className="ad-left">
-    <div className="ad-hamburger" onClick={() => setOpen(!open)}>
-      {open ? "✖" : "☰"}
-    </div>
-    <h2>
-      {active === "freelancers"
-        ? "Freelancer Analytics"
-        : "Admin Dashboard"}
-    </h2>
-  </div>
+          {/* PROFILE */}
+          <div className="ad-profile" ref={profileRef}>
+            <div
+              className="ad-avatar"
+              onClick={() => setProfileOpen(!profileOpen)}
+            >
+              👤
+            </div>
 
-  {/* PROFILE */}
- <div className="ad-profile" ref={profileRef}>
-
-    <div
-      className="ad-avatar"
-      onClick={() => setProfileOpen(!profileOpen)}
-    >
-      👤
-    </div>
-
-    {profileOpen && (
-      <div className="ad-profile-menu">
-        <button onClick={handleLogout}>Logout</button>
-      </div>
-    )}
-  </div>
-</header>
-
-
-          <main className="ad-content">
-            {active === "dashboard" && <DashboardView />}
-            {active === "freelancers" && <FreelancerView />}
-
-            {active !== "dashboard" && active !== "freelancers" && (
-              <div className="placeholder">
-                <h3>{active.toUpperCase()}</h3>
-                <p>Content will be shown here</p>
+            {profileOpen && (
+              <div className="ad-profile-menu">
+                <button onClick={handleLogout}>Logout</button>
               </div>
             )}
-          </main>
-        </div>
+          </div>
+        </header>
+
+        <main className="ad-content">
+          {active === "dashboard" && <DashboardView />}
+          {active === "freelancers" && <FreelancerView />}
+
+          {active !== "dashboard" && active !== "freelancers" && (
+            <div className="placeholder">
+              <h3>{active.toUpperCase()}</h3>
+              <p>Content will be shown here</p>
+            </div>
+          )}
+        </main>
       </div>
     </div>
-  );
+  </div>
+);
+
 }
 
 /* ================= DASHBOARD ================= */
@@ -214,6 +221,9 @@ const applyQuickRange = (key: string) => {
   setQuickLabel(label);
 };
 
+useEffect(() => {
+  window.dispatchEvent(new Event("resize"));
+}, []);
 
 
 
@@ -382,16 +392,36 @@ onChange={(dates) => {
             : "Freelancer Registrations by Category"}
         </h3>
 
-        <div className="ad-chart">
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={chartData}>
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Line dataKey="value" stroke="#2563eb" strokeWidth={3} />
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
+<div className="ad-chart">
+  {chartData.length > 0 && (
+    <ResponsiveContainer width="100%" height={260}>
+      <BarChart
+        data={chartData}
+        margin={{ top: 20, right: 16, left: 0, bottom: 12 }}
+      >
+        <defs>
+          <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#2563eb" stopOpacity={0.95} />
+            <stop offset="100%" stopColor="#60a5fa" stopOpacity={0.85} />
+          </linearGradient>
+        </defs>
+
+        <XAxis dataKey="name" tickLine={false} axisLine={false} />
+        <YAxis tickLine={false} axisLine={false} />
+        <Tooltip />
+
+        <Bar
+          dataKey="value"
+          fill="url(#barGradient)"
+          radius={[8, 8, 0, 0]}
+          maxBarSize={32}
+        />
+      </BarChart>
+    </ResponsiveContainer>
+  )}
+</div>
+
+
 
         <div className="card-footer">
           <span className="green">Avg Growth +12.5%</span>
