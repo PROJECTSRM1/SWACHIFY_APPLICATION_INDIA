@@ -64,7 +64,8 @@ const navItems = [
     key: "Swachifyproducts",
     label: <Link to="/swachify-products">Swachify Products</Link>,
   },
-  { key: "freelancer", label: <Link to="/Freelancer">Freelancer</Link> },
+  // { key: "freelancer", label: <Link to="/Freelancer">Freelancer</Link> },
+   { key: "freelancer", label: <Link to="/Freelancer">Freelancer</Link> },
 ];
 
 const serviceIdToRoute: Record<number, string> = {
