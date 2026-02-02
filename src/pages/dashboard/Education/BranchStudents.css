@@ -1,10 +1,3 @@
-.bsx-page {
-  max-width: 1200px;
-  margin: auto;
-  padding: 32px;
-  background: transparent !important;
-  min-height: 100vh;
-}
 .bsx-wrapper {
   min-height: 100vh;
   background: linear-gradient(
@@ -19,6 +12,24 @@
   overflow-x: hidden;
   font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont;
 }
+.bsx-search {
+  width: 100%;
+}
+
+.bsx-search input {
+  background: transparent;
+}
+.bsx-card {
+  position: relative;
+}
+
+.bsx-card .inactive {
+  margin-left: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #ef4444;
+}
+
 
 /* HEADER */
 .bsx-header {
@@ -153,13 +164,13 @@
     font-size: 20px;
   }
 }
-a.bsx-page {
+.bsx-page {
   max-width: 1200px;
   margin: auto;
   padding: 36px;
-  background: linear-gradient(180deg,#f7f9ff,#f1f5fb);
   min-height: 100vh;
 }
+
 
 /* HEADER */
 .bsx-header {
