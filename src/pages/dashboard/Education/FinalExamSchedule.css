@@ -1,0 +1,61 @@
+.fes-container {
+  max-width: 900px;
+  margin: auto;
+  padding: 24px;
+}
+
+.subtitle {
+  color: #777;
+  margin-bottom: 24px;
+}
+
+.date-card {
+  margin-bottom: 20px;
+}
+
+.date-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.exam-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.exam-row:hover {
+  background: #f5f7fb;
+}
+
+.color-bar {
+  width: 6px;
+  height: 40px;
+  border-radius: 4px;
+}
+
+.setting-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.reminder-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.reminder-info {
+  flex: 1;
+  margin-left: 12px;
+}
+
+.delete {
+  cursor: pointer;
+  color: red;
+}
