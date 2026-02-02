@@ -43,7 +43,7 @@ interface Props {
   onBack: () => void;
 }
 
-/* ================= STATIC DATA (SAME AS RN) ================= */
+/* ================= STATIC DATA ================= */
 
 const examData: ExamData[] = [
   {
@@ -53,7 +53,7 @@ const examData: ExamData[] = [
     day: "Monday",
     time: "09:00 AM - 11:30 AM",
     location: "Hall A",
-    color: "#3B82F6",
+    color: "#2563eb",
     category: "midterm",
   },
   {
@@ -63,7 +63,7 @@ const examData: ExamData[] = [
     day: "Monday",
     time: "01:00 PM - 03:00 PM",
     location: "Room 402",
-    color: "#A855F7",
+    color: "#7c3aed",
     category: "midterm",
   },
   {
@@ -73,7 +73,7 @@ const examData: ExamData[] = [
     day: "Tuesday",
     time: "10:00 AM - 12:30 PM",
     location: "Lab 2",
-    color: "#10B981",
+    color: "#059669",
     category: "midterm",
   },
   {
@@ -83,7 +83,7 @@ const examData: ExamData[] = [
     day: "Wednesday",
     time: "02:00 PM - 04:00 PM",
     location: "Main Hall",
-    color: "#F59E0B",
+    color: "#d97706",
     category: "midterm",
   },
 ];
@@ -162,8 +162,6 @@ const MidTermNotificationsWeb: React.FC<Props> = ({ onBack }) => {
   const [notificationSound, setNotificationSound] = useState("Chime");
   const [savedReminders, setSavedReminders] = useState<ReminderData[]>([]);
 
-  /* ================= DATA LOGIC ================= */
-
   const filteredExams = useMemo(
     () => examData.filter(e => e.category === activeTab),
     [activeTab]
@@ -177,8 +175,6 @@ const MidTermNotificationsWeb: React.FC<Props> = ({ onBack }) => {
       return acc;
     }, {});
   }, [filteredExams]);
-
-  /* ================= HANDLERS ================= */
 
   const saveReminder = () => {
     if (!selectedExam) return;
@@ -199,12 +195,10 @@ const MidTermNotificationsWeb: React.FC<Props> = ({ onBack }) => {
     setScreen("saved-reminders");
   };
 
-  /* ================= SCREENS ================= */
-
   if (screen === "logs") {
     return (
       <div className="examw-page">
-        <button onClick={() => setScreen("timetable")}>← Back</button>
+        <button className="btn-back" onClick={() => setScreen("timetable")}>← Back</button>
         <h2>Notification Logs</h2>
 
         {logs.map(log => (
@@ -220,7 +214,7 @@ const MidTermNotificationsWeb: React.FC<Props> = ({ onBack }) => {
   if (screen === "staff") {
     return (
       <div className="examw-page">
-        <button onClick={() => setScreen("timetable")}>← Back</button>
+        <button className="btn-back" onClick={() => setScreen("timetable")}>← Back</button>
         <h2>Staff Assignments</h2>
 
         {staff.map(s => (
@@ -242,7 +236,7 @@ const MidTermNotificationsWeb: React.FC<Props> = ({ onBack }) => {
   if (screen === "saved-reminders") {
     return (
       <div className="examw-page">
-        <button onClick={() => setScreen("timetable")}>← Back</button>
+        <button className="btn-back" onClick={() => setScreen("timetable")}>← Back</button>
         <h2>Saved Reminders</h2>
 
         {savedReminders.map(r => (
@@ -259,7 +253,7 @@ const MidTermNotificationsWeb: React.FC<Props> = ({ onBack }) => {
   if (screen === "reminder" && selectedExam) {
     return (
       <div className="examw-page">
-        <button onClick={() => setScreen("timetable")}>← Back</button>
+        <button className="btn-back" onClick={() => setScreen("timetable")}>← Back</button>
         <h2>Set Exam Reminder</h2>
 
         <div className="examw-card">
@@ -291,23 +285,19 @@ const MidTermNotificationsWeb: React.FC<Props> = ({ onBack }) => {
         </select>
 
         <button className="btn-primary" onClick={saveReminder}>
-  Save Reminder
-</button>
+          Save Reminder
+        </button>
       </div>
     );
   }
 
-  /* ================= TIMETABLE ================= */
-
   return (
     <div className="examw-page">
-     <button className="btn-back" onClick={onBack}>←</button>
+      <button className="btn-back" onClick={onBack}>← Back</button>
       <h2>Exam Timetable</h2>
 
       <div className="tab-row">
-       <button className="tab-btn">Mid-term</button>
-
-        {/* <button onClick={() => setActiveTab("final")}>Final</button> */}
+        <button className="tab-btn">Mid-term</button>
       </div>
 
       {Object.entries(groupedExams).map(([date, exams]) => (
@@ -323,10 +313,7 @@ const MidTermNotificationsWeb: React.FC<Props> = ({ onBack }) => {
                 setScreen("reminder");
               }}
             >
-              <span
-                className="exam-color"
-                style={{ background: exam.color }}
-              />
+              <span className="exam-color" style={{ background: exam.color }} />
               <div>
                 <strong>{exam.subject}</strong>
                 <p>{exam.time}</p>
@@ -337,9 +324,9 @@ const MidTermNotificationsWeb: React.FC<Props> = ({ onBack }) => {
         </div>
       ))}
 
-     <button className="btn-primary" onClick={() => setScreen("staff")}>
-  Manage Staff
-</button>
+      <button className="btn-primary" onClick={() => setScreen("staff")}>
+        Manage Staff
+      </button>
     </div>
   );
 };

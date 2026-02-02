@@ -16,7 +16,7 @@ body {
 /* ================= INTERNSHIPS ROOT (MATCH EDU) ================= */
 
 .internships-wrapper {
-  height: 100vh;
+  min-height: 100vh;
   background: linear-gradient(
     135deg,
     #f3f4f8 0%,
@@ -24,7 +24,7 @@ body {
     #ffffff 42%,
     #ffffff 100%
   );
-  padding-top: 88px;
+  padding-top: 40px;
   padding-bottom: 80px;
   overflow-x: hidden;
   font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont;
