@@ -16,7 +16,7 @@ body {
 /* ================= ROOT ================= */
 .cp-root {
   max-width: 1200px;
-  margin: 110px auto 60px;
+  margin: 10px auto 60px;
   padding: 0 32px; /* ⬅ prevents edge cutting */
   background: transparent;
 }
@@ -389,7 +389,7 @@ body {
 /* Small Mobile */
 @media (max-width: 480px) {
   .cp-root {
-    margin-top: 72px;
+    margin-top: 28px;
   }
 
   .cp-avatar-wrap {

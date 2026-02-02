@@ -374,7 +374,7 @@
 .students-root {
   min-height: 100vh;
   background: #f5f7fb;
-  padding-top: 88px;     /* ✅ navbar height */
+      margin-top: 0px;
   padding-bottom: 80px;
 }
 
@@ -565,7 +565,7 @@
 
   /* ROOT SPACING */
   .students-root {
-    padding-top: 72px;
+    padding-top: 20px;
   }
 
   /* HEADER CARD */
