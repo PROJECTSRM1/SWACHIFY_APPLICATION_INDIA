@@ -4093,3 +4093,46 @@
     transform: translateY(0);
   }
 }
+/* Slot Tabs */
+.slot-tabs {
+  display: flex;
+  gap: 10px;
+  margin: 16px 0;
+}
+
+.slot-tab {
+  padding: 8px 14px;
+  border-radius: 20px;
+  border: 1px solid #ddd;
+  background: #fff;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.slot-tab.active {
+  background: #1677ff;
+  color: #fff;
+  border-color: #1677ff;
+}
+
+/* Slot Grid */
+.slots-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 12px;
+}
+
+.slot-btn {
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  background: #fff;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.slot-btn.active {
+  border-color: #1677ff;
+  color: #1677ff;
+  background: #f0f6ff;
+}
