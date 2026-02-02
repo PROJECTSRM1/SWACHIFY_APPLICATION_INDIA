@@ -81,6 +81,7 @@ export default function JobDetails({ company, onBack }: Props) {
   }
 
   return (
+        <div className="job-wrapper">
     <div className="job-layout">
       {/* HEADER */}
       <div className="job-header">
@@ -142,6 +143,7 @@ export default function JobDetails({ company, onBack }: Props) {
       <div className="apply-bar">
         <button className="apply-btn">Apply Now →</button>
       </div>
+    </div>
     </div>
   );
 }

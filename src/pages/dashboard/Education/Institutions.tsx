@@ -138,6 +138,7 @@ if (step === "step2" && !institutionId) {
   /* ================= UI ================= */
 
   return (
+      <div className="inst-reg-wrapper">
     <div className="inst-reg-page">
       <div className="inst-reg-container">
         <div className="inst-reg-header">
@@ -310,6 +311,7 @@ if (step === "step2" && !institutionId) {
           </button>
         </div>
       </div>
+    </div>
     </div>
   );
 };

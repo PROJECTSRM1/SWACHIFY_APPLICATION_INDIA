@@ -150,6 +150,7 @@ if (showFinalExam) {
 
 
   return (
+      <div className="bsx-wrapper">
     <div className="mgmtw-page">
       {/* HEADER */}
       <header className="mgmtw-header">
@@ -476,6 +477,7 @@ if (showFinalExam) {
       )}
 
      
+    </div>
     </div>
   );
 };

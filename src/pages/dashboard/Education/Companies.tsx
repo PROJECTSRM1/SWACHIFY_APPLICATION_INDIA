@@ -145,6 +145,7 @@ useEffect(() => {
   ======================= */
 
   return (
+     <div className="companies-wrapper">
     <div className="companies-layout">
       <div className="page-header">
         <div className="header-left">
@@ -233,6 +234,7 @@ useEffect(() => {
           ))}
         </div>
       )}
+    </div>
     </div>
   );
 }
