@@ -3,7 +3,7 @@
   padding: 32px;
 }
 .branchcfg-wrapper {
-  height: 100vh;
+  min-height: 100vh;
   background: linear-gradient(
     135deg,
     #f3f4f8 0%,
@@ -11,7 +11,7 @@
     #ffffff 42%,
     #ffffff 100%
   );
-  padding-top: 88px;
+  /* padding-top: 88px; */
   padding-bottom: 80px;
   overflow-x: hidden;
   font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont;
