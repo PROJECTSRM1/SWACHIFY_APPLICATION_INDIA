@@ -110,7 +110,7 @@ margin-top: -146px !important;
 }
 
 .companies-wrapper {
-  height: 100vh;
+  min-height: 100vh;
   background: linear-gradient(
     135deg,
     #f3f4f8 0%,
@@ -131,6 +131,7 @@ margin-top: -146px !important;
   display: flex;
   align-items: center;
   gap: 12px;
+  justify-content: flex-start !important;
 }
 
 .avatar {
