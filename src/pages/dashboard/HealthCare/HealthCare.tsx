@@ -1,8 +1,10 @@
 import React, { useMemo, useState, useEffect } from "react";
 import "./HealthCare.css";
-import { Tooltip } from "antd";
+import { message, Tooltip } from "antd";
 import { AppstoreOutlined } from "@ant-design/icons";
 import healthcareService from "../../../api/healthcare";
+import { PaymentsAPI } from "../../../api/customerAuth";
+
 
 
 type AmbulanceHospital = {
@@ -871,6 +873,7 @@ const formatAvailabilityTime = (from: string, to: string) => {
 };
 
 
+
 const getDoctorImage = (id: number) => {
   switch (id) {
     case 1:
@@ -943,7 +946,37 @@ const TIME_SLOTS = [
 const HealthCare: React.FC = () => {
   const [searchText, setSearchText] = useState("");
   const [activeCategory, setActiveCategory] = useState<string>("All");
+// ✅ Appointment booking screen (Image 2)
+const [openAppointmentScreen, setOpenAppointmentScreen] = useState(false);
+const [appointmentDoctor, setAppointmentDoctor] = useState<Doctor | null>(null);
+// 📅 Appointment date handling
+const [currentMonth, setCurrentMonth] = useState(new Date());
+const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+const [showMonthPicker, setShowMonthPicker] = useState(false);
+const [selectedTime, setSelectedTime] = useState<string | null>(null);
+const [showConfirmPopup, setShowConfirmPopup] = useState(false);
+const [payLoading, setPayLoading] = useState(false);
 
+const getDaysInMonth = (date: Date) => {
+  return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+};
+
+const generateDates = () => {
+  const days = [];
+  const totalDays = getDaysInMonth(currentMonth);
+
+  for (let i = 1; i <= totalDays; i++) {
+    days.push(
+      new Date(currentMonth.getFullYear(), currentMonth.getMonth(), i)
+    );
+  }
+  return days;
+};
+
+const months = [
+  "January","February","March","April","May","June",
+  "July","August","September","October","November","December",
+];
 
   const [openConsultation, setOpenConsultation] = useState<boolean>(false);
 
@@ -1223,6 +1256,63 @@ const filteredHospitals = useMemo(() => {
 
 
 
+  const handlePayNow = async () => {
+  try {
+    setPayLoading(true);
+
+    // Temporary ID for now (since no booking API exists yet)
+    const tempHomeServiceId = 25; 
+
+    const amount = 5000; // ₹50 => 5000 paise
+
+    // 1️⃣ Create Razorpay order
+    const order = await PaymentsAPI.createOrder(tempHomeServiceId, amount);
+
+    const options = {
+      key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+      amount: order.amount,
+      currency: "INR",
+      name: "Swachify Healthcare",
+      description: "Online Video Consultation",
+      order_id: order.id,
+
+    
+
+      handler: async function (response: any) {
+        try {
+          // 2️⃣ Verify payment with backend
+          await PaymentsAPI.verifyPayment(
+            order.id,
+            response.razorpay_payment_id,
+            response.razorpay_signature,
+            tempHomeServiceId
+          );
+
+          message.success("Payment Successful 🎉");
+          setShowConfirmPopup(false);
+        } catch (err) {
+          message.error("Payment verification failed");
+        }
+      },
+
+      theme: {
+        color: "#065f46",
+      },
+    };
+
+    //@ts-ignore
+    const rzp = new window.Razorpay(options);
+    rzp.open();
+  } catch (err) {
+    message.error("Payment failed!");
+  } finally {
+    setPayLoading(false);
+  }
+};
+
+
+
+
 
 
 
@@ -1429,9 +1519,17 @@ const filteredHospitals = useMemo(() => {
 
   <div className="doctor-footer">
     <span className="price">{doc.price}</span>
-    <button type="button" className="book-btn">
-      Book Now
-    </button>
+    <button
+  type="button"
+  className="book-btn"
+  onClick={() => {
+    setAppointmentDoctor(doc);
+    setOpenAppointmentScreen(true);
+  }}
+>
+  Book Now
+</button>
+
   </div>
 </div>
     </div>
@@ -2828,6 +2926,218 @@ const filteredHospitals = useMemo(() => {
   </div>
 )}
 
+{openAppointmentScreen && appointmentDoctor && (
+  <div className="appointment-overlay">
+
+    {/* Header */}
+    <div className="appointment-header">
+      <button
+        className="back-btn"
+        onClick={() => setOpenAppointmentScreen(false)}
+      >
+        ←
+      </button>
+      <h2>Choose Appointment Time</h2>
+      <div style={{ width: 32 }} />
+    </div>
+
+    {/* Doctor Card */}
+    <div className="appointment-doctor-card">
+      <img src={appointmentDoctor.image} />
+      <div>
+        <h3>{appointmentDoctor.name}</h3>
+        <p>{appointmentDoctor.speciality}</p>
+        <span>⭐ {appointmentDoctor.rating}</span>
+      </div>
+    </div>
+
+    {/* Date */}
+    <div className="appointment-date-header">
+      <h3>Select Date</h3>
+    <span
+  className="month-selector"
+  onClick={() => setShowMonthPicker(true)}
+>
+  {months[currentMonth.getMonth()]}
+  <span className="month-arrow">▼</span>
+</span>
+
+{showMonthPicker && (
+  <div
+    className="month-popup-overlay"
+    onClick={() => setShowMonthPicker(false)}
+  >
+    <div
+      className="month-popup"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <h3 className="month-popup-title">Select Month</h3>
+
+      <div className="month-popup-list">
+        {months.map((m, index) => (
+          <div
+            key={m}
+            className="month-popup-item"
+            onClick={() => {
+              setCurrentMonth(
+                new Date(currentMonth.getFullYear(), index, 1)
+              );
+              setShowMonthPicker(false);
+            }}
+          >
+            {m}
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+)}
+
+
+
+    </div>
+
+  <div className="date-scroll">
+  {generateDates().map((date) => {
+    const isActive =
+      date.toDateString() === selectedDate.toDateString();
+
+    return (
+      <div
+        key={date.toDateString()}
+        className={`date-box ${isActive ? "active" : ""}`}
+        onClick={() => setSelectedDate(date)}
+      >
+        <span>
+          {date.toLocaleDateString("en-US", { weekday: "short" })}
+        </span>
+        <b>{date.getDate()}</b>
+      </div>
+    );
+  })}
+</div>
+
+
+    {/* Morning */}
+    <h4 className="slot-title">☀ Morning</h4>
+    <div className="slots">
+  {["10:00 AM", "10:30 AM", "11:30 AM"].map((time) => (
+    <button
+      key={time}
+      type="button"
+      className={selectedTime === time ? "active" : ""}
+      onClick={() => setSelectedTime(time)}
+    >
+      {time}
+    </button>
+  ))}
+</div>
+
+
+    {/* Afternoon */}
+    <h4 className="slot-title">☀ Afternoon</h4>
+<div className="slots">
+  {["12:30 PM", "02:00 PM", "03:30 PM", "04:00 PM"].map((time) => (
+    <button
+      key={time}
+      type="button"
+      className={selectedTime === time ? "active" : ""}
+      onClick={() => setSelectedTime(time)}
+    >
+      {time}
+    </button>
+  ))}
+</div>
+
+
+
+    {/* Evening */}
+    <h4 className="slot-title">🌙 Evening</h4>
+<div className="slots">
+  {["06:00 PM","06:30 PM", "07:30 PM"].map((time) => (
+    <button
+      key={time}
+      type="button"
+      className={selectedTime === time ? "active" : ""}
+      onClick={() => setSelectedTime(time)}
+    >
+      {time}
+    </button>
+  ))}
+</div>
+
+
+    {/* Confirm */}
+    <button
+  className="confirm-appointment-btn"
+  disabled={!selectedTime}
+  onClick={() => {
+    setOpenAppointmentScreen(false); // 🔥 CLOSE booking screen
+    setShowConfirmPopup(true);       // 🔥 OPEN confirm popup
+  }}
+>
+  Confirm Appointment
+</button>
+
+
+  </div>
+)}
+{showConfirmPopup && (
+  <div className="confirm-overlay" onClick={() => setShowConfirmPopup(false)}>
+    <div
+      className="confirm-sheet"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <div className="sheet-handle" />
+
+      <h2 className="confirm-title">
+        Appointment Confirmed! 🎉
+      </h2>
+      <p className="confirm-sub">
+        Your slot is reserved. Please complete payment to confirm.
+      </p>
+
+      {/* Doctor Card */}
+      <div className="confirm-doctor-card">
+        <img src={appointmentDoctor?.image} alt="doctor" />
+        <div>
+          <span className="doc-type">CARDIOLOGIST</span>
+          <h3>{appointmentDoctor?.name}</h3>
+          <p>St. Mary's Hospital</p>
+        </div>
+      </div>
+
+      {/* Info Rows */}
+      <div className="confirm-info">
+        <div className="info-row">
+          📅 <b>{selectedDate?.toDateString()}</b>
+        </div>
+        <div className="info-row">
+          ⏰ <b>{selectedTime}</b> <span>(IST)</span>
+        </div>
+        <div className="info-row">
+          🎥 Online Video Consultation
+        </div>
+      </div>
+
+      {/* Pay Button */}
+      <button className="pay-btn"  onClick={handlePayNow} disabled={payLoading}>
+        Pay Now ($50.00)
+      </button>
+
+      <button
+  className="cancel-link"
+  onClick={() => {
+    setShowConfirmPopup(false);
+    setSelectedTime(null);
+  }}
+>
+  Cancel Appointment
+</button>
+
+    </div>
+  </div>
+)}
 
 
     </div >
