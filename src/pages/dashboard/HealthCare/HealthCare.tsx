@@ -956,6 +956,11 @@ const [showMonthPicker, setShowMonthPicker] = useState(false);
 const [selectedTime, setSelectedTime] = useState<string | null>(null);
 const [showConfirmPopup, setShowConfirmPopup] = useState(false);
 const [payLoading, setPayLoading] = useState(false);
+const [openPaymentSuccess, setOpenPaymentSuccess] = useState(false);
+const [paymentCompleted, _setPaymentCompleted] = useState(false);
+
+
+
 
 const getDaysInMonth = (date: Date) => {
   return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
@@ -1291,7 +1296,9 @@ const filteredHospitals = useMemo(() => {
           );
 
           message.success("Payment Successful 🎉");
-          setShowConfirmPopup(false);
+       
+          setOpenPaymentSuccess(true);   
+          setOpenPaymentSuccess(true);
         } catch (err) {
           message.error("Payment verification failed");
         }
@@ -1301,6 +1308,7 @@ const filteredHospitals = useMemo(() => {
         color: "#065f46",
       },
     };
+        setShowConfirmPopup(false);
 
     //@ts-ignore
     const rzp = new window.Razorpay(options);
@@ -3091,7 +3099,9 @@ const filteredHospitals = useMemo(() => {
 
   </div>
 )}
-{showConfirmPopup && (
+
+
+{showConfirmPopup && !paymentCompleted &&(
   <div className="confirm-overlay" onClick={() => setShowConfirmPopup(false)}>
     <div
       className="confirm-sheet"
@@ -3148,6 +3158,91 @@ const filteredHospitals = useMemo(() => {
   </div>
 )}
 
+
+
+
+{openPaymentSuccess && (
+  <div className="pay-mobile-screen">
+
+    {/* HEADER */}
+    <div className="pay-mobile-header">
+      <button
+        className="pay-mobile-close"
+        onClick={() => setOpenPaymentSuccess(false)}
+      >
+        ✕
+      </button>
+      <div style={{ width: 24 }} />
+    </div>
+
+    {/* CONTENT */}
+    <div className="pay-mobile-content">
+
+      {/* SUCCESS ICON */}
+      <div className="pay-mobile-check">✓</div>
+
+      <h1 className="pay-mobile-title">Payment Successful!</h1>
+      <p className="pay-mobile-sub">
+        Your appointment with <b>Dr. Sarah Jenkins</b> is confirmed.
+      </p>
+
+      {/* CARD */}
+      <div className="pay-mobile-card">
+
+        {/* AMOUNT */}
+        <div className="pay-mobile-amount">
+          <p className="label">TOTAL AMOUNT PAID</p>
+          <h1>₹50</h1>
+        </div>
+
+        {/* TRANSACTION */}
+        <div className="pay-mobile-row">
+          <span>Transaction ID</span>
+          <span className="bold">#pay_SBBYHLSboGNNcj</span>
+        </div>
+
+        <div className="pay-mobile-divider" />
+
+        {/* DOCTOR */}
+        <div className="pay-mobile-doctor">
+          <img
+            src="https://randomuser.me/api/portraits/women/44.jpg"
+            alt="Doctor"
+          />
+          <div>
+            <h4>Dr. Sarah Jenkins</h4>
+            <p>Specialist</p>
+          </div>
+        </div>
+
+        {/* DATE & TIME */}
+        <div className="pay-mobile-slots">
+          <div className="slot">
+            📅 2 February 2026
+          </div>
+          <div className="slot">
+            🕒 12:30 PM
+          </div>
+        </div>
+      </div>
+
+      {/* CTA */}
+      <button className="pay-mobile-btn">
+        Call scheduled
+      </button>
+
+      <p className="pay-mobile-footer">
+        You can join the consultation from <b>My Bookings</b> at the scheduled time.
+      </p>
+    </div>
+  </div>
+)}
+
+
+
+
+
+
 {openMyBookings && (
   <div
     className="bookings-overlay"
@@ -3200,6 +3295,9 @@ const filteredHospitals = useMemo(() => {
     </div>
   </div>
 )}
+
+
+
 
 
 
