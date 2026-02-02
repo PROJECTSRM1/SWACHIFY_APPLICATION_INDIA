@@ -70,6 +70,7 @@ const ManagementOverview: React.FC<ManagementOverviewProps> = ({ onBack }) => {
   };
 
   return (
+      <div className="bsx-wrapper">
     <div className="mgmtw-page">
       {/* HEADER */}
       <header className="mgmtw-header">
@@ -318,6 +319,7 @@ const ManagementOverview: React.FC<ManagementOverviewProps> = ({ onBack }) => {
           </div>
         </div>
       )}
+    </div>
     </div>
   );
 };

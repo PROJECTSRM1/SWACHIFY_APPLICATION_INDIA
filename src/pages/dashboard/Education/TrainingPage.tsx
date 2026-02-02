@@ -168,6 +168,7 @@ export default function TrainingPage({ onBack }: Props) {
   }
 
  return (
+  <div className="training-wrapper">
   <div className="training-scope">
     <div className="training-page">
       <div className="training-header">
@@ -246,6 +247,7 @@ export default function TrainingPage({ onBack }: Props) {
         ))}
       </div>
     </div>
+  </div>
   </div>
 );
 

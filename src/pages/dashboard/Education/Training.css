@@ -1,5 +1,5 @@
 .training-scope .training-page {
-  background: #f9fafb;
+  background: transparent;
   padding: 28px;
   padding-top: 56px;   /* 🔥 pushes whole page down */
   min-height: 100vh;
@@ -9,6 +9,20 @@
   font-size: 26px;
   font-weight: 700;
   color: #111827;
+}
+.training-wrapper {
+  height: 100vh;
+  background: linear-gradient(
+    135deg,
+    #f3f4f8 0%,
+    #f3f4f8 42%,
+    #ffffff 42%,
+    #ffffff 100%
+  );
+  padding-top: 0px;
+  padding-bottom: 80px;
+  overflow-x: hidden;
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont;
 }
 
 .training-scope .training-header p {
@@ -27,7 +41,7 @@
   padding: 7px 16px;
   border-radius: 999px;
   border: none;
-  background: #e5e7eb;
+  background: transparent !important;
   font-weight: 600;
 }
 

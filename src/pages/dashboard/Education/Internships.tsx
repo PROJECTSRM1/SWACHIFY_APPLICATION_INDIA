@@ -108,6 +108,7 @@ const Internships = ({ onBack }: Props) => {
   /* ================= RENDER ================= */
 
   return (
+    <div className="internships-wrapper">
     <div className="internships-web">
       {showReview ? (
         <ReviewApplication onBack={() => setShowReview(false)} />
@@ -195,6 +196,7 @@ const Internships = ({ onBack }: Props) => {
           )}
         </>
       )}
+    </div>
     </div>
   );
 };

@@ -115,6 +115,7 @@ const handleContinue = async () => {
   /* ================= UI ================= */
 
   return (
+      <div className="inst-reg-wrapper">
     <div className="inst-reg-page">
       <div className="inst-reg-container">
         <div className="inst-reg-header">
@@ -287,6 +288,7 @@ const handleContinue = async () => {
           </button>
         </div>
       </div>
+    </div>
     </div>
   );
 };

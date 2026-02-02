@@ -89,6 +89,7 @@ const InstitutionBranchConfig: React.FC<Props> = ({
 
   // ✅ STEP 2 UI (UNCHANGED)
   return (
+      <div className="branchcfg-wrapper">
     <div className="branchcfg-page">
       <div className="branchcfg-container">
         <div className="branchcfg-header">
@@ -212,6 +213,7 @@ const InstitutionBranchConfig: React.FC<Props> = ({
           </button>
         </div>
       </div>
+    </div>
     </div>
   );
 };
