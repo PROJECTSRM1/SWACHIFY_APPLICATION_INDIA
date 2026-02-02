@@ -366,7 +366,6 @@ export const HOSPITAL_DOCTORS: HospitalDoctor[] = [
   bio: "Focuses on nutrition, obesity prevention, and diet planning.",
 },
 
-// 🏥 Max Healthcare (hospital_id: 6) → 5 doctors
 {
   id: 601,
   hospitalId: 6,
@@ -950,6 +949,9 @@ const HealthCare: React.FC = () => {
   const [openOnlinePopup, setOpenOnlinePopup] = useState(false);
 
   const [ambulanceList, setAmbulanceList] = useState<AmbulanceHospital[]>([]);
+  const [openMyBookings, setOpenMyBookings] = useState(false);
+
+
 
   useEffect(() => {
   setAmbulanceList(STATIC_HOSPITALS);
@@ -1243,19 +1245,19 @@ const filteredHospitals = useMemo(() => {
           </button>
         </div>
         <div className="healthcare-banner-icon">
-          {/* Profile Icon with Tooltip */}
-          <Tooltip title="Customize your Available Time" placement="bottom">
-            <button
-              type="button"
-              className="banner-profile-btn"
-              onClick={() => setOpenDoctorProfile(true)}
-            >
-              👤
-            </button>
-          </Tooltip>
-        </div>
+ 
 
-
+  {/* 👤 Profile Button */}
+  <Tooltip title="Customize your Available Time" placement="bottom">
+    <button
+      type="button"
+      className="banner-profile-btn"
+      onClick={() => setOpenDoctorProfile(true)}
+    >
+      👤
+    </button>
+  </Tooltip>
+</div>
 
       </div>
 
@@ -1301,43 +1303,46 @@ const filteredHospitals = useMemo(() => {
   </div>
 
   {/* 🔁 MODE SELECT */}
-  <div className="mode-toggle">
-    <button
-      className={consultMode === "online" ? "active" : ""}
-      onClick={() => setConsultMode("online")}
-    >
-      🌐 Online
-    </button>
-
-    <button
-      className={consultMode === "offline" ? "active" : ""}
-      onClick={() => setConsultMode("offline")}
-    >
-      🏥 Offline
-    </button>
-  </div>
-
-  {/* 🚑 Ambulance Button (API Integrated) */}
+  {/* 🔁 MODE + BOOKINGS */}
+<div className="mode-toggle">
   <button
-    type="button"
-    className="emergency-btn search-ambulance-btn"
-    onClick={() => {
-      setOpenAmbulanceScreen(true);
-    }}
+    className={consultMode === "online" ? "active" : ""}
+    onClick={() => setConsultMode("online")}
   >
-    Book Ambulance Now →
+    🌐 Online
+  </button>
+
+  <button
+    className={consultMode === "offline" ? "active" : ""}
+    onClick={() => setConsultMode("offline")}
+  >
+    🏥 Offline
+  </button>
+
+  {/* 🧾 MY BOOKINGS */}
+  <button
+    className="my-bookings-btn"
+    onClick={() => setOpenMyBookings(true)}
+
+  >
+    📅 My Bookings
   </button>
 </div>
 
+{/* 🚑 Ambulance Button */}
+<button
+  type="button"
+  className="emergency-btn search-ambulance-btn"
+  onClick={() => {
+    setOpenAmbulanceScreen(true);
+  }}
+>
+  Book Ambulance Now →
+</button>
 
+</div>
 
-
-
-
-
-
-
-      {/* Categories */}
+{/* Categories */}
       <div className="healthcare-cards">
         {/* SEE ALL CARD */}
         {/* SEE ALL CARD */}
@@ -2828,7 +2833,58 @@ const filteredHospitals = useMemo(() => {
   </div>
 )}
 
+{openMyBookings && (
+  <div
+    className="bookings-overlay"
+    onClick={() => setOpenMyBookings(false)}
+  >
+    <div
+      className="bookings-popup"
+      onClick={(e) => e.stopPropagation()}
+    >
+      {/* Header */}
+      <div className="bookings-header">
+        <h2>My Bookings</h2>
+        <button
+          className="close-btn"
+          onClick={() => setOpenMyBookings(false)}
+        >
+          ✖
+        </button>
+      </div>
 
+      {/* Booking Card */}
+      <div className="booking-card">
+        <h3>Dr. Sarah Jenkins</h3>
+        <p className="dates">30 Jan 2026 • 05:30 PM</p>
+
+        <button className="join-call-btn">
+          Join Call
+        </button>
+      </div>
+
+      {/* Booking Card */}
+      <div className="booking-card">
+        <h3>Dr. Marcus Chen</h3>
+        <p className="dates">30 Jan 2026 • 04:00 PM</p>
+
+        <button className="join-call-btn">
+          Join Call
+        </button>
+      </div>
+      {/* Booking Card */}
+<div className="booking-card">
+  <h3>Dr. Aisha Khan</h3>
+  <p className="dates">31 Jan 2026 • 11:00 AM</p>
+
+  <button className="join-call-btn">
+    Join Call
+  </button>
+</div>
+
+    </div>
+  </div>
+)}
 
     </div >
 
