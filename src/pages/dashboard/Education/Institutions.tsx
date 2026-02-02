@@ -83,14 +83,28 @@ const handleContinue = async () => {
       is_active: true,
     };
 
-    const res = await axios.post(
-      `${API_BASE}/institution/student/register`,
-      payload,
-      { headers: { "Content-Type": "application/json" } }
-    );
+  const res = await axios.post(
+  `${API_BASE}/institution/student/register`,
+  payload,
+  { headers: { "Content-Type": "application/json" } }
+);
 
-    setInstitutionId(res.data.institution_id);
-    setStep("step2");
+console.log("REGISTER RESPONSE:", res.data);
+
+// ✅ adjust based on response
+const id =
+  res.data.institution_id ??
+  res.data.id ??
+  res.data.data?.id;
+
+if (!id) {
+  throw new Error("Institution ID not returned from API");
+}
+
+setInstitutionId(id);
+setStep("step2");
+
+
   } catch (err) {
     console.error(err);
     alert("Institution registration failed");
@@ -103,14 +117,23 @@ const handleContinue = async () => {
 
   /* ================= STEP 2 ================= */
 
-  if (step === "step2") {
-    return (
-      <InstitutionBranchConfig
-        institutionId={institutionId}
-        onBack={() => setStep("step1")}
-      />
-    );
-  }
+if (step === "step2" && institutionId) {
+  return (
+    <InstitutionBranchConfig
+      institutionId={institutionId}
+      onBack={() => setStep("step1")}
+    />
+  );
+}
+if (step === "step2" && !institutionId) {
+  return (
+    <div style={{ padding: 40 }}>
+      <h3>Creating institution…</h3>
+      <p>Please wait</p>
+    </div>
+  );
+}
+
 
   /* ================= UI ================= */
 

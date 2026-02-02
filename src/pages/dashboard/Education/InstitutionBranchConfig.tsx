@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "./InstitutionBranchConfig.css";
 import InstitutionAccessMode from "../../dashboard/Education/InstitutionAccessMode";
+import axios from "axios";
+
+const API_BASE = "https://swachify-india-be-1-mcrb.onrender.com";
 
 interface Props {
   onBack: () => void;
-  institutionId: number | null; // ✅ ADDED
+  institutionId: number | null;
 }
 
 interface Branch {
@@ -18,10 +21,9 @@ const InstitutionBranchConfig: React.FC<Props> = ({
   onBack,
   institutionId,
 }) => {
-  // ✅ STEP STATE
   const [step, setStep] = useState<"step2" | "step3">("step2");
-
   const [branchesCount, setBranchesCount] = useState(1);
+  const [loading, setLoading] = useState(false);
 
   const [academic, setAcademic] = useState({
     start: "",
@@ -32,42 +34,22 @@ const InstitutionBranchConfig: React.FC<Props> = ({
     { name: "", city: "", code: "", head: "" },
   ]);
 
-  // ✅ SAFE ACCESS TO INSTITUTION ID
   useEffect(() => {
-    if (!institutionId) return;
-
-    console.log("Institution ID in Branch Config:", institutionId);
-    // 🔗 Later: use this institutionId for branch POST API
+    if (institutionId) {
+      console.log("Institution ID:", institutionId);
+    }
   }, [institutionId]);
 
-  // Sync branches with count
   const updateBranchCount = (count: number) => {
     setBranchesCount(count);
-
     setBranches((prev) => {
       const updated = [...prev];
-      if (count > prev.length) {
-        while (updated.length < count) {
-          updated.push({
-            name: "",
-            city: "",
-            code: "",
-            head: "",
-          });
-        }
-      } else {
-        updated.length = count;
+      while (updated.length < count) {
+        updated.push({ name: "", city: "", code: "", head: "" });
       }
+      updated.length = count;
       return updated;
     });
-  };
-
-  const addBranch = () => {
-    setBranchesCount((prev) => prev + 1);
-    setBranches((prev) => [
-      ...prev,
-      { name: "", city: "", code: "", head: "" },
-    ]);
   };
 
   const updateBranch = (
@@ -82,12 +64,60 @@ const InstitutionBranchConfig: React.FC<Props> = ({
     );
   };
 
-  // ✅ STEP 3
+  /* ================= SAVE BRANCHES ================= */
+
+  const handleSaveBranches = async () => {
+    if (!institutionId) {
+      alert("Institution ID missing");
+      return;
+    }
+
+    // Basic validation
+    for (const b of branches) {
+      if (!b.name || !b.city || !b.code || !b.head) {
+        alert("Please fill all branch fields");
+        return;
+      }
+    }
+
+    setLoading(true);
+
+    try {
+      for (const branch of branches) {
+        const payload = {
+          institution_id: institutionId,
+          branch_name: branch.name,
+          city: branch.city,
+          branch_code: branch.code,
+          branch_head: branch.head,
+          is_active: true,
+        };
+
+        await axios.post(
+          `${API_BASE}/institution/student/branch`,
+          payload,
+          { headers: { "Content-Type": "application/json" } }
+        );
+      }
+
+      // ✅ All branches saved
+      setStep("step3");
+    } catch (err) {
+      console.error(err);
+      alert("Failed to save branches");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  /* ================= STEP 3 ================= */
+
   if (step === "step3") {
     return <InstitutionAccessMode onClose={onBack} />;
   }
 
-  // ✅ STEP 2 UI (UNCHANGED)
+  /* ================= UI ================= */
+
   return (
       <div className="branchcfg-wrapper">
     <div className="branchcfg-page">
@@ -160,9 +190,7 @@ const InstitutionBranchConfig: React.FC<Props> = ({
 
         {branches.map((branch, index) => (
           <div key={index} className="branchcfg-branchcard">
-            <div className="branchcfg-branchheader">
-              <h4>Branch {index + 1}</h4>
-            </div>
+            <h4>Branch {index + 1}</h4>
 
             <div className="branchcfg-grid-2">
               <input
@@ -197,19 +225,16 @@ const InstitutionBranchConfig: React.FC<Props> = ({
           </div>
         ))}
 
-        <button className="branchcfg-add" onClick={addBranch}>
-          + Add Another Branch
-        </button>
-
         <div className="branchcfg-footer">
           <button className="secondary" onClick={onBack}>
             Back
           </button>
           <button
             className="primary"
-            onClick={() => setStep("step3")}
+            onClick={handleSaveBranches}
+            disabled={loading}
           >
-            Save & Continue
+            {loading ? "Saving..." : "Save & Continue"}
           </button>
         </div>
       </div>
