@@ -3,6 +3,9 @@ import "./ManagementOverview.css";
 import Payroll from "../../dashboard/Education/Payroll"; 
 import MidTermNotificationsWeb from "../../dashboard/Education/MidTermNotificationsWeb";
 import FinalExamSchedule from "../../dashboard/Education/FinalExamSchedule";
+import { useEffect } from "react";
+import axios from "axios";
+
 
 
 // adjust path if needed
@@ -30,13 +33,13 @@ const [selectedBus, setSelectedBus] = useState<any>(null);
 const [busSearch, setBusSearch] = useState("");
 const [showMidTerm, setShowMidTerm] = useState(false);
 const [showFinalExam, setShowFinalExam] = useState(false);
+const [buses, setBuses] = useState<any[]>([]);
+const [busAlerts, setBusAlerts] = useState<any[]>([]);
+
 
 
 
 const [showPayroll, setShowPayroll] = useState(false);
-type PayrollMode = "PAYSLIPS" | "SALARY_OVERVIEW";
-
-const [payrollMode, setPayrollMode] = useState<PayrollMode>("PAYSLIPS");
 
 
 
@@ -46,44 +49,11 @@ const [payrollMode, setPayrollMode] = useState<PayrollMode>("PAYSLIPS");
 
 
 
-const buses = [
-  {
-    id: 1,
-    number: "Bus 12",
-    route: "Madhapur → College",
-    driver: "Ramesh Kumar",
-    status: "MOVING",
-    speed: "35 km/h",
-    nextStop: "Inorbit Mall",
-    eta: "4 mins",
-    lat: 17.4416,
-    lng: 78.3910,
-  },
-  {
-    id: 2,
-    number: "Bus 7",
-    route: "Kukatpally → College",
-    driver: "Suresh",
-    status: "IDLE",
-    speed: "0 km/h",
-    nextStop: "Depot",
-    eta: "--",
-    lat: 17.4948,
-    lng: 78.3996,
-  },
-  {
-    id: 3,
-    number: "Bus 21",
-    route: "LB Nagar → College",
-    driver: "Mahesh",
-    status: "OFF-ROUTE",
-    speed: "--",
-    nextStop: "Unknown",
-    eta: "--",
-    lat: 17.3506,
-    lng: 78.5576,
-  },
-];
+
+
+
+
+
 
 
 
@@ -97,6 +67,52 @@ const buses = [
   const sendSMSAlert = () => alert("📩 SMS Alert Sent");
   ;
 
+useEffect(() => {
+  fetchBusTracking();
+  fetchBusAlerts();
+}, []);
+useEffect(() => {
+  console.log("Total bus alerts:", busAlerts.length);
+}, [busAlerts]);
+
+
+const fetchBusTracking = async () => {
+  try {
+    const res = await axios.get(
+      "https://swachify-india-be-1-mcrb.onrender.com/institution/management/bus-tracking-overview"
+    );
+
+    const formatted = res.data.map((bus: any) => ({
+      id: bus.bus_id,
+      number: bus.bus_name,
+      route: bus.location_description || "Route not available",
+      driver: bus.driver_name,
+      status: bus.status || "UNKNOWN",
+      speed: bus.current_speed ? `${bus.current_speed} km/h` : "--",
+      nextStop: bus.next_stop || "--",
+      eta: bus.eta_minutes ? `${bus.eta_minutes} mins` : "--",
+
+      // dummy coords until backend gives lat/lng
+      lat: 17.385044,
+      lng: 78.486671,
+    }));
+
+    setBuses(formatted);
+  } catch (err) {
+    console.error("Bus tracking error", err);
+  }
+};
+
+const fetchBusAlerts = async () => {
+  try {
+    const res = await axios.get(
+      "https://swachify-india-be-1-mcrb.onrender.com/institution/management/bus/alerts"
+    );
+    setBusAlerts(res.data);
+  } catch (err) {
+    console.error("Bus alerts error", err);
+  }
+};
 
 
   const saveStudent = () => {
@@ -122,14 +138,13 @@ const filteredBuses = buses.filter((bus) =>
 );
 if (showPayroll) {
   return (
-   <Payroll
-  onBack={() => setShowPayroll(false)}
-  mode={payrollMode}
-  initialView={payrollMode === "SALARY_OVERVIEW" ? "OVERVIEW" : "LIST"}
-/>
-
+    <Payroll
+      onBack={() => setShowPayroll(false)}
+      initialView="LIST"
+    />
   );
 }
+
 if (showMidTerm) {
   return (
     <MidTermNotificationsWeb
@@ -239,23 +254,16 @@ if (showFinalExam) {
               </div>
             </div>
 <div className="payroll-actions">
- <button
-  onClick={() => {
-    setPayrollMode("PAYSLIPS");
-    setShowPayroll(true);
-  }}
->
+<button onClick={() => setShowPayroll(true)}>
   📄 Payslips
 </button>
 
-<button
-  onClick={() => {
-    setPayrollMode("SALARY_OVERVIEW");
-    setShowPayroll(true);
-  }}
->
+<button onClick={() => setShowPayroll(true)}>
   💰 Salary Overview
 </button>
+
+
+
 
 
   {/* <button

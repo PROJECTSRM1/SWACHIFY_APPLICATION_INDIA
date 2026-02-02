@@ -1053,6 +1053,8 @@ const [needAmbulance, setNeedAmbulance] = useState<"Yes" | "No">("No");
 
 
 const [consultMode, setConsultMode] = useState<"online" | "offline">("online");
+const [openMyBookings, setOpenMyBookings] = useState(false);
+
 
 
 
@@ -1405,6 +1407,13 @@ const filteredHospitals = useMemo(() => {
     >
       🏥 Offline
     </button>
+    <button
+    className="my-bookings-btn"
+    onClick={() => setOpenMyBookings(true)}
+
+  >
+    📅 My Bookings
+  </button>
   </div>
 
   {/* 🚑 Ambulance Button (API Integrated) */}
@@ -3138,6 +3147,60 @@ const filteredHospitals = useMemo(() => {
     </div>
   </div>
 )}
+
+{openMyBookings && (
+  <div
+    className="bookings-overlay"
+    onClick={() => setOpenMyBookings(false)}
+  >
+    <div
+      className="bookings-popup"
+      onClick={(e) => e.stopPropagation()}
+    >
+      {/* Header */}
+      <div className="bookings-header">
+        <h2>My Bookings</h2>
+        <button
+          className="close-btn"
+          onClick={() => setOpenMyBookings(false)}
+        >
+          ✖
+        </button>
+      </div>
+
+      {/* Booking Card */}
+      <div className="booking-card">
+        <h3>Dr. Sarah Jenkins</h3>
+        <p className="dates">30 Jan 2026 • 05:30 PM</p>
+
+        <button className="join-call-btn">
+          Join Call
+        </button>
+      </div>
+
+      {/* Booking Card */}
+      <div className="booking-card">
+        <h3>Dr. Marcus Chen</h3>
+        <p className="dates">30 Jan 2026 • 04:00 PM</p>
+
+        <button className="join-call-btn">
+          Join Call
+        </button>
+      </div>
+      {/* Booking Card */}
+<div className="booking-card">
+  <h3>Dr. Aisha Khan</h3>
+  <p className="dates">31 Jan 2026 • 11:00 AM</p>
+
+  <button className="join-call-btn">
+    Join Call
+  </button>
+</div>
+
+    </div>
+  </div>
+)}
+
 
 
     </div >
