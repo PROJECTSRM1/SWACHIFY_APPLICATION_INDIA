@@ -13,8 +13,6 @@ import {
 import "./FooterSection.css";
 // import { Link } from "react-router-dom";
 
-
-
 type FooterSectionProps = {
   selectedKey?: string;
 };
@@ -38,54 +36,63 @@ const FooterSection: React.FC<FooterSectionProps> = ({ selectedKey }) => {
         </div>
 
         {/* Services */}
-      <div className="sw-lp-col">
-  <h5>Services</h5>
-  <ul className="sw-lp-links-list">
-    <li>
-      <a href="/cleaningservice" onClick={() => window.scrollTo(0, 0)}>
-        Cleaning & Home Services
-      </a>
-    </li>
+        <div className="sw-lp-col">
+          <h5>Services</h5>
+          <ul className="sw-lp-links-list">
+            <li>
+              <a href="/education" onClick={() => window.scrollTo(0, 0)}>
+                Education
+              </a>
+            </li>
+            <li>
+              <a href="/education" onClick={() => window.scrollTo(0, 0)}>
+                Health Care
+              </a>
+            </li>
+            <li>
+              <a href="/education" onClick={() => window.scrollTo(0, 0)}>
+                Just ride
+              </a>
+            </li>
+            <li>
+              <a href="/" onClick={() => window.scrollTo(0, 0)}>
+                Swachify Products
+              </a>
+            </li>
+            <li>
+              <a href="/cleaningservice" onClick={() => window.scrollTo(0, 0)}>
+                Cleaning & Home Services
+              </a>
+            </li>
 
-    <li>
-      <a href="/LandingPackers" onClick={() => window.scrollTo(0, 0)}>
-        Transport
-      </a>
-    </li>
+            <li>
+              <a href="/LandingPackers" onClick={() => window.scrollTo(0, 0)}>
+                Transport
+              </a>
+            </li>
 
-    <li>
-      <a href="/commercial-plots" onClick={() => window.scrollTo(0, 0)}>
-        Buy / Sale / Rentals
-      </a>
-    </li>
+            <li>
+              <a href="/commercial-plots" onClick={() => window.scrollTo(0, 0)}>
+                Buy / Sale / Rentals
+              </a>
+            </li>
 
-    <li>
-      <a href="/ConstructionMaterials" onClick={() => window.scrollTo(0, 0)}>
-        Raw Materials
-      </a>
-    </li>
+            <li>
+              <a
+                href="/ConstructionMaterials"
+                onClick={() => window.scrollTo(0, 0)}
+              >
+                Raw Materials
+              </a>
+            </li>
 
-    <li>
-      <a href="/" onClick={() => window.scrollTo(0, 0)}>
-        Education
-      </a>
-    </li>
-
-    <li>
-      <a href="/" onClick={() => window.scrollTo(0, 0)}>
-        Swachify Products
-      </a>
-    </li>
-
-    <li>
-      <a href="/Freelancer" onClick={() => window.scrollTo(0, 0)}>
-        Freelancer
-      </a>
-    </li>
-  </ul>
-</div>
-
-
+            <li>
+              <a href="/Freelancer" onClick={() => window.scrollTo(0, 0)}>
+                Freelancer
+              </a>
+            </li>
+          </ul>
+        </div>
 
         {/* Quick Links */}
         <div className="sw-lp-col">
@@ -103,7 +110,7 @@ const FooterSection: React.FC<FooterSectionProps> = ({ selectedKey }) => {
           <h5>Contact Info</h5>
 
           <div className="contact-row">
-            <Phone className="contact-icon " aria-hidden/>
+            <Phone className="contact-icon " aria-hidden />
             <span className="contact-text">+1 (555) 123-4567</span>
           </div>
 
@@ -114,7 +121,9 @@ const FooterSection: React.FC<FooterSectionProps> = ({ selectedKey }) => {
 
           <div className="contact-row">
             <EnvironmentOutlined className="contact-icon" />
-            <span className="contact-text">123 Service Street, City, State</span>
+            <span className="contact-text">
+              123 Service Street, City, State
+            </span>
           </div>
 
           <div className="contact-row">
@@ -123,10 +132,34 @@ const FooterSection: React.FC<FooterSectionProps> = ({ selectedKey }) => {
           </div>
 
           <div className="sw-lp-socials" aria-hidden>
-            <a className="sw-lp-social-btn" href="https://www.facebook.com" aria-label="facebook"><FacebookOutlined /></a>
-            <a className="sw-lp-social-btn" href="https://www.twitter.com" aria-label="twitter"><TwitterOutlined /></a>
-            <a className="sw-lp-social-btn" href="https://www.instagram.com" aria-label="instagram"><InstagramOutlined /></a>
-            <a className="sw-lp-social-btn" href="https://www.linkedin.com" aria-label="linkedin"><LinkedinOutlined /></a>
+            <a
+              className="sw-lp-social-btn"
+              href="https://www.facebook.com"
+              aria-label="facebook"
+            >
+              <FacebookOutlined />
+            </a>
+            <a
+              className="sw-lp-social-btn"
+              href="https://www.twitter.com"
+              aria-label="twitter"
+            >
+              <TwitterOutlined />
+            </a>
+            <a
+              className="sw-lp-social-btn"
+              href="https://www.instagram.com"
+              aria-label="instagram"
+            >
+              <InstagramOutlined />
+            </a>
+            <a
+              className="sw-lp-social-btn"
+              href="https://www.linkedin.com"
+              aria-label="linkedin"
+            >
+              <LinkedinOutlined />
+            </a>
           </div>
         </div>
       </div>
