@@ -55,17 +55,14 @@ const allowEmailChars = (value: string) =>
 
 const navItems = [
   { key: "home", label: <Link to="/landing">Home</Link> },
-  { key: "cleaning", label: <Link to="/cleaningservice">Cleaning & Home Services</Link> },
-  { key: "packers", label: <Link to="/LandingPackers">Transport</Link> },
-  { key: "commercial", label: <Link to="/commercial-plots">Buy/Sale/Rentals</Link> },
-  { key: "materials", label: <Link to="/ConstructionMaterials">Raw Materials</Link> },
   { key: "education", label: <Link to="/education">Education</Link> },
-  {
-    key: "Swachifyproducts",
-    label: <Link to="/swachify-products">Swachify Products</Link>,
-  },
-  // { key: "freelancer", label: <Link to="/Freelancer">Freelancer</Link> },
-   { key: "freelancer", label: <Link to="/Freelancer">Freelancer</Link> },
+  { key: "healthcare", label: <Link to="/healthcare">Health Care</Link> },
+  { key: "packers", label: <Link to="/LandingPackers">Just Ride</Link> },
+  { key: "Swachifyproducts", label: <Link to="/swachify-products">Swachify Products</Link>, },
+  { key: "cleaning", label: <Link to="/cleaningservice">Cleaning & Home Services</Link> },
+  { key: "commercial", label: <Link to="/commercial-plots">Buy/Sale/Rentals</Link> },
+  { key: "materials", label: <Link to="/ConstructionMaterials">Raw Materials</Link> }, 
+  { key: "freelancer", label: <Link to="/Freelancer">Freelancer</Link> },
 ];
 
 const serviceIdToRoute: Record<number, string> = {
@@ -329,21 +326,21 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
       setAuthLoading(false);
     }
   };
-  const handleSkipLogin = () => {
-    localStorage.setItem("isGuest", "true");
+  // const handleSkipLogin = () => {
+  //   localStorage.setItem("isGuest", "true");
 
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("user");
-
-
-
-    // ✅ Guest should see ONLY HealthCare
-    localStorage.setItem("service_ids", JSON.stringify([7]));
+  //   localStorage.removeItem("accessToken");
+  //   localStorage.removeItem("user");
 
 
-    closeAuthModal();
-    navigate("/app/dashboard");
-  };
+
+  //   // ✅ Guest should see ONLY HealthCare
+  //   localStorage.setItem("service_ids", JSON.stringify([7]));
+
+
+  //   closeAuthModal();
+  //   navigate("/app/dashboard");
+  // };
 
 
   // ==========================
@@ -802,7 +799,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
 
               {!hideSkipLogin && (
                 <Form.Item>
-                  <Button block type="default" onClick={handleSkipLogin}>
+                  <Button block type="default" >
                     Skip Login
                   </Button>
                 </Form.Item>

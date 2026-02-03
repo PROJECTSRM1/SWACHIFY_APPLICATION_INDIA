@@ -28,6 +28,7 @@ import HealthcarePartner from '../../pages/WebHospital/HealthcarePartnerDashboar
 import DriverDashboard from '../../pages/landing/JustRidePartnerDashboard';
 import { MOCK_NOTIFICATIONS } from '../../pages/landing/JRPData';
 import EmployeeDashboard from '../../pages/freelancer/EmployeeDashboard';
+import Healthcare from "../../pages/dashboard/HealthCare/HealthCare"
 
 export const NonSecureRoutes = () => {
   const navigate = useNavigate();
@@ -60,6 +61,9 @@ export const NonSecureRoutes = () => {
       <Route path="/" element={<Landing />} />
       <Route path="/landing" element={<Landing />} />
       <Route path="/partner/dashboard" element={<PartnerDashboard />} />
+            <Route path="/healthcare/dashboard" element={<Healthcare />} />
+
+
 
       {/* <Route path="/forgotpasswordlink" element={<ForgotPasswordLink />} /> */}
       {/* <Route path="/forgotpassword/:id" element={<ForgotPassword />} /> */}
@@ -71,6 +75,7 @@ export const NonSecureRoutes = () => {
       <Route path='/ConstructionMaterials' element={<ConstructionMaterials />} />
       {/* cleaning landing page */}
       <Route path="/cleaningservice" element={<LandingCleaningPage />} />
+      <Route path="/healthcare" element={<Healthcare />} />
 
       {/* rentals landing page */}
       <Route path="/rentals" element={<Landingrentals />} />

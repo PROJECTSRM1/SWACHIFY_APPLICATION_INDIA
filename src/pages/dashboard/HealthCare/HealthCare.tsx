@@ -4,6 +4,7 @@ import { message, Tooltip } from "antd";
 import { AppstoreOutlined } from "@ant-design/icons";
 import healthcareService from "../../../api/healthcare";
 import { PaymentsAPI } from "../../../api/customerAuth";
+import CommonHeader from "../../landing/Header";
 
 
 
@@ -1326,8 +1327,12 @@ const filteredHospitals = useMemo(() => {
 
 
 
-  return (
+return (
+  <>
+    <CommonHeader selectedKey="healthcare" />
+
     <div className="healthcare-wrapper">
+
       {/* Banner */}
       <div className="healthcare-banner">
         <div className="healthcare-banner-content">
@@ -3301,10 +3306,10 @@ const filteredHospitals = useMemo(() => {
 
 
 
-    </div >
+    </div>
+  </>
+);
 
-
-  );
 
 };
 
