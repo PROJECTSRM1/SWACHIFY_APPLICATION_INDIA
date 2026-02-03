@@ -4,6 +4,7 @@ import { message, Tooltip } from "antd";
 import { AppstoreOutlined } from "@ant-design/icons";
 import healthcareService from "../../../api/healthcare";
 import { PaymentsAPI } from "../../../api/customerAuth";
+import CommonHeader from "../../landing/Header";
 
 
 
@@ -333,270 +334,270 @@ export const HOSPITAL_DOCTORS: HospitalDoctor[] = [
     bio: "Handles complex adult medical conditions.",
   },
 
-// 🏥 Rainbow Children Hospital (hospital_id: 5) → 3 doctors
-{
-  id: 501,
-  hospitalId: 5,
-  name: "Dr. Meera Joshi",
-  speciality: "Pediatrician",
-  rating: 4.9,
-  experience: "11 Yrs",
-  patients: "5k+",
-  image: "https://randomuser.me/api/portraits/women/12.jpg",
-  bio: "Senior pediatrician specializing in child growth and immunity.",
-},
-{
-  id: 502,
-  hospitalId: 5,
-  name: "Dr. Kunal Shah",
-  speciality: "Pediatric Pulmonologist",
-  rating: 4.7,
-  experience: "8 Yrs",
-  patients: "2.2k+",
-  image: "https://randomuser.me/api/portraits/men/23.jpg",
-  bio: "Treats asthma, allergies, and respiratory infections in children.",
-},
-{
-  id: 503,
-  hospitalId: 5,
-  name: "Dr. Riya Malhotra",
-  speciality: "Child Nutritionist",
-  rating: 4.6,
-  experience: "6 Yrs",
-  patients: "1.6k+",
-  image: "https://randomuser.me/api/portraits/women/39.jpg",
-  bio: "Focuses on nutrition, obesity prevention, and diet planning.",
-},
+  // 🏥 Rainbow Children Hospital (hospital_id: 5) → 3 doctors
+  {
+    id: 501,
+    hospitalId: 5,
+    name: "Dr. Meera Joshi",
+    speciality: "Pediatrician",
+    rating: 4.9,
+    experience: "11 Yrs",
+    patients: "5k+",
+    image: "https://randomuser.me/api/portraits/women/12.jpg",
+    bio: "Senior pediatrician specializing in child growth and immunity.",
+  },
+  {
+    id: 502,
+    hospitalId: 5,
+    name: "Dr. Kunal Shah",
+    speciality: "Pediatric Pulmonologist",
+    rating: 4.7,
+    experience: "8 Yrs",
+    patients: "2.2k+",
+    image: "https://randomuser.me/api/portraits/men/23.jpg",
+    bio: "Treats asthma, allergies, and respiratory infections in children.",
+  },
+  {
+    id: 503,
+    hospitalId: 5,
+    name: "Dr. Riya Malhotra",
+    speciality: "Child Nutritionist",
+    rating: 4.6,
+    experience: "6 Yrs",
+    patients: "1.6k+",
+    image: "https://randomuser.me/api/portraits/women/39.jpg",
+    bio: "Focuses on nutrition, obesity prevention, and diet planning.",
+  },
 
-// 🏥 Max Healthcare (hospital_id: 6) → 5 doctors
-{
-  id: 601,
-  hospitalId: 6,
-  name: "Dr. Pradeep Nair",
-  speciality: "Emergency Medicine",
-  rating: 4.8,
-  experience: "14 Yrs",
-  patients: "6.5k+",
-  image: "https://randomuser.me/api/portraits/men/45.jpg",
-  bio: "Handles trauma, cardiac emergencies, and critical care.",
-},
-{
-  id: 602,
-  hospitalId: 6,
-  name: "Dr. Swati Kulkarni",
-  speciality: "Infectious Disease",
-  rating: 4.7,
-  experience: "9 Yrs",
-  patients: "3k+",
-  image: "https://randomuser.me/api/portraits/women/48.jpg",
-  bio: "Specialist in viral infections including COVID-19.",
-},
-{
-  id: 603,
-  hospitalId: 6,
-  name: "Dr. Rohit Bansal",
-  speciality: "General Physician",
-  rating: 4.6,
-  experience: "10 Yrs",
-  patients: "3.8k+",
-  image: "https://randomuser.me/api/portraits/men/56.jpg",
-  bio: "Treats lifestyle diseases and acute illnesses.",
-},
-{
-  id: 604,
-  hospitalId: 6,
-  name: "Dr. Aditi Sengupta",
-  speciality: "Pulmonologist",
-  rating: 4.8,
-  experience: "11 Yrs",
-  patients: "2.9k+",
-  image: "https://randomuser.me/api/portraits/women/61.jpg",
-  bio: "Expert in lung disorders and post-COVID recovery.",
-},
-{
-  id: 605,
-  hospitalId: 6,
-  name: "Dr. Nikhil Arora",
-  speciality: "Cardiologist",
-  rating: 4.9,
-  experience: "13 Yrs",
-  patients: "4.4k+",
-  image: "https://randomuser.me/api/portraits/men/67.jpg",
-  bio: "Specializes in heart disease and preventive cardiology.",
-},
+  // 🏥 Max Healthcare (hospital_id: 6) → 5 doctors
+  {
+    id: 601,
+    hospitalId: 6,
+    name: "Dr. Pradeep Nair",
+    speciality: "Emergency Medicine",
+    rating: 4.8,
+    experience: "14 Yrs",
+    patients: "6.5k+",
+    image: "https://randomuser.me/api/portraits/men/45.jpg",
+    bio: "Handles trauma, cardiac emergencies, and critical care.",
+  },
+  {
+    id: 602,
+    hospitalId: 6,
+    name: "Dr. Swati Kulkarni",
+    speciality: "Infectious Disease",
+    rating: 4.7,
+    experience: "9 Yrs",
+    patients: "3k+",
+    image: "https://randomuser.me/api/portraits/women/48.jpg",
+    bio: "Specialist in viral infections including COVID-19.",
+  },
+  {
+    id: 603,
+    hospitalId: 6,
+    name: "Dr. Rohit Bansal",
+    speciality: "General Physician",
+    rating: 4.6,
+    experience: "10 Yrs",
+    patients: "3.8k+",
+    image: "https://randomuser.me/api/portraits/men/56.jpg",
+    bio: "Treats lifestyle diseases and acute illnesses.",
+  },
+  {
+    id: 604,
+    hospitalId: 6,
+    name: "Dr. Aditi Sengupta",
+    speciality: "Pulmonologist",
+    rating: 4.8,
+    experience: "11 Yrs",
+    patients: "2.9k+",
+    image: "https://randomuser.me/api/portraits/women/61.jpg",
+    bio: "Expert in lung disorders and post-COVID recovery.",
+  },
+  {
+    id: 605,
+    hospitalId: 6,
+    name: "Dr. Nikhil Arora",
+    speciality: "Cardiologist",
+    rating: 4.9,
+    experience: "13 Yrs",
+    patients: "4.4k+",
+    image: "https://randomuser.me/api/portraits/men/67.jpg",
+    bio: "Specializes in heart disease and preventive cardiology.",
+  },
 
-// 🏥 Star Hospitals (hospital_id: 7) → 2 doctors
-{
-  id: 701,
-  hospitalId: 7,
-  name: "Dr. Vikas Chandra",
-  speciality: "General Physician",
-  rating: 4.5,
-  experience: "7 Yrs",
-  patients: "1.9k+",
-  image: "https://randomuser.me/api/portraits/men/72.jpg",
-  bio: "Primary care specialist for common infections.",
-},
-{
-  id: 702,
-  hospitalId: 7,
-  name: "Dr. Nandini Rao",
-  speciality: "Chest Physician",
-  rating: 4.6,
-  experience: "8 Yrs",
-  patients: "2.1k+",
-  image: "https://randomuser.me/api/portraits/women/70.jpg",
-  bio: "Treats cough, bronchitis, and respiratory conditions.",
-},
+  // 🏥 Star Hospitals (hospital_id: 7) → 2 doctors
+  {
+    id: 701,
+    hospitalId: 7,
+    name: "Dr. Vikas Chandra",
+    speciality: "General Physician",
+    rating: 4.5,
+    experience: "7 Yrs",
+    patients: "1.9k+",
+    image: "https://randomuser.me/api/portraits/men/72.jpg",
+    bio: "Primary care specialist for common infections.",
+  },
+  {
+    id: 702,
+    hospitalId: 7,
+    name: "Dr. Nandini Rao",
+    speciality: "Chest Physician",
+    rating: 4.6,
+    experience: "8 Yrs",
+    patients: "2.1k+",
+    image: "https://randomuser.me/api/portraits/women/70.jpg",
+    bio: "Treats cough, bronchitis, and respiratory conditions.",
+  },
 
-// 🏥 KIMS Hospital (hospital_id: 8) → 4 doctors
-{
-  id: 801,
-  hospitalId: 8,
-  name: "Dr. Mahesh Patil",
-  speciality: "Internal Medicine",
-  rating: 4.7,
-  experience: "12 Yrs",
-  patients: "3.5k+",
-  image: "https://randomuser.me/api/portraits/men/81.jpg",
-  bio: "Manages chronic and acute adult medical conditions.",
-},
-{
-  id: 802,
-  hospitalId: 8,
-  name: "Dr. Farah Khan",
-  speciality: "Emergency Physician",
-  rating: 4.8,
-  experience: "10 Yrs",
-  patients: "4k+",
-  image: "https://randomuser.me/api/portraits/women/82.jpg",
-  bio: "Expert in emergency and trauma care.",
-},
-{
-  id: 803,
-  hospitalId: 8,
-  name: "Dr. Sandeep Reddy",
-  speciality: "Gastroenterologist",
-  rating: 4.6,
-  experience: "9 Yrs",
-  patients: "2.7k+",
-  image: "https://randomuser.me/api/portraits/men/85.jpg",
-  bio: "Treats digestive disorders and liver diseases.",
-},
-{
-  id: 804,
-  hospitalId: 8,
-  name: "Dr. Anu Thomas",
-  speciality: "General Physician",
-  rating: 4.5,
-  experience: "6 Yrs",
-  patients: "1.4k+",
-  image: "https://randomuser.me/api/portraits/women/88.jpg",
-  bio: "Provides holistic primary healthcare.",
-},
+  // 🏥 KIMS Hospital (hospital_id: 8) → 4 doctors
+  {
+    id: 801,
+    hospitalId: 8,
+    name: "Dr. Mahesh Patil",
+    speciality: "Internal Medicine",
+    rating: 4.7,
+    experience: "12 Yrs",
+    patients: "3.5k+",
+    image: "https://randomuser.me/api/portraits/men/81.jpg",
+    bio: "Manages chronic and acute adult medical conditions.",
+  },
+  {
+    id: 802,
+    hospitalId: 8,
+    name: "Dr. Farah Khan",
+    speciality: "Emergency Physician",
+    rating: 4.8,
+    experience: "10 Yrs",
+    patients: "4k+",
+    image: "https://randomuser.me/api/portraits/women/82.jpg",
+    bio: "Expert in emergency and trauma care.",
+  },
+  {
+    id: 803,
+    hospitalId: 8,
+    name: "Dr. Sandeep Reddy",
+    speciality: "Gastroenterologist",
+    rating: 4.6,
+    experience: "9 Yrs",
+    patients: "2.7k+",
+    image: "https://randomuser.me/api/portraits/men/85.jpg",
+    bio: "Treats digestive disorders and liver diseases.",
+  },
+  {
+    id: 804,
+    hospitalId: 8,
+    name: "Dr. Anu Thomas",
+    speciality: "General Physician",
+    rating: 4.5,
+    experience: "6 Yrs",
+    patients: "1.4k+",
+    image: "https://randomuser.me/api/portraits/women/88.jpg",
+    bio: "Provides holistic primary healthcare.",
+  },
 
-// 🏥 Yashoda Hospitals (hospital_id: 9) → 3 doctors
-{
-  id: 901,
-  hospitalId: 9,
-  name: "Dr. Srinivas Rao",
-  speciality: "ENT Specialist",
-  rating: 4.7,
-  experience: "11 Yrs",
-  patients: "3.2k+",
-  image: "https://randomuser.me/api/portraits/men/90.jpg",
-  bio: "Expert in sinus, ear, and throat disorders.",
-},
-{
-  id: 902,
-  hospitalId: 9,
-  name: "Dr. Pallavi Deshmukh",
-  speciality: "General Physician",
-  rating: 4.6,
-  experience: "8 Yrs",
-  patients: "2.5k+",
-  image: "https://randomuser.me/api/portraits/women/91.jpg",
-  bio: "Treats fever, infections, and lifestyle disorders.",
-},
-{
-  id: 903,
-  hospitalId: 9,
-  name: "Dr. Ashok Menon",
-  speciality: "Pulmonologist",
-  rating: 4.8,
-  experience: "13 Yrs",
-  patients: "4k+",
-  image: "https://randomuser.me/api/portraits/men/92.jpg",
-  bio: "Specialist in respiratory and sleep disorders.",
-},
+  // 🏥 Yashoda Hospitals (hospital_id: 9) → 3 doctors
+  {
+    id: 901,
+    hospitalId: 9,
+    name: "Dr. Srinivas Rao",
+    speciality: "ENT Specialist",
+    rating: 4.7,
+    experience: "11 Yrs",
+    patients: "3.2k+",
+    image: "https://randomuser.me/api/portraits/men/90.jpg",
+    bio: "Expert in sinus, ear, and throat disorders.",
+  },
+  {
+    id: 902,
+    hospitalId: 9,
+    name: "Dr. Pallavi Deshmukh",
+    speciality: "General Physician",
+    rating: 4.6,
+    experience: "8 Yrs",
+    patients: "2.5k+",
+    image: "https://randomuser.me/api/portraits/women/91.jpg",
+    bio: "Treats fever, infections, and lifestyle disorders.",
+  },
+  {
+    id: 903,
+    hospitalId: 9,
+    name: "Dr. Ashok Menon",
+    speciality: "Pulmonologist",
+    rating: 4.8,
+    experience: "13 Yrs",
+    patients: "4k+",
+    image: "https://randomuser.me/api/portraits/men/92.jpg",
+    bio: "Specialist in respiratory and sleep disorders.",
+  },
 
-// 🏥 Global Hospitals (hospital_id: 10) → 6 doctors
-{
-  id: 1001,
-  hospitalId: 10,
-  name: "Dr. Rajiv Khanna",
-  speciality: "Critical Care",
-  rating: 4.9,
-  experience: "16 Yrs",
-  patients: "7k+",
-  image: "https://randomuser.me/api/portraits/men/95.jpg",
-  bio: "Handles ICU and life-threatening conditions.",
-},
-{
-  id: 1002,
-  hospitalId: 10,
-  name: "Dr. Shalini Gupta",
-  speciality: "Infectious Disease",
-  rating: 4.8,
-  experience: "12 Yrs",
-  patients: "3.9k+",
-  image: "https://randomuser.me/api/portraits/women/96.jpg",
-  bio: "Expert in complex infections and sepsis.",
-},
-{
-  id: 1003,
-  hospitalId: 10,
-  name: "Dr. Ankit Verma",
-  speciality: "Emergency Medicine",
-  rating: 4.7,
-  experience: "9 Yrs",
-  patients: "3.1k+",
-  image: "https://randomuser.me/api/portraits/men/97.jpg",
-  bio: "Emergency response and trauma specialist.",
-},
-{
-  id: 1004,
-  hospitalId: 10,
-  name: "Dr. Leena Roy",
-  speciality: "Internal Medicine",
-  rating: 4.6,
-  experience: "10 Yrs",
-  patients: "2.8k+",
-  image: "https://randomuser.me/api/portraits/women/98.jpg",
-  bio: "Treats chronic illnesses and complex diagnoses.",
-},
-{
-  id: 1005,
-  hospitalId: 10,
-  name: "Dr. Harish Iyer",
-  speciality: "Cardiologist",
-  rating: 4.9,
-  experience: "14 Yrs",
-  patients: "4.6k+",
-  image: "https://randomuser.me/api/portraits/men/99.jpg",
-  bio: "Advanced cardiac care and interventions.",
-},
-{
-  id: 1006,
-  hospitalId: 10,
-  name: "Dr. Neelam Sethi",
-  speciality: "Nephrologist",
-  rating: 4.7,
-  experience: "11 Yrs",
-  patients: "2.4k+",
-  image: "https://randomuser.me/api/portraits/women/99.jpg",
-  bio: "Specialist in kidney disorders and dialysis.",
-},
+  // 🏥 Global Hospitals (hospital_id: 10) → 6 doctors
+  {
+    id: 1001,
+    hospitalId: 10,
+    name: "Dr. Rajiv Khanna",
+    speciality: "Critical Care",
+    rating: 4.9,
+    experience: "16 Yrs",
+    patients: "7k+",
+    image: "https://randomuser.me/api/portraits/men/95.jpg",
+    bio: "Handles ICU and life-threatening conditions.",
+  },
+  {
+    id: 1002,
+    hospitalId: 10,
+    name: "Dr. Shalini Gupta",
+    speciality: "Infectious Disease",
+    rating: 4.8,
+    experience: "12 Yrs",
+    patients: "3.9k+",
+    image: "https://randomuser.me/api/portraits/women/96.jpg",
+    bio: "Expert in complex infections and sepsis.",
+  },
+  {
+    id: 1003,
+    hospitalId: 10,
+    name: "Dr. Ankit Verma",
+    speciality: "Emergency Medicine",
+    rating: 4.7,
+    experience: "9 Yrs",
+    patients: "3.1k+",
+    image: "https://randomuser.me/api/portraits/men/97.jpg",
+    bio: "Emergency response and trauma specialist.",
+  },
+  {
+    id: 1004,
+    hospitalId: 10,
+    name: "Dr. Leena Roy",
+    speciality: "Internal Medicine",
+    rating: 4.6,
+    experience: "10 Yrs",
+    patients: "2.8k+",
+    image: "https://randomuser.me/api/portraits/women/98.jpg",
+    bio: "Treats chronic illnesses and complex diagnoses.",
+  },
+  {
+    id: 1005,
+    hospitalId: 10,
+    name: "Dr. Harish Iyer",
+    speciality: "Cardiologist",
+    rating: 4.9,
+    experience: "14 Yrs",
+    patients: "4.6k+",
+    image: "https://randomuser.me/api/portraits/men/99.jpg",
+    bio: "Advanced cardiac care and interventions.",
+  },
+  {
+    id: 1006,
+    hospitalId: 10,
+    name: "Dr. Neelam Sethi",
+    speciality: "Nephrologist",
+    rating: 4.7,
+    experience: "11 Yrs",
+    patients: "2.4k+",
+    image: "https://randomuser.me/api/portraits/women/99.jpg",
+    bio: "Specialist in kidney disorders and dialysis.",
+  },
 ];
 
 
@@ -611,6 +612,7 @@ type Doctor = {
   speciality: string;
   category: string;          // NEW
   conditions: string[];      // NEW
+  experience?: number;
   rating: number;
   availability: string;
   price: string;
@@ -842,67 +844,102 @@ const labs = [
 
 
 // new functions related to apis
-const getSpecialityName = (id: number) => {
-  switch (id) {
-    case 1: return "CARDIOLOGIST";
-    case 2: return "DERMATOLOGIST";
-    case 3: return "PSYCHIATRIST";
-    case 4: return "OPHTHALMOLOGIST";
-    case 5: return "ORTHOPEDIC";
-    default: return "GENERAL";
-  }
-};
+// const getSpecialityName = (id: number) => {
+//   switch (id) {
+//     case 1: return "CARDIOLOGIST";
+//     case 2: return "DERMATOLOGIST";
+//     case 3: return "PSYCHIATRIST";
+//     case 4: return "OPHTHALMOLOGIST";
+//     case 5: return "ORTHOPEDIC";
+//     default: return "GENERAL";
+//   }
+// };
 
-const getCategoryBySpecialization = (id: number) => {
-  switch (id) {
-    case 1: return "Heart";
-    case 2: return "Skin";
-    case 3: return "Mental";
-    case 4: return "Eyes";
-    case 5: return "Bones";
-    default: return "All";
-  }
-};
+// const getCategoryBySpecialization = (id: number) => {
+//   switch (id) {
+//     case 1: return "Heart";
+//     case 2: return "Skin";
+//     case 3: return "Mental";
+//     case 4: return "Eyes";
+//     case 5: return "Bones";
+//     default: return "All";
+//   }
+// };
 
 
 // API availability
-const formatAvailabilityTime = (from: string, to: string) => {
-  const f = new Date(from).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-  const t = new Date(to).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-  return `${f} - ${t}`;
-};
+// const formatAvailabilityTime = (from: string, to: string) => {
+//   const f = new Date(from).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+//   const t = new Date(to).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+//   return `${f} - ${t}`;
+// };
 
+function formatAvailabilityTime(from: string, to: string) {
+  if (!from || !to) return "Available Today";
+
+
+  return `${formatTime(from)} - ${formatTime(to)}`;
+}
+
+
+function formatTime(timeStr: string) {
+  const [h, m] = timeStr.split(":").map(Number);
+
+
+  const hour = h % 12 || 12;
+  const ampm = h >= 12 ? "PM" : "AM";
+
+
+  return `${hour}:${m.toString().padStart(2, "0")} ${ampm}`;
+}
+
+
+
+// const getDoctorImage = (id: number) => {
+//   switch (id) {
+//     case 1:
+//       return "https://images.unsplash.com/photo-1582750433449-648ed127bb54?auto=format&fit=crop&w=800&q=80";
+//     case 2:
+//       return "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=800&q=80";
+//     case 3:
+//       return "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=800&q=80";
+//     case 4:
+//       return "https://images.unsplash.com/photo-1579154203451-0d2d83d2f4a2?auto=format&fit=crop&w=800&q=80";
+//     case 5:
+//       return "https://images.unsplash.com/photo-1550831107-1553da8c8464?auto=format&fit=crop&w=800&q=80";
+//     default:
+//       return "https://images.unsplash.com/photo-1550831107-1553da8c8464?auto=format&fit=crop&w=800&q=80";
+//   }
+// };
+
+
+const defaultImages = [
+
+  "https://images.unsplash.com/photo-1582750433449-648ed127bb54?auto=format&fit=crop&w=800&q=80",
+  "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=800&q=80",
+  "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=800&q=80",
+  "https://images.unsplash.com/photo-1579154203451-0d2d83d2f4a2?auto=format&fit=crop&w=800&q=80",
+  "https://images.unsplash.com/photo-1550831107-1553da8c8464?auto=format&fit=crop&w=800&q=80",
+];
 
 
 const getDoctorImage = (id: number) => {
-  switch (id) {
-    case 1:
-      return "https://images.unsplash.com/photo-1582750433449-648ed127bb54?auto=format&fit=crop&w=800&q=80";
-    case 2:
-      return "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=800&q=80";
-    case 3:
-      return "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=800&q=80";
-    case 4:
-      return "https://images.unsplash.com/photo-1579154203451-0d2d83d2f4a2?auto=format&fit=crop&w=800&q=80";
-    case 5:
-      return "https://images.unsplash.com/photo-1550831107-1553da8c8464?auto=format&fit=crop&w=800&q=80";
-    default:
-      return "https://images.unsplash.com/photo-1550831107-1553da8c8464?auto=format&fit=crop&w=800&q=80";
-  }
+  const numericId = Number(id);
+  return defaultImages[(numericId - 1) % defaultImages.length]; // cycles through images for any ID
 };
 
 
 
 
-const doctorNameMap: Record<number, string> = {
-  45: "Dr. Rahul Verma",
-  1: "Dr. Sarah Jenkins",
-  319: "Dr. Neha Sharma",
-  13: "Dr. Arvind Mehta",
-  133: "Dr. Priya Reddy",
-  101: "Dr. Marcus Chen",
-  421: "Dr. Aisha Khan",
-};
+// const doctorNameMap: Record<number, string> = {
+//   45: "Dr. Rahul Verma",
+//   1: "Dr. Sarah Jenkins",
+//   319: "Dr. Neha Sharma",
+//   13: "Dr. Arvind Mehta",
+//   133: "Dr. Priya Reddy",
+//   101: "Dr. Marcus Chen",
+//   421: "Dr. Aisha Khan",
+// };
 
 
 // Assistants
@@ -946,42 +983,42 @@ const TIME_SLOTS = [
 const HealthCare: React.FC = () => {
   const [searchText, setSearchText] = useState("");
   const [activeCategory, setActiveCategory] = useState<string>("All");
-// ✅ Appointment booking screen (Image 2)
-const [openAppointmentScreen, setOpenAppointmentScreen] = useState(false);
-const [appointmentDoctor, setAppointmentDoctor] = useState<Doctor | null>(null);
-// 📅 Appointment date handling
-const [currentMonth, setCurrentMonth] = useState(new Date());
-const [selectedDate, setSelectedDate] = useState<Date>(new Date());
-const [showMonthPicker, setShowMonthPicker] = useState(false);
-const [selectedTime, setSelectedTime] = useState<string | null>(null);
-const [showConfirmPopup, setShowConfirmPopup] = useState(false);
-const [payLoading, setPayLoading] = useState(false);
-const [openPaymentSuccess, setOpenPaymentSuccess] = useState(false);
-const [paymentCompleted, _setPaymentCompleted] = useState(false);
+  // ✅ Appointment booking screen (Image 2)
+  const [openAppointmentScreen, setOpenAppointmentScreen] = useState(false);
+  const [appointmentDoctor, setAppointmentDoctor] = useState<Doctor | null>(null);
+  // 📅 Appointment date handling
+  const [currentMonth, setCurrentMonth] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const [showMonthPicker, setShowMonthPicker] = useState(false);
+  const [selectedTime, setSelectedTime] = useState<string | null>(null);
+  const [showConfirmPopup, setShowConfirmPopup] = useState(false);
+  const [payLoading, setPayLoading] = useState(false);
+  const [openPaymentSuccess, setOpenPaymentSuccess] = useState(false);
+  const [paymentCompleted, _setPaymentCompleted] = useState(false);
 
 
 
 
-const getDaysInMonth = (date: Date) => {
-  return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
-};
+  const getDaysInMonth = (date: Date) => {
+    return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+  };
 
-const generateDates = () => {
-  const days = [];
-  const totalDays = getDaysInMonth(currentMonth);
+  const generateDates = () => {
+    const days = [];
+    const totalDays = getDaysInMonth(currentMonth);
 
-  for (let i = 1; i <= totalDays; i++) {
-    days.push(
-      new Date(currentMonth.getFullYear(), currentMonth.getMonth(), i)
-    );
-  }
-  return days;
-};
+    for (let i = 1; i <= totalDays; i++) {
+      days.push(
+        new Date(currentMonth.getFullYear(), currentMonth.getMonth(), i)
+      );
+    }
+    return days;
+  };
 
-const months = [
-  "January","February","March","April","May","June",
-  "July","August","September","October","November","December",
-];
+  const months = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December",
+  ];
 
   const [openConsultation, setOpenConsultation] = useState<boolean>(false);
 
@@ -990,54 +1027,54 @@ const months = [
   const [ambulanceList, setAmbulanceList] = useState<AmbulanceHospital[]>([]);
 
   useEffect(() => {
-  setAmbulanceList(STATIC_HOSPITALS);
-}, []);
+    setAmbulanceList(STATIC_HOSPITALS);
+  }, []);
 
 
 
 
-// hospital booking
-const [selectedHospital, setSelectedHospital] =
-  useState<AmbulanceHospital | null>(null);
+  // hospital booking
+  const [selectedHospital, setSelectedHospital] =
+    useState<AmbulanceHospital | null>(null);
 
-const [openHospitalBooking, setOpenHospitalBooking] = useState(false);
-const [openHospitalSuccess, setOpenHospitalSuccess] = useState(false);
-
-
-// hospital → doctors flow
-const [openHospitalDoctors, setOpenHospitalDoctors] = useState(false);
-const [hospitalDoctors, setHospitalDoctors] = useState<HospitalDoctor[]>([]);
-const [selectedDoctor, setSelectedDoctor] = useState<HospitalDoctor | null>(null);
-
-// ✅ RESET ASSISTANT WHEN DOCTOR CHANGES
-useEffect(() => {
-  if (selectedDoctor) {
-    setPatientAssist("");
-    setSelectedAssistant(null);
-    setShowAssistantPopup(false);
-  }
-}, [selectedDoctor]);
+  const [openHospitalBooking, setOpenHospitalBooking] = useState(false);
+  const [openHospitalSuccess, setOpenHospitalSuccess] = useState(false);
 
 
+  // hospital → doctors flow
+  const [openHospitalDoctors, setOpenHospitalDoctors] = useState(false);
+  const [hospitalDoctors, setHospitalDoctors] = useState<HospitalDoctor[]>([]);
+  const [selectedDoctor, setSelectedDoctor] = useState<HospitalDoctor | null>(null);
 
-const [showAssistantPopup, setShowAssistantPopup] = useState(false);
-// const [selectedAssistant, setSelectedAssistant] = useState(null);
-
-type Assistant = {
-  id: number;
-  name: string;
-  role: string;
-  rating: number;
-  image: string;
-};
-
-const [selectedAssistant, setSelectedAssistant] = useState<Assistant | null>(null);
+  // ✅ RESET ASSISTANT WHEN DOCTOR CHANGES
+  useEffect(() => {
+    if (selectedDoctor) {
+      setPatientAssist("");
+      setSelectedAssistant(null);
+      setShowAssistantPopup(false);
+    }
+  }, [selectedDoctor]);
 
 
-// booking form
-const [bookingDate, setBookingDate] = useState("Friday, 30 Jan 2026");
-const [bookingTime, setBookingTime] = useState("11:48 AM");
-const [needAmbulance, setNeedAmbulance] = useState<"Yes" | "No">("No");
+
+  const [showAssistantPopup, setShowAssistantPopup] = useState(false);
+  // const [selectedAssistant, setSelectedAssistant] = useState(null);
+
+  type Assistant = {
+    id: number;
+    name: string;
+    role: string;
+    rating: number;
+    image: string;
+  };
+
+  const [selectedAssistant, setSelectedAssistant] = useState<Assistant | null>(null);
+
+
+  // booking form
+  const [bookingDate, setBookingDate] = useState("Friday, 30 Jan 2026");
+  const [bookingTime, setBookingTime] = useState("11:48 AM");
+  const [needAmbulance, setNeedAmbulance] = useState<"Yes" | "No">("No");
 
 
 
@@ -1057,8 +1094,8 @@ const [needAmbulance, setNeedAmbulance] = useState<"Yes" | "No">("No");
   const [showTrending, setShowTrending] = useState(false);
 
 
-const [consultMode, setConsultMode] = useState<"online" | "offline">("online");
-const [openMyBookings, setOpenMyBookings] = useState(false);
+  const [consultMode, setConsultMode] = useState<"online" | "offline">("online");
+  const [openMyBookings, setOpenMyBookings] = useState(false);
 
 
 
@@ -1074,38 +1111,78 @@ const [openMyBookings, setOpenMyBookings] = useState(false);
 
 
 
+  // useEffect(() => {
+  //   const fetchDoctors = async () => {
+  //     try {
+  //       setLoadingDoctors(true); // ✅ ADD
+
+  //       const data = await healthcareService.getAvailableDoctors();
+
+  //       const mappedDoctors: Doctor[] = data
+  //         .filter((item) => item.is_available)
+  //         .map((item) => ({
+  //           id: item.id,
+  //           name: doctorNameMap[item.user_id] ?? "Dr. Unknown",
+  //           speciality: getSpecialityName(item.specialization_id),
+  //           category: getCategoryBySpecialization(item.specialization_id),
+  //           conditions: [getSpecialityName(item.specialization_id)],
+  //           rating: Number(item.rating) || 4.5,
+  //           availability:
+  //             item.available_from && item.available_to
+  //               ? formatAvailabilityTime(item.available_from, item.available_to)
+  //               : "Available Today",
+  //           price: `₹${item.fees_per_hour ?? 500}/hr`,
+  //           image: getDoctorImage(item.specialization_id),
+  //           slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
+  //         }));
+
+  //       setDoctors(mappedDoctors);
+  //     } catch (error) {
+  //       console.error("Doctor fetch failed", error);
+  //     } finally {
+  //       setLoadingDoctors(false); // ✅ ADD
+  //     }
+  //   };
+
+  //   fetchDoctors();
+  // }, []);
+
+
   useEffect(() => {
     const fetchDoctors = async () => {
       try {
-        setLoadingDoctors(true); // ✅ ADD
+        setLoadingDoctors(true);
+
 
         const data = await healthcareService.getAvailableDoctors();
 
-        const mappedDoctors: Doctor[] = data
-          .filter((item) => item.is_available)
-          .map((item) => ({
-            id: item.id,
-            name: doctorNameMap[item.user_id] ?? "Dr. Unknown",
-            speciality: getSpecialityName(item.specialization_id),
-            category: getCategoryBySpecialization(item.specialization_id),
-            conditions: [getSpecialityName(item.specialization_id)],
-            rating: Number(item.rating) || 4.5,
-            availability:
-              item.available_from && item.available_to
-                ? formatAvailabilityTime(item.available_from, item.available_to)
-                : "Available Today",
-            price: `₹${item.fees_per_hour ?? 500}/hr`,
-            image: getDoctorImage(item.specialization_id),
-            slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
-          }));
+
+        const mappedDoctors: Doctor[] = data.map((item: any) => ({
+          id: item.doctor_id,
+          name: item.doctor_name ?? "Dr. Unknown",
+          speciality: item.specialization_name,
+          category: item.specialization_name, // or map to category if needed
+          conditions: [item.specialization_name],
+          rating: Number(item.rating) || 4.5,
+          experience: item.experience_years,
+          availability:
+            item.available_from && item.available_to
+              ? formatAvailabilityTime(item.available_from, item.available_to)
+              : "Available Today",
+          price: `₹${item.fees_per_hour}/hr`,
+          image: getDoctorImage(item.doctor_id), // ✅ use doctor_id now
+          slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
+        }));
+
 
         setDoctors(mappedDoctors);
       } catch (error) {
         console.error("Doctor fetch failed", error);
       } finally {
-        setLoadingDoctors(false); // ✅ ADD
+        setLoadingDoctors(false);
       }
     };
+
 
     fetchDoctors();
   }, []);
@@ -1220,15 +1297,15 @@ const [openMyBookings, setOpenMyBookings] = useState(false);
   }, [searchText, activeCategory, doctors]);
 
 
-const filteredHospitals = useMemo(() => {
-  if (!searchText.trim()) return ambulanceList;
+  const filteredHospitals = useMemo(() => {
+    if (!searchText.trim()) return ambulanceList;
 
-  const q = searchText.toLowerCase().trim();
+    const q = searchText.toLowerCase().trim();
 
-  return ambulanceList.filter((h) =>
-    h.conditions.some((c) => c.toLowerCase().includes(q))
-  );
-}, [searchText, ambulanceList]);
+    return ambulanceList.filter((h) =>
+      h.conditions.some((c) => c.toLowerCase().includes(q))
+    );
+  }, [searchText, ambulanceList]);
 
 
   useEffect(() => {
@@ -1264,61 +1341,61 @@ const filteredHospitals = useMemo(() => {
 
 
   const handlePayNow = async () => {
-  try {
-    setPayLoading(true);
+    try {
+      setPayLoading(true);
 
-    // Temporary ID for now (since no booking API exists yet)
-    const tempHomeServiceId = 25; 
+      // Temporary ID for now (since no booking API exists yet)
+      const tempHomeServiceId = 25;
 
-    const amount = 5000; // ₹50 => 5000 paise
+      const amount = 5000; // ₹50 => 5000 paise
 
-    // 1️⃣ Create Razorpay order
-    const order = await PaymentsAPI.createOrder(tempHomeServiceId, amount);
+      // 1️⃣ Create Razorpay order
+      const order = await PaymentsAPI.createOrder(tempHomeServiceId, amount);
 
-    const options = {
-      key: import.meta.env.VITE_RAZORPAY_KEY_ID,
-      amount: order.amount,
-      currency: "INR",
-      name: "Swachify Healthcare",
-      description: "Online Video Consultation",
-      order_id: order.id,
+      const options = {
+        key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+        amount: order.amount,
+        currency: "INR",
+        name: "Swachify Healthcare",
+        description: "Online Video Consultation",
+        order_id: order.id,
 
-    
 
-      handler: async function (response: any) {
-        try {
-          // 2️⃣ Verify payment with backend
-          await PaymentsAPI.verifyPayment(
-            order.id,
-            response.razorpay_payment_id,
-            response.razorpay_signature,
-            tempHomeServiceId
-          );
 
-          message.success("Payment Successful 🎉");
-       
-          setOpenPaymentSuccess(true);   
-          setOpenPaymentSuccess(true);
-        } catch (err) {
-          message.error("Payment verification failed");
-        }
-      },
+        handler: async function (response: any) {
+          try {
+            // 2️⃣ Verify payment with backend
+            await PaymentsAPI.verifyPayment(
+              order.id,
+              response.razorpay_payment_id,
+              response.razorpay_signature,
+              tempHomeServiceId
+            );
 
-      theme: {
-        color: "#065f46",
-      },
-    };
-        setShowConfirmPopup(false);
+            message.success("Payment Successful 🎉");
 
-    //@ts-ignore
-    const rzp = new window.Razorpay(options);
-    rzp.open();
-  } catch (err) {
-    message.error("Payment failed!");
-  } finally {
-    setPayLoading(false);
-  }
-};
+            setOpenPaymentSuccess(true);
+            setOpenPaymentSuccess(true);
+          } catch (err) {
+            message.error("Payment verification failed");
+          }
+        },
+
+        theme: {
+          color: "#065f46",
+        },
+      };
+      setShowConfirmPopup(false);
+
+      //@ts-ignore
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+    } catch (err) {
+      message.error("Payment failed!");
+    } finally {
+      setPayLoading(false);
+    }
+  };
 
 
 
@@ -1327,308 +1404,317 @@ const filteredHospitals = useMemo(() => {
 
 
   return (
-    <div className="healthcare-wrapper">
-      {/* Banner */}
-      <div className="healthcare-banner">
-        <div className="healthcare-banner-content">
-          <h2>Feeling unwell?</h2>
-          <p>Describe your symptoms for a quick recommendation.</p>
+    <>
+      <CommonHeader selectedKey="healthcare" />
 
-          <button
-            type="button"
-            className="healthcare-btn"
-            onClick={() => setOpenConsultation(true)}
-          >
-            Submit your Health Condition
-          </button>
-        </div>
-        <div className="healthcare-banner-icon">
-          {/* Profile Icon with Tooltip */}
-          <Tooltip title="Customize your Available Time" placement="bottom">
+      <div className="healthcare-wrapper">
+
+        {/* Banner */}
+        <div className="healthcare-banner">
+          <div className="healthcare-banner-content">
+            <h2>Feeling unwell?</h2>
+            <p>Describe your symptoms for a quick recommendation.</p>
+
             <button
               type="button"
-              className="banner-profile-btn"
-              onClick={() => setOpenDoctorProfile(true)}
+              className="healthcare-btn"
+              onClick={() => setOpenConsultation(true)}
             >
-              👤
+              Submit your Health Condition
             </button>
-          </Tooltip>
-        </div>
-
-
-
-      </div>
-
-
-      {/* Search */}
-<div className="healthcare-search">
-  {/* 🔍 Search Box */}
-  <div className="search-box-wrap">
-    <input
-      type="text"
-      className="search-input"
-      placeholder={placeholders[placeholderIndex]}
-      value={searchText}
-      onChange={(e) => {
-        const value = e.target.value;
-        if (/^[a-zA-Z\s]*$/.test(value)) {
-          setSearchText(value);
-        }
-      }}
-      onFocus={() => setShowTrending(true)}
-      onBlur={() => setTimeout(() => setShowTrending(false), 150)}
-    />
-
-    {showTrending && (
-      <div className="trending-dropdown">
-        <p className="trending-title">Searches</p>
-
-        {trendingSearches.map((item) => (
-          <div
-            key={item}
-            className="trending-item"
-            onMouseDown={() => {
-              setSearchText(item);
-              setShowTrending(false);
-            }}
-          >
-            <span className="trending-icon">📈</span>
-            <span className="trending-text">{item}</span>
           </div>
-        ))}
-      </div>
-    )}
-  </div>
-
-  {/* 🔁 MODE SELECT */}
-  <div className="mode-toggle">
-    <button
-      className={consultMode === "online" ? "active" : ""}
-      onClick={() => setConsultMode("online")}
-    >
-      🌐 Online
-    </button>
-
-    <button
-      className={consultMode === "offline" ? "active" : ""}
-      onClick={() => setConsultMode("offline")}
-    >
-      🏥 Offline
-    </button>
-    <button
-    className="my-bookings-btn"
-    onClick={() => setOpenMyBookings(true)}
-
-  >
-    📅 My Bookings
-  </button>
-  </div>
-
-  {/* 🚑 Ambulance Button (API Integrated) */}
-  <button
-    type="button"
-    className="emergency-btn search-ambulance-btn"
-    onClick={() => {
-      setOpenAmbulanceScreen(true);
-    }}
-  >
-    Book Ambulance Now →
-  </button>
-</div>
-
-
-
-
-
-
-
-
-
-      {/* Categories */}
-      <div className="healthcare-cards">
-        {/* SEE ALL CARD */}
-        {/* SEE ALL CARD */}
-        <div
-          className={`healthcare-card ${activeCategory === "All" ? "active" : ""}`}
-          onClick={() => {
-            setActiveCategory("All");
-            setSearchText(""); // ✅ clear search so all doctors show
-          }}
-        >
-          <span className="see-all-icon">
-            <AppstoreOutlined />
-          </span>
-          <p>See All</p>
-        </div>
-
-
-        {[
-          { label: "Heart", icon: "❤️" },
-          { label: "Skin", icon: "🩹" },
-          { label: "Mental", icon: "🧠" },
-          { label: "Eyes", icon: "👁️" },
-          { label: "Bones", icon: "🦴" },
-          { label: "Child", icon: "👶" },
-          { label: "Dental", icon: "🦷" },
-        ].map((c) => (
-          <div
-            key={c.label}
-            className={`healthcare-card ${activeCategory === c.label ? "active" : ""}`}
-            onClick={() => setActiveCategory(c.label)}
-          >
-            <span>{c.icon}</span>
-            <p>{c.label}</p>
+          <div className="healthcare-banner-icon">
+            {/* Profile Icon with Tooltip */}
+            <Tooltip title="Customize your Available Time" placement="bottom">
+              <button
+                type="button"
+                className="banner-profile-btn"
+                onClick={() => setOpenDoctorProfile(true)}
+              >
+                👤
+              </button>
+            </Tooltip>
           </div>
-        ))}
-      </div>
-      {/* Categories */}
 
 
 
-
-      {/* Available Doctors */}
-{/* Online / Offline Result Section */}
-{consultMode === "online" ? (
-  <>
-    {/* ONLINE DOCTORS — NO CHANGE */}
-    <div className="available-doctors-header">
-      <h3>Available Doctors</h3>
-      <span
-        className="see-all"
-        onClick={() => {
-          setActiveCategory("All");
-          setSearchText("");
-        }}
-      >
-        See all
-      </span>
-    </div>
-
-    {loadingDoctors && (
-      <div style={{ padding: "20px", textAlign: "center", fontWeight: 600 }}>
-        ⏳ Loading available doctors...
-      </div>
-    )}
-
-    <div className="doctor-list grid-view">
-      {filteredDoctors.map((doc) => (
-        <div key={doc.id} className="doctor-card">
-         <div className="doctor-top">
-  <img src={doc.image} alt={doc.name} />
-
-  <h4 className="doctor-name">{doc.name}</h4>
-</div>
-
-<div className="doctor-info">
-  <p className="doctor-meta">
-    {doc.speciality}
-    <span className="dot">•</span>
-    ⭐ {doc.rating}
-    <span className="dot">•</span>
-    Exp. 12 Yrs
-    <span className="dot">•</span>
-    Patients 4k+
-  </p>
-
-  <p className="availability">
-    Next available: <span>{doc.availability}</span>
-  </p>
-
-  <div className="doctor-footer">
-    <span className="price">{doc.price}</span>
-    <button
-  type="button"
-  className="book-btn"
-  onClick={() => {
-    setAppointmentDoctor(doc);
-    setOpenAppointmentScreen(true);
-  }}
->
-  Book Now
-</button>
-
-  </div>
-</div>
-    </div>
-      ))}
-    </div>
-  </>
-) : (
-  <>
-    {/* OFFLINE FLOW — CONDITION REQUIRED */}
-    {!searchText.trim() ? (
-      <div className="offline-empty-state">
-        <h3>Select a condition to find nearby hospitals</h3>
-        <p>
-          Example: <b>Fever</b>, <b>Cold</b>, <b>Cough</b>, <b>Vomiting</b>
-        </p>
-      </div>
-    ) : (
-      <>
-        <div className="available-doctors-header">
-          <h3>Nearby Hospitals</h3>
-          <span className="see-all" onClick={() => setSearchText("")}>
-            Clear
-          </span>
         </div>
 
-        <div className="ambulance-hospital-list">
-          {filteredHospitals.length > 0 ? (
-            filteredHospitals.map((h) => (
-              <div key={h.ambulance_id} className="ambulance-hospital-card">
-                <div className="ambulance-hospital-top">
-                  <div className="ambulance-hospital-icon">✚</div>
-                  <div>
-                    <h2>{h.hospital_name}</h2>
-                    <p className="ambulance-hospital-type">
-                      {h.specialty_type}
-                    </p>
-                  </div>
-                </div>
 
-                <div className="ambulance-details">
-                  <div className="hospital-condition-chips">
-                    {h.conditions.map((c) => (
-                      <span key={c} className="condition-chip">
-                        {c}
-                      </span>
-                    ))}
-                  </div>
+        {/* Search */}
+        <div className="healthcare-search">
+          {/* 🔍 Search Box */}
+          <div className="search-box-wrap">
+            <input
+              type="text"
+              className="search-input"
+              placeholder={placeholders[placeholderIndex]}
+              value={searchText}
+              onChange={(e) => {
+                const value = e.target.value;
+                if (/^[a-zA-Z\s]*$/.test(value)) {
+                  setSearchText(value);
+                }
+              }}
+              onFocus={() => setShowTrending(true)}
+              onBlur={() => setTimeout(() => setShowTrending(false), 150)}
+            />
 
-                  <p>📍 {h.location}</p>
-                  <p>🚑 {h.service_provider}</p>
-                  <p>📞 {h.ambulance_contact}</p>
+            {showTrending && (
+              <div className="trending-dropdown">
+                <p className="trending-title">Searches</p>
 
-                  <button
-                    className="book-btn"
-                    onClick={() => {
-                      setSelectedHospital(h);
-                      setOpenHospitalBooking(true);
+                {trendingSearches.map((item) => (
+                  <div
+                    key={item}
+                    className="trending-item"
+                    onMouseDown={() => {
+                      setSearchText(item);
+                      setShowTrending(false);
                     }}
                   >
-                    Book Now
-                  </button>
-                </div>
+                    <span className="trending-icon">📈</span>
+                    <span className="trending-text">{item}</span>
+                  </div>
+                ))}
               </div>
-            ))
-          ) : (
-            <div className="offline-empty-state">
-              <h3>No hospitals found</h3>
-              <p>Try another condition</p>
-            </div>
-          )}
+            )}
+          </div>
+
+          {/* 🔁 MODE SELECT */}
+          <div className="mode-toggle">
+            <button
+              className={consultMode === "online" ? "active" : ""}
+              onClick={() => setConsultMode("online")}
+            >
+              🌐 Online
+            </button>
+
+            <button
+              className={consultMode === "offline" ? "active" : ""}
+              onClick={() => setConsultMode("offline")}
+            >
+              🏥 Offline
+            </button>
+            <button
+              className="my-bookings-btn"
+              onClick={() => setOpenMyBookings(true)}
+
+            >
+              📅 My Bookings
+            </button>
+          </div>
+
+          {/* 🚑 Ambulance Button (API Integrated) */}
+          <button
+            type="button"
+            className="emergency-btn search-ambulance-btn"
+            onClick={() => {
+              setOpenAmbulanceScreen(true);
+            }}
+          >
+            Book Ambulance Now →
+          </button>
         </div>
-      </>
-    )}
-  </>
-)}
 
 
 
 
 
 
-            {/* <p>📍 {h.location}</p>
+
+
+
+        {/* Categories */}
+        <div className="healthcare-cards">
+          {/* SEE ALL CARD */}
+          {/* SEE ALL CARD */}
+          <div
+            className={`healthcare-card ${activeCategory === "All" ? "active" : ""}`}
+            onClick={() => {
+              setActiveCategory("All");
+              setSearchText(""); // ✅ clear search so all doctors show
+            }}
+          >
+            <span className="see-all-icon">
+              <AppstoreOutlined />
+            </span>
+            <p>See All</p>
+          </div>
+
+
+          {[
+            { label: "Heart", icon: "❤️" },
+            { label: "Skin", icon: "🩹" },
+            { label: "Mental", icon: "🧠" },
+            { label: "Eyes", icon: "👁️" },
+            { label: "Bones", icon: "🦴" },
+            { label: "Child", icon: "👶" },
+            { label: "Dental", icon: "🦷" },
+          ].map((c) => (
+            <div
+              key={c.label}
+              className={`healthcare-card ${activeCategory === c.label ? "active" : ""}`}
+              onClick={() => setActiveCategory(c.label)}
+            >
+              <span>{c.icon}</span>
+              <p>{c.label}</p>
+            </div>
+          ))}
+        </div>
+        {/* Categories */}
+
+
+
+
+        {/* Available Doctors */}
+        {/* Online / Offline Result Section */}
+        {consultMode === "online" ? (
+          <>
+            {/* ONLINE DOCTORS — NO CHANGE */}
+            <div className="available-doctors-header">
+              <h3>Available Doctors</h3>
+              <span
+                className="see-all"
+                onClick={() => {
+                  setActiveCategory("All");
+                  setSearchText("");
+                }}
+              >
+                See all
+              </span>
+            </div>
+
+            {loadingDoctors && (
+              <div style={{ padding: "20px", textAlign: "center", fontWeight: 600 }}>
+                ⏳ Loading available doctors...
+              </div>
+            )}
+
+            <div className="doctor-list grid-view">
+              {filteredDoctors.map((doc) => (
+                <div key={doc.id} className="doctor-card">
+                  <div className="doctor-top">
+                    <img src={doc.image} alt={doc.name} />
+
+
+                    <h4 className="doctor-name">{doc.name}</h4>
+                  </div>
+
+
+                  <div className="doctor-info">
+                    <p className="doctor-meta">
+                      {doc.speciality}
+                      <span className="dot">•</span>
+                      ⭐ {doc.rating}
+                      <span className="dot">•</span>
+                      Exp. {doc.experience} yrs
+                      <span className="dot">•</span>
+                      Patients 4k+
+                    </p>
+
+
+                    <p className="availability">
+                      Next available: <span>{doc.availability}</span>
+                    </p>
+
+
+                    <div className="doctor-footer">
+                      <span className="price">{doc.price}</span>
+                      <button
+                        type="button"
+                        className="book-btn"
+                        onClick={() => {
+                          setAppointmentDoctor(doc);
+                          setOpenAppointmentScreen(true);
+                        }}
+                      >
+                        Book Now
+                      </button>
+
+
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
+        ) : (
+          <>
+            {/* OFFLINE FLOW — CONDITION REQUIRED */}
+            {!searchText.trim() ? (
+              <div className="offline-empty-state">
+                <h3>Select a condition to find nearby hospitals</h3>
+                <p>
+                  Example: <b>Fever</b>, <b>Cold</b>, <b>Cough</b>, <b>Vomiting</b>
+                </p>
+              </div>
+            ) : (
+              <>
+                <div className="available-doctors-header">
+                  <h3>Nearby Hospitals</h3>
+                  <span className="see-all" onClick={() => setSearchText("")}>
+                    Clear
+                  </span>
+                </div>
+
+                <div className="ambulance-hospital-list">
+                  {filteredHospitals.length > 0 ? (
+                    filteredHospitals.map((h) => (
+                      <div key={h.ambulance_id} className="ambulance-hospital-card">
+                        <div className="ambulance-hospital-top">
+                          <div className="ambulance-hospital-icon">✚</div>
+                          <div>
+                            <h2>{h.hospital_name}</h2>
+                            <p className="ambulance-hospital-type">
+                              {h.specialty_type}
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="ambulance-details">
+                          <div className="hospital-condition-chips">
+                            {h.conditions.map((c) => (
+                              <span key={c} className="condition-chip">
+                                {c}
+                              </span>
+                            ))}
+                          </div>
+
+                          <p>📍 {h.location}</p>
+                          <p>🚑 {h.service_provider}</p>
+                          <p>📞 {h.ambulance_contact}</p>
+
+                          <button
+                            className="book-btn"
+                            onClick={() => {
+                              setSelectedHospital(h);
+                              setOpenHospitalBooking(true);
+                            }}
+                          >
+                            Book Now
+                          </button>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="offline-empty-state">
+                      <h3>No hospitals found</h3>
+                      <p>Try another condition</p>
+                    </div>
+                  )}
+                </div>
+              </>
+            )}
+          </>
+        )}
+
+
+
+
+
+
+        {/* <p>📍 {h.location}</p>
             <p>🚑 {h.service_provider}</p>
             <p>📞 {h.ambulance_contact}</p>
 
@@ -1650,500 +1736,566 @@ const filteredHospitals = useMemo(() => {
 
 
 
-      {/* FULL SCREEN OVERLAY */}
-      {openConsultation && (
-        <div className="consult-overlay">
-          {/* Header */}
-          <div className="consult-header">
-            <button
-              type="button"
-              className="consult-back-btn"
-              onClick={() => {
-                setOpenConsultation(false);
-                setOpenPaymentPopup(false);
-                setOpenConfirmedScreen(false);
-              }}
-            >
-              ←
-            </button>
-
-            <h2 className="consult-title">Consultation Request</h2>
-
-            <button type="button" className="consult-info-btn">
-              i
-            </button>
-          </div>
-
-          {/* Body */}
-          <div className="consult-body">
-            {/* Doctor Specialized */}
-            <div className="consult-field">
-              <label className="consult-label">DOCTOR SPECIALIZED</label>
-              <select
-                className="consult-select"
-                value={doctorSpecialized}
-                onChange={(e) => setDoctorSpecialized(e.target.value)}
+        {/* FULL SCREEN OVERLAY */}
+        {openConsultation && (
+          <div className="consult-overlay">
+            {/* Header */}
+            <div className="consult-header">
+              <button
+                type="button"
+                className="consult-back-btn"
+                onClick={() => {
+                  setOpenConsultation(false);
+                  setOpenPaymentPopup(false);
+                  setOpenConfirmedScreen(false);
+                }}
               >
-                <option value="">Select Doctor</option>
+                ←
+              </button>
 
-                <option value="General Practitioner">General Practitioner</option>
-                <option value="Cardiologist">Cardiologist</option>
-                <option value="Dermatologist">Dermatologist</option>
-                <option value="Neurologist">Neurologist</option>
+              <h2 className="consult-title">Consultation Request</h2>
 
-                {/* ✅ NEW SPECIALISTS */}
-                <option value="Orthopedic">Orthopedic</option>
-                <option value="Pediatrician">Pediatrician</option>
-                <option value="Dentist">Dentist</option>
-                <option value="Psychologist">Psychologist</option>
-              </select>
-
+              <button type="button" className="consult-info-btn">
+                i
+              </button>
             </div>
 
-            {/* Description */}
-            <div className="consult-field">
-              <label className="consult-label">DESCRIPTION</label>
-              <textarea
-                className="consult-textarea"
-                placeholder="Describe your symptoms or health concerns in detail..."
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              />
-            </div>
-
-            {/* Days */}
-            <div className="consult-field">
-              <label className="consult-label">
-                HOW MANY DAYS ARE YOU SUFFERING?
-              </label>
-              <input
-                type="number"
-                className="consult-input"
-                placeholder="Enter number of days (e.g., 3)"
-                value={days}
-                onChange={(e) => setDays(e.target.value)}
-              />
-            </div>
-
-            {/* Insurance */}
-            <div className="consult-field">
-              <label className="consult-label">
-                DO YOU HAVE HEALTH INSURANCE?
-              </label>
-
-              <div className="consult-radio-row">
-                <button
-                  type="button"
-                  className={`insurance-btn ${insurance === "yes" ? "active" : ""
-                    }`}
-                  onClick={() => setInsurance("yes")}
+            {/* Body */}
+            <div className="consult-body">
+              {/* Doctor Specialized */}
+              <div className="consult-field">
+                <label className="consult-label">DOCTOR SPECIALIZED</label>
+                <select
+                  className="consult-select"
+                  value={doctorSpecialized}
+                  onChange={(e) => setDoctorSpecialized(e.target.value)}
                 >
-                  <span className="radio-dot" />
-                  Yes
-                </button>
+                  <option value="">Select Doctor</option>
 
-                <button
-                  type="button"
-                  className={`insurance-btn ${insurance === "no" ? "active" : ""
-                    }`}
-                  onClick={() => setInsurance("no")}
-                >
-                  <span className="radio-dot" />
-                  No
-                </button>
+                  <option value="General Practitioner">General Practitioner</option>
+                  <option value="Cardiologist">Cardiologist</option>
+                  <option value="Dermatologist">Dermatologist</option>
+                  <option value="Neurologist">Neurologist</option>
+
+                  {/* ✅ NEW SPECIALISTS */}
+                  <option value="Orthopedic">Orthopedic</option>
+                  <option value="Pediatrician">Pediatrician</option>
+                  <option value="Dentist">Dentist</option>
+                  <option value="Psychologist">Psychologist</option>
+                </select>
+
               </div>
-            </div>
 
-            {/* Specialist card */}
-            {isFormCompleted && selectedSpecialist && (
-              <>
-                <div className="specialists-header">
-                  <h3>Specialists</h3>
-                  <span className="nearby-pill">1 Nearby</span>
-                </div>
+              {/* Description */}
+              <div className="consult-field">
+                <label className="consult-label">DESCRIPTION</label>
+                <textarea
+                  className="consult-textarea"
+                  placeholder="Describe your symptoms or health concerns in detail..."
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                />
+              </div>
 
-                <div
-                  className="specialist-card"
-                  onClick={() => setSelectedDoctorId(selectedSpecialist.id)}
-                  style={{
-                    cursor: "pointer",
-                    border:
-                      selectedDoctorId === selectedSpecialist.id
-                        ? "2px solid #2f6f6d"
-                        : "none",
-                  }}
-                >
-                  <div className="specialist-img-wrap">
-                    <img
-                      src={selectedSpecialist.image}
-                      alt={selectedSpecialist.name}
-                    />
+              {/* Days */}
+              <div className="consult-field">
+                <label className="consult-label">
+                  HOW MANY DAYS ARE YOU SUFFERING?
+                </label>
+                <input
+                  type="number"
+                  className="consult-input"
+                  placeholder="Enter number of days (e.g., 3)"
+                  value={days}
+                  onChange={(e) => setDays(e.target.value)}
+                />
+              </div>
 
-                    <div className="specialist-rating-badge">
-                      <span className="star">★</span>
-                      <span>{selectedSpecialist.rating}</span>
-                    </div>
-                  </div>
+              {/* Insurance */}
+              <div className="consult-field">
+                <label className="consult-label">
+                  DO YOU HAVE HEALTH INSURANCE?
+                </label>
 
-                  <div className="specialist-content">
-                    <h4>{selectedSpecialist.name}</h4>
-                    <p className="exp">{selectedSpecialist.experience}</p>
-
-                    <p className="time">
-                      <span className="clock">🕒</span>
-                      {selectedSpecialist.availableAt}
-                    </p>
-                  </div>
-                </div>
-              </>
-            )}
-          </div>
-
-          {/* Footer fixed bottom */}
-          <div className="consult-footer">
-            <button
-              type="button"
-              className={`consult-book-btn ${canBookAppointment ? "enabled" : ""
-                }`}
-              disabled={!canBookAppointment}
-              onClick={() => setOpenPaymentPopup(true)}
-            >
-              Book Appointment
-            </button>
-          </div>
-
-
-
-          {/* Payment popup */}
-          {openPaymentPopup && (
-            <div
-              className="payment-overlay"
-              onClick={() => setOpenPaymentPopup(false)}
-            >
-              <div
-                className="payment-popup"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <h2 className="payment-title">Payment Required</h2>
-                <p className="payment-subtitle">
-                  Proceed to PhonePe for payment?
-                </p>
-
-                <div className="payment-actions">
+                <div className="consult-radio-row">
                   <button
                     type="button"
-                    className="payment-cancel"
-                    onClick={() => setOpenPaymentPopup(false)}
+                    className={`insurance-btn ${insurance === "yes" ? "active" : ""
+                      }`}
+                    onClick={() => setInsurance("yes")}
                   >
-                    CANCEL
+                    <span className="radio-dot" />
+                    Yes
                   </button>
 
                   <button
                     type="button"
-                    className="payment-pay"
-                    onClick={() => {
-                      setOpenPaymentPopup(false);
+                    className={`insurance-btn ${insurance === "no" ? "active" : ""
+                      }`}
+                    onClick={() => setInsurance("no")}
+                  >
+                    <span className="radio-dot" />
+                    No
+                  </button>
+                </div>
+              </div>
 
-                      setOpenConfirmedScreen(true); // open confirmed screen
-                      setShowSuccessPopup(true);    // open success popup also
-                      setSecondsLeft(60);           // reset timer to 1 minute
+              {/* Specialist card */}
+              {isFormCompleted && selectedSpecialist && (
+                <>
+                  <div className="specialists-header">
+                    <h3>Specialists</h3>
+                    <span className="nearby-pill">1 Nearby</span>
+                  </div>
+
+                  <div
+                    className="specialist-card"
+                    onClick={() => setSelectedDoctorId(selectedSpecialist.id)}
+                    style={{
+                      cursor: "pointer",
+                      border:
+                        selectedDoctorId === selectedSpecialist.id
+                          ? "2px solid #2f6f6d"
+                          : "none",
                     }}
-
                   >
-                    PAY NOW
-                  </button>
+                    <div className="specialist-img-wrap">
+                      <img
+                        src={selectedSpecialist.image}
+                        alt={selectedSpecialist.name}
+                      />
 
-                </div>
-              </div>
-            </div>
-          )}
+                      <div className="specialist-rating-badge">
+                        <span className="star">★</span>
+                        <span>{selectedSpecialist.rating}</span>
+                      </div>
+                    </div>
 
-          {/* Confirmed Screen overlay (MUST be inside consultation overlay) */}
-          {openConfirmedScreen && (
-            <div className="confirmed-overlay">
-              <div className="confirmed-header">
-                <button
-                  type="button"
-                  className="confirmed-back-btn"
-                  onClick={() => setOpenConfirmedScreen(false)}
-                >
-                  ←
-                </button>
+                    <div className="specialist-content">
+                      <h4>{selectedSpecialist.name}</h4>
+                      <p className="exp">{selectedSpecialist.experience}</p>
 
-                <h2 className="confirmed-title">Appointment Confirmed</h2>
-
-                <div style={{ width: 42 }} />
-              </div>
-
-              <div className="confirmed-body">
-                <div className="confirmed-card">
-                  <div className="confirmed-check">✓</div>
-
-                  <h1 className="confirmed-main-title">Appointment Booked!</h1>
-                  <p className="confirmed-subtitle">
-                    Payment completed successfully
-                  </p>
-
-                  <div className="confirmed-doctor-box">
-                    <img
-                      src={selectedSpecialist?.image}
-                      alt={selectedSpecialist?.name}
-                      className="confirmed-doctor-img"
-                    />
-
-                    <div>
-                      <h3 className="confirmed-doctor-name">
-                        {selectedSpecialist?.name}
-                      </h3>
-                      <p className="confirmed-doctor-spec">{doctorSpecialized}</p>
-                      <p className="confirmed-doctor-time">
-                        🕒 Scheduled at{" "}
-                        {selectedSpecialist?.availableAt?.replace(
-                          "Available at ",
-                          ""
-                        )}
+                      <p className="time">
+                        <span className="clock">🕒</span>
+                        {selectedSpecialist.availableAt}
                       </p>
                     </div>
                   </div>
+                </>
+              )}
+            </div>
 
-                  <div className="confirmed-line" />
+            {/* Footer fixed bottom */}
+            <div className="consult-footer">
+              <button
+                type="button"
+                className={`consult-book-btn ${canBookAppointment ? "enabled" : ""
+                  }`}
+                disabled={!canBookAppointment}
+                onClick={() => setOpenPaymentPopup(true)}
+              >
+                Book Appointment
+              </button>
+            </div>
 
-                  <p className="confirmed-wait-text">
-                    Your consultation will start in:
-                  </p>
 
-                  <div className="confirmed-timer">{formatTime(secondsLeft)}</div>
 
-                  <p className="confirmed-footer-text">
-                    Please wait while we prepare your session
-                  </p>
-                </div>
-              </div>
-
-              <div className="confirmed-bottom">
-                <button
-                  type="button"
-                  className={`confirmed-wait-btn ${canJoinLive ? "enabled" : ""}`}
-                  disabled={!canJoinLive}
-                  onClick={() => {
-                    if (!canJoinLive) return;
-                    setOpenLiveScreen(true);
-                  }}
+            {/* Payment popup */}
+            {openPaymentPopup && (
+              <div
+                className="payment-overlay"
+                onClick={() => setOpenPaymentPopup(false)}
+              >
+                <div
+                  className="payment-popup"
+                  onClick={(e) => e.stopPropagation()}
                 >
-                  {canJoinLive ? "Connect Online Now" : "Please Wait..."}
-                </button>
-              </div>
+                  <h2 className="payment-title">Payment Required</h2>
+                  <p className="payment-subtitle">
+                    Proceed to PhonePe for payment?
+                  </p>
 
-              {showSuccessPopup && (
-                <div className="success-overlay">
-                  <div className="success-popup">
-                    <h2 className="success-title">Success</h2>
-                    <p className="success-text">
-                      Payment completed! Your appointment is booked.
-                    </p>
+                  <div className="payment-actions">
+                    <button
+                      type="button"
+                      className="payment-cancel"
+                      onClick={() => setOpenPaymentPopup(false)}
+                    >
+                      CANCEL
+                    </button>
 
                     <button
                       type="button"
-                      className="success-ok"
-                      onClick={() => setShowSuccessPopup(false)}
+                      className="payment-pay"
+                      onClick={() => {
+                        setOpenPaymentPopup(false);
+
+                        setOpenConfirmedScreen(true); // open confirmed screen
+                        setShowSuccessPopup(true);    // open success popup also
+                        setSecondsLeft(60);           // reset timer to 1 minute
+                      }}
+
                     >
-                      OK
+                      PAY NOW
                     </button>
+
                   </div>
                 </div>
-              )}
+              </div>
+            )}
 
-            </div>
+            {/* Confirmed Screen overlay (MUST be inside consultation overlay) */}
+            {openConfirmedScreen && (
+              <div className="confirmed-overlay">
+                <div className="confirmed-header">
+                  <button
+                    type="button"
+                    className="confirmed-back-btn"
+                    onClick={() => setOpenConfirmedScreen(false)}
+                  >
+                    ←
+                  </button>
 
-          )}
+                  <h2 className="confirmed-title">Appointment Confirmed</h2>
 
-          {openLiveScreen && (
-            <div className="live-overlay">
-              <div className="live-header">
-                <button
-                  type="button"
-                  className="live-back-btn"
-                  onClick={() => setOpenLiveScreen(false)}
-                >
-                  ←
-                </button>
-
-                <div className="live-title-wrap">
-                  <h2 className="live-title">{selectedSpecialist?.name}</h2>
-                  <p className="live-subtitle">
-                    <span className="live-dot" /> LIVE CONSULTATION
-                  </p>
+                  <div style={{ width: 42 }} />
                 </div>
 
-                <div style={{ width: 42 }} />
+                <div className="confirmed-body">
+                  <div className="confirmed-card">
+                    <div className="confirmed-check">✓</div>
+
+                    <h1 className="confirmed-main-title">Appointment Booked!</h1>
+                    <p className="confirmed-subtitle">
+                      Payment completed successfully
+                    </p>
+
+                    <div className="confirmed-doctor-box">
+                      <img
+                        src={selectedSpecialist?.image}
+                        alt={selectedSpecialist?.name}
+                        className="confirmed-doctor-img"
+                      />
+
+                      <div>
+                        <h3 className="confirmed-doctor-name">
+                          {selectedSpecialist?.name}
+                        </h3>
+                        <p className="confirmed-doctor-spec">{doctorSpecialized}</p>
+                        <p className="confirmed-doctor-time">
+                          🕒 Scheduled at{" "}
+                          {selectedSpecialist?.availableAt?.replace(
+                            "Available at ",
+                            ""
+                          )}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="confirmed-line" />
+
+                    <p className="confirmed-wait-text">
+                      Your consultation will start in:
+                    </p>
+
+                    <div className="confirmed-timer">{formatTime(secondsLeft)}</div>
+
+                    <p className="confirmed-footer-text">
+                      Please wait while we prepare your session
+                    </p>
+                  </div>
+                </div>
+
+                <div className="confirmed-bottom">
+                  <button
+                    type="button"
+                    className={`confirmed-wait-btn ${canJoinLive ? "enabled" : ""}`}
+                    disabled={!canJoinLive}
+                    onClick={() => {
+                      if (!canJoinLive) return;
+                      setOpenLiveScreen(true);
+                    }}
+                  >
+                    {canJoinLive ? "Connect Online Now" : "Please Wait..."}
+                  </button>
+                </div>
+
+                {showSuccessPopup && (
+                  <div className="success-overlay">
+                    <div className="success-popup">
+                      <h2 className="success-title">Success</h2>
+                      <p className="success-text">
+                        Payment completed! Your appointment is booked.
+                      </p>
+
+                      <button
+                        type="button"
+                        className="success-ok"
+                        onClick={() => setShowSuccessPopup(false)}
+                      >
+                        OK
+                      </button>
+                    </div>
+                  </div>
+                )}
+
               </div>
 
-              <div className="live-body">
-                <div className="live-video-card">
-                  <img
-                    className="live-main-img"
-                    src={selectedSpecialist?.image}
-                    alt="Doctor"
-                  />
+            )}
 
-                  <div className="live-small-preview">
+            {openLiveScreen && (
+              <div className="live-overlay">
+                <div className="live-header">
+                  <button
+                    type="button"
+                    className="live-back-btn"
+                    onClick={() => setOpenLiveScreen(false)}
+                  >
+                    ←
+                  </button>
+
+                  <div className="live-title-wrap">
+                    <h2 className="live-title">{selectedSpecialist?.name}</h2>
+                    <p className="live-subtitle">
+                      <span className="live-dot" /> LIVE CONSULTATION
+                    </p>
+                  </div>
+
+                  <div style={{ width: 42 }} />
+                </div>
+
+                <div className="live-body">
+                  <div className="live-video-card">
                     <img
-                      src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=500&auto=format&fit=crop&q=80"
-                      alt="User"
+                      className="live-main-img"
+                      src={selectedSpecialist?.image}
+                      alt="Doctor"
                     />
-                  </div>
 
-                  <div className="live-controls">
-                    <button className="live-control-btn">🎤</button>
-                    <button className="live-end-btn">●</button>
-                    <button className="live-control-btn">📹</button>
-                  </div>
-                </div>
-
-                <div className="live-documents">
-                  <h2>Medical Documents</h2>
-                  <p>View and download your digital records</p>
-
-                  <div
-                    className="live-doc-card"
-                    onClick={() => setOpenPrescription(!openPrescription)}
-                    style={{ cursor: "pointer" }}
-                  >
-                    <div className="live-doc-left">
-                      <div className="live-doc-icon">📋</div>
-                      <div>
-                        <h3>Digital Prescription</h3>
-                        <p>2 Medicines prescribed</p>
-                      </div>
-                    </div>
-                    <button className="live-download-btn">⬇</button>
-                  </div>
-
-                  {openPrescription && (
-                    <div className="prescription-expand">
-                      <div className="prescription-title">
-                        <span className="prescription-file">📄</span>
-                        <h4>OFFICIAL MEDICINE LIST</h4>
-                      </div>
-
-                      <div className="medicine-item">
-                        <h3>Amoxicillin</h3>
-                        <p>500mg - Twice daily</p>
-                      </div>
-
-                      <div className="medicine-item">
-                        <h3>Paracetamol</h3>
-                        <p>650mg - As needed</p>
-                      </div>
-
-                      <button
-                        className="order-medicine-btn"
-                        onClick={() => {
-                          setOpenNearbyPharmacies(true); // FULL SCREEN pharmacies
-                        }}
-                      >
-                        👜 Order Medicines Now
-                      </button>
-
-                    </div>
-                  )}
-
-
-                  <div
-                    className="live-doc-card"
-                    onClick={() => setOpenLabTest((prev) => !prev)}
-                    style={{ cursor: "pointer" }}
-                  >
-                    <div className="live-doc-left">
-                      <div className="live-doc-icon">🔬</div>
-                      <div>
-                        <h3>Lab Test Requisition</h3>
-                        <p>2 Tests required</p>
-                      </div>
+                    <div className="live-small-preview">
+                      <img
+                        src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=500&auto=format&fit=crop&q=80"
+                        alt="User"
+                      />
                     </div>
 
-                    <button
-                      className="live-download-btn"
-                      onClick={(e) => e.stopPropagation()}
+                    <div className="live-controls">
+                      <button className="live-control-btn">🎤</button>
+                      <button className="live-end-btn">●</button>
+                      <button className="live-control-btn">📹</button>
+                    </div>
+                  </div>
+
+                  <div className="live-documents">
+                    <h2>Medical Documents</h2>
+                    <p>View and download your digital records</p>
+
+                    <div
+                      className="live-doc-card"
+                      onClick={() => setOpenPrescription(!openPrescription)}
+                      style={{ cursor: "pointer" }}
                     >
-                      ⬇
-                    </button>
-                  </div>
-
-                  {openLabTest && (
-                    <div className="lab-expand">
-                      <div className="lab-title">
-                        <span className="lab-file">📄</span>
-                        <h4>REQUIRED LAB PROCEDURES</h4>
+                      <div className="live-doc-left">
+                        <div className="live-doc-icon">📋</div>
+                        <div>
+                          <h3>Digital Prescription</h3>
+                          <p>2 Medicines prescribed</p>
+                        </div>
                       </div>
+                      <button className="live-download-btn">⬇</button>
+                    </div>
 
-                      <div className="lab-item">
-                        <h3>Complete Blood Count (CBC)</h3>
+                    {openPrescription && (
+                      <div className="prescription-expand">
+                        <div className="prescription-title">
+                          <span className="prescription-file">📄</span>
+                          <h4>OFFICIAL MEDICINE LIST</h4>
+                        </div>
+
+                        <div className="medicine-item">
+                          <h3>Amoxicillin</h3>
+                          <p>500mg - Twice daily</p>
+                        </div>
+
+                        <div className="medicine-item">
+                          <h3>Paracetamol</h3>
+                          <p>650mg - As needed</p>
+                        </div>
+
+                        <button
+                          className="order-medicine-btn"
+                          onClick={() => {
+                            setOpenNearbyPharmacies(true); // FULL SCREEN pharmacies
+                          }}
+                        >
+                          👜 Order Medicines Now
+                        </button>
+
                       </div>
+                    )}
 
-                      <div className="lab-item">
-                        <h3>Thyroid Profile</h3>
+
+                    <div
+                      className="live-doc-card"
+                      onClick={() => setOpenLabTest((prev) => !prev)}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <div className="live-doc-left">
+                        <div className="live-doc-icon">🔬</div>
+                        <div>
+                          <h3>Lab Test Requisition</h3>
+                          <p>2 Tests required</p>
+                        </div>
                       </div>
 
                       <button
-                        className="lab-btn"
-                        onClick={() => {
-                          setOpenNearbyLabs(true); // FULL SCREEN labs
-                        }}
+                        className="live-download-btn"
+                        onClick={(e) => e.stopPropagation()}
                       >
-                        📍 Find Nearby Labs
+                        ⬇
                       </button>
-
                     </div>
-                  )}
 
+                    {openLabTest && (
+                      <div className="lab-expand">
+                        <div className="lab-title">
+                          <span className="lab-file">📄</span>
+                          <h4>REQUIRED LAB PROCEDURES</h4>
+                        </div>
+
+                        <div className="lab-item">
+                          <h3>Complete Blood Count (CBC)</h3>
+                        </div>
+
+                        <div className="lab-item">
+                          <h3>Thyroid Profile</h3>
+                        </div>
+
+                        <button
+                          className="lab-btn"
+                          onClick={() => {
+                            setOpenNearbyLabs(true); // FULL SCREEN labs
+                          }}
+                        >
+                          📍 Find Nearby Labs
+                        </button>
+
+                      </div>
+                    )}
+
+                  </div>
                 </div>
               </div>
-            </div>
 
-          )}
-          {openNearbyPharmacies && (
-            <div className="nearby-overlay">
-              <div className="nearby-header">
-                <button
-                  type="button"
-                  className="nearby-back-btn"
-                  onClick={() => setOpenNearbyPharmacies(false)}
-                >
-                  ←
-                </button>
-                <h2 className="nearby-title">Nearby Facilities</h2>
-                <div style={{ width: 42 }} />
-              </div>
-
-              <div className="nearby-tabs">
-                <button className="nearby-tab">Nearby Labs</button>
-                <button className="nearby-tab active">Pharmacies</button>
-              </div>
-
-              <div className="nearby-card">
-                <h3>Prescribed Medicines</h3>
-                <div className="nearby-medicine-pills">
-                  <span>Amoxicillin</span>
-                  <span>Paracetamol</span>
+            )}
+            {openNearbyPharmacies && (
+              <div className="nearby-overlay">
+                <div className="nearby-header">
+                  <button
+                    type="button"
+                    className="nearby-back-btn"
+                    onClick={() => setOpenNearbyPharmacies(false)}
+                  >
+                    ←
+                  </button>
+                  <h2 className="nearby-title">Nearby Facilities</h2>
+                  <div style={{ width: 42 }} />
                 </div>
-                <p className="nearby-subtext">Showing facilities matching your results</p>
-              </div>
 
-              <div className="nearby-filters">
-                <button className="filter-pill active">All</button>
-                <button className="filter-pill">Nearby</button>
-                <button className="filter-pill">Ratings 4.5+</button>
-                <button className="filter-pill">Home Collect</button>
-              </div>
+                <div className="nearby-tabs">
+                  <button className="nearby-tab">Nearby Labs</button>
+                  <button className="nearby-tab active">Pharmacies</button>
+                </div>
 
-              <div className="nearby-search">
-                <input placeholder="Search in pharmacies..." />
-              </div>
+                <div className="nearby-card">
+                  <h3>Prescribed Medicines</h3>
+                  <div className="nearby-medicine-pills">
+                    <span>Amoxicillin</span>
+                    <span>Paracetamol</span>
+                  </div>
+                  <p className="nearby-subtext">Showing facilities matching your results</p>
+                </div>
 
-              <div className="nearby-list">
+                <div className="nearby-filters">
+                  <button className="filter-pill active">All</button>
+                  <button className="filter-pill">Nearby</button>
+                  <button className="filter-pill">Ratings 4.5+</button>
+                  <button className="filter-pill">Home Collect</button>
+                </div>
+
+                <div className="nearby-search">
+                  <input placeholder="Search in pharmacies..." />
+                </div>
+
                 <div className="nearby-list">
-                  {pharmacies.map((item) => (
+                  <div className="nearby-list">
+                    {pharmacies.map((item) => (
+                      <div key={item.id} className="nearby-item">
+                        <p className="distance">📍 {item.distance}</p>
+
+                        <div className="nearby-item-row">
+                          <div>
+                            <h3>{item.name}</h3>
+                            <p className="type">{item.type}</p>
+                            <p className="desc">{item.medicines}</p>
+                          </div>
+
+                          <div className="rating-badge">⭐ {item.rating}</div>
+                        </div>
+
+                        <div className="nearby-bottom-row">
+                          <div>
+                            <p className="est">ESTIMATED DELIVERY</p>
+                            <h4>{item.eta}</h4>
+                          </div>
+
+                          <button className="order-btn">{item.buttonText}</button>
+                        </div>
+                      </div>
+                    ))}
+
+                    <button className="map-btn">🗺 View on Map</button>
+                  </div>
+                </div>
+              </div>
+            )}
+            {openNearbyLabs && (
+              <div className="nearby-overlay">
+                <div className="nearby-header">
+                  <button
+                    type="button"
+                    className="nearby-back-btn"
+                    onClick={() => setOpenNearbyLabs(false)}
+                  >
+                    ←
+                  </button>
+
+                  <h2 className="nearby-title">Nearby Facilities</h2>
+                  <div style={{ width: 42 }} />
+                </div>
+
+                <div className="nearby-tabs">
+                  <button className="nearby-tab active">Nearby Labs</button>
+                  <button className="nearby-tab">Pharmacies</button>
+                </div>
+
+                <div className="nearby-card">
+                  <h3>Required Lab Procedures</h3>
+
+                  <div className="nearby-medicine-pills">
+                    <span>Complete Blood Count (CBC)</span>
+                    <span>Thyroid Profile</span>
+                  </div>
+
+                  <p className="nearby-subtext">Showing facilities matching your results</p>
+                </div>
+
+                <div className="nearby-search">
+                  <input placeholder="Search in labs..." />
+                </div>
+
+                <div className="nearby-list">
+                  {labs.map((item) => (
                     <div key={item.id} className="nearby-item">
                       <p className="distance">📍 {item.distance}</p>
 
@@ -2151,7 +2303,7 @@ const filteredHospitals = useMemo(() => {
                         <div>
                           <h3>{item.name}</h3>
                           <p className="type">{item.type}</p>
-                          <p className="desc">{item.medicines}</p>
+                          <p className="desc">{item.tests}</p>
                         </div>
 
                         <div className="rating-badge">⭐ {item.rating}</div>
@@ -2159,8 +2311,8 @@ const filteredHospitals = useMemo(() => {
 
                       <div className="nearby-bottom-row">
                         <div>
-                          <p className="est">ESTIMATED DELIVERY</p>
-                          <h4>{item.eta}</h4>
+                          <p className="est">NEXT AVAILABLE SLOT</p>
+                          <h4>{item.slot}</h4>
                         </div>
 
                         <button className="order-btn">{item.buttonText}</button>
@@ -2171,388 +2323,321 @@ const filteredHospitals = useMemo(() => {
                   <button className="map-btn">🗺 View on Map</button>
                 </div>
               </div>
-            </div>
-          )}
-          {openNearbyLabs && (
-            <div className="nearby-overlay">
-              <div className="nearby-header">
+            )}
+
+
+
+
+
+          </div>
+        )
+        }
+        {openDoctorProfile && (
+          <div
+            className="profile-overlay"
+            onClick={() => setOpenDoctorProfile(false)}
+          >
+            <div className="profile-popup" onClick={(e) => e.stopPropagation()}>
+              <div className="profile-header">
+                <h2>Doctor Profile</h2>
                 <button
-                  type="button"
-                  className="nearby-back-btn"
-                  onClick={() => setOpenNearbyLabs(false)}
+                  className="profile-close"
+                  onClick={() => setOpenDoctorProfile(false)}
                 >
-                  ←
+                  ✖
                 </button>
-
-                <h2 className="nearby-title">Nearby Facilities</h2>
-                <div style={{ width: 42 }} />
               </div>
 
-              <div className="nearby-tabs">
-                <button className="nearby-tab active">Nearby Labs</button>
-                <button className="nearby-tab">Pharmacies</button>
-              </div>
+              <div className="profile-body">
+                <p><b>Name:</b> {doctorProfile.name}</p>
+                <p><b>Speciality:</b> {doctorProfile.speciality}</p>
+                <p><b>Hospital:</b> {doctorProfile.hospital}</p>
+                <p><b>Experience:</b> {doctorProfile.experience}</p>
+                <p><b>Contact:</b> {doctorProfile.contact}</p>
 
-              <div className="nearby-card">
-                <h3>Required Lab Procedures</h3>
+                <div className="op-time-box">
+                  <p><b>OP Time:</b></p>
 
-                <div className="nearby-medicine-pills">
-                  <span>Complete Blood Count (CBC)</span>
-                  <span>Thyroid Profile</span>
-                </div>
-
-                <p className="nearby-subtext">Showing facilities matching your results</p>
-              </div>
-
-              <div className="nearby-search">
-                <input placeholder="Search in labs..." />
-              </div>
-
-              <div className="nearby-list">
-                {labs.map((item) => (
-                  <div key={item.id} className="nearby-item">
-                    <p className="distance">📍 {item.distance}</p>
-
-                    <div className="nearby-item-row">
-                      <div>
-                        <h3>{item.name}</h3>
-                        <p className="type">{item.type}</p>
-                        <p className="desc">{item.tests}</p>
-                      </div>
-
-                      <div className="rating-badge">⭐ {item.rating}</div>
-                    </div>
-
-                    <div className="nearby-bottom-row">
-                      <div>
-                        <p className="est">NEXT AVAILABLE SLOT</p>
-                        <h4>{item.slot}</h4>
-                      </div>
-
-                      <button className="order-btn">{item.buttonText}</button>
-                    </div>
-                  </div>
-                ))}
-
-                <button className="map-btn">🗺 View on Map</button>
-              </div>
-            </div>
-          )}
-
-
-
-
-
-        </div>
-      )
-      }
-      {openDoctorProfile && (
-        <div
-          className="profile-overlay"
-          onClick={() => setOpenDoctorProfile(false)}
-        >
-          <div className="profile-popup" onClick={(e) => e.stopPropagation()}>
-            <div className="profile-header">
-              <h2>Doctor Profile</h2>
-              <button
-                className="profile-close"
-                onClick={() => setOpenDoctorProfile(false)}
-              >
-                ✖
-              </button>
-            </div>
-
-            <div className="profile-body">
-              <p><b>Name:</b> {doctorProfile.name}</p>
-              <p><b>Speciality:</b> {doctorProfile.speciality}</p>
-              <p><b>Hospital:</b> {doctorProfile.hospital}</p>
-              <p><b>Experience:</b> {doctorProfile.experience}</p>
-              <p><b>Contact:</b> {doctorProfile.contact}</p>
-
-              <div className="op-time-box">
-                <p><b>OP Time:</b></p>
-
-                {!editOpTime ? (
-                  <div className="op-time-row">
-                    <span className="op-time">{doctorProfile.opTime}</span>
-                    <button
-                      className="edit-btn"
-                      onClick={() => {
-                        setEditOpTime(true);
-                        setNewOpTime(doctorProfile.opTime);
-                      }}
-                    >
-                      Edit
-                    </button>
-                  </div>
-                ) : (
-                  <div className="op-time-edit">
-                    <input
-                      type="text"
-                      value={newOpTime}
-                      onChange={(e) => setNewOpTime(e.target.value)}
-                      placeholder="Ex: 10:00 AM - 01:00 PM"
-                    />
-
-                    <div className="op-time-actions">
+                  {!editOpTime ? (
+                    <div className="op-time-row">
+                      <span className="op-time">{doctorProfile.opTime}</span>
                       <button
-                        className="cancel-btn"
-                        onClick={() => setEditOpTime(false)}
-                      >
-                        Cancel
-                      </button>
-
-                      <button
-                        className="save-btn"
+                        className="edit-btn"
                         onClick={() => {
-                          setDoctorProfile((prev) => ({ ...prev, opTime: newOpTime }));
-                          setEditOpTime(false);
+                          setEditOpTime(true);
+                          setNewOpTime(doctorProfile.opTime);
                         }}
                       >
-                        Save
+                        Edit
                       </button>
                     </div>
-                  </div>
-                )}
+                  ) : (
+                    <div className="op-time-edit">
+                      <input
+                        type="text"
+                        value={newOpTime}
+                        onChange={(e) => setNewOpTime(e.target.value)}
+                        placeholder="Ex: 10:00 AM - 01:00 PM"
+                      />
+
+                      <div className="op-time-actions">
+                        <button
+                          className="cancel-btn"
+                          onClick={() => setEditOpTime(false)}
+                        >
+                          Cancel
+                        </button>
+
+                        <button
+                          className="save-btn"
+                          onClick={() => {
+                            setDoctorProfile((prev) => ({ ...prev, opTime: newOpTime }));
+                            setEditOpTime(false);
+                          }}
+                        >
+                          Save
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {openAmbulancePopup && (
-        <div
-          className="ambulance-overlay"
-          onClick={() => setOpenAmbulancePopup(false)}
-        >
-          <div className="ambulance-popup" onClick={(e) => e.stopPropagation()}>
-            <h2 className="ambulance-title">🚑 Ambulance Booking</h2>
-            <p className="ambulance-subtitle">
-              Emergency ambulance will reach you within <b>10-15 mins</b>.
-            </p>
+        {openAmbulancePopup && (
+          <div
+            className="ambulance-overlay"
+            onClick={() => setOpenAmbulancePopup(false)}
+          >
+            <div className="ambulance-popup" onClick={(e) => e.stopPropagation()}>
+              <h2 className="ambulance-title">🚑 Ambulance Booking</h2>
+              <p className="ambulance-subtitle">
+                Emergency ambulance will reach you within <b>10-15 mins</b>.
+              </p>
 
-            <div className="ambulance-actions">
+              <div className="ambulance-actions">
+                <button
+                  className="ambulance-cancel"
+                  onClick={() => setOpenAmbulancePopup(false)}
+                >
+                  Cancel
+                </button>
+
+                <button
+                  className="ambulance-confirm"
+                  onClick={() => {
+                    setOpenAmbulancePopup(false);
+                    alert("✅ Ambulance booked successfully!");
+                  }}
+                >
+                  Confirm Booking
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+        {openAmbulanceScreen && (
+          <div className="ambulance-screen">
+            {/* Header */}
+            <div className="ambulance-header">
               <button
-                className="ambulance-cancel"
-                onClick={() => setOpenAmbulancePopup(false)}
+                className="ambulance-back-btn"
+                onClick={() => setOpenAmbulanceScreen(false)}
               >
-                Cancel
+                ←
               </button>
+              <h2 className="ambulance-header-title">Book Ambulance</h2>
+              <div style={{ width: 42 }} />
+            </div>
+
+            {/* Body */}
+            <div className="ambulance-body">
+              {/* Warning */}
+              <div className="ambulance-warning">
+                <span className="ambulance-warning-icon">⚠</span>
+                <p>
+                  <b>For life-threatening emergencies, call 108 immediately</b>
+                </p>
+              </div>
+
+              {/* Hospitals Found */}
+              <h3 className="ambulance-found-title">
+                {filteredHospitals.length} hospitals found nearby
+              </h3>
+
+              <p className="ambulance-location">📍 Hyderabad, Telangana</p>
+
+              {/* Hospital Cards */}
+              <div className="ambulance-hospital-list">
+
+
+                {filteredHospitals.map((h) => (
+                  <div key={h.ambulance_id} className="ambulance-hospital-card">
+                    <div className="ambulance-hospital-top">
+                      <div className="ambulance-hospital-icon-wrap">
+                        <div className="ambulance-hospital-icon">✚</div>
+                      </div>
+
+                      <div className="ambulance-hospital-info">
+                        <h2>{h.hospital_name}</h2>
+                        <p className="ambulance-hospital-type">
+                          {h.specialty_type}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="ambulance-details">
+                      <p>📍 {h.location}</p>
+                      <p>🚑 {h.service_provider}</p>
+                      <p>✅ {h.availability_status}</p>
+                      <p>📞 {h.ambulance_contact}</p>
+                    </div>
+
+                    <div className="ambulance-actions-row">
+                      <button
+                        className="ambulance-call-btn"
+                        onClick={() =>
+                          window.open(`tel:${h.ambulance_contact}`)
+                        }
+                      >
+                        📞 Call
+                      </button>
+
+                      <button
+                        className="ambulance-book-btn"
+                        onClick={() =>
+                          alert(`✅ Ambulance booked from ${h.hospital_name}`)
+                        }
+                      >
+                        Book Now →
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+            </div>
+          </div>
+        )}
+
+
+
+
+        {openHospitalBooking && selectedHospital && (
+          <div className="profile-overlay" onClick={() => setOpenHospitalBooking(false)}>
+            <div className="profile-popup" onClick={(e) => e.stopPropagation()}>
+              <h2 className="popup-title">Booking Details</h2>
+
+              <div className="popup-section">
+                <label>Appointment Date</label>
+
+                <input
+                  type="date"
+                  className="date-picker"
+                  value={bookingDate}
+                  min={new Date().toISOString().split("T")[0]}
+                  onChange={(e) => setBookingDate(e.target.value)}
+                />
+              </div>
+
+
+              <div className="popup-section">
+                <label>Select Time</label>
+
+
+
+
+
+                <div className="time-slots">
+                  {TIME_SLOTS.map((slot) => (
+                    <button
+                      key={slot}
+                      type="button"
+                      className={`time-slot ${bookingTime === slot ? "active" : ""
+                        }`}
+                      onClick={() => setBookingTime(slot)}
+                    >
+                      {slot}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="popup-section">
+                <label>Ambulance Required?</label>
+                <div className="pill-row">
+                  <button
+                    className={needAmbulance === "Yes" ? "active" : ""}
+                    onClick={() => setNeedAmbulance("Yes")}
+                  >
+                    Yes
+                  </button>
+                  <button
+                    className={needAmbulance === "No" ? "active" : ""}
+                    onClick={() => setNeedAmbulance("No")}
+                  >
+                    No
+                  </button>
+                </div>
+              </div>
 
               <button
-                className="ambulance-confirm"
+                className="confirm-btn"
                 onClick={() => {
-                  setOpenAmbulancePopup(false);
-                  alert("✅ Ambulance booked successfully!");
+                  setOpenHospitalBooking(false);
+                  setOpenHospitalSuccess(true);
                 }}
               >
                 Confirm Booking
               </button>
+
+              <button
+                className="cancel-btn"
+                onClick={() => setOpenHospitalBooking(false)}
+              >
+                Cancel
+              </button>
             </div>
           </div>
-        </div>
-      )}
-      {openAmbulanceScreen && (
-        <div className="ambulance-screen">
-          {/* Header */}
-          <div className="ambulance-header">
-            <button
-              className="ambulance-back-btn"
-              onClick={() => setOpenAmbulanceScreen(false)}
-            >
-              ←
-            </button>
-            <h2 className="ambulance-header-title">Book Ambulance</h2>
-            <div style={{ width: 42 }} />
-          </div>
+        )}
 
-          {/* Body */}
-          <div className="ambulance-body">
-            {/* Warning */}
-            <div className="ambulance-warning">
-              <span className="ambulance-warning-icon">⚠</span>
-              <p>
-                <b>For life-threatening emergencies, call 108 immediately</b>
-              </p>
+
+        {openHospitalSuccess && (
+          <div className="profile-overlay">
+            <div className="success-popup">
+              <h2>Booking Confirmed ✅</h2>
+
+              <p>Hospital: {selectedHospital?.hospital_name}</p>
+              <p>Speciality: {selectedHospital?.specialty_type}</p>
+              <p>Date: {bookingDate}</p>
+              <p>Time: {bookingTime}</p>
+              <p>Price: $150/hr</p>
+              <p>Ambulance: {needAmbulance}</p>
+
+              {/* ✅ THIS IS THE ONLY CORRECT PLACE */}
+              <button
+                className="view-doctors-btn"
+                onClick={() => {
+                  const docs = HOSPITAL_DOCTORS.filter(
+                    (d) => d.hospitalId === selectedHospital?.hospital_id
+                  );
+
+                  setHospitalDoctors(docs);
+                  setOpenHospitalSuccess(false);
+                  setOpenHospitalDoctors(true);
+                }}
+              >
+                VIEW HOSPITAL DOCTORS
+              </button>
             </div>
-
-            {/* Hospitals Found */}
-<h3 className="ambulance-found-title">
-  {filteredHospitals.length} hospitals found nearby
-</h3>
-
-            <p className="ambulance-location">📍 Hyderabad, Telangana</p>
-
-            {/* Hospital Cards */}
-            <div className="ambulance-hospital-list">
-
-
-              {filteredHospitals.map((h) => (
-                <div key={h.ambulance_id} className="ambulance-hospital-card">
-                  <div className="ambulance-hospital-top">
-                    <div className="ambulance-hospital-icon-wrap">
-                      <div className="ambulance-hospital-icon">✚</div>
-                    </div>
-
-                    <div className="ambulance-hospital-info">
-                      <h2>{h.hospital_name}</h2>
-                      <p className="ambulance-hospital-type">
-                        {h.specialty_type}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="ambulance-details">
-                    <p>📍 {h.location}</p>
-                    <p>🚑 {h.service_provider}</p>
-                    <p>✅ {h.availability_status}</p>
-                    <p>📞 {h.ambulance_contact}</p>
-                  </div>
-
-                  <div className="ambulance-actions-row">
-                    <button
-                      className="ambulance-call-btn"
-                      onClick={() =>
-                        window.open(`tel:${h.ambulance_contact}`)
-                      }
-                    >
-                      📞 Call
-                    </button>
-
-                    <button
-                      className="ambulance-book-btn"
-                      onClick={() =>
-                        alert(`✅ Ambulance booked from ${h.hospital_name}`)
-                      }
-                    >
-                      Book Now →
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-
           </div>
-        </div>
-      )}
+        )}
 
 
 
-
-{openHospitalBooking && selectedHospital && (
-  <div className="profile-overlay" onClick={() => setOpenHospitalBooking(false)}>
-    <div className="profile-popup" onClick={(e) => e.stopPropagation()}>
-      <h2 className="popup-title">Booking Details</h2>
-
-<div className="popup-section">
-  <label>Appointment Date</label>
-
-  <input
-    type="date"
-    className="date-picker"
-    value={bookingDate}
-    min={new Date().toISOString().split("T")[0]}
-    onChange={(e) => setBookingDate(e.target.value)}
-  />
-</div>
-
-
-<div className="popup-section">
-  <label>Select Time</label>
-
-
-
-
-
-  <div className="time-slots">
-    {TIME_SLOTS.map((slot) => (
-      <button
-        key={slot}
-        type="button"
-        className={`time-slot ${
-          bookingTime === slot ? "active" : ""
-        }`}
-        onClick={() => setBookingTime(slot)}
-      >
-        {slot}
-      </button>
-    ))}
-  </div>
-</div>
-
-      <div className="popup-section">
-        <label>Ambulance Required?</label>
-        <div className="pill-row">
-          <button
-            className={needAmbulance === "Yes" ? "active" : ""}
-            onClick={() => setNeedAmbulance("Yes")}
-          >
-            Yes
-          </button>
-          <button
-            className={needAmbulance === "No" ? "active" : ""}
-            onClick={() => setNeedAmbulance("No")}
-          >
-            No
-          </button>
-        </div>
-      </div>
-
-      <button
-        className="confirm-btn"
-        onClick={() => {
-          setOpenHospitalBooking(false);
-          setOpenHospitalSuccess(true);
-        }}
-      >
-        Confirm Booking
-      </button>
-
-      <button
-        className="cancel-btn"
-        onClick={() => setOpenHospitalBooking(false)}
-      >
-        Cancel
-      </button>
-    </div>
-  </div>
-)}
-
-
-{openHospitalSuccess && (
-  <div className="profile-overlay">
-    <div className="success-popup">
-      <h2>Booking Confirmed ✅</h2>
-
-      <p>Hospital: {selectedHospital?.hospital_name}</p>
-      <p>Speciality: {selectedHospital?.specialty_type}</p>
-      <p>Date: {bookingDate}</p>
-      <p>Time: {bookingTime}</p>
-      <p>Price: $150/hr</p>
-      <p>Ambulance: {needAmbulance}</p>
-
-      {/* ✅ THIS IS THE ONLY CORRECT PLACE */}
-      <button
-        className="view-doctors-btn"
-        onClick={() => {
-          const docs = HOSPITAL_DOCTORS.filter(
-            (d) => d.hospitalId === selectedHospital?.hospital_id
-          );
-
-          setHospitalDoctors(docs);
-          setOpenHospitalSuccess(false);
-          setOpenHospitalDoctors(true);
-        }}
-      >
-        VIEW HOSPITAL DOCTORS
-      </button>
-    </div>
-  </div>
-)}
-
-
-
-{/* 
+        {/* 
 {openHospitalSuccess && selectedHospital && (
   <div className="profile-overlay">
     <div className="success-popup">
@@ -2583,728 +2668,727 @@ const filteredHospitals = useMemo(() => {
 
 
 
-      {openOfflinePopup && (
-        <div className="profile-overlay" onClick={() => setOpenOfflinePopup(false)}>
-          <div className="profile-popup" onClick={(e) => e.stopPropagation()}>
-            <div className="profile-header">
-              <h2>Offline Consultation</h2>
+        {openOfflinePopup && (
+          <div className="profile-overlay" onClick={() => setOpenOfflinePopup(false)}>
+            <div className="profile-popup" onClick={(e) => e.stopPropagation()}>
+              <div className="profile-header">
+                <h2>Offline Consultation</h2>
 
-              <button
-                className="profile-close"
-                onClick={() => setOpenOfflinePopup(false)}
-              >
-                ✖
-              </button>
-            </div>
+                <button
+                  className="profile-close"
+                  onClick={() => setOpenOfflinePopup(false)}
+                >
+                  ✖
+                </button>
+              </div>
 
-            <div className="profile-body">
-              {/* 1) Consultation Time */}
-              <div className="op-time-box">
-                <p><b>What is your consultation time?</b></p>
+              <div className="profile-body">
+                {/* 1) Consultation Time */}
+                <div className="op-time-box">
+                  <p><b>What is your consultation time?</b></p>
 
-                {!editOfflineTime ? (
-                  <div className="op-time-row">
-                    <span className="op-time">{doctorProfile.opTime}</span>
-
-                    <button
-                      className="edit-btn"
-                      onClick={() => {
-                        setEditOfflineTime(true);
-                        setTempOfflineTime(doctorProfile.opTime);
-                      }}
-                    >
-                      Edit
-                    </button>
-                  </div>
-                ) : (
-                  <div className="op-time-edit">
-                    <input
-                      type="text"
-                      value={tempOfflineTime}
-                      onChange={(e) => setTempOfflineTime(e.target.value)}
-                      placeholder="Ex: 10:00 AM - 01:00 PM"
-                    />
-
-                    <div className="op-time-actions">
-                      <button
-                        className="cancel-btn"
-                        onClick={() => setEditOfflineTime(false)}
-                      >
-                        Cancel
-                      </button>
+                  {!editOfflineTime ? (
+                    <div className="op-time-row">
+                      <span className="op-time">{doctorProfile.opTime}</span>
 
                       <button
-                        className="save-btn"
+                        className="edit-btn"
                         onClick={() => {
-                          setDoctorProfile((prev) => ({
-                            ...prev,
-                            opTime: tempOfflineTime,
-                          }));
-                          setEditOfflineTime(false);
+                          setEditOfflineTime(true);
+                          setTempOfflineTime(doctorProfile.opTime);
                         }}
                       >
-                        Save
+                        Edit
                       </button>
                     </div>
+                  ) : (
+                    <div className="op-time-edit">
+                      <input
+                        type="text"
+                        value={tempOfflineTime}
+                        onChange={(e) => setTempOfflineTime(e.target.value)}
+                        placeholder="Ex: 10:00 AM - 01:00 PM"
+                      />
+
+                      <div className="op-time-actions">
+                        <button
+                          className="cancel-btn"
+                          onClick={() => setEditOfflineTime(false)}
+                        >
+                          Cancel
+                        </button>
+
+                        <button
+                          className="save-btn"
+                          onClick={() => {
+                            setDoctorProfile((prev) => ({
+                              ...prev,
+                              opTime: tempOfflineTime,
+                            }));
+                            setEditOfflineTime(false);
+                          }}
+                        >
+                          Save
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+
+
+                {/* 2) Book Ambulance Button */}
+                <button
+                  type="button"
+                  className="emergency-btn"
+                  style={{ width: "100%", marginTop: "14px" }}
+                  onClick={() => {
+                    setOpenOfflinePopup(false);
+                    setOpenAmbulanceScreen(true);
+                  }}
+
+                >
+                  Book Ambulance Now →
+                </button>
+
+
+              </div>
+            </div>
+          </div>
+        )}
+        {openOnlinePopup && (
+          <div className="profile-overlay" onClick={() => setOpenOnlinePopup(false)}>
+            <div className="profile-popup" onClick={(e) => e.stopPropagation()}>
+
+              {/* Header */}
+              <div className="profile-header">
+                <h2>Online Consultation</h2>
+                <button
+                  className="profile-close"
+                  onClick={() => setOpenOnlinePopup(false)}
+                >
+                  ✖
+                </button>
+              </div>
+
+              {/* Body */}
+              <div className="profile-body">
+                <p style={{ fontWeight: 800, marginBottom: "12px" }}>
+                  Available Doctors
+                </p>
+
+                <div className="online-doctor-list">
+                  {doctors.map((doc) => (
+                    <div key={doc.id} className="online-doctor-card">
+                      <div className="online-doc-top">
+                        <img src={doc.image} alt={doc.name} />
+                        <div>
+                          <h4>{doc.name}</h4>
+                          <p className="spec">{doc.speciality}</p>
+                          <p className="rating">⭐ {doc.rating}</p>
+                        </div>
+                      </div>
+
+                      {/* Slots */}
+                      <div className="online-slots">
+                        {doc.slots.map((slot) => (
+                          <span key={slot} className="slot-pill">
+                            {slot}
+                          </span>
+                        ))}
+                      </div>
+
+                      {/* Book */}
+                      <button
+                        className="online-book-btn"
+                        onClick={() => {
+                          setBookedDoctorName(doc.name);
+                          setOpenOnlinePopup(false);
+                          setOnlineSuccessPopup(true);
+                        }}
+                      >
+                        Book Now →
+                      </button>
+
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+        {onlineSuccessPopup && (
+          <div className="success-overlay">
+            <div className="success-popup">
+              <h2 className="success-title">Success ✅</h2>
+
+              <p className="success-text">
+                Your online consultation is booked with <b>{bookedDoctorName}</b>.
+              </p>
+
+              <button
+                type="button"
+                className="success-ok"
+                onClick={() => setOnlineSuccessPopup(false)}
+              >
+                OK
+              </button>
+            </div>
+          </div>
+        )}
+
+
+        {/* ✅ HOSPITAL DOCTORS SCREEN (ADD HERE) */}
+        {openHospitalDoctors && (
+          <div className="doctor-list-screen">
+            <div className="doctor-list-header">
+              <button
+                className="back-btn"
+                onClick={() => setOpenHospitalDoctors(false)}
+              >
+                ←
+              </button>
+
+              <h2 className="doctor-list-title">
+                {selectedHospital?.hospital_name} Doctors
+              </h2>
+            </div>
+
+            {hospitalDoctors.map((doc) => (
+              <div
+                key={doc.id}
+                className="hospital-doctor-card"
+                onClick={() => setSelectedDoctor(doc)}
+              >
+                <div className="hospital-doctor-left">
+                  <img src={doc.image} alt={doc.name} />
+
+                  <div className="hospital-doctor-info">
+                    <h3>{doc.name}</h3>
+                    <p className="spec">{doc.speciality}</p>
+
+                    <div className="rating-pill">
+                      ⭐ {doc.rating}
+                    </div>
                   </div>
-                )}
+                </div>
+
+                <div className="arrow-circle">
+                  →
+                </div>
+
+              </div>
+            ))}
+
+          </div>
+        )}
+
+
+
+
+        {selectedDoctor && (
+          <div className="doctor-profile-screen">
+            <div className="doctor-profile-header">
+              <button onClick={() => setSelectedDoctor(null)}>←</button>
+              <h2>Doctor Profile</h2>
+            </div>
+
+            <div className="doctor-profile-card">
+              <img src={selectedDoctor.image} />
+              <h2>{selectedDoctor.name}</h2>
+              <p className="spec">{selectedDoctor.speciality}</p>
+              <p className="rating">⭐ {selectedDoctor.rating}</p>
+
+              <div className="stats">
+                <div>
+                  <p>Exp.</p>
+                  <b>{selectedDoctor.experience}</b>
+                </div>
+                <div>
+                  <p>Patients</p>
+                  <b>{selectedDoctor.patients}</b>
+                </div>
+              </div>
+            </div>
+
+            <h3>Biography</h3>
+            <p className="bio">{selectedDoctor.bio}</p>
+
+            {/* Personal Care Assistant */}
+            <div className="assistant-box">
+              <div className="assistant-header">
+                <span>Personal Care Assistant</span>
+                <span className="price">+₹25</span>
               </div>
 
 
+              <label className="switch">
+                <input
+                  type="checkbox"
+                  checked={patientAssist === "yes"}
+                  onChange={(e) => {
+                    if (e.target.checked) {
+                      setShowAssistantPopup(true);   // 🔥 OPEN POPUP
+                    } else {
+                      setPatientAssist("no");
+                      setSelectedAssistant(null);
+                    }
+                  }}
+                />
+                <span className="slider" />
+              </label>
 
-              {/* 2) Book Ambulance Button */}
-              <button
-                type="button"
-                className="emergency-btn"
-                style={{ width: "100%", marginTop: "14px" }}
-                onClick={() => {
-                  setOpenOfflinePopup(false);
-                  setOpenAmbulanceScreen(true);
-                }}
-
-              >
-                Book Ambulance Now →
-              </button>
-
-              
+              <ul>
+                <li>✔ Queue Management</li>
+                <li>✔ Lab Report Collection</li>
+              </ul>
             </div>
+
+
+            {patientAssist === "yes" && selectedAssistant && (
+              <div className="assistant-selected-card">
+                <img
+                  src={selectedAssistant.image}
+                  alt={selectedAssistant.name}
+                  className="assistant-avatar"
+                />
+
+                <div className="assistant-details">
+                  <h4>{selectedAssistant.name}</h4>
+                  <p className="assistant-role">{selectedAssistant.role}</p>
+
+                  <div className="assistant-meta">
+                    <span>⭐ {selectedAssistant.rating}</span>
+                    <span>📞 +91 98XXX 12XXX</span>
+                  </div>
+                </div>
+
+                <span className="assistant-badge">Assigned</span>
+              </div>
+            )}
+
+
+
+            <button className="confirm-btn">Book Appointment</button>
           </div>
-        </div>
-      )}
-      {openOnlinePopup && (
-        <div className="profile-overlay" onClick={() => setOpenOnlinePopup(false)}>
-          <div className="profile-popup" onClick={(e) => e.stopPropagation()}>
+        )}
 
-            {/* Header */}
-            <div className="profile-header">
-              <h2>Online Consultation</h2>
-              <button
-                className="profile-close"
-                onClick={() => setOpenOnlinePopup(false)}
-              >
-                ✖
-              </button>
-            </div>
 
-            {/* Body */}
-            <div className="profile-body">
-              <p style={{ fontWeight: 800, marginBottom: "12px" }}>
-                Available Doctors
-              </p>
+        {showAssistantPopup && (
+          <div className="assistant-overlay">
+            <div className="assistant-popup">
 
-              <div className="online-doctor-list">
-                {doctors.map((doc) => (
-                  <div key={doc.id} className="online-doctor-card">
-                    <div className="online-doc-top">
-                      <img src={doc.image} alt={doc.name} />
-                      <div>
-                        <h4>{doc.name}</h4>
-                        <p className="spec">{doc.speciality}</p>
-                        <p className="rating">⭐ {doc.rating}</p>
-                      </div>
+              <h2>Select Care Assistant</h2>
+              <p className="subtitle">Choose an assistant for your visit</p>
+
+              <div className="assistant-list">
+                {assistants.map((a) => (
+                  <div
+                    key={a.id}
+                    className={`assistant-card ${selectedAssistant?.id === a.id ? "active" : ""
+                      }`}
+                    onClick={() => setSelectedAssistant(a)}
+                  >
+                    <img src={a.image} alt={a.name} />
+                    <div>
+                      <h4>{a.name}</h4>
+                      <p>{a.role}</p>
+                      <span>⭐ {a.rating}</span>
                     </div>
-
-                    {/* Slots */}
-                    <div className="online-slots">
-                      {doc.slots.map((slot) => (
-                        <span key={slot} className="slot-pill">
-                          {slot}
-                        </span>
-                      ))}
-                    </div>
-
-                    {/* Book */}
-                    <button
-                      className="online-book-btn"
-                      onClick={() => {
-                        setBookedDoctorName(doc.name);
-                        setOpenOnlinePopup(false);
-                        setOnlineSuccessPopup(true);
-                      }}
-                    >
-                      Book Now →
-                    </button>
-
                   </div>
                 ))}
               </div>
+
+              <div className="assistant-confirm">
+                <button
+                  className="no-btn"
+                  onClick={() => {
+                    setShowAssistantPopup(false);
+                    setPatientAssist("no");
+                    setSelectedAssistant(null);
+                  }}
+                >
+                  No
+                </button>
+
+                <button
+                  className="yes-btn"
+                  disabled={!selectedAssistant}
+                  onClick={() => {
+                    setPatientAssist("yes");
+                    setShowAssistantPopup(false);
+                  }}
+                >
+                  Yes
+                </button>
+              </div>
+
             </div>
           </div>
-        </div>
-      )}
-      {onlineSuccessPopup && (
-        <div className="success-overlay">
-          <div className="success-popup">
-            <h2 className="success-title">Success ✅</h2>
+        )}
 
-            <p className="success-text">
-              Your online consultation is booked with <b>{bookedDoctorName}</b>.
-            </p>
+        {openAppointmentScreen && appointmentDoctor && (
+          <div className="appointment-overlay">
 
+            {/* Header */}
+            <div className="appointment-header">
+              <button
+                className="back-btn"
+                onClick={() => setOpenAppointmentScreen(false)}
+              >
+                ←
+              </button>
+              <h2>Choose Appointment Time</h2>
+              <div style={{ width: 32 }} />
+            </div>
+
+            {/* Doctor Card */}
+            <div className="appointment-doctor-card">
+              <img src={appointmentDoctor.image} />
+              <div>
+                <h3>{appointmentDoctor.name}</h3>
+                <p>{appointmentDoctor.speciality}</p>
+                <span>⭐ {appointmentDoctor.rating}</span>
+              </div>
+            </div>
+
+            {/* Date */}
+            <div className="appointment-date-header">
+              <h3>Select Date</h3>
+              <span
+                className="month-selector"
+                onClick={() => setShowMonthPicker(true)}
+              >
+                {months[currentMonth.getMonth()]}
+                <span className="month-arrow">▼</span>
+              </span>
+
+              {showMonthPicker && (
+                <div
+                  className="month-popup-overlay"
+                  onClick={() => setShowMonthPicker(false)}
+                >
+                  <div
+                    className="month-popup"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <h3 className="month-popup-title">Select Month</h3>
+
+                    <div className="month-popup-list">
+                      {months.map((m, index) => (
+                        <div
+                          key={m}
+                          className="month-popup-item"
+                          onClick={() => {
+                            setCurrentMonth(
+                              new Date(currentMonth.getFullYear(), index, 1)
+                            );
+                            setShowMonthPicker(false);
+                          }}
+                        >
+                          {m}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+
+
+            </div>
+
+            <div className="date-scroll">
+              {generateDates().map((date) => {
+                const isActive =
+                  date.toDateString() === selectedDate.toDateString();
+
+                return (
+                  <div
+                    key={date.toDateString()}
+                    className={`date-box ${isActive ? "active" : ""}`}
+                    onClick={() => setSelectedDate(date)}
+                  >
+                    <span>
+                      {date.toLocaleDateString("en-US", { weekday: "short" })}
+                    </span>
+                    <b>{date.getDate()}</b>
+                  </div>
+                );
+              })}
+            </div>
+
+
+            {/* Morning */}
+            <h4 className="slot-title">☀ Morning</h4>
+            <div className="slots">
+              {["10:00 AM", "10:30 AM", "11:30 AM"].map((time) => (
+                <button
+                  key={time}
+                  type="button"
+                  className={selectedTime === time ? "active" : ""}
+                  onClick={() => setSelectedTime(time)}
+                >
+                  {time}
+                </button>
+              ))}
+            </div>
+
+
+            {/* Afternoon */}
+            <h4 className="slot-title">☀ Afternoon</h4>
+            <div className="slots">
+              {["12:30 PM", "02:00 PM", "03:30 PM", "04:00 PM"].map((time) => (
+                <button
+                  key={time}
+                  type="button"
+                  className={selectedTime === time ? "active" : ""}
+                  onClick={() => setSelectedTime(time)}
+                >
+                  {time}
+                </button>
+              ))}
+            </div>
+
+
+
+            {/* Evening */}
+            <h4 className="slot-title">🌙 Evening</h4>
+            <div className="slots">
+              {["06:00 PM", "06:30 PM", "07:30 PM"].map((time) => (
+                <button
+                  key={time}
+                  type="button"
+                  className={selectedTime === time ? "active" : ""}
+                  onClick={() => setSelectedTime(time)}
+                >
+                  {time}
+                </button>
+              ))}
+            </div>
+
+
+            {/* Confirm */}
             <button
-              type="button"
-              className="success-ok"
-              onClick={() => setOnlineSuccessPopup(false)}
+              className="confirm-appointment-btn"
+              disabled={!selectedTime}
+              onClick={() => {
+                setOpenAppointmentScreen(false); // 🔥 CLOSE booking screen
+                setShowConfirmPopup(true);       // 🔥 OPEN confirm popup
+              }}
             >
-              OK
+              Confirm Appointment
             </button>
+
+
           </div>
-        </div>
-      )}
+        )}
 
 
-      {/* ✅ HOSPITAL DOCTORS SCREEN (ADD HERE) */}
-{openHospitalDoctors && (
-  <div className="doctor-list-screen">
-    <div className="doctor-list-header">
-      <button
-        className="back-btn"
-        onClick={() => setOpenHospitalDoctors(false)}
-      >
-        ←
-      </button>
+        {showConfirmPopup && !paymentCompleted && (
+          <div className="confirm-overlay" onClick={() => setShowConfirmPopup(false)}>
+            <div
+              className="confirm-sheet"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="sheet-handle" />
 
-      <h2 className="doctor-list-title">
-        {selectedHospital?.hospital_name} Doctors
-      </h2>
-    </div>
+              <h2 className="confirm-title">
+                Appointment Confirmed! 🎉
+              </h2>
+              <p className="confirm-sub">
+                Your slot is reserved. Please complete payment to confirm.
+              </p>
 
-{hospitalDoctors.map((doc) => (
-  <div
-    key={doc.id}
-    className="hospital-doctor-card"
-    onClick={() => setSelectedDoctor(doc)}
-  >
-    <div className="hospital-doctor-left">
-      <img src={doc.image} alt={doc.name} />
+              {/* Doctor Card */}
+              <div className="confirm-doctor-card">
+                <img src={appointmentDoctor?.image} alt="doctor" />
+                <div>
+                  <span className="doc-type">CARDIOLOGIST</span>
+                  <h3>{appointmentDoctor?.name}</h3>
+                  <p>St. Mary's Hospital</p>
+                </div>
+              </div>
 
-      <div className="hospital-doctor-info">
-        <h3>{doc.name}</h3>
-        <p className="spec">{doc.speciality}</p>
+              {/* Info Rows */}
+              <div className="confirm-info">
+                <div className="info-row">
+                  📅 <b>{selectedDate?.toDateString()}</b>
+                </div>
+                <div className="info-row">
+                  ⏰ <b>{selectedTime}</b> <span>(IST)</span>
+                </div>
+                <div className="info-row">
+                  🎥 Online Video Consultation
+                </div>
+              </div>
 
-        <div className="rating-pill">
-          ⭐ {doc.rating}
-        </div>
-      </div>
-    </div>
+              {/* Pay Button */}
+              <button className="pay-btn" onClick={handlePayNow} disabled={payLoading}>
+                Pay Now ($50.00)
+              </button>
 
-    <div className="arrow-circle">
-      →
-    </div>
+              <button
+                className="cancel-link"
+                onClick={() => {
+                  setShowConfirmPopup(false);
+                  setSelectedTime(null);
+                }}
+              >
+                Cancel Appointment
+              </button>
 
-  </div>
-))}
-
-  </div>
-)}
-
-
-
-
-{selectedDoctor && (
-  <div className="doctor-profile-screen">
-    <div className="doctor-profile-header">
-      <button onClick={() => setSelectedDoctor(null)}>←</button>
-      <h2>Doctor Profile</h2>
-    </div>
-
-    <div className="doctor-profile-card">
-      <img src={selectedDoctor.image} />
-      <h2>{selectedDoctor.name}</h2>
-      <p className="spec">{selectedDoctor.speciality}</p>
-      <p className="rating">⭐ {selectedDoctor.rating}</p>
-
-      <div className="stats">
-        <div>
-          <p>Exp.</p>
-          <b>{selectedDoctor.experience}</b>
-        </div>
-        <div>
-          <p>Patients</p>
-          <b>{selectedDoctor.patients}</b>
-        </div>
-      </div>
-    </div>
-
-    <h3>Biography</h3>
-    <p className="bio">{selectedDoctor.bio}</p>
-
-    {/* Personal Care Assistant */}
-    <div className="assistant-box">
-      <div className="assistant-header">
-        <span>Personal Care Assistant</span>
-        <span className="price">+₹25</span>
-      </div>
-
-
-<label className="switch">
-  <input
-    type="checkbox"
-    checked={patientAssist === "yes"}
-    onChange={(e) => {
-      if (e.target.checked) {
-        setShowAssistantPopup(true);   // 🔥 OPEN POPUP
-      } else {
-        setPatientAssist("no");
-        setSelectedAssistant(null);
-      }
-    }}
-  />
-  <span className="slider" />
-</label>
-
-      <ul>
-        <li>✔ Queue Management</li>
-        <li>✔ Lab Report Collection</li>
-      </ul>
-    </div>
-
-
-{patientAssist === "yes" && selectedAssistant && (
-  <div className="assistant-selected-card">
-    <img
-      src={selectedAssistant.image}
-      alt={selectedAssistant.name}
-      className="assistant-avatar"
-    />
-
-    <div className="assistant-details">
-      <h4>{selectedAssistant.name}</h4>
-      <p className="assistant-role">{selectedAssistant.role}</p>
-
-      <div className="assistant-meta">
-        <span>⭐ {selectedAssistant.rating}</span>
-        <span>📞 +91 98XXX 12XXX</span>
-      </div>
-    </div>
-
-    <span className="assistant-badge">Assigned</span>
-  </div>
-)}
-
-
-
-    <button className="confirm-btn">Book Appointment</button>
-  </div>
-)}
-
-
-{showAssistantPopup && (
-  <div className="assistant-overlay">
-    <div className="assistant-popup">
-
-      <h2>Select Care Assistant</h2>
-      <p className="subtitle">Choose an assistant for your visit</p>
-
-      <div className="assistant-list">
-        {assistants.map((a) => (
-          <div
-            key={a.id}
-            className={`assistant-card ${
-              selectedAssistant?.id === a.id ? "active" : ""
-            }`}
-            onClick={() => setSelectedAssistant(a)}
-          >
-            <img src={a.image} alt={a.name} />
-            <div>
-              <h4>{a.name}</h4>
-              <p>{a.role}</p>
-              <span>⭐ {a.rating}</span>
             </div>
           </div>
-        ))}
-      </div>
+        )}
 
-      <div className="assistant-confirm">
-        <button
-          className="no-btn"
-          onClick={() => {
-            setShowAssistantPopup(false);
-            setPatientAssist("no");
-            setSelectedAssistant(null);
-          }}
-        >
-          No
-        </button>
 
-        <button
-          className="yes-btn"
-          disabled={!selectedAssistant}
-          onClick={() => {
-            setPatientAssist("yes");
-            setShowAssistantPopup(false);
-          }}
-        >
-          Yes
-        </button>
-      </div>
 
-    </div>
-  </div>
-)}
 
-{openAppointmentScreen && appointmentDoctor && (
-  <div className="appointment-overlay">
+        {openPaymentSuccess && (
+          <div className="pay-mobile-screen">
 
-    {/* Header */}
-    <div className="appointment-header">
-      <button
-        className="back-btn"
-        onClick={() => setOpenAppointmentScreen(false)}
-      >
-        ←
-      </button>
-      <h2>Choose Appointment Time</h2>
-      <div style={{ width: 32 }} />
-    </div>
+            {/* HEADER */}
+            <div className="pay-mobile-header">
+              <button
+                className="pay-mobile-close"
+                onClick={() => setOpenPaymentSuccess(false)}
+              >
+                ✕
+              </button>
+              <div style={{ width: 24 }} />
+            </div>
 
-    {/* Doctor Card */}
-    <div className="appointment-doctor-card">
-      <img src={appointmentDoctor.image} />
-      <div>
-        <h3>{appointmentDoctor.name}</h3>
-        <p>{appointmentDoctor.speciality}</p>
-        <span>⭐ {appointmentDoctor.rating}</span>
-      </div>
-    </div>
+            {/* CONTENT */}
+            <div className="pay-mobile-content">
 
-    {/* Date */}
-    <div className="appointment-date-header">
-      <h3>Select Date</h3>
-    <span
-  className="month-selector"
-  onClick={() => setShowMonthPicker(true)}
->
-  {months[currentMonth.getMonth()]}
-  <span className="month-arrow">▼</span>
-</span>
+              {/* SUCCESS ICON */}
+              <div className="pay-mobile-check">✓</div>
 
-{showMonthPicker && (
-  <div
-    className="month-popup-overlay"
-    onClick={() => setShowMonthPicker(false)}
-  >
-    <div
-      className="month-popup"
-      onClick={(e) => e.stopPropagation()}
-    >
-      <h3 className="month-popup-title">Select Month</h3>
+              <h1 className="pay-mobile-title">Payment Successful!</h1>
+              <p className="pay-mobile-sub">
+                Your appointment with <b>Dr. Sarah Jenkins</b> is confirmed.
+              </p>
 
-      <div className="month-popup-list">
-        {months.map((m, index) => (
+              {/* CARD */}
+              <div className="pay-mobile-card">
+
+                {/* AMOUNT */}
+                <div className="pay-mobile-amount">
+                  <p className="label">TOTAL AMOUNT PAID</p>
+                  <h1>₹50</h1>
+                </div>
+
+                {/* TRANSACTION */}
+                <div className="pay-mobile-row">
+                  <span>Transaction ID</span>
+                  <span className="bold">#pay_SBBYHLSboGNNcj</span>
+                </div>
+
+                <div className="pay-mobile-divider" />
+
+                {/* DOCTOR */}
+                <div className="pay-mobile-doctor">
+                  <img
+                    src="https://randomuser.me/api/portraits/women/44.jpg"
+                    alt="Doctor"
+                  />
+                  <div>
+                    <h4>Dr. Sarah Jenkins</h4>
+                    <p>Specialist</p>
+                  </div>
+                </div>
+
+                {/* DATE & TIME */}
+                <div className="pay-mobile-slots">
+                  <div className="slot">
+                    📅 2 February 2026
+                  </div>
+                  <div className="slot">
+                    🕒 12:30 PM
+                  </div>
+                </div>
+              </div>
+
+              {/* CTA */}
+              <button className="pay-mobile-btn">
+                Call scheduled
+              </button>
+
+              <p className="pay-mobile-footer">
+                You can join the consultation from <b>My Bookings</b> at the scheduled time.
+              </p>
+            </div>
+          </div>
+        )}
+
+
+
+
+
+
+        {openMyBookings && (
           <div
-            key={m}
-            className="month-popup-item"
-            onClick={() => {
-              setCurrentMonth(
-                new Date(currentMonth.getFullYear(), index, 1)
-              );
-              setShowMonthPicker(false);
-            }}
+            className="bookings-overlay"
+            onClick={() => setOpenMyBookings(false)}
           >
-            {m}
+            <div
+              className="bookings-popup"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Header */}
+              <div className="bookings-header">
+                <h2>My Bookings</h2>
+                <button
+                  className="close-btn"
+                  onClick={() => setOpenMyBookings(false)}
+                >
+                  ✖
+                </button>
+              </div>
+
+              {/* Booking Card */}
+              <div className="booking-card">
+                <h3>Dr. Sarah Jenkins</h3>
+                <p className="dates">30 Jan 2026 • 05:30 PM</p>
+
+                <button className="join-call-btn">
+                  Join Call
+                </button>
+              </div>
+
+              {/* Booking Card */}
+              <div className="booking-card">
+                <h3>Dr. Marcus Chen</h3>
+                <p className="dates">30 Jan 2026 • 04:00 PM</p>
+
+                <button className="join-call-btn">
+                  Join Call
+                </button>
+              </div>
+              {/* Booking Card */}
+              <div className="booking-card">
+                <h3>Dr. Aisha Khan</h3>
+                <p className="dates">31 Jan 2026 • 11:00 AM</p>
+
+                <button className="join-call-btn">
+                  Join Call
+                </button>
+              </div>
+
+            </div>
           </div>
-        ))}
+        )}
+
+
+
+
+
+
       </div>
-    </div>
-  </div>
-)}
-
-
-
-    </div>
-
-  <div className="date-scroll">
-  {generateDates().map((date) => {
-    const isActive =
-      date.toDateString() === selectedDate.toDateString();
-
-    return (
-      <div
-        key={date.toDateString()}
-        className={`date-box ${isActive ? "active" : ""}`}
-        onClick={() => setSelectedDate(date)}
-      >
-        <span>
-          {date.toLocaleDateString("en-US", { weekday: "short" })}
-        </span>
-        <b>{date.getDate()}</b>
-      </div>
-    );
-  })}
-</div>
-
-
-    {/* Morning */}
-    <h4 className="slot-title">☀ Morning</h4>
-    <div className="slots">
-  {["10:00 AM", "10:30 AM", "11:30 AM"].map((time) => (
-    <button
-      key={time}
-      type="button"
-      className={selectedTime === time ? "active" : ""}
-      onClick={() => setSelectedTime(time)}
-    >
-      {time}
-    </button>
-  ))}
-</div>
-
-
-    {/* Afternoon */}
-    <h4 className="slot-title">☀ Afternoon</h4>
-<div className="slots">
-  {["12:30 PM", "02:00 PM", "03:30 PM", "04:00 PM"].map((time) => (
-    <button
-      key={time}
-      type="button"
-      className={selectedTime === time ? "active" : ""}
-      onClick={() => setSelectedTime(time)}
-    >
-      {time}
-    </button>
-  ))}
-</div>
-
-
-
-    {/* Evening */}
-    <h4 className="slot-title">🌙 Evening</h4>
-<div className="slots">
-  {["06:00 PM","06:30 PM", "07:30 PM"].map((time) => (
-    <button
-      key={time}
-      type="button"
-      className={selectedTime === time ? "active" : ""}
-      onClick={() => setSelectedTime(time)}
-    >
-      {time}
-    </button>
-  ))}
-</div>
-
-
-    {/* Confirm */}
-    <button
-  className="confirm-appointment-btn"
-  disabled={!selectedTime}
-  onClick={() => {
-    setOpenAppointmentScreen(false); // 🔥 CLOSE booking screen
-    setShowConfirmPopup(true);       // 🔥 OPEN confirm popup
-  }}
->
-  Confirm Appointment
-</button>
-
-
-  </div>
-)}
-
-
-{showConfirmPopup && !paymentCompleted &&(
-  <div className="confirm-overlay" onClick={() => setShowConfirmPopup(false)}>
-    <div
-      className="confirm-sheet"
-      onClick={(e) => e.stopPropagation()}
-    >
-      <div className="sheet-handle" />
-
-      <h2 className="confirm-title">
-        Appointment Confirmed! 🎉
-      </h2>
-      <p className="confirm-sub">
-        Your slot is reserved. Please complete payment to confirm.
-      </p>
-
-      {/* Doctor Card */}
-      <div className="confirm-doctor-card">
-        <img src={appointmentDoctor?.image} alt="doctor" />
-        <div>
-          <span className="doc-type">CARDIOLOGIST</span>
-          <h3>{appointmentDoctor?.name}</h3>
-          <p>St. Mary's Hospital</p>
-        </div>
-      </div>
-
-      {/* Info Rows */}
-      <div className="confirm-info">
-        <div className="info-row">
-          📅 <b>{selectedDate?.toDateString()}</b>
-        </div>
-        <div className="info-row">
-          ⏰ <b>{selectedTime}</b> <span>(IST)</span>
-        </div>
-        <div className="info-row">
-          🎥 Online Video Consultation
-        </div>
-      </div>
-
-      {/* Pay Button */}
-      <button className="pay-btn"  onClick={handlePayNow} disabled={payLoading}>
-        Pay Now ($50.00)
-      </button>
-
-      <button
-  className="cancel-link"
-  onClick={() => {
-    setShowConfirmPopup(false);
-    setSelectedTime(null);
-  }}
->
-  Cancel Appointment
-</button>
-
-    </div>
-  </div>
-)}
-
-
-
-
-{openPaymentSuccess && (
-  <div className="pay-mobile-screen">
-
-    {/* HEADER */}
-    <div className="pay-mobile-header">
-      <button
-        className="pay-mobile-close"
-        onClick={() => setOpenPaymentSuccess(false)}
-      >
-        ✕
-      </button>
-      <div style={{ width: 24 }} />
-    </div>
-
-    {/* CONTENT */}
-    <div className="pay-mobile-content">
-
-      {/* SUCCESS ICON */}
-      <div className="pay-mobile-check">✓</div>
-
-      <h1 className="pay-mobile-title">Payment Successful!</h1>
-      <p className="pay-mobile-sub">
-        Your appointment with <b>Dr. Sarah Jenkins</b> is confirmed.
-      </p>
-
-      {/* CARD */}
-      <div className="pay-mobile-card">
-
-        {/* AMOUNT */}
-        <div className="pay-mobile-amount">
-          <p className="label">TOTAL AMOUNT PAID</p>
-          <h1>₹50</h1>
-        </div>
-
-        {/* TRANSACTION */}
-        <div className="pay-mobile-row">
-          <span>Transaction ID</span>
-          <span className="bold">#pay_SBBYHLSboGNNcj</span>
-        </div>
-
-        <div className="pay-mobile-divider" />
-
-        {/* DOCTOR */}
-        <div className="pay-mobile-doctor">
-          <img
-            src="https://randomuser.me/api/portraits/women/44.jpg"
-            alt="Doctor"
-          />
-          <div>
-            <h4>Dr. Sarah Jenkins</h4>
-            <p>Specialist</p>
-          </div>
-        </div>
-
-        {/* DATE & TIME */}
-        <div className="pay-mobile-slots">
-          <div className="slot">
-            📅 2 February 2026
-          </div>
-          <div className="slot">
-            🕒 12:30 PM
-          </div>
-        </div>
-      </div>
-
-      {/* CTA */}
-      <button className="pay-mobile-btn">
-        Call scheduled
-      </button>
-
-      <p className="pay-mobile-footer">
-        You can join the consultation from <b>My Bookings</b> at the scheduled time.
-      </p>
-    </div>
-  </div>
-)}
-
-
-
-
-
-
-{openMyBookings && (
-  <div
-    className="bookings-overlay"
-    onClick={() => setOpenMyBookings(false)}
-  >
-    <div
-      className="bookings-popup"
-      onClick={(e) => e.stopPropagation()}
-    >
-      {/* Header */}
-      <div className="bookings-header">
-        <h2>My Bookings</h2>
-        <button
-          className="close-btn"
-          onClick={() => setOpenMyBookings(false)}
-        >
-          ✖
-        </button>
-      </div>
-
-      {/* Booking Card */}
-      <div className="booking-card">
-        <h3>Dr. Sarah Jenkins</h3>
-        <p className="dates">30 Jan 2026 • 05:30 PM</p>
-
-        <button className="join-call-btn">
-          Join Call
-        </button>
-      </div>
-
-      {/* Booking Card */}
-      <div className="booking-card">
-        <h3>Dr. Marcus Chen</h3>
-        <p className="dates">30 Jan 2026 • 04:00 PM</p>
-
-        <button className="join-call-btn">
-          Join Call
-        </button>
-      </div>
-      {/* Booking Card */}
-<div className="booking-card">
-  <h3>Dr. Aisha Khan</h3>
-  <p className="dates">31 Jan 2026 • 11:00 AM</p>
-
-  <button className="join-call-btn">
-    Join Call
-  </button>
-</div>
-
-    </div>
-  </div>
-)}
-
-
-
-
-
-
-    </div >
-
-
+    </>
   );
+
 
 };
 
