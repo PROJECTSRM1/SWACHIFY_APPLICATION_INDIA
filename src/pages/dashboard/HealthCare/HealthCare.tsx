@@ -876,41 +876,35 @@ const labs = [
 
 function formatAvailabilityTime(from: string, to: string) {
   if (!from || !to) return "Available Today";
-
-
   return `${formatTime(from)} - ${formatTime(to)}`;
 }
 
-
 function formatTime(timeStr: string) {
   const [h, m] = timeStr.split(":").map(Number);
-
-
   const hour = h % 12 || 12;
   const ampm = h >= 12 ? "PM" : "AM";
-
-
   return `${hour}:${m.toString().padStart(2, "0")} ${ampm}`;
 }
 
+/* 🔥 ADD HERE */
+const isFutureSlot = (slot: string, selectedDate: Date) => {
+  const now = new Date();
 
+  const [time, meridian] = slot.split(" ");
+  let [hours, minutes] = time.split(":").map(Number);
 
-// const getDoctorImage = (id: number) => {
-//   switch (id) {
-//     case 1:
-//       return "https://images.unsplash.com/photo-1582750433449-648ed127bb54?auto=format&fit=crop&w=800&q=80";
-//     case 2:
-//       return "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=800&q=80";
-//     case 3:
-//       return "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=800&q=80";
-//     case 4:
-//       return "https://images.unsplash.com/photo-1579154203451-0d2d83d2f4a2?auto=format&fit=crop&w=800&q=80";
-//     case 5:
-//       return "https://images.unsplash.com/photo-1550831107-1553da8c8464?auto=format&fit=crop&w=800&q=80";
-//     default:
-//       return "https://images.unsplash.com/photo-1550831107-1553da8c8464?auto=format&fit=crop&w=800&q=80";
-//   }
-// };
+  if (meridian === "PM" && hours !== 12) hours += 12;
+  if (meridian === "AM" && hours === 12) hours = 0;
+
+  const slotDate = new Date(selectedDate);
+  slotDate.setHours(hours, minutes, 0, 0);
+
+  return slotDate > now;
+};
+
+/* ⬇️ Component starts here */
+// const HealthCare: React.FC = () => {
+
 
 
 const defaultImages = [
@@ -3075,20 +3069,31 @@ const HealthCare: React.FC = () => {
                     <h3 className="month-popup-title">Select Month</h3>
 
                     <div className="month-popup-list">
-                      {months.map((m, index) => (
-                        <div
-                          key={m}
-                          className="month-popup-item"
-                          onClick={() => {
-                            setCurrentMonth(
-                              new Date(currentMonth.getFullYear(), index, 1)
-                            );
-                            setShowMonthPicker(false);
-                          }}
-                        >
-                          {m}
-                        </div>
-                      ))}
+{months.map((m, index) => {
+  const now = new Date();
+  const monthDate = new Date(now.getFullYear(), index, 1);
+
+  // ❌ Hide past months
+  if (monthDate < new Date(now.getFullYear(), now.getMonth(), 1)) {
+    return null;
+  }
+
+  return (
+    <div
+      key={m}
+      className="month-popup-item"
+      onClick={() => {
+        setCurrentMonth(
+          new Date(currentMonth.getFullYear(), index, 1)
+        );
+        setShowMonthPicker(false);
+      }}
+    >
+      {m}
+    </div>
+  );
+})}
+
                     </div>
                   </div>
                 </div>
@@ -3099,55 +3104,88 @@ const HealthCare: React.FC = () => {
             </div>
 
             <div className="date-scroll">
-              {generateDates().map((date) => {
-                const isActive =
-                  date.toDateString() === selectedDate.toDateString();
+{generateDates().map((date) => {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
 
-                return (
-                  <div
-                    key={date.toDateString()}
-                    className={`date-box ${isActive ? "active" : ""}`}
-                    onClick={() => setSelectedDate(date)}
-                  >
-                    <span>
-                      {date.toLocaleDateString("en-US", { weekday: "short" })}
-                    </span>
-                    <b>{date.getDate()}</b>
-                  </div>
-                );
-              })}
+  // ❌ Skip past dates
+  if (date < today) return null;
+
+  const isActive =
+    date.toDateString() === selectedDate.toDateString();
+
+  return (
+    <div
+      key={date.toDateString()}
+      className={`date-box ${isActive ? "active" : ""}`}
+      onClick={() => setSelectedDate(date)}
+    >
+      <span>
+        {date.toLocaleDateString("en-US", { weekday: "short" })}
+      </span>
+      <b>{date.getDate()}</b>
+    </div>
+  );
+})}
             </div>
 
 
             {/* Morning */}
             <h4 className="slot-title">☀ Morning</h4>
             <div className="slots">
-              {["10:00 AM", "10:30 AM", "11:30 AM"].map((time) => (
-                <button
-                  key={time}
-                  type="button"
-                  className={selectedTime === time ? "active" : ""}
-                  onClick={() => setSelectedTime(time)}
-                >
-                  {time}
-                </button>
-              ))}
+{["10:00 AM", "10:30 AM", "11:30 AM"].map((time) => {
+  const isToday =
+    selectedDate.toDateString() === new Date().toDateString();
+
+  const isAvailable = !isToday || isFutureSlot(time, selectedDate);
+
+  return (
+    <button
+      key={time}
+      className={`slot-btn 
+        ${selectedTime === time ? "active" : ""}
+        ${!isAvailable ? "disabled" : ""}
+      `}
+      disabled={!isAvailable}
+      onClick={() => {
+        if (!isAvailable) return;
+        setSelectedTime(time);
+      }}
+    >
+      {time}
+    </button>
+  );
+})}
+
             </div>
 
 
             {/* Afternoon */}
             <h4 className="slot-title">☀ Afternoon</h4>
             <div className="slots">
-              {["12:30 PM", "02:00 PM", "03:30 PM", "04:00 PM"].map((time) => (
-                <button
-                  key={time}
-                  type="button"
-                  className={selectedTime === time ? "active" : ""}
-                  onClick={() => setSelectedTime(time)}
-                >
-                  {time}
-                </button>
-              ))}
+{["12:30 PM", "02:00 PM", "03:30 PM", "04:00 PM"].map((time) => {
+  const isToday =
+    selectedDate.toDateString() === new Date().toDateString();
+
+  const isAvailable = !isToday || isFutureSlot(time, selectedDate);
+
+  return (
+    <button
+      key={time}
+      className={`slot-btn 
+        ${selectedTime === time ? "active" : ""}
+        ${!isAvailable ? "disabled" : ""}
+      `}
+      disabled={!isAvailable}
+      onClick={() => {
+        if (!isAvailable) return;
+        setSelectedTime(time);
+      }}
+    >
+      {time}
+    </button>
+  );
+})}
             </div>
 
 
@@ -3155,16 +3193,30 @@ const HealthCare: React.FC = () => {
             {/* Evening */}
             <h4 className="slot-title">🌙 Evening</h4>
             <div className="slots">
-              {["06:00 PM", "06:30 PM", "07:30 PM"].map((time) => (
-                <button
-                  key={time}
-                  type="button"
-                  className={selectedTime === time ? "active" : ""}
-                  onClick={() => setSelectedTime(time)}
-                >
-                  {time}
-                </button>
-              ))}
+{["06:00 PM", "06:30 PM", "07:30 PM"].map((time) => {
+  const isToday =
+    selectedDate.toDateString() === new Date().toDateString();
+
+  const isAvailable = !isToday || isFutureSlot(time, selectedDate);
+
+  return (
+    <button
+      key={time}
+      className={`slot-btn 
+        ${selectedTime === time ? "active" : ""}
+        ${!isAvailable ? "disabled" : ""}
+      `}
+      disabled={!isAvailable}
+      onClick={() => {
+        if (!isAvailable) return;
+        setSelectedTime(time);
+      }}
+    >
+      {time}
+    </button>
+  );
+})}
+
             </div>
 
 
