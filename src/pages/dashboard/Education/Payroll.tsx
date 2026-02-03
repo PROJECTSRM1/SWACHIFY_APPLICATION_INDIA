@@ -22,17 +22,20 @@ interface Staff {
 interface Payslip {
   payroll_month: string;
   payment_date: string;
+
   basic_pay: string;
   hra: string;
   medical_allowance: string;
   conveyance: string;
   performance_bonus: string;
   gross_earnings: string;
+
   pf_deduction: string;
   income_tax: string;
   professional_tax: string;
   health_insurance: string;
   total_deductions: string;
+
   net_salary: string;
 }
 
@@ -66,7 +69,7 @@ const Payroll: React.FC<PayrollProps> = ({
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
 
-  /* ================= FETCH ALL DATA ================= */
+  /* ================= FETCH DATA ================= */
 
   useEffect(() => {
     fetch(`${API_BASE}/institution/management/staff-profile/all`)
@@ -87,7 +90,7 @@ const Payroll: React.FC<PayrollProps> = ({
     setLoading(false);
   };
 
-  /* ================= FILTER STAFF ================= */
+  /* ================= FILTER ================= */
 
   const filteredStaff = useMemo(
     () =>
@@ -100,7 +103,7 @@ const Payroll: React.FC<PayrollProps> = ({
     [staffList, search]
   );
 
-  /* ================= OVERVIEW AGGREGATION ================= */
+  /* ================= OVERVIEW ================= */
 
   const overview = useMemo(() => {
     const map: Record<string, { total: number; staff: Set<string> }> = {};
@@ -124,10 +127,73 @@ const Payroll: React.FC<PayrollProps> = ({
 
   const downloadPayslipPDF = (staff: Staff, p: Payslip) => {
     const doc = new jsPDF();
-    doc.text("SWACHIFY EDUCATION PVT. LTD.", 105, 20, { align: "center" });
-    doc.text(`Payslip - ${p.payroll_month}`, 105, 30, { align: "center" });
-    doc.text(`Name: ${staff.staff_name}`, 15, 50);
-    doc.text(`Net Salary: ₹${amount(p.net_salary)}`, 15, 65);
+    let y = 20;
+
+    doc.setFontSize(14);
+    doc.text("SWACHIFY EDUCATION PVT. LTD.", 105, y, { align: "center" });
+    y += 8;
+    doc.setFontSize(11);
+    doc.text(`Payslip - ${p.payroll_month}`, 105, y, { align: "center" });
+
+    y += 15;
+
+    doc.setFontSize(10);
+    doc.text(`Name: ${staff.staff_name}`, 15, y);
+    doc.text(`Staff ID: ${staff.staff_id}`, 140, y);
+    y += 6;
+    doc.text(`Department: ${staff.department}`, 15, y);
+    doc.text(`Designation: ${staff.job_title}`, 140, y);
+    y += 6;
+    doc.text(`Payment Date: ${p.payment_date}`, 15, y);
+
+    y += 10;
+
+    const addRow = (label: string, value: any) => {
+      doc.text(label, 15, y);
+      doc.text(amount(value).toString(), 150, y, { align: "right" });
+      y += 6;
+    };
+
+    doc.setFontSize(11);
+    doc.text("EARNINGS", 15, y);
+    y += 6;
+
+    doc.setFontSize(10);
+    addRow("Basic Pay", p.basic_pay);
+    addRow("HRA", p.hra);
+    addRow("Medical Allowance", p.medical_allowance);
+    addRow("Conveyance", p.conveyance);
+    addRow("Performance Bonus", p.performance_bonus);
+    addRow("Gross Earnings", p.gross_earnings);
+
+    y += 6;
+
+    doc.setFontSize(11);
+    doc.text("DEDUCTIONS", 15, y);
+    y += 6;
+
+    doc.setFontSize(10);
+    addRow("Provident Fund", p.pf_deduction);
+    addRow("Income Tax", p.income_tax);
+    addRow("Professional Tax", p.professional_tax);
+    addRow("Health Insurance", p.health_insurance);
+    addRow("Total Deductions", p.total_deductions);
+
+    y += 8;
+
+    doc.setFontSize(12);
+    doc.text("NET SALARY", 15, y);
+    doc.text(`₹ ${amount(p.net_salary)}`, 150, y, { align: "right" });
+
+    y += 15;
+    doc.setFontSize(9);
+    doc.text(
+      "This is a system generated payslip. No signature required.",
+      105,
+      y,
+      { align: "center" }
+    );
+
     doc.save(`Payslip_${staff.staff_id}_${p.payroll_month}.pdf`);
   };
 
@@ -166,7 +232,9 @@ const Payroll: React.FC<PayrollProps> = ({
           >
             <strong>{s.staff_name}</strong>
             <p>{s.job_title}</p>
-            <small>{s.staff_id} • {s.department}</small>
+            <small>
+              {s.staff_id} • {s.department}
+            </small>
           </div>
         ))}
 
@@ -189,9 +257,12 @@ const Payroll: React.FC<PayrollProps> = ({
         {payslips.map((p, i) => (
           <div key={i} className="salary-card">
             <h3>{p.payroll_month}</h3>
-            <p>Net Salary: ₹{amount(p.net_salary)}</p>
+            <p>Gross: ₹{amount(p.gross_earnings)}</p>
+            <p>Deductions: ₹{amount(p.total_deductions)}</p>
+            <h2>Net Salary: ₹{amount(p.net_salary)}</h2>
+
             <button onClick={() => downloadPayslipPDF(selectedStaff, p)}>
-              ⬇ Download PDF
+              ⬇ Download Payslip
             </button>
           </div>
         ))}
