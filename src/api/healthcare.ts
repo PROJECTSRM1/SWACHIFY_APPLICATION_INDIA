@@ -53,7 +53,7 @@ const healthcareService = {
     // ✅ Get available doctors
     getAvailableDoctors: async (): Promise<AvailableDoctorResponse> => {
         try {
-            const response = await api.get("/healthcare/doctors/available");
+            const response = await api.get("/healthcare/available-doctors");
             return response.data;
         } catch (error) {
             console.error("Error fetching available doctors:", error);
