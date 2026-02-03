@@ -12,11 +12,10 @@ const homeCleaningServices = [
 ];
 
 const HomeCleaning: React.FC = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   return (
     <>
-      {/* ✅ CONSTANT HEADER */}
       <CleaningHeader />
 
       <section className="hc-container">
@@ -27,27 +26,33 @@ const HomeCleaning: React.FC = () => {
           <div className="hc-services">
             {homeCleaningServices.map((s, i) => (
               <div
-  key={i}
-  className="hc-card"
-  onClick={() => {
-    if (s.title === "Kitchen Cleaning") {
-      navigate("/cleaning/home/kitchen");
-    }
-  }}
->
-  <span className="hc-icon">{s.icon}</span>
-  <p>{s.title}</p>
-</div>
-
+                key={i}
+                className="hc-card"
+                onClick={() =>
+                  navigate(
+                    `/cleaning/home/${s.title
+                      .toLowerCase()
+                      .replace(" cleaning", "")}`
+                  )
+                }
+              >
+                <span className="hc-icon">{s.icon}</span>
+                <p>{s.title}</p>
+              </div>
             ))}
           </div>
         </div>
 
-        {/* RIGHT IMAGE / VIDEO PLACEHOLDER */}
         <div className="hc-right">
           <div className="hc-media">
-            {/* Later you can replace with video / image */}
-            <p>Service preview</p>
+            <video
+              src="https://www.w3schools.com/html/mov_bbb.mp4"
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="hc-video"
+            />
           </div>
         </div>
       </section>

@@ -125,3 +125,17 @@
     position: static;
   }
 }
+.hc-media {
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #000;
+}
+
+.hc-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+}
