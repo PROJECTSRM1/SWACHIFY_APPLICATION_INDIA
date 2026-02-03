@@ -787,6 +787,7 @@ const pharmacies = [
 const labs = [
   {
     id: 1,
+    image: "https://images.unsplash.com/photo-1582719478185-2f7b6a7a52c0?w=400",
     distance: "1.2 km away",
     name: "City Diagnostic Center",
     type: "DIAGNOSTIC CENTER",
@@ -797,6 +798,7 @@ const labs = [
   },
   {
     id: 2,
+    image: "https://images.unsplash.com/photo-1581594549595-35f6edc7b762?w=400",
     distance: "0.5 km away",
     name: "Precision Labs",
     type: "PATHOLOGY LAB",
@@ -807,6 +809,7 @@ const labs = [
   },
   {
     id: 3,
+    image: "https://images.unsplash.com/photo-1579154203451-0d2d83d2f4a2?w=400",
     distance: "2.8 km away",
     name: "HealthCare Diagnostics",
     type: "DIAGNOSTIC CENTER",
@@ -817,6 +820,7 @@ const labs = [
   },
   {
     id: 4,
+    image: "https://images.unsplash.com/photo-1580281657527-47f249e8f2d1?w=400",
     distance: "3.4 km away",
     name: "ThyroCare Lab",
     type: "PATHOLOGY LAB",
@@ -1064,9 +1068,10 @@ const HealthCare: React.FC = () => {
 
   const [showTrending, setShowTrending] = useState(false);
 
-  const [consultMode, setConsultMode] = useState<"online" | "offline">(
+  const [consultMode, setConsultMode] = useState<"online" | "offline" | "labs">(
     "online",
   );
+
   const [openMyBookings, setOpenMyBookings] = useState(false);
 
   // ✅ MOBILE TAP SUPPORT (DO NOT REMOVE)
@@ -1408,6 +1413,16 @@ const HealthCare: React.FC = () => {
           {/* 🔁 MODE SELECT */}
           <div className="mode-toggle">
             <button
+              className={consultMode === "labs" ? "active" : ""}
+              onClick={() => {
+                setConsultMode("labs");
+                setSearchText("");
+              }}
+            >
+              🧪 Labs
+            </button>
+
+            <button
               className={consultMode === "online" ? "active" : ""}
               onClick={() => setConsultMode("online")}
             >
@@ -1480,7 +1495,8 @@ const HealthCare: React.FC = () => {
 
         {/* Available Doctors */}
         {/* Online / Offline Result Section */}
-        {consultMode === "online" ? (
+        {/* ================= ONLINE ================= */}
+        {consultMode === "online" && (
           <>
             {/* ONLINE DOCTORS — NO CHANGE */}
             <div className="available-doctors-header">
@@ -1549,7 +1565,10 @@ const HealthCare: React.FC = () => {
               ))}
             </div>
           </>
-        ) : (
+        )}
+
+        {/* ================= OFFLINE ================= */}
+        {consultMode === "offline" && (
           <>
             {/* OFFLINE FLOW — CONDITION REQUIRED */}
             <>
@@ -1610,6 +1629,59 @@ const HealthCare: React.FC = () => {
                 )}
               </div>
             </>
+          </>
+        )}
+
+        {/* ================= LABS (MAIN UI, NOT OVERLAY) ================= */}
+        {consultMode === "labs" && (
+          <>
+            <div className="available-doctors-header">
+              <h3>Available Labs</h3>
+              <span className="see-all" onClick={() => setSearchText("")}>
+                Clear
+              </span>
+            </div>
+
+            <div className="nearby-list">
+              {labs.map((item) => (
+                <div key={item.id} className="nearby-item">
+                  <div className="nearby-item-row">
+                    {/* IMAGE */}
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="lab-image"
+                    />
+
+                    {/* DETAILS */}
+                    <div className="lab-info">
+                      <h3 className="lab-name">{item.name}</h3>
+
+                      <p className="lab-test">{item.type}</p>
+
+                      <p className="lab-timing">
+                        Timing:{" "}
+                        {item.slot.includes("Open")
+                          ? "Open Now"
+                          : "9:00 AM - 8:00 PM"}
+                      </p>
+
+                      <p className="lab-price">
+                        ${item.id === 1 ? 50 : item.id === 2 ? 75 : 60}/hr
+                      </p>
+                    </div>
+
+                    {/* RATING */}
+                    <div className="lab-rating">⭐ {item.rating}</div>
+                  </div>
+
+                  {/* ACTION */}
+                  <div className="lab-action">
+                    <button className="book-btn">Book Now</button>
+                  </div>
+                </div>
+              ))}
+            </div>
           </>
         )}
 
