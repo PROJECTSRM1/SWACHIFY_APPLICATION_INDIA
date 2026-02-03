@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import CleaningHeader from "./CleaningHeader";
 import "./KitchenCleaning.css";
 import { Modal, Input, Button } from "antd";
-import commercialvideo from "../../../public/videos/4203186-hd_1920_1080_24fps.mp4"
+import commercialvideo from "../../../src/assets/4203186-hd_1920_1080_24fps.mp4";
 
 const propertyTypes = [
   { title: "Office", price: 1999 },
@@ -13,8 +13,9 @@ const propertyTypes = [
 
 const CommercialCleaning: React.FC = () => {
   const [selected, setSelected] = useState<any>(null);
-  const [step, setStep] =
-    useState<"select" | "login" | "otp" | "done">("select");
+  const [step, setStep] = useState<"select" | "login" | "otp" | "done">(
+    "select",
+  );
   const [mobile, setMobile] = useState("");
   const [otp, setOtp] = useState("");
 
@@ -82,9 +83,7 @@ const CommercialCleaning: React.FC = () => {
           placeholder="Enter mobile number"
           maxLength={10}
           value={mobile}
-          onChange={(e) =>
-            setMobile(e.target.value.replace(/[^0-9]/g, ""))
-          }
+          onChange={(e) => setMobile(e.target.value.replace(/[^0-9]/g, ""))}
         />
         <Button
           type="primary"
@@ -120,8 +119,8 @@ const CommercialCleaning: React.FC = () => {
       <Modal open={step === "done"} footer={null} centered closable={false}>
         <h3>🎉 Booking Requested</h3>
         <p>
-          Our team will contact you shortly for{" "}
-          <b>{selected?.title}</b> cleaning.
+          Our team will contact you shortly for <b>{selected?.title}</b>{" "}
+          cleaning.
         </p>
         <Button
           type="primary"

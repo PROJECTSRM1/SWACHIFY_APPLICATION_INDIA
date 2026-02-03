@@ -2,7 +2,7 @@ import React from "react";
 import CleaningHeader from "./CleaningHeader";
 import "./HomeCleaning.css";
 import { useNavigate } from "react-router-dom";
-import cleaning from "../../../public/videos/5592525-hd_1920_1080_24fps.mp4"
+import cleaning from "../../../src/assets/5592525-hd_1920_1080_24fps.mp4";
 
 const homeCleaningServices = [
   { title: "Kitchen Cleaning", icon: "🍳" },
@@ -33,7 +33,7 @@ const HomeCleaning: React.FC = () => {
                   navigate(
                     `/cleaning/home/${s.title
                       .toLowerCase()
-                      .replace(" cleaning", "")}`
+                      .replace(" cleaning", "")}`,
                   )
                 }
               >
