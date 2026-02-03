@@ -32,6 +32,8 @@ import Healthcare from "../../pages/dashboard/HealthCare/HealthCare"
 import CleaningService from '../../pages/CleaningService/CleaningService';
 import HomeCleaning from '../../pages/CleaningService/HomeCleaning';
 import KitchenCleaning from '../../pages/CleaningService/KitchenCleaning';
+import HomeCleaningCategory from '../../pages/CleaningService/HomeCleaningCategory';
+import CommercialCleaning from '../../pages/CleaningService/CommercialCleaning';
 //import homesubcat from "../../pages/dashboard/homeservices/HomeSubCatWeb"
 
 export const NonSecureRoutes = () => {
@@ -81,6 +83,15 @@ export const NonSecureRoutes = () => {
       <Route path="/cleaningservice" element={<CleaningService />} />
       <Route path="/cleaning/home" element={<HomeCleaning />} />
       <Route path="/cleaning/home/kitchen" element={<KitchenCleaning />} />
+      <Route
+  path="/cleaning/home/:category"
+  element={<HomeCleaningCategory />}
+/>
+<Route
+  path="/cleaning/commercial"
+  element={<CommercialCleaning />}
+/>
+
       <Route path="/healthcare" element={<Healthcare />} />
 
 

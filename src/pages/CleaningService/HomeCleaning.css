@@ -58,6 +58,31 @@
   justify-content: center;
   color: #999;
 }
+.kc-cart-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.kc-cart-total {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+  margin: 12px 0;
+}
+
+.kc-proceed-btn {
+  width: 100%;
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
 
 /* MOBILE */
 @media (max-width: 900px) {
