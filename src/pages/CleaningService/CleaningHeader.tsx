@@ -61,7 +61,7 @@ const CleaningHeader: React.FC = () => {
 
 
         <div className="cleaning-search">
-          <Input.Search placeholder="Search" />
+          <Input placeholder="Search" />
         </div>
       </header>
     </>
