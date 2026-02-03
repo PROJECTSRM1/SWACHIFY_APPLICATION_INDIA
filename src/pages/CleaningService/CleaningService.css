@@ -1,0 +1,144 @@
+.cs-container {
+  padding: 40px 60px;
+  background: #ffffff;
+}
+
+/* HERO */
+.cs-hero {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+/* LEFT */
+.cs-left {
+  flex: 1;
+}
+
+.cs-left h1 {
+  font-size: 42px;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+.cs-box {
+  border: 1px solid #eaeaea;
+  border-radius: 14px;
+  padding: 20px;
+}
+
+.cs-box h3 {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.cs-services {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.cs-service-card {
+  position: relative;
+  border: 1px solid #f0f0f0;
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cs-service-card:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.cs-icon {
+  font-size: 30px;
+  margin-bottom: 8px;
+}
+
+.cs-service-card p {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.cs-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: #e91e63;
+  color: #fff;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+
+/* RIGHT */
+.cs-right {
+  flex: 1;
+}
+
+.cs-img-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.cs-img-grid img {
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+  object-fit: cover;
+}
+
+/* STATS */
+.cs-stats {
+  display: flex;
+  gap: 80px;
+  margin-top: 40px;
+}
+
+.cs-stats strong {
+  font-size: 22px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .cs-hero {
+    flex-direction: column;
+  }
+
+  .cs-container {
+    padding: 20px;
+  }
+
+  .cs-services {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+/* POPUP SERVICES */
+.cs-popup-services {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.cs-popup-card {
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cs-popup-card:hover {
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+}
+
+.cs-popup-icon {
+  font-size: 28px;
+  display: block;
+  margin-bottom: 8px;
+}
