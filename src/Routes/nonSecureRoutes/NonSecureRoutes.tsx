@@ -35,6 +35,7 @@ import KitchenCleaning from '../../pages/CleaningService/KitchenCleaning';
 import HomeCleaningCategory from '../../pages/CleaningService/HomeCleaningCategory';
 import CommercialCleaning from '../../pages/CleaningService/CommercialCleaning';
 import VehicleCleaning from '../../pages/CleaningService/VehicleCleaning';
+import HomeServiceBooking from '../../pages/CleaningService/HomeServiceBooking';
 //import homesubcat from "../../pages/dashboard/homeservices/HomeSubCatWeb"
 
 export const NonSecureRoutes = () => {
@@ -93,6 +94,20 @@ export const NonSecureRoutes = () => {
   element={<CommercialCleaning />}
 />
 <Route path="/cleaning/vehicle" element={<VehicleCleaning />} />
+    <Route
+  path="/plumbing/:serviceKey"
+  element={<HomeServiceBooking />}
+/>
+
+<Route
+  path="/electrician/:serviceKey"
+  element={<HomeServiceBooking />}
+/>
+
+<Route
+  path="/painting/:serviceKey"
+  element={<HomeServiceBooking />}
+/>
     
 
       <Route path="/healthcare" element={<Healthcare />} />
