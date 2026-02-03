@@ -139,3 +139,16 @@
   object-fit: cover;
   border-radius: 16px;
 }
+.kc-media {
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.kc-video {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
