@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import CleaningHeader from "./CleaningHeader";
-import "./KitchenCleaning.css"; // reuse same styles
+import "./KitchenCleaning.css";
 import { Modal, Input, Button } from "antd";
+import commercialvideo from "../../../public/videos/4203186-hd_1920_1080_24fps.mp4"
 
 const propertyTypes = [
   { title: "Office", price: 1999 },
@@ -12,7 +13,8 @@ const propertyTypes = [
 
 const CommercialCleaning: React.FC = () => {
   const [selected, setSelected] = useState<any>(null);
-  const [step, setStep] = useState<"select" | "login" | "otp" | "done">("select");
+  const [step, setStep] =
+    useState<"select" | "login" | "otp" | "done">("select");
   const [mobile, setMobile] = useState("");
   const [otp, setOtp] = useState("");
 
@@ -21,6 +23,7 @@ const CommercialCleaning: React.FC = () => {
       <CleaningHeader />
 
       <section className="kc-page">
+        {/* LEFT SIDE */}
         <div className="kc-left">
           <h1>Commercial Cleaning</h1>
           <p className="kc-rating">⭐ 4.7 (1.1M bookings)</p>
@@ -45,6 +48,30 @@ const CommercialCleaning: React.FC = () => {
                 </button>
               </div>
             ))}
+          </div>
+        </div>
+
+        {/* RIGHT SIDE – VIDEO PREVIEW */}
+        <div className="kc-right">
+          <div className="kc-media">
+            <video
+              src={commercialvideo}
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="kc-video"
+            />
+          </div>
+
+          <div className="kc-cart">
+            <h4>Why choose Swachify?</h4>
+            <ul className="kc-promise">
+              <li>✔ Trained commercial staff</li>
+              <li>✔ Industrial-grade equipment</li>
+              <li>✔ Flexible scheduling</li>
+              <li>✔ Transparent pricing</li>
+            </ul>
           </div>
         </div>
       </section>
@@ -93,12 +120,13 @@ const CommercialCleaning: React.FC = () => {
       <Modal open={step === "done"} footer={null} centered closable={false}>
         <h3>🎉 Booking Requested</h3>
         <p>
-          Our team will contact you shortly for <b>{selected?.title}</b> cleaning.
+          Our team will contact you shortly for{" "}
+          <b>{selected?.title}</b> cleaning.
         </p>
         <Button
           type="primary"
           block
-          onClick={() => window.location.href = "/cleaningservice"}
+          onClick={() => (window.location.href = "/cleaningservice")}
         >
           Done
         </Button>

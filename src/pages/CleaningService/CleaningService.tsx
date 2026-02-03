@@ -416,6 +416,9 @@ const CleaningService: React.FC = () => {
                 if (s.title === "Commercial Cleaning") {
     navigate("/cleaning/commercial");
   }
+  if (s.title === "Vehicle Cleaning") {
+    navigate("/cleaning/vehicle");
+  }
               }}
             >
               <span className="cs-popup-icon">{s.icon}</span>

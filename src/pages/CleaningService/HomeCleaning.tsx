@@ -2,6 +2,7 @@ import React from "react";
 import CleaningHeader from "./CleaningHeader";
 import "./HomeCleaning.css";
 import { useNavigate } from "react-router-dom";
+import cleaning from "../../../public/videos/5592525-hd_1920_1080_24fps.mp4"
 
 const homeCleaningServices = [
   { title: "Kitchen Cleaning", icon: "🍳" },
@@ -46,7 +47,7 @@ const HomeCleaning: React.FC = () => {
         <div className="hc-right">
           <div className="hc-media">
             <video
-              src="https://www.w3schools.com/html/mov_bbb.mp4"
+              src={cleaning}
               autoPlay
               muted
               loop
