@@ -103,11 +103,11 @@ const EducationPage = () => {
               <button className="btn-secondary">View Success Stories</button>
             </div>
 
-            <div className="hero-features">
+            {/* <div className="hero-features">
               <span>✔ Certified Courses</span>
               <span>✔ Expert Mentors</span>
               <span>✔ Job Assistance</span>
-            </div>
+            </div> */}
           </div>
         </section>
         {/* --- STATS BAR --- */}
@@ -371,43 +371,7 @@ const EducationPage = () => {
         {/* --- WHY CHOOSE US --- */}
         <section className="why-choose-us section-padding">
           <div className="why-content">
-            <div className="why-text">
-              <h2>Why Choose Our Platform?</h2>
-              <p>
-                We don't just teach; we transform. Our practical approach to
-                learning ensures you are industry-ready from day one.
-              </p>
-              <ul className="check-list">
-                <li>
-                  <span className="check-icon"></span> Industry-aligned
-                  curriculum
-                </li>
-                <li>
-                  <span className="check-icon"></span> Hands-on project
-                  experience
-                </li>
-                <li>
-                  <span className="check-icon"></span> Lifetime access to
-                  resources
-                </li>
-              </ul>
-              <button
-                className="btn-dark"
-                onClick={() => {
-                  if (
-                    typeof window !== "undefined" &&
-                    (window as any).openAuthModal
-                  ) {
-                    (window as any).openAuthModal("register");
-                  } else {
-                    console.warn("Auth modal opener not available on window.");
-                  }
-                }}
-              >
-                Start Your Journey
-              </button>
-            </div>
-
+            <h2>Why Choose Our Platform?</h2>
             <div className="features-grid">
               {/* Card 1 */}
               <div className="feature-item">
@@ -492,6 +456,42 @@ const EducationPage = () => {
                   </p>
                 </div>
               </div>
+            </div>
+            <div className="why-text">
+              {/* <h2>Why Choose Our Platform?</h2> */}
+              <p>
+                We don't just teach; we transform. Our practical approach to
+                learning ensures you are industry-ready from day one.
+              </p>
+              <ul className="check-list">
+                <li>
+                  <span className="check-icon"></span> Industry-aligned
+                  curriculum
+                </li>
+                <li>
+                  <span className="check-icon"></span> Hands-on project
+                  experience
+                </li>
+                <li>
+                  <span className="check-icon"></span> Lifetime access to
+                  resources
+                </li>
+              </ul>
+              <button
+                className="btn-dark"
+                onClick={() => {
+                  if (
+                    typeof window !== "undefined" &&
+                    (window as any).openAuthModal
+                  ) {
+                    (window as any).openAuthModal("register");
+                  } else {
+                    console.warn("Auth modal opener not available on window.");
+                  }
+                }}
+              >
+                Start Your Journey
+              </button>
             </div>
           </div>
         </section>
