@@ -11,7 +11,7 @@ import LandingPackers from "../../pages/landing/LandingPackers"
 // import ForgotPasswordLink from '../../pages/forgotpassword/ForgotPasswordLink';
 import CommercialPlots from "../../pages/landing/CommercialPlots"
 import ConstructionMaterials from '../../pages/landing/ConstructionMaterials';
-import LandingCleaningPage from "../../pages/landing/landingcleaningpage";
+//import LandingCleaningPage from "../../pages/landing/landingcleaningpage";
 //Import rentals page (file: src/pages/landing/landingrentals.tsx)
 import Landingrentals from "../../pages/landing/landingrentals";
 //import Freelancer from '../../pages/landing/Freelancer';
@@ -29,6 +29,10 @@ import DriverDashboard from '../../pages/landing/JustRidePartnerDashboard';
 import { MOCK_NOTIFICATIONS } from '../../pages/landing/JRPData';
 import EmployeeDashboard from '../../pages/freelancer/EmployeeDashboard';
 import Healthcare from "../../pages/dashboard/HealthCare/HealthCare"
+import CleaningService from '../../pages/CleaningService/CleaningService';
+import HomeCleaning from '../../pages/CleaningService/HomeCleaning';
+import KitchenCleaning from '../../pages/CleaningService/KitchenCleaning';
+//import homesubcat from "../../pages/dashboard/homeservices/HomeSubCatWeb"
 
 export const NonSecureRoutes = () => {
   const navigate = useNavigate();
@@ -74,8 +78,11 @@ export const NonSecureRoutes = () => {
       <Route path="/commercial-plots" element={<CommercialPlots />} />
       <Route path='/ConstructionMaterials' element={<ConstructionMaterials />} />
       {/* cleaning landing page */}
-      <Route path="/cleaningservice" element={<LandingCleaningPage />} />
+      <Route path="/cleaningservice" element={<CleaningService />} />
+      <Route path="/cleaning/home" element={<HomeCleaning />} />
+      <Route path="/cleaning/home/kitchen" element={<KitchenCleaning />} />
       <Route path="/healthcare" element={<Healthcare />} />
+
 
       {/* rentals landing page */}
       <Route path="/rentals" element={<Landingrentals />} />
