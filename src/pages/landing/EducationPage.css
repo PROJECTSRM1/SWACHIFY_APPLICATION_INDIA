@@ -37,11 +37,16 @@
 }
 
 .hero-content {
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   z-index: 1;
-  max-width: 800px;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
-
 .badge {
   color: #60a5fa;
   background: rgba(37, 99, 235, 0.2);
@@ -250,9 +255,11 @@
 
 /* Checklist Styling */
 .check-list {
-  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* center items horizontally */
   padding: 0;
-  margin: 25px 0 35px 0;
+  margin: 25px auto 35px;
 }
 
 .check-list li {
@@ -332,6 +339,8 @@
   background: #0f172a;
   color: white;
   border: none;
+  display: block;
+  margin: 20px auto 0;
   padding: 12px 28px;
   border-radius: 6px;
   font-weight: 600;
@@ -482,5 +491,60 @@
 
   .stat-value {
     font-size: 22px;
+  }
+}
+/* =========================
+   WHY CHOOSE US – FINAL FIX
+   3 CARDS / ROW + TEXT BOTTOM
+========================= */
+
+/* Stack layout: cards first, text below */
+.why-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 50px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 5%;
+}
+
+/* 3 cards per row */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  width: 100%;
+}
+
+/* Proper card alignment */
+.feature-item {
+  background: #f8fafc;
+  padding: 24px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Why choose content at bottom */
+.why-text {
+  max-width: 800px;
+  width: 100%;
+}
+
+/* =========================
+   RESPONSIVE (ONLY THIS)
+========================= */
+
+@media (max-width: 1024px) {
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .features-grid {
+    grid-template-columns: 1fr;
   }
 }
