@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Modal, Input, Button } from "antd";
 import CleaningHeader from "./CleaningHeader";
 import "./KitchenCleaning.css";
+import BookCleaningScreenWeb from "../../pages/dashboard/homeservices/BookCleaningScreenWeb";
 
 import kitchenImg from "../../assets/CleaningServices/Kitchen2.jpg";
 import bathroomImg from "../../assets/CleaningServices/bathroom.jpeg";
@@ -68,9 +69,10 @@ const HomeCleaningCategory: React.FC = () => {
   const config = SERVICE_CONFIG[category];
 
   const [cart, setCart] = useState<Service[]>([]);
-  const [step, setStep] = useState<"services" | "login" | "otp" | "done">(
-    "services"
-  );
+ const [step, setStep] = useState<
+  "services" | "login" | "otp" | "booking" | "done"
+>("services");
+
   const [mobile, setMobile] = useState("");
   const [otp, setOtp] = useState("");
 
@@ -230,6 +232,30 @@ const HomeCleaningCategory: React.FC = () => {
   </div>
 </Modal>
 
+<<<<<<< HEAD
+=======
+      {/* OTP */}
+      <Modal open={step === "otp"} footer={null} centered>
+        <Input
+          placeholder="Enter OTP"
+          maxLength={6}
+          value={otp}
+          onChange={(e) => setOtp(e.target.value.replace(/[^0-9]/g, ""))}
+        />
+        <Button
+  type="primary"
+  block
+  disabled={otp.length !== 6}
+  onClick={() => {
+    setOtp("");
+    setStep("booking");
+  }}
+>
+  Verify & Book
+</Button>
+
+      </Modal>
+>>>>>>> dev
 
       {/* DONE */}
       <Modal open={step === "done"} footer={null} centered closable={false}>
@@ -239,6 +265,54 @@ const HomeCleaningCategory: React.FC = () => {
           Done
         </Button>
       </Modal>
+      {/* BOOKING DETAILS */}
+{/* <Modal open={step === "booking"} footer={null} centered>
+  <h3>Booking details</h3>
+
+  <Input.TextArea
+    placeholder="Enter service address"
+    rows={3}
+    style={{ marginBottom: 12 }}
+  />
+
+  <Input
+    type="date"
+    style={{ marginBottom: 12 }}
+  />
+
+  <Input
+    type="time"
+    style={{ marginBottom: 16 }}
+  />
+
+  <Button
+    type="primary"
+    block
+    onClick={() => setStep("done")}
+  >
+    Confirm booking
+  </Button>
+</Modal> */}
+{step === "booking" && (
+  <div className="uc-overlay">
+    <div className="uc-modal">
+      <BookCleaningScreenWeb
+       selectedServices={cart.map((c, i) => ({
+  id: String(i),
+  title: c.title,
+  price: c.price,
+  category: "homeServices",
+}))}
+
+        consultationCharge={total}
+        serviceContext="homeServices"
+        onClose={() => setStep("services")}
+      />
+    </div>
+  </div>
+)}
+
+
     </>
   );
 };
