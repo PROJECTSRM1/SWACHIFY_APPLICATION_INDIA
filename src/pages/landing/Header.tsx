@@ -55,14 +55,14 @@ const allowEmailChars = (value: string) =>
 
 const navItems = [
   { key: "home", label: <Link to="/landing">Home</Link> },
-  { key: "education", label: <Link to="/education">Education</Link> },
-  { key: "healthcare", label: <Link to="/healthcare">Health Care</Link> },
-  { key: "packers", label: <Link to="/LandingPackers">Just Ride</Link> },
-  { key: "Swachifyproducts", label: <Link to="/swachify-products">Swachify Products</Link>, },
-  { key: "cleaning", label: <Link to="/cleaningservice">Cleaning & Home Services</Link> },
-  { key: "commercial", label: <Link to="/commercial-plots">Buy/Sale/Rentals</Link> },
-  { key: "materials", label: <Link to="/ConstructionMaterials">Raw Materials</Link> }, 
-  { key: "freelancer", label: <Link to="/Freelancer">Freelancer</Link> },
+  // { key: "education", label: <Link to="/education">Education</Link> },
+  // { key: "healthcare", label: <Link to="/healthcare">Health Care</Link> },
+  // { key: "packers", label: <Link to="/LandingPackers">Just Ride</Link> },
+  // { key: "Swachifyproducts", label: <Link to="/swachify-products">Swachify Products</Link>, },
+  // { key: "cleaning", label: <Link to="/cleaningservice">Cleaning & Home Services</Link> },
+  // { key: "commercial", label: <Link to="/commercial-plots">Buy/Sale/Rentals</Link> },
+  // { key: "materials", label: <Link to="/ConstructionMaterials">Raw Materials</Link> }, 
+  // { key: "freelancer", label: <Link to="/Freelancer">Freelancer</Link> },
 ];
 
 const serviceIdToRoute: Record<number, string> = {
