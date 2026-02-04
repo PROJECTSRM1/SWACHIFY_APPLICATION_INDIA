@@ -230,31 +230,8 @@ const HomeCleaningCategory: React.FC = () => {
       Verify & Book
     </Button>
   </div>
-</Modal>
+</Modal>   
 
-      {/* OTP */}
-      <Modal open={step === "otp"} footer={null} centered>
-        <Input
-          placeholder="Enter OTP"
-          maxLength={6}
-          value={otp}
-          onChange={(e) => setOtp(e.target.value.replace(/[^0-9]/g, ""))}
-        />
-        <Button
-  type="primary"
-  block
-  disabled={otp.length !== 6}
-  onClick={() => {
-    setOtp("");
-    setStep("booking");
-  }}
->
-  Verify & Book
-</Button>
-
-      </Modal>
-
-      {/* DONE */}
       <Modal open={step === "done"} footer={null} centered closable={false}>
         <h3>🎉 Booking Confirmed</h3>
         <p>Total Paid: ₹{total}</p>

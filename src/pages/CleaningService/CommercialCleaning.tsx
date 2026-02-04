@@ -78,8 +78,7 @@ const CommercialCleaning: React.FC = () => {
       </section>
 
       {/* LOGIN */}
-     {/* LOGIN */}
-<Modal
+      <Modal
   open={step === "login"}
   footer={null}
   centered
@@ -120,8 +119,9 @@ const CommercialCleaning: React.FC = () => {
   </div>
 </Modal>
 
-{/* OTP */}
-<Modal
+
+      {/* OTP */}
+     <Modal
   open={step === "otp"}
   footer={null}
   centered
@@ -157,7 +157,6 @@ const CommercialCleaning: React.FC = () => {
     </Button>
   </div>
 </Modal>
-
 
       {/* DONE */}
       <Modal open={step === "done"} footer={null} centered closable={false}>

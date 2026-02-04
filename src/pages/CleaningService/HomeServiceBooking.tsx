@@ -14,7 +14,6 @@ const HomeServiceBooking: React.FC = () => {
   // LOGIN FLOW STATES
   const [step, setStep] = useState<"idle" | "login" | "otp" | "done">("idle");
   const [mobile, setMobile] = useState("");
-  const [otp, setOtp] = useState("");
 
   if (!config) return <h2>Service not found</h2>;
 
@@ -122,32 +121,7 @@ const HomeServiceBooking: React.FC = () => {
         </Button>
       </Modal>
 
-      {/* OTP MODAL */}
-      <Modal
-        open={step === "otp"}
-        footer={null}
-        centered
-        onCancel={() => setStep("idle")}
-      >
-        <h3>Enter OTP</h3>
-        <Input
-          placeholder="Enter OTP"
-          maxLength={6}
-          value={otp}
-          onChange={(e) =>
-            setOtp(e.target.value.replace(/[^0-9]/g, ""))
-          }
-        />
-        <Button
-          type="primary"
-          block
-          disabled={otp.length !== 6}
-          onClick={() => setStep("done")}
-          style={{ marginTop: 16 }}
-        >
-          Verify & Book
-        </Button>
-      </Modal>
+
 
       {/* SUCCESS MODAL */}
       <Modal

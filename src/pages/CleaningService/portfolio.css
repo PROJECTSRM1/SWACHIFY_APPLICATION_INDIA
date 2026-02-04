@@ -1,0 +1,112 @@
+/* HERO */
+.portfolio-hero {
+  height: 240px;
+  background: linear-gradient(
+      rgba(0, 0, 0, 0.55),
+      rgba(0, 0, 0, 0.55)
+    ),
+    url("https://images.unsplash.com/photo-1581578731548-c64695cc6952")
+      center / cover no-repeat;
+  display: flex;
+  align-items: center;
+}
+
+.portfolio-hero-content {
+  padding-left: 80px;
+  color: #fff;
+}
+
+.portfolio-hero-content h1 {
+  font-size: 44px;
+  margin-bottom: 6px;
+}
+
+.portfolio-hero-content p {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+/* SECTION */
+.portfolio-section {
+  background: #f7f9fc;
+  padding: 60px 0;
+}
+
+.portfolio-container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 0 20px;
+}
+
+/* CARD */
+.portfolio-card {
+  background: #fff;
+  display: flex;
+  gap: 24px;
+  padding: 26px;
+  border-radius: 8px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+  margin-bottom: 26px;
+}
+
+.portfolio-date {
+  min-width: 70px;
+  height: 70px;
+  background: #0a58ff;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-radius: 4px;
+}
+
+.portfolio-body {
+  flex: 1;
+}
+
+.portfolio-meta {
+  font-size: 12px;
+  color: #777;
+  margin-bottom: 6px;
+}
+
+.portfolio-title {
+  font-size: 20px;
+  color: #0a58ff;
+  margin-bottom: 8px;
+}
+
+.portfolio-desc {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.6;
+}
+
+.portfolio-actions {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.portfolio-read {
+  background: #0a58ff;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  font-size: 13px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.portfolio-share {
+  color: #0a58ff;
+  cursor: pointer;
+  font-size: 16px;
+}
