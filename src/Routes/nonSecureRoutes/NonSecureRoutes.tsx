@@ -31,8 +31,13 @@ import EmployeeDashboard from '../../pages/freelancer/EmployeeDashboard';
 import Healthcare from "../../pages/dashboard/HealthCare/HealthCare"
 import CleaningService from '../../pages/CleaningService/CleaningService';
 import HomeCleaning from '../../pages/CleaningService/HomeCleaning';
-import KitchenCleaning from '../../pages/CleaningService/KitchenCleaning';
+// import KitchenCleaning from '../../pages/CleaningService/KitchenCleaning';
 import Education from '../../pages/dashboard/Education/Education';
+//import KitchenCleaning from '../../pages/CleaningService/KitchenCleaning';
+import HomeCleaningCategory from '../../pages/CleaningService/HomeCleaningCategory';
+import CommercialCleaning from '../../pages/CleaningService/CommercialCleaning';
+import VehicleCleaning from '../../pages/CleaningService/VehicleCleaning';
+import HomeServiceBooking from '../../pages/CleaningService/HomeServiceBooking';
 //import homesubcat from "../../pages/dashboard/homeservices/HomeSubCatWeb"
 import SwachifyProducts from '../../pages/dashboard/SwachifyProducts/SwachifyProducts';
 import BuysaleProducts from   '../../pages/dashboard/buy&sale/BuySaleProducts';
@@ -101,7 +106,32 @@ useEffect(() => {
       {/* cleaning landing page */}
       <Route path="/cleaningservice" element={<CleaningService />} />
       <Route path="/cleaning/home" element={<HomeCleaning />} />
-      <Route path="/cleaning/home/kitchen" element={<KitchenCleaning />} />
+      {/* <Route path="/cleaning/home/kitchen" element={<KitchenCleaning />} /> */}
+      <Route
+  path="/cleaning/home/:category"
+  element={<HomeCleaningCategory />}
+/>
+<Route
+  path="/cleaning/commercial"
+  element={<CommercialCleaning />}
+/>
+<Route path="/cleaning/vehicle" element={<VehicleCleaning />} />
+    <Route
+  path="/plumbing/:serviceKey"
+  element={<HomeServiceBooking />}
+/>
+
+<Route
+  path="/electrician/:serviceKey"
+  element={<HomeServiceBooking />}
+/>
+
+<Route
+  path="/painting/:serviceKey"
+  element={<HomeServiceBooking />}
+/>
+    
+
       <Route path="/healthcare" element={<Healthcare />} />
        {/* <Route path="/education" element={<Education />} /> */}
  <Route path="/swachifyproducts" element={<SwachifyProducts/>} />
