@@ -629,6 +629,8 @@ type Specialist = {
   image: string;
 };
 
+
+
 const specialistByType: Record<string, Specialist> = {
   "General Practitioner": {
     id: 1,
@@ -794,82 +796,25 @@ const pharmacies = [
     buttonText: "Order Now",
   },
 ];
-// const labs = [
-//   {
-//     id: 1,
-//     image: "https://images.unsplash.com/photo-1582719478185-2f7b6a7a52c0?w=400",
-//     distance: "1.2 km away",
-//     name: "City Diagnostic Center",
-//     type: "DIAGNOSTIC CENTER",
-//     tests: "CBC, MRI, X-Ray, Thyroid",
-//     rating: 4.8,
-//     slot: "Today, 04:30 PM",
-//     buttonText: "Book Test",
-//   },
-//   {
-//     id: 2,
-//     image: "https://images.unsplash.com/photo-1581594549595-35f6edc7b762?w=400",
-//     distance: "0.5 km away",
-//     name: "Precision Labs",
-//     type: "PATHOLOGY LAB",
-//     tests: "Blood Tests, Glucose, Urine",
-//     rating: 4.6,
-//     slot: "Today, 05:15 PM",
-//     buttonText: "Book Test",
-//   },
-//   {
-//     id: 3,
-//     image: "https://images.unsplash.com/photo-1579154203451-0d2d83d2f4a2?w=400",
-//     distance: "2.8 km away",
-//     name: "HealthCare Diagnostics",
-//     type: "DIAGNOSTIC CENTER",
-//     tests: "Thyroid, CBC, ECG",
-//     rating: 4.7,
-//     slot: "Tomorrow, 10:00 AM",
-//     buttonText: "Book Test",
-//   },
-//   {
-//     id: 4,
-//     image: "https://images.unsplash.com/photo-1580281657527-47f249e8f2d1?w=400",
-//     distance: "3.4 km away",
-//     name: "ThyroCare Lab",
-//     type: "PATHOLOGY LAB",
-//     tests: "Thyroid Profile, Vitamin D",
-//     rating: 4.5,
-//     slot: "Tomorrow, 11:45 AM",
-//     buttonText: "Book Test",
-//   },
-// ];
 
-// new functions related to apis
-// const getSpecialityName = (id: number) => {
-//   switch (id) {
-//     case 1: return "CARDIOLOGIST";
-//     case 2: return "DERMATOLOGIST";
-//     case 3: return "PSYCHIATRIST";
-//     case 4: return "OPHTHALMOLOGIST";
-//     case 5: return "ORTHOPEDIC";
-//     default: return "GENERAL";
-//   }
-// };
+interface UIHospitalItem {
+  ambulance_id: number;
+  hospital_name: string;
+  specialty_type: string;
+  location: string;
+  conditions: string[];
+  service_provider: string;
+  ambulance_contact: string;
+  availability_status: string;
+  price: number; // ✅ ADD THIS
+}
 
-// const getCategoryBySpecialization = (id: number) => {
-//   switch (id) {
-//     case 1: return "Heart";
-//     case 2: return "Skin";
-//     case 3: return "Mental";
-//     case 4: return "Eyes";
-//     case 5: return "Bones";
-//     default: return "All";
-//   }
-// };
 
-// API availability
-// const formatAvailabilityTime = (from: string, to: string) => {
-//   const f = new Date(from).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-//   const t = new Date(to).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-//   return `${f} - ${t}`;
-// };
+
+
+
+
+
 
 
 const labImages = [
@@ -914,6 +859,7 @@ const isFutureSlot = (slot: string, selectedDate: Date) => {
 
 /* ⬇️ Component starts here */
 // const HealthCare: React.FC = () => {
+
 
 const defaultImages = [
 
@@ -1007,6 +953,14 @@ const HealthCare: React.FC = () => {
 
 
   const [loadingLabs, setLoadingLabs] = useState(false);
+  const [selectedNearbyHospital, setSelectedNearbyHospital] =
+    useState<UIHospitalItem | null>(null);
+
+
+
+
+
+
 
 
   const getDaysInMonth = (date: Date) => {
@@ -1044,14 +998,16 @@ const HealthCare: React.FC = () => {
 
   const [openOnlinePopup, setOpenOnlinePopup] = useState(false);
 
-  const [ambulanceList, setAmbulanceList] = useState<AmbulanceHospital[]>([]);
+  const [_ambulanceList, setAmbulanceList] = useState<AmbulanceHospital[]>([]);
+  const [hospitalList, setHospitalList] = useState<UIHospitalItem[]>([]);
+
 
   useEffect(() => {
     setAmbulanceList(STATIC_HOSPITALS);
   }, []);
 
   // hospital booking
-  const [selectedHospital, setSelectedHospital] =
+  const [_selectedHospital, _setSelectedHospital] =
     useState<AmbulanceHospital | null>(null);
 
   const [openHospitalBooking, setOpenHospitalBooking] = useState(false);
@@ -1059,7 +1015,7 @@ const HealthCare: React.FC = () => {
 
   // hospital → doctors flow
   const [openHospitalDoctors, setOpenHospitalDoctors] = useState(false);
-  const [hospitalDoctors, setHospitalDoctors] = useState<HospitalDoctor[]>([]);
+  // const [hospitalDoctors, setHospitalDoctors] = useState<HospitalDoctor[]>([]);
   const [selectedDoctor, setSelectedDoctor] = useState<HospitalDoctor | null>(
     null,
   );
@@ -1120,48 +1076,21 @@ const HealthCare: React.FC = () => {
 
   const [loadingDoctors, setLoadingDoctors] = useState<boolean>(false);
 
-  // useEffect(() => {
-  //   const fetchDoctors = async () => {
-  //     try {
-  //       setLoadingDoctors(true); // ✅ ADD
-
-  //       const data = await healthcareService.getAvailableDoctors();
-
-  //       const mappedDoctors: Doctor[] = data
-  //         .filter((item) => item.is_available)
-  //         .map((item) => ({
-  //           id: item.id,
-  //           name: doctorNameMap[item.user_id] ?? "Dr. Unknown",
-  //           speciality: getSpecialityName(item.specialization_id),
-  //           category: getCategoryBySpecialization(item.specialization_id),
-  //           conditions: [getSpecialityName(item.specialization_id)],
-  //           rating: Number(item.rating) || 4.5,
-  //           availability:
-  //             item.available_from && item.available_to
-  //               ? formatAvailabilityTime(item.available_from, item.available_to)
-  //               : "Available Today",
-  //           price: `₹${item.fees_per_hour ?? 500}/hr`,
-  //           image: getDoctorImage(item.specialization_id),
-  //           slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
-  //         }));
-
-  //       setDoctors(mappedDoctors);
-  //     } catch (error) {
-  //       console.error("Doctor fetch failed", error);
-  //     } finally {
-  //       setLoadingDoctors(false); // ✅ ADD
-  //     }
-  //   };
-
-  //   fetchDoctors();
-  // }, []);
-
   const getLabImage = (id?: number | string) => {
     const index =
       Math.abs(Number(id ?? 0)) % labImages.length;
 
     return labImages[index] || labImages[0];
   };
+
+  const hospitalDoctors = useMemo(() => {
+    if (!selectedNearbyHospital) return [];
+
+    return HOSPITAL_DOCTORS.filter(
+      (doc) => doc.hospitalId === selectedNearbyHospital.ambulance_id
+    );
+  }, [selectedNearbyHospital]);
+
 
 
 
@@ -1239,6 +1168,48 @@ const HealthCare: React.FC = () => {
 
     fetchLabs();
   }, [consultMode]);
+
+  // get hospital
+  useEffect(() => {
+    if (consultMode !== "offline") return;
+
+    const fetchHospitals = async () => {
+      try {
+        const response = await healthcareService.getAvailableHospitals();
+
+        const formatted = response.map((h) => ({
+          ambulance_id: h.hospital_id,
+          hospital_name: h.hospital_name,
+          specialty_type: h.specialty_type,
+          location: h.location,
+
+          conditions: [
+            h.specialty_type,
+            h.hospital_name,
+            h.location,
+          ],
+
+          service_provider: "Hospital Service",
+          availability_status: h.hospital_status,
+          price: h.fees_per_hour, // ✅ NEW
+
+          ambulance_contact: h.contact_number,
+        }));
+
+
+        setHospitalList(formatted); // ✅ NEW STATE
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchHospitals();
+  }, [consultMode]);
+
+
+
+
+
 
 
 
@@ -1339,14 +1310,17 @@ const HealthCare: React.FC = () => {
   }, [searchText, activeCategory, doctors]);
 
   const filteredHospitals = useMemo(() => {
-    if (!searchText.trim()) return ambulanceList;
+    if (!searchText.trim()) return hospitalList;
 
     const q = searchText.toLowerCase().trim();
 
-    return ambulanceList.filter((h) =>
-      h.conditions.some((c) => c.toLowerCase().includes(q)),
+    return hospitalList.filter((h) =>
+      h.conditions.some((c) =>
+        c.toLowerCase().includes(q)
+      )
     );
-  }, [searchText, ambulanceList]);
+  }, [searchText, hospitalList]);
+
 
   useEffect(() => {
     setSelectedDoctorId(null);
@@ -1504,59 +1478,59 @@ const HealthCare: React.FC = () => {
           </div>
 
           {/* 🔁 MODE SELECT */}
-         {/* 🔁 MODE SELECT (DROPDOWNS) */}
-<div className="mode-toggle">
+          {/* 🔁 MODE SELECT (DROPDOWNS) */}
+          <div className="mode-toggle">
 
-  {/* MAIN SERVICE DROPDOWN */}
-  <select
-    className="mode-dropdown"
-    onChange={(e) => {
-      const value = e.target.value;
+            {/* MAIN SERVICE DROPDOWN */}
+            <select
+              className="mode-dropdown"
+              onChange={(e) => {
+                const value = e.target.value;
 
-      if (value === "Doctor") {
-        setConsultMode("online");
-      }
+                if (value === "Doctor") {
+                  setConsultMode("online");
+                }
 
-      if (value === "Labs") {
-        setConsultMode("labs");
-        setSearchText("");
-      }
+                if (value === "Labs") {
+                  setConsultMode("labs");
+                  setSearchText("");
+                }
 
-      // These two are UI only for now
-      if (value === "Medical Store") {
-        setConsultMode("labs"); // reuse existing labs UI safely
-      }
+                // These two are UI only for now
+                if (value === "Medical Store") {
+                  setConsultMode("labs"); // reuse existing labs UI safely
+                }
 
-      if (value === "Complete Treatment") {
-        setConsultMode("offline"); // reuse hospital flow
-      }
-    }}
-  >
-    <option value="Doctor">Doctor</option>
-    <option value="Labs">Labs</option>
-    <option value="Medical Store">Medical Store</option>
-    <option value="Complete Treatment">Complete Treatment</option>
-  </select>
+                if (value === "Complete Treatment") {
+                  setConsultMode("offline"); // reuse hospital flow
+                }
+              }}
+            >
+              <option value="Doctor">Doctor</option>
+              <option value="Labs">Labs</option>
+              <option value="Medical Store">Medical Store</option>
+              <option value="Complete Treatment">Complete Treatment</option>
+            </select>
 
-  {/* ONLINE / OFFLINE DROPDOWN */}
-  <select
-    className="mode-dropdown"
-    value={consultMode}
-    onChange={(e) => setConsultMode(e.target.value as any)}
-  >
-    <option value="online">🌐 Online</option>
-    <option value="offline">🏥 Offline</option>
-  </select>
+            {/* ONLINE / OFFLINE DROPDOWN */}
+            <select
+              className="mode-dropdown"
+              value={consultMode}
+              onChange={(e) => setConsultMode(e.target.value as any)}
+            >
+              <option value="online">🌐 Online</option>
+              <option value="offline">🏥 Offline</option>
+            </select>
 
-  {/* MY BOOKINGS */}
-  <button
-    className="my-bookings-btn"
-    onClick={() => setOpenMyBookings(true)}
-  >
-    📅 My Bookings
-  </button>
+            {/* MY BOOKINGS */}
+            <button
+              className="my-bookings-btn"
+              onClick={() => setOpenMyBookings(true)}
+            >
+              📅 My Bookings
+            </button>
 
-</div>
+          </div>
 
 
           {/* 🚑 Ambulance Button (API Integrated) */}
@@ -1734,7 +1708,7 @@ const HealthCare: React.FC = () => {
                         <button
                           className="book-btn"
                           onClick={() => {
-                            setSelectedHospital(h);
+                            setSelectedNearbyHospital(h);
                             setOpenHospitalBooking(true);
                           }}
                         >
@@ -2705,7 +2679,7 @@ const HealthCare: React.FC = () => {
           </div>
         )}
 
-        {openHospitalBooking && selectedHospital && (
+        {openHospitalBooking && selectedNearbyHospital && (
           <div
             className="profile-overlay"
             onClick={() => setOpenHospitalBooking(false)}
@@ -2786,24 +2760,25 @@ const HealthCare: React.FC = () => {
             <div className="success-popup">
               <h2>Booking Confirmed ✅</h2>
 
-              <p>Hospital: {selectedHospital?.hospital_name}</p>
-              <p>Speciality: {selectedHospital?.specialty_type}</p>
+              <p>Hospital: {selectedNearbyHospital?.hospital_name}</p>
+              <p>Speciality: {selectedNearbyHospital?.specialty_type}</p>
               <p>Date: {bookingDate}</p>
               <p>Time: {bookingTime}</p>
-              <p>Price: $150/hr</p>
+              <p>Price: ${selectedNearbyHospital?.price}/hr</p>
               <p>Ambulance: {needAmbulance}</p>
 
               {/* ✅ THIS IS THE ONLY CORRECT PLACE */}
               <button
                 className="view-doctors-btn"
                 onClick={() => {
-                  const docs = HOSPITAL_DOCTORS.filter(
-                    (d) => d.hospitalId === selectedHospital?.hospital_id,
-                  );
+                  // const docs = HOSPITAL_DOCTORS.filter(
+                  //   (d) => d.hospitalId === selectedHospital?.hospital_id,
+                  // );
 
-                  setHospitalDoctors(docs);
+                  // setHospitalDoctors(docs);
                   setOpenHospitalSuccess(false);
                   setOpenHospitalDoctors(true);
+                  // setSelectedNearbyHospital(h);
                 }}
               >
                 VIEW HOSPITAL DOCTORS
@@ -2818,7 +2793,7 @@ const HealthCare: React.FC = () => {
     <div className="success-popup">
       <h2>Booking Confirmed ✅</h2>
 
-      <p><b>Hospital:</b> {selectedHospital.hospital_name}</p>
+      <p><b>Hospital:</b> {selectedNearbyHospital.hospital_name}</p>
       <p><b>Speciality:</b> {selectedHospital.specialty_type}</p>
       <p><b>Date:</b> {bookingDate}</p>
       <p><b>Time:</b> {bookingTime}</p>
@@ -3021,7 +2996,7 @@ const HealthCare: React.FC = () => {
               </button>
 
               <h2 className="doctor-list-title">
-                {selectedHospital?.hospital_name} Doctors
+                {selectedNearbyHospital?.hospital_name} Doctors
               </h2>
             </div>
 

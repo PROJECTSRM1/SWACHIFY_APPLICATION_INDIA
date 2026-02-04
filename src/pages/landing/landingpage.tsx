@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 import { useNavigate } from "react-router-dom";
 import CommonHeader from "../../pages/landing/Header";
 import FooterSection from "../../pages/landing/FooterSection";
@@ -24,12 +24,12 @@ import img5 from "../../assets/health care.jpg";
 
 /* SERVICES */
 const services = [
-    {
+  {
     title: "Education",
     icon: <BookOutlined />,
     route: "/education",             // ✅ public
   },
-    {
+  {
     title: "Health Care",
     icon: <UserOutlined />,
     route: "/healthcare",            // ✅ public
@@ -39,7 +39,7 @@ const services = [
     icon: <TruckOutlined />,
     route: "/LandingPackers",        // ✅ public
   },
-   {
+  {
     title: "Swachify Products",
     icon: <ShoppingCartOutlined />,
     route: "/swachifyproducts",     // ✅ public
@@ -49,7 +49,7 @@ const services = [
     icon: <HomeOutlined />,
     route: "/cleaningservice",       // ✅ public
   },
-  
+
   {
     title: "Buy / Sale / Rentals",
     icon: <ShopOutlined />,
@@ -61,7 +61,7 @@ const services = [
     route: "/Rawmaterials", // ✅ public
   },
 
- 
+
 
 ];
 
@@ -93,17 +93,17 @@ const LandingPage = () => {
 
             <div className="sw-uc-grid">
               {services.map((item, index) => (
-            <div
-  key={index}
-  className="sw-uc-card"
-  onClick={() => {
-    // ✅ allow dashboard access as guest
+                <div
+                  key={index}
+                  className="sw-uc-card"
+                  onClick={() => {
+                    // ✅ allow dashboard access as guest
 
 
-    // navigate to dashboard page
-    navigate(item.route);
-  }}
->
+                    // navigate to dashboard page
+                    navigate(item.route);
+                  }}
+                >
 
                   <div className="sw-uc-icon">{item.icon}</div>
                   <div className="sw-uc-text">{item.title}</div>
