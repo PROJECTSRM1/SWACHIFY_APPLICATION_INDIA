@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Modal, Input, Button } from "antd";
 import CleaningHeader from "./CleaningHeader";
 import "./KitchenCleaning.css";
+import BookCleaningScreenWeb from "../../pages/dashboard/homeservices/BookCleaningScreenWeb";
 
 import kitchenImg from "../../assets/CleaningServices/Kitchen2.jpg";
 import bathroomImg from "../../assets/CleaningServices/bathroom.jpeg";
@@ -68,9 +69,10 @@ const HomeCleaningCategory: React.FC = () => {
   const config = SERVICE_CONFIG[category];
 
   const [cart, setCart] = useState<Service[]>([]);
-  const [step, setStep] = useState<"services" | "login" | "otp" | "done">(
-    "services"
-  );
+ const [step, setStep] = useState<
+  "services" | "login" | "otp" | "booking" | "done"
+>("services");
+
   const [mobile, setMobile] = useState("");
   const [otp, setOtp] = useState("");
 
@@ -153,25 +155,82 @@ const HomeCleaningCategory: React.FC = () => {
       </section>
 
       {/* LOGIN */}
-      <Modal open={step === "login"} footer={null} centered>
-        <Input
-          placeholder="Enter mobile number"
-          value={mobile}
-          maxLength={10}
-          onChange={(e) =>
-            setMobile(e.target.value.replace(/[^0-9]/g, ""))
-          }
-        />
-        <Button
-          type="primary"
-          block
-          style={{ marginTop: 16 }}
-          disabled={mobile.length !== 10}
-          onClick={() => setStep("otp")}
-        >
-          Continue
-        </Button>
-      </Modal>
+      <Modal
+  open={step === "login"}
+  footer={null}
+  centered
+  onCancel={() => setStep("services")}
+  className="auth-modal"
+  closeIcon={<span className="auth-close">✕</span>}
+>
+  <div className="auth-box">
+    <h3 className="auth-title">Login to continue</h3>
+
+    <p className="auth-subtitle">
+      We’ll send a one-time password to your mobile
+    </p>
+
+    <Input
+      className="auth-input"
+      placeholder="Enter 10-digit mobile number"
+      maxLength={10}
+      value={mobile}
+      onChange={(e) =>
+        setMobile(e.target.value.replace(/[^0-9]/g, ""))
+      }
+    />
+
+    <Button
+      type="primary"
+      block
+      className="auth-button"
+      disabled={mobile.length !== 10}
+      onClick={() => setStep("otp")}
+    >
+      Continue
+    </Button>
+
+    <p className="auth-note">
+      By continuing, you agree to our Terms & Privacy Policy
+    </p>
+  </div>
+</Modal>
+<Modal
+  open={step === "otp"}
+  footer={null}
+  centered
+  onCancel={() => setStep("login")}
+  className="auth-modal"
+  closeIcon={<span className="auth-close">✕</span>}
+>
+  <div className="auth-box">
+    <h3 className="auth-title">Verify OTP</h3>
+
+    <p className="auth-subtitle">
+      Enter the 6-digit code sent to <strong>{mobile}</strong>
+    </p>
+
+    <Input
+      className="auth-input otp-input"
+      placeholder="Enter OTP"
+      maxLength={6}
+      value={otp}
+      onChange={(e) =>
+        setOtp(e.target.value.replace(/[^0-9]/g, ""))
+      }
+    />
+
+    <Button
+      type="primary"
+      block
+      className="auth-button"
+      disabled={otp.length !== 6}
+      onClick={() => setStep("done")}
+    >
+      Verify & Book
+    </Button>
+  </div>
+</Modal>
 
       {/* OTP */}
       <Modal open={step === "otp"} footer={null} centered>
@@ -182,14 +241,17 @@ const HomeCleaningCategory: React.FC = () => {
           onChange={(e) => setOtp(e.target.value.replace(/[^0-9]/g, ""))}
         />
         <Button
-          type="primary"
-          block
-          style={{ marginTop: 16 }}
-          disabled={otp.length !== 6}
-          onClick={() => setStep("done")}
-        >
-          Verify & Book
-        </Button>
+  type="primary"
+  block
+  disabled={otp.length !== 6}
+  onClick={() => {
+    setOtp("");
+    setStep("booking");
+  }}
+>
+  Verify & Book
+</Button>
+
       </Modal>
 
       {/* DONE */}
@@ -200,6 +262,54 @@ const HomeCleaningCategory: React.FC = () => {
           Done
         </Button>
       </Modal>
+      {/* BOOKING DETAILS */}
+{/* <Modal open={step === "booking"} footer={null} centered>
+  <h3>Booking details</h3>
+
+  <Input.TextArea
+    placeholder="Enter service address"
+    rows={3}
+    style={{ marginBottom: 12 }}
+  />
+
+  <Input
+    type="date"
+    style={{ marginBottom: 12 }}
+  />
+
+  <Input
+    type="time"
+    style={{ marginBottom: 16 }}
+  />
+
+  <Button
+    type="primary"
+    block
+    onClick={() => setStep("done")}
+  >
+    Confirm booking
+  </Button>
+</Modal> */}
+{step === "booking" && (
+  <div className="uc-overlay">
+    <div className="uc-modal">
+      <BookCleaningScreenWeb
+       selectedServices={cart.map((c, i) => ({
+  id: String(i),
+  title: c.title,
+  price: c.price,
+  category: "homeServices",
+}))}
+
+        consultationCharge={total}
+        serviceContext="homeServices"
+        onClose={() => setStep("services")}
+      />
+    </div>
+  </div>
+)}
+
+
     </>
   );
 };

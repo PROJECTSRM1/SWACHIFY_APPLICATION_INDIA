@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Modal, Input, Button } from "antd";
 import CleaningHeader from "./CleaningHeader";
 import "./KitchenCleaning.css";
+import BookCleaningScreenWeb from "../../pages/dashboard/homeservices/BookCleaningScreenWeb";
 
 type VehicleType = "Bike" | "Car" | "SUV";
 
@@ -28,9 +29,10 @@ const vehiclePackages: Record<
 const VehicleCleaning: React.FC = () => {
   const [vehicleType, setVehicleType] = useState<VehicleType | null>(null);
   const [cart, setCart] = useState<any[]>([]);
-  const [step, setStep] = useState<"services" | "login" | "otp" | "done">(
-    "services"
-  );
+ const [step, setStep] = useState<
+  "services" | "login" | "otp" | "booking" | "done"
+>("services");
+
   const [mobile, setMobile] = useState("");
   const [otp, setOtp] = useState("");
 
@@ -127,57 +129,107 @@ const VehicleCleaning: React.FC = () => {
       </section>
 
       {/* LOGIN */}
-      <Modal open={step === "login"} footer={null} centered>
-        <Input
-          placeholder="Enter mobile number"
-          maxLength={10}
-          value={mobile}
-          onChange={(e) =>
-            setMobile(e.target.value.replace(/[^0-9]/g, ""))
-          }
-        />
-        <Button
-          type="primary"
-          block
-          disabled={mobile.length !== 10}
-          onClick={() => setStep("otp")}
-          style={{ marginTop: 16 }}
-        >
-          Continue
-        </Button>
-      </Modal>
+      {/* LOGIN */}
+<Modal
+  open={step === "login"}
+  footer={null}
+  centered
+  onCancel={() => setStep("services")}
+  className="auth-modal"
+>
+  <div className="auth-box">
+    <h3 className="auth-title">Login to continue</h3>
 
-      {/* OTP */}
-      <Modal open={step === "otp"} footer={null} centered>
-        <Input
-          placeholder="Enter OTP"
-          maxLength={6}
-          value={otp}
-          onChange={(e) => setOtp(e.target.value.replace(/[^0-9]/g, ""))}
-        />
-        <Button
-          type="primary"
-          block
-          disabled={otp.length !== 6}
-          onClick={() => setStep("done")}
-          style={{ marginTop: 16 }}
-        >
-          Verify & Book
-        </Button>
-      </Modal>
+    <p className="auth-subtitle">
+      We’ll send a one-time password to your mobile
+    </p>
 
-      {/* DONE */}
-      <Modal open={step === "done"} footer={null} centered closable={false}>
-        <h3>🚗 Booking Confirmed</h3>
-        <p>Your vehicle cleaning is scheduled.</p>
-        <Button
-          type="primary"
-          block
-          onClick={() => (window.location.href = "/cleaningservice")}
-        >
-          Done
-        </Button>
-      </Modal>
+    <Input
+      className="auth-input"
+      placeholder="Enter 10-digit mobile number"
+      maxLength={10}
+      value={mobile}
+      onChange={(e) =>
+        setMobile(e.target.value.replace(/[^0-9]/g, ""))
+      }
+    />
+
+    <Button
+      type="primary"
+      block
+      className="auth-button"
+      disabled={mobile.length !== 10}
+      onClick={() => setStep("otp")}
+    >
+      Continue
+    </Button>
+  </div>
+</Modal>
+<Modal
+  open={step === "otp"}
+  footer={null}
+  centered
+  onCancel={() => setStep("login")}
+  className="auth-modal"
+>
+  <div className="auth-box">
+    <h3 className="auth-title">Verify OTP</h3>
+
+    <Input
+      className="auth-input otp-input"
+      placeholder="Enter OTP"
+      maxLength={6}
+      value={otp}
+      onChange={(e) =>
+        setOtp(e.target.value.replace(/[^0-9]/g, ""))
+      }
+    />
+
+    <Button
+      type="primary"
+      block
+      className="auth-button"
+      disabled={otp.length !== 6}
+      onClick={() => {
+        setOtp("");
+        setStep("booking");
+      }}
+    >
+      Verify & Book
+    </Button>
+  </div>
+</Modal>
+{step === "booking" && cart.length > 0 && (
+  <div className="uc-overlay">
+    <div className="uc-modal">
+      <BookCleaningScreenWeb
+        selectedServices={cart.map((c, i) => ({
+          id: `vehicle-${i}`,
+          title: `${vehicleType} - ${c.title}`,
+          price: c.price,
+          category: "vehicle",
+        }))}
+        consultationCharge={total}
+        serviceContext="vehicle"
+        meta={{
+          vehicleType,
+          subServices: cart.map((c) => ({
+            name: c.title,
+            price: c.price,
+          })),
+        }}
+        onClose={() => {
+          setStep("services");
+          setVehicleType(null);
+          setCart([]);
+          setMobile("");
+        }}
+      />
+    </div>
+  </div>
+)}
+
+
     </>
   );
 };
