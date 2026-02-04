@@ -2,9 +2,11 @@ import React, { useMemo, useState, useEffect } from "react";
 import "./HealthCare.css";
 import { message, Tooltip } from "antd";
 import { AppstoreOutlined } from "@ant-design/icons";
-import healthcareService from "../../../api/healthcare";
+import healthcareService, { type LabItem } from "../../../api/healthcare";
 import { PaymentsAPI } from "../../../api/customerAuth";
 import CommonHeader from "../../landing/Header";
+
+
 
 type AmbulanceHospital = {
   hospital_id: number;
@@ -20,6 +22,14 @@ type AmbulanceHospital = {
   ambulance_contact: string;
   availability_status: string;
 };
+
+
+// 👇 ADD THIS at top of same file (Labs.tsx)
+
+
+
+
+
 
 const STATIC_HOSPITALS: AmbulanceHospital[] = [
   {
@@ -784,52 +794,52 @@ const pharmacies = [
     buttonText: "Order Now",
   },
 ];
-const labs = [
-  {
-    id: 1,
-    image: "https://images.unsplash.com/photo-1582719478185-2f7b6a7a52c0?w=400",
-    distance: "1.2 km away",
-    name: "City Diagnostic Center",
-    type: "DIAGNOSTIC CENTER",
-    tests: "CBC, MRI, X-Ray, Thyroid",
-    rating: 4.8,
-    slot: "Today, 04:30 PM",
-    buttonText: "Book Test",
-  },
-  {
-    id: 2,
-    image: "https://images.unsplash.com/photo-1581594549595-35f6edc7b762?w=400",
-    distance: "0.5 km away",
-    name: "Precision Labs",
-    type: "PATHOLOGY LAB",
-    tests: "Blood Tests, Glucose, Urine",
-    rating: 4.6,
-    slot: "Today, 05:15 PM",
-    buttonText: "Book Test",
-  },
-  {
-    id: 3,
-    image: "https://images.unsplash.com/photo-1579154203451-0d2d83d2f4a2?w=400",
-    distance: "2.8 km away",
-    name: "HealthCare Diagnostics",
-    type: "DIAGNOSTIC CENTER",
-    tests: "Thyroid, CBC, ECG",
-    rating: 4.7,
-    slot: "Tomorrow, 10:00 AM",
-    buttonText: "Book Test",
-  },
-  {
-    id: 4,
-    image: "https://images.unsplash.com/photo-1580281657527-47f249e8f2d1?w=400",
-    distance: "3.4 km away",
-    name: "ThyroCare Lab",
-    type: "PATHOLOGY LAB",
-    tests: "Thyroid Profile, Vitamin D",
-    rating: 4.5,
-    slot: "Tomorrow, 11:45 AM",
-    buttonText: "Book Test",
-  },
-];
+// const labs = [
+//   {
+//     id: 1,
+//     image: "https://images.unsplash.com/photo-1582719478185-2f7b6a7a52c0?w=400",
+//     distance: "1.2 km away",
+//     name: "City Diagnostic Center",
+//     type: "DIAGNOSTIC CENTER",
+//     tests: "CBC, MRI, X-Ray, Thyroid",
+//     rating: 4.8,
+//     slot: "Today, 04:30 PM",
+//     buttonText: "Book Test",
+//   },
+//   {
+//     id: 2,
+//     image: "https://images.unsplash.com/photo-1581594549595-35f6edc7b762?w=400",
+//     distance: "0.5 km away",
+//     name: "Precision Labs",
+//     type: "PATHOLOGY LAB",
+//     tests: "Blood Tests, Glucose, Urine",
+//     rating: 4.6,
+//     slot: "Today, 05:15 PM",
+//     buttonText: "Book Test",
+//   },
+//   {
+//     id: 3,
+//     image: "https://images.unsplash.com/photo-1579154203451-0d2d83d2f4a2?w=400",
+//     distance: "2.8 km away",
+//     name: "HealthCare Diagnostics",
+//     type: "DIAGNOSTIC CENTER",
+//     tests: "Thyroid, CBC, ECG",
+//     rating: 4.7,
+//     slot: "Tomorrow, 10:00 AM",
+//     buttonText: "Book Test",
+//   },
+//   {
+//     id: 4,
+//     image: "https://images.unsplash.com/photo-1580281657527-47f249e8f2d1?w=400",
+//     distance: "3.4 km away",
+//     name: "ThyroCare Lab",
+//     type: "PATHOLOGY LAB",
+//     tests: "Thyroid Profile, Vitamin D",
+//     rating: 4.5,
+//     slot: "Tomorrow, 11:45 AM",
+//     buttonText: "Book Test",
+//   },
+// ];
 
 // new functions related to apis
 // const getSpecialityName = (id: number) => {
@@ -860,6 +870,19 @@ const labs = [
 //   const t = new Date(to).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 //   return `${f} - ${t}`;
 // };
+
+
+const labImages = [
+  "https://images.unsplash.com/photo-1581594549595-35f6edc7b762?auto=format&fit=crop&w=800&q=80",
+  "https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=800&q=80",
+  // "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=800&q=80",
+  "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80",
+  "https://images.unsplash.com/photo-1504814532849-9279d32b6a55?auto=format&fit=crop&w=800&q=80",
+];
+
+
+
+
 
 function formatAvailabilityTime(from: string, to: string) {
   if (!from || !to) return "Available Today";
@@ -893,6 +916,7 @@ const isFutureSlot = (slot: string, selectedDate: Date) => {
 // const HealthCare: React.FC = () => {
 
 const defaultImages = [
+
   "https://images.unsplash.com/photo-1582750433449-648ed127bb54?auto=format&fit=crop&w=800&q=80",
   "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=800&q=80",
   "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=800&q=80",
@@ -900,10 +924,16 @@ const defaultImages = [
   "https://images.unsplash.com/photo-1550831107-1553da8c8464?auto=format&fit=crop&w=800&q=80",
 ];
 
-const getDoctorImage = (id: number) => {
-  const numericId = Number(id);
-  return defaultImages[(numericId - 1) % defaultImages.length]; // cycles through images for any ID
+
+
+const getDoctorImage = (id: number | string | undefined) => {
+  const num = Number(id);
+  if (!num || isNaN(num)) return defaultImages[0];
+  return defaultImages[Math.abs(num) % defaultImages.length];
 };
+
+
+
 
 // const doctorNameMap: Record<number, string> = {
 //   45: "Dr. Rahul Verma",
@@ -972,6 +1002,12 @@ const HealthCare: React.FC = () => {
   //labs
   const [openLabBooking, setOpenLabBooking] = useState(false);
   const [selectedLab, setSelectedLab] = useState<any>(null);
+
+  const [labs, setLabs] = useState<LabItem[]>([]);
+
+
+  const [loadingLabs, setLoadingLabs] = useState(false);
+
 
   const getDaysInMonth = (date: Date) => {
     return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
@@ -1120,6 +1156,16 @@ const HealthCare: React.FC = () => {
   //   fetchDoctors();
   // }, []);
 
+  const getLabImage = (id?: number | string) => {
+    const index =
+      Math.abs(Number(id ?? 0)) % labImages.length;
+
+    return labImages[index] || labImages[0];
+  };
+
+
+
+
   useEffect(() => {
     const fetchDoctors = async () => {
       try {
@@ -1154,6 +1200,49 @@ const HealthCare: React.FC = () => {
 
     fetchDoctors();
   }, []);
+
+
+  // get Labs
+
+  useEffect(() => {
+    if (consultMode !== "labs") return;
+
+    const fetchLabs = async () => {
+      try {
+        setLoadingLabs(true);
+
+        const response = await healthcareService.getAvailableLabs();
+
+        // 🔥 Transform API → UI structure (IMPORTANT)
+        response.map((lab) => ({
+          id: lab.lab_id,
+          name: lab.lab_name,
+          type: lab.specialization_name,
+          slot: `${lab.available_from} - ${lab.available_to}`,
+          rating: lab.rating,
+          image: getLabImage(lab.lab_id), // static image
+          price: lab.fees_per_test,
+          status: lab.status,
+          homeCollection: lab.home_collection,
+          nextAvailable: lab.next_available,
+          delivery: lab.estimated_delivery,
+        }));
+
+        setLabs(response)
+
+      } catch (err) {
+        console.error("Error fetching labs:", err);
+      } finally {
+        setLoadingLabs(false);
+      }
+    };
+
+    fetchLabs();
+  }, [consultMode]);
+
+
+
+
 
   const [doctorProfile, setDoctorProfile] = useState({
     name: "Dr. Sarah Jenkins",
@@ -1555,7 +1644,13 @@ const HealthCare: React.FC = () => {
               {filteredDoctors.map((doc) => (
                 <div key={doc.id} className="doctor-card">
                   <div className="doctor-top">
-                    <img src={doc.image} alt={doc.name} />
+                    <img src={doc.image} alt={doc.name}
+
+                      onError={(e) => {
+                        e.currentTarget.src = defaultImages[1];
+                      }}
+
+                    />
 
                     <h4 className="doctor-name">{doc.name}</h4>
                   </div>
@@ -1669,48 +1764,69 @@ const HealthCare: React.FC = () => {
               </span>
             </div>
 
+            {loadingLabs && <p>Loading labs...</p>}
+
             <div className="nearby-list">
               {labs.map((item) => (
-                <div key={item.id} className="nearby-item">
+                <div key={item.lab_id} className="nearby-item">
                   <div className="nearby-item-row">
-                    {/* IMAGE */}
+
+                    {/* IMAGE (dummy or static for now) */}
                     <img
-                      src={item.image}
-                      alt={item.name}
+                      src={getLabImage(item.lab_id)}
+                      alt={item.lab_name}
+                      onError={(e) => {
+                        e.currentTarget.src = labImages[0];
+                      }}
+
                       className="lab-image"
                     />
 
                     {/* DETAILS */}
                     <div className="lab-info">
-                      <h3 className="lab-name">{item.name}</h3>
+                      <h3 className="lab-name">{item.lab_name}</h3>
 
-                      <p className="lab-test">{item.type}</p>
+                      <p className="lab-test">{item.specialization_name}</p>
 
                       <p className="lab-timing">
-                        Timing:{" "}
-                        {item.slot.includes("Open")
-                          ? "Open Now"
-                          : "9:00 AM - 8:00 PM"}
+                        Timing: {item.available_from} - {item.available_to}
                       </p>
 
                       <p className="lab-price">
-                        ${item.id === 1 ? 50 : item.id === 2 ? 75 : 60}/hr
+                        ₹ {item.fees_per_test} / test
                       </p>
+
+                      {/* {item.home_collection && (
+                        <p className="home-collection">🏠 Home Collection Available</p>
+                      )} */}
                     </div>
 
                     {/* RATING */}
-                    <div className="lab-rating">⭐ {item.rating}</div>
+                    <div className="lab-rating">
+                      ⭐ {item.rating}
+                      <br />
+                      <span
+                        style={{
+                          color: item.status === "OPEN" ? "green" : "red",
+                          fontSize: 12,
+                        }}
+                      >
+                        {item.status}
+                      </span>
+                    </div>
                   </div>
 
                   {/* ACTION */}
                   <div className="lab-action">
                     <button
                       className="book-btn"
+                      // disabled={item.status === "CLOSED"}
                       onClick={() => {
-                        setSelectedLab(item);
+                        setSelectedLab(true);
                         setOpenLabBooking(true);
                       }}
                     >
+                      {/* {item.status === "OPEN" ? "Book Now" : "Closed"} */}
                       Book Now
                     </button>
                   </div>
@@ -1719,6 +1835,12 @@ const HealthCare: React.FC = () => {
             </div>
           </>
         )}
+
+
+
+
+
+
         {openLabBooking && selectedLab && (
           <div className="lab-booking-overlay">
             <div className="lab-booking-popup">
@@ -1871,9 +1993,8 @@ const HealthCare: React.FC = () => {
                 <div className="consult-radio-row">
                   <button
                     type="button"
-                    className={`insurance-btn ${
-                      insurance === "yes" ? "active" : ""
-                    }`}
+                    className={`insurance-btn ${insurance === "yes" ? "active" : ""
+                      }`}
                     onClick={() => setInsurance("yes")}
                   >
                     <span className="radio-dot" />
@@ -1882,9 +2003,8 @@ const HealthCare: React.FC = () => {
 
                   <button
                     type="button"
-                    className={`insurance-btn ${
-                      insurance === "no" ? "active" : ""
-                    }`}
+                    className={`insurance-btn ${insurance === "no" ? "active" : ""
+                      }`}
                     onClick={() => setInsurance("no")}
                   >
                     <span className="radio-dot" />
@@ -1942,9 +2062,8 @@ const HealthCare: React.FC = () => {
             <div className="consult-footer">
               <button
                 type="button"
-                className={`consult-book-btn ${
-                  canBookAppointment ? "enabled" : ""
-                }`}
+                className={`consult-book-btn ${canBookAppointment ? "enabled" : ""
+                  }`}
                 disabled={!canBookAppointment}
                 onClick={() => setOpenPaymentPopup(true)}
               >
@@ -2351,14 +2470,14 @@ const HealthCare: React.FC = () => {
 
                 <div className="nearby-list">
                   {labs.map((item) => (
-                    <div key={item.id} className="nearby-item">
-                      <p className="distance">📍 {item.distance}</p>
+                    <div key={item.lab_id} className="nearby-item">
+                      <p className="distance">📍 {item.distance_km}</p>
 
                       <div className="nearby-item-row">
                         <div>
-                          <h3>{item.name}</h3>
-                          <p className="type">{item.type}</p>
-                          <p className="desc">{item.tests}</p>
+                          <h3>{item.lab_name}</h3>
+                          <p className="type">{item.specialization_name}</p>
+                          {/* <p className="desc">{item.tests}</p> */}
                         </div>
 
                         <div className="rating-badge">⭐ {item.rating}</div>
@@ -2367,10 +2486,10 @@ const HealthCare: React.FC = () => {
                       <div className="nearby-bottom-row">
                         <div>
                           <p className="est">NEXT AVAILABLE SLOT</p>
-                          <h4>{item.slot}</h4>
+                          <h4>{item.next_available}</h4>
                         </div>
 
-                        <button className="order-btn">{item.buttonText}</button>
+                        {/* <button className="order-btn">{item.buttonText}</button> */}
                       </div>
                     </div>
                   ))}
@@ -2614,9 +2733,8 @@ const HealthCare: React.FC = () => {
                     <button
                       key={slot}
                       type="button"
-                      className={`time-slot ${
-                        bookingTime === slot ? "active" : ""
-                      }`}
+                      className={`time-slot ${bookingTime === slot ? "active" : ""
+                        }`}
                       onClick={() => setBookingTime(slot)}
                     >
                       {slot}
@@ -3023,9 +3141,8 @@ const HealthCare: React.FC = () => {
                 {assistants.map((a) => (
                   <div
                     key={a.id}
-                    className={`assistant-card ${
-                      selectedAssistant?.id === a.id ? "active" : ""
-                    }`}
+                    className={`assistant-card ${selectedAssistant?.id === a.id ? "active" : ""
+                      }`}
                     onClick={() => setSelectedAssistant(a)}
                   >
                     <img src={a.image} alt={a.name} />
@@ -3081,7 +3198,11 @@ const HealthCare: React.FC = () => {
 
             {/* Doctor Card */}
             <div className="appointment-doctor-card">
-              <img src={appointmentDoctor.image} />
+              <img src={appointmentDoctor.image}
+                onError={(e) => {
+                  e.currentTarget.src = defaultImages[1]
+                }}
+              />
               <div>
                 <h3>{appointmentDoctor.name}</h3>
                 <p>{appointmentDoctor.speciality}</p>
@@ -3287,7 +3408,11 @@ const HealthCare: React.FC = () => {
 
               {/* Doctor Card */}
               <div className="confirm-doctor-card">
-                <img src={appointmentDoctor?.image} alt="doctor" />
+                <img src={appointmentDoctor?.image} alt="doctor"
+                  onError={(e) => {
+                    e.currentTarget.src = defaultImages[1]
+                  }}
+                />
                 <div>
                   <span className="doc-type">CARDIOLOGIST</span>
                   <h3>{appointmentDoctor?.name}</h3>
