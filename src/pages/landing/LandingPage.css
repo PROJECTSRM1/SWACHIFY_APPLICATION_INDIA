@@ -1,0 +1,126 @@
+/* ROOT */
+.sw-landing-root {
+  background: #ffffff;
+  font-family: Inter, system-ui, sans-serif;
+}
+
+/* HERO */
+.sw-hero {
+  padding: 80px 40px;
+}
+
+.sw-hero-content {
+  max-width: 1200px;
+  margin: auto;
+}
+
+.sw-hero h1 {
+  font-size: 44px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.sw-hero p {
+  margin-top: 12px;
+  font-size: 18px;
+  color: #475569;
+}
+
+/* SERVICES */
+.sw-uc-services {
+  padding: 40px 40px 80px;
+}
+
+.sw-uc-container {
+  max-width: 1200px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+}
+
+.sw-uc-left h2 {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 32px;
+}
+
+/* GRID */
+.sw-uc-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.sw-uc-card {
+  background: #f8fafc;
+  border-radius: 14px;
+  padding: 22px 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sw-uc-card:hover {
+  background: #ffffff;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+.sw-uc-icon {
+  font-size: 32px;
+  margin-bottom: 10px;
+  color: #1677ff;
+}
+
+.sw-uc-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+/* RIGHT IMAGES */
+.sw-uc-right {
+  display: flex;
+  justify-content: center;
+}
+
+.sw-uc-images {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.sw-uc-images .img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+.sw-uc-images .img.big {
+  grid-column: span 2;
+  height: 220px;
+}
+
+/* RESPONSIVE – SAME AS URBAN COMPANY */
+@media (max-width: 992px) {
+  .sw-uc-container {
+    grid-template-columns: 1fr;
+  }
+
+  .sw-uc-right {
+    display: none;
+  }
+
+  .sw-uc-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .sw-uc-grid {
+    grid-template-columns: 1fr;
+  }
+}
