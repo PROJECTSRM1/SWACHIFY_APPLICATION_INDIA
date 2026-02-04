@@ -1072,7 +1072,7 @@ const HealthCare: React.FC = () => {
 
   const [showTrending, setShowTrending] = useState(false);
 
-  const [consultMode, setConsultMode] = useState<"online" | "offline" | "labs">(
+  const [consultMode, setConsultMode] = useState<"online" | "offline" | "labs" | "medical">(
     "online",
   );
 
@@ -1435,7 +1435,7 @@ const HealthCare: React.FC = () => {
 
       // These two are UI only for now
       if (value === "Medical Store") {
-        setConsultMode("labs"); // reuse existing labs UI safely
+        setConsultMode("medical"); // reuse existing labs UI safely
       }
 
       if (value === "Complete Treatment") {
@@ -1719,6 +1719,50 @@ const HealthCare: React.FC = () => {
             </div>
           </>
         )}
+
+{/* ================= MEDICAL STORE ================= */}
+{consultMode === "medical" && (
+  <>
+    <div className="available-doctors-header">
+      <h3>Available Medical Stores</h3>
+      <span className="see-all" onClick={() => setSearchText("")}>
+        Clear
+      </span>
+    </div>
+
+    <div className="nearby-list">
+      {pharmacies.map((item) => (
+        <div key={item.id} className="nearby-item">
+          <p className="distance">📍 {item.distance}</p>
+
+          <div className="nearby-item-row">
+            <div>
+              <h3>{item.name}</h3>
+              <p className="type">{item.type}</p>
+              <p className="desc">{item.medicines}</p>
+            </div>
+
+            <div className="rating-badge">⭐ {item.rating}</div>
+          </div>
+
+          <div className="nearby-bottom-row">
+            <div>
+              <p className="est">ESTIMATED DELIVERY</p>
+              <h4>{item.eta}</h4>
+            </div>
+
+            <button className="order-btn">
+              {item.buttonText}
+            </button>
+          </div>
+        </div>
+      ))}
+    </div>
+  </>
+)}
+
+
+
         {openLabBooking && selectedLab && (
           <div className="lab-booking-overlay">
             <div className="lab-booking-popup">
