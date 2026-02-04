@@ -26,6 +26,8 @@ interface StudentForm {
 
 const ManagementOverview: React.FC<ManagementOverviewProps> = ({ onBack }) => {
   const [showBus, setShowBus] = useState(false);
+  const [payrollView, setPayrollView] = useState<"LIST" | "OVERVIEW">("LIST");
+
   
   const [showAddStudent, setShowAddStudent] = useState(false);
   const [showBusList, setShowBusList] = useState(false);
@@ -35,27 +37,68 @@ const [showMidTerm, setShowMidTerm] = useState(false);
 const [showFinalExam, setShowFinalExam] = useState(false);
 const [buses, setBuses] = useState<any[]>([]);
 const [busAlerts, setBusAlerts] = useState<any[]>([]);
+const [showAddBus, setShowAddBus] = useState(false);
+
+const [busForm, setBusForm] = useState({
+  bus_name: "",
+  driver_name: "",
+  phone: "",
+  route: "",
+  capacity: "",
+});
+const handleBusChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const { name, value } = e.target;
+  setBusForm(prev => ({ ...prev, [name]: value }));
+};
+const handleAddBus = async () => {
+  if (
+    !busForm.bus_name ||
+    !busForm.driver_name ||
+    !busForm.phone ||
+    !busForm.route ||
+    !busForm.capacity
+  ) {
+    alert("⚠️ Please fill all bus details");
+    return;
+  }
+
+  try {
+    await axios.post(
+      "https://swachify-india-be-1-mcrb.onrender.com/institution/management/bus/add",
+      {
+        bus_name: busForm.bus_name,
+        driver_name: busForm.driver_name,
+        phone: busForm.phone,
+        location_description: busForm.route,
+        capacity: Number(busForm.capacity),
+        status: "ACTIVE",
+      }
+    );
+
+    alert("✅ Bus added successfully");
+
+    setShowAddBus(false);
+    setBusForm({
+      bus_name: "",
+      driver_name: "",
+      phone: "",
+      route: "",
+      capacity: "",
+    });
+
+    // 🔄 refresh buses
+    fetchBusTracking();
+
+  } catch (err) {
+    console.error(err);
+    alert("❌ Failed to add bus");
+  }
+};
 
 
 
 
 const [showPayroll, setShowPayroll] = useState(false);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   const [studentForm, setStudentForm] = useState<StudentForm>({
     name: "",
@@ -140,18 +183,30 @@ if (showPayroll) {
   return (
     <Payroll
       onBack={() => setShowPayroll(false)}
-      initialView="LIST"
+      initialView={payrollView}
     />
   );
 }
 
+
 if (showMidTerm) {
   return (
     <MidTermNotificationsWeb
+      examMode="midterm"
       onBack={() => setShowMidTerm(false)}
     />
   );
 }
+
+if (showFinalExam) {
+  return (
+    <MidTermNotificationsWeb
+      examMode="final"
+      onBack={() => setShowFinalExam(false)}
+    />
+  );
+}
+
 
 if (showFinalExam) {
   return (
@@ -164,7 +219,9 @@ if (showFinalExam) {
 
 
 
+
   return (
+    
       <div className="bsx-wrapper">
     <div className="mgmtw-page">
       {/* HEADER */}
@@ -180,6 +237,63 @@ if (showFinalExam) {
       </header>
 
       <div className="mgmtw-container">
+        {showAddBus && (
+  <div className="mgmtw-modal">
+    <div className="mgmtw-modal-card">
+      <h3>Add New Bus</h3>
+
+      <input
+        name="bus_name"
+        placeholder="Bus Number / Name"
+        value={busForm.bus_name}
+        onChange={handleBusChange}
+      />
+
+      <input
+        name="driver_name"
+        placeholder="Driver Name"
+        value={busForm.driver_name}
+        onChange={handleBusChange}
+      />
+
+      <input
+        name="phone"
+        placeholder="Driver Phone"
+        value={busForm.phone}
+        onChange={handleBusChange}
+      />
+
+      <input
+        name="route"
+        placeholder="Route / Location Description"
+        value={busForm.route}
+        onChange={handleBusChange}
+      />
+
+      <input
+        name="capacity"
+        placeholder="Bus Capacity"
+        type="number"
+        value={busForm.capacity}
+        onChange={handleBusChange}
+      />
+
+      <button
+        className="mgmtw-action success"
+        onClick={handleAddBus}
+      >
+        Save Bus
+      </button>
+
+      <button
+        className="mgmtw-link"
+        onClick={() => setShowAddBus(false)}
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+)}
 
         {/* ================= ENROLLMENT ================= */}
         <section>
@@ -216,10 +330,21 @@ if (showFinalExam) {
                 <span className="mgmtw-dot online" />
               </div>
               <h4>Bus Tracking</h4>
-              <p className="mgmtw-muted">3 Buses Online</p>
+              <p className="mgmtw-muted">
+  {buses.length} Buses Online
+</p>
+
               <button className="mgmtw-action" onClick={() => setShowBusList(true)}>
   Track Bus
 </button>
+
+<button
+  className="mgmtw-action success"
+  onClick={() => setShowAddBus(true)}
+>
+  ➕ Add New Bus
+</button>
+
 
             </div>
 
@@ -254,19 +379,24 @@ if (showFinalExam) {
               </div>
             </div>
 <div className="payroll-actions">
-<button onClick={() => setShowPayroll(true)}>
+<button
+  onClick={() => {
+    setPayrollView("LIST");
+    setShowPayroll(true);
+  }}
+>
   📄 Payslips
 </button>
 
-<button onClick={() => setShowPayroll(true)}>
+<button
+  onClick={() => {
+    setPayrollView("OVERVIEW");
+    setShowPayroll(true);
+  }}
+>
   💰 Salary Overview
 </button>
-
-
-
-
-
-  {/* <button
+ {/* <button
     onClick={() => {
       setPayrollView("OVERVIEW");
       setShowPayroll(true);
@@ -275,11 +405,7 @@ if (showFinalExam) {
     💰 Salary Overview
   </button> */}
 </div>
-
-
-
-
-          </div>
+         </div>
         </section>
 
         {/* ================= MAINTENANCE ================= */}

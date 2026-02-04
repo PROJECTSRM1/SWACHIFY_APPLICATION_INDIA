@@ -15,7 +15,7 @@ import ConstructionMaterials from '../../pages/landing/ConstructionMaterials';
 //Import rentals page (file: src/pages/landing/landingrentals.tsx)
 import Landingrentals from "../../pages/landing/landingrentals";
 //import Freelancer from '../../pages/landing/Freelancer';
-import Education from '../../pages/landing/EducationPage';
+// import Education from '../../pages/landing/EducationPage';
 
 import Freelancerlogin from '../../pages/login/Freelancerlogin';
 import FreelancerRegistration from '../../pages/login/FreelancerRegistration';
@@ -31,36 +31,58 @@ import EmployeeDashboard from '../../pages/freelancer/EmployeeDashboard';
 import Healthcare from "../../pages/dashboard/HealthCare/HealthCare"
 import CleaningService from '../../pages/CleaningService/CleaningService';
 import HomeCleaning from '../../pages/CleaningService/HomeCleaning';
+// import KitchenCleaning from '../../pages/CleaningService/KitchenCleaning';
+import Education from '../../pages/dashboard/Education/Education';
 //import KitchenCleaning from '../../pages/CleaningService/KitchenCleaning';
 import HomeCleaningCategory from '../../pages/CleaningService/HomeCleaningCategory';
 import CommercialCleaning from '../../pages/CleaningService/CommercialCleaning';
 import VehicleCleaning from '../../pages/CleaningService/VehicleCleaning';
 import HomeServiceBooking from '../../pages/CleaningService/HomeServiceBooking';
 //import homesubcat from "../../pages/dashboard/homeservices/HomeSubCatWeb"
+import SwachifyProducts from '../../pages/dashboard/SwachifyProducts/SwachifyProducts';
+import BuysaleProducts from   '../../pages/dashboard/buy&sale/BuySaleProducts';
+import Rawmaterials from'../../pages/building/building';
 
 export const NonSecureRoutes = () => {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const userData: any = getUserDetails("user");
-    const currentPath = window.location.pathname;
+useEffect(() => {
+  const userData: any = getUserDetails("user");
+  const currentPath = window.location.pathname;
 
-    // ✅ Allow all freelancer pages freely
-    if (currentPath.startsWith("/freelancer")) {
-      return;
-    }
+  // ✅ Exact public routes
+  const exactPublicRoutes = ["/", "/landing"];
 
-    // ✅ Logged-in customer → force app dashboard
-    if (userData && !currentPath.startsWith("/app")) {
-      navigate("/app/freelancer", { replace: true });
-      return;
-    }
+  // ✅ Prefix-based public routes
+  const prefixPublicRoutes = [
+    "/education",
+    "/healthcare",
+    "/cleaningservice",
+    "/landingpackers",
+    "/swachifyproducts",
+    "/buysaleproducts",
+    "/rawmaterials",
+  ];
 
-    // ✅ Non-logged user visiting root → landing
-    // if (!userData && currentPath === "/") {
-    //   navigate("/landing", { replace: true });
-    // }
-  }, [navigate]);
+  if (
+    exactPublicRoutes.includes(currentPath) ||
+    prefixPublicRoutes.some((path) => currentPath.startsWith(path))
+  ) {
+    return;
+  }
+
+  // ✅ Allow freelancer pages
+  if (currentPath.startsWith("/freelancer")) {
+    return;
+  }
+
+  // ✅ Redirect logged-in users ONLY when needed
+  if (userData && !currentPath.startsWith("/app")) {
+    navigate("/app/freelancer", { replace: true });
+  }
+}, [navigate]);
+
+
 
 
 
@@ -78,7 +100,7 @@ export const NonSecureRoutes = () => {
       {/* <Route path="/privacy" element={<PrivacyPolicy />} /> */}
       {/* <Route path="/terms" element={<TermsOfService />} /> */}
       <Route path="/home_service" element={<Home_Service />} />
-      <Route path="/LandingPackers" element={<LandingPackers />} />
+      <Route path="/landingpackers" element={<LandingPackers />} />
       <Route path="/commercial-plots" element={<CommercialPlots />} />
       <Route path='/ConstructionMaterials' element={<ConstructionMaterials />} />
       {/* cleaning landing page */}
@@ -111,11 +133,14 @@ export const NonSecureRoutes = () => {
     
 
       <Route path="/healthcare" element={<Healthcare />} />
-
+       {/* <Route path="/education" element={<Education />} /> */}
+ <Route path="/swachifyproducts" element={<SwachifyProducts/>} />
+ <Route path="/buysaleproducts" element={<BuysaleProducts/>} />
+ <Route path="/rawmaterials" element={<Rawmaterials/>} />
 
       {/* rentals landing page */}
       <Route path="/rentals" element={<Landingrentals />} />
-      <Route path="/Education" element={<Education />} />
+      <Route path="/education" element={<Education />} />
       {/* <Route path="/freelancer" element={<Freelancer />} /> */}
       <Route path="/freelancer" element={<EmployeeDashboard />} />
       <Route path="/freelancerlogin" element={<Freelancerlogin />} />

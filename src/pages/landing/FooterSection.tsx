@@ -11,6 +11,8 @@ import {
   LinkedinOutlined,
 } from "@ant-design/icons";
 import "./FooterSection.css";
+import { Link } from "react-router-dom";
+
 // import { Link } from "react-router-dom";
 
 type FooterSectionProps = {
@@ -40,57 +42,64 @@ const FooterSection: React.FC<FooterSectionProps> = ({ selectedKey }) => {
           <h5>Services</h5>
           <ul className="sw-lp-links-list">
             <li>
-              <a href="/education" onClick={() => window.scrollTo(0, 0)}>
-                Education
-              </a>
-            </li>
-            <li>
-              <a href="/education" onClick={() => window.scrollTo(0, 0)}>
-                Health Care
-              </a>
-            </li>
-            <li>
-              <a href="/education" onClick={() => window.scrollTo(0, 0)}>
-                Just ride
-              </a>
-            </li>
-            <li>
-              <a href="/" onClick={() => window.scrollTo(0, 0)}>
-                Swachify Products
-              </a>
-            </li>
-            <li>
-              <a href="/cleaningservice" onClick={() => window.scrollTo(0, 0)}>
-                Cleaning & Home Services
-              </a>
-            </li>
+  <Link to="/education" onClick={() => window.scrollTo(0, 0)}>
+    Education
+  </Link>
+</li>
 
-            <li>
-              <a href="/LandingPackers" onClick={() => window.scrollTo(0, 0)}>
-                Transport
-              </a>
-            </li>
+<li>
+  <Link to="/healthcare" onClick={() => window.scrollTo(0, 0)}>
+    Health Care
+  </Link>
+</li>
 
-            <li>
-              <a href="/commercial-plots" onClick={() => window.scrollTo(0, 0)}>
-                Buy / Sale / Rentals
-              </a>
-            </li>
+<li>
+  <Link to="/landingpackers" onClick={() => window.scrollTo(0, 0)}>
+    Just ride
+  </Link>
+</li>
 
-            <li>
+<li>
+  <Link to="/swachifyproducts" onClick={() => window.scrollTo(0, 0)}>
+    Swachify Products
+  </Link>
+</li>
+
+<li>
+  <Link to="/cleaningservice" onClick={() => window.scrollTo(0, 0)}>
+    Cleaning & Home Services
+  </Link>
+</li>
+
+<li>
+  <Link to="/buysaleproducts" onClick={() => window.scrollTo(0, 0)}>
+    Buy / Sale / Rentals
+  </Link>
+</li>
+
+<li>
+  <Link to="/rawmaterials" onClick={() => window.scrollTo(0, 0)}>
+    Raw Materials
+  </Link>
+</li>
+
+<li>
+  <Link to="/freelancer" onClick={() => window.scrollTo(0, 0)}>
+    Freelancer
+  </Link>
+</li>
+
+
+            {/* <li>
               <a
                 href="/ConstructionMaterials"
                 onClick={() => window.scrollTo(0, 0)}
               >
                 Raw Materials
               </a>
-            </li>
+            </li> */}
 
-            <li>
-              <a href="/Freelancer" onClick={() => window.scrollTo(0, 0)}>
-                Freelancer
-              </a>
-            </li>
+          
           </ul>
         </div>
 

@@ -188,12 +188,13 @@ if (step === "step2" && !institutionId) {
               <option value="1">Registration Certificate</option>
               <option value="2">Government Approval</option>
             </select>
-            <input
-              name="registrationNumber"
-              placeholder="Document number"
-              value={form.registrationNumber}
-              onChange={handleChange}
-            />
+           <input
+  name="registrationNumber"
+  placeholder="Institution Registration Number"
+  value={form.registrationNumber}
+  onChange={handleChange}
+/>
+
           </div>
 
           {/* FILE UPLOADS */}
