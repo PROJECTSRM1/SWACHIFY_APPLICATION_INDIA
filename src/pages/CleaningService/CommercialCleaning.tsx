@@ -80,47 +80,92 @@ const CommercialCleaning: React.FC = () => {
       </section>
 
       {/* LOGIN */}
-      <Modal open={step === "login"} footer={null} centered>
-        <Input
-          placeholder="Enter mobile number"
-          maxLength={10}
-          value={mobile}
-          onChange={(e) => setMobile(e.target.value.replace(/[^0-9]/g, ""))}
-        />
-        <Button
-          type="primary"
-          block
-          disabled={mobile.length !== 10}
-          onClick={() => setStep("otp")}
-          style={{ marginTop: 16 }}
-        >
-          Continue
-        </Button>
-      </Modal>
+     {/* LOGIN */}
+<Modal
+  open={step === "login"}
+  footer={null}
+  centered
+  onCancel={() => setStep("select")}
+  className="auth-modal"
+  closeIcon={<span className="auth-close">✕</span>}
+>
+  <div className="auth-box">
+    <h3 className="auth-title">Login to continue</h3>
+
+    <p className="auth-subtitle">
+      We’ll send a one-time password to your mobile
+    </p>
+
+    <Input
+      className="auth-input"
+      placeholder="Enter 10-digit mobile number"
+      maxLength={10}
+      value={mobile}
+      onChange={(e) =>
+        setMobile(e.target.value.replace(/[^0-9]/g, ""))
+      }
+    />
+
+    <Button
+      type="primary"
+      block
+      className="auth-button"
+      disabled={mobile.length !== 10}
+      onClick={() => setStep("otp")}
+    >
+      Continue
+    </Button>
+
+    <p className="auth-note">
+      By continuing, you agree to our Terms & Privacy Policy
+    </p>
+  </div>
+</Modal>
+
+{/* OTP */}
+<Modal
+  open={step === "otp"}
+  footer={null}
+  centered
+  onCancel={() => setStep("login")}
+  className="auth-modal"
+  closeIcon={<span className="auth-close">✕</span>}
+>
+  <div className="auth-box">
+    <h3 className="auth-title">Verify OTP</h3>
+
+    <p className="auth-subtitle">
+      Enter the 6-digit code sent to <strong>{mobile}</strong>
+    </p>
+
+    <Input
+      className="auth-input otp-input"
+      placeholder="Enter OTP"
+      maxLength={6}
+      value={otp}
+      onChange={(e) =>
+        setOtp(e.target.value.replace(/[^0-9]/g, ""))
+      }
+    />
+
+    <Button
+      type="primary"
+      block
+      className="auth-button"
+      disabled={otp.length !== 6}
+      onClick={() => {
+        setOtp("");
+        setStep("booking");
+      }}
+    >
+      Verify & Book
+    </Button>
+  </div>
+</Modal>
+
 
       {/* OTP */}
-      <Modal open={step === "otp"} footer={null} centered>
-        <Input
-          placeholder="Enter OTP"
-          maxLength={6}
-          value={otp}
-          onChange={(e) => setOtp(e.target.value.replace(/[^0-9]/g, ""))}
-        />
-        <Button
-          type="primary"
-          block
-          disabled={otp.length !== 6}
-         onClick={() => {
-  setOtp("");
-  setStep("booking");
-}}
-
-          style={{ marginTop: 16 }}
-        >
-          Verify & Book
-        </Button>
-      </Modal>
-
+      
       {/* DONE */}
       <Modal open={step === "done"} footer={null} centered closable={false}>
         <h3>🎉 Booking Requested</h3>
