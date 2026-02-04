@@ -232,8 +232,6 @@ const HomeCleaningCategory: React.FC = () => {
   </div>
 </Modal>
 
-<<<<<<< HEAD
-=======
       {/* OTP */}
       <Modal open={step === "otp"} footer={null} centered>
         <Input
@@ -255,7 +253,6 @@ const HomeCleaningCategory: React.FC = () => {
 </Button>
 
       </Modal>
->>>>>>> dev
 
       {/* DONE */}
       <Modal open={step === "done"} footer={null} centered closable={false}>
