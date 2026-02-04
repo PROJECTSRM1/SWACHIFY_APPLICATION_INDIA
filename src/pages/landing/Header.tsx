@@ -12,11 +12,13 @@ import {
   Input,
   Checkbox,
   message,
-  //Radio,
   Upload,
+  Row,
+  Col,
 } from "antd";
 
-import { Select, TreeSelect } from "antd";
+
+import { Select } from "antd";
 
 
 import {
@@ -354,17 +356,17 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
     setVendorModalVisible(false);
     message.success("Vendor Login Successful!");
   };
-  const [selectedServices, setSelectedServices] = useState<number[]>([]);
+  // const [selectedServices, setSelectedServices] = useState<number[]>([]);
 
-  const serviceOptions = [
-    { title: "Cleaning & Home Services", value: 1 },
-    { title: "Just Ride", value: 2 },
-    { title: "Buy/Sell/Rental", value: 3 },
-    { title: "Raw Materials", value: 4 },
-    { title: "Education", value: 5 },
-    { title: "Swachify Products", value: 6 },
-    { title: "HealthCare", value: 7 },
-  ];
+  // const serviceOptions = [
+  //   { title: "Cleaning & Home Services", value: 1 },
+  //   { title: "Just Ride", value: 2 },
+  //   { title: "Buy/Sell/Rental", value: 3 },
+  //   { title: "Raw Materials", value: 4 },
+  //   { title: "Education", value: 5 },
+  //   { title: "Swachify Products", value: 6 },
+  //   { title: "HealthCare", value: 7 },
+  // ];
 
   // ✅ Partner Register/Login handler (Education only)
 
@@ -505,7 +507,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
         last_name: values.lastName?.trim() || "DefaultLast",
         email: values.email?.trim() || "user@example.com",
         mobile: values.mobile?.trim() || "9999999999",
-        role_id: selectedRole,
+        // role_id: selectedRole,
         password: values.password || "Default@123",
         confirm_password: values.confirmPassword || "Default@123",
         work_type:
@@ -727,14 +729,16 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
       >
 
 
-        <div className="auth-header">
-          <UserOutlined className="auth-profile-icon" />
-          <div className="auth-title">
-            {activeAuthTab === "register"
-              ? "Create Your Account"
-              : "Welcome Back"}
-          </div>
-        </div>
+{activeAuthTab === "register" && (
+  <div className="auth-illustration">
+    <div className="auth-avatar">
+      <UserOutlined />
+    </div>
+    <h2>Create Your Account</h2>
+    <p>Join Swachify & start your journey 🚀</p>
+  </div>
+)}
+       
 
 
         <Tabs
@@ -841,7 +845,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
           <TabPane tab="Register" key="register">
             <Form layout="vertical" onFinish={onRegister} preserve={false}>
 
-              <Form.Item
+              {/* <Form.Item
                 label="Select Services"
                 name="service"
                 rules={[{ required: true, message: "Please select at least one service" }]}
@@ -884,82 +888,51 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
 
 
 
-              </Form.Item>
+              </Form.Item> */}
 
+<Row gutter={16}>
+  <Col xs={24} md={12}>
+    <Form.Item
+      label="First Name"
+      name="firstName"
+      rules={[{ required: true }]}
+    >
+      <Input placeholder="First name" />
+    </Form.Item>
+  </Col>
 
-              <Form.Item
-                label="First Name"
-                name="firstName"
-                normalize={(value) =>
-                  value
-                    ?.replace(/[^A-Za-z ]/g, "")
-                    .replace(/\s+/g, " ")
-                    .trim()
-                }
-                rules={[
-                  { required: true, message: "First name is required" },
-                  {
-                    pattern: /^[A-Za-z]+( [A-Za-z]+)*$/,
-                    message: "Only letters allowed",
-                  },
-                ]}
-              >
-                <Input placeholder="Enter first name" />
-              </Form.Item>
-
-
-
-              <Form.Item
-                label="Last Name"
-                name="lastName"
-                normalize={(value) =>
-                  value
-                    ?.replace(/[^A-Za-z ]/g, "")
-                    .replace(/\s+/g, " ")
-                    .trim()
-                }
-                rules={[
-                  { required: true, message: "Last name is required" },
-                  {
-                    pattern: /^[A-Za-z]+( [A-Za-z]+)*$/,
-                    message: "Only letters allowed",
-                  },
-                ]}
-              >
-                <Input placeholder="Enter last name" />
-              </Form.Item>
+  <Col xs={24} md={12}>
+    <Form.Item
+      label="Last Name"
+      name="lastName"
+      rules={[{ required: true }]}
+    >
+      <Input placeholder="Last name" />
+    </Form.Item>
+  </Col>
+</Row>
 
 
 
-              <Form.Item
-                label="Mobile Number"
-                name="mobile"
-                normalize={(value) => allowOnlyNumbers(value || "").slice(0, 10)}
-                rules={[
-                  { required: true },
-                  { pattern: /^[6-9][0-9]{9}$/, message: "Invalid mobile number" },
-                ]}
-              >
-                <Input inputMode="numeric" />
-              </Form.Item>
+<Row gutter={16}>
+  <Col xs={24} md={12}>
+    <Form.Item label="Mobile Number" name="mobile" rules={[{ required: true }]}>
+      <Input />
+    </Form.Item>
+  </Col>
 
-
-              <Form.Item
-                name="email"
-                label="Email"
-                normalize={(value) => value?.toLowerCase().replace(/\s+/g, "")}
-                rules={[
-                  { required: true, message: "Please input the email!" },
-                  { type: "email", message: "Please enter a valid email!" },
-                ]}
-              >
-                <Input placeholder="Enter email" />
-              </Form.Item>
+  <Col xs={24} md={12}>
+    <Form.Item label="Email" name="email" rules={[{ required: true }]}>
+      <Input />
+    </Form.Item>
+  </Col>
+</Row>
 
 
 
 
-              <Form.Item
+
+              {/* <Form.Item
                 label="Aadhaar Number"
                 name="aadhaar"
                 normalize={(value) => allowOnlyNumbers(value || "").slice(0, 12)}
@@ -969,20 +942,20 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
                 ]}
               >
                 <Input inputMode="numeric" />
-              </Form.Item>
+              </Form.Item> */}
 
 
 
-              <Form.Item
+              {/* <Form.Item
                 label="Location"
                 name="location"
                 rules={[{ required: true }]}
               >
                 <Input placeholder="Enter your location" />
-              </Form.Item>
+              </Form.Item> */}
 
 
-              {!isHealthCareSelected && (
+              {/* {!isHealthCareSelected && (
                 <Form.Item
                   label="Select Work Type"
                   name="workType"
@@ -1000,7 +973,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
                     <Select.Option value="both">Both</Select.Option>
                   </Select>
                 </Form.Item>
-              )}
+              )} */}
 
 
 
@@ -1182,46 +1155,25 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
                 </div>
               )}
 
-              {/* PASSWORD */}
-              <Form.Item
-                label="Password"
-                name="password"
-                rules={[
-                  { required: true, message: "Password is required" },
-                  {
-                    pattern:
-                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{6,}$/,
-                    message:
-                      "Min 6 chars, uppercase, lowercase, number & special character required",
-                  },
-                ]}
-                hasFeedback
-              >
-                <Input.Password />
-              </Form.Item>
+<Row gutter={16}>
+  <Col xs={24} md={12}>
+    <Form.Item label="Password" name="password" rules={[{ required: true }]}>
+      <Input.Password />
+    </Form.Item>
+  </Col>
 
+  <Col xs={24} md={12}>
+    <Form.Item
+      label="Confirm Password"
+      name="confirmPassword"
+      dependencies={["password"]}
+      rules={[{ required: true }]}
+    >
+      <Input.Password />
+    </Form.Item>
+  </Col>
+</Row>
 
-
-              {/* CONFIRM PASSWORD */}
-              <Form.Item
-                label="Confirm Password"
-                name="confirmPassword"
-                dependencies={["password"]}
-                hasFeedback
-                rules={[
-                  { required: true, message: "Please confirm your password" },
-                  ({ getFieldValue }) => ({
-                    validator(_, value) {
-                      if (!value || getFieldValue("password") === value) {
-                        return Promise.resolve();
-                      }
-                      return Promise.reject("Passwords do not match");
-                    },
-                  }),
-                ]}
-              >
-                <Input.Password />
-              </Form.Item>
 
 
 
