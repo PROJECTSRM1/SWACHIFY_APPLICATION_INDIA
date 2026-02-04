@@ -3,6 +3,7 @@ import CleaningHeader from "./CleaningHeader";
 import "./KitchenCleaning.css";
 import { Modal, Input, Button } from "antd";
 import commercialvideo from "../../../src/assets/4203186-hd_1920_1080_24fps.mp4";
+import BookCleaningScreenWeb from "../../pages/dashboard/homeservices/BookCleaningScreenWeb";
 
 const propertyTypes = [
   { title: "Office", price: 1999 },
@@ -13,9 +14,10 @@ const propertyTypes = [
 
 const CommercialCleaning: React.FC = () => {
   const [selected, setSelected] = useState<any>(null);
-  const [step, setStep] = useState<"select" | "login" | "otp" | "done">(
-    "select",
-  );
+ const [step, setStep] = useState<
+  "select" | "login" | "otp" | "booking" | "done"
+>("select");
+
   const [mobile, setMobile] = useState("");
   const [otp, setOtp] = useState("");
 
@@ -151,7 +153,10 @@ const CommercialCleaning: React.FC = () => {
       block
       className="auth-button"
       disabled={otp.length !== 6}
-      onClick={() => setStep("done")}
+      onClick={() => {
+        setOtp("");
+        setStep("booking");
+      }}
     >
       Verify & Book
     </Button>
@@ -159,6 +164,8 @@ const CommercialCleaning: React.FC = () => {
 </Modal>
 
 
+      {/* OTP */}
+      
       {/* DONE */}
       <Modal open={step === "done"} footer={null} centered closable={false}>
         <h3>🎉 Booking Requested</h3>
@@ -174,6 +181,26 @@ const CommercialCleaning: React.FC = () => {
           Done
         </Button>
       </Modal>
+      {step === "booking" && selected && (
+  <div className="uc-overlay">
+    <div className="uc-modal">
+      <BookCleaningScreenWeb
+        selectedServices={[
+          {
+            id: "commercial-1",
+            title: `${selected.title} Cleaning`,
+            price: selected.price,
+            category: "commercial",
+          },
+        ]}
+        consultationCharge={selected.price}
+        serviceContext="commercial"
+        onClose={() => setStep("select")}
+      />
+    </div>
+  </div>
+)}
+
     </>
   );
 };

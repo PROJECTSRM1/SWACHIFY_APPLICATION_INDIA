@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Modal, Input, Button } from "antd";
 import CleaningHeader from "./CleaningHeader";
 import "./KitchenCleaning.css";
+import BookCleaningScreenWeb from "../../pages/dashboard/homeservices/BookCleaningScreenWeb";
 
 type VehicleType = "Bike" | "Car" | "SUV";
 
@@ -28,9 +29,10 @@ const vehiclePackages: Record<
 const VehicleCleaning: React.FC = () => {
   const [vehicleType, setVehicleType] = useState<VehicleType | null>(null);
   const [cart, setCart] = useState<any[]>([]);
-  const [step, setStep] = useState<"services" | "login" | "otp" | "done">(
-    "services"
-  );
+ const [step, setStep] = useState<
+  "services" | "login" | "otp" | "booking" | "done"
+>("services");
+
   const [mobile, setMobile] = useState("");
   const [otp, setOtp] = useState("");
 
@@ -134,7 +136,6 @@ const VehicleCleaning: React.FC = () => {
   centered
   onCancel={() => setStep("services")}
   className="auth-modal"
-  closeIcon={<span className="auth-close">✕</span>}
 >
   <div className="auth-box">
     <h3 className="auth-title">Login to continue</h3>
@@ -162,28 +163,17 @@ const VehicleCleaning: React.FC = () => {
     >
       Continue
     </Button>
-
-    <p className="auth-note">
-      By continuing, you agree to our Terms & Privacy Policy
-    </p>
   </div>
 </Modal>
-
-     {/* OTP */}
 <Modal
   open={step === "otp"}
   footer={null}
   centered
   onCancel={() => setStep("login")}
   className="auth-modal"
-  closeIcon={<span className="auth-close">✕</span>}
 >
   <div className="auth-box">
     <h3 className="auth-title">Verify OTP</h3>
-
-    <p className="auth-subtitle">
-      Enter the 6-digit code sent to <strong>{mobile}</strong>
-    </p>
 
     <Input
       className="auth-input otp-input"
@@ -200,38 +190,45 @@ const VehicleCleaning: React.FC = () => {
       block
       className="auth-button"
       disabled={otp.length !== 6}
-      onClick={() => setStep("done")}
+      onClick={() => {
+        setOtp("");
+        setStep("booking");
+      }}
     >
       Verify & Book
     </Button>
   </div>
 </Modal>
-
-{/* DONE */}
-<Modal
-  open={step === "done"}
-  footer={null}
-  centered
-  closable={false}
-  className="auth-modal"
->
-  <div className="auth-box">
-    <h3 className="auth-title">🚗 Booking Confirmed</h3>
-
-    <p className="auth-subtitle">
-      Your vehicle cleaning is scheduled.
-    </p>
-
-    <Button
-      type="primary"
-      block
-      className="auth-button"
-      onClick={() => (window.location.href = "/cleaningservice")}
-    >
-      Done
-    </Button>
+{step === "booking" && cart.length > 0 && (
+  <div className="uc-overlay">
+    <div className="uc-modal">
+      <BookCleaningScreenWeb
+        selectedServices={cart.map((c, i) => ({
+          id: `vehicle-${i}`,
+          title: `${vehicleType} - ${c.title}`,
+          price: c.price,
+          category: "vehicle",
+        }))}
+        consultationCharge={total}
+        serviceContext="vehicle"
+        meta={{
+          vehicleType,
+          subServices: cart.map((c) => ({
+            name: c.title,
+            price: c.price,
+          })),
+        }}
+        onClose={() => {
+          setStep("services");
+          setVehicleType(null);
+          setCart([]);
+          setMobile("");
+        }}
+      />
+    </div>
   </div>
-</Modal>
+)}
+
 
     </>
   );
