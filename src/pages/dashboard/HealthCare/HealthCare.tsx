@@ -969,6 +969,10 @@ const HealthCare: React.FC = () => {
   const [openPaymentSuccess, setOpenPaymentSuccess] = useState(false);
   const [paymentCompleted, _setPaymentCompleted] = useState(false);
 
+  //labs
+  const [openLabBooking, setOpenLabBooking] = useState(false);
+  const [selectedLab, setSelectedLab] = useState<any>(null);
+
   const getDaysInMonth = (date: Date) => {
     return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
   };
@@ -1677,12 +1681,67 @@ const HealthCare: React.FC = () => {
 
                   {/* ACTION */}
                   <div className="lab-action">
-                    <button className="book-btn">Book Now</button>
+                    <button
+                      className="book-btn"
+                      onClick={() => {
+                        setSelectedLab(item);
+                        setOpenLabBooking(true);
+                      }}
+                    >
+                      Book Now
+                    </button>
                   </div>
                 </div>
               ))}
             </div>
           </>
+        )}
+        {openLabBooking && selectedLab && (
+          <div className="lab-booking-overlay">
+            <div className="lab-booking-popup">
+              {/* Header */}
+              <h2>Book Lab Test</h2>
+              <p className="lab-name">{selectedLab.name}</p>
+
+              {/* Upload Prescription */}
+              <div className="lab-section">
+                <h4>Upload Prescription</h4>
+                <div className="upload-row">
+                  <button className="upload-btn">📷 Camera</button>
+                  <button className="upload-btn">🖼 Gallery</button>
+                </div>
+              </div>
+
+              {/* Delivery Mode */}
+              <div className="lab-section">
+                <h4>How would you like to proceed?</h4>
+                <div className="mode-row">
+                  <button className="mode-btn active">🚚 Delivery</button>
+                  <button className="mode-btn">🏪 Visit Store</button>
+                </div>
+              </div>
+
+              {/* Instructions */}
+              <div className="lab-section">
+                <h4>Special Instructions</h4>
+                <input
+                  className="instruction-input"
+                  placeholder="E.g. Call before arrival"
+                />
+              </div>
+
+              {/* Actions */}
+              <div className="lab-actions">
+                <button className="confirm-order-btn">Confirm Order</button>
+                <button
+                  className="cancel-btn"
+                  onClick={() => setOpenLabBooking(false)}
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
         )}
 
         {/* <p>📍 {h.location}</p>
