@@ -2024,17 +2024,20 @@
 }
 
 .profile-popup {
-  background: #ffffff;
+  background: #fff;
   width: 92%;
   max-width: 420px;
-  border-radius: 20px;
-  padding: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  max-height: 90vh;
+
+  max-height: 90vh;      /* ⭐ limit to screen */
   display: flex;
   flex-direction: column;
-  animation: slideUp 0.25s ease;
+
+  border-radius: 20px;
+  padding: 20px;
+
+  overflow-y: auto;      /* ⭐ ENABLE SCROLL */
 }
+
 
 @keyframes slideUp {
   from {
@@ -2172,13 +2175,9 @@
 }
 
 .profile-body {
-  overflow-y: auto;
-  /* enable scroll */
-  max-height: calc(90vh - 80px);
-  /* header height adjust */
-  padding-right: 6px;
-  /* avoid scrollbar overlap */
+  overflow: visible;   /* or remove this block */
 }
+
 
 .online-doctor-list {
   display: flex;
