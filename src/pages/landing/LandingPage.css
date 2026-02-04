@@ -6,12 +6,12 @@
 
 /* HERO */
 .sw-hero {
-  padding: 80px 40px;
+  /* padding: 20px 10px; */
 }
 
 .sw-hero-content {
   max-width: 1200px;
-  margin: auto;
+  /* margin: auto; */
 }
 
 .sw-hero h1 {
