@@ -94,14 +94,14 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
   const [roleType, setRoleType] = useState<RoleType>("vendor");
   const [showRegisterHint, setShowRegisterHint] = useState<"vendor" | "admin" | null>(null);
 
-  const [showProfessionalFields, setShowProfessionalFields] = useState(false);
+  const [showProfessionalFields] = useState(false);
 
-  const [isHealthCareSelected, setIsHealthCareSelected] = useState(false);
+  const [isHealthCareSelected] = useState(false);
   const [doctorRoleSelected, setDoctorRoleSelected] = useState(false);
 
-  type UserRole = "customer" | "employee" | "partner" | "admin" | null;
+  // type UserRole = "customer" | "employee" | "partner" | "admin" | null;
 
-  const [userRole, setUserRole] = useState<UserRole>(null);
+  // const [ setUserRole] = useState<UserRole>(null);
   const [partnerModalVisible, setPartnerModalVisible] = useState(false);
   const [partnerActiveTab, setPartnerActiveTab] = useState<"login" | "register">("register");
 
@@ -120,7 +120,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
 
   const [authLoading, setAuthLoading] = useState(false);
   const navigate = useNavigate();
-  const [serviceOpen, setServiceOpen] = useState(false);
+  // const [setServiceOpen] = useState(false);
 
 
   const openAuthModal = (tab: "login" | "register" = "login") => {
@@ -128,7 +128,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
     setAuthModalVisible(true);
     setMenuOpen(false);
   };
-  const [hideWorkType, setHideWorkType] = useState(false);
+  // const [hideWorkType, setHideWorkType] = useState(false);
 
 
   const closeAuthModal = () => {
@@ -171,17 +171,17 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
     };
   }, []);
 
-  useEffect(() => {
-    const closeOnScroll = () => {
-      setServiceOpen(false);
-    };
+  // useEffect(() => {
+  //   const closeOnScroll = () => {
+  //     setServiceOpen(false);
+  //   };
 
-    window.addEventListener("scroll", closeOnScroll, true);
+  //   window.addEventListener("scroll", closeOnScroll, true);
 
-    return () => {
-      window.removeEventListener("scroll", closeOnScroll, true);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener("scroll", closeOnScroll, true);
+  //   };
+  // }, []);
 
   const onLogin = async (values: any) => {
     try {
@@ -489,15 +489,15 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
       //   navigate("/adminshell/dashboard");
       //   return;
       // }
-      const roleMap = {
-        customer: 1,
-        employee: 2,
-      };
+      // const roleMap = {
+      //   customer: 1,
+      //   employee: 2,
+      // };
 
-      const selectedRole =
-        userRole === "employee"
-          ? roleMap.employee
-          : roleMap.customer;
+      // const selectedRole =
+      //   userRole === "employee"
+      //     ? roleMap.employee
+      //     : roleMap.customer;
 
 
       // ================= CUSTOMER REGISTER =================
@@ -514,9 +514,8 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
           values.workType === "assigning" ? 1 :
             values.workType === "looking" ? 2 :
               values.workType === "both" ? 3 : 1,
-        service_ids: selectedServices.length > 0
-          ? selectedServices.map(Number) // <--- Convert strings to numbers
-          : [1],
+      service_ids: [1], // default service
+
 
 
         professional_details: values.experience
@@ -640,7 +639,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
           className="swl-hs-navbar-menu"
           items={navItems}
         />
-        <Select
+        {/* <Select
           placeholder="Role"
           style={{ width: 150, marginRight: 12 }}
           onChange={(value: UserRole) => {
@@ -669,7 +668,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
           <Select.Option value="employee">Employee</Select.Option>
           <Select.Option value="partner">Partner</Select.Option>
           <Select.Option value="admin">Admin</Select.Option>
-        </Select>
+        </Select> */}
 
 
         <Button
