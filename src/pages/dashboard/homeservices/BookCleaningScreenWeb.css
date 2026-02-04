@@ -63,8 +63,8 @@
 }
 
 .uc_overlay--visible {
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(8px);
+  background: transparent;
+  /* backdrop-filter: blur(8px); */
   pointer-events: auto;
 }
 
