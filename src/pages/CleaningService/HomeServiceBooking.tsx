@@ -4,6 +4,8 @@ import { Modal, Input, Button } from "antd";
 import CleaningHeader from "./CleaningHeader";
 import { HOME_SERVICE_CONFIG } from "./homeServiceConfig";
 import "./KitchenCleaning.css";
+import BookCleaningScreenWeb from "../../pages/dashboard/homeservices/BookCleaningScreenWeb";
+
 
 const HomeServiceBooking: React.FC = () => {
   const { serviceKey } = useParams<{ serviceKey: string }>();
@@ -12,7 +14,10 @@ const HomeServiceBooking: React.FC = () => {
   const [cart, setCart] = useState<any | null>(null);
 
   // LOGIN FLOW STATES
-  const [step, setStep] = useState<"idle" | "login" | "otp" | "done">("idle");
+  const [step, setStep] = useState<
+  "idle" | "login" | "otp" | "booking" | "done"
+>("idle");
+
   const [mobile, setMobile] = useState("");
   const [otp, setOtp] = useState("");
 
@@ -142,7 +147,10 @@ const HomeServiceBooking: React.FC = () => {
           type="primary"
           block
           disabled={otp.length !== 6}
-          onClick={() => setStep("done")}
+          onClick={() => {
+  setOtp("");
+  setStep("booking");
+}}
           style={{ marginTop: 16 }}
         >
           Verify & Book
@@ -150,7 +158,7 @@ const HomeServiceBooking: React.FC = () => {
       </Modal>
 
       {/* SUCCESS MODAL */}
-      <Modal
+      {/* <Modal
         open={step === "done"}
         footer={null}
         centered
@@ -170,7 +178,35 @@ const HomeServiceBooking: React.FC = () => {
         >
           Done
         </Button>
-      </Modal>
+      </Modal> */}
+      {step === "booking" && cart && (
+  <div className="uc-overlay">
+    <div className="uc-modal">
+      <BookCleaningScreenWeb
+        selectedServices={[
+          {
+            id: cart.id,
+            title: cart.title,
+            price: cart.price,
+            category: "homeServices",
+          },
+        ]}
+        consultationCharge={cart.price}
+        serviceContext="homeServices"
+        meta={{
+          serviceKey,
+        }}
+        onClose={() => {
+          setStep("idle");
+          setCart(null);
+          setMobile("");
+          setOtp("");
+        }}
+      />
+    </div>
+  </div>
+)}
+
     </>
   );
 };

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Modal, Input, Button } from "antd";
 import CleaningHeader from "./CleaningHeader";
 import "./KitchenCleaning.css";
+import BookCleaningScreenWeb from "../../pages/dashboard/homeservices/BookCleaningScreenWeb";
 
 type VehicleType = "Bike" | "Car" | "SUV";
 
@@ -28,9 +29,10 @@ const vehiclePackages: Record<
 const VehicleCleaning: React.FC = () => {
   const [vehicleType, setVehicleType] = useState<VehicleType | null>(null);
   const [cart, setCart] = useState<any[]>([]);
-  const [step, setStep] = useState<"services" | "login" | "otp" | "done">(
-    "services"
-  );
+ const [step, setStep] = useState<
+  "services" | "login" | "otp" | "booking" | "done"
+>("services");
+
   const [mobile, setMobile] = useState("");
   const [otp, setOtp] = useState("");
 
@@ -159,7 +161,11 @@ const VehicleCleaning: React.FC = () => {
           type="primary"
           block
           disabled={otp.length !== 6}
-          onClick={() => setStep("done")}
+         onClick={() => {
+  setOtp("");
+  setStep("booking");
+}}
+
           style={{ marginTop: 16 }}
         >
           Verify & Book
@@ -178,6 +184,35 @@ const VehicleCleaning: React.FC = () => {
           Done
         </Button>
       </Modal>
+      {step === "booking" && cart.length > 0 && (
+  <div className="uc-overlay">
+    <div className="uc-modal">
+      <BookCleaningScreenWeb
+        selectedServices={cart.map((c, i) => ({
+          id: `vehicle-${i}`,
+          title: `${vehicleType} - ${c.title}`,
+          price: c.price,
+          category: "vehicle",
+        }))}
+        consultationCharge={total}
+        serviceContext="vehicle"
+        meta={{
+          vehicleType,
+          subServices: cart.map((c) => ({
+            name: c.title,
+            price: c.price,
+          })),
+        }}
+        onClose={() => {
+          setStep("services");
+          setVehicleType(null);
+          setCart([]);
+        }}
+      />
+    </div>
+  </div>
+)}
+
     </>
   );
 };
