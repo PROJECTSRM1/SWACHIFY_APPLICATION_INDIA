@@ -1504,37 +1504,60 @@ const HealthCare: React.FC = () => {
           </div>
 
           {/* 🔁 MODE SELECT */}
-          <div className="mode-toggle">
-            <button
-              className={consultMode === "labs" ? "active" : ""}
-              onClick={() => {
-                setConsultMode("labs");
-                setSearchText("");
-              }}
-            >
-              🧪 Labs
-            </button>
+         {/* 🔁 MODE SELECT (DROPDOWNS) */}
+<div className="mode-toggle">
 
-            <button
-              className={consultMode === "online" ? "active" : ""}
-              onClick={() => setConsultMode("online")}
-            >
-              🌐 Online
-            </button>
+  {/* MAIN SERVICE DROPDOWN */}
+  <select
+    className="mode-dropdown"
+    onChange={(e) => {
+      const value = e.target.value;
 
-            <button
-              className={consultMode === "offline" ? "active" : ""}
-              onClick={() => setConsultMode("offline")}
-            >
-              🏥 Offline
-            </button>
-            <button
-              className="my-bookings-btn"
-              onClick={() => setOpenMyBookings(true)}
-            >
-              📅 My Bookings
-            </button>
-          </div>
+      if (value === "Doctor") {
+        setConsultMode("online");
+      }
+
+      if (value === "Labs") {
+        setConsultMode("labs");
+        setSearchText("");
+      }
+
+      // These two are UI only for now
+      if (value === "Medical Store") {
+        setConsultMode("labs"); // reuse existing labs UI safely
+      }
+
+      if (value === "Complete Treatment") {
+        setConsultMode("offline"); // reuse hospital flow
+      }
+    }}
+  >
+    <option value="Doctor">Doctor</option>
+    <option value="Labs">Labs</option>
+    <option value="Medical Store">Medical Store</option>
+    <option value="Complete Treatment">Complete Treatment</option>
+  </select>
+
+  {/* ONLINE / OFFLINE DROPDOWN */}
+  <select
+    className="mode-dropdown"
+    value={consultMode}
+    onChange={(e) => setConsultMode(e.target.value as any)}
+  >
+    <option value="online">🌐 Online</option>
+    <option value="offline">🏥 Offline</option>
+  </select>
+
+  {/* MY BOOKINGS */}
+  <button
+    className="my-bookings-btn"
+    onClick={() => setOpenMyBookings(true)}
+  >
+    📅 My Bookings
+  </button>
+
+</div>
+
 
           {/* 🚑 Ambulance Button (API Integrated) */}
           <button

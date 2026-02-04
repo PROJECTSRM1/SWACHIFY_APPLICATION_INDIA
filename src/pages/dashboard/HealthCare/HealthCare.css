@@ -4876,3 +4876,34 @@
   border: none;
   cursor: pointer;
 }
+.mode-dropdown {
+  height: 42px;
+  padding: 0 14px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.mode-dropdown:focus {
+  outline: none;
+  border-color: #2f6f6d;
+}
+
+.mode-toggle {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.mode-dropdown {
+  height: 42px;
+  padding: 0 14px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+
+  margin-top: 7px; /* ✅ ONLY dropdowns move up */
+}
