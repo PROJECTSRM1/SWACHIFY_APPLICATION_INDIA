@@ -63,6 +63,22 @@ export interface LabItem {
 
 export type AvailableLabsResponse = LabItem[];
 
+// ================= HOSPITAL TYPES =================
+
+export interface HospitalItem {
+    hospital_id: number;
+    hospital_name: string;
+    specialty_type: string;
+    location: string;
+    contact_number: string;
+    rating: number;
+    hospital_status: string;
+    fees_per_hour: number;
+}
+
+export type AvailableHospitalsResponse = HospitalItem[];
+
+
 
 
 /* =========================
@@ -132,7 +148,28 @@ const healthcareService = {
     },
 
 
+    // get available hospitals
+    getAvailableHospitals: async (): Promise<AvailableHospitalsResponse> => {
+        try {
+            const response = await api.get("/healthcare/available-hospitals");
+            console.log(response);
+
+            return response.data;
+        } catch (error) {
+            console.error("Error fetching available hospitals:", error);
+            throw error;
+        }
+    },
+
+
+
+
+
+
+
 
 };
+
+
 
 export default healthcareService;
