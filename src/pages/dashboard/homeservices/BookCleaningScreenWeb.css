@@ -1192,3 +1192,25 @@
     padding-bottom: 120px;
   }
 }
+.uc_professionalList {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.uc_professionalSelectable {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.uc_professionalSelectable:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+}
+
+.uc_selectIcon {
+  margin-left: auto;
+  color: #4caf50;
+  font-size: 22px;
+}
