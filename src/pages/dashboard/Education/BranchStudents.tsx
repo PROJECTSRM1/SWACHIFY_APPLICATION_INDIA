@@ -93,14 +93,16 @@ const BranchStudents: React.FC<Props> = ({ branch, onBack }) => {
         </header>
 
         {/* SEARCH */}
-        <div className="bsx-search">
-          🔍
-          <input
-            placeholder="Search by name or student ID"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-        </div>
+<div className="bsx-search">
+  <span>🔍</span>
+  <input
+    placeholder="Search by name or student ID"
+    value={search}
+    onChange={(e) => setSearch(e.target.value)}
+  />
+</div>
+
+
 
         {/* FILTER */}
         <div style={{ padding: "0 16px" }}>
@@ -132,15 +134,16 @@ const BranchStudents: React.FC<Props> = ({ branch, onBack }) => {
                 <img src={s.avatar} className="bsx-avatar-img" />
               </div>
 
-              <div className="bsx-info">
-                <h4>{s.name}</h4>
+<div className="bsx-info">
+  <h4>{s.name}</h4>
+  <div className="bsx-meta">
+    <span className="bsx-id">{s.studentId}</span>
+    <span className="bsx-year">{s.year}</span>
+  </div>
+</div>
 
-                <div className="bsx-meta">
-                  <span className="bsx-id">{s.studentId}</span>
-                  <span className="bsx-year">{s.year}</span>
-                </div>
-              </div>
 {!s.isActive && <span className="inactive">INACTIVE</span>}
+
 
 
               <span className="bsx-arrow">›</span>
