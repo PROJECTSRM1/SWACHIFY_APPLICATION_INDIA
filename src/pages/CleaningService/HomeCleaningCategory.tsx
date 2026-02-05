@@ -86,6 +86,8 @@ const HomeCleaningCategory: React.FC = () => {
       setCart([...cart, item]);
     }
   };
+  const isAuthenticated = !!localStorage.getItem("accessToken");
+
 
   const removeFromCart = (item: Service) => {
     setCart(cart.filter((c) => c.title !== item.title));
@@ -263,13 +265,22 @@ const HomeCleaningCategory: React.FC = () => {
                     </div>
                   </div>
 
-                  <button
-                    className="kc-proceed-btn"
-                    onClick={() => setStep("login")}
-                  >
-                    <span>Proceed to Book</span>
-                    <span className="kc-btn-arrow">→</span>
-                  </button>
+                 <button
+  className="kc-proceed-btn"
+  onClick={() => {
+    if (isAuthenticated) {
+      // ✅ User already logged in → go directly to booking
+      setStep("booking");
+    } else {
+      // ❌ Not logged in → show login flow
+      setStep("login");
+    }
+  }}
+>
+  <span>Proceed to Book</span>
+  <span className="kc-btn-arrow">→</span>
+</button>
+
                 </>
               )}
             </div>

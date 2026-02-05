@@ -53,6 +53,7 @@ type PaymentScreenWebProps = {
   totalAmount: number;
   allocatedEmployee: AllocatedEmployee | null;
   bookingDetails: BookingDetails | null;
+  bookingId: number; 
 };
 
 /* ---------------- CONFIG ---------------- */
@@ -105,14 +106,24 @@ async function createOrder(
 }
 
 async function verifyPayment(payload: VerifyPayload): Promise<void> {
+  const token = localStorage.getItem("accessToken");
+
   const res = await fetch(`${API_BASE_URL}/api/payment/verify-payment`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
     body: JSON.stringify(payload),
   });
 
-  if (!res.ok) throw new Error("Verify payment failed");
+  if (!res.ok) {
+    const err = await res.text();
+    console.error("Verify payment failed:", err);
+    throw new Error("Verify payment failed");
+  }
 }
+
 
 /* ---------------- COMPONENT ---------------- */
 
@@ -121,6 +132,7 @@ const PaymentScreenWeb: React.FC<PaymentScreenWebProps> = ({
   totalAmount,
   allocatedEmployee,
   bookingDetails,
+  bookingId,
 }) => {
   const paymentHandled = useRef(false);
   const [loadingPay, setLoadingPay] = useState(false);
@@ -128,7 +140,7 @@ const PaymentScreenWeb: React.FC<PaymentScreenWebProps> = ({
   const [selectedPayment, setSelectedPayment] = useState<string>("upi");
 
   const TOTAL_AMOUNT = Math.round(totalAmount * 100);
-  const BOOKING_ID = 26;
+  const BOOKING_ID = bookingId;
 
   const payableText = useMemo(() => formatINR(TOTAL_AMOUNT / 100), [TOTAL_AMOUNT]);
 
@@ -160,7 +172,7 @@ const PaymentScreenWeb: React.FC<PaymentScreenWebProps> = ({
         key: RAZORPAY_KEY,
         amount: order.amount,
         currency: order.currency,
-        name: "Jeeva Services",
+        name: "swachify Services",
         description: "Service Payment",
         order_id: order.id,
         prefill: {
