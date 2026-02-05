@@ -1784,7 +1784,7 @@ html,
 body {
   height: 100%;
   margin: 0;
-  overflow: hidden;
+  overflow: auto;
   font-family: "Inter", sans-serif;
 }
 
@@ -1797,11 +1797,21 @@ html,
 body {
   height: 100%;
   margin: 0;
-  overflow: hidden;
+  overflow: auto;
+  /* desktop only */
+}
+
+/* ⭐ allow scroll on small devices */
+@media (max-width: 1024px) {
+
+  html,
+  body {
+    overflow-y: auto;
+  }
 }
 
 .sw-jr-pr-container {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
 
   background: linear-gradient(180deg,
@@ -1921,6 +1931,7 @@ body {
   flex: 1;
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
 }
 
 /* =====================================================
@@ -2056,6 +2067,15 @@ body {
 .sw-jr-pr-footer {
   margin-top: auto;
   padding-top: 1px;
+}
+
+.sw-jr-pr-footer {
+  position: sticky;
+  bottom: 0;
+
+  background: #f4f7ef;
+  padding-top: 10px;
+  padding-bottom: 8px;
 }
 
 .sw-jr-pr-continue-btn {
