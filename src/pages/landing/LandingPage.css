@@ -1,9 +1,15 @@
 /* ================= ROOT ================= */
 .sw-landing-root {
-  background: #ffffff;
-  font-family: Inter, system-ui, sans-serif;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: visible;   /* 🔥 THIS IS IMPORTANT */
+}
+.sw-landing-scroll {
+  min-height: 100vh;
+  overflow-y: auto;     /* ✅ guarantees scroll */
   overflow-x: hidden;
 }
+
 
 /* ================= HERO ================= */
 .sw-main-hero {
@@ -518,5 +524,98 @@ border-radius: 15px ;
 @media (max-width: 420px) {
   .sw-uc-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+
+/* =========================================
+   🔥 LANDING PAGE SCROLL – HARD OVERRIDE
+========================================= */
+
+.sw-landing-root {
+  position: relative;
+  width: 100%;
+  height: 100vh;           /* 🔥 viewport bound */
+  overflow: hidden;        /* isolate from body */
+}
+
+.sw-landing-scroll {
+  height: 100%;
+  overflow-y: auto !important;   /* 🔥 FORCE vertical scroll */
+  overflow-x: hidden !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+
+/* =========================================
+   MOBILE HEADER FIX – HAMBURGER LEFT
+========================================= */
+
+@media (max-width: 768px) {
+
+  .swl-hs-navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* Hamburger FIRST (LEFT) */
+  .swl-mobile-menu-icon {
+    order: 1;
+    display: block;
+  }
+
+  /* Brand in CENTER */
+  .swl-hs-navbar-logo {
+    order: 2;
+    flex: 1;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  /* Profile icon RIGHT */
+  .swl-hs-profile-icon,
+  .swl-hs-navbar-actions {
+    order: 3;
+  }
+
+  /* Hide desktop menu */
+  .swl-hs-navbar-menu {
+    display: none !important;
+  }
+}
+
+/* =========================================
+   🔥 MOBILE HEADER – GUARANTEED ORDER FIX
+========================================= */
+@media (max-width: 768px) {
+
+  /* Reverse whole row */
+  .swl-hs-navbar {
+    display: flex;
+    flex-direction: row-reverse; /* 🔥 MAGIC */
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* Logo always center */
+  .swl-hs-navbar-logo {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 16px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  /* Hamburger visible */
+  .swl-mobile-menu-icon {
+    display: block;
+  }
+
+  /* Hide desktop menu */
+  .swl-hs-navbar-menu {
+    display: none !important;
   }
 }

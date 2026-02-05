@@ -1801,7 +1801,7 @@ const handleConfirmAppointment = async () => {
               <div className="available-doctors-header">
                 <h3>Nearby Hospitals</h3>
                 <span className="see-all" onClick={() => setSearchText("")}>
-                  Clear
+                
                 </span>
               </div>
 
@@ -1864,7 +1864,7 @@ const handleConfirmAppointment = async () => {
             <div className="available-doctors-header">
               <h3>Available Labs</h3>
               <span className="see-all" onClick={() => setSearchText("")}>
-                Clear
+              
               </span>
             </div>
 
@@ -1947,7 +1947,7 @@ const handleConfirmAppointment = async () => {
     <div className="available-doctors-header">
       <h3>Available Medical Stores</h3>
       <span className="see-all" onClick={() => setSearchText("")}>
-        Clear
+    
       </span>
     </div>
 
