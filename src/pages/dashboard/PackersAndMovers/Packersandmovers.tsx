@@ -15,7 +15,8 @@ import bike from "../../../assets/JustRide/bike.jpg"
 import scooty from "../../../assets/JustRide/scooty.jpg";
 import auto from "../../../assets/JustRide/auto.jpg";
 import car from "../../../assets/JustRide/car.png";
-  ;
+;
+import"./JustRide.css";
 
 import { useNavigate } from "react-router-dom";
 
