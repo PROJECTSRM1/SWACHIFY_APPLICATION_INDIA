@@ -24,7 +24,7 @@ export interface CustomerRegisterPayload {
   work_type: number;
   service_ids: number[];
 
-  government_id: GovernmentId[];
+  government_id: GovernmentId;
 
   professional_details?: ProfessionalDetails;
 }
