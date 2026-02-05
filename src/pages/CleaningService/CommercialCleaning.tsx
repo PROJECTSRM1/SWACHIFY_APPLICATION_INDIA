@@ -44,6 +44,8 @@ const CommercialCleaning: React.FC = () => {
 
   const [mobile, setMobile] = useState("");
   const [otp, setOtp] = useState("");
+  const isAuthenticated = !!localStorage.getItem("accessToken");
+
 
   return (
     <>
@@ -125,13 +127,15 @@ const CommercialCleaning: React.FC = () => {
                     <button
                       className={`cc-select-btn ${selected?.title === property.title ? 'cc-selected' : ''}`}
                       onClick={(e) => {
-                        e.stopPropagation();
-                        if (selected?.title === property.title) {
-                          setStep("login");
-                        } else {
-                          setSelected(property);
-                        }
-                      }}
+  e.stopPropagation();
+
+  if (selected?.title === property.title) {
+    setStep(isAuthenticated ? "booking" : "login");
+  } else {
+    setSelected(property);
+  }
+}}
+
                     >
                       {selected?.title === property.title ? "Book Now →" : "Select"}
                     </button>

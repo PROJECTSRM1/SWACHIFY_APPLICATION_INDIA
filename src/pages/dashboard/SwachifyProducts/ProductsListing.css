@@ -78,20 +78,60 @@
 }
 
 .sw-products-listing-filter-tab.active {
-  background: green;
+  background: #16a34a;
   color: #ffffff;
 }
 
 .filter-icon {
   margin-right: 6px;
 }
-
 /* =========================================================
    SORT BUTTON
 ========================================================= */
 .sw-products-listing-sort-btn {
   border-radius: 12px !important;
   height: 44px;
+}
+/* Apply Filter button color */
+.ant-modal-footer .ant-btn-primary {
+  background-color: #16a34a !important; /* green */
+  border-color: #16a34a !important;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+/* Hover */
+.ant-modal-footer .ant-btn-primary:hover {
+  background-color: #15803d !important;
+  border-color: #15803d !important;
+}
+
+/* Active / pressed */
+.ant-modal-footer .ant-btn-primary:active {
+  background-color: #166534 !important;
+  border-color: #166534 !important;
+}
+/* Reset button hover → green */
+.ant-modal-footer .ant-btn:not(.ant-btn-primary):hover {
+  color: #16a34a !important;
+  border-color: #16a34a !important;
+  background: #f0fdf4 !important;
+}
+/* Radio checked circle */
+.ant-radio-checked .ant-radio-inner {
+  border-color: #16a34a !important;
+  background-color: #16a34a !important;
+}
+
+/* Radio dot */
+.ant-radio-inner::after {
+  background-color: #ffffff !important;
+}
+
+/* Selected radio text */
+.ant-radio-checked + span {
+  color: #16a34a !important;
+  font-weight: 600;
 }
 
 /* =========================================================
@@ -252,7 +292,7 @@
 }
 
 .sw-product-cart-fab:hover {
-  background: green;
+  background: #16a34a;
 }
 /* Remove extra AntD card padding */
 .sw-product-listing-card .ant-card-body {
@@ -502,9 +542,9 @@
 }
 
 .sw-nav-tab.active {
-  background: green;
+  background: #16a34a;
   color: white;
-  border-color: green;
+  border-color: #16a34a;
 }
 
 .sw-sort-icon-btn {
@@ -513,6 +553,26 @@
   display: flex;
   align-items: center;
   font-weight: 500;
+}
+/* Default */
+.sw-sort-icon-btn {
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  color: #111827;
+  transition: all 0.2s ease;
+}
+
+/* Icon color */
+.sw-sort-icon-btn.active .anticon {
+  color: #ffffff !important;
+}
+
+/* Hover (inactive) */
+.sw-sort-icon-btn:not(.active):hover,
+.sw-sort-icon-btn:not(.active):focus {
+  border-color: #16a34a !important;
+  color: #16a34a !important;
+  background: #ffffff !important;
 }
 
 /* Mobile Responsiveness */

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Input } from "antd";
-import { Dropdown, Menu } from "antd";
+import { Dropdown, Menu,Modal } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
 import { 
   SearchOutlined, 
@@ -10,20 +10,68 @@ import {
   CloseOutlined
 } from "@ant-design/icons";
 import "./CleaningHeader.css";
+import { getAllHomeServiceBookings, type HomeServiceBookingItem } from "../../api/homeService";
 
 const CleaningHeader: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showRecentBookings, setShowRecentBookings] = useState(false);
+  const [recentBookings, setRecentBookings] = useState<HomeServiceBookingItem[]>([]);
+
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(
   !!localStorage.getItem("accessToken")
 );
+const handleLogout = () => {
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("refreshToken"); // if you have it
+  setIsAuthenticated(false);
+  navigate("/");
+};
+
+
+const formatDateTime = (iso: string) => {
+  const d = new Date(iso);
+  return d.toLocaleString("en-IN", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+  });
+};
+
+
+useEffect(() => {
+  const loadBookings = async () => {
+    try {
+      const bookings = await getAllHomeServiceBookings(); // now it's an array
+      setRecentBookings(bookings);
+    } catch (e) {
+      console.error("Failed to load bookings", e);
+      setRecentBookings([]);
+    }
+  };
+
+  if (showRecentBookings) {
+    loadBookings();
+  }
+}, [showRecentBookings]);
+
+
+
+
+
+
 
 
 useEffect(() => {
   const token = localStorage.getItem("accessToken");
   setIsAuthenticated(!!token);
 }, []);
+ 
+ 
 
 
   const getActiveMenu = () => {
@@ -110,6 +158,26 @@ useEffect(() => {
       ]}
     />
   );
+  const profileMenu = (
+  <Menu
+    items={[
+      {
+        key: "recent",
+        label: "Recent Bookings",
+        onClick: () => setShowRecentBookings(true),
+      },
+      {
+        type: "divider",
+      },
+      {
+        key: "logout",
+        label: <span style={{ color: "red" }}>Logout</span>,
+        onClick: handleLogout,
+      },
+    ]}
+  />
+);
+
 
   const handleNavClick = (menu: typeof activeMenu, path: string) => {
     setActiveMenu(menu);
@@ -228,12 +296,12 @@ useEffect(() => {
     <span>Login</span>
   </button>
 ) : (
-  <button
-    className="ch-profile-btn"
-    onClick={() => navigate("/profile")}
-  >
+  <Dropdown overlay={profileMenu} trigger={["click"]} placement="bottomRight">
+  <button className="ch-profile-btn">
     <UserOutlined />
   </button>
+</Dropdown>
+
 )}
 
 
@@ -317,6 +385,67 @@ useEffect(() => {
           </div>
         </div>
       )}
+      {/* <Modal
+  open={showRecentBookings}
+  footer={null}
+  centered
+  onCancel={() => setShowRecentBookings(false)}
+  title="Recent Bookings"
+>
+ 
+  <div style={{ padding: "10px 0" }}>
+    <p>🧹 Home Cleaning – ₹899</p>
+    <p>🚗 Car Wash – ₹699</p>
+    <p>🏢 Office Cleaning – ₹1999</p>
+  </div>
+</Modal> */}
+
+<Modal
+  open={showRecentBookings}
+  footer={null}
+  centered
+  width={420}
+    style={{ top: 50 }}    
+      bodyStyle={{ padding: 0 }}
+  onCancel={() => setShowRecentBookings(false)}
+  title="🧾 Recent Bookings"
+  className="recent-bookings-modal"
+>
+  <div className="recent-bookings-container">
+    {recentBookings.length === 0 && (
+      <p className="rb-empty">No recent bookings found.</p>
+    )}
+
+    {recentBookings.map((item) => (
+      <div key={item.booking_id} className="rb-card">
+        <div className="rb-header">
+          <span className="rb-service">
+            🧹 {item.service_summary?.main_service}
+          </span>
+          <span className="rb-price">
+            ₹{item.service_summary?.total_amount}
+          </span>
+        </div>
+
+        <div className="rb-meta">
+          <span>📅 {item.preferred_date}</span>
+          <span>⏰ {item.time_slot}</span>
+        </div>
+
+        <div className="rb-booked">
+          🕒 Booked on: {formatDateTime(item.created_date)}
+        </div>
+      </div>
+    ))}
+  </div>
+</Modal>
+
+
+
+
+
+
+
     </>
   );
 };

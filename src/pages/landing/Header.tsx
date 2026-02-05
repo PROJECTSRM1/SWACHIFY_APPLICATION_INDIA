@@ -221,6 +221,8 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
         email_or_phone: values.identifier,
         password: values.password,
       });
+      localStorage.setItem("user_id", res.user_id);
+      localStorage.setItem("email", res.email_or_phone);
 
       localStorage.setItem("accessToken", res.access_token);
       localStorage.setItem("user", JSON.stringify(res));
@@ -701,7 +703,7 @@ closeAuthModal();
   <Button
     type="text"
     icon={<UserOutlined style={{ fontSize: 22 }} />}
-    onClick={() => navigate("/profile")}
+    // onClick={() => navigate("/profile")}
   />
 )}
 

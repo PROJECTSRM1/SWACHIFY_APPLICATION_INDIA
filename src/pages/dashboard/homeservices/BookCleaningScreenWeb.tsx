@@ -253,6 +253,8 @@ const [chosenProfessional, setChosenProfessional] = useState<any>(null);
 
   const selectedEmployee = serviceContext === "vehicle" ? meta?.employee : null;
   const vehicleSubServices = serviceContext === "vehicle" ? meta?.subServices || [] : [];
+  const [bookingId, setBookingId] = useState<number | null>(null);
+
 
   const [showPaymentModal, setShowPaymentModal] = useState(false);
 
@@ -260,55 +262,91 @@ const [chosenProfessional, setChosenProfessional] = useState<any>(null);
     setShowPaymentModal(false);
     handleClose();
   };
-
-  const buildBookingPayload = () => {
-    return {
-      module_id: serviceContext === "vehicle" ? 2 : 1,
-      sub_module_id: 1,
-      service_id: resolveServiceId(),
-      sub_service_id: selectedAddons.length > 0 ? 1 : 0,
-      full_name: customerName || "Guest User",
-      email: "user@example.com",
-      mobile:
-        contactNumber && /^[6-9]\d{9}$/.test(contactNumber)
-          ? contactNumber
-          : "9876543210",
-      address: locationType === "default" ? currentAddress : manualAddress,
-      others_address: manualAddress || "",
-      latitude: meta?.latitude || 0,
-      longitude: meta?.longitude || 0,
-      service_type_id: serviceContext === "vehicle" ? 2 : 1,
-      issue_id: extraHours > 0 ? 1 : 0,
-      problem_description: reason || "",
-      property_size_sqft: floorArea || "",
-      duration_id: extraHours || 1,
-      preferred_date: date,
-      time_slot_id: time ? parseInt(time.replace(":", "")) : 0,
-      payment_type_id: 1,
-      service_price: totalPrice,
-      payment_done: false,
-    };
+ const buildServiceSummary = () => {
+  return {
+    main_service: mainService?.title || "Service",
+    addons: selectedAddons.map(a => a.label),
+    total_amount: totalPrice,
   };
+};
 
-  const createBooking = async () => {
-    const payload = buildBookingPayload();
-    const token = localStorage.getItem("accessToken");
-    try {
-      const res = await fetch(`${API_BASE_URL}/api/master/home-service`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(payload),
-      });
-      if (!res.ok) throw new Error("Booking failed");
-      return await res.json();
-    } catch (err) {
-      console.error("Booking Error:", err);
-      throw err;
-    }
+ const buildBookingPayload = () => {
+  return {
+    module_id: serviceContext === "vehicle" ? 2 : 1,
+    sub_module_id: 1,
+    service_id: resolveServiceId(),
+
+    // ✅ MUST BE INTEGER
+    sub_service_id: 1,
+
+    full_name: customerName || "Guest User",
+    email: "user@example.com",
+    mobile:
+      contactNumber && /^[6-9]\d{9}$/.test(contactNumber)
+        ? contactNumber
+        : "9876543210",
+
+    address:
+      locationType === "default"
+        ? currentAddress || "Location not provided"
+        : manualAddress || "Location not provided",
+
+    others_address: manualAddress || "",
+
+    latitude: meta?.latitude ?? 0,
+    longitude: meta?.longitude ?? 0,
+
+    service_type_id: serviceContext === "vehicle" ? 2 : 1,
+
+    issue_id: extraHours > 0 ? 1 : 1,
+    problem_description: reason || "",
+
+    property_size_sqft: floorArea ? Number(floorArea) : 0,
+
+    duration_id: extraHours || 1,
+    preferred_date: date,
+
+    // backend wants ID, not HH:mm
+    time_slot_id: 1,
+
+    payment_type_id: 1,
+    payment_done: false,
+
+    // ✅ REQUIRED & CORRECT TYPES
+    service_summary: buildServiceSummary(), // OBJECT ✅
+    total_amount: totalPrice,               // INT/FLOAT ✅
+
+    service_price: totalPrice,
   };
+};
+
+
+ const createBooking = async () => {
+  const payload = buildBookingPayload();
+  const token = localStorage.getItem("accessToken");
+
+  const res = await fetch(`${API_BASE_URL}/api/home-service/bookings`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(payload),
+  });
+
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(err);
+  }
+
+  const data = await res.json();
+
+  // ✅ SAVE REAL BOOKING ID
+  setBookingId(data.id);
+
+  return data;
+};
+
 const AVAILABLE_PROFESSIONALS = [
   {
     id: 1,
@@ -775,7 +813,7 @@ const AVAILABLE_PROFESSIONALS = [
             <span className="uc_bottomPriceLabel">Total</span>
             <span className="uc_bottomPriceValue">{formatMoney(totalPrice)}</span>
           </div>
-          <button className="uc_ctaBtn" onClick={() => setShowPaymentModal(true)}>
+          <button className="uc_ctaBtn" onClick={validateAndCheckout}>
             <MdShoppingBag />
             <span>Proceed to Pay</span>
           </button>
@@ -786,6 +824,7 @@ const AVAILABLE_PROFESSIONALS = [
           <div className="uc_paymentOverlay" onClick={() => setShowPaymentModal(false)}>
             <div className="uc_paymentModal" onClick={(e) => e.stopPropagation()}>
               <PaymentScreenWeb
+                bookingId={bookingId!}
                 totalAmount={totalPrice}
                 onClose={closeAll}
                 bookingDetails={{
