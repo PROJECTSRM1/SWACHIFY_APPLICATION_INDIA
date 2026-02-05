@@ -86,6 +86,7 @@ const VehicleCleaning: React.FC = () => {
 
   const [mobile, setMobile] = useState("");
   const [otp, setOtp] = useState("");
+  const isAuthenticated = !!localStorage.getItem("accessToken");
 
   const total = cart.reduce((s, i) => s + i.price, 0);
 
@@ -348,9 +349,9 @@ const VehicleCleaning: React.FC = () => {
                   </div>
 
                   <button
-                    className="vc-proceed-btn"
-                    onClick={() => setStep("login")}
-                  >
+  className="vc-proceed-btn"
+  onClick={() => setStep(isAuthenticated ? "booking" : "login")}
+>
                     <span>Proceed to Book</span>
                     <span className="vc-btn-arrow">→</span>
                   </button>
