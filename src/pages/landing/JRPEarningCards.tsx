@@ -224,7 +224,7 @@ export const RecentRides: React.FC<RecentRidesProps> = ({ rides, onViewAll }) =>
 };
   return (
     <div className="recent-rides-container">
-      <div className="section-header">
+      <div className="sw-jr-pr-section-header">
         <div className="section-header-title">Recent Rides</div>
         <button className="view-all-button" onClick={onViewAll}>
           <span className="view-all-text">View All</span>

@@ -23586,16 +23586,18 @@ color:#00A73E !important;
   z-index: -1;
 }
 
-
 .sw-jr-pr-container {
-  /* Replace the flat white with a subtle professional gradient */
- background-color: #F5F7FC !important;
-  padding: 60px 20px !important;
-  margin-top: 0px !important;
+  min-height: 100vh;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* optional for parallax feel */
 }
 
+
 .sw-jr-pr-card {
-  background: #ffffff !important;
+  background: #fff !important;
   border-radius: 28px !important;
   padding: 40px !important;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08) !important;
@@ -23694,7 +23696,9 @@ color:#00A73E !important;
 }
 
 .sw-jr-pr-label.pink { color: #ff4d7d; }
-.sw-jr-pr-label.green { color: #00d2ad; }
+.sw-jr-pr-label.green { color: #00d2ad; 
+background-color: #fff !important;
+}
 
 
 
