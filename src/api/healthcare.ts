@@ -101,7 +101,22 @@ export interface PharmacyItem {
 export type AvailablePharmaciesResponse = PharmacyItem[];
 
 
-
+// book appointment payload
+export interface AppointmentBookingPayload {
+  user_id: number;
+  consultation_type_id: number;
+  appointment_time: string;
+  doctor_id: number;
+  doctor_specialization_id?: number | null;   // ✅ FIX
+  required_ambulance: boolean;
+  ambulance_id?: number | null;               // ✅ FIX
+  pickup_time: string;
+  required_assistant: boolean;
+  assistant_id?: number | null;               // ✅ FIX
+  labs_id?: number | null;                    // ✅ FIX
+  pharmacies_id?: number | null;              // ✅ FIX
+  call_booking_status: string;
+}
 
 
 /* =========================
@@ -193,6 +208,22 @@ const healthcareService = {
             throw error;
         }
     },
+
+    //book appointment with doctor
+    bookAppointment: async (
+    payload: AppointmentBookingPayload
+): Promise<any> => {
+    try {
+        const response = await api.post(
+            "/healthcare/appointments",
+            payload
+        );
+        return response.data;
+    } catch (error) {
+        console.error("Error booking appointment:", error);
+        throw error;
+    }
+},
 
 
 
