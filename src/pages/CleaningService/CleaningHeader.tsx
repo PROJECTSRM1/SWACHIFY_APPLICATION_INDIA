@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Input } from "antd";
-import { Dropdown, Menu } from "antd";
+import { Dropdown, Menu,Modal } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
 import { 
   SearchOutlined, 
@@ -15,9 +15,18 @@ const CleaningHeader: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showRecentBookings, setShowRecentBookings] = useState(false);
+
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(
   !!localStorage.getItem("accessToken")
 );
+const handleLogout = () => {
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("refreshToken"); // if you have it
+  setIsAuthenticated(false);
+  navigate("/");
+};
+
 
 
 useEffect(() => {
@@ -110,6 +119,26 @@ useEffect(() => {
       ]}
     />
   );
+  const profileMenu = (
+  <Menu
+    items={[
+      {
+        key: "recent",
+        label: "Recent Bookings",
+        onClick: () => setShowRecentBookings(true),
+      },
+      {
+        type: "divider",
+      },
+      {
+        key: "logout",
+        label: <span style={{ color: "red" }}>Logout</span>,
+        onClick: handleLogout,
+      },
+    ]}
+  />
+);
+
 
   const handleNavClick = (menu: typeof activeMenu, path: string) => {
     setActiveMenu(menu);
@@ -228,12 +257,12 @@ useEffect(() => {
     <span>Login</span>
   </button>
 ) : (
-  <button
-    className="ch-profile-btn"
-    onClick={() => navigate("/profile")}
-  >
+  <Dropdown overlay={profileMenu} trigger={["click"]} placement="bottomRight">
+  <button className="ch-profile-btn">
     <UserOutlined />
   </button>
+</Dropdown>
+
 )}
 
 
@@ -317,6 +346,21 @@ useEffect(() => {
           </div>
         </div>
       )}
+      <Modal
+  open={showRecentBookings}
+  footer={null}
+  centered
+  onCancel={() => setShowRecentBookings(false)}
+  title="Recent Bookings"
+>
+  {/* Replace this with real API data later */}
+  <div style={{ padding: "10px 0" }}>
+    <p>🧹 Home Cleaning – ₹899</p>
+    <p>🚗 Car Wash – ₹699</p>
+    <p>🏢 Office Cleaning – ₹1999</p>
+  </div>
+</Modal>
+
     </>
   );
 };

@@ -67,6 +67,16 @@ const SERVICE_CONFIG: Record<
       { title: "Window Cleaning (per window)", price: 99, duration: "10 mins" },
     ],
   },
+  "full deep": {
+  title: "Full Home Deep Cleaning",
+  image: bedroomImg,
+  description: "Complete deep cleaning for your entire home",
+  services: [
+    { title: "1 BHK Full Deep Cleaning", price: 2499, duration: "3 – 4 hrs" },
+    { title: "2 BHK Full Deep Cleaning", price: 3499, duration: "4 – 5 hrs" },
+    { title: "3 BHK Full Deep Cleaning", price: 4499, duration: "5 – 6 hrs" },
+  ],
+},
 };
 
 const HomeCleaningCategory: React.FC = () => {
@@ -95,7 +105,17 @@ const HomeCleaningCategory: React.FC = () => {
 
   const total = cart.reduce((s, i) => s + i.price, 0);
 
-  if (!config) return null;
+ if (!config) {
+  return (
+    <>
+      <CleaningHeader />
+      <div style={{ padding: 40, textAlign: "center" }}>
+        <h2>Service not found</h2>
+        <p>Category: <b>{category}</b></p>
+      </div>
+    </>
+  );
+}
 
   return (
     <>
