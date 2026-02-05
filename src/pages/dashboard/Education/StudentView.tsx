@@ -32,6 +32,8 @@ const StudentView: React.FC<Props> = ({ onBack }) => {
   const [totalStudents, setTotalStudents] = useState(0);
   const [branchCount, setBranchCount] = useState(0);
   const [loading, setLoading] = useState(true);
+const [searchTerm, setSearchTerm] = useState("");
+
 
   useEffect(() => {
     fetchBranches();
@@ -66,6 +68,11 @@ const StudentView: React.FC<Props> = ({ onBack }) => {
       setLoading(false);
     }
   };
+const filteredBranches = branches.filter((b) =>
+  `${b.name} ${b.location}`
+    .toLowerCase()
+    .includes(searchTerm.toLowerCase())
+);
 
   if (view === "students" && selectedBranch) {
     return (
@@ -81,16 +88,41 @@ const StudentView: React.FC<Props> = ({ onBack }) => {
   }
 
   return (
+    
     <div className="sv-wrapper">
       <div className="sv-page">
         {/* HEADER */}
         <header className="sv-header">
+          <header className="sv-header">
+  <div className="sv-header-left">
+<button className="sv-back-link" onClick={onBack}>
+  ← Back
+</button>
+
+    <h2>Branch Directory</h2>
+  </div>
+
+
+</header>
+
           <h2>Branch Directory</h2>
           <div className="sv-header-actions">
-            <span className="sv-icon">🔍</span>
+          
+
             <span className="sv-icon">⚙️</span>
           </div>
         </header>
+    <div className="sv-search-wrap">
+  <input
+    className="sv-search-input"
+    type="text"
+    placeholder="Search branch or location..."
+    value={searchTerm}
+    onChange={(e) => setSearchTerm(e.target.value)}
+  />
+</div>
+
+
 
         {/* STATS */}
         <div className="sv-stats">
@@ -121,7 +153,8 @@ const StudentView: React.FC<Props> = ({ onBack }) => {
         {/* 🔥 GRID WRAPPER */}
         {!loading && (
           <div className="sv-branch-grid">
-            {branches.map((b) => (
+          {filteredBranches.map((b) => (
+
               <div key={b.id} className="sv-branch-card">
                 <div className="sv-branch-top">
                   <div className="sv-branch-icon">🎓</div>
@@ -162,9 +195,6 @@ const StudentView: React.FC<Props> = ({ onBack }) => {
           </div>
         )}
 
-        <button className="sv-back" onClick={onBack}>
-          ← Back to Partner Portal
-        </button>
       </div>
     </div>
   );

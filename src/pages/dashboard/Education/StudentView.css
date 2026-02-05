@@ -149,9 +149,47 @@
   align-items: center;
   margin: 16px 0;
 }
+.sv-search-wrap {
+  margin: 20px 0 28px;
+}
+
+.sv-search-input {
+  width: 100%;
+  padding: 16px 18px;
+  border-radius: 16px;
+  border: 1px solid #e5e7eb;
+  font-size: 15px;
+  background: #fff;
+}
+
+.sv-search-input:focus {
+  outline: none;
+  border-color: #1677ff;
+  box-shadow: 0 0 0 3px rgba(22,119,255,0.12);
+}
 
 .sv-avatars {
   display: flex;
+}
+.sv-back-link {
+  background: none;
+  border: none;
+  color: #1677ff;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sv-back-link:hover {
+  text-decoration: underline;
+}
+
+.sv-back-link:focus {
+  outline: none;
 }
 
 .av {
@@ -212,5 +250,120 @@
 @media (max-width: 640px) {
   .sv-branch-grid {
     grid-template-columns: 1fr;
+  }
+}
+/* ===== MOBILE FIX ===== */
+@media (max-width: 640px) {
+
+  /* PAGE PADDING */
+  .sv-page {
+    padding: 16px;
+  }
+
+  /* HEADER */
+  .sv-header h2 {
+    font-size: 20px;
+  }
+
+  .sv-header-actions {
+    gap: 10px;
+  }
+
+  /* STATS → STACKED & COMPACT */
+  .sv-stats {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin: 18px 0;
+  }
+
+  .sv-stat-card {
+    padding: 16px;
+    border-radius: 14px;
+  }
+
+  .sv-stat-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+
+  /* SECTION HEAD */
+  .sv-section-head h3 {
+    font-size: 16px;
+  }
+
+  .sv-updated {
+    font-size: 12px;
+  }
+
+  /* GRID → SINGLE COLUMN */
+  .sv-branch-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  /* CARD */
+  .sv-branch-card {
+    padding: 16px;
+    border-radius: 16px;
+  }
+
+  .sv-branch-top {
+    gap: 12px;
+  }
+
+  .sv-branch-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+
+  .sv-branch-info h4 {
+    font-size: 16px;
+  }
+
+  .sv-branch-info p {
+    font-size: 13px;
+  }
+
+  /* ACTIVE BADGE */
+  .sv-active {
+    padding: 4px 10px;
+    font-size: 11px;
+  }
+
+  /* FOOTER STACK */
+  .sv-branch-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 12px 0;
+  }
+
+  /* AVATARS SMALL */
+  .av {
+    width: 24px;
+    height: 24px;
+    font-size: 10px;
+  }
+
+  /* STUDENT COUNT */
+  .sv-count {
+    font-size: 13px;
+  }
+
+  /* BUTTON FULL WIDTH */
+  .sv-primary {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+    border-radius: 12px;
+  }
+
+  /* BACK BUTTON CENTER */
+  .sv-back {
+    width: 100%;
+    text-align: center;
+    margin-top: 22px;
   }
 }

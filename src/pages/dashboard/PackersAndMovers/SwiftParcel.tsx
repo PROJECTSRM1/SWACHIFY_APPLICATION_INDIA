@@ -11,6 +11,8 @@ import {
 import { useLocation, useNavigate } from 'react-router-dom';
 import { PaymentsAPI } from '../../../api/customerAuth';
 
+import "./JustRide.css";
+
 
 
 const SwiftParcel: React.FC = () => {
@@ -46,10 +48,11 @@ const SwiftParcel: React.FC = () => {
 const handlePayment = async () => {
   try {
     // Booking ID as a number
-    const bookingId = Date.now(); // ✅ number
+   // ✅ number
+     const tempHomeServiceId = 25;
 
     // Create Razorpay order
-    const order = await PaymentsAPI.createOrder(bookingId, 10700);
+    const order = await PaymentsAPI.createOrder(tempHomeServiceId, 10700);
 
     const options = {
       key: import.meta.env.VITE_RAZORPAY_KEY_ID,
@@ -64,11 +67,28 @@ const handlePayment = async () => {
         contact: phone,
       },
 
-      handler: function (response: any) {
-        // FRONTEND-ONLY: skip verifyPayment, show modal directly
-        console.log("Payment ID:", response.razorpay_payment_id);
-        setIsModalVisible(true); // show success modal
-      },
+      // handler: function (response: any) {
+      //   // FRONTEND-ONLY: skip verifyPayment, show modal directly
+      //   console.log("Payment ID:", response.razorpay_payment_id);
+      //   setIsModalVisible(true); // show success modal
+      // },
+
+        handler: async function (response: any) {
+                try {
+                  // 2️⃣ Verify payment with backend
+                  await PaymentsAPI.verifyPayment(
+                    order.id,
+                    response.razorpay_payment_id,
+                    response.razorpay_signature,
+                    tempHomeServiceId
+                  );
+                  // message.success("Payment Successful 🎉");
+                  setIsModalVisible(true); // Show success modal
+                } catch (err) {
+                  message.error("Payment verification failed");
+                }
+              },
+      
 
       theme: { color: "#7c3aed" },
     };

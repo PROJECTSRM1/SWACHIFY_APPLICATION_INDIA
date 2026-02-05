@@ -1,10 +1,10 @@
-import { useEffect } from 'react';
-import { Routes, Route, useNavigate } from "react-router-dom";
+//import { useEffect } from 'react';
+import { Routes, Route,  } from "react-router-dom";
 // import ForgotPassword from '../../pages/forgotpassword/ForgotPassword';
 import Landing from '../../pages/landing/landingpage';
 // import PrivacyPolicy from '../../pages/privacy/PrivacyPolicy';
 // import TermsOfService from '../../pages/terms/TermsOfService';
-import { getUserDetails } from '../../utils/helpers/storage';
+//import { getUserDetails } from '../../utils/helpers/storage';
 //import RefundPolicy from '../../pages/refund/RefundPolicy';
 import Home_Service from "../../pages/landing/Home_Service";
 import LandingPackers from "../../pages/landing/LandingPackers"
@@ -44,43 +44,43 @@ import BuysaleProducts from   '../../pages/dashboard/buy&sale/BuySaleProducts';
 import Rawmaterials from'../../pages/building/building';
 
 export const NonSecureRoutes = () => {
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
 
-useEffect(() => {
-  const userData: any = getUserDetails("user");
-  const currentPath = window.location.pathname;
+// useEffect(() => {
+//   const userData: any = getUserDetails("user");
+//   const currentPath = window.location.pathname;
 
-  // ✅ Exact public routes
-  const exactPublicRoutes = ["/", "/landing"];
+//   // ✅ Exact public routes
+//   const exactPublicRoutes = ["/", "/landing"];
 
-  // ✅ Prefix-based public routes
-  const prefixPublicRoutes = [
-    "/education",
-    "/healthcare",
-    "/cleaningservice",
-    "/landingpackers",
-    "/swachifyproducts",
-    "/buysaleproducts",
-    "/rawmaterials",
-  ];
+//   // ✅ Prefix-based public routes
+//   const prefixPublicRoutes = [
+//     "/education",
+//     "/healthcare",
+//     "/cleaningservice",
+//     "/landingpackers",
+//     "/swachifyproducts",
+//     "/buysaleproducts",
+//     "/rawmaterials",
+//   ];
 
-  if (
-    exactPublicRoutes.includes(currentPath) ||
-    prefixPublicRoutes.some((path) => currentPath.startsWith(path))
-  ) {
-    return;
-  }
+//   if (
+//     exactPublicRoutes.includes(currentPath) ||
+//     prefixPublicRoutes.some((path) => currentPath.startsWith(path))
+//   ) {
+//     return;
+//   }
 
-  // ✅ Allow freelancer pages
-  if (currentPath.startsWith("/freelancer")) {
-    return;
-  }
+//   // ✅ Allow freelancer pages
+//   if (currentPath.startsWith("/freelancer")) {
+//     return;
+//   }
 
-  // ✅ Redirect logged-in users ONLY when needed
-  if (userData && !currentPath.startsWith("/app")) {
-    navigate("/app/freelancer", { replace: true });
-  }
-}, [navigate]);
+//   // ✅ Redirect logged-in users ONLY when needed
+//   // if (userData && !currentPath.startsWith("/app")) {
+//   //   navigate("/app/freelancer", { replace: true });
+//   // }
+// }, [navigate]);
 
 
 

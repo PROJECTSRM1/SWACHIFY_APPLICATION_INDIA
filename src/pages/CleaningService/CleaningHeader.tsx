@@ -15,6 +15,16 @@ const CleaningHeader: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(
+  !!localStorage.getItem("accessToken")
+);
+
+
+useEffect(() => {
+  const token = localStorage.getItem("accessToken");
+  setIsAuthenticated(!!token);
+}, []);
+
 
   const getActiveMenu = () => {
     if (location.pathname.startsWith("/cleaning")) return "services";
@@ -206,10 +216,26 @@ const CleaningHeader: React.FC = () => {
             </div>
 
             {/* Login/Profile Button */}
-            <button className="ch-profile-btn">
-              <UserOutlined />
-              <span>Login</span>
-            </button>
+            {!isAuthenticated ? (
+  <button
+    className="ch-profile-btn"
+    onClick={() => {
+      // reuse global auth modal
+      (window as any).openAuthModal?.("login");
+    }}
+  >
+    <UserOutlined />
+    <span>Login</span>
+  </button>
+) : (
+  <button
+    className="ch-profile-btn"
+    onClick={() => navigate("/profile")}
+  >
+    <UserOutlined />
+  </button>
+)}
+
 
             {/* Mobile Menu Toggle */}
             <button 

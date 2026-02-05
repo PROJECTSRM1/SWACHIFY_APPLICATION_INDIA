@@ -1,12 +1,9 @@
-// import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import CommonHeader from "../../pages/landing/Header";
 import FooterSection from "../../pages/landing/FooterSection";
 import "../../pages/landing/FooterSection.css";
 import "./LandingPage.css";
-import { useEffect, useState } from "react";
-
-
 
 import {
   HomeOutlined,
@@ -18,167 +15,191 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 
-/* RIGHT SIDE IMAGES */
+/* IMAGES */
 import img1 from "../../assets/cleaning and home.jpg";
 import img2 from "../../assets/education1.jpg";
-import img3 from "../../assets/swachify product.jpg";
-import img4 from "../../assets/transport.jpg";
+import img3 from "../../assets/transport.jpg";
+import img4 from "../../assets/img4.jpg";
 import img5 from "../../assets/health care.jpg";
+import img6 from "../../assets/img6.jpg";
+import img7 from "../../assets/img7.jpg";
 
 /* SERVICES */
 const services = [
   {
     title: "Education",
     icon: <BookOutlined />,
-    route: "/education",             // ✅ public
+    route: "/education",
+    image: img2,
+    gradient: "linear-gradient(135deg,#6366f1,#8b5cf6)",
   },
   {
     title: "Health Care",
     icon: <UserOutlined />,
-    route: "/healthcare",            // ✅ public
+    route: "/healthcare",
+    image: img5,
+    gradient: "linear-gradient(135deg,#ec4899,#f43f5e)",
   },
   {
     title: "Just Ride",
     icon: <TruckOutlined />,
-    route: "/LandingPackers",        // ✅ public
+    route: "/LandingPackers",
+    image: img3,
+    gradient: "linear-gradient(135deg,#0ea5e9,#38bdf8)",
   },
   {
     title: "Swachify Products",
     icon: <ShoppingCartOutlined />,
-    route: "/swachifyproducts",     // ✅ public
+    route: "/swachifyproducts",
+    image: img4,
+    gradient: "linear-gradient(135deg,#22c55e,#4ade80)",
   },
   {
     title: "Cleaning & Home Services",
     icon: <HomeOutlined />,
-    route: "/cleaningservice",       // ✅ public
+    route: "/cleaningservice",
+    image: img1,
+    gradient: "linear-gradient(135deg,#f59e0b,#fbbf24)",
   },
-
   {
     title: "Buy / Sale / Rentals",
     icon: <ShopOutlined />,
-    route: "/BuySaleProducts",      // ✅ public
+    route: "/BuySaleProducts",
+    image: img6,
+    gradient: "linear-gradient(135deg,#14b8a6,#2dd4bf)",
   },
   {
     title: "Raw Materials",
     icon: <BuildOutlined />,
-    route: "/Rawmaterials", // ✅ public
+    route: "/Rawmaterials",
+    image: img7,
+    gradient: "linear-gradient(135deg,#64748b,#94a3b8)",
   },
-
-
-
-];
-/* HERO BACKGROUND IMAGES */
-const heroImages = [
-  img2, // Education
-  img5, // Health Care
-  img4, // Just Ride
-  img3, // Swachify Products (fruits/vegetables)
-  img1, // Cleaning & Home
 ];
 
+/* HERO BG */
+const heroImages = [img2, img5, img4, img3, img1];
 
 const LandingPage = () => {
   const navigate = useNavigate();
+
+  /* ✅ hooks INSIDE component */
+  const [activeIndex, setActiveIndex] = useState(0);
   const [bgIndex, setBgIndex] = useState(0);
 
+  /* 🔁 auto rotate service images */
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % services.length);
+    }, 4000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  /* 🔁 hero bg rotation */
   useEffect(() => {
     const interval = setInterval(() => {
       setBgIndex((prev) => (prev + 1) % heroImages.length);
-    }, 5000); // ⏱ 5 seconds
+    }, 5000);
 
     return () => clearInterval(interval);
   }, []);
 
-
   return (
-    
-<div className="sw-landing-root">
-  <CommonHeader selectedKey="landing" />
+    <div className="sw-landing-root">
+      <CommonHeader selectedKey="landing" />
 
-  {/* HERO – FULL WIDTH */}
-<section className="sw-main-hero">
-  {/* 🔥 BACKGROUND IMAGE */}
-  <div
-    className="sw-hero-bg"
-    style={{ backgroundImage: `url(${heroImages[bgIndex]})` }}
-  />
+      {/* HERO */}
+      <section className="sw-main-hero">
+        <div
+          className="sw-hero-bg"
+          style={{ backgroundImage: `url(${heroImages[bgIndex]})` }}
+        />
 
-  {/* CONTENT */}
-  <div className="sw-hero-content">
-    <span className="sw-badge">
-      Trusted by 1M+ Indians across 100+ cities
-    </span>
+        <div className="sw-hero-content">
+          <span className="sw-badge">
+            Trusted by 1M+ Indians across 100+ cities
+          </span>
 
-    <h1>
-      Your Life, <span>Simplified</span>
-    </h1>
+          <h1>
+            Your Life, <span>Simplified</span>
+          </h1>
 
-    <p>
-      From education to healthcare, transport to home services – everything
-      you need in one powerful platform.
-    </p>
+          <p>
+            From education to healthcare, transport to home services – everything
+            in one platform.
+          </p>
 
-    <div className="sw-hero-actions">
-      <button
-        className="primary-btn"
-        onClick={() =>
-          document
-            .querySelector("#services")
-            ?.scrollIntoView({ behavior: "smooth" })
-        }
-      >
-        Explore Services
-      </button>
-
-      <button className="secondary-btn">Download App</button>
-    </div>
-
-    <div className="sw-hero-stats">
-      ⭐ 4.8/5 Rating | ✅ Verified Professionals | ⏰ 24/7 Support
-    </div>
-  </div>
-</section>
-
-
-  {/* SERVICES */}
-  <section id="services" className="sw-uc-services">
-    <div className="sw-uc-container">
-      {/* LEFT */}
-      <div className="sw-uc-left">
-        <h2>What are you looking for?</h2>
-
-        <div className="sw-uc-grid">
-          {services.map((item, index) => (
-            <div
-              key={index}
-              className="sw-uc-card"
-              onClick={() => navigate(item.route)}
+          <div className="sw-hero-actions">
+            <button
+              className="primary-btn"
+              onClick={() =>
+                document
+                  .querySelector("#services")
+                  ?.scrollIntoView({ behavior: "smooth" })
+              }
             >
-              <div className="sw-uc-icon-wrap">
-                <div className="sw-uc-icon">{item.icon}</div>
-              </div>
-              <div className="sw-uc-text">{item.title}</div>
+              Explore Services
+            </button>
+            <button className="secondary-btn">Download App</button>
+          </div>
+        </div>
+      </section>
+
+      {/* SERVICES */}
+      <section id="services" className="sw-uc-services">
+        <div className="sw-uc-container">
+          {/* LEFT */}
+          <div className="sw-uc-left">
+            <h2>What are you looking for?</h2>
+
+            <div className="sw-uc-grid">
+              {services.map((item, index) => (
+                <div
+                  key={index}
+                  className={`sw-uc-card ${
+                    activeIndex === index ? "active" : ""
+                  }`}
+                  onMouseEnter={() => setActiveIndex(index)}
+                  onClick={() => navigate(item.route)}
+                >
+                  <div
+                    className="sw-uc-icon-wrap"
+                    style={{ background: item.gradient }}
+                  >
+                    <div className="sw-uc-icon">{item.icon}</div>
+                  </div>
+                  <div className="sw-uc-text">{item.title}</div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-      </div>
+          </div>
 
-      {/* RIGHT */}
-      <div className="sw-uc-right">
-        <div className="sw-uc-images">
-          <img src={img1} className="img big" />
-          <img src={img2} className="img" />
-          <img src={img3} className="img" />
-          <img src={img4} className="img" />
-          <img src={img5} className="img" />
-        </div>
+<div className="sw-uc-right">
+  <div className="sw-uc-image-grid">
+    {services.map((s, i) => (
+      <div
+        key={i}
+        className={`sw-uc-image-card ${
+          activeIndex === i ? "active" : ""
+        }`}
+      >
+        <img src={s.image} alt={s.title} />
+        <div
+          className="sw-uc-image-glow"
+          style={{ background: s.gradient }}
+        />
       </div>
-    </div>
-  </section>
-
-  <FooterSection selectedKey="LandingPackers" />
+    ))}
+  </div>
 </div>
 
+
+        </div>
+      </section>
+
+      <FooterSection selectedKey="LandingPackers" />
+    </div>
   );
 };
 
