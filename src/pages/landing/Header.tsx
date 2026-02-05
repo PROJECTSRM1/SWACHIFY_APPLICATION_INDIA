@@ -67,15 +67,15 @@ const navItems = [
   // { key: "freelancer", label: <Link to="/Freelancer">Freelancer</Link> },
 ];
 
-const serviceIdToRoute: Record<number, string> = {
-  1: "/app/dashboard/homeservices",
-  2: "/app/dashboard/packers",
-  3: "/app/dashboard/commercials",
-  4: "/app/dashboard/constructions",
-  5: "/app/dashboard/education",
-  6: "/app/dashboard", // or products page if you add one
-  7: "/app/dashboard/healthcare",
-};
+// const serviceIdToRoute: Record<number, string> = {
+//   1: "/app/dashboard/homeservices",
+//   2: "/app/dashboard/packers",
+//   3: "/app/dashboard/commercials",
+//   4: "/app/dashboard/constructions",
+//   5: "/app/dashboard/education",
+//   6: "/app/dashboard", // or products page if you add one
+//   7: "/app/dashboard/healthcare",
+// };
 
 
 
@@ -98,6 +98,9 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
 
   const [isHealthCareSelected] = useState(false);
   const [doctorRoleSelected, setDoctorRoleSelected] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(
+  !!localStorage.getItem("accessToken")
+);
 
   // type UserRole = "customer" | "employee" | "partner" | "admin" | null;
 
@@ -224,18 +227,28 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
 
       localStorage.removeItem("isGuest");
 
-      const serviceIds: number[] = res.service_ids || [];
+      // const serviceIds: number[] = res.service_ids || [];
 
-      const firstServiceId = serviceIds[0];
-      const redirectPath =
-        serviceIdToRoute[firstServiceId] || "/app/dashboard";
+      // const firstServiceId = serviceIds[0];
+      // const redirectPath =
+      //   serviceIdToRoute[firstServiceId] || "/app/dashboard";
 
-      console.log("Navigating to:", redirectPath);
+      // console.log("Navigating to:", redirectPath);
       // After successful login
       localStorage.setItem("service_ids", JSON.stringify(res.service_ids));
 
-      closeAuthModal();
-      navigate(redirectPath);
+      // after successful login
+localStorage.setItem("accessToken", res.access_token);
+localStorage.setItem("user", JSON.stringify(res));
+
+// mark as authenticated
+setIsAuthenticated(true);
+
+// close modal
+closeAuthModal();
+
+// ❌ DO NOT navigate anywhere
+
 
 
 
@@ -289,6 +302,13 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
   //     setAuthLoading(false);
   //   }
   // };
+  useEffect(() => {
+  const token = localStorage.getItem("accessToken");
+  if (token) {
+    setIsAuthenticated(true);
+  }
+}, []);
+
 
   const onAdminLogin = async (values: any) => {
     setAuthLoading(true);
@@ -527,12 +547,10 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
             additional_service: values.additionalService?.trim() || "None",
           }
           : undefined,
-        government_id: [
-          {
-            id_type: "aadhaar",
-            id_number: values.aadhaar?.trim() || "000000000000"
-          }
-        ],
+        government_id: {
+  id_type: "aadhaar",
+  id_number: values.aadhaar?.trim() || "000000000000"
+},
 
         // Hard-coded values
         dob: "2001-01-01",
@@ -541,6 +559,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
         district_id: 1,
         address: values.location?.trim() || "Default Address",
         documents: [], // leave empty for now
+        work_type_id:1,
       };
 
       // Call your API
@@ -585,15 +604,15 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
 
 
       // ✅ OTHERWISE → NORMAL CUSTOMER FLOW
-      const firstServiceId =
-        (loginRes.service_ids && loginRes.service_ids[0]) ||
-        customerPayload.service_ids[0];
+      // const firstServiceId =
+      //   (loginRes.service_ids && loginRes.service_ids[0]) ||
+      //   customerPayload.service_ids[0];
 
-      const redirectPath =
-        serviceIdToRoute[firstServiceId] || "/app/dashboard";
+      // const redirectPath =
+      //   serviceIdToRoute[firstServiceId] || "/app/dashboard";
 
       closeAuthModal();
-      navigate(redirectPath);
+      //navigate(redirectPath);
 
 
 
@@ -671,13 +690,21 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
         </Select> */}
 
 
-        <Button
-          className="swl-hs-contact-btn swl-signup-btn"
-          onClick={() => openAuthModal("register")}
-          htmlType="button"
-        >
-          Sign Up
-        </Button>
+       {!isAuthenticated ? (
+  <Button
+    className="swl-hs-contact-btn swl-signup-btn"
+    onClick={() => openAuthModal("register")}
+  >
+    Sign Up
+  </Button>
+) : (
+  <Button
+    type="text"
+    icon={<UserOutlined style={{ fontSize: 22 }} />}
+    onClick={() => navigate("/profile")}
+  />
+)}
+
 
       </header>
 

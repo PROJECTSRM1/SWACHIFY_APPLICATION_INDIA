@@ -754,48 +754,48 @@ const specialistByType: Record<string, Specialist> = {
   },
 };
 
-const pharmacies = [
-  {
-    id: 1,
-    distance: "0.8 km away",
-    name: "Wellness Plus Pharmacy",
-    type: "RETAIL PHARMACY",
-    medicines: "Amoxicillin, Paracetamol, ...",
-    rating: 4.9,
-    eta: "25 - 40 mins",
-    buttonText: "Order Now",
-  },
-  {
-    id: 2,
-    distance: "1.5 km away",
-    name: "CarePoint Medical Store",
-    type: "RETAIL PHARMACY",
-    medicines: "Paracetamol, Vitamin C, ...",
-    rating: 4.7,
-    eta: "30 - 45 mins",
-    buttonText: "Order Now",
-  },
-  {
-    id: 3,
-    distance: "2.2 km away",
-    name: "Apollo Pharmacy",
-    type: "CHAIN PHARMACY",
-    medicines: "Amoxicillin, Cough Syrup, ...",
-    rating: 4.8,
-    eta: "20 - 35 mins",
-    buttonText: "Order Now",
-  },
-  {
-    id: 4,
-    distance: "3.0 km away",
-    name: "MediCare Pharmacy",
-    type: "RETAIL PHARMACY",
-    medicines: "Pain relief, Cold meds, ...",
-    rating: 4.6,
-    eta: "35 - 55 mins",
-    buttonText: "Order Now",
-  },
-];
+// const pharmacies = [
+//   {
+//     id: 1,
+//     distance: "0.8 km away",
+//     name: "Wellness Plus Pharmacy",
+//     type: "RETAIL PHARMACY",
+//     medicines: "Amoxicillin, Paracetamol, ...",
+//     rating: 4.9,
+//     eta: "25 - 40 mins",
+//     buttonText: "Order Now",
+//   },
+//   {
+//     id: 2,
+//     distance: "1.5 km away",
+//     name: "CarePoint Medical Store",
+//     type: "RETAIL PHARMACY",
+//     medicines: "Paracetamol, Vitamin C, ...",
+//     rating: 4.7,
+//     eta: "30 - 45 mins",
+//     buttonText: "Order Now",
+//   },
+//   {
+//     id: 3,
+//     distance: "2.2 km away",
+//     name: "Apollo Pharmacy",
+//     type: "CHAIN PHARMACY",
+//     medicines: "Amoxicillin, Cough Syrup, ...",
+//     rating: 4.8,
+//     eta: "20 - 35 mins",
+//     buttonText: "Order Now",
+//   },
+//   {
+//     id: 4,
+//     distance: "3.0 km away",
+//     name: "MediCare Pharmacy",
+//     type: "RETAIL PHARMACY",
+//     medicines: "Pain relief, Cold meds, ...",
+//     rating: 4.6,
+//     eta: "35 - 55 mins",
+//     buttonText: "Order Now",
+//   },
+// ];
 
 interface UIHospitalItem {
   ambulance_id: number;
@@ -808,6 +808,20 @@ interface UIHospitalItem {
   availability_status: string;
   price: number; // ✅ ADD THIS
 }
+
+interface UIPharmacyItem {
+  id: number;
+  name: string;
+  type: string;
+  medicines: string;
+  rating: number;
+  eta: string;
+  distance: string;
+  buttonText: string;
+  deliveryTime: string;
+  services: string; // ✅ ADD THIS
+}
+
 
 
 
@@ -870,6 +884,14 @@ const defaultImages = [
   "https://images.unsplash.com/photo-1550831107-1553da8c8464?auto=format&fit=crop&w=800&q=80",
 ];
 
+const pharmacyImages = [
+  "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=300",
+  "https://images.unsplash.com/photo-1603398938378-e54eab446dde?w=300",
+  "https://images.unsplash.com/photo-1580281657527-47d8c1f6f52e?w=300",
+];
+
+
+
 
 
 const getDoctorImage = (id: number | string | undefined) => {
@@ -877,6 +899,11 @@ const getDoctorImage = (id: number | string | undefined) => {
   if (!num || isNaN(num)) return defaultImages[0];
   return defaultImages[Math.abs(num) % defaultImages.length];
 };
+
+
+
+const getPharmacyImage = (id: number) =>
+  pharmacyImages[id % pharmacyImages.length];
 
 
 
@@ -955,6 +982,8 @@ const HealthCare: React.FC = () => {
   const [loadingLabs, setLoadingLabs] = useState(false);
   const [selectedNearbyHospital, setSelectedNearbyHospital] =
     useState<UIHospitalItem | null>(null);
+  const [pharmacies, setPharmacies] = useState<UIPharmacyItem[]>([]);
+
 
 
 
@@ -1064,7 +1093,7 @@ const HealthCare: React.FC = () => {
 
   const [showTrending, setShowTrending] = useState(false);
 
-  const [consultMode, setConsultMode] = useState<"online" | "offline" | "labs">(
+  const [consultMode, setConsultMode] = useState<"online" | "offline" | "labs" | "medical">(
     "online",
   );
 
@@ -1205,6 +1234,40 @@ const HealthCare: React.FC = () => {
 
     fetchHospitals();
   }, [consultMode]);
+
+
+  useEffect(() => {
+    if (consultMode !== "medical") return;
+
+    const fetchPharmacies = async () => {
+      try {
+        const response = await healthcareService.getAvailablePharmacies();
+
+        const formatted: UIPharmacyItem[] = response.map((p) => ({
+          id: p.pharmacy_id,
+          name: p.pharmacy_name,
+          type: p.pharmacy_type,
+          medicines: p.services,            // still stored (even if not shown)
+          rating: p.rating,
+          eta: p.delivery_time,
+          services: p.services,
+          deliveryTime: p.delivery_time,    // ✅ NEW
+          distance: p.distance_km ? `${p.distance_km} km` : "Nearby",
+          buttonText:
+            p.status === "OPEN NOW"
+              ? (p.proceed_type ?? "Visit")
+              : "Closed",
+        }));
+
+        setPharmacies(formatted);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchPharmacies();
+  }, [consultMode]);
+
 
 
 
@@ -1498,7 +1561,7 @@ const HealthCare: React.FC = () => {
 
                 // These two are UI only for now
                 if (value === "Medical Store") {
-                  setConsultMode("labs"); // reuse existing labs UI safely
+                  setConsultMode("medical"); // reuse existing labs UI safely
                 }
 
                 if (value === "Complete Treatment") {
@@ -1809,6 +1872,66 @@ const HealthCare: React.FC = () => {
             </div>
           </>
         )}
+
+        {/* ================= MEDICAL STORE ================= */}
+        {consultMode === "medical" && (
+          <>
+            <div className="available-doctors-header">
+              <h3>Available Medical Stores</h3>
+              <span className="see-all" onClick={() => setSearchText("")}>
+                Clear
+              </span>
+            </div>
+
+
+            <div className="medical-store-list">
+              {pharmacies.map((item) => (
+                <div key={item.id} className="medical-card">
+
+                  {/* TOP ROW */}
+                  <div className="medical-top">
+                    <img
+                      src={getPharmacyImage(item.id)}
+                      alt={item.name}
+                      className="medical-img"
+                      onError={(e) => {
+                        e.currentTarget.src = pharmacyImages[1];
+                      }}
+                    />
+
+
+                    <div className="medical-info">
+                      <h4>{item.name}</h4>
+                      <p className="medical-type">{item.type}</p>
+                      <p>Services: {item.services}</p>
+                      <p className="medical-time">Delivery Time: {item.deliveryTime}</p>
+                    </div>
+
+
+                    <div className="medical-rating">
+                      ⭐ {item.rating}
+                    </div>
+                  </div>
+
+
+                  {/* PRICE */}
+                  <p className="medical-price">Contact for price</p>
+
+
+                  {/* ACTION */}
+                  <button className="medical-visit-btn">Visit</button>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+
+
+
+
+
+
+
 
 
 
