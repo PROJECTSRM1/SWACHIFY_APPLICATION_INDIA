@@ -61,6 +61,7 @@
   color: #fff;
   border-radius: 22px;
   font-weight: 600;
+  margin-right: -10px;
 }
 
 .swl-hs-contact-btn.swl-signup-btn:hover {
