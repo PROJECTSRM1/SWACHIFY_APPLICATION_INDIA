@@ -391,12 +391,12 @@
    VENDOR & ADMIN BUTTON COLORS
    =============================== */
 
-.ant-modal .ant-tabs-tabpane-active button[type="submit"] {
-  background-color: #c4a15f !important;
+/* .ant-modal .ant-tabs-tabpane-active button[type="submit"] {
+  /* background-color: #c4a15f !important; */
   /* 🔵 CHANGE COLOR HERE */
-  border-color: #c4a15f !important;
-  color: #ffffff !important;
-}
+  /* border-color: #c4a15f !important; */
+  /* color: #ffffff !important; */
+/* } */ */
 
 /* Hover */
 .ant-modal .ant-tabs-tabpane-active button[type="submit"]:hover {
@@ -781,7 +781,7 @@
 
 .partner-modal .ant-modal-body {
   padding: 20px;
-  max-height: 70vh;
+
   /* ✅ control height */
   overflow-y: auto;
   /* ✅ enable scroll */
@@ -799,7 +799,7 @@
   }
 
   .partner-modal .ant-modal-body {
-    max-height: 80vh;
+  
     padding: 16px;
   }
 }
@@ -831,10 +831,7 @@
 }
 
 /* Prevent modal clipping dropdown */
-.partner-modal .ant-modal-body {
-  overflow-y: auto;
-  overflow-x: hidden;
-}
+
 
 /* Dropdown height control */
 .partner-modal .ant-select-dropdown {
@@ -1068,4 +1065,203 @@
 .auth-illustration p {
   font-size: 14px;
   color: #64748b;
+}
+/* =====================================
+   COLOR OVERRIDE ONLY (NO UI DAMAGE)
+===================================== */
+
+/* Tabs text color */
+.swl-hs-rf-classname .ant-tabs-tab-btn,
+.swl-hs-rf-classname .ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: #14b8a6 !important;
+}
+
+/* Tabs underline */
+.swl-hs-rf-classname .ant-tabs-ink-bar {
+  background: linear-gradient(135deg, #14b8a6, #0ea5e9) !important;
+}
+
+/* Register / Login PRIMARY button */
+.swl-hs-rf-classname button[type="submit"] {
+  background: linear-gradient(135deg, #14b8a6, #0ea5e9) !important;
+  border: none !important;
+  color: #ffffff !important;
+}
+
+/* Hover SAME COLOR (no login color coming) */
+.swl-hs-rf-classname button[type="submit"]:hover,
+.swl-hs-rf-classname button[type="submit"]:focus {
+  background: linear-gradient(135deg, #14b8a6, #0ea5e9) !important;
+  border: none !important;
+  color: #ffffff !important;
+}
+
+/* Links (Forgot password, etc.) */
+.swl-hs-rf-classname a,
+.swl-forgot-password-text {
+  color: #14b8a6 !important;
+}
+
+.swl-hs-rf-classname a:hover,
+.swl-forgot-password-text:hover {
+  color: #0ea5e9 !important;
+}
+/* =========================================
+   🔥 FORCE OVERRIDE AUTH COLORS (FINAL)
+========================================= */
+
+/* Tabs text (Login / Register) */
+.swl-hs-rf-classname.ant-modal
+.ant-tabs-tab-active
+.ant-tabs-tab-btn {
+  color: #14b8a6 !important;
+}
+
+.swl-hs-rf-classname.ant-modal
+.ant-tabs-tab-btn {
+  color: #64748b !important;
+}
+
+/* Tabs underline */
+.swl-hs-rf-classname.ant-modal
+.ant-tabs-ink-bar {
+  background: linear-gradient(135deg, #14b8a6, #0ea5e9) !important;
+}
+
+/* PRIMARY buttons (Login / Register) */
+.swl-hs-rf-classname.ant-modal
+button[type="submit"] {
+  background: linear-gradient(135deg, #14b8a6, #0ea5e9) !important;
+  border: none !important;
+  color: #fff !important;
+}
+
+/* Hover SAME COLOR */
+.swl-hs-rf-classname.ant-modal
+button[type="submit"]:hover {
+  background: linear-gradient(135deg, #14b8a6, #0ea5e9) !important;
+  color: #fff !important;
+}
+
+/* Links (Forgot password / vendor / admin) */
+.swl-hs-rf-classname.ant-modal a,
+.swl-hs-rf-classname.ant-modal .swl-forgot-password-text {
+  color: #14b8a6 !important;
+}
+
+.swl-hs-rf-classname.ant-modal a:hover,
+.swl-hs-rf-classname.ant-modal .swl-forgot-password-text:hover {
+  color: #0ea5e9 !important;
+}
+/* =========================================
+   REMOVE SCROLL – REGISTER TAB ONLY
+========================================= */
+
+/* Register tab pane – allow full height */
+.swl-hs-rf-classname
+.ant-tabs-tabpane-active {
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+/* Modal body – stop forcing scroll */
+.swl-hs-rf-classname
+.ant-modal-body {
+  max-height: none !important;
+  overflow-y: visible !important;
+}
+/* ===============================
+   AUTH MODAL – PERFECT HEIGHT FIT
+================================ */
+
+.swl-hs-rf-classname.ant-modal {
+  max-width: 420px;
+}
+
+/* Body height control */
+.swl-hs-rf-classname .ant-modal-body {
+  padding: 20px 22px !important;
+}
+
+/* Reduce spacing between fields */
+.swl-hs-rf-classname .ant-form-item {
+  margin-bottom: 10px !important;
+}
+
+/* Inputs compact */
+.swl-hs-rf-classname .ant-input,
+.swl-hs-rf-classname .ant-input-password,
+.swl-hs-rf-classname .ant-input-affix-wrapper {
+  height: 42px !important;
+  border-radius: 12px !important;
+}
+
+/* Buttons */
+.swl-hs-rf-classname button {
+  height: 42px !important;
+  font-size: 14px !important;
+}
+
+/* Mobile FINAL SAFETY */
+@media (max-width: 480px) {
+  .swl-hs-rf-classname .ant-modal-body {
+    padding: 14px 14px !important;
+  }
+
+  .swl-hs-rf-classname .ant-form-item {
+    margin-bottom: 8px !important;
+  }
+}
+
+@media (max-width: 768px) {
+
+  /* Allow modal to scroll vertically */
+  .swl-hs-rf-classname.ant-modal {
+    top: 0 !important;
+    margin: 0 auto !important;
+  }
+
+  /* Enable scroll inside modal */
+  .swl-hs-rf-classname .ant-modal-body {
+    max-height: calc(100vh - 100px) !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Tabs pane must not block scroll */
+  .swl-hs-rf-classname .ant-tabs-tabpane-active {
+    overflow: visible !important;
+  }
+}
+/* 🔥 GLOBAL HORIZONTAL SCROLL KILL */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden !important;
+}
+
+/* Modal container */
+.swl-hs-rf-classname.ant-modal {
+  max-width: 100vw !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+  overflow-x: hidden !important;
+}
+
+/* Modal content */
+.swl-hs-rf-classname .ant-modal-content {
+  max-width: 100%;
+  overflow-x: hidden !important;
+}
+
+/* Modal body – vertical ok, horizontal no */
+.swl-hs-rf-classname .ant-modal-body {
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+/* Tabs + forms safety */
+.swl-hs-rf-classname .ant-tabs,
+.swl-hs-rf-classname .ant-form {
+  max-width: 100%;
+  overflow-x: hidden;
 }

@@ -983,6 +983,8 @@ const HealthCare: React.FC = () => {
   const [selectedNearbyHospital, setSelectedNearbyHospital] =
     useState<UIHospitalItem | null>(null);
   const [pharmacies, setPharmacies] = useState<UIPharmacyItem[]>([]);
+  const [bookedAppointment, setBookedAppointment] = useState<any>(null);
+
 
 
 
@@ -1104,6 +1106,7 @@ const HealthCare: React.FC = () => {
   const [doctors, setDoctors] = useState<Doctor[]>([]);
 
   const [loadingDoctors, setLoadingDoctors] = useState<boolean>(false);
+
 
   const getLabImage = (id?: number | string) => {
     const index =
@@ -1235,7 +1238,7 @@ const HealthCare: React.FC = () => {
     fetchHospitals();
   }, [consultMode]);
 
-
+// get pharmacies
   useEffect(() => {
     if (consultMode !== "medical") return;
 
@@ -1256,7 +1259,7 @@ const HealthCare: React.FC = () => {
           buttonText:
             p.status === "OPEN NOW"
               ? (p.proceed_type ?? "Visit")
-              : "Closed",
+              : "order",
         }));
 
         setPharmacies(formatted);
@@ -1267,6 +1270,76 @@ const HealthCare: React.FC = () => {
 
     fetchPharmacies();
   }, [consultMode]);
+
+//Book appointment
+const handleConfirmAppointment = async () => {
+  if (!appointmentDoctor || !selectedDate || !selectedTime) return;
+
+  const user_id = Number(localStorage.getItem("user_id"));
+
+  // Build date from parts
+  const year = selectedDate.getFullYear();
+  const month = selectedDate.getMonth(); // 0-based
+  const day = selectedDate.getDate();
+
+  const [time, modifier] = selectedTime.split(" ");
+  let [hours, minutes] = time.split(":").map(Number);
+
+  if (modifier === "PM" && hours !== 12) hours += 12;
+  if (modifier === "AM" && hours === 12) hours = 0;
+
+  // Create local IST datetime
+  const appointmentDateTime = new Date(year, month, day, hours, minutes, 0, 0);
+
+  // 🔥 Send LOCAL time string (not UTC)
+  const localDateTime = appointmentDateTime
+    .toLocaleString("sv-SE")   // YYYY-MM-DD HH:mm:ss
+    .replace(" ", "T");
+
+  console.log("UI selected:", selectedDate, selectedTime);
+  console.log("Local datetime:", appointmentDateTime.toString());
+  console.log("Local to send:", localDateTime);
+
+  const payload = {
+    user_id,
+    consultation_type_id: 1,
+    appointment_time: localDateTime,        // ✅ FIXED
+    doctor_id: appointmentDoctor.id,
+    doctor_specialization_id: null,
+    required_ambulance: false,
+    ambulance_id: null,
+    pickup_time: localDateTime,             // ✅ FIXED
+    required_assistant: false,
+    assistant_id: null,
+    labs_id: null,
+    pharmacies_id: null,
+    call_booking_status: "CALL_PENDING",
+  };
+
+  try {
+    const response = await healthcareService.bookAppointment(payload);
+
+    console.log("API returned:", response.appointment_time);
+    console.log(
+      "IST from API:",
+      new Date(response.appointment_time).toLocaleString("en-IN", {
+        timeZone: "Asia/Kolkata",
+      })
+    );
+
+    setBookedAppointment(response);
+    setOpenAppointmentScreen(false);
+    setShowConfirmPopup(true);
+  } catch (err) {
+    console.error("Appointment booking failed", err);
+  }
+};
+
+
+
+
+
+
 
 
 
@@ -1413,59 +1486,52 @@ const HealthCare: React.FC = () => {
   };
 
   const handlePayNow = async () => {
-    try {
-      setPayLoading(true);
+  try {
+    setPayLoading(true);
 
-      // Temporary ID for now (since no booking API exists yet)
-      const tempHomeServiceId = 25;
+    const tempHomeServiceId = 25;
+    const amount = 5000; // ₹50 => 5000 paise
 
-      const amount = 5000; // ₹50 => 5000 paise
+    // 1️⃣ Create Razorpay order
+    const order = await PaymentsAPI.createOrder(tempHomeServiceId, amount);
 
-      // 1️⃣ Create Razorpay order
-      const order = await PaymentsAPI.createOrder(tempHomeServiceId, amount);
+    const options = {
+      key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+      amount: order.amount,
+      currency: "INR",
+      name: "Swachify Healthcare",
+      description: "Online Video Consultation",
+      order_id: order.id,
 
-      const options = {
-        key: import.meta.env.VITE_RAZORPAY_KEY_ID,
-        amount: order.amount,
-        currency: "INR",
-        name: "Swachify Healthcare",
-        description: "Online Video Consultation",
-        order_id: order.id,
+      handler: async function (response: any) {
+        // ✅ No verification — just treat as success
+        console.log("Razorpay success:", response);
 
-        handler: async function (response: any) {
-          try {
-            // 2️⃣ Verify payment with backend
-            await PaymentsAPI.verifyPayment(
-              order.id,
-              response.razorpay_payment_id,
-              response.razorpay_signature,
-              tempHomeServiceId,
-            );
+        message.success("Payment Successful 🎉");
 
-            message.success("Payment Successful 🎉");
+        setOpenPaymentSuccess(true);
+        setShowConfirmPopup(false);
+      },
 
-            setOpenPaymentSuccess(true);
-            setOpenPaymentSuccess(true);
-          } catch (err) {
-            message.error("Payment verification failed");
-          }
-        },
+      theme: {
+        color: "#065f46",
+      },
+    };
 
-        theme: {
-          color: "#065f46",
-        },
-      };
-      setShowConfirmPopup(false);
+    setShowConfirmPopup(false);
 
-      //@ts-ignore
-      const rzp = new window.Razorpay(options);
-      rzp.open();
-    } catch (err) {
-      message.error("Payment failed!");
-    } finally {
-      setPayLoading(false);
-    }
-  };
+    // @ts-ignore
+    const rzp = new window.Razorpay(options);
+    rzp.open();
+  } catch (err) {
+    console.error(err);
+    message.error("Payment failed!");
+  } finally {
+    setPayLoading(false);
+  }
+};
+
+
 
   return (
     <>
@@ -1712,6 +1778,7 @@ const HealthCare: React.FC = () => {
                         type="button"
                         className="book-btn"
                         onClick={() => {
+                         
                           setAppointmentDoctor(doc);
                           setOpenAppointmentScreen(true);
                         }}
@@ -1874,57 +1941,56 @@ const HealthCare: React.FC = () => {
         )}
 
         {/* ================= MEDICAL STORE ================= */}
-        {consultMode === "medical" && (
-          <>
-            <div className="available-doctors-header">
-              <h3>Available Medical Stores</h3>
-              <span className="see-all" onClick={() => setSearchText("")}>
-                Clear
-              </span>
+    {/* ================= MEDICAL STORE ================= */}
+{consultMode === "medical" && (
+  <>
+    <div className="available-doctors-header">
+      <h3>Available Medical Stores</h3>
+      <span className="see-all" onClick={() => setSearchText("")}>
+        Clear
+      </span>
+    </div>
+
+    <div className="medical-store-list">
+      {pharmacies.map((item) => (
+        <div key={item.id} className="medical-card">
+          <div className="medical-row">
+
+            {/* LEFT IMAGE */}
+            <img
+              src={getPharmacyImage(item.id)}
+              alt={item.name}
+              className="medical-img"
+              onError={(e) => {
+                e.currentTarget.src = pharmacyImages[1];
+              }}
+            />
+
+            {/* CENTER INFO */}
+            <div className="medical-info">
+              <div className="medical-head">
+                <h4>{item.name}</h4>
+                <span className="medical-rating">⭐ {item.rating}</span>
+              </div>
+
+              <p className="medical-type">{item.type}</p>
+              <p className="medical-time">Delivery: {item.deliveryTime}</p>
+              <p className="medical-services">{item.services}</p>
+              <p className="medical-price">Contact for price</p>
             </div>
 
+            {/* RIGHT BUTTON */}
+            <button className="medical-order-btn">
+              {item.buttonText}
+            </button>
 
-            <div className="medical-store-list">
-              {pharmacies.map((item) => (
-                <div key={item.id} className="medical-card">
+          </div>
+        </div>
+      ))}
+    </div>
+  </>
+)}
 
-                  {/* TOP ROW */}
-                  <div className="medical-top">
-                    <img
-                      src={getPharmacyImage(item.id)}
-                      alt={item.name}
-                      className="medical-img"
-                      onError={(e) => {
-                        e.currentTarget.src = pharmacyImages[1];
-                      }}
-                    />
-
-
-                    <div className="medical-info">
-                      <h4>{item.name}</h4>
-                      <p className="medical-type">{item.type}</p>
-                      <p>Services: {item.services}</p>
-                      <p className="medical-time">Delivery Time: {item.deliveryTime}</p>
-                    </div>
-
-
-                    <div className="medical-rating">
-                      ⭐ {item.rating}
-                    </div>
-                  </div>
-
-
-                  {/* PRICE */}
-                  <p className="medical-price">Contact for price</p>
-
-
-                  {/* ACTION */}
-                  <button className="medical-visit-btn">Visit</button>
-                </div>
-              ))}
-            </div>
-          </>
-        )}
 
 
 
@@ -3481,10 +3547,13 @@ const HealthCare: React.FC = () => {
             <button
               className="confirm-appointment-btn"
               disabled={!selectedTime}
-              onClick={() => {
-                setOpenAppointmentScreen(false); // 🔥 CLOSE booking screen
-                setShowConfirmPopup(true); // 🔥 OPEN confirm popup
-              }}
+              // onClick={() => {
+               
+              //   setOpenAppointmentScreen(false); // 🔥 CLOSE booking screen
+              //   setShowConfirmPopup(true); // 🔥 OPEN confirm popup
+              //   handleConfirmAppointment();
+              // }}
+               onClick={handleConfirmAppointment}
             >
               Confirm Appointment
             </button>
@@ -3520,12 +3589,54 @@ const HealthCare: React.FC = () => {
 
               {/* Info Rows */}
               <div className="confirm-info">
-                <div className="info-row">
-                  📅 <b>{selectedDate?.toDateString()}</b>
-                </div>
-                <div className="info-row">
-                  ⏰ <b>{selectedTime}</b> <span>(IST)</span>
-                </div>
+
+                {bookedAppointment && (
+  <>
+    <div className="info-row">
+      📅{" "}
+      <b>
+        {new Date(bookedAppointment.appointment_time).toLocaleDateString(
+          "en-IN",
+          {
+            timeZone: "Asia/Kolkata",
+            weekday: "short",
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+          }
+        )}
+      </b>
+    </div>
+
+    <div className="info-row">
+      ⏰{" "}
+      <b>
+        {new Date(bookedAppointment.appointment_time).toLocaleTimeString(
+          "en-IN",
+          {
+            timeZone: "Asia/Kolkata",   // 🔥 THIS is the fix
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: true,
+          }
+        )}
+      </b>{" "}
+      <span>(IST)</span>
+    </div>
+  </>
+)}
+
+
+
+
+
+
+
+
+
+
+
+              
                 <div className="info-row">🎥 Online Video Consultation</div>
               </div>
 

@@ -17,6 +17,7 @@ const HomeServiceBooking: React.FC = () => {
 
   const [mobile, setMobile] = useState("");
   const [otp, setOtp] = useState("");
+  const isAuthenticated = !!localStorage.getItem("accessToken");
 
   if (!config) {
     return (
@@ -223,10 +224,10 @@ const HomeServiceBooking: React.FC = () => {
                     </div>
                   </div>
 
-                  <button
-                    className="hsb-proceed-btn"
-                    onClick={() => setStep("login")}
-                  >
+                 <button
+  className="vc-proceed-btn"
+  onClick={() => setStep(isAuthenticated ? "booking" : "login")}
+>
                     <span>Proceed to Book</span>
                     <span className="hsb-btn-arrow">→</span>
                   </button>
