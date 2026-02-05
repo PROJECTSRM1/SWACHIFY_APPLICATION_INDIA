@@ -3752,27 +3752,122 @@ const handleConfirmAppointment = async () => {
               </div>
 
               {/* Booking Card */}
-              <div className="booking-card">
-                <h3>Dr. Sarah Jenkins</h3>
-                <p className="dates">30 Jan 2026 • 05:30 PM</p>
+             <div className="booking-card">
+  <h3 className="booking-name">Dr. Sarah Jenkins</h3>
 
-                <button className="join-call-btn">Join Call</button>
-              </div>
+  <p className="booking-date">
+    📅 30 Jan 2026 • 05:30 PM
+  </p>
+
+  <button className="booking-status">Not Started</button>
+
+  <div className="booking-steps">
+    <div className="step active">
+      <span>📅</span>
+      <p>Booked</p>
+    </div>
+
+    <div className="line"></div>
+
+    <div className="step">
+      <span>💬</span>
+      <p>Consulted</p>
+    </div>
+
+    <div className="line"></div>
+
+    <div className="step">
+      <span>💊</span>
+      <p>Medications</p>
+    </div>
+
+    <div className="line"></div>
+
+    <div className="step">
+      <span>🧪</span>
+      <p>Lab Tests</p>
+    </div>
+  </div>
+</div>
+
+
+       <div className="booking-card">
+  <h3 className="booking-name">Dr. Sarah Jenkins</h3>
+
+  <p className="booking-date">
+    📅 30 Jan 2026 • 05:30 PM
+  </p>
+
+  <button className="booking-status">Not Started</button>
+
+  <div className="booking-steps">
+    <div className="step active">
+      <span>📅</span>
+      <p>Booked</p>
+    </div>
+
+    <div className="line"></div>
+
+    <div className="step">
+      <span>💬</span>
+      <p>Consulted</p>
+    </div>
+
+    <div className="line"></div>
+
+    <div className="step">
+      <span>💊</span>
+      <p>Medications</p>
+    </div>
+
+    <div className="line"></div>
+
+    <div className="step">
+      <span>🧪</span>
+      <p>Lab Tests</p>
+    </div>
+  </div>
+</div>
 
               {/* Booking Card */}
-              <div className="booking-card">
-                <h3>Dr. Marcus Chen</h3>
-                <p className="dates">30 Jan 2026 • 04:00 PM</p>
+<div className="booking-card">
+  <h3 className="booking-name">Dr. Sarah Jenkins</h3>
 
-                <button className="join-call-btn">Join Call</button>
-              </div>
-              {/* Booking Card */}
-              <div className="booking-card">
-                <h3>Dr. Aisha Khan</h3>
-                <p className="dates">31 Jan 2026 • 11:00 AM</p>
+  <p className="booking-date">
+    📅 30 Jan 2026 • 05:30 PM
+  </p>
 
-                <button className="join-call-btn">Join Call</button>
-              </div>
+  <button className="booking-status">Not Started</button>
+
+  <div className="booking-steps">
+    <div className="step active">
+      <span>📅</span>
+      <p>Booked</p>
+    </div>
+
+    <div className="line"></div>
+
+    <div className="step">
+      <span>💬</span>
+      <p>Consulted</p>
+    </div>
+
+    <div className="line"></div>
+
+    <div className="step">
+      <span>💊</span>
+      <p>Medications</p>
+    </div>
+
+    <div className="line"></div>
+
+    <div className="step">
+      <span>🧪</span>
+      <p>Lab Tests</p>
+    </div>
+  </div>
+</div>
+
             </div>
           </div>
         )}
