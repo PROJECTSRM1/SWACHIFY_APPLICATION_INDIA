@@ -577,3 +577,186 @@ html {
   outline: 2px solid #6366f1;
   outline-offset: 2px;
 }
+
+
+.recent-bookings-modal .ant-modal-body {
+  padding: 16px 20px;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.recent-bookings-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.rb-card {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.rb-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+}
+
+.rb-service {
+  font-size: 14px;
+  color: #111827;
+}
+
+.rb-price {
+  font-size: 14px;
+  color: #16a34a;
+}
+
+.rb-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4px;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.rb-booked {
+  margin-top: 4px;
+  font-size: 11px;
+  color: #9ca3af;
+}
+
+.rb-empty {
+  text-align: center;
+  color: #9ca3af;
+  font-size: 14px;
+}
+
+
+/* Force modal to always sit below your app header */
+.recent-bookings-modal .ant-modal {
+  top: 90px !important;   /* 👈 Increase this if your navbar is taller */
+  margin: 0 auto;
+}
+
+/* Ensure modal content is clipped properly */
+.recent-bookings-modal .ant-modal-content {
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+/* Modal header styling */
+.recent-bookings-modal .ant-modal-header {
+  background: linear-gradient(90deg, #6a5acd, #7b68ee);
+  padding: 12px 16px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* Title style */
+.recent-bookings-modal .ant-modal-title {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+
+
+
+
+/* Tablets & small laptops */
+@media (max-width: 768px) {
+  .recent-bookings-modal .ant-modal {
+    width: 90% !important;
+  }
+
+  .rb-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .rb-meta {
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .rb-service {
+    font-size: 13px;
+  }
+
+  .rb-price {
+    font-size: 13px;
+  }
+}
+
+/* Mobile devices */
+@media (max-width: 480px) {
+  .recent-bookings-modal .ant-modal-body {
+    padding: 12px 14px;
+  }
+
+  .rb-card {
+    padding: 8px 10px;
+  }
+
+  .rb-header {
+    gap: 2px;
+  }
+
+  .rb-service {
+    font-size: 12px;
+  }
+
+  .rb-price {
+    font-size: 12px;
+  }
+
+  .rb-meta {
+    font-size: 11px;
+  }
+
+  .rb-booked {
+    font-size: 10px;
+  }
+}
+
+/* Very small screens */
+@media (max-width: 360px) {
+  .rb-service {
+    font-size: 11px;
+  }
+
+  .rb-price {
+    font-size: 11px;
+  }
+
+  .rb-meta {
+    font-size: 10px;
+  }
+
+  .rb-booked {
+    font-size: 9px;
+  }
+}
+
+
+@media (max-width: 480px) {
+  .recent-bookings-modal .ant-modal {
+    top: 100px !important;  /* ⬅️ big enough gap from navbar */
+    width: 92% !important;
+  }
+
+  .recent-bookings-modal .ant-modal-header {
+    padding: 10px 14px;
+  }
+
+  .recent-bookings-modal .ant-modal-title {
+    font-size: 13px;
+  }
+}
+
