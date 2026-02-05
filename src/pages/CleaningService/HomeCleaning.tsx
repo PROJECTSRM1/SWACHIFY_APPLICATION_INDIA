@@ -30,6 +30,11 @@ const homeCleaningServices = [
     icon: "🪟",
     description: "Crystal clear windows inside-out"
   },
+  {
+  title: "Full Deep Cleaning",
+  icon: "🏠",
+  description: "Complete home deep cleaning"
+}
 ];
 
 const HomeCleaning: React.FC = () => {
