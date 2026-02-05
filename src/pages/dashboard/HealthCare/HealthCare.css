@@ -5407,3 +5407,116 @@
   bottom:0;
   right:0;
 }
+/* =========================
+   LAB CARD – SAME AS MEDICAL
+   ========================= */
+
+.lab-card{
+  background:#fff;
+  border-radius:14px;
+  padding:14px;
+  box-shadow:0 6px 20px rgba(0,0,0,0.08);
+  margin-bottom:14px;
+}
+
+.lab-row{
+  position:relative;
+  display:flex;
+  gap:14px;
+  align-items:flex-start;
+  width:100%;
+}
+
+/* image */
+.lab-image{
+  width:70px;
+  height:70px;
+  border-radius:12px;
+  object-fit:cover;
+  flex-shrink:0;
+}
+
+/* text */
+.lab-info{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  align-items:flex-start;
+  text-align:left;
+}
+
+.lab-name{
+  font-size:15px;
+  font-weight:700;
+  margin:0;
+}
+
+.lab-test{
+  font-size:13px;
+  font-weight:600;
+  color:#2f6f6d;
+}
+
+.lab-timing{
+  font-size:12px;
+  color:#666;
+}
+
+.lab-price{
+  margin-top:6px;
+  font-size:14px;
+  font-weight:700;
+}
+
+/* rating top right */
+.lab-rating{
+  position:absolute;
+  top:10px;
+  right:10px;
+  background:#fff4d6;
+  padding:4px 8px;
+  border-radius:12px;
+  font-size:12px;
+  font-weight:700;
+}
+
+/* button bottom right */
+.lab-order-btn{
+  position:absolute;
+  bottom:10px;
+  right:10px;
+  background:#2f6f6d;
+  color:#fff;
+  border:none;
+  padding:6px 14px;
+  font-size:12px;
+  border-radius:10px;
+  font-weight:700;
+  cursor:pointer;
+}
+/* =========================
+   LAB MOBILE – EXACT MATCH
+   ========================= */
+@media (max-width:768px){
+
+  .lab-row{
+    align-items:flex-start;
+  }
+
+  .lab-info,
+  .lab-info *{
+    text-align:left !important;
+    align-items:flex-start !important;
+  }
+
+  .lab-rating{
+    top:8px;
+    right:8px;
+  }
+
+  .lab-order-btn{
+    bottom:8px;
+    right:8px;
+  }
+}
