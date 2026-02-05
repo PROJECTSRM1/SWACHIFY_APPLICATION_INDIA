@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 
 //import { setUserDetails } from "../../utils/helpers/storage";
 import { Link, useNavigate } from "react-router-dom";
+import { Dropdown } from "antd";
+
 import {
   Button,
   Menu,
@@ -55,6 +57,7 @@ const allowEmailChars = (value: string) =>
 
 
 
+
 const navItems = [
   { key: "home", label: <Link to="/landing">Home</Link> },
   // { key: "education", label: <Link to="/education">Education</Link> },
@@ -101,6 +104,11 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(
   !!localStorage.getItem("accessToken")
 );
+const handleLogout = () => {
+  localStorage.clear();          // 🔥 full logout
+  setIsAuthenticated(false);     // UI update
+  navigate("/landing");          // 🔁 redirect to landing
+};
 
   // type UserRole = "customer" | "employee" | "partner" | "admin" | null;
 
@@ -699,11 +707,30 @@ closeAuthModal();
     Sign Up
   </Button>
 ) : (
+  <Dropdown
+  placement="bottomRight"
+  menu={{
+    items: [
+      {
+        key: "profile",
+        label: "My Profile",
+        onClick: () => navigate("/profile"),
+      },
+      {
+        key: "logout",
+        label: "Logout",
+        danger: true,
+        onClick: handleLogout,
+      },
+    ],
+  }}
+>
   <Button
     type="text"
     icon={<UserOutlined style={{ fontSize: 22 }} />}
-    onClick={() => navigate("/profile")}
   />
+</Dropdown>
+
 )}
 
 
