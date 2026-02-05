@@ -1,192 +1,184 @@
-// LandingPage.tsx
-import CommonHeader from "../../pages/landing/Header";
-import "../../index.css";
-
+// import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Card, Row, Col } from "antd";
+import CommonHeader from "../../pages/landing/Header";
 import FooterSection from "../../pages/landing/FooterSection";
 import "../../pages/landing/FooterSection.css";
+import "./LandingPage.css";
+import { useEffect, useState } from "react";
+
 
 
 import {
   HomeOutlined,
   TruckOutlined,
-  ToolOutlined,
   ShopOutlined,
-  ApartmentOutlined,
   BuildOutlined,
   BookOutlined,
   ShoppingCartOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 
-import heroImage from "../../assets/landingimages/hero.jpg";
+/* RIGHT SIDE IMAGES */
+import img1 from "../../assets/cleaning and home.jpg";
+import img2 from "../../assets/education1.jpg";
+import img3 from "../../assets/swachify product.jpg";
+import img4 from "../../assets/transport.jpg";
+import img5 from "../../assets/health care.jpg";
 
-// 🔹 Import shared JSON config
-import educationData from "../../data/educationData.json";
-import type React from "react";
+/* SERVICES */
+const services = [
+  {
+    title: "Education",
+    icon: <BookOutlined />,
+    route: "/education",             // ✅ public
+  },
+  {
+    title: "Health Care",
+    icon: <UserOutlined />,
+    route: "/healthcare",            // ✅ public
+  },
+  {
+    title: "Just Ride",
+    icon: <TruckOutlined />,
+    route: "/LandingPackers",        // ✅ public
+  },
+  {
+    title: "Swachify Products",
+    icon: <ShoppingCartOutlined />,
+    route: "/swachifyproducts",     // ✅ public
+  },
+  {
+    title: "Cleaning & Home Services",
+    icon: <HomeOutlined />,
+    route: "/cleaningservice",       // ✅ public
+  },
 
-// 🔹 Types (optional, just for clarity)
-type LandingService = {
-  id: number;
-  iconKey: string;
-  title: string;
-  desc: string;
-  route: string;
-};
+  {
+    title: "Buy / Sale / Rentals",
+    icon: <ShopOutlined />,
+    route: "/BuySaleProducts",      // ✅ public
+  },
+  {
+    title: "Raw Materials",
+    icon: <BuildOutlined />,
+    route: "/Rawmaterials", // ✅ public
+  },
 
-type LandingWhyCard = {
-  iconKey: string;
-  title: string;
-  desc: string;
-};
 
-type LandingHero = {
-  title: string;
-  subtitle: string;
-  buttonText: string;
-  backgroundImageKey: string;
-};
 
-// 🔹 Map hero background imageKey -> actual import
-const heroBgMap: Record<string, string> = {
-  landingHero: heroImage,
-};
+];
+/* HERO BACKGROUND IMAGES */
+const heroImages = [
+  img2, // Education
+  img5, // Health Care
+  img4, // Just Ride
+  img3, // Swachify Products (fruits/vegetables)
+  img1, // Cleaning & Home
+];
 
-// 🔹 Extract hero data from JSON with fallback
-const landingHero: LandingHero = (educationData as any).landingHero || {
-  title: "Transform Your Home & Property Services",
-  subtitle: "Your trusted solution for cleaning, moving, rentals, construction, and more.",
-  buttonText: "Get Started",
-  backgroundImageKey: "landingHero",
-};
-
-// 🔹 Resolve background image
-const heroBackgroundImage =
-  heroBgMap[landingHero.backgroundImageKey] ?? heroImage;
-
-// 🔹 Icon maps for services & why-cards
-const landingServiceIconMap: Record<string, React.ReactNode> = {
-  home: <HomeOutlined style={{ fontSize: 28, color: "#1677ff" }} />,
-  truck: <TruckOutlined style={{ fontSize: 28, color: "#00aa33" }} />,
-  shop: <ShopOutlined style={{ fontSize: 28, color: "#ff7a00" }} />,
-  build: <BuildOutlined style={{ fontSize: 28, color: "#8b00ff" }} />,
-  book: <BookOutlined style={{ fontSize: 28, color: "#ff3333" }} />,
-  cart: <ShoppingCartOutlined style={{ fontSize: 28, color: "#ffaa00" }} />,
-  user: <UserOutlined style={{ fontSize: 28, color: "#ffaa00" }} />,
-};
-
-const landingWhyIconMap: Record<string, React.ReactNode> = {
-  tools: <ToolOutlined style={{ fontSize: 28, color: "#ff7a00" }} />,
-  home: <HomeOutlined style={{ fontSize: 28, color: "#1677ff" }} />,
-  truck: <TruckOutlined style={{ fontSize: 28, color: "#00aa33" }} />,
-  build: <BuildOutlined style={{ fontSize: 28, color: "#ffaa00" }} />,
-  apartment: <ApartmentOutlined style={{ fontSize: 28, color: "#8b00ff" }} />,
-  shop: <ShopOutlined style={{ fontSize: 28, color: "#ff3333" }} />,
-};
-
-// 🔹 Read services & why-choose-us from JSON
-const landingServicesConfig: LandingService[] =
-  ((educationData as any).landingServices as LandingService[]) || [];
-
-const services = landingServicesConfig.map((item) => ({
-  icon: landingServiceIconMap[item.iconKey] || null,
-  title: item.title,
-  desc: item.desc,
-  route: item.route,
-}));
-
-const landingWhyConfig: LandingWhyCard[] =
-  ((educationData as any).landingWhyChooseUs as LandingWhyCard[]) || [];
-
-const whyChooseCards = landingWhyConfig.map((item) => ({
-  icon: landingWhyIconMap[item.iconKey] || null,
-  title: item.title,
-  desc: item.desc,
-}));
 
 const LandingPage = () => {
   const navigate = useNavigate();
+  const [bgIndex, setBgIndex] = useState(0);
 
-  const scrollToServices = () => {
-    document.getElementById("services-section")?.scrollIntoView({
-      behavior: "smooth",
-    });
-  };
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setBgIndex((prev) => (prev + 1) % heroImages.length);
+    }, 5000); // ⏱ 5 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
 
   return (
-    <div className="sw-lp-classname-landing-container">
-      <CommonHeader selectedKey="landing" />
+    
+<div className="sw-landing-root">
+  <CommonHeader selectedKey="landing" />
 
-      {/* HERO SECTION */}
-      <section
-        className="sw-lp-classname-hero-section"
-        style={{ backgroundImage: `url(${heroBackgroundImage})` }}
+  {/* HERO – FULL WIDTH */}
+<section className="sw-main-hero">
+  {/* 🔥 BACKGROUND IMAGE */}
+  <div
+    className="sw-hero-bg"
+    style={{ backgroundImage: `url(${heroImages[bgIndex]})` }}
+  />
+
+  {/* CONTENT */}
+  <div className="sw-hero-content">
+    <span className="sw-badge">
+      Trusted by 1M+ Indians across 100+ cities
+    </span>
+
+    <h1>
+      Your Life, <span>Simplified</span>
+    </h1>
+
+    <p>
+      From education to healthcare, transport to home services – everything
+      you need in one powerful platform.
+    </p>
+
+    <div className="sw-hero-actions">
+      <button
+        className="primary-btn"
+        onClick={() =>
+          document
+            .querySelector("#services")
+            ?.scrollIntoView({ behavior: "smooth" })
+        }
       >
-        <div className="sw-lp-classname-hero-content">
-          <h1>{landingHero.title}</h1>
-          <p>{landingHero.subtitle}</p>
+        Explore Services
+      </button>
 
-          <Button type="primary" size="large" onClick={scrollToServices}>
-            {landingHero.buttonText}
-          </Button>
-        </div>
-      </section>
-
-      {/* SERVICES SECTION */}
-      <section id="services-section" className="sw-lp-classname-services-section">
-        <h2 className="sw-lp-classname-section-title">Our Services</h2>
-        <p className="sw-lp-classname-section-subtitle">
-          Comprehensive solutions for all your home and property needs
-        </p>
-
-        <Row gutter={[24, 24]} justify="center">
-          {services.map((item, index) => (
-            <Col xs={24} sm={12} md={8} key={index}>
-              <Card
-                hoverable
-                className="sw-lp-classname-service-card"
-                onClick={() => navigate(item.route)}
-              >
-                <div className="sw-lp-classname-service-icon">{item.icon}</div>
-                <h3 className="sw-lp-classname-service-title">{item.title}</h3>
-                <p className="sw-lp-classname-service-desc">{item.desc}</p>
-                <span className="sw-lp-classname-learn-more">Learn More →</span>
-              </Card>
-            </Col>
-          ))}
-        </Row>
-      </section>
-
-      {/* WHY CHOOSE US */}
-      <section className="sw-lp-classname-why-choose-section">
-        <div className="sw-lp-classname-container">
-          <h2 className="sw-lp-classname-section-title">Why Choose Our Service</h2>
-          <p className="sw-lp-classname-section-subtitle">
-            We focus on quality, trust and speed — built to make your life easier.
-          </p>
-
-          <Row gutter={[20, 20]} justify="center">
-            {whyChooseCards.map((card, i) => (
-              <Col xs={24} sm={12} md={8} key={i}>
-                <Card className="sw-lp-classname-why-card" hoverable>
-                  <div style={{ display: "flex", gap: 12 }}>
-                    {card.icon}
-                    <div>
-                      <h4>{card.title}</h4>
-                      <p>{card.desc}</p>
-                    </div>
-                  </div>
-                </Card>
-              </Col>
-            ))}
-          </Row>
-        </div>
-      </section>
-
-      {/* FOOTER (still via FooterSection component) */}
-      <FooterSection selectedKey="LandingPackers" />
+      <button className="secondary-btn">Download App</button>
     </div>
+
+    <div className="sw-hero-stats">
+      ⭐ 4.8/5 Rating | ✅ Verified Professionals | ⏰ 24/7 Support
+    </div>
+  </div>
+</section>
+
+
+  {/* SERVICES */}
+  <section id="services" className="sw-uc-services">
+    <div className="sw-uc-container">
+      {/* LEFT */}
+      <div className="sw-uc-left">
+        <h2>What are you looking for?</h2>
+
+        <div className="sw-uc-grid">
+          {services.map((item, index) => (
+            <div
+              key={index}
+              className="sw-uc-card"
+              onClick={() => navigate(item.route)}
+            >
+              <div className="sw-uc-icon-wrap">
+                <div className="sw-uc-icon">{item.icon}</div>
+              </div>
+              <div className="sw-uc-text">{item.title}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* RIGHT */}
+      <div className="sw-uc-right">
+        <div className="sw-uc-images">
+          <img src={img1} className="img big" />
+          <img src={img2} className="img" />
+          <img src={img3} className="img" />
+          <img src={img4} className="img" />
+          <img src={img5} className="img" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <FooterSection selectedKey="LandingPackers" />
+</div>
+
   );
 };
 

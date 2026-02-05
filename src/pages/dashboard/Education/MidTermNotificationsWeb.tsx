@@ -3,334 +3,357 @@ import "./MidTermNotificationsWeb.css";
 
 /* ================= TYPES ================= */
 
+type ExamMode = "midterm" | "final";
+
 interface ExamData {
-  id: string;
-  subject: string;
-  date: string;
-  day: string;
-  time: string;
+  exam_date: string;
+  day_name: string;
+  subject_name: string;
+  exam_type: string;
+  start_time: string;
+  end_time: string;
   location: string;
-  color: string;
-  category: "midterm" | "final";
 }
 
-interface ReminderData {
+interface SavedReminder {
   id: string;
-  examId: string;
   subject: string;
-  enabled: boolean;
-  triggerTime: string;
+  trigger: string;
   sound: string;
-  createdAt: Date;
+  enabled: boolean;
 }
 
-interface LogEntry {
+interface NotificationLog {
   id: string;
-  timestamp: string;
   message: string;
-  status: "success" | "failed";
-}
-
-interface StaffMember {
-  id: string;
-  name: string;
-  email: string;
-  phone: string;
-  assignedExams: string[];
+  time: string;
+  status: "success" | "error";
 }
 
 interface Props {
   onBack: () => void;
+  examMode: ExamMode;
 }
 
-/* ================= STATIC (NON-EXAM) DATA ================= */
+type Screen =
+  | "schedule"
+  | "set-reminder"
+  | "saved-reminders"
+  | "logs"
+  | "staff";
 
-const logs: LogEntry[] = [
+/* ================= MOCK DATA ================= */
+
+const LOGS: NotificationLog[] = [
   {
     id: "1",
-    timestamp: "Sep 20, 2023 - 10:30 AM",
     message: "Notification sent to 285 parents",
+    time: "Sep 20, 2023 · 10:30 AM",
     status: "success",
   },
   {
     id: "2",
-    timestamp: "Sep 20, 2023 - 10:31 AM",
     message: "Failed to send to 15 contacts",
-    status: "failed",
+    time: "Sep 20, 2023 · 10:31 AM",
+    status: "error",
   },
-];
-
-const staff: StaffMember[] = [
   {
-    id: "1",
-    name: "Dr. Alice Johnson",
-    email: "alice.j@school.edu",
-    phone: "+1 234-567-8901",
-    assignedExams: [],
+    id: "3",
+    message: "Retry successful for 12 contacts",
+    time: "Sep 20, 2023 · 10:35 AM",
+    status: "success",
   },
-];
-
-const triggerTimeOptions = [
-  "15 minutes",
-  "30 minutes",
-  "1 hour",
-  "2 hours",
-  "1 day",
-  "2 days",
-  "1 week",
-];
-
-const notificationSounds = [
-  "Chime",
-  "Bell",
-  "Alert",
-  "Notification",
-  "Classic",
-  "Modern",
-  "Gentle",
 ];
 
 /* ================= COMPONENT ================= */
 
-const MidTermNotificationsWeb: React.FC<Props> = ({ onBack }) => {
-  const [screen, setScreen] = useState<
-    "timetable" | "reminder" | "logs" | "staff" | "saved-reminders"
-  >("timetable");
-
-  const [activeTab] = useState<"midterm" | "final">("midterm");
+const MidTermNotificationsWeb: React.FC<Props> = ({
+  onBack,
+  examMode,
+}) => {
+  const [screen, setScreen] = useState<Screen>("schedule");
   const [examData, setExamData] = useState<ExamData[]>([]);
   const [selectedExam, setSelectedExam] = useState<ExamData | null>(null);
-  const [loading, setLoading] = useState(true);
 
-  const [reminderEnabled, setReminderEnabled] = useState(true);
-  const [triggerTime, setTriggerTime] = useState("1 day");
-  const [notificationSound, setNotificationSound] = useState("Chime");
-  const [savedReminders, setSavedReminders] = useState<ReminderData[]>([]);
+  // reminder form state
+  const [enabled, setEnabled] = useState(true);
+  const [trigger, setTrigger] = useState("1 day before");
+  const [sound, setSound] = useState("Chime");
 
-  /* ================= FETCH EXAM SCHEDULE ================= */
+  const [savedReminders, setSavedReminders] = useState<SavedReminder[]>([]);
+
+  /* ================= FETCH ================= */
 
   useEffect(() => {
-    fetchExamSchedule();
+    fetch(
+      "https://swachify-india-be-1-mcrb.onrender.com/institution/management/exam-schedule"
+    )
+      .then((res) => res.json())
+      .then(setExamData);
   }, []);
 
-const fetchExamSchedule = async () => {
-  try {
-    setLoading(true);
+  /* ================= FILTER ================= */
 
-    const res = await fetch(
-      `https://swachify-india-be-1-mcrb.onrender.com/institution/student/exam-schedule?institution_id=1&student_id=1`
+  const filteredExams = useMemo(() => {
+    return examData.filter((e) =>
+      examMode === "midterm"
+        ? e.exam_type.toLowerCase().includes("mid")
+        : e.exam_type.toLowerCase().includes("final")
     );
-
-    if (!res.ok) {
-      throw new Error("Failed to fetch exam schedule");
-    }
-
-    const data = await res.json();
-
-    const formatted: ExamData[] = data.map((e: any) => {
-      const examDate = new Date(e.exam_date);
-
-      return {
-        id: String(e.id),
-        subject: e.subject_name ?? e.subject ?? "Unknown Subject",
-        date: examDate.toLocaleDateString("en-US", {
-          month: "short",
-          day: "2-digit",
-        }),
-        day: examDate.toLocaleDateString("en-US", {
-          weekday: "long",
-        }),
-        time: `${e.start_time} - ${e.end_time}`,
-        location: e.exam_hall ?? e.location ?? "Room TBD",
-        color: "#3B82F6",
-        category:
-          e.exam_type?.toLowerCase() === "final" ? "final" : "midterm",
-      };
-    });
-
-    setExamData(formatted);
-  } catch (error) {
-    console.error("Exam schedule load failed:", error);
-  } finally {
-    setLoading(false);
-  }
-};
-
-
-  /* ================= DATA LOGIC ================= */
-
-  const filteredExams = useMemo(
-    () => examData.filter(e => e.category === activeTab),
-    [examData, activeTab]
-  );
+  }, [examData, examMode]);
 
   const groupedExams = useMemo(() => {
-    return filteredExams.reduce<Record<string, ExamData[]>>((acc, exam) => {
-      const key = `${exam.day}, ${exam.date}`;
-      acc[key] = acc[key] || [];
-      acc[key].push(exam);
+    return filteredExams.reduce<Record<string, ExamData[]>>((acc, e) => {
+      const key = `${e.day_name}, ${e.exam_date}`;
+      if (!acc[key]) acc[key] = [];
+      acc[key].push(e);
       return acc;
     }, {});
   }, [filteredExams]);
 
-  /* ================= REMINDER ================= */
+  /* ================= ACTIONS ================= */
 
   const saveReminder = () => {
     if (!selectedExam) return;
 
-    setSavedReminders(prev => [
+    setSavedReminders((prev) => [
       ...prev,
       {
-        id: Date.now().toString(),
-        examId: selectedExam.id,
-        subject: selectedExam.subject,
-        enabled: reminderEnabled,
-        triggerTime,
-        sound: notificationSound,
-        createdAt: new Date(),
+        id: crypto.randomUUID(),
+        subject: selectedExam.subject_name,
+        trigger,
+        sound,
+        enabled,
       },
     ]);
 
     setScreen("saved-reminders");
   };
 
-  /* ================= SCREENS ================= */
+  const deleteReminder = (id: string) => {
+    setSavedReminders((prev) => prev.filter((r) => r.id !== id));
+  };
 
-  if (screen === "logs") {
+  /* ================= HEADER ================= */
+
+  const Header = ({ title }: { title: string }) => (
+    <div className="examw-header">
+      <button
+        className="examw-back-btn"
+        onClick={() =>
+          screen === "schedule" ? onBack() : setScreen("schedule")
+        }
+      >
+        ←
+      </button>
+      <h1 className="examw-title">{title}</h1>
+    </div>
+  );
+
+  /* ================= SET REMINDER ================= */
+
+  if (screen === "set-reminder" && selectedExam) {
     return (
-      <div className="examw-page">
-        <button onClick={() => setScreen("timetable")}>← Back</button>
-        <h2>Notification Logs</h2>
-
-        {logs.map(l => (
-          <div key={l.id} className="examw-card">
-            <strong>{l.message}</strong>
-            <p>{l.timestamp}</p>
-          </div>
-        ))}
-      </div>
-    );
-  }
-
-  if (screen === "staff") {
-    return (
-      <div className="examw-page">
-        <button onClick={() => setScreen("timetable")}>← Back</button>
-        <h2>Staff Assignments</h2>
-
-        {staff.map(s => (
-          <div key={s.id} className="staff-card">
-            <strong>{s.name}</strong>
-            <p>{s.email}</p>
-            <p>{s.phone}</p>
-          </div>
-        ))}
-      </div>
-    );
-  }
-
-  if (screen === "saved-reminders") {
-    return (
-      <div className="examw-page">
-        <button onClick={() => setScreen("timetable")}>← Back</button>
-        <h2>Saved Reminders</h2>
-
-        {savedReminders.map(r => (
-          <div key={r.id} className="examw-card">
-            <strong>{r.subject}</strong>
-            <p>{r.triggerTime} before</p>
-            <p>Sound: {r.sound}</p>
-          </div>
-        ))}
-      </div>
-    );
-  }
-
-  if (screen === "reminder" && selectedExam) {
-    return (
-      <div className="examw-page">
-        <button onClick={() => setScreen("timetable")}>← Back</button>
-
-        <h2>Set Exam Reminder</h2>
+      <div className="examw-scope examw-page">
+        <Header title="Set Exam Reminder" />
 
         <div className="examw-card">
-          <strong>{selectedExam.subject}</strong>
-          <p>{selectedExam.day}, {selectedExam.date}</p>
-          <p>{selectedExam.time}</p>
-          <p>{selectedExam.location}</p>
+          <strong>{selectedExam.subject_name}</strong>
+          <p>
+            {selectedExam.day_name}, {selectedExam.exam_date}
+          </p>
+          <p>
+            {selectedExam.start_time} – {selectedExam.end_time}
+          </p>
+          <p>Location: {selectedExam.location}</p>
         </div>
 
-        <label>
-          <input
-            type="checkbox"
-            checked={reminderEnabled}
-            onChange={e => setReminderEnabled(e.target.checked)}
-          />
-          Enable Reminder
-        </label>
+        <div className="examw-card">
+          <label className="examw-row">
+            Enable Notifications
+            <input
+              type="checkbox"
+              checked={enabled}
+              onChange={(e) => setEnabled(e.target.checked)}
+            />
+          </label>
 
-        <select value={triggerTime} onChange={e => setTriggerTime(e.target.value)}>
-          {triggerTimeOptions.map(t => (
-            <option key={t}>{t}</option>
-          ))}
-        </select>
+          <label className="examw-label">Trigger Alert</label>
+          <select
+            className="examw-select"
+            value={trigger}
+            onChange={(e) => setTrigger(e.target.value)}
+          >
+            <option>1 day before</option>
+            <option>2 hours before</option>
+            <option>30 minutes before</option>
+          </select>
 
-        <select
-          value={notificationSound}
-          onChange={e => setNotificationSound(e.target.value)}
+          <label className="examw-label">Notification Sound</label>
+          <select
+            className="examw-select"
+            value={sound}
+            onChange={(e) => setSound(e.target.value)}
+          >
+            <option>Chime</option>
+            <option>Bell</option>
+            <option>Alert</option>
+          </select>
+        </div>
+
+        <button
+          className="examw-btn examw-btn-primary"
+          onClick={saveReminder}
         >
-          {notificationSounds.map(s => (
-            <option key={s}>{s}</option>
-          ))}
-        </select>
-
-        <button className="btn-primary" onClick={saveReminder}>
           Save Reminder
         </button>
       </div>
     );
   }
 
-  /* ================= TIMETABLE ================= */
+  /* ================= SAVED REMINDERS ================= */
 
-  return (
-    <div className="examw-page">
-      <button className="btn-back" onClick={onBack}>←</button>
-      <h2>Exam Timetable</h2>
+  if (screen === "saved-reminders") {
+    return (
+      <div className="examw-scope examw-page">
+        <Header title="Saved Reminders" />
 
-      {loading && <p>Loading exam schedule…</p>}
+        {savedReminders.map((r) => (
+          <div key={r.id} className="examw-reminder-card">
+            <div>
+              <strong>{r.subject}</strong>
+              <p>Alert: {r.trigger}</p>
+              <p>Sound: {r.sound}</p>
+              <p>Status: {r.enabled ? "Enabled" : "Disabled"}</p>
+            </div>
 
-      {!loading &&
-        Object.entries(groupedExams).map(([date, exams]) => (
-          <div key={date} className="examw-card">
-            <strong>{date}</strong>
-
-            {exams.map(exam => (
-              <div
-                key={exam.id}
-                className="examw-exam"
-                onClick={() => {
-                  setSelectedExam(exam);
-                  setScreen("reminder");
-                }}
-              >
-                <span
-                  className="exam-color"
-                  style={{ background: exam.color }}
-                />
-                <div>
-                  <strong>{exam.subject}</strong>
-                  <p>{exam.time}</p>
-                </div>
-                <span>{exam.location}</span>
-              </div>
-            ))}
+            <button
+              className="examw-delete"
+              onClick={() => deleteReminder(r.id)}
+            >
+              🗑
+            </button>
           </div>
         ))}
+      </div>
+    );
+  }
 
-      <button className="btn-primary" onClick={() => setScreen("staff")}>
-        Manage Staff
-      </button>
+  /* ================= LOGS ================= */
+
+  if (screen === "logs") {
+    return (
+      <div className="examw-scope examw-page">
+        <Header title="Notification Logs" />
+
+        <div className="examw-logs-wrapper">
+          {LOGS.map((log) => (
+            <div key={log.id} className="examw-log-card">
+              <div
+                className={`examw-log-icon ${
+                  log.status === "success" ? "success" : "error"
+                }`}
+              >
+                {log.status === "success" ? "✓" : "!"}
+              </div>
+
+              <div className="examw-log-text">
+                <strong>{log.message}</strong>
+                <p>{log.time}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  /* ================= STAFF ================= */
+
+  if (screen === "staff") {
+    return (
+      <div className="examw-scope examw-page">
+        <Header title="Manage Staff Assignments" />
+
+        <div className="examw-staff-card">
+          <div className="examw-staff-avatar">A</div>
+          <div>
+            <strong>Dr. Alice Johnson</strong>
+            <p>alice@school.edu</p>
+            <p>9876543210</p>
+          </div>
+        </div>
+
+        <div className="examw-staff-card">
+          <div className="examw-staff-avatar">B</div>
+          <div>
+            <strong>Prof. Bob Smith</strong>
+            <p>bob@school.edu</p>
+            <p>9876543222</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  /* ================= SCHEDULE ================= */
+
+  return (
+    <div className="examw-scope examw-page">
+      <Header
+        title={
+          examMode === "midterm"
+            ? "Midterm Exam Schedule"
+            : "Final Exam Schedule"
+        }
+      />
+
+      {Object.entries(groupedExams).map(([date, exams]) => (
+        <div key={date} className="examw-card">
+          <div className="examw-date-row">
+            {date}
+            <span>{exams.length} Subject</span>
+          </div>
+
+          {exams.map((exam) => (
+            <div
+              key={`${exam.subject_name}-${exam.start_time}`}
+              className="examw-exam"
+              onClick={() => {
+                setSelectedExam(exam);
+                setScreen("set-reminder");
+              }}
+            >
+              <div className="examw-exam-bar" />
+              <div>
+                <strong>{exam.subject_name}</strong>
+                <p>
+                  {exam.start_time} – {exam.end_time}
+                </p>
+              </div>
+              <span className="examw-exam-location">
+                {exam.location}
+              </span>
+            </div>
+          ))}
+        </div>
+      ))}
+
+      <div className="examw-actions">
+        <button
+          className="examw-btn"
+          onClick={() => setScreen("logs")}
+        >
+          View Logs
+        </button>
+
+        <button
+          className="examw-btn examw-btn-primary"
+          onClick={() => setScreen("staff")}
+        >
+          Manage Staff Assignments
+        </button>
+      </div>
     </div>
   );
 };

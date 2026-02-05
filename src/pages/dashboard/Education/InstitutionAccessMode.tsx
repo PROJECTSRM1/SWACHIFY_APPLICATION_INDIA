@@ -32,10 +32,8 @@ const InstitutionAccessMode: React.FC<InstitutionAccessModeProps> = ({
         {/* HEADER */}
         <div className="access-header">
           <button className="access-close" onClick={onClose}>
-            ✕
-          </button>
+            ←</button>
           <h2>Partner Portal</h2>
-          <span className="access-help">?</span>
         </div>
 
         {/* TITLE */}

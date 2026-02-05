@@ -2,7 +2,7 @@ import React, { useMemo, useState, useEffect } from "react";
 import "./HealthCare.css";
 import { message, Tooltip } from "antd";
 import { AppstoreOutlined } from "@ant-design/icons";
-import healthcareService from "../../../api/healthcare";
+import healthcareService, { type LabItem } from "../../../api/healthcare";
 import { PaymentsAPI } from "../../../api/customerAuth";
 import CommonHeader from "../../landing/Header";
 
@@ -22,6 +22,13 @@ type AmbulanceHospital = {
   ambulance_contact: string;
   availability_status: string;
 };
+
+
+// 👇 ADD THIS at top of same file (Labs.tsx)
+
+
+
+
 
 
 const STATIC_HOSPITALS: AmbulanceHospital[] = [
@@ -166,9 +173,6 @@ const STATIC_HOSPITALS: AmbulanceHospital[] = [
     availability_status: "Available",
   },
 ];
-
-
-
 
 type HospitalDoctor = {
   id: number;
@@ -600,18 +604,14 @@ export const HOSPITAL_DOCTORS: HospitalDoctor[] = [
   },
 ];
 
-
-
-
-
 // import { AppstoreOutlined } from "@ant-design/icons";
 
 type Doctor = {
   id: number;
   name: string;
   speciality: string;
-  category: string;          // NEW
-  conditions: string[];      // NEW
+  category: string; // NEW
+  conditions: string[]; // NEW
   experience?: number;
   rating: number;
   availability: string;
@@ -619,9 +619,6 @@ type Doctor = {
   image: string;
   slots: string[];
 };
-
-
-
 
 type Specialist = {
   id: number;
@@ -631,6 +628,8 @@ type Specialist = {
   availableAt: string;
   image: string;
 };
+
+
 
 const specialistByType: Record<string, Specialist> = {
   "General Practitioner": {
@@ -755,7 +754,6 @@ const specialistByType: Record<string, Specialist> = {
   },
 };
 
-
 const pharmacies = [
   {
     id: 1,
@@ -798,119 +796,69 @@ const pharmacies = [
     buttonText: "Order Now",
   },
 ];
-const labs = [
-  {
-    id: 1,
-    distance: "1.2 km away",
-    name: "City Diagnostic Center",
-    type: "DIAGNOSTIC CENTER",
-    tests: "CBC, MRI, X-Ray, Thyroid",
-    rating: 4.8,
-    slot: "Today, 04:30 PM",
-    buttonText: "Book Test",
-  },
-  {
-    id: 2,
-    distance: "0.5 km away",
-    name: "Precision Labs",
-    type: "PATHOLOGY LAB",
-    tests: "Blood Tests, Glucose, Urine",
-    rating: 4.6,
-    slot: "Today, 05:15 PM",
-    buttonText: "Book Test",
-  },
-  {
-    id: 3,
-    distance: "2.8 km away",
-    name: "HealthCare Diagnostics",
-    type: "DIAGNOSTIC CENTER",
-    tests: "Thyroid, CBC, ECG",
-    rating: 4.7,
-    slot: "Tomorrow, 10:00 AM",
-    buttonText: "Book Test",
-  },
-  {
-    id: 4,
-    distance: "3.4 km away",
-    name: "ThyroCare Lab",
-    type: "PATHOLOGY LAB",
-    tests: "Thyroid Profile, Vitamin D",
-    rating: 4.5,
-    slot: "Tomorrow, 11:45 AM",
-    buttonText: "Book Test",
-  },
+
+interface UIHospitalItem {
+  ambulance_id: number;
+  hospital_name: string;
+  specialty_type: string;
+  location: string;
+  conditions: string[];
+  service_provider: string;
+  ambulance_contact: string;
+  availability_status: string;
+  price: number; // ✅ ADD THIS
+}
+
+
+
+
+
+
+
+
+
+const labImages = [
+  "https://images.unsplash.com/photo-1581594549595-35f6edc7b762?auto=format&fit=crop&w=800&q=80",
+  "https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=800&q=80",
+  // "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=800&q=80",
+  "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80",
+  "https://images.unsplash.com/photo-1504814532849-9279d32b6a55?auto=format&fit=crop&w=800&q=80",
 ];
 
 
 
-// new functions related to apis
-// const getSpecialityName = (id: number) => {
-//   switch (id) {
-//     case 1: return "CARDIOLOGIST";
-//     case 2: return "DERMATOLOGIST";
-//     case 3: return "PSYCHIATRIST";
-//     case 4: return "OPHTHALMOLOGIST";
-//     case 5: return "ORTHOPEDIC";
-//     default: return "GENERAL";
-//   }
-// };
 
-// const getCategoryBySpecialization = (id: number) => {
-//   switch (id) {
-//     case 1: return "Heart";
-//     case 2: return "Skin";
-//     case 3: return "Mental";
-//     case 4: return "Eyes";
-//     case 5: return "Bones";
-//     default: return "All";
-//   }
-// };
-
-
-// API availability
-// const formatAvailabilityTime = (from: string, to: string) => {
-//   const f = new Date(from).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-//   const t = new Date(to).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-//   return `${f} - ${t}`;
-// };
 
 function formatAvailabilityTime(from: string, to: string) {
   if (!from || !to) return "Available Today";
-
-
   return `${formatTime(from)} - ${formatTime(to)}`;
 }
 
-
 function formatTime(timeStr: string) {
   const [h, m] = timeStr.split(":").map(Number);
-
-
   const hour = h % 12 || 12;
   const ampm = h >= 12 ? "PM" : "AM";
-
-
   return `${hour}:${m.toString().padStart(2, "0")} ${ampm}`;
 }
 
+/* 🔥 ADD HERE */
+const isFutureSlot = (slot: string, selectedDate: Date) => {
+  const now = new Date();
 
+  const [time, meridian] = slot.split(" ");
+  let [hours, minutes] = time.split(":").map(Number);
 
-// const getDoctorImage = (id: number) => {
-//   switch (id) {
-//     case 1:
-//       return "https://images.unsplash.com/photo-1582750433449-648ed127bb54?auto=format&fit=crop&w=800&q=80";
-//     case 2:
-//       return "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=800&q=80";
-//     case 3:
-//       return "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=800&q=80";
-//     case 4:
-//       return "https://images.unsplash.com/photo-1579154203451-0d2d83d2f4a2?auto=format&fit=crop&w=800&q=80";
-//     case 5:
-//       return "https://images.unsplash.com/photo-1550831107-1553da8c8464?auto=format&fit=crop&w=800&q=80";
-//     default:
-//       return "https://images.unsplash.com/photo-1550831107-1553da8c8464?auto=format&fit=crop&w=800&q=80";
-//   }
-// };
+  if (meridian === "PM" && hours !== 12) hours += 12;
+  if (meridian === "AM" && hours === 12) hours = 0;
+
+  const slotDate = new Date(selectedDate);
+  slotDate.setHours(hours, minutes, 0, 0);
+
+  return slotDate > now;
+};
+
+/* ⬇️ Component starts here */
+// const HealthCare: React.FC = () => {
 
 
 const defaultImages = [
@@ -923,9 +871,11 @@ const defaultImages = [
 ];
 
 
-const getDoctorImage = (id: number) => {
-  const numericId = Number(id);
-  return defaultImages[(numericId - 1) % defaultImages.length]; // cycles through images for any ID
+
+const getDoctorImage = (id: number | string | undefined) => {
+  const num = Number(id);
+  if (!num || isNaN(num)) return defaultImages[0];
+  return defaultImages[Math.abs(num) % defaultImages.length];
 };
 
 
@@ -940,7 +890,6 @@ const getDoctorImage = (id: number) => {
 //   101: "Dr. Marcus Chen",
 //   421: "Dr. Aisha Khan",
 // };
-
 
 // Assistants
 
@@ -978,14 +927,14 @@ const TIME_SLOTS = [
   "05:30 PM",
 ];
 
-
-
 const HealthCare: React.FC = () => {
   const [searchText, setSearchText] = useState("");
   const [activeCategory, setActiveCategory] = useState<string>("All");
   // ✅ Appointment booking screen (Image 2)
   const [openAppointmentScreen, setOpenAppointmentScreen] = useState(false);
-  const [appointmentDoctor, setAppointmentDoctor] = useState<Doctor | null>(null);
+  const [appointmentDoctor, setAppointmentDoctor] = useState<Doctor | null>(
+    null,
+  );
   // 📅 Appointment date handling
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
@@ -995,6 +944,21 @@ const HealthCare: React.FC = () => {
   const [payLoading, setPayLoading] = useState(false);
   const [openPaymentSuccess, setOpenPaymentSuccess] = useState(false);
   const [paymentCompleted, _setPaymentCompleted] = useState(false);
+
+  //labs
+  const [openLabBooking, setOpenLabBooking] = useState(false);
+  const [selectedLab, setSelectedLab] = useState<any>(null);
+
+  const [labs, setLabs] = useState<LabItem[]>([]);
+
+
+  const [loadingLabs, setLoadingLabs] = useState(false);
+  const [selectedNearbyHospital, setSelectedNearbyHospital] =
+    useState<UIHospitalItem | null>(null);
+
+
+
+
 
 
 
@@ -1009,42 +973,52 @@ const HealthCare: React.FC = () => {
 
     for (let i = 1; i <= totalDays; i++) {
       days.push(
-        new Date(currentMonth.getFullYear(), currentMonth.getMonth(), i)
+        new Date(currentMonth.getFullYear(), currentMonth.getMonth(), i),
       );
     }
     return days;
   };
 
   const months = [
-    "January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December",
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
   ];
 
   const [openConsultation, setOpenConsultation] = useState<boolean>(false);
 
   const [openOnlinePopup, setOpenOnlinePopup] = useState(false);
 
-  const [ambulanceList, setAmbulanceList] = useState<AmbulanceHospital[]>([]);
+  const [_ambulanceList, setAmbulanceList] = useState<AmbulanceHospital[]>([]);
+  const [hospitalList, setHospitalList] = useState<UIHospitalItem[]>([]);
+
 
   useEffect(() => {
     setAmbulanceList(STATIC_HOSPITALS);
   }, []);
 
-
-
-
   // hospital booking
-  const [selectedHospital, setSelectedHospital] =
+  const [_selectedHospital, _setSelectedHospital] =
     useState<AmbulanceHospital | null>(null);
 
   const [openHospitalBooking, setOpenHospitalBooking] = useState(false);
   const [openHospitalSuccess, setOpenHospitalSuccess] = useState(false);
 
-
   // hospital → doctors flow
   const [openHospitalDoctors, setOpenHospitalDoctors] = useState(false);
-  const [hospitalDoctors, setHospitalDoctors] = useState<HospitalDoctor[]>([]);
-  const [selectedDoctor, setSelectedDoctor] = useState<HospitalDoctor | null>(null);
+  // const [hospitalDoctors, setHospitalDoctors] = useState<HospitalDoctor[]>([]);
+  const [selectedDoctor, setSelectedDoctor] = useState<HospitalDoctor | null>(
+    null,
+  );
 
   // ✅ RESET ASSISTANT WHEN DOCTOR CHANGES
   useEffect(() => {
@@ -1054,8 +1028,6 @@ const HealthCare: React.FC = () => {
       setShowAssistantPopup(false);
     }
   }, [selectedDoctor]);
-
-
 
   const [showAssistantPopup, setShowAssistantPopup] = useState(false);
   // const [selectedAssistant, setSelectedAssistant] = useState(null);
@@ -1068,15 +1040,14 @@ const HealthCare: React.FC = () => {
     image: string;
   };
 
-  const [selectedAssistant, setSelectedAssistant] = useState<Assistant | null>(null);
-
+  const [selectedAssistant, setSelectedAssistant] = useState<Assistant | null>(
+    null,
+  );
 
   // booking form
   const [bookingDate, setBookingDate] = useState("Friday, 30 Jan 2026");
   const [bookingTime, setBookingTime] = useState("11:48 AM");
   const [needAmbulance, setNeedAmbulance] = useState<"Yes" | "No">("No");
-
-
 
   // form states
   const [doctorSpecialized, setDoctorSpecialized] = useState<string>("");
@@ -1093,59 +1064,35 @@ const HealthCare: React.FC = () => {
 
   const [showTrending, setShowTrending] = useState(false);
 
+  const [consultMode, setConsultMode] = useState<"online" | "offline" | "labs">(
+    "online",
+  );
 
-  const [consultMode, setConsultMode] = useState<"online" | "offline">("online");
   const [openMyBookings, setOpenMyBookings] = useState(false);
 
-
-
-
-
-
   // ✅ MOBILE TAP SUPPORT (DO NOT REMOVE)
-
 
   const [doctors, setDoctors] = useState<Doctor[]>([]);
 
   const [loadingDoctors, setLoadingDoctors] = useState<boolean>(false);
 
+  const getLabImage = (id?: number | string) => {
+    const index =
+      Math.abs(Number(id ?? 0)) % labImages.length;
+
+    return labImages[index] || labImages[0];
+  };
+
+  const hospitalDoctors = useMemo(() => {
+    if (!selectedNearbyHospital) return [];
+
+    return HOSPITAL_DOCTORS.filter(
+      (doc) => doc.hospitalId === selectedNearbyHospital.ambulance_id
+    );
+  }, [selectedNearbyHospital]);
 
 
-  // useEffect(() => {
-  //   const fetchDoctors = async () => {
-  //     try {
-  //       setLoadingDoctors(true); // ✅ ADD
 
-  //       const data = await healthcareService.getAvailableDoctors();
-
-  //       const mappedDoctors: Doctor[] = data
-  //         .filter((item) => item.is_available)
-  //         .map((item) => ({
-  //           id: item.id,
-  //           name: doctorNameMap[item.user_id] ?? "Dr. Unknown",
-  //           speciality: getSpecialityName(item.specialization_id),
-  //           category: getCategoryBySpecialization(item.specialization_id),
-  //           conditions: [getSpecialityName(item.specialization_id)],
-  //           rating: Number(item.rating) || 4.5,
-  //           availability:
-  //             item.available_from && item.available_to
-  //               ? formatAvailabilityTime(item.available_from, item.available_to)
-  //               : "Available Today",
-  //           price: `₹${item.fees_per_hour ?? 500}/hr`,
-  //           image: getDoctorImage(item.specialization_id),
-  //           slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
-  //         }));
-
-  //       setDoctors(mappedDoctors);
-  //     } catch (error) {
-  //       console.error("Doctor fetch failed", error);
-  //     } finally {
-  //       setLoadingDoctors(false); // ✅ ADD
-  //     }
-  //   };
-
-  //   fetchDoctors();
-  // }, []);
 
 
   useEffect(() => {
@@ -1153,9 +1100,7 @@ const HealthCare: React.FC = () => {
       try {
         setLoadingDoctors(true);
 
-
         const data = await healthcareService.getAvailableDoctors();
-
 
         const mappedDoctors: Doctor[] = data.map((item: any) => ({
           id: item.doctor_id,
@@ -1174,7 +1119,6 @@ const HealthCare: React.FC = () => {
           slots: ["10:00 AM", "11:30 AM", "01:00 PM"],
         }));
 
-
         setDoctors(mappedDoctors);
       } catch (error) {
         console.error("Doctor fetch failed", error);
@@ -1183,9 +1127,88 @@ const HealthCare: React.FC = () => {
       }
     };
 
-
     fetchDoctors();
   }, []);
+
+
+  // get Labs
+
+  useEffect(() => {
+    if (consultMode !== "labs") return;
+
+    const fetchLabs = async () => {
+      try {
+        setLoadingLabs(true);
+
+        const response = await healthcareService.getAvailableLabs();
+
+        // 🔥 Transform API → UI structure (IMPORTANT)
+        response.map((lab) => ({
+          id: lab.lab_id,
+          name: lab.lab_name,
+          type: lab.specialization_name,
+          slot: `${lab.available_from} - ${lab.available_to}`,
+          rating: lab.rating,
+          image: getLabImage(lab.lab_id), // static image
+          price: lab.fees_per_test,
+          status: lab.status,
+          homeCollection: lab.home_collection,
+          nextAvailable: lab.next_available,
+          delivery: lab.estimated_delivery,
+        }));
+
+        setLabs(response)
+
+      } catch (err) {
+        console.error("Error fetching labs:", err);
+      } finally {
+        setLoadingLabs(false);
+      }
+    };
+
+    fetchLabs();
+  }, [consultMode]);
+
+  // get hospital
+  useEffect(() => {
+    if (consultMode !== "offline") return;
+
+    const fetchHospitals = async () => {
+      try {
+        const response = await healthcareService.getAvailableHospitals();
+
+        const formatted = response.map((h) => ({
+          ambulance_id: h.hospital_id,
+          hospital_name: h.hospital_name,
+          specialty_type: h.specialty_type,
+          location: h.location,
+
+          conditions: [
+            h.specialty_type,
+            h.hospital_name,
+            h.location,
+          ],
+
+          service_provider: "Hospital Service",
+          availability_status: h.hospital_status,
+          price: h.fees_per_hour, // ✅ NEW
+
+          ambulance_contact: h.contact_number,
+        }));
+
+
+        setHospitalList(formatted); // ✅ NEW STATE
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchHospitals();
+  }, [consultMode]);
+
+
+
+
 
 
 
@@ -1212,11 +1235,7 @@ const HealthCare: React.FC = () => {
   const [onlineSuccessPopup, setOnlineSuccessPopup] = useState(false);
   const [bookedDoctorName, setBookedDoctorName] = useState("");
 
-
-
   const selectedSpecialist = specialistByType[doctorSpecialized];
-
-
 
   // select doctor card
   const [selectedDoctorId, setSelectedDoctorId] = useState<number | null>(null);
@@ -1234,7 +1253,6 @@ const HealthCare: React.FC = () => {
   // timer (1 minute)
   const [secondsLeft, setSecondsLeft] = useState<number>(60);
   const canJoinLive = secondsLeft === 0;
-
 
   const [openLiveScreen, setOpenLiveScreen] = useState(false);
 
@@ -1258,11 +1276,6 @@ const HealthCare: React.FC = () => {
 
     return () => clearInterval(interval);
   }, []);
-
-
-
-
-
 
   const isFormCompleted = useMemo(() => {
     return (
@@ -1296,16 +1309,17 @@ const HealthCare: React.FC = () => {
     });
   }, [searchText, activeCategory, doctors]);
 
-
   const filteredHospitals = useMemo(() => {
-    if (!searchText.trim()) return ambulanceList;
+    if (!searchText.trim()) return hospitalList;
 
     const q = searchText.toLowerCase().trim();
 
-    return ambulanceList.filter((h) =>
-      h.conditions.some((c) => c.toLowerCase().includes(q))
+    return hospitalList.filter((h) =>
+      h.conditions.some((c) =>
+        c.toLowerCase().includes(q)
+      )
     );
-  }, [searchText, ambulanceList]);
+  }, [searchText, hospitalList]);
 
 
   useEffect(() => {
@@ -1313,9 +1327,6 @@ const HealthCare: React.FC = () => {
   }, [doctorSpecialized, description, days, insurance]);
 
   const [openLabTest, setOpenLabTest] = useState(false);
-
-
-
 
   useEffect(() => {
     if (!openConfirmedScreen) return;
@@ -1338,8 +1349,6 @@ const HealthCare: React.FC = () => {
     return `${m}:${s.toString().padStart(2, "0")}`;
   };
 
-
-
   const handlePayNow = async () => {
     try {
       setPayLoading(true);
@@ -1360,8 +1369,6 @@ const HealthCare: React.FC = () => {
         description: "Online Video Consultation",
         order_id: order.id,
 
-
-
         handler: async function (response: any) {
           try {
             // 2️⃣ Verify payment with backend
@@ -1369,7 +1376,7 @@ const HealthCare: React.FC = () => {
               order.id,
               response.razorpay_payment_id,
               response.razorpay_signature,
-              tempHomeServiceId
+              tempHomeServiceId,
             );
 
             message.success("Payment Successful 🎉");
@@ -1397,18 +1404,11 @@ const HealthCare: React.FC = () => {
     }
   };
 
-
-
-
-
-
-
   return (
     <>
       <CommonHeader selectedKey="healthcare" />
 
       <div className="healthcare-wrapper">
-
         {/* Banner */}
         <div className="healthcare-banner">
           <div className="healthcare-banner-content">
@@ -1435,11 +1435,7 @@ const HealthCare: React.FC = () => {
               </button>
             </Tooltip>
           </div>
-
-
-
         </div>
-
 
         {/* Search */}
         <div className="healthcare-search">
@@ -1482,28 +1478,60 @@ const HealthCare: React.FC = () => {
           </div>
 
           {/* 🔁 MODE SELECT */}
+          {/* 🔁 MODE SELECT (DROPDOWNS) */}
           <div className="mode-toggle">
-            <button
-              className={consultMode === "online" ? "active" : ""}
-              onClick={() => setConsultMode("online")}
-            >
-              🌐 Online
-            </button>
 
-            <button
-              className={consultMode === "offline" ? "active" : ""}
-              onClick={() => setConsultMode("offline")}
+            {/* MAIN SERVICE DROPDOWN */}
+            <select
+              className="mode-dropdown"
+              onChange={(e) => {
+                const value = e.target.value;
+
+                if (value === "Doctor") {
+                  setConsultMode("online");
+                }
+
+                if (value === "Labs") {
+                  setConsultMode("labs");
+                  setSearchText("");
+                }
+
+                // These two are UI only for now
+                if (value === "Medical Store") {
+                  setConsultMode("labs"); // reuse existing labs UI safely
+                }
+
+                if (value === "Complete Treatment") {
+                  setConsultMode("offline"); // reuse hospital flow
+                }
+              }}
             >
-              🏥 Offline
-            </button>
+              <option value="Doctor">Doctor</option>
+              <option value="Labs">Labs</option>
+              <option value="Medical Store">Medical Store</option>
+              <option value="Complete Treatment">Complete Treatment</option>
+            </select>
+
+            {/* ONLINE / OFFLINE DROPDOWN */}
+            <select
+              className="mode-dropdown"
+              value={consultMode}
+              onChange={(e) => setConsultMode(e.target.value as any)}
+            >
+              <option value="online">🌐 Online</option>
+              <option value="offline">🏥 Offline</option>
+            </select>
+
+            {/* MY BOOKINGS */}
             <button
               className="my-bookings-btn"
               onClick={() => setOpenMyBookings(true)}
-
             >
               📅 My Bookings
             </button>
+
           </div>
+
 
           {/* 🚑 Ambulance Button (API Integrated) */}
           <button
@@ -1516,14 +1544,6 @@ const HealthCare: React.FC = () => {
             Book Ambulance Now →
           </button>
         </div>
-
-
-
-
-
-
-
-
 
         {/* Categories */}
         <div className="healthcare-cards">
@@ -1541,7 +1561,6 @@ const HealthCare: React.FC = () => {
             </span>
             <p>See All</p>
           </div>
-
 
           {[
             { label: "Heart", icon: "❤️" },
@@ -1564,12 +1583,10 @@ const HealthCare: React.FC = () => {
         </div>
         {/* Categories */}
 
-
-
-
         {/* Available Doctors */}
         {/* Online / Offline Result Section */}
-        {consultMode === "online" ? (
+        {/* ================= ONLINE ================= */}
+        {consultMode === "online" && (
           <>
             {/* ONLINE DOCTORS — NO CHANGE */}
             <div className="available-doctors-header">
@@ -1586,7 +1603,13 @@ const HealthCare: React.FC = () => {
             </div>
 
             {loadingDoctors && (
-              <div style={{ padding: "20px", textAlign: "center", fontWeight: 600 }}>
+              <div
+                style={{
+                  padding: "20px",
+                  textAlign: "center",
+                  fontWeight: 600,
+                }}
+              >
                 ⏳ Loading available doctors...
               </div>
             )}
@@ -1595,29 +1618,30 @@ const HealthCare: React.FC = () => {
               {filteredDoctors.map((doc) => (
                 <div key={doc.id} className="doctor-card">
                   <div className="doctor-top">
-                    <img src={doc.image} alt={doc.name} />
+                    <img src={doc.image} alt={doc.name}
 
+                      onError={(e) => {
+                        e.currentTarget.src = defaultImages[1];
+                      }}
+
+                    />
 
                     <h4 className="doctor-name">{doc.name}</h4>
                   </div>
 
-
                   <div className="doctor-info">
                     <p className="doctor-meta">
                       {doc.speciality}
-                      <span className="dot">•</span>
-                      ⭐ {doc.rating}
+                      <span className="dot">•</span>⭐ {doc.rating}
                       <span className="dot">•</span>
                       Exp. {doc.experience} yrs
                       <span className="dot">•</span>
                       Patients 4k+
                     </p>
 
-
                     <p className="availability">
                       Next available: <span>{doc.availability}</span>
                     </p>
-
 
                     <div className="doctor-footer">
                       <span className="price">{doc.price}</span>
@@ -1631,81 +1655,158 @@ const HealthCare: React.FC = () => {
                       >
                         Book Now
                       </button>
-
-
                     </div>
                   </div>
                 </div>
               ))}
             </div>
           </>
-        ) : (
+        )}
+
+        {/* ================= OFFLINE ================= */}
+        {consultMode === "offline" && (
           <>
             {/* OFFLINE FLOW — CONDITION REQUIRED */}
-            {!searchText.trim() ? (
-              <div className="offline-empty-state">
-                <h3>Select a condition to find nearby hospitals</h3>
-                <p>
-                  Example: <b>Fever</b>, <b>Cold</b>, <b>Cough</b>, <b>Vomiting</b>
-                </p>
+            <>
+              <div className="available-doctors-header">
+                <h3>Nearby Hospitals</h3>
+                <span className="see-all" onClick={() => setSearchText("")}>
+                  Clear
+                </span>
               </div>
-            ) : (
-              <>
-                <div className="available-doctors-header">
-                  <h3>Nearby Hospitals</h3>
-                  <span className="see-all" onClick={() => setSearchText("")}>
-                    Clear
-                  </span>
-                </div>
 
-                <div className="ambulance-hospital-list">
-                  {filteredHospitals.length > 0 ? (
-                    filteredHospitals.map((h) => (
-                      <div key={h.ambulance_id} className="ambulance-hospital-card">
-                        <div className="ambulance-hospital-top">
-                          <div className="ambulance-hospital-icon">✚</div>
-                          <div>
-                            <h2>{h.hospital_name}</h2>
-                            <p className="ambulance-hospital-type">
-                              {h.specialty_type}
-                            </p>
-                          </div>
-                        </div>
-
-                        <div className="ambulance-details">
-                          <div className="hospital-condition-chips">
-                            {h.conditions.map((c) => (
-                              <span key={c} className="condition-chip">
-                                {c}
-                              </span>
-                            ))}
-                          </div>
-
-                          <p>📍 {h.location}</p>
-                          <p>🚑 {h.service_provider}</p>
-                          <p>📞 {h.ambulance_contact}</p>
-
-                          <button
-                            className="book-btn"
-                            onClick={() => {
-                              setSelectedHospital(h);
-                              setOpenHospitalBooking(true);
-                            }}
-                          >
-                            Book Now
-                          </button>
+              <div className="ambulance-hospital-list">
+                {filteredHospitals.length > 0 ? (
+                  filteredHospitals.map((h) => (
+                    <div
+                      key={h.ambulance_id}
+                      className="ambulance-hospital-card"
+                    >
+                      <div className="ambulance-hospital-top">
+                        <div className="ambulance-hospital-icon">✚</div>
+                        <div>
+                          <h2>{h.hospital_name}</h2>
+                          <p className="ambulance-hospital-type">
+                            {h.specialty_type}
+                          </p>
                         </div>
                       </div>
-                    ))
-                  ) : (
-                    <div className="offline-empty-state">
-                      <h3>No hospitals found</h3>
-                      <p>Try another condition</p>
+
+                      <div className="ambulance-details">
+                        <div className="hospital-condition-chips">
+                          {h.conditions.map((c) => (
+                            <span key={c} className="condition-chip">
+                              {c}
+                            </span>
+                          ))}
+                        </div>
+
+                        <p>📍 {h.location}</p>
+                        <p>🚑 {h.service_provider}</p>
+                        <p>📞 {h.ambulance_contact}</p>
+
+                        <button
+                          className="book-btn"
+                          onClick={() => {
+                            setSelectedNearbyHospital(h);
+                            setOpenHospitalBooking(true);
+                          }}
+                        >
+                          Book Now
+                        </button>
+                      </div>
                     </div>
-                  )}
+                  ))
+                ) : (
+                  <div className="offline-empty-state">
+                    <h3>No hospitals found</h3>
+                    <p>Try another condition</p>
+                  </div>
+                )}
+              </div>
+            </>
+          </>
+        )}
+
+        {/* ================= LABS (MAIN UI, NOT OVERLAY) ================= */}
+        {consultMode === "labs" && (
+          <>
+            <div className="available-doctors-header">
+              <h3>Available Labs</h3>
+              <span className="see-all" onClick={() => setSearchText("")}>
+                Clear
+              </span>
+            </div>
+
+            {loadingLabs && <p>Loading labs...</p>}
+
+            <div className="nearby-list">
+              {labs.map((item) => (
+                <div key={item.lab_id} className="nearby-item">
+                  <div className="nearby-item-row">
+
+                    {/* IMAGE (dummy or static for now) */}
+                    <img
+                      src={getLabImage(item.lab_id)}
+                      alt={item.lab_name}
+                      onError={(e) => {
+                        e.currentTarget.src = labImages[0];
+                      }}
+
+                      className="lab-image"
+                    />
+
+                    {/* DETAILS */}
+                    <div className="lab-info">
+                      <h3 className="lab-name">{item.lab_name}</h3>
+
+                      <p className="lab-test">{item.specialization_name}</p>
+
+                      <p className="lab-timing">
+                        Timing: {item.available_from} - {item.available_to}
+                      </p>
+
+                      <p className="lab-price">
+                        ₹ {item.fees_per_test} / test
+                      </p>
+
+                      {/* {item.home_collection && (
+                        <p className="home-collection">🏠 Home Collection Available</p>
+                      )} */}
+                    </div>
+
+                    {/* RATING */}
+                    <div className="lab-rating">
+                      ⭐ {item.rating}
+                      <br />
+                      <span
+                        style={{
+                          color: item.status === "OPEN" ? "green" : "red",
+                          fontSize: 12,
+                        }}
+                      >
+                        {item.status}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* ACTION */}
+                  <div className="lab-action">
+                    <button
+                      className="book-btn"
+                      // disabled={item.status === "CLOSED"}
+                      onClick={() => {
+                        setSelectedLab(true);
+                        setOpenLabBooking(true);
+                      }}
+                    >
+                      {/* {item.status === "OPEN" ? "Book Now" : "Closed"} */}
+                      Book Now
+                    </button>
+                  </div>
                 </div>
-              </>
-            )}
+              ))}
+            </div>
           </>
         )}
 
@@ -1713,6 +1814,54 @@ const HealthCare: React.FC = () => {
 
 
 
+
+        {openLabBooking && selectedLab && (
+          <div className="lab-booking-overlay">
+            <div className="lab-booking-popup">
+              {/* Header */}
+              <h2>Book Lab Test</h2>
+              <p className="lab-name">{selectedLab.name}</p>
+
+              {/* Upload Prescription */}
+              <div className="lab-section">
+                <h4>Upload Prescription</h4>
+                <div className="upload-row">
+                  <button className="upload-btn">📷 Camera</button>
+                  <button className="upload-btn">🖼 Gallery</button>
+                </div>
+              </div>
+
+              {/* Delivery Mode */}
+              <div className="lab-section">
+                <h4>How would you like to proceed?</h4>
+                <div className="mode-row">
+                  <button className="mode-btn active">🚚 Delivery</button>
+                  <button className="mode-btn">🏪 Visit Store</button>
+                </div>
+              </div>
+
+              {/* Instructions */}
+              <div className="lab-section">
+                <h4>Special Instructions</h4>
+                <input
+                  className="instruction-input"
+                  placeholder="E.g. Call before arrival"
+                />
+              </div>
+
+              {/* Actions */}
+              <div className="lab-actions">
+                <button className="confirm-order-btn">Confirm Order</button>
+                <button
+                  className="cancel-btn"
+                  onClick={() => setOpenLabBooking(false)}
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* <p>📍 {h.location}</p>
             <p>🚑 {h.service_provider}</p>
@@ -1732,9 +1881,6 @@ const HealthCare: React.FC = () => {
     </div>
   </>
 )} */}
-
-
-
 
         {/* FULL SCREEN OVERLAY */}
         {openConsultation && (
@@ -1772,7 +1918,9 @@ const HealthCare: React.FC = () => {
                 >
                   <option value="">Select Doctor</option>
 
-                  <option value="General Practitioner">General Practitioner</option>
+                  <option value="General Practitioner">
+                    General Practitioner
+                  </option>
                   <option value="Cardiologist">Cardiologist</option>
                   <option value="Dermatologist">Dermatologist</option>
                   <option value="Neurologist">Neurologist</option>
@@ -1783,7 +1931,6 @@ const HealthCare: React.FC = () => {
                   <option value="Dentist">Dentist</option>
                   <option value="Psychologist">Psychologist</option>
                 </select>
-
               </div>
 
               {/* Description */}
@@ -1898,8 +2045,6 @@ const HealthCare: React.FC = () => {
               </button>
             </div>
 
-
-
             {/* Payment popup */}
             {openPaymentPopup && (
               <div
@@ -1931,14 +2076,12 @@ const HealthCare: React.FC = () => {
                         setOpenPaymentPopup(false);
 
                         setOpenConfirmedScreen(true); // open confirmed screen
-                        setShowSuccessPopup(true);    // open success popup also
-                        setSecondsLeft(60);           // reset timer to 1 minute
+                        setShowSuccessPopup(true); // open success popup also
+                        setSecondsLeft(60); // reset timer to 1 minute
                       }}
-
                     >
                       PAY NOW
                     </button>
-
                   </div>
                 </div>
               </div>
@@ -1965,7 +2108,9 @@ const HealthCare: React.FC = () => {
                   <div className="confirmed-card">
                     <div className="confirmed-check">✓</div>
 
-                    <h1 className="confirmed-main-title">Appointment Booked!</h1>
+                    <h1 className="confirmed-main-title">
+                      Appointment Booked!
+                    </h1>
                     <p className="confirmed-subtitle">
                       Payment completed successfully
                     </p>
@@ -1981,12 +2126,14 @@ const HealthCare: React.FC = () => {
                         <h3 className="confirmed-doctor-name">
                           {selectedSpecialist?.name}
                         </h3>
-                        <p className="confirmed-doctor-spec">{doctorSpecialized}</p>
+                        <p className="confirmed-doctor-spec">
+                          {doctorSpecialized}
+                        </p>
                         <p className="confirmed-doctor-time">
                           🕒 Scheduled at{" "}
                           {selectedSpecialist?.availableAt?.replace(
                             "Available at ",
-                            ""
+                            "",
                           )}
                         </p>
                       </div>
@@ -1998,7 +2145,9 @@ const HealthCare: React.FC = () => {
                       Your consultation will start in:
                     </p>
 
-                    <div className="confirmed-timer">{formatTime(secondsLeft)}</div>
+                    <div className="confirmed-timer">
+                      {formatTime(secondsLeft)}
+                    </div>
 
                     <p className="confirmed-footer-text">
                       Please wait while we prepare your session
@@ -2038,9 +2187,7 @@ const HealthCare: React.FC = () => {
                     </div>
                   </div>
                 )}
-
               </div>
-
             )}
 
             {openLiveScreen && (
@@ -2130,10 +2277,8 @@ const HealthCare: React.FC = () => {
                         >
                           👜 Order Medicines Now
                         </button>
-
                       </div>
                     )}
-
 
                     <div
                       className="live-doc-card"
@@ -2179,14 +2324,11 @@ const HealthCare: React.FC = () => {
                         >
                           📍 Find Nearby Labs
                         </button>
-
                       </div>
                     )}
-
                   </div>
                 </div>
               </div>
-
             )}
             {openNearbyPharmacies && (
               <div className="nearby-overlay">
@@ -2213,7 +2355,9 @@ const HealthCare: React.FC = () => {
                     <span>Amoxicillin</span>
                     <span>Paracetamol</span>
                   </div>
-                  <p className="nearby-subtext">Showing facilities matching your results</p>
+                  <p className="nearby-subtext">
+                    Showing facilities matching your results
+                  </p>
                 </div>
 
                 <div className="nearby-filters">
@@ -2249,7 +2393,9 @@ const HealthCare: React.FC = () => {
                             <h4>{item.eta}</h4>
                           </div>
 
-                          <button className="order-btn">{item.buttonText}</button>
+                          <button className="order-btn">
+                            {item.buttonText}
+                          </button>
                         </div>
                       </div>
                     ))}
@@ -2287,7 +2433,9 @@ const HealthCare: React.FC = () => {
                     <span>Thyroid Profile</span>
                   </div>
 
-                  <p className="nearby-subtext">Showing facilities matching your results</p>
+                  <p className="nearby-subtext">
+                    Showing facilities matching your results
+                  </p>
                 </div>
 
                 <div className="nearby-search">
@@ -2296,14 +2444,14 @@ const HealthCare: React.FC = () => {
 
                 <div className="nearby-list">
                   {labs.map((item) => (
-                    <div key={item.id} className="nearby-item">
-                      <p className="distance">📍 {item.distance}</p>
+                    <div key={item.lab_id} className="nearby-item">
+                      <p className="distance">📍 {item.distance_km}</p>
 
                       <div className="nearby-item-row">
                         <div>
-                          <h3>{item.name}</h3>
-                          <p className="type">{item.type}</p>
-                          <p className="desc">{item.tests}</p>
+                          <h3>{item.lab_name}</h3>
+                          <p className="type">{item.specialization_name}</p>
+                          {/* <p className="desc">{item.tests}</p> */}
                         </div>
 
                         <div className="rating-badge">⭐ {item.rating}</div>
@@ -2312,10 +2460,10 @@ const HealthCare: React.FC = () => {
                       <div className="nearby-bottom-row">
                         <div>
                           <p className="est">NEXT AVAILABLE SLOT</p>
-                          <h4>{item.slot}</h4>
+                          <h4>{item.next_available}</h4>
                         </div>
 
-                        <button className="order-btn">{item.buttonText}</button>
+                        {/* <button className="order-btn">{item.buttonText}</button> */}
                       </div>
                     </div>
                   ))}
@@ -2324,14 +2472,8 @@ const HealthCare: React.FC = () => {
                 </div>
               </div>
             )}
-
-
-
-
-
           </div>
-        )
-        }
+        )}
         {openDoctorProfile && (
           <div
             className="profile-overlay"
@@ -2349,14 +2491,26 @@ const HealthCare: React.FC = () => {
               </div>
 
               <div className="profile-body">
-                <p><b>Name:</b> {doctorProfile.name}</p>
-                <p><b>Speciality:</b> {doctorProfile.speciality}</p>
-                <p><b>Hospital:</b> {doctorProfile.hospital}</p>
-                <p><b>Experience:</b> {doctorProfile.experience}</p>
-                <p><b>Contact:</b> {doctorProfile.contact}</p>
+                <p>
+                  <b>Name:</b> {doctorProfile.name}
+                </p>
+                <p>
+                  <b>Speciality:</b> {doctorProfile.speciality}
+                </p>
+                <p>
+                  <b>Hospital:</b> {doctorProfile.hospital}
+                </p>
+                <p>
+                  <b>Experience:</b> {doctorProfile.experience}
+                </p>
+                <p>
+                  <b>Contact:</b> {doctorProfile.contact}
+                </p>
 
                 <div className="op-time-box">
-                  <p><b>OP Time:</b></p>
+                  <p>
+                    <b>OP Time:</b>
+                  </p>
 
                   {!editOpTime ? (
                     <div className="op-time-row">
@@ -2391,7 +2545,10 @@ const HealthCare: React.FC = () => {
                         <button
                           className="save-btn"
                           onClick={() => {
-                            setDoctorProfile((prev) => ({ ...prev, opTime: newOpTime }));
+                            setDoctorProfile((prev) => ({
+                              ...prev,
+                              opTime: newOpTime,
+                            }));
                             setEditOpTime(false);
                           }}
                         >
@@ -2411,7 +2568,10 @@ const HealthCare: React.FC = () => {
             className="ambulance-overlay"
             onClick={() => setOpenAmbulancePopup(false)}
           >
-            <div className="ambulance-popup" onClick={(e) => e.stopPropagation()}>
+            <div
+              className="ambulance-popup"
+              onClick={(e) => e.stopPropagation()}
+            >
               <h2 className="ambulance-title">🚑 Ambulance Booking</h2>
               <p className="ambulance-subtitle">
                 Emergency ambulance will reach you within <b>10-15 mins</b>.
@@ -2471,8 +2631,6 @@ const HealthCare: React.FC = () => {
 
               {/* Hospital Cards */}
               <div className="ambulance-hospital-list">
-
-
                 {filteredHospitals.map((h) => (
                   <div key={h.ambulance_id} className="ambulance-hospital-card">
                     <div className="ambulance-hospital-top">
@@ -2517,16 +2675,15 @@ const HealthCare: React.FC = () => {
                   </div>
                 ))}
               </div>
-
             </div>
           </div>
         )}
 
-
-
-
-        {openHospitalBooking && selectedHospital && (
-          <div className="profile-overlay" onClick={() => setOpenHospitalBooking(false)}>
+        {openHospitalBooking && selectedNearbyHospital && (
+          <div
+            className="profile-overlay"
+            onClick={() => setOpenHospitalBooking(false)}
+          >
             <div className="profile-popup" onClick={(e) => e.stopPropagation()}>
               <h2 className="popup-title">Booking Details</h2>
 
@@ -2542,13 +2699,8 @@ const HealthCare: React.FC = () => {
                 />
               </div>
 
-
               <div className="popup-section">
                 <label>Select Time</label>
-
-
-
-
 
                 <div className="time-slots">
                   {TIME_SLOTS.map((slot) => (
@@ -2603,30 +2755,30 @@ const HealthCare: React.FC = () => {
           </div>
         )}
 
-
         {openHospitalSuccess && (
           <div className="profile-overlay">
             <div className="success-popup">
               <h2>Booking Confirmed ✅</h2>
 
-              <p>Hospital: {selectedHospital?.hospital_name}</p>
-              <p>Speciality: {selectedHospital?.specialty_type}</p>
+              <p>Hospital: {selectedNearbyHospital?.hospital_name}</p>
+              <p>Speciality: {selectedNearbyHospital?.specialty_type}</p>
               <p>Date: {bookingDate}</p>
               <p>Time: {bookingTime}</p>
-              <p>Price: $150/hr</p>
+              <p>Price: ${selectedNearbyHospital?.price}/hr</p>
               <p>Ambulance: {needAmbulance}</p>
 
               {/* ✅ THIS IS THE ONLY CORRECT PLACE */}
               <button
                 className="view-doctors-btn"
                 onClick={() => {
-                  const docs = HOSPITAL_DOCTORS.filter(
-                    (d) => d.hospitalId === selectedHospital?.hospital_id
-                  );
+                  // const docs = HOSPITAL_DOCTORS.filter(
+                  //   (d) => d.hospitalId === selectedHospital?.hospital_id,
+                  // );
 
-                  setHospitalDoctors(docs);
+                  // setHospitalDoctors(docs);
                   setOpenHospitalSuccess(false);
                   setOpenHospitalDoctors(true);
+                  // setSelectedNearbyHospital(h);
                 }}
               >
                 VIEW HOSPITAL DOCTORS
@@ -2635,15 +2787,13 @@ const HealthCare: React.FC = () => {
           </div>
         )}
 
-
-
         {/* 
 {openHospitalSuccess && selectedHospital && (
   <div className="profile-overlay">
     <div className="success-popup">
       <h2>Booking Confirmed ✅</h2>
 
-      <p><b>Hospital:</b> {selectedHospital.hospital_name}</p>
+      <p><b>Hospital:</b> {selectedNearbyHospital.hospital_name}</p>
       <p><b>Speciality:</b> {selectedHospital.specialty_type}</p>
       <p><b>Date:</b> {bookingDate}</p>
       <p><b>Time:</b> {bookingTime}</p>
@@ -2663,13 +2813,11 @@ const HealthCare: React.FC = () => {
   </div>
 )} */}
 
-
-
-
-
-
         {openOfflinePopup && (
-          <div className="profile-overlay" onClick={() => setOpenOfflinePopup(false)}>
+          <div
+            className="profile-overlay"
+            onClick={() => setOpenOfflinePopup(false)}
+          >
             <div className="profile-popup" onClick={(e) => e.stopPropagation()}>
               <div className="profile-header">
                 <h2>Offline Consultation</h2>
@@ -2685,7 +2833,9 @@ const HealthCare: React.FC = () => {
               <div className="profile-body">
                 {/* 1) Consultation Time */}
                 <div className="op-time-box">
-                  <p><b>What is your consultation time?</b></p>
+                  <p>
+                    <b>What is your consultation time?</b>
+                  </p>
 
                   {!editOfflineTime ? (
                     <div className="op-time-row">
@@ -2735,8 +2885,6 @@ const HealthCare: React.FC = () => {
                   )}
                 </div>
 
-
-
                 {/* 2) Book Ambulance Button */}
                 <button
                   type="button"
@@ -2746,20 +2894,19 @@ const HealthCare: React.FC = () => {
                     setOpenOfflinePopup(false);
                     setOpenAmbulanceScreen(true);
                   }}
-
                 >
                   Book Ambulance Now →
                 </button>
-
-
               </div>
             </div>
           </div>
         )}
         {openOnlinePopup && (
-          <div className="profile-overlay" onClick={() => setOpenOnlinePopup(false)}>
+          <div
+            className="profile-overlay"
+            onClick={() => setOpenOnlinePopup(false)}
+          >
             <div className="profile-popup" onClick={(e) => e.stopPropagation()}>
-
               {/* Header */}
               <div className="profile-header">
                 <h2>Online Consultation</h2>
@@ -2809,7 +2956,6 @@ const HealthCare: React.FC = () => {
                       >
                         Book Now →
                       </button>
-
                     </div>
                   ))}
                 </div>
@@ -2823,7 +2969,8 @@ const HealthCare: React.FC = () => {
               <h2 className="success-title">Success ✅</h2>
 
               <p className="success-text">
-                Your online consultation is booked with <b>{bookedDoctorName}</b>.
+                Your online consultation is booked with{" "}
+                <b>{bookedDoctorName}</b>.
               </p>
 
               <button
@@ -2837,7 +2984,6 @@ const HealthCare: React.FC = () => {
           </div>
         )}
 
-
         {/* ✅ HOSPITAL DOCTORS SCREEN (ADD HERE) */}
         {openHospitalDoctors && (
           <div className="doctor-list-screen">
@@ -2850,7 +2996,7 @@ const HealthCare: React.FC = () => {
               </button>
 
               <h2 className="doctor-list-title">
-                {selectedHospital?.hospital_name} Doctors
+                {selectedNearbyHospital?.hospital_name} Doctors
               </h2>
             </div>
 
@@ -2867,24 +3013,15 @@ const HealthCare: React.FC = () => {
                     <h3>{doc.name}</h3>
                     <p className="spec">{doc.speciality}</p>
 
-                    <div className="rating-pill">
-                      ⭐ {doc.rating}
-                    </div>
+                    <div className="rating-pill">⭐ {doc.rating}</div>
                   </div>
                 </div>
 
-                <div className="arrow-circle">
-                  →
-                </div>
-
+                <div className="arrow-circle">→</div>
               </div>
             ))}
-
           </div>
         )}
-
-
-
 
         {selectedDoctor && (
           <div className="doctor-profile-screen">
@@ -2921,14 +3058,13 @@ const HealthCare: React.FC = () => {
                 <span className="price">+₹25</span>
               </div>
 
-
               <label className="switch">
                 <input
                   type="checkbox"
                   checked={patientAssist === "yes"}
                   onChange={(e) => {
                     if (e.target.checked) {
-                      setShowAssistantPopup(true);   // 🔥 OPEN POPUP
+                      setShowAssistantPopup(true); // 🔥 OPEN POPUP
                     } else {
                       setPatientAssist("no");
                       setSelectedAssistant(null);
@@ -2943,7 +3079,6 @@ const HealthCare: React.FC = () => {
                 <li>✔ Lab Report Collection</li>
               </ul>
             </div>
-
 
             {patientAssist === "yes" && selectedAssistant && (
               <div className="assistant-selected-card">
@@ -2967,17 +3102,13 @@ const HealthCare: React.FC = () => {
               </div>
             )}
 
-
-
             <button className="confirm-btn">Book Appointment</button>
           </div>
         )}
 
-
         {showAssistantPopup && (
           <div className="assistant-overlay">
             <div className="assistant-popup">
-
               <h2>Select Care Assistant</h2>
               <p className="subtitle">Choose an assistant for your visit</p>
 
@@ -3022,14 +3153,12 @@ const HealthCare: React.FC = () => {
                   Yes
                 </button>
               </div>
-
             </div>
           </div>
         )}
 
         {openAppointmentScreen && appointmentDoctor && (
           <div className="appointment-overlay">
-
             {/* Header */}
             <div className="appointment-header">
               <button
@@ -3044,7 +3173,11 @@ const HealthCare: React.FC = () => {
 
             {/* Doctor Card */}
             <div className="appointment-doctor-card">
-              <img src={appointmentDoctor.image} />
+              <img src={appointmentDoctor.image}
+                onError={(e) => {
+                  e.currentTarget.src = defaultImages[1]
+                }}
+              />
               <div>
                 <h3>{appointmentDoctor.name}</h3>
                 <p>{appointmentDoctor.speciality}</p>
@@ -3075,31 +3208,47 @@ const HealthCare: React.FC = () => {
                     <h3 className="month-popup-title">Select Month</h3>
 
                     <div className="month-popup-list">
-                      {months.map((m, index) => (
-                        <div
-                          key={m}
-                          className="month-popup-item"
-                          onClick={() => {
-                            setCurrentMonth(
-                              new Date(currentMonth.getFullYear(), index, 1)
-                            );
-                            setShowMonthPicker(false);
-                          }}
-                        >
-                          {m}
-                        </div>
-                      ))}
+                      {months.map((m, index) => {
+                        const now = new Date();
+                        const monthDate = new Date(now.getFullYear(), index, 1);
+
+                        // ❌ Hide past months
+                        if (
+                          monthDate <
+                          new Date(now.getFullYear(), now.getMonth(), 1)
+                        ) {
+                          return null;
+                        }
+
+                        return (
+                          <div
+                            key={m}
+                            className="month-popup-item"
+                            onClick={() => {
+                              setCurrentMonth(
+                                new Date(currentMonth.getFullYear(), index, 1),
+                              );
+                              setShowMonthPicker(false);
+                            }}
+                          >
+                            {m}
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
                 </div>
               )}
-
-
-
             </div>
 
             <div className="date-scroll">
               {generateDates().map((date) => {
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+
+                // ❌ Skip past dates
+                if (date < today) return null;
+
                 const isActive =
                   date.toDateString() === selectedDate.toDateString();
 
@@ -3118,55 +3267,92 @@ const HealthCare: React.FC = () => {
               })}
             </div>
 
-
             {/* Morning */}
             <h4 className="slot-title">☀ Morning</h4>
             <div className="slots">
-              {["10:00 AM", "10:30 AM", "11:30 AM"].map((time) => (
-                <button
-                  key={time}
-                  type="button"
-                  className={selectedTime === time ? "active" : ""}
-                  onClick={() => setSelectedTime(time)}
-                >
-                  {time}
-                </button>
-              ))}
-            </div>
+              {["10:00 AM", "10:30 AM", "11:30 AM"].map((time) => {
+                const isToday =
+                  selectedDate.toDateString() === new Date().toDateString();
 
+                const isAvailable =
+                  !isToday || isFutureSlot(time, selectedDate);
+
+                return (
+                  <button
+                    key={time}
+                    className={`slot-btn 
+        ${selectedTime === time ? "active" : ""}
+        ${!isAvailable ? "disabled" : ""}
+      `}
+                    disabled={!isAvailable}
+                    onClick={() => {
+                      if (!isAvailable) return;
+                      setSelectedTime(time);
+                    }}
+                  >
+                    {time}
+                  </button>
+                );
+              })}
+            </div>
 
             {/* Afternoon */}
             <h4 className="slot-title">☀ Afternoon</h4>
             <div className="slots">
-              {["12:30 PM", "02:00 PM", "03:30 PM", "04:00 PM"].map((time) => (
-                <button
-                  key={time}
-                  type="button"
-                  className={selectedTime === time ? "active" : ""}
-                  onClick={() => setSelectedTime(time)}
-                >
-                  {time}
-                </button>
-              ))}
+              {["12:30 PM", "02:00 PM", "03:30 PM", "04:00 PM"].map((time) => {
+                const isToday =
+                  selectedDate.toDateString() === new Date().toDateString();
+
+                const isAvailable =
+                  !isToday || isFutureSlot(time, selectedDate);
+
+                return (
+                  <button
+                    key={time}
+                    className={`slot-btn 
+        ${selectedTime === time ? "active" : ""}
+        ${!isAvailable ? "disabled" : ""}
+      `}
+                    disabled={!isAvailable}
+                    onClick={() => {
+                      if (!isAvailable) return;
+                      setSelectedTime(time);
+                    }}
+                  >
+                    {time}
+                  </button>
+                );
+              })}
             </div>
-
-
 
             {/* Evening */}
             <h4 className="slot-title">🌙 Evening</h4>
             <div className="slots">
-              {["06:00 PM", "06:30 PM", "07:30 PM"].map((time) => (
-                <button
-                  key={time}
-                  type="button"
-                  className={selectedTime === time ? "active" : ""}
-                  onClick={() => setSelectedTime(time)}
-                >
-                  {time}
-                </button>
-              ))}
-            </div>
+              {["06:00 PM", "06:30 PM", "07:30 PM"].map((time) => {
+                const isToday =
+                  selectedDate.toDateString() === new Date().toDateString();
 
+                const isAvailable =
+                  !isToday || isFutureSlot(time, selectedDate);
+
+                return (
+                  <button
+                    key={time}
+                    className={`slot-btn 
+        ${selectedTime === time ? "active" : ""}
+        ${!isAvailable ? "disabled" : ""}
+      `}
+                    disabled={!isAvailable}
+                    onClick={() => {
+                      if (!isAvailable) return;
+                      setSelectedTime(time);
+                    }}
+                  >
+                    {time}
+                  </button>
+                );
+              })}
+            </div>
 
             {/* Confirm */}
             <button
@@ -3174,35 +3360,34 @@ const HealthCare: React.FC = () => {
               disabled={!selectedTime}
               onClick={() => {
                 setOpenAppointmentScreen(false); // 🔥 CLOSE booking screen
-                setShowConfirmPopup(true);       // 🔥 OPEN confirm popup
+                setShowConfirmPopup(true); // 🔥 OPEN confirm popup
               }}
             >
               Confirm Appointment
             </button>
-
-
           </div>
         )}
 
-
         {showConfirmPopup && !paymentCompleted && (
-          <div className="confirm-overlay" onClick={() => setShowConfirmPopup(false)}>
-            <div
-              className="confirm-sheet"
-              onClick={(e) => e.stopPropagation()}
-            >
+          <div
+            className="confirm-overlay"
+            onClick={() => setShowConfirmPopup(false)}
+          >
+            <div className="confirm-sheet" onClick={(e) => e.stopPropagation()}>
               <div className="sheet-handle" />
 
-              <h2 className="confirm-title">
-                Appointment Confirmed! 🎉
-              </h2>
+              <h2 className="confirm-title">Appointment Confirmed! 🎉</h2>
               <p className="confirm-sub">
                 Your slot is reserved. Please complete payment to confirm.
               </p>
 
               {/* Doctor Card */}
               <div className="confirm-doctor-card">
-                <img src={appointmentDoctor?.image} alt="doctor" />
+                <img src={appointmentDoctor?.image} alt="doctor"
+                  onError={(e) => {
+                    e.currentTarget.src = defaultImages[1]
+                  }}
+                />
                 <div>
                   <span className="doc-type">CARDIOLOGIST</span>
                   <h3>{appointmentDoctor?.name}</h3>
@@ -3218,13 +3403,15 @@ const HealthCare: React.FC = () => {
                 <div className="info-row">
                   ⏰ <b>{selectedTime}</b> <span>(IST)</span>
                 </div>
-                <div className="info-row">
-                  🎥 Online Video Consultation
-                </div>
+                <div className="info-row">🎥 Online Video Consultation</div>
               </div>
 
               {/* Pay Button */}
-              <button className="pay-btn" onClick={handlePayNow} disabled={payLoading}>
+              <button
+                className="pay-btn"
+                onClick={handlePayNow}
+                disabled={payLoading}
+              >
                 Pay Now ($50.00)
               </button>
 
@@ -3237,17 +3424,12 @@ const HealthCare: React.FC = () => {
               >
                 Cancel Appointment
               </button>
-
             </div>
           </div>
         )}
 
-
-
-
         {openPaymentSuccess && (
           <div className="pay-mobile-screen">
-
             {/* HEADER */}
             <div className="pay-mobile-header">
               <button
@@ -3261,7 +3443,6 @@ const HealthCare: React.FC = () => {
 
             {/* CONTENT */}
             <div className="pay-mobile-content">
-
               {/* SUCCESS ICON */}
               <div className="pay-mobile-check">✓</div>
 
@@ -3272,7 +3453,6 @@ const HealthCare: React.FC = () => {
 
               {/* CARD */}
               <div className="pay-mobile-card">
-
                 {/* AMOUNT */}
                 <div className="pay-mobile-amount">
                   <p className="label">TOTAL AMOUNT PAID</p>
@@ -3301,31 +3481,21 @@ const HealthCare: React.FC = () => {
 
                 {/* DATE & TIME */}
                 <div className="pay-mobile-slots">
-                  <div className="slot">
-                    📅 2 February 2026
-                  </div>
-                  <div className="slot">
-                    🕒 12:30 PM
-                  </div>
+                  <div className="slot">📅 2 February 2026</div>
+                  <div className="slot">🕒 12:30 PM</div>
                 </div>
               </div>
 
               {/* CTA */}
-              <button className="pay-mobile-btn">
-                Call scheduled
-              </button>
+              <button className="pay-mobile-btn">Call scheduled</button>
 
               <p className="pay-mobile-footer">
-                You can join the consultation from <b>My Bookings</b> at the scheduled time.
+                You can join the consultation from <b>My Bookings</b> at the
+                scheduled time.
               </p>
             </div>
           </div>
         )}
-
-
-
-
-
 
         {openMyBookings && (
           <div
@@ -3352,9 +3522,7 @@ const HealthCare: React.FC = () => {
                 <h3>Dr. Sarah Jenkins</h3>
                 <p className="dates">30 Jan 2026 • 05:30 PM</p>
 
-                <button className="join-call-btn">
-                  Join Call
-                </button>
+                <button className="join-call-btn">Join Call</button>
               </div>
 
               {/* Booking Card */}
@@ -3362,35 +3530,21 @@ const HealthCare: React.FC = () => {
                 <h3>Dr. Marcus Chen</h3>
                 <p className="dates">30 Jan 2026 • 04:00 PM</p>
 
-                <button className="join-call-btn">
-                  Join Call
-                </button>
+                <button className="join-call-btn">Join Call</button>
               </div>
               {/* Booking Card */}
               <div className="booking-card">
                 <h3>Dr. Aisha Khan</h3>
                 <p className="dates">31 Jan 2026 • 11:00 AM</p>
 
-                <button className="join-call-btn">
-                  Join Call
-                </button>
+                <button className="join-call-btn">Join Call</button>
               </div>
-
             </div>
           </div>
         )}
-
-
-
-
-
-
       </div>
     </>
   );
-
-
 };
-
 
 export default HealthCare;

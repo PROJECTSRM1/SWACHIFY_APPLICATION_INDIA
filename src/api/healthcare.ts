@@ -41,6 +41,46 @@ export type AmbulanceBookingPayload = {
     aadhar_number: string;
 };
 
+// get Available Labs API response
+// healthcareService.ts
+
+// healthcareService.ts
+
+export interface LabItem {
+    lab_id: number;
+    lab_name: string;
+    specialization_name: string;
+    rating: number;
+    fees_per_test: number;
+    available_from: string;
+    available_to: string;
+    home_collection: boolean;
+    distance_km: number | null;
+    status: "OPEN" | "CLOSED";
+    next_available: string;
+    estimated_delivery: string;
+}
+
+export type AvailableLabsResponse = LabItem[];
+
+// ================= HOSPITAL TYPES =================
+
+export interface HospitalItem {
+    hospital_id: number;
+    hospital_name: string;
+    specialty_type: string;
+    location: string;
+    contact_number: string;
+    rating: number;
+    hospital_status: string;
+    fees_per_hour: number;
+}
+
+export type AvailableHospitalsResponse = HospitalItem[];
+
+
+
+
 /* =========================
    SERVICE
 ========================= */
@@ -95,6 +135,41 @@ const healthcareService = {
             throw error;
         }
     },
+    // get Available Labs
+    getAvailableLabs: async (): Promise<AvailableLabsResponse> => {
+        try {
+            const response = await api.get("/healthcare/available-labs");
+
+            return response.data;
+        } catch (error) {
+            console.error("Error fetching available labs:", error);
+            throw error;
+        }
+    },
+
+
+    // get available hospitals
+    getAvailableHospitals: async (): Promise<AvailableHospitalsResponse> => {
+        try {
+            const response = await api.get("/healthcare/available-hospitals");
+            console.log(response);
+
+            return response.data;
+        } catch (error) {
+            console.error("Error fetching available hospitals:", error);
+            throw error;
+        }
+    },
+
+
+
+
+
+
+
+
 };
+
+
 
 export default healthcareService;

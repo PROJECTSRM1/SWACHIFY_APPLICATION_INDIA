@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./InstitutionAuthModal.css";
 
+
 type Mode = "welcome" | "login" | "register";
 
 interface Props {
@@ -22,21 +23,57 @@ const InstitutionAuthModal: React.FC<Props> = ({
   const [otp, setOtp] = useState("");
   const [otpSent, setOtpSent] = useState(false);
 
-  /* ================= OTP HANDLERS ================= */
+  // ERRORS
+  const [emailError, setEmailError] = useState("");
+  const [otpError, setOtpError] = useState("");
+
+  /* ================= VALIDATION ================= */
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  const handleEmailChange = (value: string) => {
+    setEmail(value);
+
+    if (!emailRegex.test(value)) {
+      setEmailError("Please enter a valid email address");
+    } else {
+      setEmailError("");
+    }
+  };
+
+  const handleOtpChange = (value: string) => {
+    // allow only digits
+    if (!/^\d*$/.test(value)) return;
+
+    // max 6 digits
+    if (value.length > 6) return;
+
+    setOtp(value);
+
+    if (value.length !== 6) {
+      setOtpError("OTP must be exactly 6 digits");
+    } else {
+      setOtpError("");
+    }
+  };
+
+  /* ================= ACTIONS ================= */
 
   const handleSendOtp = () => {
-    if (!regNo || !email) return;
+    if (!regNo || !email || emailError) return;
 
-    console.log("Send OTP to:", email);
+    console.log("Sending OTP to:", email);
     setOtpSent(true); // simulate OTP sent
   };
 
   const handleVerifyOtp = () => {
     if (otp.length !== 6) return;
 
-    console.log("OTP verified");
+    console.log("OTP verified successfully");
     onLoginSuccess();
   };
+
+  /* ================= UI ================= */
 
   return (
     <div className="inst-modal-backdrop">
@@ -48,7 +85,9 @@ const InstitutionAuthModal: React.FC<Props> = ({
               ←
             </button>
           )}
-          <button className="inst-close" onClick={onClose}>✕</button>
+          <button className="inst-close" onClick={onClose}>
+            ✕
+          </button>
         </div>
 
         {/* ================= WELCOME ================= */}
@@ -61,7 +100,10 @@ const InstitutionAuthModal: React.FC<Props> = ({
             <h2>Welcome Back</h2>
             <p>Access your institutional resources.</p>
 
-            <button className="inst-btn primary" onClick={() => setMode("login")}>
+            <button
+              className="inst-btn primary"
+              onClick={() => setMode("login")}
+            >
               Sign In
             </button>
 
@@ -74,7 +116,7 @@ const InstitutionAuthModal: React.FC<Props> = ({
           </div>
         )}
 
-        {/* ================= LOGIN (OTP) ================= */}
+        {/* ================= LOGIN ================= */}
         {mode === "login" && (
           <div className="inst-login">
             <div className="inst-logo light">🎓</div>
@@ -94,8 +136,11 @@ const InstitutionAuthModal: React.FC<Props> = ({
             <input
               placeholder="e.g., admin@institution.edu"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => handleEmailChange(e.target.value)}
             />
+            {emailError && (
+              <span className="inst-error">{emailError}</span>
+            )}
 
             {/* OTP */}
             {otpSent && (
@@ -104,8 +149,13 @@ const InstitutionAuthModal: React.FC<Props> = ({
                 <input
                   placeholder="Enter 6-digit OTP"
                   value={otp}
-                  onChange={(e) => setOtp(e.target.value)}
+                  onChange={(e) => handleOtpChange(e.target.value)}
+                  inputMode="numeric"
+                  maxLength={6}
                 />
+                {otpError && (
+                  <span className="inst-error">{otpError}</span>
+                )}
               </>
             )}
 
@@ -113,7 +163,7 @@ const InstitutionAuthModal: React.FC<Props> = ({
             {!otpSent ? (
               <button
                 className="inst-btn primary"
-                disabled={!regNo || !email}
+                disabled={!regNo || !email || !!emailError}
                 onClick={handleSendOtp}
               >
                 Send OTP
