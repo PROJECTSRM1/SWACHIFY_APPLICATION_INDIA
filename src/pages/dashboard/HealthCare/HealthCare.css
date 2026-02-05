@@ -1509,6 +1509,7 @@
 }
 
 @media (max-width: 600px) {
+
   /* Buttons */
   .banner-profile-btn,
   .banner-plus-btn {
@@ -2028,14 +2029,16 @@
   width: 92%;
   max-width: 420px;
 
-  max-height: 90vh;      /* ⭐ limit to screen */
+  max-height: 90vh;
+  /* ⭐ limit to screen */
   display: flex;
   flex-direction: column;
 
   border-radius: 20px;
   padding: 20px;
 
-  overflow-y: auto;      /* ⭐ ENABLE SCROLL */
+  overflow-y: auto;
+  /* ⭐ ENABLE SCROLL */
 }
 
 
@@ -2175,7 +2178,8 @@
 }
 
 .profile-body {
-  overflow: visible;   /* or remove this block */
+  overflow: visible;
+  /* or remove this block */
 }
 
 
@@ -2584,11 +2588,11 @@
   transition: 0.3s;
 }
 
-.switch input:checked + .slider {
+.switch input:checked+.slider {
   background-color: #2f6f6d;
 }
 
-.switch input:checked + .slider:before {
+.switch input:checked+.slider:before {
   transform: translateX(20px);
 }
 
@@ -4267,6 +4271,7 @@
 }
 
 @media (max-width: 768px) {
+
   .mode-toggle button,
   .my-bookings-btn {
     height: 38px;
@@ -4327,6 +4332,7 @@
 }
 
 @media (max-width: 768px) {
+
   .mode-toggle button,
   .my-bookings-btn {
     height: 38px;
@@ -4724,8 +4730,10 @@
 .lab-name {
   font-size: 16px;
   font-weight: 700;
-  text-align: center; /* ✅ center text */
+  text-align: center;
+  /* ✅ center text */
 }
+
 .lab-test {
   color: #2f6f6d;
   font-weight: 700;
@@ -4755,6 +4763,7 @@
   display: flex;
   justify-content: flex-end;
 }
+
 /* Dark background */
 .lab-booking-overlay {
   position: fixed;
@@ -4782,6 +4791,7 @@
     transform: scale(0.9);
     opacity: 0;
   }
+
   to {
     transform: scale(1);
     opacity: 1;
@@ -4875,6 +4885,7 @@
   border: none;
   cursor: pointer;
 }
+
 .mode-dropdown {
   height: 42px;
   padding: 0 14px;
@@ -4895,6 +4906,7 @@
   gap: 12px;
   align-items: center;
 }
+
 .mode-dropdown {
   height: 42px;
   padding: 0 14px;
@@ -4904,5 +4916,75 @@
   font-weight: 600;
   cursor: pointer;
 
-  margin-top: 7px; /* ✅ ONLY dropdowns move up */
+  margin-top: 7px;
+  /* ✅ ONLY dropdowns move up */
+}
+
+
+.medical-store-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.medical-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 14px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.medical-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.medical-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.medical-info h4 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.medical-type {
+  font-size: 12px;
+  color: #2f6f6d;
+  font-weight: 600;
+}
+
+.medical-time {
+  font-size: 12px;
+  color: #666;
+}
+
+.medical-rating {
+  margin-left: auto;
+  background: #fff4d6;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.medical-price {
+  margin: 10px 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.medical-visit-btn {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background: #2f6f6d;
+  color: #fff;
+  font-weight: 600;
 }
