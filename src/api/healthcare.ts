@@ -79,6 +79,29 @@ export interface HospitalItem {
 export type AvailableHospitalsResponse = HospitalItem[];
 
 
+// ================= PHARMACY TYPES =================
+
+export interface PharmacyItem {
+    pharmacy_id: number;
+    pharmacy_name: string;
+    pharmacy_type: string;
+    services: string;
+    rating: number;
+    delivery_time: string;
+    home_delivery: boolean;
+    distance_km: number | null;
+    status: string;
+    next_available: string | null;
+    delivery_address: string | null;
+    special_instructions: string | null;
+    upload_prescription: string | null;
+    proceed_type: string | null;
+}
+
+export type AvailablePharmaciesResponse = PharmacyItem[];
+
+
+
 
 
 /* =========================
@@ -160,6 +183,22 @@ const healthcareService = {
             throw error;
         }
     },
+    // get available pharmacies
+    getAvailablePharmacies: async (): Promise<AvailablePharmaciesResponse> => {
+        try {
+            const response = await api.get("/healthcare/available-pharmacies");
+            return response.data;
+        } catch (error) {
+            console.error("Error fetching available pharmacies:", error);
+            throw error;
+        }
+    },
+
+
+
+
+
+
 
 
 
