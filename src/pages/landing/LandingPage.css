@@ -8,11 +8,46 @@
 /* ================= HERO ================= */
 .sw-main-hero {
   position: relative;
-  width: 100%;
+  width: 90%;
   min-height: 100vh;
   padding: 88px 20px 64px;
   text-align: center;
   color: #ffffff;
+border-radius: 15px ;
+  margin-left: 70px ;
+}
+/* ===== HERO BORDER RADIUS FIX ONLY ===== */
+
+.sw-main-hero {
+  border-radius: 24px;       
+  overflow: hidden;        
+}
+
+/* background image */
+.sw-hero-bg {
+  border-radius: 24px;
+}
+
+/* gradient overlay */
+.sw-main-hero::before {
+  border-radius: 24px;
+}
+/* ===== MOBILE HERO BORDER FIX ONLY ===== */
+@media (max-width: 768px) {
+  .sw-main-hero {
+    width: calc(100% - 24px);  
+    margin: 12px auto 0;
+    border-radius: 20px;       
+    overflow: hidden;
+  }
+
+  .sw-hero-bg {
+    border-radius: 20px;
+  }
+
+  .sw-main-hero::before {
+    border-radius: 20px;
+  }
 }
 
 .sw-hero-bg {
