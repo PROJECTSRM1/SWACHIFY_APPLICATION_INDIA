@@ -1212,3 +1212,56 @@ button[type="submit"]:hover {
     margin-bottom: 8px !important;
   }
 }
+
+@media (max-width: 768px) {
+
+  /* Allow modal to scroll vertically */
+  .swl-hs-rf-classname.ant-modal {
+    top: 0 !important;
+    margin: 0 auto !important;
+  }
+
+  /* Enable scroll inside modal */
+  .swl-hs-rf-classname .ant-modal-body {
+    max-height: calc(100vh - 100px) !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Tabs pane must not block scroll */
+  .swl-hs-rf-classname .ant-tabs-tabpane-active {
+    overflow: visible !important;
+  }
+}
+/* 🔥 GLOBAL HORIZONTAL SCROLL KILL */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden !important;
+}
+
+/* Modal container */
+.swl-hs-rf-classname.ant-modal {
+  max-width: 100vw !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+  overflow-x: hidden !important;
+}
+
+/* Modal content */
+.swl-hs-rf-classname .ant-modal-content {
+  max-width: 100%;
+  overflow-x: hidden !important;
+}
+
+/* Modal body – vertical ok, horizontal no */
+.swl-hs-rf-classname .ant-modal-body {
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+/* Tabs + forms safety */
+.swl-hs-rf-classname .ant-tabs,
+.swl-hs-rf-classname .ant-form {
+  max-width: 100%;
+  overflow-x: hidden;
+}
