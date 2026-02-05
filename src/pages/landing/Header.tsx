@@ -247,6 +247,13 @@ setIsAuthenticated(true);
 
 // close modal
 closeAuthModal();
+const redirectPath = localStorage.getItem("postAuthRedirect");
+
+if (redirectPath) {
+  localStorage.removeItem("postAuthRedirect");
+  navigate(redirectPath);
+}
+
 
 // ❌ DO NOT navigate anywhere
 

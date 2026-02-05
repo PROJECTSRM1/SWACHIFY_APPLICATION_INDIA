@@ -10,6 +10,8 @@ import bathroomImg from "../../assets/CleaningServices/bathroom.jpeg";
 import sofaImg from "../../assets/CleaningServices/conference.jpg";
 import bedroomImg from "../../assets/CleaningServices/bedroom.png";
 import windowImg from "../../assets/CleaningServices/window.png";
+import { customerLogin } from "../../api/customerAuth";
+import { useNavigate } from "react-router-dom";
 
 type Service = {
   title: string;
@@ -80,6 +82,7 @@ const SERVICE_CONFIG: Record<
 };
 
 const HomeCleaningCategory: React.FC = () => {
+   const navigate = useNavigate();
   const { category = "kitchen" } = useParams();
   const config = SERVICE_CONFIG[category];
 
@@ -87,8 +90,11 @@ const HomeCleaningCategory: React.FC = () => {
   const [step, setStep] = useState<
     "services" | "login" | "otp" | "booking" | "done"
   >("services");
+  const [identifier, setIdentifier] = useState("");
+const [password, setPassword] = useState("");
+const [loading, setLoading] = useState(false);
 
-  const [mobile, setMobile] = useState("");
+  const [mobile,] = useState("");
   const [otp, setOtp] = useState("");
 
   const addToCart = (item: Service) => {
@@ -104,6 +110,22 @@ const HomeCleaningCategory: React.FC = () => {
   };
 
   const total = cart.reduce((s, i) => s + i.price, 0);
+
+  const onLogin = async (values: any) => {
+    try{
+      const res: any = await customerLogin({
+              email_or_phone: values.identifier,
+              password: values.password,
+            });
+            localStorage.setItem("user_id", res.user_id);
+      
+            localStorage.setItem("accessToken", res.access_token);
+            localStorage.setItem("user", JSON.stringify(res));
+    }
+    catch(error){
+      console.error("Login failed:", error);
+    }
+  }
 
  if (!config) {
   return (
@@ -324,29 +346,72 @@ const HomeCleaningCategory: React.FC = () => {
             We'll send a one-time password to your mobile
           </p>
 
-          <Input
-            className="auth-input"
-            placeholder="Enter 10-digit mobile number"
-            maxLength={10}
-            value={mobile}
-            onChange={(e) =>
-              setMobile(e.target.value.replace(/[^0-9]/g, ""))
-            }
-          />
+         <Input
+  className="auth-input"
+  placeholder="Email or mobile number"
+  value={identifier}
+  onChange={(e) => setIdentifier(e.target.value)}
+/>
 
-          <Button
-            type="primary"
-            block
-            className="auth-button"
-            disabled={mobile.length !== 10}
-            onClick={() => setStep("otp")}
-          >
-            Continue
-          </Button>
+<Input.Password
+  className="auth-input"
+  placeholder="Password"
+  value={password}
+  onChange={(e) => setPassword(e.target.value)}
+/>
 
-          <p className="auth-note">
-            By continuing, you agree to our Terms & Privacy Policy
-          </p>
+
+         <Button
+  type="primary"
+  block
+  className="auth-button"
+  loading={loading}
+  disabled={!identifier || !password}
+  onClick={async () => {
+    try {
+      setLoading(true);
+
+      await onLogin({
+        identifier,
+        password,
+      });
+
+      // ✅ login success → go to booking
+      setStep("booking");
+    } catch (e) {
+      // optional toast
+    } finally {
+      setLoading(false);
+    }
+  }}
+>
+  Login & Continue
+</Button>
+
+
+         <p className="auth-note">
+  Don’t have an account?{" "}
+  <span
+    style={{ color: "#1677ff", cursor: "pointer", fontWeight: 500 }}
+    onClick={() => {
+      // ✅ save where user came from
+      localStorage.setItem(
+        "postAuthRedirect",
+        window.location.pathname
+      );
+
+      navigate("/");
+
+      setTimeout(() => {
+        if ((window as any).openAuthModal) {
+          (window as any).openAuthModal("register");
+        }
+      }, 0);
+    }}
+  >
+    Register
+  </span>
+</p>
         </div>
       </Modal>
 
