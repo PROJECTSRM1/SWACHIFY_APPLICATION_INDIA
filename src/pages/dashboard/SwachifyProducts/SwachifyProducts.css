@@ -1,6 +1,25 @@
-/* =========================
-   SWACHIFY PRODUCTS DASHBOARD CONTAINER
-========================= */
+/* GLOBAL BACK BUTTON */
+.sw-products-global-back-btn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sw-products-global-back-btn:hover {
+  background: #fff;
+}
+/* SWACHIFY PRODUCTS DASHBOARD CONTAINER */
+
 .sw-products-dashboard-container {
   width: 100%;
 }
@@ -17,7 +36,7 @@
   width: 100%;
   max-width: 1200px;
   margin: 65px auto 24px;
-
+  margin-bottom: 24px;
   padding: 22px 28px;
   background: #005cfa;
   color: #fff;
