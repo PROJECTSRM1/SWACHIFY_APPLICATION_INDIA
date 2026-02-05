@@ -144,15 +144,34 @@
 .overdue { border-left: 6px solid #ef4444; }
 .upcoming { border-left: 6px solid #9ca3af; }
 
-/* PROGRESS */
+/* Academic Progress */
 .sd-progress {
-  background: #fff;
-  padding: 20px;
-  border-radius: 16px;
+  background: transparent;
+  padding: 0;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  text-align: center;
+  gap: 16px;
 }
+
+.sd-progress > div {
+  background: #fff;
+  padding: 18px;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0,0,0,.06);
+}
+
+.sd-progress span {
+  display: block;
+  color: #6b7280;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.sd-progress strong {
+  font-size: 22px;
+  font-weight: 700;
+}
+
 
 .sd-progress span {
   color: #6b7280;
@@ -186,6 +205,79 @@
   font-weight: 600;
   cursor: pointer;
 }
+
+/* 3-dot dropdown */
+.sd-dropdown {
+  position: absolute;
+  top: 32px;
+  right: 0;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 28px rgba(0,0,0,0.12);
+  min-width: 180px;
+  padding: 6px;
+  z-index: 20;
+}
+
+.sd-dropdown div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.sd-dropdown div:hover {
+  background: #f3f4f6;
+}
+
+.sd-dropdown .danger {
+  color: #ef4444;
+}
+/* Editable inputs */
+.sd-input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  margin-bottom: 10px;
+  outline: none;
+}
+
+.sd-input:focus {
+  border-color: #1677ff;
+  box-shadow: 0 0 0 2px rgba(22,119,255,0.15);
+}
+
+/* Save / Cancel buttons */
+.sd-edit-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.sd-save {
+  background: #1677ff;
+  color: #fff;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.sd-cancel {
+  background: #f3f4f6;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
 
 /* RESPONSIVE */
 @media (max-width: 700px) {

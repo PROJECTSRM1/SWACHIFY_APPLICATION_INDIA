@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import { NonSecureRoutes } from "./nonSecureRoutes/NonSecureRoutes";
-import { ProtectedRoutes } from "./ProtectedRoutes";
+//import { ProtectedRoutes } from "./ProtectedRoutes";
 import { SecureRoutes } from "./secureRoutes/SecureRoutes";
 import App from "../pages/Admin/Appadmin";
 import Vendor from "../pages/vendor/Vendor";
@@ -16,7 +16,6 @@ import BookRide from "../pages/dashboard/PackersAndMovers/BookRide";
 import MetroHubPage from "../pages/dashboard/PackersAndMovers/MetroHubPage";
 import ProductPartnerDashboard from "../pages/dashboard/SwachifyProducts/ProductPartnerDashboard";
 import NewAdminDashboard from "../pages/Admin/NewAdminDashboard";
-
 
 export const AppRoutes = () => {
   return (
@@ -37,9 +36,8 @@ export const AppRoutes = () => {
           element={
             <>
               <CommonHeader />
-              <ProtectedRoutes>
-                <SecureRoutes />
-              </ProtectedRoutes>
+
+              <SecureRoutes />
             </>
           }
         />
