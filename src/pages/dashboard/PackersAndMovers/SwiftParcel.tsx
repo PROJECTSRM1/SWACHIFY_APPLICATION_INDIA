@@ -11,6 +11,8 @@ import {
 import { useLocation, useNavigate } from 'react-router-dom';
 import { PaymentsAPI } from '../../../api/customerAuth';
 
+import "./JustRide.css";
+
 
 
 const SwiftParcel: React.FC = () => {
