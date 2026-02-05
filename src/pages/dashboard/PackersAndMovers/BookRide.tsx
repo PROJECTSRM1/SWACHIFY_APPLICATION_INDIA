@@ -13,6 +13,7 @@ import {
   CheckCircleFilled
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import "./JustRide.css"
 
 const BookRide: React.FC = () => {
   const navigate = useNavigate();

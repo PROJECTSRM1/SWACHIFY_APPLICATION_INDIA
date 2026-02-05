@@ -147,6 +147,9 @@ const BookCleaningScreenWeb: React.FC<Props> = ({
   const [locationType, setLocationType] = useState<"default" | "other">("default");
   const [currentAddress, setCurrentAddress] = useState("");
   const [loadingLocation, setLoadingLocation] = useState(false);
+  const [showProfessionalModal, setShowProfessionalModal] = useState(false);
+const [chosenProfessional, setChosenProfessional] = useState<any>(null);
+
 
   const getCurrentLocation = async () => {
     if (!navigator.geolocation) return;
@@ -306,6 +309,26 @@ const BookCleaningScreenWeb: React.FC<Props> = ({
       throw err;
     }
   };
+const AVAILABLE_PROFESSIONALS = [
+  {
+    id: 1,
+    name: "Ramesh Kumar",
+    rating: 4.8,
+    experience: "5 yrs",
+  },
+  {
+    id: 2,
+    name: "Suresh Patel",
+    rating: 4.6,
+    experience: "4 yrs",
+  },
+  {
+    id: 3,
+    name: "Anil Sharma",
+    rating: 4.9,
+    experience: "6 yrs",
+  },
+];
 
   /* ================= RENDER ================= */
   return (
@@ -444,10 +467,14 @@ const BookCleaningScreenWeb: React.FC<Props> = ({
                   <span className="uc_badge uc_badge--recommended">Recommended</span>
                 </div>
 
-                <div
-                  className={`uc_allocationCard ${allocationType === "manual" ? "uc_allocationCard--selected" : ""}`}
-                  onClick={() => setAllocationType("manual")}
-                >
+               <div
+  className={`uc_allocationCard ${allocationType === "manual" ? "uc_allocationCard--selected" : ""}`}
+  onClick={() => {
+    setAllocationType("manual");
+    setShowProfessionalModal(true);
+  }}
+>
+
                   <div className="uc_allocationCheck">
                     {allocationType === "manual" && <MdCheckCircle />}
                   </div>
@@ -482,6 +509,29 @@ const BookCleaningScreenWeb: React.FC<Props> = ({
               </div>
             </section>
           )}
+          {chosenProfessional && (
+  <section className="uc_section">
+    <div className="uc_sectionHeader">
+      <MdVerified className="uc_sectionIcon" />
+      <h2>Selected Professional</h2>
+    </div>
+
+    <div className="uc_professionalCard">
+      <div className="uc_professionalAvatar">
+        {chosenProfessional.name.charAt(0)}
+      </div>
+
+      <div className="uc_professionalInfo">
+        <h4>{chosenProfessional.name}</h4>
+        <div className="uc_professionalRating">
+          <MdStar className="uc_starIcon" />
+          <span>{chosenProfessional.rating}</span>
+          <span> • {chosenProfessional.experience}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+)}
 
           {/* FLOOR AREA */}
           {serviceContext !== "vehicle" && serviceContext !== "homeServices" && (
@@ -749,6 +799,56 @@ const BookCleaningScreenWeb: React.FC<Props> = ({
             </div>
           </div>
         )}
+        {showProfessionalModal && (
+  <div
+    className="uc_paymentOverlay"
+    onClick={() => setShowProfessionalModal(false)}
+  >
+    <div
+      className="uc_paymentModal"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <header className="uc_header">
+        <h2>Select a Professional</h2>
+        <button
+          className="uc_closeBtn"
+          onClick={() => setShowProfessionalModal(false)}
+        >
+          <MdClose />
+        </button>
+      </header>
+
+      <div className="uc_professionalList">
+        {AVAILABLE_PROFESSIONALS.map((pro) => (
+          <div
+            key={pro.id}
+            className="uc_professionalCard uc_professionalSelectable"
+            onClick={() => {
+              setChosenProfessional(pro);
+              setShowProfessionalModal(false);
+            }}
+          >
+            <div className="uc_professionalAvatar">
+              {pro.name.charAt(0)}
+            </div>
+
+            <div className="uc_professionalInfo">
+              <h4>{pro.name}</h4>
+              <div className="uc_professionalRating">
+                <MdStar className="uc_starIcon" />
+                <span>{pro.rating}</span>
+                <span> • {pro.experience}</span>
+              </div>
+            </div>
+
+            <MdCheckCircle className="uc_selectIcon" />
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+)}
+
       </div>
     </div>
   );
