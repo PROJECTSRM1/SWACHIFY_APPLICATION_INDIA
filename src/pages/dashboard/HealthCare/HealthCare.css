@@ -4363,6 +4363,7 @@
   }
 }
 
+
 .search-box-wrap {
   flex: 1 1 auto;
 }
@@ -5726,4 +5727,24 @@
   height:2px;
   background:#e6ecf5;
   margin:0 4px;
+}
+
+
+/* =====================================
+   320px MOBILE – CARD FULL WIDTH ONLY
+   ===================================== */
+
+@media (max-width:340px){
+
+  .bookings-popup{
+    width: 100% !important;     /* 🔥 full screen width */
+    max-width: 100% !important;
+    padding: 12px;              /* small safe spacing */
+    border-radius: 0;           /* optional: app style */
+  }
+
+  .booking-card{
+    width: 100% !important;     /* 🔥 fill container */
+    margin: 0 0 14px 0;
+  }
 }
