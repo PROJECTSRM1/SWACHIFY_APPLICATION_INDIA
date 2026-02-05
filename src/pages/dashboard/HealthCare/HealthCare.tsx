@@ -1256,7 +1256,7 @@ const HealthCare: React.FC = () => {
           buttonText:
             p.status === "OPEN NOW"
               ? (p.proceed_type ?? "Visit")
-              : "Closed",
+              : "order",
         }));
 
         setPharmacies(formatted);
@@ -1874,57 +1874,56 @@ const HealthCare: React.FC = () => {
         )}
 
         {/* ================= MEDICAL STORE ================= */}
-        {consultMode === "medical" && (
-          <>
-            <div className="available-doctors-header">
-              <h3>Available Medical Stores</h3>
-              <span className="see-all" onClick={() => setSearchText("")}>
-                Clear
-              </span>
+    {/* ================= MEDICAL STORE ================= */}
+{consultMode === "medical" && (
+  <>
+    <div className="available-doctors-header">
+      <h3>Available Medical Stores</h3>
+      <span className="see-all" onClick={() => setSearchText("")}>
+        Clear
+      </span>
+    </div>
+
+    <div className="medical-store-list">
+      {pharmacies.map((item) => (
+        <div key={item.id} className="medical-card">
+          <div className="medical-row">
+
+            {/* LEFT IMAGE */}
+            <img
+              src={getPharmacyImage(item.id)}
+              alt={item.name}
+              className="medical-img"
+              onError={(e) => {
+                e.currentTarget.src = pharmacyImages[1];
+              }}
+            />
+
+            {/* CENTER INFO */}
+            <div className="medical-info">
+              <div className="medical-head">
+                <h4>{item.name}</h4>
+                <span className="medical-rating">⭐ {item.rating}</span>
+              </div>
+
+              <p className="medical-type">{item.type}</p>
+              <p className="medical-time">Delivery: {item.deliveryTime}</p>
+              <p className="medical-services">{item.services}</p>
+              <p className="medical-price">Contact for price</p>
             </div>
 
+            {/* RIGHT BUTTON */}
+            <button className="medical-order-btn">
+              {item.buttonText}
+            </button>
 
-            <div className="medical-store-list">
-              {pharmacies.map((item) => (
-                <div key={item.id} className="medical-card">
+          </div>
+        </div>
+      ))}
+    </div>
+  </>
+)}
 
-                  {/* TOP ROW */}
-                  <div className="medical-top">
-                    <img
-                      src={getPharmacyImage(item.id)}
-                      alt={item.name}
-                      className="medical-img"
-                      onError={(e) => {
-                        e.currentTarget.src = pharmacyImages[1];
-                      }}
-                    />
-
-
-                    <div className="medical-info">
-                      <h4>{item.name}</h4>
-                      <p className="medical-type">{item.type}</p>
-                      <p>Services: {item.services}</p>
-                      <p className="medical-time">Delivery Time: {item.deliveryTime}</p>
-                    </div>
-
-
-                    <div className="medical-rating">
-                      ⭐ {item.rating}
-                    </div>
-                  </div>
-
-
-                  {/* PRICE */}
-                  <p className="medical-price">Contact for price</p>
-
-
-                  {/* ACTION */}
-                  <button className="medical-visit-btn">Visit</button>
-                </div>
-              ))}
-            </div>
-          </>
-        )}
 
 
 
