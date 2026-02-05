@@ -260,7 +260,7 @@ const ProductsListing: React.FC<ProductsListingProps> = ({
           {/* Sort Button */}
           <Button
             icon={<FilterOutlined />}
-            className="sw-sort-icon-btn"
+            className={`sw-sort-icon-btn ${filterModalVisible ? "active" : ""}`}
             onClick={() => setFilterModalVisible(true)}
           >
             <span className="hide-on-mobile">Sort & Filter</span>
