@@ -3,6 +3,8 @@ import { Modal, Input, Button } from "antd";
 import CleaningHeader from "./CleaningHeader";
 import "./VehicleCleaning.css";
 import BookCleaningScreenWeb from "../../pages/dashboard/homeservices/BookCleaningScreenWeb";
+import { customerLogin } from "../../api/customerAuth";
+import { useNavigate } from "react-router";
 
 type VehicleType = "Bike" | "Car" | "SUV";
 
@@ -78,6 +80,7 @@ const vehicleIcons: Record<VehicleType, string> = {
 };
 
 const VehicleCleaning: React.FC = () => {
+   const navigate = useNavigate();
   const [vehicleType, setVehicleType] = useState<VehicleType | null>(null);
   const [cart, setCart] = useState<any[]>([]);
   const [step, setStep] = useState<
@@ -87,8 +90,25 @@ const VehicleCleaning: React.FC = () => {
   const [mobile, setMobile] = useState("");
   const [otp, setOtp] = useState("");
   const isAuthenticated = !!localStorage.getItem("accessToken");
-
+const [identifier, setIdentifier] = useState("");
+const [password, setPassword] = useState("");
+const [loading, setLoading] = useState(false);
   const total = cart.reduce((s, i) => s + i.price, 0);
+  const onLogin = async (values: any) => {
+      try{
+        const res: any = await customerLogin({
+                email_or_phone: values.identifier,
+                password: values.password,
+              });
+              localStorage.setItem("user_id", res.user_id);
+        
+              localStorage.setItem("accessToken", res.access_token);
+              localStorage.setItem("user", JSON.stringify(res));
+      }
+      catch(error){
+        console.error("Login failed:", error);
+      }
+    }
 
   const addToCart = (item: any) => {
     if (!cart.find((c) => c.title === item.title)) {
@@ -391,29 +411,71 @@ const VehicleCleaning: React.FC = () => {
             We'll send a one-time password to your mobile
           </p>
 
-          <Input
-            className="auth-input"
-            placeholder="Enter 10-digit mobile number"
-            maxLength={10}
-            value={mobile}
-            onChange={(e) =>
-              setMobile(e.target.value.replace(/[^0-9]/g, ""))
+         <Input
+          className="auth-input"
+          placeholder="Email or mobile number"
+          value={identifier}
+          onChange={(e) => setIdentifier(e.target.value)}
+        />
+        
+        <Input.Password
+          className="auth-input"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        
+        
+                 <Button
+          type="primary"
+          block
+          className="auth-button"
+          loading={loading}
+          disabled={!identifier || !password}
+          onClick={async () => {
+            try {
+              setLoading(true);
+        
+              await onLogin({
+                identifier,
+                password,
+              });
+        
+              // ✅ login success → go to booking
+              setStep("booking");
+            } catch (e) {
+              // optional toast
+            } finally {
+              setLoading(false);
             }
-          />
+          }}
+        >
+          Login & Continue
+        </Button>
 
-          <Button
-            type="primary"
-            block
-            className="auth-button"
-            disabled={mobile.length !== 10}
-            onClick={() => setStep("otp")}
-          >
-            Continue
-          </Button>
+           <p className="auth-note">
+  Don’t have an account?{" "}
+  <span
+    style={{ color: "#1677ff", cursor: "pointer", fontWeight: 500 }}
+    onClick={() => {
+      // ✅ save where user came from
+      localStorage.setItem(
+        "postAuthRedirect",
+        window.location.pathname
+      );
 
-          <p className="auth-note">
-            By continuing, you agree to our Terms & Privacy Policy
-          </p>
+      navigate("/");
+
+      setTimeout(() => {
+        if ((window as any).openAuthModal) {
+          (window as any).openAuthModal("register");
+        }
+      }, 0);
+    }}
+  >
+    Register
+  </span>
+</p>
         </div>
       </Modal>
 
