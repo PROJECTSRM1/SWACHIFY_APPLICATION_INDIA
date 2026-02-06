@@ -130,6 +130,8 @@ export const NonSecureRoutes = () => {
   path="/painting/:serviceKey"
   element={<HomeServiceBooking />}
 />
+<Route path="/ac/:serviceKey" element={<HomeServiceBooking />} />
+<Route path="/chef/:serviceKey" element={<HomeServiceBooking />} />
     
 
       <Route path="/healthcare" element={<Healthcare />} />
