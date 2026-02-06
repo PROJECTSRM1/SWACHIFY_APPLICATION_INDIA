@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./Education.css";
+import { useEffect } from "react";
 
 import Companies from "../Education/Companies";
 import Students from "../Education/Students";
@@ -9,6 +10,8 @@ import CandidateProfile from "../Education/CandidateProfile";
 import TrainingPage from "./TrainingPage";
 import Institutions from "../Education/Institutions";
 import InstitutionAccessMode from "./InstitutionAccessMode";
+import { speak } from "../../../utils/constants/aiVoice";
+
 
 import InstitutionAuthModal from "../../dashboard/Education/InstitutionAuthModal";
 
@@ -106,6 +109,39 @@ const Education: React.FC = () => {
     useState<Student | null>(null);
   const [showAllTrending, setShowAllTrending] = useState(false);
   const [showInstitutionPortal, setShowInstitutionPortal] = useState(false);
+useEffect(() => {
+  speak("Welcome to Education. Explore students, internships, companies and training programs.");
+}, []);
+useEffect(() => {
+  switch (page) {
+    case "students":
+      speak("Welcome to Students section. Discover top performing students.");
+      break;
+
+    case "internships":
+      speak("Welcome to Internships. Find opportunities that shape your career.");
+      break;
+
+    case "companies":
+      speak("Welcome to Companies. Explore hiring organizations.");
+      break;
+
+    case "training":
+      speak("Welcome to Training programs. Upskill yourself with the best courses.");
+      break;
+
+    case "institution-login":
+      speak("Welcome to Institution access portal.");
+      break;
+
+    case "institution-register":
+      speak("Institution registration page. Please fill in the details.");
+      break;
+
+    default:
+      break;
+  }
+}, [page]);
 
 
 
