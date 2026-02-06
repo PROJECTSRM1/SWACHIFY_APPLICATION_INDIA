@@ -3023,6 +3023,453 @@ body {
   background: #f1f5f9 !important;
 }
 
+.sw-jr-bk-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.2);
+  /* subtle dim behind popup */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.sw-jr-bk-popup-success-card {
+  width: 320px;
+  border-radius: 12px;
+  padding: 20px;
+  background-color: #ffffff;
+  /* light theme */
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
+  text-align: center;
+}
+
+.sw-jr-bk-popup-icon-container {
+  margin-bottom: 12px;
+}
+
+.sw-jr-bk-popup-success-icon {
+  font-size: 40px;
+  color: #10b981;
+  /* green success color */
+}
+
+.sw-jr-bk-popup-success-title {
+  margin-bottom: 6px;
+  font-size: 18px;
+  color: #111827;
+}
+
+.sw-jr-bk-popup-success-desc {
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: #374151;
+}
+
+.sw-jr-bk-popup-success-reason {
+  background: #f3f4f6;
+  /* light gray background */
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  color: #111827;
+}
+
+.sw-jr-bk-popup-success-reason p {
+  margin: 4px 0 0 0;
+}
+
+
+/* ////boook ride end/// */
+/* ====== BOOK RIDE LAYOUT FIX (NO CARD, LAPTOP FIT) ====== */
+
+.sw-jr-bk-full-wrapper {
+  --theme-color: #8eb33e;
+  --text-light: #ffffff;
+  --text-dark: #1a1a1a;
+  --muted-text: #6b7280;
+
+  background: #f5f7fa;
+  min-height: 100vh;
+  width: 100%;
+  padding: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* Container should NOT look boxed */
+.sw-jr-bk-container-centered {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* REMOVE glass / card look completely */
+.sw-jr-bk-glass-card {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+/* Heading & back button */
+.sw-jr-bk-main-heading {
+  color: var(--text-dark);
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.sw-jr-bk-back-round {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  color: var(--text-dark);
+}
+
+/* Flat input section */
+.sw-jr-bk-location-box {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 20px;
+  border: 1px solid #e5e7eb;
+}
+
+.sw-jr-bk-field-column label {
+  color: var(--muted-text);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.sw-jr-bk-input-web input {
+  color: var(--text-dark) !important;
+}
+
+/* Theme color applied */
+.sw-jr-bk-icon-p,
+.sw-jr-bk-ride-price,
+.sw-jr-bk-eta,
+.sw-jr-bk-fare-amount {
+  color: var(--theme-color);
+}
+
+/* Ride rows (NOT cards) */
+.sw-jr-bk-ride-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+}
+
+.sw-jr-bk-ride-card:hover {
+  background: #f9fafb;
+}
+
+.sw-jr-bk-ride-card.active {
+  border-color: var(--theme-color);
+  background: rgba(142, 179, 62, 0.12);
+}
+
+/* Primary button */
+.sw-jr-bk-confirm-btn {
+  background: var(--theme-color) !important;
+  color: var(--text-light) !important;
+  height: 56px;
+  border-radius: 14px;
+  font-weight: 800;
+  border: none;
+}
+
+/* Laptop fit */
+@media (max-width: 1024px) {
+  .sw-jr-bk-container-centered {
+    max-width: 100%;
+  }
+}
+
+/* ====== BRIGHT STATUS + CANCEL FIX ====== */
+
+/* Driver arriving pill */
+.sw-jr-bk-status-pill {
+  background: rgba(142, 179, 62, 0.18) !important;
+  color: #4d7c0f !important;
+  font-weight: 700;
+  box-shadow: 0 0 0 1px rgba(142, 179, 62, 0.5) inset;
+}
+
+/* ETA text (7 min away) */
+.sw-jr-bk-eta {
+  color: #4d7c0f !important;
+  font-weight: 800;
+  font-size: 14px;
+}
+
+/* Total Fare container */
+.sw-jr-bk-fare-box {
+  background: #ffffff !important;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+}
+
+/* Fare amount (₹257) */
+.sw-jr-bk-fare-amount {
+  color: #65a30d !important;
+  font-size: 22px;
+  font-weight: 900;
+}
+
+/* CANCEL RIDE BUTTON — MAKE IT POP */
+.sw-jr-bk-cancel-btn {
+  background: #fee2e2 !important;
+  border: 1px solid #fecaca !important;
+  color: #dc2626 !important;
+  font-weight: 800 !important;
+  box-shadow: 0 4px 14px rgba(220, 38, 38, 0.25);
+}
+
+/* Hover effect for cancel */
+.sw-jr-bk-cancel-btn:hover {
+  background: var(--primary) !important;
+  color: #ffffff !important;
+}
+
+/* ====== FIX REMAINING WHITE / FADED TEXT ====== */
+
+/* Vehicle type text (Bike / Car) */
+.sw-jr-bk-ride-type,
+.sw-jr-bk-ride-type span {
+  color: #000000 !important;
+  font-weight: 600;
+}
+
+/* Driver vehicle number */
+.sw-jr-bk-driver-text p {
+  color: #000000 !important;
+  opacity: 1 !important;
+}
+
+/* PICKUP / DROP-OFF labels */
+.sw-jr-bk-route-text label,
+.sw-jr-bk-reason-label,
+.sw-jr-bk-route-item label {
+  color: #000000 !important;
+  opacity: 1 !important;
+}
+
+/* Pickup / Dropoff values */
+.sw-jr-bk-route-text p,
+.sw-jr-bk-route-item p {
+  color: #000000 !important;
+}
+
+/* Pickup / Drop-off section text */
+.sw-jr-bk-location-box *,
+.sw-jr-bk-route-summary * {
+  color: #000000 !important;
+}
+
+/* SAFE • RELIABLE • PREMIUM text */
+.sw-jr-bk-footer-hint {
+  color: #000000 !important;
+  opacity: 1 !important;
+  font-weight: 600;
+}
+
+/* ====== PICKUP / DROP-OFF SAGE COLOR FIX ====== */
+
+/* Section labels */
+.sw-jr-bk-field-column label {
+  color: #8eb33e !important;
+  font-weight: 700;
+}
+
+/* Pickup & Drop-off text */
+.sw-jr-bk-input-web input,
+.sw-jr-bk-route-text p {
+  color: #000000 !important;
+}
+
+/* Placeholder text */
+.sw-jr-bk-input-web input::placeholder {
+  color: #6b7280 !important;
+}
+
+/* Pickup icon (dot / pin) */
+.sw-jr-bk-icon-p {
+  color: #8eb33e !important;
+}
+
+/* Drop-off icon */
+.sw-jr-bk-icon-d {
+  color: #ef4444 !important;
+}
+
+/* Dashed vertical line between pickup & dropoff */
+.sw-jr-bk-dashed-line {
+  background: repeating-linear-gradient(to bottom,
+      #8eb33e,
+      #8eb33e 4px,
+      transparent 4px,
+      transparent 8px);
+}
+
+.sw-jr-bk-status-badge {
+  background: rgba(142, 179, 62, 0.15) !important;
+  border: 1px solid rgba(142, 179, 62, 0.4);
+  border-radius: 999px;
+  padding: 6px 14px;
+  width: fit-content;
+}
+
+/* Badge text */
+.sw-jr-bk-status-badge .ant-badge-status-text {
+  color: #8eb33e !important;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/* Badge dot */
+.sw-jr-bk-status-badge .ant-badge-status-dot {
+  background-color: #8eb33e !important;
+}
+
+.sw-jr-bk-mini-name {
+  color: #8eb33e !important;
+  font-weight: 700;
+  opacity: 1 !important;
+}
+
+/* Vehicle emoji/icon next to text */
+.sw-jr-bk-mini-icon {
+  color: #8eb33e !important;
+  opacity: 1 !important;
+}
+
+/* =====================================================
+   FINAL RESPONSIVE NORMALIZATION (ALL DEVICES)
+   320 / 375 / 420 / Tablet / Desktop
+===================================================== */
+
+/* ---- ROOT WRAPPER ---- */
+.sw-jr-bk-full-wrapper {
+  min-height: 100vh;
+  width: 100%;
+  padding: 12px;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-y: auto;
+  /* ❗ allow natural flow */
+}
+
+/* ---- MAIN CONTAINER ---- */
+.sw-jr-bk-container-centered {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+}
+
+/* ---- CARD ---- */
+.sw-jr-bk-glass-card {
+  width: 100%;
+  padding: 0;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* ---- FIX OVER-SPACING ---- */
+.sw-jr-bk-top-nav {
+  margin-bottom: 12px;
+}
+
+.sw-jr-bk-status-circle-wrap {
+  margin: 8px auto 12px;
+}
+
+/* ---- BUTTONS ALWAYS VISIBLE ---- */
+.sw-jr-bk-confirm-btn,
+.sw-jr-bk-cancel-btn {
+  width: 100%;
+  max-width: 100%;
+  margin-top: 12px;
+}
+
+/* ---- FOOTER ---- */
+.sw-jr-bk-footer-hint {
+  margin: 16px 0 0;
+  font-size: 11px;
+  text-align: center;
+}
+
+/* =====================================================
+   MOBILE (320–374)
+===================================================== */
+@media (max-width: 374px) {
+  .sw-jr-bk-container-centered {
+    max-width: 100%;
+  }
+
+  .sw-jr-bk-main-heading {
+    font-size: 16px;
+  }
+
+  .sw-jr-bk-location-box {
+    padding: 12px;
+  }
+
+  .sw-jr-bk-ride-desc {
+    display: none;
+    /* free space */
+  }
+
+  .sw-jr-bk-confirm-btn,
+  .sw-jr-bk-cancel-btn {
+    height: 44px;
+    font-size: 13px;
+  }
+}
+
+/* =====================================================
+   MOBILE (375–420)
+===================================================== */
+@media (min-width: 375px) and (max-width: 420px) {
+  .sw-jr-bk-container-centered {
+    max-width: 100%;
+  }
+
+  .sw-jr-bk-main-heading {
+    font-size: 18px;
+  }
+
+  .sw-jr-bk-location-box {
+    padding: 14px;
+  }
+}
+
+/* =====================================================
+   TABLET (421–768)
+===================================================== */
+@media (min-width: 421px) and (max-width: 768px) {
+  .sw-jr-bk-container-centered {
+    max-width: 560px;
+  }
+}
+
+/* =====================================================
+   DESKTOP (769+)
+===================================================== */
+@media (min-width: 769px) {
+  .sw-jr-bk-container-centered {
+    max-width: 980px;
+  }
+}
+
+/* ///close book ride//// */
 
 /* 1. The Full Screen Overlay (Blurs the background) */
 .sw-success-popup-overlay {
@@ -3139,66 +3586,6 @@ body {
   }
 }
 
-
-.sw-jr-bk-popup-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.2);
-  /* subtle dim behind popup */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-
-.sw-jr-bk-popup-success-card {
-  width: 320px;
-  border-radius: 12px;
-  padding: 20px;
-  background-color: #ffffff;
-  /* light theme */
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
-  text-align: center;
-}
-
-.sw-jr-bk-popup-icon-container {
-  margin-bottom: 12px;
-}
-
-.sw-jr-bk-popup-success-icon {
-  font-size: 40px;
-  color: #10b981;
-  /* green success color */
-}
-
-.sw-jr-bk-popup-success-title {
-  margin-bottom: 6px;
-  font-size: 18px;
-  color: #111827;
-}
-
-.sw-jr-bk-popup-success-desc {
-  margin-bottom: 12px;
-  font-size: 14px;
-  color: #374151;
-}
-
-.sw-jr-bk-popup-success-reason {
-  background: #f3f4f6;
-  /* light gray background */
-  padding: 10px;
-  border-radius: 8px;
-  margin-bottom: 16px;
-  font-size: 13px;
-  color: #111827;
-}
-
-.sw-jr-bk-popup-success-reason p {
-  margin: 4px 0 0 0;
-}
 
 
 
