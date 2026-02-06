@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CleaningHeader from "./CleaningHeader";
 import "./CommercialCleaning.css";
 import { Modal, Input, Button } from "antd";
@@ -46,11 +46,28 @@ const CommercialCleaning: React.FC = () => {
 
   const [mobile] = useState("");
   const [otp, setOtp] = useState("");
-  const isAuthenticated = !!localStorage.getItem("accessToken");
+ const [isAuthenticated, setIsAuthenticated] = useState(
+  !!localStorage.getItem("accessToken")
+);
+
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
    const navigate = useNavigate();
+   
+   useEffect(() => {
+  const handleStorageChange = () => {
+    setIsAuthenticated(!!localStorage.getItem("accessToken"));
+  };
+
+  window.addEventListener("storage", handleStorageChange);
+  handleStorageChange(); // initial sync
+
+  return () => {
+    window.removeEventListener("storage", handleStorageChange);
+  };
+}, []);
+
 
   const onLogin = async (values: any) => {
       try{
