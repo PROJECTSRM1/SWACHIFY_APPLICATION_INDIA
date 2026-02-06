@@ -5482,7 +5482,9 @@
   font-size:11px;
   color:#9ca3af;
 }
-
+.step p{
+  font-size: 10px;
+}
 .step span{
   width:32px;
   height:32px;
