@@ -4452,6 +4452,7 @@
   }
 }
 
+
 .search-box-wrap {
   flex: 1 1 auto;
 }
@@ -5588,16 +5589,18 @@
   font-size: 11px;
   color: #9ca3af;
 }
-
-.step span {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: #e6ecf5;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 6px;
+.step p{
+  font-size: 10px;
+}
+.step span{
+  width:32px;
+  height:32px;
+  border-radius:50%;
+  background:#e6ecf5;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:6px;
 }
 
 /* active step */
