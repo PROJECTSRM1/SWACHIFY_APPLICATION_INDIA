@@ -799,3 +799,25 @@
     font-size: 15px;
   }
 }
+
+.sw-jr-book-card {
+  position: relative;
+  /* needed for absolute arrow */
+}
+
+.sw-jr-arrow {
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  /* ✅ vertical center */
+  font-size: 22px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .sw-jr-book-card:hover .sw-jr-arrow {
+    color: #ffffff;
+    /* ✅ white on hover */
+  }
+}
