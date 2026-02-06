@@ -4,14 +4,20 @@ import ProductsListing from "./ProductsListing";
 import RegisterProduct from "./RegisterProduct";
 import MyProducts from "./MyProducts";
 import Orders from "./Orders";
-import { ArrowLeftOutlined } from "@ant-design/icons";
+import {
+  ArrowLeftOutlined,
+  ShoppingOutlined,
+  AppstoreAddOutlined,
+  DatabaseOutlined,
+  ShoppingCartOutlined,
+} from "@ant-design/icons";
 
 interface CardItem {
   id: number;
   title: string;
   description: string;
-  icon: string;
-  isDummy?: boolean;
+  IconComponent: React.ReactNode;
+  buttonText: string;
 }
 
 const cards: CardItem[] = [
@@ -19,25 +25,29 @@ const cards: CardItem[] = [
     id: 1,
     title: "Browse Products",
     description: "Explore sustainable products from local entrepreneurs",
-    icon: "🛍️",
+    IconComponent: <ShoppingOutlined />,
+    buttonText: "View",
   },
   {
     id: 2,
     title: "Register Product",
     description: "List your eco-friendly products on the marketplace",
-    icon: "📦",
+    IconComponent: <AppstoreAddOutlined />,
+    buttonText: "Add",
   },
   {
     id: 3,
     title: "My Products",
     description: "Manage your registered products and inventory",
-    icon: "📋",
+    IconComponent: <DatabaseOutlined />,
+    buttonText: "Manage",
   },
   {
     id: 4,
     title: "Orders",
     description: "Track your product orders and sales",
-    icon: "🛒",
+    IconComponent: <ShoppingCartOutlined />,
+    buttonText: "Track",
   },
 ];
 
@@ -57,6 +67,7 @@ const SwachifyProducts: React.FC<SwachifyProductsProps> = ({
     setPage("main");
     setActiveCard(null);
   };
+
   return (
     <>
       {/* GLOBAL BACK ARROW – OUTSIDE BLOCKS */}
@@ -82,32 +93,32 @@ const SwachifyProducts: React.FC<SwachifyProductsProps> = ({
           <div className="sw-products-dashboard-grid">
             {cards.map((card) => (
               <div className="sw-products-dashboard-card" key={card.id}>
-                <div className="sw-products-icon-box">{card.icon}</div>
+                <div className="sw-products-icon-box">{card.IconComponent}</div>
                 <h3>{card.title}</h3>
                 <p>{card.description}</p>
 
                 <button
-                  className="sw-products-details-btn"
+                  className="sw-products-action-btn"
                   onClick={() => {
-                    if (card.title === "Browse Products") {
-                      setActiveCard("browse");
-                      setPage("subpage");
+                    switch (card.id) {
+                      case 1:
+                        setActiveCard("browse");
+                        break;
+                      case 2:
+                        setActiveCard("register");
+                        break;
+                      case 3:
+                        setActiveCard("myproducts");
+                        break;
+                      case 4:
+                        setActiveCard("orders");
+                        break;
                     }
-                    if (card.title === "Register Product") {
-                      setActiveCard("register");
-                      setPage("subpage");
-                    }
-                    if (card.title === "My Products") {
-                      setActiveCard("myproducts");
-                      setPage("subpage");
-                    }
-                    if (card.title === "Orders") {
-                      setActiveCard("orders");
-                      setPage("subpage");
-                    }
+                    setPage("subpage");
                   }}
                 >
-                  View Details
+                  {card.buttonText}
+                  <span className="arrow">›</span>
                 </button>
               </div>
             ))}
