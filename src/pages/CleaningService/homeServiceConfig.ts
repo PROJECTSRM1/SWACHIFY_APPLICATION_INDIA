@@ -79,6 +79,37 @@ export const HOME_SERVICE_CONFIG: Record<string, HomeServiceConfig> = {
       
     ],
   },
+  "fan-repair": {
+  category: "Electrician",
+  title: "Fan Repair",
+  rating: "4.7",
+  bookings: "180K bookings",
+  video: "/videos/fan-repair.mp4",
+  services: [
+    {
+      id: "fan-basic",
+      title: "Ceiling Fan Repair",
+      price: 299,
+      duration: "30 mins",
+      description: "Repair of ceiling fan issues like noise or wobbling",
+    },
+    {
+      id: "fan-wiring",
+      title: "Fan Wiring Fix",
+      price: 399,
+      duration: "45 mins",
+      description: "Fix loose or damaged fan wiring connections",
+    },
+    {
+      id: "fan-install",
+      title: "Fan Installation",
+      price: 499,
+      duration: "45 mins",
+      description: "New ceiling fan installation and setup",
+    },
+  ],
+},
+
   "interior": {
   category: "Painting",
   title: "Interior Painting",
@@ -158,6 +189,30 @@ export const HOME_SERVICE_CONFIG: Record<string, HomeServiceConfig> = {
     },
   ],
 },
+"uninstallation": {
+  category: "AC Repair",
+  title: "AC Uninstallation",
+  rating: "4.7",
+  bookings: "620K bookings",
+  video: "https://assets.mixkit.co/videos/preview/mixkit-technician-removing-an-air-conditioner-4373-large.mp4",
+  services: [
+    {
+      id: "split-uninstall",
+      title: "Split AC Uninstallation",
+      price: 999,
+      duration: "60 mins",
+      description: "Safe removal of split AC with proper gas handling",
+    },
+    {
+      id: "window-uninstall",
+      title: "Window AC Uninstallation",
+      price: 699,
+      duration: "45 mins",
+      description: "Quick and damage-free window AC uninstallation",
+    },
+  ],
+},
+
 "home-cooking": {
   category: "Chef",
   title: "Home Cooking",

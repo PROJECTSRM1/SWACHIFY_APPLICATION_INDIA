@@ -483,6 +483,98 @@
   border-color: #2563eb;
 }
 
+
+
+.sw-jr-recent-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sw-jr-recent-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  /* 👈 THIS adds breathing room */
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: #f9fbff;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.sw-jr-recent-item:hover {
+  background: #f1f5ff;
+}
+
+.sw-jr-recent-icon {
+  font-size: 22px;
+  line-height: 1;
+  flex-shrink: 0;
+  /* 👈 prevents icon from squishing */
+}
+
+
+
+
+
+.sw-jr-recent-icon {
+  font-size: 22px;
+  line-height: 1;
+}
+
+
+.sw-jr-recent-title {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.sw-jr-recent-sub {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+
+.sw-jr-recent-item:hover {
+  background: #e2e8f0;
+}
+
+.sw-jr-recent-icon {
+  font-size: 18px;
+}
+
+.sw-jr-recent-title {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.sw-jr-recent-sub {
+  font-size: 12px;
+  color: #64748b;
+}
+
+/* 3. VERY SMALL SCREENS (Small Phones) */
+@media (max-width: 480px) {
+  .sw-jr-header-title {
+    font-size: 18px;
+  }
+
+  .sw-jr-options-grid {
+    grid-template-columns: 1fr;
+    /* Stack ride options vertically */
+  }
+
+  .sw-jr-recent-card {
+    padding: 10px !important;
+  }
+
+  .sw-jr-recent-distance {
+    display: none;
+    /* Hide distance on tiny screens to save space */
+  }
+}
+
+
 .sw-jr-recent-items-main {
   display: flex;
   flex-direction: column;
@@ -514,6 +606,291 @@
   background: #f1f5f9;
 }
 
+
+/* =====================================================
+   JUST RIDE (sw-jr-*) — SAGE THEME OVERRIDE (#8eb33e)
+   FINAL + GUARANTEED
+===================================================== */
+
+:root {
+  --sage: #8eb33e;
+  --sage-dark: #7aa62f;
+  --sage-soft: rgba(142, 179, 62, 0.15);
+}
+
+/* HEADER ICON */
+.sw-jr-header-icon {
+  background: var(--sage) !important;
+}
+
+/* LABELS */
+.sw-jr-label {
+  color: var(--sage) !important;
+}
+
+/* LOCATION BUTTON */
+.sw-jr-location-btn {
+  background: rgba(142, 179, 62, 0.12) !important;
+  border-color: var(--sage) !important;
+}
+
+/* OPTION CARDS */
+.sw-jr-option-card:hover {
+  border-color: var(--sage) !important;
+  background: rgba(142, 179, 62, 0.08) !important;
+}
+
+/* ACTIVE OPTION */
+.sw-jr-option-card.sw-jr-active-option {
+  background: var(--sage) !important;
+  border-color: var(--sage) !important;
+}
+
+.sw-jr-option-card.sw-jr-active-option .sw-jr-option-label,
+.sw-jr-option-card.sw-jr-active-option .sw-jr-icon-wrapper {
+  color: #ffffff !important;
+}
+
+/* ICONS */
+.sw-jr-icon-wrapper {
+  color: var(--sage) !important;
+}
+
+/* RECENT ICONS */
+.sw-jr-recent-icon,
+.sw-jr-recent-icon.office,
+.sw-jr-recent-icon.home {
+  color: var(--sage) !important;
+}
+
+/* MODE PILLS */
+.sw-jr-mode-pill {
+  border-color: var(--sage) !important;
+}
+
+.sw-jr-mode-pill:hover {
+  background: var(--sage) !important;
+  color: #ffffff !important;
+}
+
+.sw-jr-mode-active {
+  background: var(--sage) !important;
+  border-color: var(--sage) !important;
+  box-shadow: 0 6px 16px rgba(142, 179, 62, 0.35) !important;
+}
+
+/* AVAILABLE RIDES */
+.sw-jr-ride-price {
+  color: var(--sage) !important;
+}
+
+/* RIDE ICON COLORS */
+.sw-jr-ride-icon.bike,
+.sw-jr-ride-icon.car,
+.sw-jr-ride-icon.auto {
+  color: var(--sage) !important;
+}
+
+/* CONFIRM BUTTON */
+.sw-jr-confirm-btn {
+  background: linear-gradient(135deg,
+      var(--sage),
+      var(--sage-dark)) !important;
+  border: none !important;
+  box-shadow: 0 8px 20px rgba(142, 179, 62, 0.35) !important;
+}
+
+/* CONFIRM BUTTON HOVER */
+.sw-jr-confirm-btn:hover {
+  background: linear-gradient(135deg,
+      var(--sage-dark),
+      var(--sage)) !important;
+}
+
+/* MAP CONTROL BUTTONS (if any icons inside) */
+.sw-jr-map-controls button,
+.sw-jr-map-controls svg {
+  color: var(--sage) !important;
+}
+
+/* =====================================================
+   JUST RIDE — RECENT DESTINATIONS + RIDER PILL (SAGE)
+===================================================== */
+
+:root {
+  --sage: #8eb33e;
+  --sage-dark: #7aa62f;
+  --sage-soft: rgba(142, 179, 62, 0.12);
+}
+
+/* ---------- "FOR ME" RIDER PILL ---------- */
+.sw-jr-rider-pill {
+  background: var(--sage-soft) !important;
+  border: 1px solid var(--sage) !important;
+  color: #1a1a1a !important;
+}
+
+.sw-jr-rider-pill svg {
+  color: var(--sage) !important;
+}
+
+/* ---------- SECTION TITLE ---------- */
+.sw-jr-section-title,
+.sw-jr-recent-title {
+  color: #1a1a1a !important;
+  font-weight: 700;
+}
+
+/* ---------- RECENT DESTINATION ITEM ---------- */
+.sw-jr-recent-item {
+  background: #f9fafb !important;
+  border: 1px solid #e5e7eb;
+  transition: all 0.2s ease;
+}
+
+.sw-jr-recent-item:hover {
+  background: var(--sage-soft) !important;
+  border-color: var(--sage) !important;
+}
+
+/* ---------- ICON COLORS (FORCE SAGE) ---------- */
+.sw-jr-recent-item svg {
+  color: var(--sage) !important;
+}
+
+/* ---------- LABEL + ADDRESS ---------- */
+.sw-jr-recent-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a1a !important;
+}
+
+.sw-jr-recent-sub {
+  color: #6b7280 !important;
+  font-size: 13px;
+}
+
+/* ---------- TIP BOX ---------- */
+.sw-jr-tip-box {
+  background: var(--sage-soft) !important;
+  border: 1px dashed var(--sage);
+  color: #1a1a1a;
+  font-weight: 500;
+}
+
+/* Light bulb emoji alignment */
+.sw-jr-tip-box {
+  padding: 10px 12px;
+  border-radius: 12px;
+}
+
+.sw-jr-location-block .ant-input,
+.sw-jr-location-block .ant-input-affix-wrapper {
+  border-color: #8eb33e !important;
+}
+
+/* Hover state */
+.sw-jr-location-block .ant-input:hover,
+.sw-jr-location-block .ant-input-affix-wrapper:hover {
+  border-color: #8eb33e !important;
+}
+
+/* Focus state */
+.sw-jr-location-block .ant-input:focus,
+.sw-jr-location-block .ant-input-affix-wrapper-focused,
+.sw-jr-location-block .ant-input-affix-wrapper:focus-within {
+  border-color: #8eb33e !important;
+  box-shadow: 0 0 0 2px rgba(142, 179, 62, 0.25) !important;
+}
+
+/* =====================================================
+   LOCATION SUGGESTIONS DROPDOWN — SAGE THEME
+===================================================== */
+
+/* Dropdown container */
+.sw-jr-suggestions-list {
+  background: #ffffff !important;
+  border: 1px solid #8eb33e !important;
+  border-radius: 12px !important;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12) !important;
+  overflow: hidden;
+}
+
+/* Each suggestion item */
+.sw-jr-suggestion-item {
+  padding: 10px 14px !important;
+  font-size: 14px;
+  color: #1a1a1a !important;
+  background: #ffffff !important;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+/* Hover / active item */
+.sw-jr-suggestion-item:hover {
+  background: rgba(142, 179, 62, 0.12) !important;
+  color: #4d7c0f !important;
+}
+
+/* Divider cleanup */
+.sw-jr-suggestion-item:not(:last-child) {
+  border-bottom: 1px solid #eef2e6 !important;
+}
+
+/* Scrollbar (WebKit) */
+.sw-jr-suggestions-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sw-jr-suggestions-list::-webkit-scrollbar-thumb {
+  background: rgba(142, 179, 62, 0.6);
+  border-radius: 6px;
+}
+
+.sw-jr-suggestions-list::-webkit-scrollbar-track {
+  background: #f5f7f2;
+}
+
+/* =====================================================
+   RECENT DESTINATIONS — SAGE THEME
+===================================================== */
+
+/* Recent destination item container */
+.sw-jr-recent-item {
+  background: #f8fbf3 !important;
+  border: 1px solid rgba(142, 179, 62, 0.4) !important;
+  border-radius: 12px !important;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Hover effect */
+.sw-jr-recent-item:hover {
+  background: rgba(142, 179, 62, 0.12) !important;
+  box-shadow: 0 6px 16px rgba(142, 179, 62, 0.18);
+}
+
+/* Title text (Home / Office / etc.) */
+.sw-jr-recent-title {
+  color: #1a1a1a !important;
+  font-weight: 700;
+}
+
+/* Address text */
+.sw-jr-recent-sub {
+  color: #4b5563 !important;
+  font-size: 13px;
+}
+
+/* Icon color inside recent items */
+.sw-jr-recent-icon {
+  color: #8eb33e !important;
+}
+
+.sw-jr-title {
+  color: #8eb33e !important;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+}
 
 /* All services in just ride */
 
@@ -752,6 +1129,213 @@
 }
 
 
+.sw-js-as-loc-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px !important;
+  gap: 12px;
+  /* ✅ spacing between dot, input, dropdown */
+}
+
+.sw-js-as-input {
+  flex: 1;
+  /* ✅ input takes full width */
+}
+
+.sw-js-as-pickup-type {
+  width: 120px;
+  /* ✅ dropdown on the right */
+}
+
+
+
+@media (max-width: 576px) {
+
+  /* Make the main card breathe */
+  .sw-js-as-card {
+    padding: 14px !important;
+    border-radius: 16px;
+  }
+
+  /* Stack location rows nicely */
+  .sw-js-as-loc-row {
+    gap: 8px;
+  }
+
+  .sw-js-as-input {
+    width: 100%;
+    font-size: 14px;
+  }
+
+  /* Tabs scroll instead of squeezing */
+  .sw-js-as-tabs {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: 6px;
+  }
+
+  .sw-js-as-tab {
+    flex: 0 0 auto;
+    font-size: 14px;
+    padding: 6px 12px;
+  }
+
+  /* Service cards → single column */
+  .sw-js-as-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  /* Each service row */
+  .sw-js-as-row {
+    padding: 12px;
+    border-radius: 14px;
+  }
+
+  .sw-js-as-icon {
+    width: 38px;
+    height: 38px;
+    font-size: 20px;
+  }
+
+  .sw-js-as-name {
+    font-size: 15px;
+  }
+
+  .sw-js-as-sub {
+    font-size: 13px;
+  }
+
+  .sw-js-as-price {
+    font-size: 15px;
+  }
+
+  .sw-js-as-km {
+    font-size: 12px;
+  }
+
+  /* CTA button */
+  .sw-js-as-cta-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 15px;
+    border-radius: 12px;
+  }
+}
+
+.sw-js-as-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.sw-js-as-back-btn {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: #2563eb;
+}
+
+.sw-js-as-header-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+  /* 👈 Remove default h2 margin */
+  line-height: 1;
+}
+
+
+.sw-js-as-back-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  color: #2563eb;
+  transition: background 0.2s ease;
+}
+
+.sw-js-as-back-btn:hover {
+  background: #e0e7ff;
+}
+
+/* =====================================================
+   JUST SEARCH / ASSIGN SCREEN — SAGE THEME (#8eb33e)
+===================================================== */
+
+/* Accent color variable (local only) */
+.sw-js-as-wrap {
+  --sage: #8eb33e;
+  --sage-dark: #7aa62f;
+  --sage-soft: rgba(142, 179, 62, 0.15);
+}
+
+/* Dots */
+.sw-js-as-dot.blue,
+.sw-js-as-dot.green {
+  background: var(--sage);
+}
+
+/* Inputs focus */
+.sw-js-as-input:focus {
+  border-color: var(--sage) !important;
+  box-shadow: 0 0 0 2px rgba(142, 179, 62, 0.15);
+}
+
+/* Tabs */
+.sw-js-as-tab.active {
+  background: linear-gradient(135deg, var(--sage), var(--sage-dark));
+  color: #ffffff;
+}
+
+/* Icons */
+.sw-js-as-icon {
+  background: linear-gradient(145deg, rgba(142, 179, 62, 0.18), rgba(142, 179, 62, 0.08));
+}
+
+/* Service subtitle */
+.sw-js-as-sub {
+  color: var(--sage);
+}
+
+/* Price */
+.sw-js-as-price {
+  color: var(--sage);
+  font-weight: 600;
+}
+
+/* CTA button */
+.sw-js-as-cta-btn {
+  background: linear-gradient(135deg, var(--sage), var(--sage-dark));
+  box-shadow: 0 8px 20px rgba(142, 179, 62, 0.35);
+}
+
+/* CTA hover */
+.sw-js-as-cta-btn:hover {
+  background: linear-gradient(135deg, var(--sage-dark), var(--sage));
+}
+
+/* Back button */
+.sw-js-as-back-btn {
+  color: var(--sage);
+}
+
+.sw-js-as-back-btn:hover {
+  background: rgba(142, 179, 62, 0.15);
+}
+
+/* Small muted text */
+.sw-js-as-km {
+  color: #6b7280;
+}
 
 /* ============================================================
    RESPONSIVE MEDIA QUERIES
@@ -821,27 +1405,6 @@
     background: white;
     padding: 15px 0;
     z-index: 100;
-  }
-}
-
-/* 3. VERY SMALL SCREENS (Small Phones) */
-@media (max-width: 480px) {
-  .sw-jr-header-title {
-    font-size: 18px;
-  }
-
-  .sw-jr-options-grid {
-    grid-template-columns: 1fr;
-    /* Stack ride options vertically */
-  }
-
-  .sw-jr-recent-card {
-    padding: 10px !important;
-  }
-
-  .sw-jr-recent-distance {
-    display: none;
-    /* Hide distance on tiny screens to save space */
   }
 }
 
@@ -1014,73 +1577,6 @@
   margin-bottom: 10px;
 }
 
-.sw-jr-recent-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.sw-jr-recent-item {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  /* 👈 THIS adds breathing room */
-  padding: 14px 16px;
-  border-radius: 12px;
-  background: #f9fbff;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-.sw-jr-recent-item:hover {
-  background: #f1f5ff;
-}
-
-.sw-jr-recent-icon {
-  font-size: 22px;
-  line-height: 1;
-  flex-shrink: 0;
-  /* 👈 prevents icon from squishing */
-}
-
-
-
-
-
-.sw-jr-recent-icon {
-  font-size: 22px;
-  line-height: 1;
-}
-
-
-.sw-jr-recent-title {
-  font-weight: 600;
-  font-size: 15px;
-}
-
-.sw-jr-recent-sub {
-  font-size: 13px;
-  color: #6b7280;
-}
-
-
-.sw-jr-recent-item:hover {
-  background: #e2e8f0;
-}
-
-.sw-jr-recent-icon {
-  font-size: 18px;
-}
-
-.sw-jr-recent-title {
-  font-size: 13px;
-  font-weight: 600;
-}
-
-.sw-jr-recent-sub {
-  font-size: 12px;
-  color: #64748b;
-}
 
 .sw-jr-tip-box-main {
 
@@ -1129,144 +1625,6 @@
   text-decoration: underline;
 }
 
-
-.sw-js-as-loc-row {
-  display: flex;
-  align-items: center;
-  margin-bottom: 8px !important;
-  gap: 12px;
-  /* ✅ spacing between dot, input, dropdown */
-}
-
-.sw-js-as-input {
-  flex: 1;
-  /* ✅ input takes full width */
-}
-
-.sw-js-as-pickup-type {
-  width: 120px;
-  /* ✅ dropdown on the right */
-}
-
-
-
-@media (max-width: 576px) {
-
-  /* Make the main card breathe */
-  .sw-js-as-card {
-    padding: 14px !important;
-    border-radius: 16px;
-  }
-
-  /* Stack location rows nicely */
-  .sw-js-as-loc-row {
-    gap: 8px;
-  }
-
-  .sw-js-as-input {
-    width: 100%;
-    font-size: 14px;
-  }
-
-  /* Tabs scroll instead of squeezing */
-  .sw-js-as-tabs {
-    overflow-x: auto;
-    white-space: nowrap;
-    padding-bottom: 6px;
-  }
-
-  .sw-js-as-tab {
-    flex: 0 0 auto;
-    font-size: 14px;
-    padding: 6px 12px;
-  }
-
-  /* Service cards → single column */
-  .sw-js-as-list {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 14px;
-  }
-
-  /* Each service row */
-  .sw-js-as-row {
-    padding: 12px;
-    border-radius: 14px;
-  }
-
-  .sw-js-as-icon {
-    width: 38px;
-    height: 38px;
-    font-size: 20px;
-  }
-
-  .sw-js-as-name {
-    font-size: 15px;
-  }
-
-  .sw-js-as-sub {
-    font-size: 13px;
-  }
-
-  .sw-js-as-price {
-    font-size: 15px;
-  }
-
-  .sw-js-as-km {
-    font-size: 12px;
-  }
-
-  /* CTA button */
-  .sw-js-as-cta-btn {
-    width: 100%;
-    padding: 12px;
-    font-size: 15px;
-    border-radius: 12px;
-  }
-}
-
-.sw-js-as-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 16px;
-}
-
-.sw-js-as-back-btn {
-  background: none;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
-  color: #2563eb;
-}
-
-.sw-js-as-header-title {
-  font-size: 18px;
-  font-weight: 600;
-  margin: 0;
-  /* 👈 Remove default h2 margin */
-  line-height: 1;
-}
-
-
-.sw-js-as-back-btn {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: none;
-  background: #f1f5f9;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  font-size: 16px;
-  color: #2563eb;
-  transition: background 0.2s ease;
-}
-
-.sw-js-as-back-btn:hover {
-  background: #e0e7ff;
-}
 
 
 /* Professional Rider Pill */
@@ -3023,6 +3381,597 @@ body {
   background: #f1f5f9 !important;
 }
 
+.sw-jr-bk-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.2);
+  /* subtle dim behind popup */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.sw-jr-bk-popup-success-card {
+  width: 320px;
+  border-radius: 12px;
+  padding: 20px;
+  background-color: #ffffff;
+  /* light theme */
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
+  text-align: center;
+}
+
+.sw-jr-bk-popup-icon-container {
+  margin-bottom: 12px;
+}
+
+.sw-jr-bk-popup-success-icon {
+  font-size: 40px;
+  color: #10b981;
+  /* green success color */
+}
+
+.sw-jr-bk-popup-success-title {
+  margin-bottom: 6px;
+  font-size: 18px;
+  color: #111827;
+}
+
+.sw-jr-bk-popup-success-desc {
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: #374151;
+}
+
+.sw-jr-bk-popup-success-reason {
+  background: #f3f4f6;
+  /* light gray background */
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  color: #111827;
+}
+
+.sw-jr-bk-popup-success-reason p {
+  margin: 4px 0 0 0;
+}
+
+
+/* ////boook ride end/// */
+/* ====== BOOK RIDE LAYOUT FIX (NO CARD, LAPTOP FIT) ====== */
+
+.sw-jr-bk-full-wrapper {
+  --theme-color: #8eb33e;
+  --text-light: #ffffff;
+  --text-dark: #1a1a1a;
+  --muted-text: #6b7280;
+
+  background: #f5f7fa;
+  min-height: 100vh;
+  width: 100%;
+  padding: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* Container should NOT look boxed */
+.sw-jr-bk-container-centered {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* REMOVE glass / card look completely */
+.sw-jr-bk-glass-card {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+/* Heading & back button */
+.sw-jr-bk-main-heading {
+  color: var(--text-dark);
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.sw-jr-bk-back-round {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  color: var(--text-dark);
+}
+
+/* Flat input section */
+.sw-jr-bk-location-box {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 20px;
+  border: 1px solid #e5e7eb;
+}
+
+.sw-jr-bk-field-column label {
+  color: var(--muted-text);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.sw-jr-bk-input-web input {
+  color: var(--text-dark) !important;
+}
+
+/* Theme color applied */
+.sw-jr-bk-icon-p,
+.sw-jr-bk-ride-price,
+.sw-jr-bk-eta,
+.sw-jr-bk-fare-amount {
+  color: var(--theme-color);
+}
+
+/* Ride rows (NOT cards) */
+.sw-jr-bk-ride-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+}
+
+.sw-jr-bk-ride-card:hover {
+  background: #f9fafb;
+}
+
+.sw-jr-bk-ride-card.active {
+  border-color: var(--theme-color);
+  background: rgba(142, 179, 62, 0.12);
+}
+
+/* Primary button */
+.sw-jr-bk-confirm-btn {
+  background: var(--theme-color) !important;
+  color: var(--text-light) !important;
+  height: 56px;
+  border-radius: 14px;
+  font-weight: 800;
+  border: none;
+}
+
+/* Laptop fit */
+@media (max-width: 1024px) {
+  .sw-jr-bk-container-centered {
+    max-width: 100%;
+  }
+}
+
+/* ====== BRIGHT STATUS + CANCEL FIX ====== */
+
+/* Driver arriving pill */
+.sw-jr-bk-status-pill {
+  background: rgba(142, 179, 62, 0.18) !important;
+  color: #4d7c0f !important;
+  font-weight: 700;
+  box-shadow: 0 0 0 1px rgba(142, 179, 62, 0.5) inset;
+}
+
+/* ETA text (7 min away) */
+.sw-jr-bk-eta {
+  color: #4d7c0f !important;
+  font-weight: 800;
+  font-size: 14px;
+}
+
+/* Total Fare container */
+.sw-jr-bk-fare-box {
+  background: #ffffff !important;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+}
+
+/* Fare amount (₹257) */
+.sw-jr-bk-fare-amount {
+  color: #65a30d !important;
+  font-size: 22px;
+  font-weight: 900;
+}
+
+/* CANCEL RIDE BUTTON — MAKE IT POP */
+.sw-jr-bk-cancel-btn {
+  background: #fee2e2 !important;
+  border: 1px solid #fecaca !important;
+  color: #dc2626 !important;
+  font-weight: 800 !important;
+  box-shadow: 0 4px 14px rgba(220, 38, 38, 0.25);
+}
+
+/* Hover effect for cancel */
+.sw-jr-bk-cancel-btn:hover {
+  background: var(--primary) !important;
+  color: #ffffff !important;
+}
+
+/* ====== FIX REMAINING WHITE / FADED TEXT ====== */
+
+/* Vehicle type text (Bike / Car) */
+.sw-jr-bk-ride-type,
+.sw-jr-bk-ride-type span {
+  color: #000000 !important;
+  font-weight: 600;
+}
+
+/* Driver vehicle number */
+.sw-jr-bk-driver-text p {
+  color: #000000 !important;
+  opacity: 1 !important;
+}
+
+/* PICKUP / DROP-OFF labels */
+.sw-jr-bk-route-text label,
+.sw-jr-bk-reason-label,
+.sw-jr-bk-route-item label {
+  color: #000000 !important;
+  opacity: 1 !important;
+}
+
+/* Pickup / Dropoff values */
+.sw-jr-bk-route-text p,
+.sw-jr-bk-route-item p {
+  color: #000000 !important;
+}
+
+/* Pickup / Drop-off section text */
+.sw-jr-bk-location-box *,
+.sw-jr-bk-route-summary * {
+  color: #000000 !important;
+}
+
+/* SAFE • RELIABLE • PREMIUM text */
+.sw-jr-bk-footer-hint {
+  color: #000000 !important;
+  opacity: 1 !important;
+  font-weight: 600;
+}
+
+/* ====== PICKUP / DROP-OFF SAGE COLOR FIX ====== */
+
+/* Section labels */
+.sw-jr-bk-field-column label {
+  color: #8eb33e !important;
+  font-weight: 700;
+}
+
+/* Pickup & Drop-off text */
+.sw-jr-bk-input-web input,
+.sw-jr-bk-route-text p {
+  color: #000000 !important;
+}
+
+/* Placeholder text */
+.sw-jr-bk-input-web input::placeholder {
+  color: #6b7280 !important;
+}
+
+/* Pickup icon (dot / pin) */
+.sw-jr-bk-icon-p {
+  color: #8eb33e !important;
+}
+
+/* Drop-off icon */
+.sw-jr-bk-icon-d {
+  color: #ef4444 !important;
+}
+
+/* Dashed vertical line between pickup & dropoff */
+.sw-jr-bk-dashed-line {
+  background: repeating-linear-gradient(to bottom,
+      #8eb33e,
+      #8eb33e 4px,
+      transparent 4px,
+      transparent 8px);
+}
+
+.sw-jr-bk-status-badge {
+  background: rgba(142, 179, 62, 0.15) !important;
+  border: 1px solid rgba(142, 179, 62, 0.4);
+  border-radius: 999px;
+  padding: 6px 14px;
+  width: fit-content;
+}
+
+/* Badge text */
+.sw-jr-bk-status-badge .ant-badge-status-text {
+  color: #8eb33e !important;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/* Badge dot */
+.sw-jr-bk-status-badge .ant-badge-status-dot {
+  background-color: #8eb33e !important;
+}
+
+.sw-jr-bk-mini-name {
+  color: #8eb33e !important;
+  font-weight: 700;
+  opacity: 1 !important;
+}
+
+/* Vehicle emoji/icon next to text */
+.sw-jr-bk-mini-icon {
+  color: #8eb33e !important;
+  opacity: 1 !important;
+}
+
+/* =====================================================
+   FINAL RESPONSIVE NORMALIZATION (ALL DEVICES)
+   320 / 375 / 420 / Tablet / Desktop
+===================================================== */
+
+/* ---- ROOT WRAPPER ---- */
+.sw-jr-bk-full-wrapper {
+  min-height: 100vh;
+  width: 100%;
+  padding: 12px;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-y: auto;
+  /* ❗ allow natural flow */
+}
+
+/* ---- MAIN CONTAINER ---- */
+.sw-jr-bk-container-centered {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+}
+
+/* ---- CARD ---- */
+.sw-jr-bk-glass-card {
+  width: 100%;
+  padding: 0;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* ---- FIX OVER-SPACING ---- */
+.sw-jr-bk-top-nav {
+  margin-bottom: 12px;
+}
+
+.sw-jr-bk-status-circle-wrap {
+  margin: 8px auto 12px;
+}
+
+/* ---- BUTTONS ALWAYS VISIBLE ---- */
+.sw-jr-bk-confirm-btn,
+.sw-jr-bk-cancel-btn {
+  width: 100%;
+  max-width: 100%;
+  margin-top: 12px;
+}
+
+/* ---- FOOTER ---- */
+.sw-jr-bk-footer-hint {
+  margin: 16px 0 0;
+  font-size: 11px;
+  text-align: center;
+}
+
+/* =====================================================
+   MOBILE (320–374)
+===================================================== */
+@media (max-width: 374px) {
+  .sw-jr-bk-container-centered {
+    max-width: 100%;
+  }
+
+  .sw-jr-bk-main-heading {
+    font-size: 16px;
+  }
+
+  .sw-jr-bk-location-box {
+    padding: 12px;
+  }
+
+  .sw-jr-bk-ride-desc {
+    display: none;
+    /* free space */
+  }
+
+  .sw-jr-bk-confirm-btn,
+  .sw-jr-bk-cancel-btn {
+    height: 44px;
+    font-size: 13px;
+  }
+}
+
+/* =====================================================
+   MOBILE (375–420)
+===================================================== */
+@media (min-width: 375px) and (max-width: 420px) {
+  .sw-jr-bk-container-centered {
+    max-width: 100%;
+  }
+
+  .sw-jr-bk-main-heading {
+    font-size: 18px;
+  }
+
+  .sw-jr-bk-location-box {
+    padding: 14px;
+  }
+}
+
+/* =====================================================
+   TABLET (421–768)
+===================================================== */
+@media (min-width: 421px) and (max-width: 768px) {
+  .sw-jr-bk-container-centered {
+    max-width: 560px;
+  }
+}
+
+/* =====================================================
+   DESKTOP (769+)
+===================================================== */
+@media (min-width: 769px) {
+  .sw-jr-bk-container-centered {
+    max-width: 980px;
+  }
+}
+
+/* =====================================================
+   CANCEL RIDE CARD — THEME (#8eb33e)
+===================================================== */
+
+/* Overlay (keep soft) */
+.sw-jr-bk-cancel-overlay {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+/* Main cancel card */
+.sw-jr-bk-cancel-content {
+  background: #ffffff !important;
+  border-radius: 18px;
+  padding: 24px 20px;
+  box-shadow: 0 20px 40px rgba(142, 179, 62, 0.25);
+  border: 1px solid rgba(142, 179, 62, 0.35);
+}
+
+/* Title */
+.sw-jr-bk-cancel-title {
+  color: #1a1a1a !important;
+  font-weight: 800;
+  text-align: center;
+}
+
+/* Subtitle */
+.sw-jr-bk-cancel-subtitle {
+  color: #64748b !important;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* "SELECT A REASON" */
+.sw-jr-bk-reason-label {
+  color: #8eb33e !important;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+}
+
+/* Reason items */
+.sw-jr-bk-reason-item {
+  background: #f8fafc !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 12px;
+  padding: 12px 14px;
+  color: #1a1a1a;
+  font-weight: 500;
+}
+
+/* Hover effect */
+.sw-jr-bk-reason-item:hover {
+  background: rgba(142, 179, 62, 0.12) !important;
+  border-color: #8eb33e !important;
+}
+
+/* Arrow icon */
+.sw-jr-bk-reason-arrow {
+  color: #8eb33e !important;
+}
+
+/* KEEP RIDE BUTTON (PRIMARY ACTION) */
+.sw-jr-bk-btn-keep-ride {
+  background: #8eb33e !important;
+  color: #ffffff !important;
+  font-weight: 800;
+  height: 52px;
+  border-radius: 14px;
+  border: none !important;
+  box-shadow: 0 8px 20px rgba(142, 179, 62, 0.35);
+}
+
+/* Button hover */
+.sw-jr-bk-btn-keep-ride:hover {
+  background: #7aa62f !important;
+}
+
+/* =====================================================
+   SUCCESS POPUP (RIDE CANCELLED) — THEME (#8eb33e)
+===================================================== */
+
+/* Overlay */
+.sw-jr-bk-popup-overlay {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+/* Success card */
+.sw-jr-bk-popup-success-card {
+  background: #ffffff !important;
+  border-radius: 18px;
+  padding: 24px 22px;
+  border: 1px solid rgba(142, 179, 62, 0.35);
+  box-shadow: 0 20px 40px rgba(142, 179, 62, 0.25);
+}
+
+/* Success icon */
+.sw-jr-bk-popup-success-icon {
+  color: #8eb33e !important;
+  font-size: 42px;
+}
+
+/* Title */
+.sw-jr-bk-popup-success-title {
+  color: #1a1a1a !important;
+  font-weight: 800;
+  margin-top: 8px;
+}
+
+/* Description */
+.sw-jr-bk-popup-success-desc {
+  color: #64748b !important;
+  font-size: 14px;
+}
+
+/* Reason box */
+.sw-jr-bk-popup-success-reason {
+  background: rgba(142, 179, 62, 0.12) !important;
+  border: 1px solid rgba(142, 179, 62, 0.3);
+  border-radius: 12px;
+  color: #1a1a1a;
+}
+
+/* Reason label text */
+.sw-jr-bk-popup-success-reason strong {
+  color: #8eb33e;
+}
+
+/* DONE BUTTON */
+.sw-jr-bk-popup-success-card .ant-btn-primary,
+.sw-jr-bk-popup-success-card button {
+  background: #8eb33e !important;
+  border: none !important;
+  color: #ffffff !important;
+  font-weight: 800;
+  height: 48px;
+  border-radius: 14px;
+  box-shadow: 0 8px 20px rgba(142, 179, 62, 0.35);
+}
+
+/* Button hover */
+.sw-jr-bk-popup-success-card .ant-btn-primary:hover,
+.sw-jr-bk-popup-success-card button:hover {
+  background: #7aa62f !important;
+}
+
+/* ///close book ride//// */
 
 /* 1. The Full Screen Overlay (Blurs the background) */
 .sw-success-popup-overlay {
@@ -3139,66 +4088,6 @@ body {
   }
 }
 
-
-.sw-jr-bk-popup-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.2);
-  /* subtle dim behind popup */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-
-.sw-jr-bk-popup-success-card {
-  width: 320px;
-  border-radius: 12px;
-  padding: 20px;
-  background-color: #ffffff;
-  /* light theme */
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
-  text-align: center;
-}
-
-.sw-jr-bk-popup-icon-container {
-  margin-bottom: 12px;
-}
-
-.sw-jr-bk-popup-success-icon {
-  font-size: 40px;
-  color: #10b981;
-  /* green success color */
-}
-
-.sw-jr-bk-popup-success-title {
-  margin-bottom: 6px;
-  font-size: 18px;
-  color: #111827;
-}
-
-.sw-jr-bk-popup-success-desc {
-  margin-bottom: 12px;
-  font-size: 14px;
-  color: #374151;
-}
-
-.sw-jr-bk-popup-success-reason {
-  background: #f3f4f6;
-  /* light gray background */
-  padding: 10px;
-  border-radius: 8px;
-  margin-bottom: 16px;
-  font-size: 13px;
-  color: #111827;
-}
-
-.sw-jr-bk-popup-success-reason p {
-  margin: 4px 0 0 0;
-}
 
 
 

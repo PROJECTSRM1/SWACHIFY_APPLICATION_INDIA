@@ -149,7 +149,7 @@
    RECENT TICKETS (clean white theme)
 -------------------------------------------- */
 .sw-jr-section-title {
-  margin-top: 32px;
+  margin-top: 12px;
   font-size: 14px;
   letter-spacing: 2px;
   color: var(--text-light);
@@ -191,10 +191,10 @@
 }
 
 .sw-jr-big-title {
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 800;
   color: var(--text-strong);
-  margin-bottom: 24px;
+  margin-bottom: 10px;
 }
 
 /* Single card */
@@ -202,7 +202,7 @@
   background: var(--surface-alt);
   border: 1px solid var(--border);
   border-radius: 14px;
-  padding: 18px;
+  padding: 14px;
 }
 
 .sw-jr-input-label {
@@ -226,12 +226,13 @@
 /* Swap */
 .sw-jr-swap-wrap {
   text-align: center;
-  margin: 14px 0;
+  margin: 4px 0;
 }
 
 .sw-jr-swap-arrow {
-  font-size: 26px;
+  font-size: 20px;
   color: var(--primary);
+  line-height: 1;
 }
 
 /* --------------------------------------------
@@ -268,7 +269,8 @@
    FARE + PAY BUTTON
 -------------------------------------------- */
 .sw-jr-fare-box {
-  margin-top: 20px;
+  margin-top: 12px;
+  text-align: center;
 }
 
 .sw-jr-fare-label {
@@ -549,12 +551,13 @@
   padding: 0;
 }
 
-
-
-.sw-jr-page {
-  max-height: 95vh !important;
+.sw-jr-popup-fullscreen {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
 
 
 
@@ -649,4 +652,172 @@
   max-width: none !important;
   width: 100%;
   padding: 16px;
+}
+
+.sw-jr-center-box {
+  width: 100%;
+  max-width: 520px;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 12px;
+  margin: auto;
+  padding: 0;
+}
+
+.sw-jr-pay-btn {
+  width: 100%;
+  background: var(--primary);
+  padding: 16px;
+
+  display: flex;
+  /* 🔥 key */
+  align-items: center;
+  /* vertical center */
+  justify-content: center;
+  /* horizontal center */
+
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+
+  border-radius: 14px;
+  cursor: pointer;
+}
+
+/* RECENT TICKETS SCROLL AREA */
+.sw-jr-recent-scroll {
+  margin-top: 12px;
+  max-height: 260px;
+  /* 👈 controls visible area */
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+/* Optional clean scrollbar */
+.sw-jr-recent-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sw-jr-recent-scroll::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+@media (max-width: 480px) {
+  .sw-jr-center-box {
+    height: 100vh;
+    gap: 8px;
+    /* tighter spacing */
+  }
+
+  .sw-jr-big-title {
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+
+  .sw-jr-input-card {
+    padding: 10px;
+  }
+
+  .sw-jr-input-box {
+    padding: 10px 12px;
+  }
+
+  .sw-jr-swap-wrap {
+    margin: 4px 0;
+  }
+
+  .sw-jr-trip-tabs {
+    padding: 4px;
+  }
+
+  .sw-jr-trip-tab {
+    padding: 10px 0;
+    font-size: 13px;
+  }
+
+  .sw-jr-fare-box {
+    margin-top: 6px;
+  }
+
+  .sw-jr-fare-amount {
+    font-size: 22px;
+  }
+
+  .sw-jr-pay-btn {
+    padding: 14px;
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 900px) and (min-width: 481px) {
+
+  .sw-jr-center-box {
+    height: 100vh;
+    gap: 8px;
+    /* tighter than desktop */
+  }
+
+  .sw-jr-big-title {
+    font-size: 26px;
+    margin-bottom: 10px;
+  }
+
+  .sw-jr-input-card {
+    padding: 12px;
+  }
+
+  .sw-jr-input-box {
+    padding: 12px 14px;
+  }
+
+  .sw-jr-swap-wrap {
+    margin: 4px 0;
+  }
+
+  .sw-jr-trip-tabs {
+    padding: 4px;
+  }
+
+  .sw-jr-trip-tab {
+    padding: 10px 0;
+    font-size: 14px;
+  }
+
+  .sw-jr-fare-box {
+    margin-top: 6px;
+  }
+
+  .sw-jr-fare-amount {
+    font-size: 24px;
+  }
+
+  .sw-jr-pay-btn {
+    padding: 14px;
+    font-size: 15px;
+  }
+}
+
+.sw-jr-book-card {
+  position: relative;
+  /* needed for absolute arrow */
+}
+
+.sw-jr-arrow {
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  /* ✅ vertical center */
+  font-size: 22px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .sw-jr-book-card:hover .sw-jr-arrow {
+    color: #ffffff;
+    /* ✅ white on hover */
+  }
 }
