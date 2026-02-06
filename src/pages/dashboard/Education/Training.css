@@ -33,7 +33,8 @@
 /* CATEGORY */
 .training-scope .category-row {
   display: flex;
-  gap: 12px;
+  gap: 4px;
+  flex-wrap: nowrap;
   margin-bottom: 28px;
 }
 
@@ -47,7 +48,7 @@
 
 .training-scope .category-btn.active {
   background: #2563eb;
-  color: #fff;
+  color: #000;
 }
 
 /* GRID */
@@ -261,4 +262,10 @@
 /* Text block alignment */
 .training-scope .training-header > div {
   margin-top: 0 !important;
+}
+@media (max-width: 360px) {
+  .category-btn {
+    font-size: 10.8px;
+    padding: 5px 3px;
+  }
 }

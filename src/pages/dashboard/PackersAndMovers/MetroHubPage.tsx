@@ -21,7 +21,7 @@ const MetroHubPage: React.FC = () => {
   const [showPlan, setShowPlan] = useState(false);
   const [showQRPopup, setShowQRPopup] = useState(false);
   const [qrData, setQrData] = useState<MetroTicket | null>(null);
-const [history, setHistory] = useState<MetroTicket[]>([]);
+  const [history, setHistory] = useState<MetroTicket[]>([]);
 
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const [history, setHistory] = useState<MetroTicket[]>([]);
     setHistory(saved);
   }, []);
 
- const addToHistory = (ticket: MetroTicket) => {
+  const addToHistory = (ticket: MetroTicket) => {
     const updated = [ticket, ...history];
     setHistory(updated);
     localStorage.setItem("metroHistory", JSON.stringify(updated));
@@ -38,38 +38,38 @@ const [history, setHistory] = useState<MetroTicket[]>([]);
   return (
     <div className="sw-jr-page">
       {/* HEADER */}
-     <div className="sw-jr-header">
-  <div className="sw-jr-header-left" style={{ display: "flex", alignItems: "center", gap: "14px" }}>
+      <div className="sw-jr-header">
+        <div className="sw-jr-header-left" style={{ display: "flex", alignItems: "center", gap: "14px" }}>
 
-    {/* BACK BUTTON */}
-    <button
-      onClick={() => navigate(-1)}
-      style={{
-        background: "#ffffff",
-        border: "1px solid #e5e7eb",
-        width: "36px",
-        height: "36px",
-        borderRadius: "50%",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        cursor: "pointer",
-        boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
-      }}
-    >
-      <LeftOutlined style={{ fontSize: "16px" }} />
-    </button>
+          {/* BACK BUTTON */}
+          <button
+            onClick={() => navigate(-1)}
+            style={{
+              background: "#ffffff",
+              border: "1px solid #e5e7eb",
+              width: "36px",
+              height: "36px",
+              borderRadius: "50%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              cursor: "pointer",
+              boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
+            }}
+          >
+            <LeftOutlined style={{ fontSize: "16px" }} />
+          </button>
 
-    {/* EXISTING LOGO + TITLE */}
-    <div className="sw-jr-icon-box">🚇</div>
-    <div>
-      <div className="sw-jr-title">Metro Hub</div>
-      <div className="sw-jr-location">HYDERABAD</div>
-    </div>
-  </div>
+          {/* EXISTING LOGO + TITLE */}
+          <div className="sw-jr-icon-box">🚇</div>
+          <div>
+            <div className="sw-jr-title">Metro Hub</div>
+            <div className="sw-jr-location">HYDERABAD</div>
+          </div>
+        </div>
 
-  <div className="sw-jr-history-btn">⟳</div>
-</div>
+        <div className="sw-jr-history-btn">⟳</div>
+      </div>
 
 
       <div className="sw-jr-center-box">
@@ -89,49 +89,50 @@ const [history, setHistory] = useState<MetroTicket[]>([]);
         {/* RECENT TICKETS */}
         <div className="sw-jr-section-title">RECENT TICKETS</div>
 
-        {history.length === 0 ? (
-          <div style={{ opacity: 0.5, marginTop: "12px", fontSize: "14px" }}>
-            No recent bookings
-          </div>
-        ) : (
-          history.map((t, idx) => (
-          <div 
-            key={idx} 
-             className="sw-jr-ticket-card"
-            onClick={() => {
-            setQrData(t);          // load ticket data
-            setShowQRPopup(true);  // open QR popup
-            }}
-            >
-
-              <div className="sw-jr-ticket-place">
-                {t.from} → {t.to}
-              </div>
-              <div className="sw-jr-ticket-meta">
-                ₹{t.fare} •{" "}
-                {new Date(t.time).toLocaleDateString("en-IN", {
-                  day: "2-digit",
-                  month: "2-digit",
-                  year: "numeric"
-                })}
-              </div>
+        <div className="sw-jr-recent-scroll">
+          {history.length === 0 ? (
+            <div style={{ opacity: 0.5, marginTop: "12px", fontSize: "14px" }}>
+              No recent bookings
             </div>
-          ))
-        )}
+          ) : (
+            history.map((t, idx) => (
+              <div
+                key={idx}
+                className="sw-jr-ticket-card"
+                onClick={() => {
+                  setQrData(t);
+                  setShowQRPopup(true);
+                }}
+              >
+                <div className="sw-jr-ticket-place">
+                  {t.from} → {t.to}
+                </div>
+                <div className="sw-jr-ticket-meta">
+                  ₹{t.fare} •{" "}
+                  {new Date(t.time).toLocaleDateString("en-IN", {
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric",
+                  })}
+                </div>
+              </div>
+            ))
+          )}
+        </div>
       </div>
 
       {/* PLAN TRIP POPUP */}
       {showPlan && (
         <div className="sw-jr-popup-overlay">
           <div className="sw-jr-popup-fullscreen">
-       <MetroPlanTrip
-  closePlan={() => setShowPlan(false)}
-  showQR={(data: MetroTicket) => {
-    setQrData(data);
-    setShowQRPopup(true);
-    addToHistory(data);
-  }}
-/>
+            <MetroPlanTrip
+              closePlan={() => setShowPlan(false)}
+              showQR={(data: MetroTicket) => {
+                setQrData(data);
+                setShowQRPopup(true);
+                addToHistory(data);
+              }}
+            />
 
           </div>
         </div>

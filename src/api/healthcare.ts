@@ -118,6 +118,50 @@ export interface AppointmentBookingPayload {
   call_booking_status: string;
 }
 
+// my bookings
+
+export interface ConsultationType {
+    id: number;
+    name: string;
+}
+
+export interface Doctor {
+    id: number;
+    name: string;
+}
+
+export interface Appointment {
+    id: number;
+    user_id: number;
+    appointment_time: string;
+    consultation_type_id: number;
+    consultation_type: ConsultationType;
+    doctor_id: number;
+    doctor_name: string;
+    doctor_specialization_id: number | null;
+    doctor_specialization: any | null;
+    ambulance_id: number | null;
+    ambulance: any | null;
+    assistant_id: number | null;
+    assistant: any | null;
+    labs_id: number | null;
+    labs: any | null;
+    pharmacies_id: number | null;
+    pharmacies: any | null;
+    hospital: any | null;
+    required_ambulance: boolean;
+    required_assistant: boolean;
+    pickup_time: string | null;
+    status: string;
+    call_booking_status: string;
+    is_active: boolean;
+}
+
+export type UserAppointmentsResponse = Appointment[];
+
+
+
+
 
 /* =========================
    SERVICE
@@ -224,6 +268,39 @@ const healthcareService = {
         throw error;
     }
 },
+
+
+// my bookings
+// get appointments by user
+getUserAppointments: async (userId: number): Promise<UserAppointmentsResponse> => {
+    try {
+        const response = await api.get(`/healthcare/appointments/user/${userId}`);
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching user appointments:", error);
+        throw error;
+    }
+},
+
+updateCallBookingStatus: async (
+  appointmentId: number,
+  callBookingStatus: string
+): Promise<{ status: boolean; message: string }> => {
+  try {
+    const response = await api.patch(
+      `/healthcare/appointments/${appointmentId}/call-booking-status`,
+      null,
+      {
+        params: { call_booking_status: callBookingStatus },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error updating call booking status:", error);
+    throw error;
+  }
+},
+
 
 
 

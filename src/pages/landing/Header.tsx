@@ -229,7 +229,11 @@ const handleLogout = () => {
         email_or_phone: values.identifier,
         password: values.password,
       });
+     
+      
       localStorage.setItem("user_id", res.user_id);
+    
+      
       localStorage.setItem("email", res.email_or_phone);
 
       localStorage.setItem("accessToken", res.access_token);
@@ -630,7 +634,11 @@ if (redirectPath) {
 
       closeAuthModal();
       //navigate(redirectPath);
-
+const redirectPath = localStorage.getItem("postAuthRedirect");
+if (redirectPath) {
+  localStorage.removeItem("postAuthRedirect");
+  navigate(redirectPath);
+}
 
 
 
