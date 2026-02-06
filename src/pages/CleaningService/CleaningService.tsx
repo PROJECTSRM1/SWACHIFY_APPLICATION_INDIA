@@ -47,15 +47,15 @@ const plumbingSubServices = [
 const paintingSubServices = [
   { title: "Interior Painting", icon: "🏠", route: "/painting/interior" },
   { title: "Exterior Painting", icon: "🏢", route: "/painting/exterior" },
-  { title: "Wall Texture", icon: "🎨", route: "/painting/wall-texture" },
-  { title: "Repainting", icon: "🖌️", route: "/painting/repainting" },
+  // { title: "Wall Texture", icon: "🎨", route: "/painting/wall-texture" },
+  // { title: "Repainting", icon: "🖌️", route: "/painting/repainting" },
 ];
 
 const electricianSubServices = [
   { title: "Wiring", icon: "🔌", route: "/electrician/wiring" },
   { title: "Fan Repair", icon: "🌀", route: "/electrician/fan-repair" },
-  { title: "Light Installation", icon: "💡", route: "/electrician/light-installation" },
-  { title: "Power Backup Setup", icon: "🔋", route: "/electrician/power-backup" },
+  // { title: "Light Installation", icon: "💡", route: "/electrician/light-installation" },
+  // { title: "Power Backup Setup", icon: "🔋", route: "/electrician/power-backup" },
 ];
 
 const acRepairSubServices = [
