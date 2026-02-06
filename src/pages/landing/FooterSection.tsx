@@ -42,53 +42,60 @@ const FooterSection: React.FC<FooterSectionProps> = ({ selectedKey }) => {
           <h5>Services</h5>
           <ul className="sw-lp-links-list">
             <li>
-  <Link to="/education" onClick={() => window.scrollTo(0, 0)}>
-    Education
-  </Link>
-</li>
+              <Link to="/education" onClick={() => window.scrollTo(0, 0)}>
+                Education
+              </Link>
+            </li>
 
-<li>
-  <Link to="/healthcare" onClick={() => window.scrollTo(0, 0)}>
-    Health Care
-  </Link>
-</li>
+            <li>
+              <Link to="/healthcare" onClick={() => window.scrollTo(0, 0)}>
+                Health Care
+              </Link>
+            </li>
 
-<li>
-  <Link to="/landingpackers" onClick={() => window.scrollTo(0, 0)}>
-    Just ride
-  </Link>
-</li>
+            <li>
+              <Link to="/landingpackers" onClick={() => window.scrollTo(0, 0)}>
+                Just ride
+              </Link>
+            </li>
 
-<li>
-  <Link to="/swachifyproducts" onClick={() => window.scrollTo(0, 0)}>
-    Swachify Products
-  </Link>
-</li>
+            <li>
+              <Link
+                to="/swachifyproducts"
+                onClick={() => window.scrollTo(0, 0)}
+              >
+                Swachify Products
+              </Link>
+            </li>
 
-<li>
-  <Link to="/cleaningservice" onClick={() => window.scrollTo(0, 0)}>
-    Cleaning & Home Services
-  </Link>
-</li>
+            <li>
+              <Link to="/cleaningservice" onClick={() => window.scrollTo(0, 0)}>
+                Cleaning & Home Services
+              </Link>
+            </li>
 
-<li>
-  <Link to="/buysaleproducts" onClick={() => window.scrollTo(0, 0)}>
-    Buy / Sale / Rentals
-  </Link>
-</li>
+            <li>
+              <Link to="/buysaleproducts" onClick={() => window.scrollTo(0, 0)}>
+                Buy / Sale / Rentals
+              </Link>
+            </li>
 
-<li>
-  <Link to="/rawmaterials" onClick={() => window.scrollTo(0, 0)}>
-    Raw Materials
-  </Link>
-</li>
+            <li>
+              <Link to="/rawmaterials" onClick={() => window.scrollTo(0, 0)}>
+                Raw Materials
+              </Link>
+            </li>
 
-<li>
-  <Link to="/freelancer" onClick={() => window.scrollTo(0, 0)}>
-    Freelancer
-  </Link>
-</li>
-
+            <li>
+              <Link to="/freelancer" onClick={() => window.scrollTo(0, 0)}>
+                Freelancer
+              </Link>
+            </li>
+            <li>
+              <Link to="/admin/dashboard" onClick={() => window.scrollTo(0, 0)}>
+                Admin
+              </Link>
+            </li>
 
             {/* <li>
               <a
@@ -98,8 +105,6 @@ const FooterSection: React.FC<FooterSectionProps> = ({ selectedKey }) => {
                 Raw Materials
               </a>
             </li> */}
-
-          
           </ul>
         </div>
 

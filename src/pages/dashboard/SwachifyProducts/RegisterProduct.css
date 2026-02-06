@@ -21,11 +21,11 @@
 .sw-register-dashboard-back-btn {
   font-size: 16px;
   font-weight: 600;
-  color: #005cfa;
+  color: #22c55e;
 }
 
 .sw-register-dashboard-back-btn:hover {
-  color: #0047cc;
+  color: #22c55e;
 }
 
 .sw-register-dashboard-title {
@@ -88,7 +88,7 @@
 .sw-register-dashboard-textarea:hover,
 .sw-register-dashboard-input:focus,
 .sw-register-dashboard-textarea:focus {
-  border-color: #005cfa;
+  border-color: #22c55e;
 }
 
 .sw-register-dashboard-textarea {
@@ -114,12 +114,12 @@
 
 .sw-register-dashboard-category-chip {
   padding: 10px 20px;
-  border: 2px solid #005cfa;
+  border: 2px solid #22c55e;
   background: #fff;
   border-radius: 20px;
   font-size: 14px;
   font-weight: 600;
-  color: #005cfa;
+  color: #22c55e;
   cursor: pointer;
   transition: all 0.2s ease;
 }
@@ -129,7 +129,7 @@
 }
 
 .sw-register-dashboard-category-chip.active {
-  background: #005cfa;
+  background: #22c55e;
   color: #fff;
 }
 
@@ -143,7 +143,7 @@
   width: 104px;
   height: 104px;
   border-radius: 8px;
-  border: 2px dashed #005cfa;
+  border: 2px dashed #22c55e;
   background: #f5f8ff;
 }
 
@@ -157,14 +157,14 @@
 
 .sw-register-dashboard-upload-icon {
   font-size: 28px;
-  color: #005cfa;
+  color: #22c55e;
   margin-bottom: 6px;
 }
 
 .sw-register-dashboard-upload-text {
   font-size: 13px;
   font-weight: 600;
-  color: #005cfa;
+  color: #22c55e;
 }
 
 .sw-register-dashboard-upload-hint {
@@ -192,30 +192,30 @@
   flex: 1;
   height: 44px;
   border-radius: 8px;
-  border: 2px solid #005cfa;
-  color: #005cfa;
+  border: 2px solid #22c55e;
+  color: #22c55e;
   font-weight: 600;
   transition: all 0.2s ease;
 }
 
 .sw-register-dashboard-btn-secondary:hover {
   background: #f5f8ff;
-  border-color: #0047cc;
-  color: #0047cc;
+  border-color: #22c55e;
+  color: #22c55e;
 }
 
 .sw-register-dashboard-btn-primary {
   flex: 1;
   height: 44px;
   border-radius: 8px;
-  background: #005cfa;
+  background: #22c55e;
   border: none;
   font-weight: 600;
   transition: all 0.2s ease;
 }
 
 .sw-register-dashboard-btn-primary:hover {
-  background: #0047cc;
+  background: #22c55e;
 }
 
 /* Responsive */
@@ -245,7 +245,6 @@
     width: 100%;
   }
 }
-
 @media (max-width: 480px) {
   .sw-register-dashboard-card .ant-card-body {
     padding: 16px;
@@ -254,4 +253,54 @@
   .sw-register-dashboard-category-chips {
     justify-content: center;
   }
+}
+/* ===== GREEN FOCUS THEME ===== */
+/* Input focus border */
+.sw-register-dashboard-input:focus,
+.sw-register-dashboard-textarea:focus,
+.sw-register-dashboard-input.ant-input-focused,
+.sw-register-dashboard-textarea.ant-input-focused {
+  border-color: #22c55e !important;
+  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2) !important;
+}
+
+/* Ant Design general input focus override */
+.ant-input:focus,
+.ant-input-focused,
+.ant-input-affix-wrapper:focus,
+.ant-input-affix-wrapper-focused,
+.ant-select-focused .ant-select-selector,
+.ant-picker-focused {
+  border-color: #22c55e !important;
+  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2) !important;
+}
+.sw-register-dashboard-input:hover,
+.sw-register-dashboard-textarea:hover {
+  border-color: #16a34a;
+}
+.sw-register-dashboard-btn-primary,
+.sw-register-dashboard-btn-primary:focus,
+.sw-register-dashboard-btn-primary:active {
+  background: #22c55e !important;
+  border-color: #22c55e !important;
+  box-shadow: none !important;
+}
+
+.sw-register-dashboard-btn-primary:hover {
+  background: #16a34a !important; /* darker green on hover */
+  border-color: #16a34a !important;
+  box-shadow: none !important;
+}
+.sw-register-dashboard-btn-secondary,
+.sw-register-dashboard-btn-secondary:focus,
+.sw-register-dashboard-btn-secondary:active {
+  border-color: #22c55e !important;
+  color: #22c55e !important;
+  box-shadow: none !important;
+}
+
+.sw-register-dashboard-btn-secondary:hover {
+  background: #ecfdf5 !important; /* light green bg */
+  border-color: #16a34a !important;
+  color: #16a34a !important;
 }
