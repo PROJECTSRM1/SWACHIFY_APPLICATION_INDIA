@@ -1,10 +1,12 @@
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useMemo, useState, useEffect, useRef } from "react";
 import "./HealthCare.css";
 import { message, Tooltip } from "antd";
 import { AppstoreOutlined } from "@ant-design/icons";
-import healthcareService, { type LabItem } from "../../../api/healthcare";
+import healthcareService, { type Appointment, type LabItem } from "../../../api/healthcare";
 import { PaymentsAPI } from "../../../api/customerAuth";
 import CommonHeader from "../../landing/Header";
+import { JitsiMeeting } from "@jitsi/react-sdk";
+
 
 
 
@@ -984,6 +986,30 @@ const HealthCare: React.FC = () => {
     useState<UIHospitalItem | null>(null);
   const [pharmacies, setPharmacies] = useState<UIPharmacyItem[]>([]);
   const [bookedAppointment, setBookedAppointment] = useState<any>(null);
+  const [appointments, setAppointments] = useState<Appointment[]>([]);
+  const [activeCallAppointment, setActiveCallAppointment] = useState<any | null>(null);
+const [inCall, setInCall] = useState(false);
+
+// storing user_id
+const [userId, setUserId] = useState<number | null>(null);
+
+const syncUserIdFromStorage = () => {
+  const id = localStorage.getItem("user_id");
+  if (id) {
+    setUserId(Number(id));
+  }
+};
+
+useEffect(() => {
+  syncUserIdFromStorage();
+}, []);
+
+
+
+  
+
+
+
 
 
 
@@ -1123,10 +1149,49 @@ const HealthCare: React.FC = () => {
     );
   }, [selectedNearbyHospital]);
 
+  const handleJoinCall = (appt: any) => {
+  setActiveCallAppointment(appt);
+  setInCall(true);
+};
+
+
+const handleEndCall = async () => {
+  if (!activeCallAppointment) return;
+
+  try {
+    await healthcareService.updateCallBookingStatus(
+      activeCallAppointment.id,
+      "Consulted"
+    );
+
+    setAppointments((prev) =>
+      prev.map((a) =>
+        a.id === activeCallAppointment.id
+          ? { ...a, call_booking_status: "Consulted", status: "COMPLETED" }
+          : a
+      )
+    );
+    
+    setInCall(false);
+    setActiveCallAppointment(null);
+  } catch (err) {
+    console.error("Failed to update call status", err);
+  }
+};
+
+
+const canJoinCall = (appointmentTime: string) => {
+  const now = new Date();
+  const apptTime = new Date(appointmentTime);
+  return now >= apptTime;
+};
 
 
 
 
+
+
+// get doctors
   useEffect(() => {
     const fetchDoctors = async () => {
       try {
@@ -1273,10 +1338,11 @@ const HealthCare: React.FC = () => {
 
 //Book appointment
 const handleConfirmAppointment = async () => {
-  if (!appointmentDoctor || !selectedDate || !selectedTime) return;
-
-  const user_id = Number(localStorage.getItem("user_id"));
-
+syncUserIdFromStorage();
+  if (!appointmentDoctor || !selectedDate || !selectedTime || !userId) {
+    alert("User not logged in. Please log in again.");
+    return;
+  }
   // Build date from parts
   const year = selectedDate.getFullYear();
   const month = selectedDate.getMonth(); // 0-based
@@ -1296,12 +1362,10 @@ const handleConfirmAppointment = async () => {
     .toLocaleString("sv-SE")   // YYYY-MM-DD HH:mm:ss
     .replace(" ", "T");
 
-  console.log("UI selected:", selectedDate, selectedTime);
-  console.log("Local datetime:", appointmentDateTime.toString());
-  console.log("Local to send:", localDateTime);
+ 
 
   const payload = {
-    user_id,
+    user_id: userId,
     consultation_type_id: 1,
     appointment_time: localDateTime,        // ✅ FIXED
     doctor_id: appointmentDoctor.id,
@@ -1334,6 +1398,50 @@ const handleConfirmAppointment = async () => {
     console.error("Appointment booking failed", err);
   }
 };
+
+//my bookings
+const lastFetchRef = useRef<number>(0);
+
+useEffect(() => {
+  syncUserIdFromStorage();
+  if (!openMyBookings || !userId) return;
+
+  const now = Date.now();
+  if (now - lastFetchRef.current < 10_000) return; // ⏱ Skip if fetched in last 10 sec
+
+  lastFetchRef.current = now;
+
+  const fetchAppointments = async () => {
+    try {
+      setLoadingBookings(true);
+
+      const data = await healthcareService.getUserAppointments(userId);
+
+      // Merge new appointments with existing ones
+      setAppointments((prev) => {
+        const updated = data.filter(
+          (newAppt) => !prev.some((oldAppt) => oldAppt.id === newAppt.id)
+        );
+        return [...prev, ...updated];
+      });
+    } catch (error) {
+      console.error("Failed to fetch appointments:", error);
+    } finally {
+      setLoadingBookings(false);
+    }
+  };
+
+  fetchAppointments();
+}, [openMyBookings, userId]);
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1396,6 +1504,7 @@ const handleConfirmAppointment = async () => {
 
   const [openNearbyPharmacies, setOpenNearbyPharmacies] = useState(false);
   const [openNearbyLabs, setOpenNearbyLabs] = useState(false);
+  const [loadingBookings, setLoadingBookings] = useState(false);
 
   const placeholders = [
     "Search Doctor",
@@ -3731,146 +3840,145 @@ const handleConfirmAppointment = async () => {
           </div>
         )}
 
-        {openMyBookings && (
-          <div
-            className="bookings-overlay"
-            onClick={() => setOpenMyBookings(false)}
-          >
-            <div
-              className="bookings-popup"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Header */}
-              <div className="bookings-header">
-                <h2>My Bookings</h2>
-                <button
-                  className="close-btn"
-                  onClick={() => setOpenMyBookings(false)}
-                >
-                  ✖
-                </button>
+      {openMyBookings && (
+  <div
+    className="bookings-overlay"
+    onClick={() => setOpenMyBookings(false)}
+  >
+    <div
+      className="bookings-popup"
+      onClick={(e) => e.stopPropagation()}
+    >
+      {/* Header */}
+      <div className="bookings-header">
+        <h2>My Bookings</h2>
+        <button
+          className="close-btn"
+          onClick={() => setOpenMyBookings(false)}
+        >
+          ✖
+        </button>
+      </div>
+
+      {/* Booking Cards */}
+      {!loadingBookings && appointments.length === 0 ? (
+        <p>No bookings found.</p>
+      ) : (
+        appointments.map((appt) => {
+          const apptDate = new Date(appt.appointment_time);
+
+          const formattedDate = apptDate.toLocaleDateString("en-IN", {
+            timeZone: "Asia/Kolkata",
+            weekday: "short",
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+          });
+
+          const formattedTime = apptDate.toLocaleTimeString("en-IN", {
+            timeZone: "Asia/Kolkata",
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: true,
+          });
+
+          return (
+            <div className="booking-card" key={appt.id}>
+              <h3 className="booking-name">{appt.doctor_name}</h3>
+
+              {/* Date */}
+              <div className="booking-date">
+                📅 <b>{formattedDate}</b>
               </div>
 
-              {/* Booking Card */}
-             <div className="booking-card">
-  <h3 className="booking-name">Dr. Sarah Jenkins</h3>
+              {/* Time */}
+              <div className="booking-time">
+                ⏰ <b>{formattedTime}</b> <span>(IST)</span>
+              </div>
 
-  <p className="booking-date">
-    📅 30 Jan 2026 • 05:30 PM
-  </p>
+              {canJoinCall(appt.appointment_time) && appt.call_booking_status === "CALL_PENDING" ? (
+  <button
+    className="booking-status join-call"
+    onClick={() => handleJoinCall(appt)}
+  >
+    Join Call
+  </button>
+) : (
+  <button className="booking-status">{appt.call_booking_status}</button>
+)}
 
-  <button className="booking-status">Not Started</button>
 
-  <div className="booking-steps">
-    <div className="step active">
-      <span>📅</span>
-      <p>Booked</p>
-    </div>
 
-    <div className="line"></div>
+              <div className="booking-steps">
+                <div className={`step ${appt.status === "PENDING" ? "active" : ""}`}>
+                  <span>📅</span>
+                  <p>Booked</p>
+                </div>
 
-    <div className="step">
-      <span>💬</span>
-      <p>Consulted</p>
-    </div>
-
-    <div className="line"></div>
-
-    <div className="step">
-      <span>💊</span>
-      <p>Medications</p>
-    </div>
-
-    <div className="line"></div>
-
-    <div className="step">
-      <span>🧪</span>
-      <p>Lab Tests</p>
-    </div>
-  </div>
+                <div className="line"></div>
+                
+<div className={`step ${appt.call_booking_status === "Consulted" ? "active" : ""}`}>
+  <span>💬</span>
+  <p>Consulted</p>
 </div>
 
 
-       <div className="booking-card">
-  <h3 className="booking-name">Dr. Sarah Jenkins</h3>
+                <div className="line"></div>
 
-  <p className="booking-date">
-    📅 30 Jan 2026 • 05:30 PM
-  </p>
+                <div className="step">
+                  <span>💊</span>
+                  <p>Medications</p>
+                </div>
 
-  <button className="booking-status">Not Started</button>
+                <div className="line"></div>
 
-  <div className="booking-steps">
-    <div className="step active">
-      <span>📅</span>
-      <p>Booked</p>
-    </div>
-
-    <div className="line"></div>
-
-    <div className="step">
-      <span>💬</span>
-      <p>Consulted</p>
-    </div>
-
-    <div className="line"></div>
-
-    <div className="step">
-      <span>💊</span>
-      <p>Medications</p>
-    </div>
-
-    <div className="line"></div>
-
-    <div className="step">
-      <span>🧪</span>
-      <p>Lab Tests</p>
-    </div>
-  </div>
-</div>
-
-              {/* Booking Card */}
-<div className="booking-card">
-  <h3 className="booking-name">Dr. Sarah Jenkins</h3>
-
-  <p className="booking-date">
-    📅 30 Jan 2026 • 05:30 PM
-  </p>
-
-  <button className="booking-status">Not Started</button>
-
-  <div className="booking-steps">
-    <div className="step active">
-      <span>📅</span>
-      <p>Booked</p>
-    </div>
-
-    <div className="line"></div>
-
-    <div className="step">
-      <span>💬</span>
-      <p>Consulted</p>
-    </div>
-
-    <div className="line"></div>
-
-    <div className="step">
-      <span>💊</span>
-      <p>Medications</p>
-    </div>
-
-    <div className="line"></div>
-
-    <div className="step">
-      <span>🧪</span>
-      <p>Lab Tests</p>
-    </div>
-  </div>
-</div>
-
+                <div className="step">
+                  <span>🧪</span>
+                  <p>Lab Tests</p>
+                </div>
+              </div>
             </div>
-          </div>
-        )}
+          );
+        })
+      )}
+    </div>
+  </div>
+)}
+
+{inCall && activeCallAppointment && (
+  <div className="call-overlay">
+    <div className="call-screen">
+      <h2>Video Consultation</h2>
+      <p>
+        With <b>{activeCallAppointment.doctor_name}</b>
+      </p>
+
+      <JitsiMeeting
+        domain="meet.jit.si"
+        roomName={`healthcare-appointment-${activeCallAppointment.id}`}
+        configOverwrite={{
+          startWithAudioMuted: false,
+          startWithVideoMuted: false,
+          prejoinPageEnabled: false,
+        }}
+        interfaceConfigOverwrite={{
+          DISABLE_JOIN_LEAVE_NOTIFICATIONS: true,
+        }}
+        getIFrameRef={(iframe) => {
+          iframe.style.height = "400px";
+          iframe.style.width = "100%";
+        }}
+      />
+
+      <button className="end-call-btn" onClick={handleEndCall}>
+        🔴 End Call
+      </button>
+    </div>
+  </div>
+)}
+
+
+
       </div>
     </>
   );
