@@ -630,7 +630,11 @@ if (redirectPath) {
 
       closeAuthModal();
       //navigate(redirectPath);
-
+const redirectPath = localStorage.getItem("postAuthRedirect");
+if (redirectPath) {
+  localStorage.removeItem("postAuthRedirect");
+  navigate(redirectPath);
+}
 
 
 
