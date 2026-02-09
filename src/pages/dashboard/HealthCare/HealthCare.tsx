@@ -188,6 +188,19 @@ type HospitalDoctor = {
   bio: string;
 };
 
+type UIDoctor = {
+  id: number;
+  name: string;
+  speciality: string;
+  rating: number;
+  image: string;
+  experience: number;
+  price: number;
+  available: boolean;
+  patients: number;
+  bio: string;
+};
+
 export const HOSPITAL_DOCTORS: HospitalDoctor[] = [
   // 🏥 Apollo Medical Center (hospital_id: 1) → 3 doctors
   {
@@ -800,7 +813,7 @@ const specialistByType: Record<string, Specialist> = {
 // ];
 
 interface UIHospitalItem {
-  ambulance_id: number;
+  hospital_id: number;
   hospital_name: string;
   specialty_type: string;
   location: string;
@@ -840,6 +853,34 @@ const labImages = [
   "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80",
   "https://images.unsplash.com/photo-1504814532849-9279d32b6a55?auto=format&fit=crop&w=800&q=80",
 ];
+
+const hospitalDoctorsphotos = [
+"https://randomuser.me/api/portraits/men/32.jpg",
+// "https://randomuser.me/api/portraits/women/44.jpg",
+"https://randomuser.me/api/portraits/men/71.jpg",
+"https://randomuser.me/api/portraits/men/55.jpg",
+"https://randomuser.me/api/portraits/men/41.jpg",
+// "https://randomuser.me/api/portraits/women/30.jpg",
+"https://randomuser.me/api/portraits/men/12.jpg",
+ "https://randomuser.me/api/portraits/men/89.jpg",
+// "https://randomuser.me/api/portraits/women/12.jpg",
+"https://randomuser.me/api/portraits/men/23.jpg",
+// "https://randomuser.me/api/portraits/women/39.jpg",
+"https://randomuser.me/api/portraits/men/45.jpg",
+"https://randomuser.me/api/portraits/men/56.jpg",
+"https://randomuser.me/api/portraits/men/67.jpg",
+"https://randomuser.me/api/portraits/men/72.jpg",
+// "https://randomuser.me/api/portraits/women/70.jpg",
+// "https://randomuser.me/api/portraits/women/82.jpg",
+"https://randomuser.me/api/portraits/men/85.jpg",
+//  "https://randomuser.me/api/portraits/women/88.jpg",
+"https://randomuser.me/api/portraits/men/90.jpg",
+// "https://randomuser.me/api/portraits/women/91.jpg",
+"https://randomuser.me/api/portraits/men/95.jpg",
+//  "https://randomuser.me/api/portraits/women/96.jpg",
+"https://randomuser.me/api/portraits/men/97.jpg",
+"https://randomuser.me/api/portraits/men/99.jpg",
+]
 
 
 
@@ -906,6 +947,14 @@ const getDoctorImage = (id: number | string | undefined) => {
 
 const getPharmacyImage = (id: number) =>
   pharmacyImages[id % pharmacyImages.length];
+
+const getHosptialDoctorsImage = (id: number | string | undefined) => {
+  const num = Number(id);
+  if (!num || isNaN(num)) return hospitalDoctorsphotos[0];
+    // const hash = Math.abs((num * 2654435761) % 2 ** 32);
+  return hospitalDoctorsphotos[Math.abs(num) % hospitalDoctorsphotos.length];
+};
+
 
 
 
@@ -1068,12 +1117,12 @@ useEffect(() => {
     useState<AmbulanceHospital | null>(null);
 
   const [openHospitalBooking, setOpenHospitalBooking] = useState(false);
-  const [openHospitalSuccess, setOpenHospitalSuccess] = useState(false);
+  // const [openHospitalSuccess, setOpenHospitalSuccess] = useState(false);
 
   // hospital → doctors flow
   const [openHospitalDoctors, setOpenHospitalDoctors] = useState(false);
   // const [hospitalDoctors, setHospitalDoctors] = useState<HospitalDoctor[]>([]);
-  const [selectedDoctor, setSelectedDoctor] = useState<HospitalDoctor | null>(
+  const [selectedDoctor, setSelectedDoctor] = useState<UIDoctor  | null>(
     null,
   );
 
@@ -1141,13 +1190,13 @@ useEffect(() => {
     return labImages[index] || labImages[0];
   };
 
-  const hospitalDoctors = useMemo(() => {
-    if (!selectedNearbyHospital) return [];
+  // const hospitalDoctors = useMemo(() => {
+  //   if (!selectedNearbyHospital) return [];
 
-    return HOSPITAL_DOCTORS.filter(
-      (doc) => doc.hospitalId === selectedNearbyHospital.ambulance_id
-    );
-  }, [selectedNearbyHospital]);
+  //   return HOSPITAL_DOCTORS.filter(
+  //     (doc) => doc.hospitalId === selectedNearbyHospital.hospital_id
+  //   );
+  // }, [selectedNearbyHospital]);
 
   const handleJoinCall = (appt: any) => {
   setActiveCallAppointment(appt);
@@ -1275,7 +1324,7 @@ const canJoinCall = (appointmentTime: string) => {
         const response = await healthcareService.getAvailableHospitals();
 
         const formatted = response.map((h) => ({
-          ambulance_id: h.hospital_id,
+          hospital_id: h.hospital_id,
           hospital_name: h.hospital_name,
           specialty_type: h.specialty_type,
           location: h.location,
@@ -1434,6 +1483,53 @@ useEffect(() => {
   fetchAppointments();
 }, [openMyBookings, userId]);
 
+const formatPatients = (num: number) => {
+  if (num >= 1000) {
+    return `${(num / 1000).toFixed(1).replace(/\.0$/, "")}k`;
+  }
+  return num.toString();
+};
+
+
+
+
+//get doctors hospital  
+useEffect(() => {
+  if (!openHospitalDoctors || !selectedNearbyHospital?.hospital_id) return;
+
+  const fetchHospitalDoctors = async () => {
+    try {
+      const response = await healthcareService.getHospitalDoctors(
+        selectedNearbyHospital.hospital_id
+      );
+
+      // ✅ response is already HospitalDoctorsResponse (array)
+      const mapped = response.map((doc) => ({
+        id: doc.doctor_id,
+        name: doc.doctor_name,
+        speciality: doc.specialization_name,
+        rating: doc.rating,
+        image: getHosptialDoctorsImage(doc.doctor_id),
+        experience: doc.experience_years,
+        price: doc.fees_per_hour,
+        available: doc.is_available,
+         patients: Math.floor(Math.random() * 5000) + 1000,
+  bio: `Dr. ${doc.doctor_name} is a highly experienced ${doc.specialization_name} with ${doc.experience_years} years of practice. Known for patient-focused care and excellent outcomes.`,
+        
+      }));
+
+      setHospitalDoctors(mapped);
+    } catch (error) {
+      console.error("Failed to load hospital doctors:", error);
+    }
+  };
+
+  fetchHospitalDoctors();
+}, [openHospitalDoctors, selectedNearbyHospital]);
+
+
+
+
 
 
 
@@ -1505,6 +1601,10 @@ useEffect(() => {
   const [openNearbyPharmacies, setOpenNearbyPharmacies] = useState(false);
   const [openNearbyLabs, setOpenNearbyLabs] = useState(false);
   const [loadingBookings, setLoadingBookings] = useState(false);
+  const [hospitalDoctors, setHospitalDoctors] = useState<UIDoctor[]>([]);
+
+
+
 
   const placeholders = [
     "Search Doctor",
@@ -1918,7 +2018,7 @@ useEffect(() => {
                 {filteredHospitals.length > 0 ? (
                   filteredHospitals.map((h) => (
                     <div
-                      key={h.ambulance_id}
+                      key={h.hospital_id}
                       className="ambulance-hospital-card"
                     >
                       <div className="ambulance-hospital-top">
@@ -2930,7 +3030,7 @@ useEffect(() => {
               {/* Hospital Cards */}
               <div className="ambulance-hospital-list">
                 {filteredHospitals.map((h) => (
-                  <div key={h.ambulance_id} className="ambulance-hospital-card">
+                  <div key={h.hospital_id} className="ambulance-hospital-card">
                     <div className="ambulance-hospital-top">
                       <div className="ambulance-hospital-icon-wrap">
                         <div className="ambulance-hospital-icon">✚</div>
@@ -3037,7 +3137,9 @@ useEffect(() => {
                 className="confirm-btn"
                 onClick={() => {
                   setOpenHospitalBooking(false);
-                  setOpenHospitalSuccess(true);
+                   setOpenHospitalDoctors(true)
+
+                  // setOpenHospitalSuccess(true);
                 }}
               >
                 Confirm Booking
@@ -3045,7 +3147,11 @@ useEffect(() => {
 
               <button
                 className="cancel-btn"
-                onClick={() => setOpenHospitalBooking(false)}
+                onClick={() =>{ setOpenHospitalBooking(false)
+                  }
+
+
+                }
               >
                 Cancel
               </button>
@@ -3053,7 +3159,7 @@ useEffect(() => {
           </div>
         )}
 
-        {openHospitalSuccess && (
+        {/* {openHospitalSuccess && (
           <div className="profile-overlay">
             <div className="success-popup">
               <h2>Booking Confirmed ✅</h2>
@@ -3065,25 +3171,23 @@ useEffect(() => {
               <p>Price: ${selectedNearbyHospital?.price}/hr</p>
               <p>Ambulance: {needAmbulance}</p>
 
-              {/* ✅ THIS IS THE ONLY CORRECT PLACE */}
+       
               <button
                 className="view-doctors-btn"
                 onClick={() => {
-                  // const docs = HOSPITAL_DOCTORS.filter(
-                  //   (d) => d.hospitalId === selectedHospital?.hospital_id,
-                  // );
+               
 
-                  // setHospitalDoctors(docs);
+              
                   setOpenHospitalSuccess(false);
                   setOpenHospitalDoctors(true);
-                  // setSelectedNearbyHospital(h);
+                
                 }}
               >
                 VIEW HOSPITAL DOCTORS
               </button>
             </div>
           </div>
-        )}
+        )} */}
 
         {/* 
 {openHospitalSuccess && selectedHospital && (
@@ -3283,7 +3387,7 @@ useEffect(() => {
         )}
 
         {/* ✅ HOSPITAL DOCTORS SCREEN (ADD HERE) */}
-        {openHospitalDoctors && (
+        {/* {openHospitalDoctors && (
           <div className="doctor-list-screen">
             <div className="doctor-list-header">
               <button
@@ -3319,7 +3423,58 @@ useEffect(() => {
               </div>
             ))}
           </div>
-        )}
+        )} */}
+        {openHospitalDoctors && (
+  <div className="doctor-list-screen">
+    <div className="doctor-list-header">
+      <button
+        className="back-btn"
+        onClick={() => setOpenHospitalDoctors(false)}
+      >
+        ←
+      </button>
+
+      <h2 className="doctor-list-title">
+        {selectedNearbyHospital?.hospital_name} Doctors
+      </h2>
+    </div>
+
+    {hospitalDoctors.map((doc) => (
+      <div
+        key={doc.id}
+        className="hospital-doctor-card"
+        onClick={() => setSelectedDoctor(doc)}
+      >
+        <div className="hospital-doctor-left">
+          <img src={doc.image} alt={doc.name} />
+
+          <div className="hospital-doctor-info">
+            <h3>{doc.name}</h3>
+
+            <p className="spec">{doc.speciality}</p>
+
+            <p className="exp">
+              {doc.experience} years experience
+            </p>
+
+            <div className="rating-row">
+              <span>⭐ {doc.rating}</span>
+              <span className="dot">•</span>
+              <span className={doc.available ? "available" : "unavailable"}>
+                {doc.available ? "Available" : "Not Available"}
+              </span>
+            </div>
+
+            <p className="price">₹{doc.price}/hr</p>
+          </div>
+        </div>
+
+        <div className="arrow-circle">→</div>
+      </div>
+    ))}
+  </div>
+)}
+
 
         {selectedDoctor && (
           <div className="doctor-profile-screen">
@@ -3341,7 +3496,7 @@ useEffect(() => {
                 </div>
                 <div>
                   <p>Patients</p>
-                  <b>{selectedDoctor.patients}</b>
+                  <b>{formatPatients(selectedDoctor.patients)}</b>
                 </div>
               </div>
             </div>
@@ -3952,7 +4107,7 @@ useEffect(() => {
       <p>
         With <b>{activeCallAppointment.doctor_name}</b>
       </p>
-
+     <div className="jitsi-wrapper">
       <JitsiMeeting
         domain="meet.jit.si"
         roomName={`healthcare-appointment-${activeCallAppointment.id}`}
@@ -3965,11 +4120,11 @@ useEffect(() => {
           DISABLE_JOIN_LEAVE_NOTIFICATIONS: true,
         }}
         getIFrameRef={(iframe) => {
-          iframe.style.height = "400px";
+          iframe.style.height = "100%";
           iframe.style.width = "100%";
         }}
       />
-
+      </div>
       <button className="end-call-btn" onClick={handleEndCall}>
         🔴 End Call
       </button>
