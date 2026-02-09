@@ -4,6 +4,7 @@ import ProductsListing from "./ProductsListing";
 import RegisterProduct from "./RegisterProduct";
 import MyProducts from "./MyProducts";
 import Orders from "./Orders";
+import CommonHeader from "../../landing/Header";
 import {
   ArrowLeftOutlined,
   ShoppingOutlined,
@@ -70,6 +71,7 @@ const SwachifyProducts: React.FC<SwachifyProductsProps> = ({
 
   return (
     <>
+      <CommonHeader />
       {/* GLOBAL BACK ARROW – OUTSIDE BLOCKS */}
       <button
         className="sw-products-global-back-btn"

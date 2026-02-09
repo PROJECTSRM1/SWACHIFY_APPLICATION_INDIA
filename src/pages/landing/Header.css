@@ -19,6 +19,9 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  padding: 6px 10px;
+  border-radius: 10px;
+  background: #f8fafc; /* light gray card */
 }
 
 .swl-hs-logo-text {
@@ -1252,4 +1255,74 @@ html, body {
 .swl-hs-rf-classname .ant-form {
   max-width: 100%;
   overflow-x: hidden;
+}
+
+
+/* ===============================
+   PREMIUM HEADER LOOK
+================================ */
+
+.swl-hs-navbar {
+  background: #ffffff;
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+/* Logo */
+.swl-logo-icon {
+  width: 44px;
+  height: 44px;
+   object-fit: contain;
+}
+
+.swl-logo-text-wrap {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.swl-logo-main {
+  font-size: 1.2rem;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  background: linear-gradient(135deg, #14b8a6, #0ea5e9);
+
+  background-clip: text;            /* ✅ standard */
+  -webkit-background-clip: text;    /* ✅ webkit */
+  -webkit-text-fill-color: transparent;
+}
+
+
+.swl-logo-sub {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #64748b;
+}
+
+/* Center menu */
+.swl-hs-navbar-menu .ant-menu-item {
+  font-size: 15px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.swl-hs-navbar-menu .ant-menu-item:hover {
+  color: #14b8a6;
+}
+
+/* Signup button – HERO CTA */
+.swl-signup-btn {
+  background: linear-gradient(135deg, #14b8a6, #0ea5e9);
+  border: none;
+  color: #fff;
+  padding: 0 22px;
+  height: 40px;
+  border-radius: 999px;
+  font-weight: 700;
+  box-shadow: 0 8px 20px rgba(14, 165, 233, 0.35);
+}
+
+.swl-signup-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px rgba(14, 165, 233, 0.45);
 }
