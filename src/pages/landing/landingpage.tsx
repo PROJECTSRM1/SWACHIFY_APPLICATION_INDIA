@@ -4,6 +4,11 @@ import CommonHeader from "../../pages/landing/Header";
 import FooterSection from "../../pages/landing/FooterSection";
 import "../../pages/landing/FooterSection.css";
 import "./LandingPage.css";
+import { useRef } from "react";
+import swachifyvideo from "../../assets/swachifyvideo.mp4"; 
+
+
+
 
 import {
   HomeOutlined,
@@ -79,13 +84,67 @@ const services = [
 
 /* HERO BG */
 const heroImages = [img2, img5, img4, img3, img1];
-
 const LandingPage = () => {
   const navigate = useNavigate();
+  const [muted, setMuted] = useState(true);
+  const recognitionRef = useRef<any>(null);
+const [listening, setListening] = useState(false);
+
 
   /* ✅ hooks INSIDE component */
   const [activeIndex, setActiveIndex] = useState(0);
   const [bgIndex, setBgIndex] = useState(0);
+const videoRef = useRef<HTMLVideoElement>(null);const voiceRoutes: { [key: string]: string } = {
+  education: "/education",
+  school: "/education",
+  doctor: "/healthcare",
+  hospital: "/healthcare",
+  cleaning: "/cleaningservice",
+  clean: "/cleaningservice",
+  ride: "/LandingPackers",
+  transport: "/LandingPackers",
+  product: "/swachifyproducts",
+  shop: "/swachifyproducts",
+  buy: "/BuySaleProducts",
+  rent: "/BuySaleProducts",
+  raw: "/Rawmaterials",
+};
+const startListening = () => {
+  const SpeechRecognition =
+    (window as any).SpeechRecognition ||
+    (window as any).webkitSpeechRecognition;
+
+  if (!SpeechRecognition) {
+    alert("Speech recognition not supported in this browser");
+    return;
+  }
+
+  const recognition = new SpeechRecognition();
+  recognition.lang = "en-IN";
+  recognition.continuous = false;
+  recognition.interimResults = false;
+
+  recognition.onstart = () => setListening(true);
+  recognition.onend = () => setListening(false);
+
+  recognition.onresult = (event: any) => {
+    const transcript = event.results[0][0].transcript.toLowerCase();
+    console.log("🎙️ Heard:", transcript);
+
+    for (const keyword in voiceRoutes) {
+      if (transcript.includes(keyword)) {
+        navigate(voiceRoutes[keyword]);
+        return;
+      }
+    }
+
+    alert("Sorry, I didn’t understand. Try again.");
+  };
+
+  recognition.start();
+  recognitionRef.current = recognition;
+};
+
 
   /* 🔁 auto rotate service images */
   useEffect(() => {
@@ -200,6 +259,69 @@ const LandingPage = () => {
 
         </div>
       </section>
+      <div>
+      {/* SWACHIFY AI PROMO */}
+{/* SWACHIFY AI PROMO */}
+<section className="sw-ai">
+  <div className="sw-ai-wrap">
+
+    {/* LEFT CONTENT */}
+    <div className="sw-ai-content">
+      <span className="sw-ai-badge">Introducing Swachify AI</span>
+
+      <h2>
+        One App. <br />
+        <span>Your entire life.</span>
+      </h2>
+
+      <p>
+        Swachify AI understands your needs and connects you instantly to
+        education, healthcare, transport, home services and more — automatically.
+      </p>
+
+      <div className="sw-ai-lines">
+        <div>🎙️ “Book a doctor for today”</div>
+        <div>🎙️ “Schedule home cleaning”</div>
+        <div>🎙️ “Find a ride now”</div>
+      </div>
+
+<button className="sw-ai-btn" onClick={startListening}>
+  {listening ? "🎧 Listening..." : "🎙️ Speak to Swachify AI"}
+</button>
+
+    </div>
+
+    {/* RIGHT VIDEO + AUDIO */}
+    <div className="sw-ai-visual">
+      <div className="sw-device">
+
+
+<video
+  ref={videoRef}
+  autoPlay
+  loop
+  muted={muted}
+  playsInline
+  className="sw-ai-video"
+>
+  <source src={swachifyvideo} type="video/mp4" />
+</video>
+
+<button
+  className="unmute-btn"
+  onClick={() => setMuted(prev => !prev)}
+>
+  {muted ? "🔇 Sound Off" : "🔊 Sound On"}
+</button>
+
+  </div>
+    </div>
+
+  </div>
+</section>
+
+  
+      </div>
 
       <FooterSection selectedKey="LandingPackers" />
     </div>

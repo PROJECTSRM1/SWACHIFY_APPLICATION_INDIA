@@ -4,6 +4,7 @@ import { Modal, Input, Button } from "antd";
 import CleaningHeader from "./CleaningHeader";
 import "./KitchenCleaning.css";
 import BookCleaningScreenWeb from "../../pages/dashboard/homeservices/BookCleaningScreenWeb";
+import { useEffect } from "react";
 
 import kitchenImg from "../../assets/CleaningServices/Kitchen2.jpg";
 import bathroomImg from "../../assets/CleaningServices/bathroom.jpeg";
@@ -94,6 +95,7 @@ const HomeCleaningCategory: React.FC = () => {
 const [password, setPassword] = useState("");
 const [loading, setLoading] = useState(false);
 
+
   const [mobile,] = useState("");
   const [otp, setOtp] = useState("");
 
@@ -102,8 +104,23 @@ const [loading, setLoading] = useState(false);
       setCart([...cart, item]);
     }
   };
-  const isAuthenticated = !!localStorage.getItem("accessToken");
+ const [isAuthenticated, setIsAuthenticated] = useState(
+  !!localStorage.getItem("accessToken")
+);
 
+
+useEffect(() => {
+  const handleStorageChange = () => {
+    setIsAuthenticated(!!localStorage.getItem("accessToken"));
+  };
+
+  window.addEventListener("storage", handleStorageChange);
+  handleStorageChange(); // initial sync
+
+  return () => {
+    window.removeEventListener("storage", handleStorageChange);
+  };
+}, []);
 
   const removeFromCart = (item: Service) => {
     setCart(cart.filter((c) => c.title !== item.title));

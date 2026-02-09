@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Modal, Input, Button } from "antd";
 import CleaningHeader from "./CleaningHeader";
@@ -21,7 +21,24 @@ const HomeServiceBooking: React.FC = () => {
 
   const [mobile, setMobile] = useState("");
   const [otp, setOtp] = useState("");
-  const isAuthenticated = !!localStorage.getItem("accessToken");
+  const [isAuthenticated, setIsAuthenticated] = useState(
+  !!localStorage.getItem("accessToken")
+);
+
+
+useEffect(() => {
+  const handleStorageChange = () => {
+    setIsAuthenticated(!!localStorage.getItem("accessToken"));
+  };
+
+  window.addEventListener("storage", handleStorageChange);
+  handleStorageChange(); // initial sync
+
+  return () => {
+    window.removeEventListener("storage", handleStorageChange);
+  };
+}, []);
+  
    const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
