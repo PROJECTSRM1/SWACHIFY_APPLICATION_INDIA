@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import "./InstitutionAccessMode.css";
 import ManagementOverview from "../../dashboard/Education/ManagementOverview";
 import StudentView from "../../dashboard/Education/StudentView";
+import studentBg from "../../../assets/student-bg.png";
+import managementBg from "../../../assets/management-bg.png";
+
 
 interface InstitutionAccessModeProps {
   onClose?: () => void;
@@ -44,7 +47,13 @@ const InstitutionAccessMode: React.FC<InstitutionAccessModeProps> = ({
 
         {/* STUDENT VIEW */}
         <div className="access-card">
-          <div className="access-card-media student-bg">
+         <div
+  className="access-card-media student-bg"
+  style={{
+    backgroundImage: `url(${studentBg})`,
+  }}
+>
+
             <div className="access-icon">🎓</div>
           </div>
 
@@ -70,7 +79,13 @@ const InstitutionAccessMode: React.FC<InstitutionAccessModeProps> = ({
 
         {/* MANAGEMENT VIEW */}
         <div className="access-card">
-          <div className="access-card-media management-bg">
+          <div
+  className="access-card-media management-bg"
+  style={{
+    backgroundImage: `url(${managementBg})`,
+  }}
+>
+
             <div className="access-icon">📊</div>
           </div>
 
