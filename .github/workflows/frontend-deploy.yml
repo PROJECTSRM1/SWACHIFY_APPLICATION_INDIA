@@ -1,7 +1,7 @@
 name: Auto Deploy – Swachify Frontend (DEV)
 
 on:
-  push:
+  push: 
     branches:
       - dev
 
