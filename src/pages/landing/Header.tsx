@@ -21,6 +21,7 @@ import {
 
 
 import { Select } from "antd";
+import Logo from "../../assets/swachify-logo.png";
 
 
 import {
@@ -87,7 +88,7 @@ const { TabPane } = Tabs;
 
 
 const CommonHeader: React.FC<{ selectedKey?: string }> = ({
-  selectedKey = "home",
+  // selectedKey = "home",
 }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [authModalVisible, setAuthModalVisible] = useState(false);
@@ -132,6 +133,7 @@ const handleLogout = () => {
   const [authLoading, setAuthLoading] = useState(false);
   const navigate = useNavigate();
   // const [setServiceOpen] = useState(false);
+const [loginForm] = Form.useForm();
 
 
   const openAuthModal = (tab: "login" | "register" = "login") => {
@@ -664,9 +666,14 @@ if (redirectPath) {
   return (
     <>
       <header className="swl-hs-navbar">
-        <div className="swl-hs-navbar-logo">
-          <span className="swl-hs-logo-text">SWACHIFY INDIA</span>
-        </div>
+<div className="swl-hs-navbar-logo">
+  <img src={Logo} alt="Swachify India" className="swl-logo-icon" />
+  <div className="swl-logo-text-wrap">
+    <span className="swl-logo-main">SWACHIFY</span>
+    <span className="swl-logo-sub">India</span>
+  </div>
+</div>
+
 
         <button
           className="swl-mobile-menu-icon"
@@ -677,12 +684,28 @@ if (redirectPath) {
           {menuOpen ? <CloseOutlined /> : <MenuOutlined />}
         </button>
 
-        <Menu
-          mode="horizontal"
-          selectedKeys={[selectedKey]}
-          className="swl-hs-navbar-menu"
-          items={navItems}
-        />
+<Menu
+  mode="horizontal"
+  className="swl-hs-navbar-menu"
+  items={[
+    {
+      key: "home",
+      label: <Link to="/landing">Home</Link>,
+    },
+    {
+      key: "services",
+      label: "Explore Services",
+      onClick: () => {
+        document
+          .getElementById("services-section")
+          ?.scrollIntoView({ behavior: "smooth" });
+      },
+    },
+  ]}
+/>
+
+
+
         {/* <Select
           placeholder="Role"
           style={{ width: 150, marginRight: 12 }}
@@ -818,35 +841,69 @@ if (redirectPath) {
         >
           {/* LOGIN TAB */}
           <TabPane tab="Login" key="login">
-            <Form layout="vertical" onFinish={onLogin} preserve={false}>
-              <Form.Item
+<Form form={loginForm} layout="vertical" onFinish={onLogin} preserve={false}>
+              {/* <Form.Item
                 label="Email / Phone"
                 name="identifier"
                 rules={[
                   { required: true, message: "Email or phone is required" },
                   {
-                    validator: (_, value) => {
-                      if (
-                        !value ||
-                        /^[0-9]{10}$/.test(value) || // phone
-                        /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) // email
-                      ) {
-                        return Promise.resolve();
-                      }
-                      return Promise.reject("Enter valid email or 10-digit phone number");
-                    },
+                   validator: (_, value) => {
+  if (!value) return Promise.reject("Required");
+
+  const isPhone = /^[6-9][0-9]{9}$/.test(value);
+  const isGmail = /^[A-Za-z0-9._%+-]+@gmail\.com$/.test(value);
+
+  if (isPhone || isGmail) return Promise.resolve();
+
+  return Promise.reject("Enter valid 10-digit phone or Gmail ID");
+},
+
                   },
                 ]}
               >
                 <Input placeholder="john@example.com or 9876543210" />
-              </Form.Item>
+              </Form.Item> */}
               <Form.Item
-                label="Password"
-                name="password"
-                rules={[{ required: true, message: "Password is required" }]}
-              >
-                <Input.Password placeholder="Enter password" />
-              </Form.Item>
+  label="Email / Phone"
+  name="identifier"
+  normalize={(v) => {
+    // If user is typing only digits → keep max 10
+    if (typeof v === "string" && /^\d+$/.test(v)) {
+      return v.replace(/\D/g, "").slice(0, 10);
+    }
+    return v; // allow email typing normally
+  }}
+  rules={[
+    { required: true, message: "Email or phone is required" },
+    {
+      validator: (_, value) => {
+        if (!value) return Promise.reject("");
+
+        const isPhone = /^[6-9][0-9]{9}$/.test(value);
+        const isGmail = /^[A-Za-z0-9._%+-]+@gmail\.com$/.test(value);
+
+        if (isPhone || isGmail) return Promise.resolve();
+
+        return Promise.reject("Enter valid 10-digit phone or Gmail ID");
+      },
+    },
+  ]}
+>
+  <Input placeholder="john@example.com or 9876543210" />
+</Form.Item>
+
+              <Form.Item
+  label="Password"
+  name="password"
+  rules={[
+    { required: true, message: "Password is required" },
+    { min: 8, message: "Please enter at least 8 characters" },
+  ]}
+>
+  <Input.Password placeholder="Enter password" />
+</Form.Item>
+
 
               <div className="swl-login-options-row">
                 <Checkbox>Remember me</Checkbox>
@@ -962,23 +1019,33 @@ if (redirectPath) {
 
 <Row gutter={16}>
   <Col xs={24} md={12}>
-    <Form.Item
-      label="First Name"
-      name="firstName"
-      rules={[{ required: true }]}
-    >
-      <Input placeholder="First name" />
-    </Form.Item>
+   <Form.Item
+  label="First Name"
+  name="firstName"
+  normalize={(v) => v?.replace(/[^A-Za-z ]/g, "")}
+  rules={[
+    { required: true, message: "First name is required" },
+    { pattern: /^[A-Za-z ]+$/, message: "Only letters allowed" },
+  ]}
+>
+  <Input placeholder="First name" />
+</Form.Item>
+
   </Col>
 
   <Col xs={24} md={12}>
     <Form.Item
-      label="Last Name"
-      name="lastName"
-      rules={[{ required: true }]}
-    >
-      <Input placeholder="Last name" />
-    </Form.Item>
+  label="Last Name"
+  name="lastName"
+  normalize={(v) => v?.replace(/[^A-Za-z ]/g, "")}
+  rules={[
+    { required: true },
+    { pattern: /^[A-Za-z ]+$/, message: "Only letters allowed" },
+  ]}
+>
+  <Input placeholder="Last name" />
+</Form.Item>
+
   </Col>
 </Row>
 
@@ -986,13 +1053,32 @@ if (redirectPath) {
 
 <Row gutter={16}>
   <Col xs={24} md={12}>
-    <Form.Item label="Mobile Number" name="mobile" rules={[{ required: true }]}>
-      <Input />
-    </Form.Item>
+    <Form.Item
+  label="Mobile Number"
+  name="mobile"
+  normalize={(v) => allowOnlyNumbers(v || "").slice(0, 10)}
+  rules={[
+    { required: true },
+    { pattern: /^[6-9][0-9]{9}$/, message: "Enter valid 10 digit mobile" },
+  ]}
+>
+  <Input inputMode="numeric" maxLength={10} />
+</Form.Item>
+
+
   </Col>
 
   <Col xs={24} md={12}>
-    <Form.Item label="Email" name="email" rules={[{ required: true }]}>
+    <Form.Item
+  label="Email"
+  name="email"
+  normalize={(v) => allowEmailChars(v || "")}
+  rules={[
+    { required: true, message: "Email required" },
+    { type: "email", message: "Enter valid email" },
+  ]}
+>
+
       <Input />
     </Form.Item>
   </Col>
@@ -1224,25 +1310,48 @@ if (redirectPath) {
 
                 </div>
               )}
-
 <Row gutter={16}>
+  {/* PASSWORD */}
   <Col xs={24} md={12}>
-    <Form.Item label="Password" name="password" rules={[{ required: true }]}>
-      <Input.Password />
+    <Form.Item
+      label="Password"
+      name="password"
+      rules={[
+        { required: true, message: "Password is required" },
+        { min: 8, message: "Password must be at least 8 characters" },
+      ]}
+      hasFeedback
+    >
+      <Input.Password placeholder="Enter password" />
     </Form.Item>
   </Col>
 
+  {/* CONFIRM PASSWORD */}
   <Col xs={24} md={12}>
     <Form.Item
       label="Confirm Password"
       name="confirmPassword"
       dependencies={["password"]}
-      rules={[{ required: true }]}
+      hasFeedback
+      rules={[
+        { required: true, message: "Confirm your password" },
+        ({ getFieldValue }) => ({
+          validator(_, value) {
+            if (!value || getFieldValue("password") === value) {
+              return Promise.resolve();
+            }
+            return Promise.reject(
+              new Error("Passwords do not match")
+            );
+          },
+        }),
+      ]}
     >
-      <Input.Password />
+      <Input.Password placeholder="Re-enter password" />
     </Form.Item>
   </Col>
 </Row>
+
 
 
 
@@ -1609,22 +1718,48 @@ if (redirectPath) {
 
 
 
+              <Form.Item
+  label="Email / Phone"
+  name="identifier"
+  normalize={(v) => {
+    if (typeof v === "string" && /^\d+$/.test(v)) {
+      return allowOnlyNumbers(v).slice(0, 10);
+    }
+    return v;
+  }}
+  rules={[
+    { required: true, message: "Email or phone is required" },
+    {
+      validator: (_, value) => {
+        if (!value) return Promise.reject("Required");
+
+        const isPhone = /^[6-9][0-9]{9}$/.test(value);
+        const isGmail = /^[A-Za-z0-9._%+-]+@gmail\.com$/.test(value);
+
+        if (isPhone || isGmail) return Promise.resolve();
+
+        return Promise.reject("Enter valid 10-digit phone or Gmail ID");
+      },
+    },
+  ]}
+>
+  <Input placeholder="john@example.com or 9876543210" />
+</Form.Item>
+
+
+
+
                 <Form.Item
-                  label="Email / Phone"
-                  name="identifier"
-                  rules={[{ required: true }]}
-                >
-                  <Input placeholder="Enter email or phone" />
-                </Form.Item>
-                <Form.Item
-                  label="Password"
-                  name="password"
-                  rules={[
-                    { required: true, message: "Password is required" },
-                  ]}
-                >
-                  <Input.Password />
-                </Form.Item>
+  label="Password"
+  name="password"
+  rules={[
+    { required: true, message: "Password is required" },
+    { min: 8, message: "Password must contain at least 8 characters" },
+  ]}
+>
+  <Input.Password />
+</Form.Item>
+
 
 
                 <div style={{ textAlign: "right", marginBottom: 12 }}>
@@ -1673,13 +1808,17 @@ if (redirectPath) {
                 </Form.Item>
 
 
-                <Form.Item
-                  label="Password"
-                  name="password"
-                  rules={[{ required: true }]}
-                >
-                  <Input.Password />
-                </Form.Item>
+               <Form.Item
+  label="Password"
+  name="password"
+  rules={[
+    { required: true, message: "Password is required" },
+    { min: 8, message: "Password must contain at least 8 characters" },
+  ]}
+>
+  <Input.Password />
+</Form.Item>
+
 
 
                 <Button type="primary" danger block htmlType="submit">
@@ -1712,7 +1851,16 @@ if (redirectPath) {
                 layout="vertical"
                 onFinish={(values) => console.log("Vendor Register:", values)}
               >
-                <Form.Item label="Business Name" name="businessName">
+                <Form.Item
+  label="Business Name"
+  name="businessName"
+  normalize={(v) => v?.replace(/[^A-Za-z0-9 ]/g, "")}
+  rules={[
+    { required: true, message: "Business name is required" },
+    { min: 3, message: "Minimum 3 characters required" },
+  ]}
+>
+
                   <Input
                     onChange={(e) =>
                       (e.target.value = allowAlphaNumeric(e.target.value))
@@ -1721,7 +1869,16 @@ if (redirectPath) {
                 </Form.Item>
 
 
-                <Form.Item label="Owner Name" name="ownerName" rules={[{ required: true }]}>
+                <Form.Item
+  label="Owner Name"
+  name="ownerName"
+  normalize={(v) => v?.replace(/[^A-Za-z ]/g, "")}
+  rules={[
+    { required: true, message: "Owner name is required" },
+    { pattern: /^[A-Za-z ]+$/, message: "Only letters allowed" },
+  ]}
+>
+
                   <Input />
                 </Form.Item>
 
@@ -1745,7 +1902,7 @@ if (redirectPath) {
                     { pattern: /^[6-9][0-9]{9}$/, message: "Invalid mobile number" },
                   ]}
                 >
-                  <Input inputMode="numeric" />
+                  <Input inputMode="numeric" maxLength={10} />
                 </Form.Item>
 
 
@@ -1765,7 +1922,16 @@ if (redirectPath) {
                   <Input.TextArea rows={3} />
                 </Form.Item>
 
-                <Form.Item label="Password" name="password" rules={[{ required: true }]}>
+               <Form.Item
+  label="Password"
+  name="password"
+  rules={[
+    { required: true, message: "Password is required" },
+    { min: 8, message: "Password must be at least 8 characters" },
+  ]}
+>
+
+
                   <Input.Password />
                 </Form.Item>
 
@@ -1781,20 +1947,30 @@ if (redirectPath) {
               <Form layout="vertical" onFinish={onAdminRegister}>
 
 
-                <Form.Item
-                  label="First Name"
-                  name="firstName"
-                  rules={[{ required: true }]}
-                >
+               <Form.Item
+  label="First Name"
+  name="firstName"
+  normalize={(v) => v?.replace(/[^A-Za-z ]/g, "")}
+  rules={[
+    { required: true, message: "First name required" },
+    { pattern: /^[A-Za-z ]+$/, message: "Only letters allowed" },
+  ]}
+>
+
                   <Input />
                 </Form.Item>
 
 
-                <Form.Item
-                  label="Last Name"
-                  name="lastName"
-                  rules={[{ required: true }]}
-                >
+               <Form.Item
+  label="Last Name"
+  name="lastName"
+  normalize={(v) => v?.replace(/[^A-Za-z ]/g, "")}
+  rules={[
+    { required: true, message: "Last name required" },
+    { pattern: /^[A-Za-z ]+$/, message: "Only letters allowed" },
+  ]}
+>
+
                   <Input />
                 </Form.Item>
 
@@ -1811,19 +1987,24 @@ if (redirectPath) {
                 <Form.Item
                   label="Mobile Number"
                   name="mobile"
+                   normalize={(value) => allowOnlyNumbers(value || "").slice(0, 10)}
                   rules={[
                     { required: true },
                     { pattern: /^[6-9][0-9]{9}$/, message: "Invalid mobile number" }
                   ]}
                 >
-                  <Input />
+                  <Input inputMode="numeric" maxLength={10} />
                 </Form.Item>
 
 
                 <Form.Item
                   label="Password"
                   name="password"
-                  rules={[{ required: true }]}
+                  rules={[
+  { required: true, message: "Password is required" },
+  { min: 8, message: "Password must be at least 8 characters" },
+]}
+
                 >
                   <Input.Password />
                 </Form.Item>

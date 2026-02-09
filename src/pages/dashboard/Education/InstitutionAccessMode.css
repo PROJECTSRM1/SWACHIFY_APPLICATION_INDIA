@@ -273,3 +273,42 @@
     margin-top: 0;
   }
 }
+.access-card-media {
+  height: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  position: relative;
+}
+
+/* overlay */
+.access-card-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.35),
+    rgba(0, 0, 0, 0.15)
+  );
+}
+
+/* keep icon above */
+.access-icon {
+  position: relative;
+  z-index: 1;
+}
+
+/* gradients stay */
+.student-bg {
+  background-color: #0ea5e9;
+}
+
+.management-bg {
+  background-color: #6366f1;
+}
