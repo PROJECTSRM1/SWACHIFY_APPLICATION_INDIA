@@ -21,6 +21,7 @@ import {
 
 
 import { Select } from "antd";
+import Logo from "../../assets/swachify-logo.png";
 
 
 import {
@@ -87,7 +88,7 @@ const { TabPane } = Tabs;
 
 
 const CommonHeader: React.FC<{ selectedKey?: string }> = ({
-  selectedKey = "home",
+  // selectedKey = "home",
 }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [authModalVisible, setAuthModalVisible] = useState(false);
@@ -664,9 +665,14 @@ if (redirectPath) {
   return (
     <>
       <header className="swl-hs-navbar">
-        <div className="swl-hs-navbar-logo">
-          <span className="swl-hs-logo-text">SWACHIFY INDIA</span>
-        </div>
+<div className="swl-hs-navbar-logo">
+  <img src={Logo} alt="Swachify India" className="swl-logo-icon" />
+  <div className="swl-logo-text-wrap">
+    <span className="swl-logo-main">SWACHIFY</span>
+    <span className="swl-logo-sub">India</span>
+  </div>
+</div>
+
 
         <button
           className="swl-mobile-menu-icon"
@@ -677,12 +683,28 @@ if (redirectPath) {
           {menuOpen ? <CloseOutlined /> : <MenuOutlined />}
         </button>
 
-        <Menu
-          mode="horizontal"
-          selectedKeys={[selectedKey]}
-          className="swl-hs-navbar-menu"
-          items={navItems}
-        />
+<Menu
+  mode="horizontal"
+  className="swl-hs-navbar-menu"
+  items={[
+    {
+      key: "home",
+      label: <Link to="/landing">Home</Link>,
+    },
+    {
+      key: "services",
+      label: "Explore Services",
+      onClick: () => {
+        document
+          .getElementById("services-section")
+          ?.scrollIntoView({ behavior: "smooth" });
+      },
+    },
+  ]}
+/>
+
+
+
         {/* <Select
           placeholder="Role"
           style={{ width: 150, marginRight: 12 }}
