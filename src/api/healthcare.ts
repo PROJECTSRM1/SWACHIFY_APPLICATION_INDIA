@@ -160,6 +160,23 @@ export interface Appointment {
 export type UserAppointmentsResponse = Appointment[];
 
 
+export interface HospitalDoctor {
+    hospital_id: number;
+    doctor_id: number;
+    doctor_name: string;
+    specialization_id: number;
+    specialization_name: string;
+    experience_years: number;
+    rating: number;
+    fees_per_hour: number;
+    available_from: string; // "HH:mm:ss" or "HH:mm:ss.SSSSSS"
+    available_to: string;
+    is_available: boolean;
+}
+
+export type HospitalDoctorsResponse = HospitalDoctor[];
+
+
 
 
 
@@ -300,6 +317,22 @@ updateCallBookingStatus: async (
     throw error;
   }
 },
+
+
+// 🔹 API Call
+ getHospitalDoctors : async (
+    hospitalId: number
+): Promise<HospitalDoctorsResponse> => {
+    try {
+        const response = await api.get(
+            `/healthcare/hospital/${hospitalId}/doctors`
+        );
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching hospital doctors:", error);
+        throw error;
+    }
+}
 
 
 
