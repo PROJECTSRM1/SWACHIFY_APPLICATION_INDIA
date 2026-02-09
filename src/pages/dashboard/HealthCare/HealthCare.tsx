@@ -898,7 +898,7 @@ function formatTime(timeStr: string) {
   return `${hour}:${m.toString().padStart(2, "0")} ${ampm}`;
 }
 
-/* 🔥 ADD HERE */
+
 const isFutureSlot = (slot: string, selectedDate: Date) => {
   const now = new Date();
 
@@ -913,6 +913,22 @@ const isFutureSlot = (slot: string, selectedDate: Date) => {
 
   return slotDate > now;
 };
+
+
+const isBeforeAppointmentTime = (slot: string, appointmentSlot: string) => {
+  const toMinutes = (time: string) => {
+    const [t, mer] = time.split(" ");
+    let [h, m] = t.split(":").map(Number);
+
+    if (mer === "PM" && h !== 12) h += 12;
+    if (mer === "AM" && h === 12) h = 0;
+
+    return h * 60 + m;
+  };
+
+  return toMinutes(slot) < toMinutes(appointmentSlot);
+};
+
 
 /* ⬇️ Component starts here */
 // const HealthCare: React.FC = () => {
@@ -995,15 +1011,6 @@ const assistants = [
   },
 ];
 
-const TIME_SLOTS = [
-  "09:00 AM",
-  "10:30 AM",
-  "11:48 AM",
-  "01:00 PM",
-  "02:30 PM",
-  "04:00 PM",
-  "05:30 PM",
-];
 
 const HealthCare: React.FC = () => {
   const [searchText, setSearchText] = useState("");
@@ -1151,9 +1158,65 @@ useEffect(() => {
   );
 
   // booking form
-  const [bookingDate, setBookingDate] = useState("Friday, 30 Jan 2026");
-  const [bookingTime, setBookingTime] = useState("11:48 AM");
-  const [needAmbulance, setNeedAmbulance] = useState<"Yes" | "No">("No");
+const [bookingDate, setBookingDate] = useState<string>("");
+const [bookingTime, setBookingTime] = useState<string>("");
+const [showTimeDropdown, setShowTimeDropdown] = useState(false);
+
+const [needAmbulance, setNeedAmbulance] = useState<"Yes" | "No" | "">("");
+
+// 🚑 Pickup time (only if ambulance = Yes)
+const [pickupTime, setPickupTime] = useState<string>("");
+const [showPickupDropdown, setShowPickupDropdown] = useState(false);
+
+// 🔒 Hospital booking flow helpers
+// 🔒 Hospital booking flow helpers
+const todayISO = new Date().toISOString().split("T")[0];
+
+const canSelectTime = Boolean(bookingDate);
+const canSelectAmbulance = Boolean(bookingDate && bookingTime);
+
+const canConfirmHospitalBooking =
+  bookingDate &&
+  bookingTime &&
+  needAmbulance &&
+  (needAmbulance === "No" || pickupTime);
+
+
+// ⏱ Generate continuous time slots
+const generateTimeSlots = (
+  startHour = 9,
+  endHour = 18,
+  intervalMinutes = 30
+) => {
+  const slots: string[] = [];
+
+  const baseDate = new Date();
+  baseDate.setHours(startHour, 0, 0, 0);
+
+  const endDate = new Date();
+  endDate.setHours(endHour, 0, 0, 0);
+
+  while (baseDate <= endDate) {
+    const hours = baseDate.getHours();
+    const minutes = baseDate.getMinutes();
+
+    const hour12 = hours % 12 || 12;
+    const ampm = hours >= 12 ? "PM" : "AM";
+
+    slots.push(
+      `${hour12.toString().padStart(2, "0")}:${minutes
+        .toString()
+        .padStart(2, "0")} ${ampm}`
+    );
+
+    baseDate.setMinutes(baseDate.getMinutes() + intervalMinutes);
+  }
+
+  return slots;
+};
+
+
+
 
   // form states
   const [doctorSpecialized, setDoctorSpecialized] = useState<string>("");
@@ -1227,6 +1290,7 @@ const handleEndCall = async () => {
     console.error("Failed to update call status", err);
   }
 };
+
 
 
 const canJoinCall = (appointmentTime: string) => {
@@ -3092,58 +3156,151 @@ useEffect(() => {
                   type="date"
                   className="date-picker"
                   value={bookingDate}
-                  min={new Date().toISOString().split("T")[0]}
-                  onChange={(e) => setBookingDate(e.target.value)}
+                  min={todayISO}
+                  onChange={(e) => {
+                  setBookingDate(e.target.value);
+                  setBookingTime("");        // 🔥 reset
+                  setNeedAmbulance("");      // 🔥 reset
+                  setShowTimeDropdown(false);
+
+                    }}
                 />
+
               </div>
 
-              <div className="popup-section">
-                <label>Select Time</label>
+<div className="popup-section">
+  <label>Select Time</label>
 
-                <div className="time-slots">
-                  {TIME_SLOTS.map((slot) => (
-                    <button
-                      key={slot}
-                      type="button"
-                      className={`time-slot ${bookingTime === slot ? "active" : ""
-                        }`}
-                      onClick={() => setBookingTime(slot)}
-                    >
-                      {slot}
-                    </button>
-                  ))}
-                </div>
-              </div>
+  {/* Time Picker Input */}
+  <div
+    className={`time-picker ${!canSelectTime ? "disabled" : ""}`}
+    onClick={() => {
+      if (!canSelectTime) return;
+      setShowTimeDropdown((prev) => !prev);
+    }}
+  >
+    <span className={bookingTime ? "value" : "placeholder"}>
+      {bookingTime || "Tap to select time"}
+    </span>
+    <span className="time-arrow">▾</span>
+  </div>
 
-              <div className="popup-section">
-                <label>Ambulance Required?</label>
-                <div className="pill-row">
-                  <button
-                    className={needAmbulance === "Yes" ? "active" : ""}
-                    onClick={() => setNeedAmbulance("Yes")}
-                  >
-                    Yes
-                  </button>
-                  <button
-                    className={needAmbulance === "No" ? "active" : ""}
-                    onClick={() => setNeedAmbulance("No")}
-                  >
-                    No
-                  </button>
-                </div>
-              </div>
+  {/* Time Dropdown */}
+  {showTimeDropdown && canSelectTime && (
+    <div className="time-dropdown">
+      {generateTimeSlots().map((slot) => {
+        const isToday = bookingDate === todayISO;
+        const isFuture =
+          !isToday || isFutureSlot(slot, new Date(bookingDate));
 
-              <button
-                className="confirm-btn"
-                onClick={() => {
-                  setOpenHospitalBooking(false);
-                   setOpenHospitalDoctors(true)
+        if (!isFuture) return null;
 
-                  // setOpenHospitalSuccess(true);
-                }}
-              >
-                Confirm Booking
-              </button>
+        return (
+          <div
+            key={slot}
+            className={`time-option ${
+              bookingTime === slot ? "active" : ""
+            }`}
+onClick={() => {
+  setBookingTime(slot);
+  setNeedAmbulance("");
+  setPickupTime("");           // 🔥 reset pickup
+  setShowTimeDropdown(false);
+}}
+          >
+            {slot}
+          </div>
+        );
+      })}
+    </div>
+  )}
+</div>
+
+{/* 🚑 Ambulance Required */}
+{needAmbulance === "" && (
+  <div className="popup-section">
+    <label>Ambulance Required?</label>
+
+    <div className="pill-row">
+      <button
+        disabled={!canSelectAmbulance}
+        onClick={() => setNeedAmbulance("Yes")}
+      >
+        Yes
+      </button>
+
+      <button
+        disabled={!canSelectAmbulance}
+        onClick={() => setNeedAmbulance("No")}
+      >
+        No
+      </button>
+    </div>
+  </div>
+)}
+
+
+{/* 🚑 Pickup Time — only if Ambulance = Yes */}
+{needAmbulance === "Yes" && (
+  <div className="popup-section">
+    <label>Pickup Time</label>
+
+    <div
+      className="time-picker"
+      onClick={() => setShowPickupDropdown((p) => !p)}
+    >
+      <span className={pickupTime ? "value" : "placeholder"}>
+        {pickupTime || "Tap to select pickup time"}
+      </span>
+      <span className="time-arrow">▾</span>
+    </div>
+
+    {showPickupDropdown && (
+      <div className="time-dropdown">
+        {generateTimeSlots().map((slot) => {
+         // For pickup time:
+          // ❗ Only rule → must be BEFORE appointment time
+          const isValid = isBeforeAppointmentTime(slot, bookingTime);
+
+          if (!isValid) return null;
+
+          if (!isValid) return null;
+
+          return (
+            <div
+              key={slot}
+              className={`time-option ${
+                pickupTime === slot ? "active" : ""
+              }`}
+              onClick={() => {
+                setPickupTime(slot);
+                setShowPickupDropdown(false);
+              }}
+            >
+              {slot}
+            </div>
+          );
+        })}
+      </div>
+    )}
+  </div>
+)}
+
+
+<button
+  className="confirm-btn"
+  disabled={!canConfirmHospitalBooking}
+  onClick={() => {
+    if (!canConfirmHospitalBooking) return;
+    setOpenHospitalBooking(false);
+       setOpenHospitalDoctors(true)
+  
+  }}
+>
+  Confirm Booking
+</button>
+
+           
 
               <button
                 className="cancel-btn"

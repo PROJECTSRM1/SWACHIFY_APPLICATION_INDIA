@@ -6044,10 +6044,8 @@
 .doctor-image-screen {
   position: fixed;
   inset: 0;
-
   background: #000;
   z-index: 12000;
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -6194,4 +6192,74 @@
 }
 
 
+
+.time-picker {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  border: 2px solid #e5e7eb;
+  border-radius: 14px;
+  cursor: pointer;
+  font-size: 16px;
+  background: #fff;
+}
+
+.time-picker .placeholder {
+  color: #9ca3af;
+}
+
+.time-picker .value {
+  color: #111827;
+  font-weight: 500;
+}
+
+.time-picker .time-arrow {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+
+
+.time-picker.disabled {
+  background: #f3f4f6;
+  cursor: not-allowed;
+  color: #9ca3af;
+}
+
+
+.time-dropdown {
+  margin-top: 6px;
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.time-option {
+  padding: 10px 14px;
+  font-size: 14px;
+}
+
+.time-option:hover {
+  background: #f3f4f6;
+}
+
+.time-option.active {
+  background: #2563eb;
+  color: #fff;
+  font-weight: 600;
+}
+
+.popup-section .time-picker {
+  background: #fafafa;
+}
+
+.popup-section .time-picker:hover {
+  border-color: #2563eb;
+}
+
 /****/
+
+
