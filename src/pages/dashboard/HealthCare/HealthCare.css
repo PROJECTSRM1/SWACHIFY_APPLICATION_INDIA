@@ -2608,6 +2608,115 @@
   color: #065f46;
 }
 
+.assistant-title {
+  display: flex;
+  gap: 10px;
+}
+
+.assistant-title h4 {
+  margin: 0;
+  font-size: 15px;
+}
+
+.assistant-title p {
+  margin: 0;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.assistant-price {
+  text-align: right;
+}
+
+.assistant-price .price {
+  color: #0f766e;
+  font-weight: 600;
+}
+
+.assistant-price small {
+  font-size: 11px;
+  color: #6b7280;
+}
+
+.assistant-select-row {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 10px;
+  margin: 12px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.assistant-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.assistant-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.assistant-text p {
+  font-size: 12px;
+  margin: 0;
+  color: #6b7280;
+}
+
+.assistant-services {
+  display: flex;
+  gap: 16px;
+  font-size: 13px;
+  color: #047857;
+}
+
+.assistant-services {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 per row on mobile */
+  gap: 10px 12px;
+  margin-top: 12px;
+    margin: 12px 0 16px;
+  padding-left: 16px;
+}
+
+.assistant-services li {
+  margin-bottom: 6px;
+}
+
+
+@media (min-width: 480px) {
+  .assistant-services {
+    grid-template-columns: repeat(4, 1fr); /* 4 per row on tablets+ */
+  }
+}
+
+@media (max-width: 480px) {
+  .assistant-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .assistant-price {
+    align-self: flex-end;
+  }
+}
+
+@media (max-width: 480px) {
+  .assistant-select-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .assistant-user {
+    width: 100%;
+  }
+}
+
+
 
 /* Toggle Switch */
 .switch {
@@ -2742,7 +2851,6 @@
   background: #eef7f5;
   border-radius: 18px;
   margin: 18px 0;
-
   border: 1px solid #d1fae5;
 }
 
@@ -2904,6 +3012,7 @@
   padding: 16px;
   z-index: 20000;
   overscroll-behavior: contain;
+
 }
 
 .assistant-popup {
@@ -2913,6 +3022,7 @@
   border-radius: 22px;
   padding: 20px;
   animation: scaleIn 0.25s ease;
+         max-height: 90vh;    
 }
 
 @keyframes scaleIn {
@@ -3103,6 +3213,80 @@
   border-radius: 999px;
   font-weight: 700;
 }
+
+@media (max-width: 480px) {
+  .assistant-popup {
+    padding: 16px 12px;
+  }
+
+  .assistant-card {
+    padding: 10px;
+  }
+
+  .assistant-info h4 {
+    font-size: 14px;
+  }
+
+  .assistant-price {
+    font-size: 13px;
+  }
+
+  .assistant-services {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .assistant-overlay {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .assistant-popup {
+    width: 100%;
+    max-width: 100%;
+    height: 92vh;               /* 🔥 Always fits screen */
+    background: #fff;
+    border-radius: 18px 18px 0 0;
+    display: flex;
+    flex-direction: column;    /* 🔥 Vertical layout */
+    padding: 12px;
+  }
+
+  .assistant-popup h2 {
+    margin: 0 0 6px;
+    font-size: 16px;
+  }
+
+  .assistant-list {
+    flex: 1;                   /* 🔥 Scroll area */
+    overflow-y: auto;
+    margin: 8px 0;
+  }
+
+  .assistant-services {
+    margin: 6px 0;
+    font-size: 12px;
+  }
+
+  .assistant-confirm {
+    position: sticky;
+    bottom: 0;
+    background: #fff;
+    padding: 8px 0 0;
+    display: flex;
+    gap: 10px;
+  }
+
+  .assistant-confirm button {
+    flex: 1;
+    padding: 12px 0;
+    font-size: 12px;
+  }
+}
+
+
 
 /* ===== HOSPITAL DOCTOR LIST – POLISHED ===== */
 
@@ -6259,6 +6443,9 @@
 .popup-section .time-picker:hover {
   border-color: #2563eb;
 }
+
+
+
 
 /****/
 

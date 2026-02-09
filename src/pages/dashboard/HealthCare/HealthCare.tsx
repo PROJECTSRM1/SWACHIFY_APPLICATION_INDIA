@@ -644,6 +644,16 @@ type Specialist = {
   image: string;
 };
 
+interface UIAssistant {
+  id: number;
+  name: string;
+  rating: number;
+  price: number;
+  role: string;
+  services: string[];   // ✅ now exists
+  image: string;
+}
+
 
 
 const specialistByType: Record<string, Specialist> = {
@@ -1011,6 +1021,12 @@ const assistants = [
   },
 ];
 
+const assistantImages = [
+ "https://randomuser.me/api/portraits/women/44.jpg",
+ "https://randomuser.me/api/portraits/men/32.jpg",
+ "https://randomuser.me/api/portraits/women/65.jpg",
+];
+
 
 const HealthCare: React.FC = () => {
   const [searchText, setSearchText] = useState("");
@@ -1059,6 +1075,7 @@ const syncUserIdFromStorage = () => {
 useEffect(() => {
   syncUserIdFromStorage();
 }, []);
+
 
 
 
@@ -1145,15 +1162,15 @@ useEffect(() => {
   const [showAssistantPopup, setShowAssistantPopup] = useState(false);
   // const [selectedAssistant, setSelectedAssistant] = useState(null);
 
-  type Assistant = {
-    id: number;
-    name: string;
-    role: string;
-    rating: number;
-    image: string;
-  };
+  // type Assistant = {
+  //   id: number;
+  //   name: string;
+  //   role: string;
+  //   rating: number;
+  //   image: string;
+  // };
 
-  const [selectedAssistant, setSelectedAssistant] = useState<Assistant | null>(
+  const [selectedAssistant, setSelectedAssistant] = useState<UIAssistant | null>(
     null,
   );
 
@@ -1244,6 +1261,9 @@ const generateTimeSlots = (
   const [doctors, setDoctors] = useState<Doctor[]>([]);
 
   const [loadingDoctors, setLoadingDoctors] = useState<boolean>(false);
+  const [assistants, setAssistants] = useState<UIAssistant[]>([]);
+   const [patientAssist, setPatientAssist] = useState<"yes" | "no" | "">("");
+   const [tempAssistant, setTempAssistant] = useState<UIAssistant | null>(null);
 
 
   const getLabImage = (id?: number | string) => {
@@ -1299,6 +1319,8 @@ const canJoinCall = (appointmentTime: string) => {
   return now >= apptTime;
 };
 
+const getAssistantImage = (id: number) =>
+  assistantImages[id % assistantImages.length];
 
 
 
@@ -1594,6 +1616,38 @@ useEffect(() => {
 
 
 
+// get assitants
+useEffect(() => {
+  if (!showAssistantPopup) return;
+
+  const fetchAssistants = async () => {
+    try {
+      const res = await healthcareService.getAvailableAssistants();
+
+      const formatted: UIAssistant[] = res.map((a) => ({
+        id: a.id,
+        name: a.name,
+        rating: Number(a.rating),
+        price: Number(a.cost_per_visit),
+        role: a.role,
+        services: a.services || [],              // ✅ now valid
+        image: getAssistantImage(a.id),
+      }));
+
+      setAssistants(formatted);
+    } catch (err) {
+      console.error("Failed to load assistants", err);
+    }
+  };
+
+  fetchAssistants();
+}, [showAssistantPopup]);
+
+
+
+
+
+
 
 
 
@@ -1632,7 +1686,7 @@ useEffect(() => {
   const [editOfflineTime, setEditOfflineTime] = useState(false);
   const [tempOfflineTime, setTempOfflineTime] = useState(doctorProfile.opTime);
 
-  const [patientAssist, setPatientAssist] = useState<"yes" | "no" | "">("");
+ 
 
   const [editOpTime, setEditOpTime] = useState(false);
   const [newOpTime, setNewOpTime] = useState(doctorProfile.opTime);
@@ -3662,7 +3716,7 @@ onClick={() => {
             <p className="bio">{selectedDoctor.bio}</p>
 
             {/* Personal Care Assistant */}
-            <div className="assistant-box">
+            {/* <div className="assistant-box">
               <div className="assistant-header">
                 <span>Personal Care Assistant</span>
                 <span className="price">+₹25</span>
@@ -3688,35 +3742,80 @@ onClick={() => {
                 <li>✔ Queue Management</li>
                 <li>✔ Lab Report Collection</li>
               </ul>
-            </div>
+            </div> */}
+            <div className="assistant-box">
+  <div className="assistant-header">
+    <div className="assistant-title">
+      <span className="assistant-icon">🎧</span>
+      <div>
+        <h4>Personal Care Assistant</h4>
+        <p>Enhance your hospital visit experience</p>
+      </div>
+    </div>
 
-            {patientAssist === "yes" && selectedAssistant && (
-              <div className="assistant-selected-card">
-                <img
-                  src={selectedAssistant.image}
-                  alt={selectedAssistant.name}
-                  className="assistant-avatar"
-                />
+    <div className="assistant-price">
+      <span className="price">+₹25</span>
+      <small>PER VISIT</small>
+    </div>
+  </div>
 
-                <div className="assistant-details">
-                  <h4>{selectedAssistant.name}</h4>
-                  <p className="assistant-role">{selectedAssistant.role}</p>
+  <div className="assistant-select-row">
+    <div className="assistant-user">
+      <img
+        src={
+          selectedAssistant
+            ? getAssistantImage(selectedAssistant.id)
+            :  "https://randomuser.me/api/portraits/women/44.jpg"
+        }
+        alt="assistant"
+        className="assistant-avatar"
+      />
 
-                  <div className="assistant-meta">
-                    <span>⭐ {selectedAssistant.rating}</span>
-                    <span>📞 +91 98XXX 12XXX</span>
-                  </div>
-                </div>
+      <div className="assistant-text">
+        <strong>
+          {selectedAssistant ? selectedAssistant.name : "Select Assistant"}
+        </strong>
+        <p>Available for your session</p>
+      </div>
+    </div>
 
-                <span className="assistant-badge">Assigned</span>
-              </div>
-            )}
+    <label className="switch">
+      <input
+        type="checkbox"
+        checked={patientAssist === "yes"}
+        onChange={(e) => {
+          if (e.target.checked) {
+            setPatientAssist("yes");
+            setShowAssistantPopup(true);
+          } else {
+            setPatientAssist("no");
+            setSelectedAssistant(null);
+          }
+        }}
+      />
+      <span className="slider" />
+    </label>
+  </div>
+
+ 
+
+<div className="assistant-services">
+  {(selectedAssistant?.services?.length
+    ? selectedAssistant.services
+    : ["Queue Management", "Lab Report Collection"]
+  ).map((service, idx) => (
+    <span key={idx}>✔ {service}</span>
+  ))}
+</div>
+
+
+</div>
 
             <button className="confirm-btn">Book Appointment</button>
           </div>
         )}
 
-        {showAssistantPopup && (
+        {/* {showAssistantPopup && (
           <div className="assistant-overlay">
             <div className="assistant-popup">
               <h2>Select Care Assistant</h2>
@@ -3765,7 +3864,80 @@ onClick={() => {
               </div>
             </div>
           </div>
-        )}
+        )} */}
+
+        {showAssistantPopup && (
+  <div className="assistant-overlay">
+    <div className="assistant-popup">
+      <h2>Select Personal Care Assistant</h2>
+
+      <div className="assistant-list">
+        {assistants.map((a) => (
+          <div
+            key={a.id}
+            className={`assistant-card ${
+              tempAssistant?.id === a.id ? "active" : ""
+            }`}
+            onClick={() => setTempAssistant(a)}
+          >
+            <img src={a.image} alt={a.name} />
+
+            <div className="assistant-info">
+              <h4>{a.name}</h4>
+
+              <p className="assistant-rating">
+                ⭐ {a.rating} <span>({Math.floor(Math.random() * 200 + 100)})</span>
+              </p>
+
+              <p className="assistant-price">₹{a.price} / visit</p>
+            </div>
+
+            {selectedAssistant?.id === a.id && (
+              <span className="check">✔</span>
+            )}
+          </div>
+        ))}
+      </div>
+{Array.isArray(tempAssistant?.services) && tempAssistant.services.length > 0 && (
+  <ul className="assistant-services">
+    {tempAssistant.services.map((s, i) => (
+      <li key={i}>✔ {s}</li>
+    ))}
+  </ul>
+)}
+
+
+
+
+
+      <div className="assistant-confirm">
+        <button
+          className="no-btn"
+          onClick={() => {
+            setShowAssistantPopup(false);
+            setPatientAssist("no");
+            setSelectedAssistant(null);
+          }}
+        >
+          Cancel
+        </button>
+
+        <button
+          className="yes-btn"
+          disabled={!tempAssistant}
+          onClick={() => {
+            setSelectedAssistant(tempAssistant);  
+            setPatientAssist("yes");
+            setShowAssistantPopup(false);
+          }}
+        >
+          Select Assistant
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
 
         {openAppointmentScreen && appointmentDoctor && (
           <div className="appointment-overlay">
