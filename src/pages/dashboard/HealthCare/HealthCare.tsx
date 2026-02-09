@@ -997,29 +997,7 @@ const getHosptialDoctorsImage = (id: number | string | undefined) => {
 
 // Assistants
 
-const assistants = [
-  {
-    id: 1,
-    name: "Emily Watson",
-    role: "Senior Care Assistant",
-    rating: 4.8,
-    image: "https://randomuser.me/api/portraits/women/44.jpg",
-  },
-  {
-    id: 2,
-    name: "John Miller",
-    role: "Patient Support Executive",
-    rating: 4.6,
-    image: "https://randomuser.me/api/portraits/men/32.jpg",
-  },
-  {
-    id: 3,
-    name: "Sophia Brown",
-    role: "Clinical Assistant",
-    rating: 4.9,
-    image: "https://randomuser.me/api/portraits/women/65.jpg",
-  },
-];
+
 
 const assistantImages = [
  "https://randomuser.me/api/portraits/women/44.jpg",
