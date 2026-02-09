@@ -1,0 +1,40 @@
+name: Auto Deploy – Swachify Frontend (PREPROD)
+
+on:
+  push:
+    branches:
+      - preprod1
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout PREPROD branch
+        uses: actions/checkout@v4
+        with:
+          ref: preprod1
+          fetch-depth: 0
+
+      - name: Show latest commit
+        run: git log -1 --oneline
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build frontend
+        run: |
+          rm -rf dist
+          npm run build   # or build:qa if applicable
+
+      - name: Deploy to PREPROD Nginx folder
+        run: |
+          sudo mkdir -p /var/www/swachify-qa
+          sudo rm -rf /var/www/swachify-qa/*
+          sudo cp -r dist/* /var/www/swachify-qa/
+          sudo chmod -R 755 /var/www/swachify-qa
+
+      - name: Test & Reload Nginx
+        run: |
+          sudo nginx -t
+          sudo systemctl reload nginx
