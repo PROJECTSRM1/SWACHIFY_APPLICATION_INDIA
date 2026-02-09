@@ -4,11 +4,19 @@ body {
   background: #f5f7fb; /* same as Students page */
   font-family: Inter, system-ui, sans-serif;
 }
-
+.cp-root {
+  background: linear-gradient(
+    135deg,
+    #f3f4f8 0%,
+    #f3f4f8 42%,
+    #ffffff 42%,
+    #ffffff 100%
+  ) !important;
+}
 /* ================= ROOT ================= */
 .cp-root {
   max-width: 1200px;
-  margin: 110px auto 60px;
+  margin: 10px auto 60px;
   padding: 0 32px; /* ⬅ prevents edge cutting */
   background: transparent;
 }
@@ -381,7 +389,7 @@ body {
 /* Small Mobile */
 @media (max-width: 480px) {
   .cp-root {
-    margin-top: 72px;
+    margin-top: 28px;
   }
 
   .cp-avatar-wrap {

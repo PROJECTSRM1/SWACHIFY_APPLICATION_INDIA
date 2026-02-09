@@ -7,7 +7,8 @@ export type Student = {
   program: string;
   avatar: string;
   rating: number;
-  status: "Active" | "Completed";
+ status: "Active" | "Completed" | "In Progress";
+
   attendance: number;
   shift: string;
   resumeUrl?: string; // ✅ FIX 1
@@ -17,10 +18,19 @@ type Props = {
   student: Student;
   onBack: () => void;
 };
+type FamilyMember = {
+  id: number;
+  relation: string;
+  name: string;
+  phone: string;
+};
+
+
 
 const CandidateProfile: React.FC<Props> = ({ student, onBack }) => {
   const [criminal, setCriminal] = useState<"YES" | "NO">("NO");
   const [isEditing, setIsEditing] = useState(false);
+  const [familyMembers, setFamilyMembers] = useState<FamilyMember[]>([]);
 
   // 🔹 PROFILE DATA
   const [aadhaar, setAadhaar] = useState("");
@@ -43,14 +53,10 @@ const handleResumeUpload = (file: File) => {
 };
 
 
-const [family, setFamily] = useState({
-  fatherName: "Suresh Reddy",
-  fatherPhone: "+91 91234 56789",
-  motherName: "Lakshmi Reddy",
-  motherPhone: "+91 99876 54321",
-});
+
 
 const [editEducation, setEditEducation] = useState<any[]>([]);
+
 
 
   // 🔹 SAVE APIs
@@ -64,6 +70,25 @@ const [editEducation, setEditEducation] = useState<any[]>([]);
       }
     );
   };
+useEffect(() => {
+  fetch(
+    `https://swachify-india-be-1-mcrb.onrender.com/api/education/${student.id}/family-members`
+  )
+    .then((res) => res.json())
+    .then((data) => {
+      const mapped = (data || []).map((item: any) => ({
+        id: item.id,
+        relation: item.relation_type, // ✅ FIX
+        name: `${item.first_name} ${item.last_name}`.trim(), // ✅ FIX
+        phone: item.phone_number, // ✅ FIX
+      }));
+
+      setFamilyMembers(mapped);
+    })
+    .catch(() => setFamilyMembers([]));
+}, [student.id]);
+
+
 
   const saveAttendance = async () => {
     await fetch(
@@ -270,25 +295,26 @@ const [editEducation, setEditEducation] = useState<any[]>([]);
             </div>
           </section>
            {/* ✅ Family Details — CORRECT POSITION */}
-  <section className="cp-section">
-    <h4>Family Details</h4>
+<section className="cp-section">
+  <h4>Family Details</h4>
 
-    <div className="cp-card cp-family-card">
-      <div className="cp-family-row">
-        <strong>Father</strong>
-        <span>Suresh Reddy</span>
-        <span className="cp-phone">📞 +91 91234 56789</span>
-      </div>
+  {familyMembers.length === 0 ? (
+    <div className="cp-card">
+      <p className="cp-muted">No family details available</p>
     </div>
+  ) : (
+    familyMembers.map((member) => (
+      <div className="cp-card cp-family-card" key={member.id}>
+        <div className="cp-family-row">
+          <strong>{member.relation}</strong>
+          <span>{member.name}</span>
+          <span className="cp-phone">📞 {member.phone}</span>
+        </div>
+      </div>
+    ))
+  )}
+</section>
 
-    <div className="cp-card cp-family-card">
-      <div className="cp-family-row">
-        <strong>Mother</strong>
-        <span>Lakshmi Reddy</span>
-        <span className="cp-phone">📞 +91 99876 54321</span>
-      </div>
-    </div>
-  </section>
 
           <section className="cp-section">
             <h4>Certificates</h4>
@@ -378,51 +404,12 @@ const [editEducation, setEditEducation] = useState<any[]>([]);
             />
           </div>
 
-          <h4>Family Details</h4>
 
-          <div className="cp-field">
-            <label>Father Name</label>
-            <input
-              className="cp-input"
-              value={family.fatherName}
-              onChange={(e) =>
-                setFamily({ ...family, fatherName: e.target.value })
-              }
-            />
-          </div>
 
-          <div className="cp-field">
-            <label>Father Phone</label>
-            <input
-              className="cp-input"
-              value={family.fatherPhone}
-              onChange={(e) =>
-                setFamily({ ...family, fatherPhone: e.target.value })
-              }
-            />
-          </div>
+   
 
-          <div className="cp-field">
-            <label>Mother Name</label>
-            <input
-              className="cp-input"
-              value={family.motherName}
-              onChange={(e) =>
-                setFamily({ ...family, motherName: e.target.value })
-              }
-            />
-          </div>
 
-          <div className="cp-field">
-            <label>Mother Phone</label>
-            <input
-              className="cp-input"
-              value={family.motherPhone}
-              onChange={(e) =>
-                setFamily({ ...family, motherPhone: e.target.value })
-              }
-            />
-          </div>
+       
 
           <h4>Education</h4>
 

@@ -7,11 +7,12 @@ export interface Student {
   program: string;
   avatar: string;
   rating: number;
-  status: "Active" | "Completed";
+  status: "In Progress" | "Completed";
   attendance: number;
   shift: string;
   certs: string[];
 }
+
 
 type StudentsProps = {
   onBack: () => void;
@@ -26,34 +27,58 @@ const Students: React.FC<StudentsProps> = ({ onBack, onSelectStudent }) => {
   const [certificate, setCertificate] = useState("");
   const [internship, setInternship] = useState("");
 
-  // ✅ FETCH STUDENTS LIST
+  /* =======================
+     FETCH STUDENTS (BASED ON TAB)
+  ======================= */
+
   useEffect(() => {
-    fetch("https://swachify-india-be-1-mcrb.onrender.com/api/education/students-list")
+    let url =
+      "https://swachify-india-be-1-mcrb.onrender.com/api/education/students-list";
+
+    if (tab === "top") {
+      url =
+        "https://swachify-india-be-1-mcrb.onrender.com/api/education/students/top-performers";
+    }
+
+    if (tab === "recent") {
+      url =
+        "https://swachify-india-be-1-mcrb.onrender.com/api/education/students/recent-joiners";
+    }
+
+   fetch(url, { cache: "no-store" })
+
       .then((res) => res.json())
       .then((data) => {
-        const mapped: Student[] = data.map((item: any, index: number) => ({
-          id: item.user_id,
-          name: item.student_name,
-          program: item.degree,
-          rating: item.rating,
-          status: item.internship_status,
-          attendance: item.attendance_percentage,
-          certs: [item.skill],
-          shift: "10:00 AM - 07:00 PM",
-          avatar: `https://randomuser.me/api/portraits/men/${index + 10}.jpg`,
-        }));
+      const mapped: Student[] = data.map((item: any, index: number) => ({
+  id: item.user_id,
+  name: item.student_name,
+  program: item.degree,
+  rating: item.rating,
+
+  // ✅ NORMALIZATION HERE
+  status:
+    item.internship_status?.toLowerCase() === "in progress"
+      ? "In Progress"
+      : "Completed",
+
+  attendance: item.attendance_percentage,
+  certs: item.skill ? [item.skill] : [],
+  shift: "10:00 AM - 07:00 PM",
+  avatar: `https://randomuser.me/api/portraits/men/${index + 10}.jpg`,
+}));
+
 
         setStudentsData(mapped);
       })
       .catch((err) => console.error(err));
-  }, []);
+  }, [tab]);
+
+  /* =======================
+     FILTERING (UNCHANGED)
+  ======================= */
 
   const filtered = useMemo(() => {
     let data = [...studentsData];
-
-    if (tab === "top") data = data.filter((s) => s.rating >= 4.7);
-    if (tab === "recent")
-      data = [...data].sort((a, b) => b.id - a.id).slice(0, 4);
 
     if (aggregate === "90+") data = data.filter((s) => s.attendance >= 90);
     if (aggregate === "80-90")
@@ -74,13 +99,15 @@ const Students: React.FC<StudentsProps> = ({ onBack, onSelectStudent }) => {
     }
 
     return data;
-  }, [studentsData, search, tab, aggregate, certificate, internship]);
+  }, [studentsData, search, aggregate, certificate, internship]);
 
   return (
     <div className="students-root">
       {/* HEADER */}
       <div className="students-header">
-        <button className="students-back" onClick={onBack}>←</button>
+        <button className="students-back" onClick={onBack}>
+          ←
+        </button>
         <h2>Students</h2>
         <input
           className="students-search"
@@ -93,13 +120,22 @@ const Students: React.FC<StudentsProps> = ({ onBack, onSelectStudent }) => {
       {/* FILTERS */}
       <div className="students-filters">
         <div className="students-tabs">
-          <button onClick={() => setTab("all")} className={tab === "all" ? "active" : ""}>
+          <button
+            onClick={() => setTab("all")}
+            className={tab === "all" ? "active" : ""}
+          >
             All Students
           </button>
-          <button onClick={() => setTab("top")} className={tab === "top" ? "active" : ""}>
+          <button
+            onClick={() => setTab("top")}
+            className={tab === "top" ? "active" : ""}
+          >
             Top Performers
           </button>
-          <button onClick={() => setTab("recent")} className={tab === "recent" ? "active" : ""}>
+          <button
+            onClick={() => setTab("recent")}
+            className={tab === "recent" ? "active" : ""}
+          >
             Recent Joiners
           </button>
         </div>
@@ -118,11 +154,18 @@ const Students: React.FC<StudentsProps> = ({ onBack, onSelectStudent }) => {
             <option value="CSS">CSS</option>
           </select>
 
-          <select onChange={(e) => setInternship(e.target.value)}>
-            <option value="">Internship</option>
-            <option value="Active">In Progress</option>
-            <option value="Completed">Completed</option>
-          </select>
+        <select
+  value={internship}
+  onChange={(e) => setInternship(e.target.value)}
+>
+  <option value="" disabled hidden>
+    
+  </option>
+  <option value="In Progress">In Progress</option>
+  <option value="Completed">Completed</option>
+</select>
+
+
         </div>
       </div>
 

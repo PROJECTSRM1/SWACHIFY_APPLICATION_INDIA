@@ -19,15 +19,29 @@
 /* ================= PAGE ================= */
 .job-layout {
   min-height: 100vh;
-  background: var(--bg-main);
+  background: transparent !important;
   display: flex;
   flex-direction: column;
-  padding-top: 88px;
+  padding-top:0px;
 }
 
 .job-title {
   margin-top: 6px;
   margin-bottom: 10px;   /* 🔥 THIS shrinks the card */
+}
+.job-wrapper {
+  min-height: 100vh;
+  background: linear-gradient(
+    135deg,
+    #f3f4f8 0%,
+    #f3f4f8 42%,
+    #ffffff 42%,
+    #ffffff 100%
+  );
+  /* padding-top: 88px; */
+  padding-bottom: 80px;
+  overflow-x: hidden;
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont;
 }
 
 

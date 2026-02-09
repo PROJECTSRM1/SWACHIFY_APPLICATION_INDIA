@@ -1,0 +1,320 @@
+.branchcfg-page {
+ background: transparent !important;
+  padding: 32px;
+}
+.branchcfg-wrapper {
+  min-height: 100vh;
+  background: linear-gradient(
+    135deg,
+    #f3f4f8 0%,
+    #f3f4f8 42%,
+    #ffffff 42%,
+    #ffffff 100%
+  );
+  /* padding-top: 88px; */
+  padding-bottom: 80px;
+  overflow-x: hidden;
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont;
+}
+.branchcfg-container {
+  max-width: 1100px;
+  background: #fff;
+  margin: auto;
+  padding: 32px;
+  border-radius: 14px;
+}
+
+/* HEADER */
+.branchcfg-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.branchcfg-header button {
+  border: none;
+  background: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.branchcfg-step {
+  margin-left: auto;
+  font-weight: 600;
+  color: #2563eb;
+}
+
+/* PROGRESS */
+.branchcfg-progress {
+  height: 6px;
+  background: #e5e7eb;
+  border-radius: 999px;
+  margin: 16px 0 28px;
+}
+
+.branchcfg-progress div {
+  width: 66%;
+  height: 100%;
+  background: #2563eb;
+}
+
+/* TITLES */
+.branchcfg-sub {
+  color: #6b7280;
+  margin-bottom: 20px;
+}
+
+/* CARD */
+.branchcfg-card {
+  background: #f9fafb;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 28px;
+}
+
+/* BRANCH COUNT */
+.branchcfg-branchcount {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.branchcfg-counter {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.branchcfg-counter button {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* GRID */
+.branchcfg-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.branchcfg-grid-2 input {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+}
+
+/* BRANCH CARD */
+.branchcfg-branchcard {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+/* FOOTER */
+.branchcfg-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 32px;
+}
+
+.branchcfg-footer .primary {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.branchcfg-footer .secondary {
+  background: #f3f4f6;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.branchcfg-add {
+  width: 100%;
+  margin: 20px 0;
+  padding: 14px;
+  border: 2px dashed #2563eb;
+  background: #f0f7ff;
+  color: #2563eb;
+  font-weight: 700;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .branchcfg-grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* =====================================================
+   INSTITUTION BRANCH CONFIG – RESPONSIVE LAYER
+   Desktop → Laptop → Tablet → Mobile → Small Mobile
+===================================================== */
+
+/* =========================
+   💻 LAPTOP (≤ 1200px)
+========================= */
+@media (max-width: 1200px) {
+  .branchcfg-container {
+    max-width: 960px;
+    padding: 28px;
+  }
+}
+
+/* =========================
+   📱 TABLET (≤ 900px)
+========================= */
+@media (max-width: 900px) {
+
+  .branchcfg-page {
+    padding: 24px 16px;
+  }
+
+  .branchcfg-container {
+    padding: 24px;
+    border-radius: 12px;
+  }
+
+  /* HEADER */
+  .branchcfg-header {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .branchcfg-step {
+    margin-left: 0;
+    font-size: 14px;
+  }
+
+  /* GRID → SINGLE COLUMN */
+  .branchcfg-grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  /* BRANCH COUNT */
+  .branchcfg-branchcount {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}
+
+/* =========================
+   📲 MOBILE (≤ 640px)
+========================= */
+@media (max-width: 640px) {
+
+  .branchcfg-page {
+    padding: 16px 12px;
+  }
+
+  .branchcfg-container {
+    padding: 20px;
+    border-radius: 12px;
+  }
+
+  /* HEADER */
+  .branchcfg-header h2 {
+    font-size: 18px;
+  }
+
+  .branchcfg-header button {
+    font-size: 16px;
+  }
+
+  .branchcfg-step {
+    font-size: 13px;
+  }
+
+  /* PROGRESS BAR */
+  .branchcfg-progress {
+    height: 5px;
+    margin: 12px 0 24px;
+  }
+
+  /* CARD */
+  .branchcfg-card {
+    padding: 16px;
+  }
+
+  /* INPUTS */
+  .branchcfg-grid-2 input {
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  /* BRANCH CARD */
+  .branchcfg-branchcard {
+    padding: 16px;
+  }
+
+  .branchcfg-branchheader h4 {
+    font-size: 15px;
+  }
+
+  /* ADD BUTTON */
+  .branchcfg-add {
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  /* FOOTER ACTIONS */
+  .branchcfg-footer {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .branchcfg-footer .primary,
+  .branchcfg-footer .secondary {
+    width: 100%;
+    padding: 14px;
+    font-size: 15px;
+  }
+}
+
+/* =========================
+   📲 SMALL MOBILE (≤ 420px)
+========================= */
+@media (max-width: 420px) {
+
+  .branchcfg-container {
+    padding: 16px;
+  }
+
+  .branchcfg-header h2 {
+    font-size: 16px;
+  }
+
+  .branchcfg-sub {
+    font-size: 13px;
+  }
+
+  .branchcfg-counter button {
+    width: 28px;
+    height: 28px;
+    font-size: 16px;
+  }
+
+  .branchcfg-footer .primary,
+  .branchcfg-footer .secondary {
+    padding: 12px;
+    font-size: 14px;
+  }
+}

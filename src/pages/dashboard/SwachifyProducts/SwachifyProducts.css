@@ -1,351 +1,218 @@
-/* =========================
-   SWACHIFY PRODUCTS DASHBOARD CONTAINER
-========================= */
-.sw-products-dashboard-container {
-  width: 100%;
+/* ===== SWACHIFY PRODUCTS - CLEAN GREEN THEME ===== */
+
+/* ================= GLOBAL BACK BUTTON ================= */
+
+.sw-products-global-back-btn {
+  position: fixed;
+  top: 85px;
+  left: 24px;
+  width: 44px;
+  height: 44px;
+  border: none;
+
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
 }
 
-/* =========================
-   SWACHIFY PRODUCTS HEADER
-   (MATCH EDUCATION MODULE)
-========================= */
-.sw-products-dashboard-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.sw-products-global-back-btn:hover {
+  transform: translateX(-4px);
+}
 
+.sw-products-global-back-btn svg {
+  font-size: 18px;
+}
+
+/* ================= DASHBOARD CONTAINER ================= */
+
+.sw-products-dashboard-container {
   width: 100%;
-  max-width: 1200px;
-  margin: 65px auto 24px;
+  min-height: 100vh;
+  padding: 80px 20px 60px;
+}
 
-  padding: 22px 28px;
-  background: #005cfa;
-  color: #fff;
-  border-radius: 12px;
-  gap: 10px;
+/* ================= HEADER ================= */
+
+.sw-products-dashboard-header {
+  max-width: 1200px;
+  margin: 0 auto 50px;
+  text-align: center;
 }
 
 .sw-products-dashboard-header h2 {
   margin: 0;
-  font-size: 20px;
+  font-size: 49px;
   font-weight: 700;
-}
 
+  background: linear-gradient(135deg, #059669, #22c55e);
+
+  background-clip: text; /* standard property */
+  -webkit-background-clip: text; /* safari/chrome support */
+
+  color: transparent; /* fallback */
+  -webkit-text-fill-color: transparent;
+}
 .sw-products-dashboard-header p {
-  margin: 4px 0 0;
-  font-size: 13px;
-  opacity: 0.95;
+  margin-top: 10px;
+  font-size: 16px;
 }
 
-.sw-products-view-all-btn {
-  background: #fff;
-  color: #000;
-  border: none;
-  padding: 8px 14px;
-  border-radius: 6px;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
+/* ================= GRID ================= */
 
-.sw-products-view-all-btn:hover {
-  background: #f0f0f0;
-  transform: translateY(-1px);
-}
-
-/* =========================
-   SWACHIFY PRODUCTS CARDS GRID
-========================= */
 .sw-products-dashboard-grid {
   max-width: 1200px;
-  margin: 0 auto 28px;
-  padding: 0 14px;
+  margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 18px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
 }
 
-.sw-products-dashboard-grid > .sw-products-dashboard-card:last-child {
-  width: 260px;
-  max-width: 260px;
-  justify-self: center;
-}
+/* ================= CARD ================= */
 
 .sw-products-dashboard-card {
-  height: 340px;
-  max-width: 260px;
-  margin: 0 auto;
-  border-radius: 12px;
-  background: #fff;
-  box-shadow: 0 6px 18px rgba(20, 20, 20, 0.06);
-  border: 1px solid #f0f0f0;
-  border-radius: 15px !important;
-  overflow: hidden !important;
+  height: 300px;
+  border-radius: 20px;
+  padding: 28px;
+  position: relative;
   display: flex;
   flex-direction: column;
-  transition: all 0.3s ease;
+  justify-content: flex-end;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  color: #ffffff;
+  overflow: hidden;
+}
+
+/* Card Gradients */
+
+.sw-products-dashboard-card:nth-child(1) {
+  background: linear-gradient(135deg, #10b981, #34d399);
+}
+
+.sw-products-dashboard-card:nth-child(2) {
+  background: linear-gradient(135deg, #14b8a6, #5eead4);
+}
+
+.sw-products-dashboard-card:nth-child(3) {
+  background: linear-gradient(135deg, #22c55e, #4ade80);
+}
+
+.sw-products-dashboard-card:nth-child(4) {
+  background: linear-gradient(135deg, #059669, #10b981);
 }
 
 .sw-products-dashboard-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 28px rgba(20, 20, 20, 0.12);
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(34, 197, 94, 0.3);
 }
 
-/* Icon / Image area */
+/* ================= ICON ================= */
+
 .sw-products-icon-box {
-  height: 150px;
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  width: 60px;
+  height: 60px;
+  background: #ffffff;
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 48px;
-  background: linear-gradient(135deg, #f5f8ff 0%, #e8f0ff 100%);
+  font-size: 30px;
+  color: #059669;
+  transition: 0.3s ease;
 }
 
-/* Card body */
+.sw-products-dashboard-card:hover .sw-products-icon-box {
+  transform: scale(1.1) rotate(-8deg);
+}
+
+/* ================= TEXT ================= */
+
 .sw-products-dashboard-card h3 {
-  margin: 12px 12px 0;
-  font-size: 16px;
-  font-weight: 600;
-  text-align: center;
-  color: #1a1a1a;
+  margin: 0 0 8px 0;
+  font-size: 24px;
+  font-weight: 700;
 }
 
 .sw-products-dashboard-card p {
-  margin: 8px 12px 0;
-  font-size: 13px;
-  color: #6b7785;
-  text-align: center;
-  line-height: 1.5;
-}
-
-/* Footer Button */
-.sw-products-details-btn {
-  margin: auto 12px 12px;
-  height: 40px;
-  background: #000;
-  color: #fff;
-  border: none;
-  border-radius: 5px !important;
+  margin: 0 0 16px 0;
   font-size: 15px;
-  font-weight: 700;
+  color: black;
+}
+
+/* ================= TRANSPARENT BUTTON ================= */
+
+.sw-products-action-btn {
+  align-self: flex-start;
+  background: transparent;
+  color: #ffffff;
+  border: none; /* remove border */
+  outline: none; /* remove focus outline */
+  box-shadow: none;
+  padding: 6px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.25s ease;
 }
 
-.sw-products-details-btn:hover:not(:disabled) {
-  background: #333;
-  transform: translateY(-2px);
+.sw-products-action-btn .arrow {
+  font-size: 22px; /* bigger */
+  font-weight: 800; /* bolder */
+  color: #ffffff;
+  margin-left: 4px;
+  margin-bottom: 3px;
+  transition:
+    transform 0.25s ease,
+    opacity 0.25s ease;
 }
 
-.sw-products-details-btn:disabled {
-  background: #ccc;
-  cursor: not-allowed;
-  opacity: 0.6;
+.sw-products-action-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
 }
 
-/* Fullscreen page for subpages */
+.sw-products-action-btn:hover .arrow {
+  transform: translateX(4px);
+}
+
+/* ================= SUBPAGE ================= */
+
 .sw-products-fullscreen-page {
   position: fixed;
   inset: 0;
-  background: #fff;
+  background: #ffffff;
   z-index: 9999;
   overflow-y: auto;
 }
 
-/* =========================
-   RESPONSIVE (ENHANCED MOBILE)
-========================= */
+/* ================= RESPONSIVE ================= */
 
-/* Tablet Landscape */
-@media (max-width: 1200px) {
-  .sw-products-dashboard-header {
-    margin: 50px auto 20px;
-    padding: 20px 24px;
-  }
-
-  .sw-products-dashboard-grid {
-    gap: 16px;
-    padding: 0 20px;
-  }
-
-  .sw-products-dashboard-card {
-    max-width: 240px;
-  }
-}
-
-/* Tablet Portrait */
 @media (max-width: 1024px) {
-  .sw-products-dashboard-header {
-    margin: 40px auto 18px;
-  }
-
   .sw-products-dashboard-grid {
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  }
-
-  .sw-products-dashboard-card {
-    max-width: 230px;
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
-/* Mobile Landscape / Small Tablet */
-@media (max-width: 768px) {
-  .sw-products-dashboard-header {
-    margin: 60px auto 16px;
-    padding: 16px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-  }
-  .sw-products-dashboard-container {
-    padding-top: 40px;
-  }
-  .sw-products-dashboard-header h2 {
-    font-size: 18px;
-  }
-
-  .sw-products-dashboard-header p {
-    font-size: 12px;
-  }
-
-  .sw-products-view-all-btn {
-    width: 100%;
-    padding: 10px 14px;
-    font-size: 14px;
-  }
-
-  .sw-products-dashboard-grid {
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 14px;
-    padding: 0 16px;
-  }
-
-  .sw-products-dashboard-card {
-    max-width: 100%;
-    height: auto;
-    min-height: 300px;
-  }
-
-  .sw-products-icon-box {
-    height: 120px;
-    font-size: 42px;
-  }
-
-  .sw-products-dashboard-card h3 {
-    font-size: 15px;
-    margin: 10px 10px 0;
-  }
-
-  .sw-products-dashboard-card p {
-    font-size: 12px;
-    margin: 6px 10px 0;
-  }
-
-  .sw-products-details-btn {
-    margin: auto 10px 10px;
-    height: 38px;
-    font-size: 14px;
-  }
-}
-
-/* Mobile Portrait */
-@media (max-width: 480px) {
-  .sw-products-dashboard-header {
-    margin: 50px auto 12px;
-    padding: 14px;
-    border-radius: 10px;
-  }
-  .sw-products-dashboard-container {
-    padding-top: 23px;
-  }
-  .sw-products-dashboard-header h2 {
-    font-size: 16px;
-  }
-
-  .sw-products-dashboard-header p {
-    font-size: 11px;
-  }
-
-  .sw-products-view-all-btn {
-    padding: 9px 12px;
-    font-size: 13px;
-    border-radius: 5px;
-  }
-
+@media (max-width: 600px) {
   .sw-products-dashboard-grid {
     grid-template-columns: 1fr;
-    gap: 12px;
-    padding: 0 12px;
-    margin-bottom: 20px;
   }
 
   .sw-products-dashboard-card {
-    max-width: 100%;
-    height: auto;
-    min-height: 280px;
-  }
-
-  .sw-products-icon-box {
-    height: 100px;
-    font-size: 36px;
-  }
-
-  .sw-products-dashboard-card h3 {
-    font-size: 14px;
-    margin: 8px 8px 0;
-  }
-
-  .sw-products-dashboard-card p {
-    font-size: 11px;
-    margin: 5px 8px 0;
-    line-height: 1.4;
-  }
-
-  .sw-products-details-btn {
-    margin: auto 8px 8px;
-    height: 36px;
-    font-size: 13px;
-  }
-}
-
-/* Small Mobile */
-@media (max-width: 360px) {
-  .sw-products-dashboard-header {
-    margin: 16px auto 10px;
-    padding: 12px;
+    height: 260px;
   }
 
   .sw-products-dashboard-header h2 {
-    font-size: 15px;
+    font-size: 30px;
   }
-
-  .sw-products-dashboard-grid {
-    padding: 0 10px;
-    gap: 10px;
-  }
-
-  .sw-products-icon-box {
-    height: 90px;
-    font-size: 32px;
-  }
-
-  .sw-products-dashboard-card {
-    min-height: 260px;
-  }
-}
-
-/* 🔥 FORCE PRODUCTS CONTENT ABOVE ANY OVERLAY */
-.sw-products-dashboard-container,
-.sw-products-dashboard-grid,
-.sw-products-dashboard-card {
-  position: relative;
-  z-index: 5;
-}
-
-/* 🔥 ENSURE BUTTON RECEIVES CLICKS */
-.sw-products-details-btn {
-  position: relative;
-  z-index: 10;
-  pointer-events: auto;
 }

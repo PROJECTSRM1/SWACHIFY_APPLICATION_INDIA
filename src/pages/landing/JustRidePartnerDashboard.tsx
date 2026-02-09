@@ -45,39 +45,108 @@ const DriverDashboard: React.FC<Props> = ({ MOCK_NOTIFICATIONS }) => {
   const [activeRide, setActiveRide] = useState<ActiveRide | null>(null);
   const [notifications, setNotifications] = useState<Notification[]>(MOCK_NOTIFICATIONS);
   const [statusFilter, setStatusFilter] = useState<'all' | 'completed' | 'cancelled'>('all');
+  const activeServiceRef = React.useRef<FilterService>(activeService);
+
 
   const unreadCount = notifications.filter(n => !n.read).length;
 
-  const generateRandomRequest = useCallback((): Omit<ActiveRide, 'id'> => {
-    const serviceType: ServiceType =
-      activeService === 'all'
-        ? (['bike','scooty','car','xl_car','parcel','metro'][Math.floor(Math.random()*6)] as ServiceType)
-        : activeService as ServiceType;
-    return {
-      serviceType,
-      pickup: 'Koramangala',
-      dropoff: 'MG Road',
-      fare: Math.floor(Math.random()*500)+50,
-      status: 'in_progress',
-      distance: `${(Math.random()*10+1).toFixed(1)} km`,
-      duration: `${Math.floor(Math.random()*30+5)} min`,
-      estimatedArrival: `${Math.floor(Math.random()*10+2)} min`
-    };
-  }, [activeService]);
-
+  
   useEffect(() => {
-    if (isOnline && !activeRide) {
-      const timer = setTimeout(() => {
-        const request = generateRandomRequest();
-        setPendingRide(request);
-        setShowRideRequest(true);
-      }, 3000);
-      return () => clearTimeout(timer);
-    } else {
-      setShowRideRequest(false);
-      setPendingRide(null);
-    }
-  }, [isOnline, activeRide, generateRandomRequest]);
+  activeServiceRef.current = activeService;
+}, [activeService]);
+
+ const generateRandomRequest = useCallback((): Omit<ActiveRide, 'id'> => {
+  const serviceFromRef = activeServiceRef.current;
+
+  const serviceType: ServiceType =
+    serviceFromRef === 'all'
+      ? (['bike','scooty','car','xl_car','parcel','metro'][Math.floor(Math.random()*6)] as ServiceType)
+      : serviceFromRef;
+
+  return {
+    serviceType,
+    pickup: 'Koramangala',
+    dropoff: 'MG Road',
+    fare: Math.floor(Math.random()*500)+50,
+    status: 'in_progress',
+    distance: `${(Math.random()*10+1).toFixed(1)} km`,
+    duration: `${Math.floor(Math.random()*30+5)} min`,
+    estimatedArrival: `${Math.floor(Math.random()*10+2)} min`
+  };
+}, []);
+
+
+
+
+//   useEffect(() => {
+//     if (isOnline && !activeRide) {
+//       const timer = setTimeout(() => {
+//         const request = generateRandomRequest();
+//         setPendingRide(request);
+//         setShowRideRequest(true);
+//       }, 3000);
+//       return () => clearTimeout(timer);
+//     } else {
+//       setShowRideRequest(false);
+//       setPendingRide(null);
+//     }
+//   }, [isOnline, activeRide, generateRandomRequest]);
+
+
+// useEffect(() => {
+//   if (!isOnline || activeRide) {
+//     setShowRideRequest(false);
+//     setPendingRide(null);
+//     return;
+//   }
+
+//   // Clear old pending request when service changes
+//   setShowRideRequest(false);
+//   setPendingRide(null);
+
+//   const timer = setTimeout(() => {
+//     const request = generateRandomRequest();
+//     setPendingRide(request);
+//     setShowRideRequest(true);
+//   }, 2000); // slightly faster feedback
+
+//   return () => clearTimeout(timer);
+// }, [isOnline, activeRide, activeService, generateRandomRequest]);
+
+// useEffect(() => {
+//   if (!isOnline || activeRide) return;
+
+//   setShowRideRequest(false);
+//   setPendingRide(null);
+
+//   const timer = setTimeout(() => {
+//     const request = generateRandomRequest();
+//     setPendingRide(request);
+//     setShowRideRequest(true);
+//   }, 2000);
+
+//   return () => clearTimeout(timer);
+// }, [isOnline, activeRide, activeService, generateRandomRequest]);
+
+
+useEffect(() => {
+  if (!isOnline || activeRide) return;
+
+  const timer = setTimeout(() => {
+    const request = generateRandomRequest();
+    setPendingRide(request);
+    setShowRideRequest(true);
+  }, 3000);
+
+  return () => clearTimeout(timer);
+}, [isOnline, activeRide, generateRandomRequest]);
+
+
+
+
+
+
+
 
   const handleAcceptRide = () => {
     if (!pendingRide) return;

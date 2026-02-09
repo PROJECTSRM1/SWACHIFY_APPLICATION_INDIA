@@ -1,190 +1,328 @@
-// LandingPage.tsx
-import CommonHeader from "../../pages/landing/Header";
-import "../../index.css";
-
 import { useNavigate } from "react-router-dom";
-import { Button, Card, Row, Col } from "antd";
+import { useEffect, useState } from "react";
+import CommonHeader from "../../pages/landing/Header";
 import FooterSection from "../../pages/landing/FooterSection";
 import "../../pages/landing/FooterSection.css";
+import "./LandingPage.css";
+import { useRef } from "react";
+import swachifyvideo from "../../assets/swachifyvideo.mp4"; 
+
+
 
 
 import {
   HomeOutlined,
   TruckOutlined,
-  ToolOutlined,
   ShopOutlined,
-  ApartmentOutlined,
   BuildOutlined,
   BookOutlined,
   ShoppingCartOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 
-import heroImage from "../../assets/landingimages/hero.jpg";
+/* IMAGES */
+import img1 from "../../assets/cleaning and home.jpg";
+import img2 from "../../assets/education1.jpg";
+import img3 from "../../assets/transport.jpg";
+import img4 from "../../assets/img4.jpg";
+import img5 from "../../assets/health care.jpg";
+import img6 from "../../assets/img6.jpg";
+import img7 from "../../assets/img7.jpg";
 
-// 🔹 Import shared JSON config
-import educationData from "../../data/educationData.json";
-import type React from "react";
+/* SERVICES */
+const services = [
+  {
+    title: "Education",
+    icon: <BookOutlined />,
+    route: "/education",
+    image: img2,
+    gradient: "linear-gradient(135deg,#6366f1,#8b5cf6)",
+  },
+  {
+    title: "Health Care",
+    icon: <UserOutlined />,
+    route: "/healthcare",
+    image: img5,
+    gradient: "linear-gradient(135deg,#ec4899,#f43f5e)",
+  },
+  {
+    title: "Just Ride",
+    icon: <TruckOutlined />,
+    route: "/LandingPackers",
+    image: img3,
+    gradient: "linear-gradient(135deg,#0ea5e9,#38bdf8)",
+  },
+  {
+    title: "Swachify Products",
+    icon: <ShoppingCartOutlined />,
+    route: "/swachifyproducts",
+    image: img4,
+    gradient: "linear-gradient(135deg,#22c55e,#4ade80)",
+  },
+  {
+    title: "Cleaning & Home Services",
+    icon: <HomeOutlined />,
+    route: "/cleaningservice",
+    image: img1,
+    gradient: "linear-gradient(135deg,#f59e0b,#fbbf24)",
+  },
+  {
+    title: "Buy / Sale / Rentals",
+    icon: <ShopOutlined />,
+    route: "/BuySaleProducts",
+    image: img6,
+    gradient: "linear-gradient(135deg,#14b8a6,#2dd4bf)",
+  },
+  {
+    title: "Raw Materials",
+    icon: <BuildOutlined />,
+    route: "/Rawmaterials",
+    image: img7,
+    gradient: "linear-gradient(135deg,#64748b,#94a3b8)",
+  },
+];
 
-// 🔹 Types (optional, just for clarity)
-type LandingService = {
-  id: number;
-  iconKey: string;
-  title: string;
-  desc: string;
-  route: string;
-};
-
-type LandingWhyCard = {
-  iconKey: string;
-  title: string;
-  desc: string;
-};
-
-type LandingHero = {
-  title: string;
-  subtitle: string;
-  buttonText: string;
-  backgroundImageKey: string;
-};
-
-// 🔹 Map hero background imageKey -> actual import
-const heroBgMap: Record<string, string> = {
-  landingHero: heroImage,
-};
-
-// 🔹 Extract hero data from JSON with fallback
-const landingHero: LandingHero = (educationData as any).landingHero || {
-  title: "Transform Your Home & Property Services",
-  subtitle: "Your trusted solution for cleaning, moving, rentals, construction, and more.",
-  buttonText: "Get Started",
-  backgroundImageKey: "landingHero",
-};
-
-// 🔹 Resolve background image
-const heroBackgroundImage =
-  heroBgMap[landingHero.backgroundImageKey] ?? heroImage;
-
-// 🔹 Icon maps for services & why-cards
-const landingServiceIconMap: Record<string, React.ReactNode> = {
-  home: <HomeOutlined style={{ fontSize: 28, color: "#1677ff" }} />,
-  truck: <TruckOutlined style={{ fontSize: 28, color: "#00aa33" }} />,
-  shop: <ShopOutlined style={{ fontSize: 28, color: "#ff7a00" }} />,
-  build: <BuildOutlined style={{ fontSize: 28, color: "#8b00ff" }} />,
-  book: <BookOutlined style={{ fontSize: 28, color: "#ff3333" }} />,
-  cart: <ShoppingCartOutlined style={{ fontSize: 28, color: "#ffaa00" }} />,
-  user: <UserOutlined style={{ fontSize: 28, color: "#ffaa00" }} />,
-};
-
-const landingWhyIconMap: Record<string, React.ReactNode> = {
-  tools: <ToolOutlined style={{ fontSize: 28, color: "#ff7a00" }} />,
-  home: <HomeOutlined style={{ fontSize: 28, color: "#1677ff" }} />,
-  truck: <TruckOutlined style={{ fontSize: 28, color: "#00aa33" }} />,
-  build: <BuildOutlined style={{ fontSize: 28, color: "#ffaa00" }} />,
-  apartment: <ApartmentOutlined style={{ fontSize: 28, color: "#8b00ff" }} />,
-  shop: <ShopOutlined style={{ fontSize: 28, color: "#ff3333" }} />,
-};
-
-// 🔹 Read services & why-choose-us from JSON
-const landingServicesConfig: LandingService[] =
-  ((educationData as any).landingServices as LandingService[]) || [];
-
-const services = landingServicesConfig.map((item) => ({
-  icon: landingServiceIconMap[item.iconKey] || null,
-  title: item.title,
-  desc: item.desc,
-  route: item.route,
-}));
-
-const landingWhyConfig: LandingWhyCard[] =
-  ((educationData as any).landingWhyChooseUs as LandingWhyCard[]) || [];
-
-const whyChooseCards = landingWhyConfig.map((item) => ({
-  icon: landingWhyIconMap[item.iconKey] || null,
-  title: item.title,
-  desc: item.desc,
-}));
-
+/* HERO BG */
+const heroImages = [img2, img5, img4, img3, img1];
 const LandingPage = () => {
   const navigate = useNavigate();
+  const [muted, setMuted] = useState(true);
+  const recognitionRef = useRef<any>(null);
+const [listening, setListening] = useState(false);
 
-  const scrollToServices = () => {
-    document.getElementById("services-section")?.scrollIntoView({
-      behavior: "smooth",
-    });
+
+  /* ✅ hooks INSIDE component */
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [bgIndex, setBgIndex] = useState(0);
+const videoRef = useRef<HTMLVideoElement>(null);const voiceRoutes: { [key: string]: string } = {
+  education: "/education",
+  school: "/education",
+  doctor: "/healthcare",
+  hospital: "/healthcare",
+  cleaning: "/cleaningservice",
+  clean: "/cleaningservice",
+  ride: "/LandingPackers",
+  transport: "/LandingPackers",
+  product: "/swachifyproducts",
+  shop: "/swachifyproducts",
+  buy: "/BuySaleProducts",
+  rent: "/BuySaleProducts",
+  raw: "/Rawmaterials",
+};
+const startListening = () => {
+  const SpeechRecognition =
+    (window as any).SpeechRecognition ||
+    (window as any).webkitSpeechRecognition;
+
+  if (!SpeechRecognition) {
+    alert("Speech recognition not supported in this browser");
+    return;
+  }
+
+  const recognition = new SpeechRecognition();
+  recognition.lang = "en-IN";
+  recognition.continuous = false;
+  recognition.interimResults = false;
+
+  recognition.onstart = () => setListening(true);
+  recognition.onend = () => setListening(false);
+
+  recognition.onresult = (event: any) => {
+    const transcript = event.results[0][0].transcript.toLowerCase();
+    console.log("🎙️ Heard:", transcript);
+
+    for (const keyword in voiceRoutes) {
+      if (transcript.includes(keyword)) {
+        navigate(voiceRoutes[keyword]);
+        return;
+      }
+    }
+
+    alert("Sorry, I didn’t understand. Try again.");
   };
 
+  recognition.start();
+  recognitionRef.current = recognition;
+};
+
+
+  /* 🔁 auto rotate service images */
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % services.length);
+    }, 4000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  /* 🔁 hero bg rotation */
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setBgIndex((prev) => (prev + 1) % heroImages.length);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <div className="sw-lp-classname-landing-container">
+    
+    <div className="sw-landing-root">
+      
+       
       <CommonHeader selectedKey="landing" />
 
-      {/* HERO SECTION */}
-      <section
-        className="sw-lp-classname-hero-section"
-        style={{ backgroundImage: `url(${heroBackgroundImage})` }}
-      >
-        <div className="sw-lp-classname-hero-content">
-          <h1>{landingHero.title}</h1>
-          <p>{landingHero.subtitle}</p>
+      {/* HERO */}
+      <section className="sw-main-hero">
+        <div
+          className="sw-hero-bg"
+          style={{ backgroundImage: `url(${heroImages[bgIndex]})` }}
+        />
 
-          <Button type="primary" size="large" onClick={scrollToServices}>
-            {landingHero.buttonText}
-          </Button>
-        </div>
-      </section>
+        <div className="sw-hero-content">
+          <span className="sw-badge">
+            Trusted by 1M+ Indians across 100+ cities
+          </span>
 
-      {/* SERVICES SECTION */}
-      <section id="services-section" className="sw-lp-classname-services-section">
-        <h2 className="sw-lp-classname-section-title">Our Services</h2>
-        <p className="sw-lp-classname-section-subtitle">
-          Comprehensive solutions for all your home and property needs
-        </p>
+          <h1>
+            Your Life, <span>Simplified</span>
+          </h1>
 
-        <Row gutter={[24, 24]} justify="center">
-          {services.map((item, index) => (
-            <Col xs={24} sm={12} md={8} key={index}>
-              <Card
-                hoverable
-                className="sw-lp-classname-service-card"
-                onClick={() => navigate(item.route)}
-              >
-                <div className="sw-lp-classname-service-icon">{item.icon}</div>
-                <h3 className="sw-lp-classname-service-title">{item.title}</h3>
-                <p className="sw-lp-classname-service-desc">{item.desc}</p>
-                <span className="sw-lp-classname-learn-more">Learn More →</span>
-              </Card>
-            </Col>
-          ))}
-        </Row>
-      </section>
-
-      {/* WHY CHOOSE US */}
-      <section className="sw-lp-classname-why-choose-section">
-        <div className="sw-lp-classname-container">
-          <h2 className="sw-lp-classname-section-title">Why Choose Our Service</h2>
-          <p className="sw-lp-classname-section-subtitle">
-            We focus on quality, trust and speed — built to make your life easier.
+          <p>
+            From education to healthcare, transport to home services – everything
+            in one platform.
           </p>
 
-          <Row gutter={[20, 20]} justify="center">
-            {whyChooseCards.map((card, i) => (
-              <Col xs={24} sm={12} md={8} key={i}>
-                <Card className="sw-lp-classname-why-card" hoverable>
-                  <div style={{ display: "flex", gap: 12 }}>
-                    {card.icon}
-                    <div>
-                      <h4>{card.title}</h4>
-                      <p>{card.desc}</p>
-                    </div>
-                  </div>
-                </Card>
-              </Col>
-            ))}
-          </Row>
+          <div className="sw-hero-actions">
+            <button
+              className="primary-btn"
+              onClick={() =>
+                document
+                  .querySelector("#services")
+                  ?.scrollIntoView({ behavior: "smooth" })
+              }
+            >
+              Explore Services
+            </button>
+            <button className="secondary-btn">Download App</button>
+          </div>
         </div>
       </section>
 
-      {/* FOOTER (still via FooterSection component) */}
+      {/* SERVICES */}
+      <section id="services" className="sw-uc-services">
+        <div className="sw-uc-container">
+          {/* LEFT */}
+          <div className="sw-uc-left">
+            <h2>What are you looking for?</h2>
+
+            <div className="sw-uc-grid">
+              {services.map((item, index) => (
+                <div
+                  key={index}
+                  className={`sw-uc-card ${
+                    activeIndex === index ? "active" : ""
+                  }`}
+                  onMouseEnter={() => setActiveIndex(index)}
+                  onClick={() => navigate(item.route)}
+                >
+                  <div
+                    className="sw-uc-icon-wrap"
+                    style={{ background: item.gradient }}
+                  >
+                    <div className="sw-uc-icon">{item.icon}</div>
+                  </div>
+                  <div className="sw-uc-text">{item.title}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+<div className="sw-uc-right">
+  <div className="sw-uc-image-grid">
+    {services.map((s, i) => (
+      <div
+        key={i}
+        className={`sw-uc-image-card ${
+          activeIndex === i ? "active" : ""
+        }`}
+      >
+        <img src={s.image} alt={s.title} />
+        <div
+          className="sw-uc-image-glow"
+          style={{ background: s.gradient }}
+        />
+      </div>
+    ))}
+  </div>
+</div>
+
+
+        </div>
+      </section>
+      <div>
+      {/* SWACHIFY AI PROMO */}
+{/* SWACHIFY AI PROMO */}
+<section className="sw-ai">
+  <div className="sw-ai-wrap">
+
+    {/* LEFT CONTENT */}
+    <div className="sw-ai-content">
+      <span className="sw-ai-badge">Introducing Swachify AI</span>
+
+      <h2>
+        One App. <br />
+        <span>Your entire life.</span>
+      </h2>
+
+      <p>
+        Swachify AI understands your needs and connects you instantly to
+        education, healthcare, transport, home services and more — automatically.
+      </p>
+
+      <div className="sw-ai-lines">
+        <div>🎙️ “Book a doctor for today”</div>
+        <div>🎙️ “Schedule home cleaning”</div>
+        <div>🎙️ “Find a ride now”</div>
+      </div>
+
+<button className="sw-ai-btn" onClick={startListening}>
+  {listening ? "🎧 Listening..." : "🎙️ Speak to Swachify AI"}
+</button>
+
+    </div>
+
+    {/* RIGHT VIDEO + AUDIO */}
+    <div className="sw-ai-visual">
+      <div className="sw-device">
+
+
+<video
+  ref={videoRef}
+  autoPlay
+  loop
+  muted={muted}
+  playsInline
+  className="sw-ai-video"
+>
+  <source src={swachifyvideo} type="video/mp4" />
+</video>
+
+<button
+  className="unmute-btn"
+  onClick={() => setMuted(prev => !prev)}
+>
+  {muted ? "🔇 Sound Off" : "🔊 Sound On"}
+</button>
+
+  </div>
+    </div>
+
+  </div>
+</section>
+
+  
+      </div>
+
       <FooterSection selectedKey="LandingPackers" />
     </div>
   );

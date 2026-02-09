@@ -79,6 +79,7 @@ export default function CourseEnroll({
     form.documents.length > 0;
 
   return (
+      <div className="enroll-wrapper">
     <div className="enroll-page">
       <div className="enroll-container">
         {/* HEADER */}
@@ -250,6 +251,7 @@ export default function CourseEnroll({
           Confirm & Enroll →
         </button>
       </div>
+    </div>
     </div>
   );
 }

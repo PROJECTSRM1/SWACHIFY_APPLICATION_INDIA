@@ -1,0 +1,340 @@
+/* ================= PAGE ================= */
+.inst-reg-page {
+  width: 100%;
+ background: transparent !important;
+  padding: 32px 40px;
+  box-sizing: border-box;
+}
+.inst-reg-wrapper {
+  min-height: 100vh;
+  background: linear-gradient(
+    135deg,
+    #f3f4f8 0%,
+    #f3f4f8 42%,
+    #ffffff 42%,
+    #ffffff 100%
+  );
+  /* padding-top: 88px; */
+  padding-bottom: 80px;
+  overflow-x: hidden;
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont;
+}
+/* ================= CONTAINER ================= */
+.inst-reg-container {
+  max-width: 1100px;
+  margin: auto;
+  background: #ffffff;
+  padding: 36px;
+  border-radius: 16px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.06);
+}
+
+/* ================= HEADER ================= */
+.inst-reg-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.inst-reg-back {
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  border-radius: 10px;
+  padding: 6px 12px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.inst-reg-step-text {
+  font-size: 12px;
+  font-weight: 600;
+  color: #2563eb;
+}
+
+/* ================= PROGRESS ================= */
+.inst-reg-progress {
+  height: 6px;
+  background: #e5e7eb;
+  border-radius: 999px;
+  margin-bottom: 32px;
+}
+
+.inst-reg-progress-fill {
+  width: 33%;
+  height: 100%;
+  background: linear-gradient(90deg, #2563eb, #3b82f6);
+  border-radius: 999px;
+}
+
+/* ================= TITLES ================= */
+.inst-reg-title {
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.inst-reg-subtitle {
+  font-size: 14px;
+  color: #6b7280;
+  margin-bottom: 32px;
+}
+
+/* ================= SECTIONS ================= */
+.inst-reg-section {
+  margin-bottom: 36px;
+}
+
+.inst-reg-section h4 {
+  font-size: 13px;
+  font-weight: 700;
+  color: #2563eb;
+  margin-bottom: 16px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ================= GRID ================= */
+.inst-reg-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+/* ================= INPUTS ================= */
+.inst-reg-input,
+.inst-reg-select {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 14px;
+  border-radius: 12px;
+  border: 1px solid #d1d5db;
+  outline: none;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.inst-reg-input:focus,
+.inst-reg-select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+/* ================= UPLOAD EMPTY ================= */
+.inst-reg-upload {
+  border: 2px dashed #2563eb;
+  border-radius: 12px;
+  padding: 18px;
+  text-align: center;
+  font-weight: 600;
+  color: #2563eb;
+  cursor: pointer;
+  transition: background 0.2s, border 0.2s;
+}
+
+.inst-reg-upload:hover {
+  background: #f0f5ff;
+}
+
+/* ================= FILE PREVIEW ================= */
+.inst-reg-file {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid #d1d5db;
+  background: #f9fafb;
+  font-size: 14px;
+  color: #111827;
+}
+
+.inst-reg-file button {
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  width: 28px;
+  height: 28px;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inst-reg-file button:hover {
+  background: #dc2626;
+}
+
+/* ================= FOOTER ================= */
+.inst-reg-footer {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.inst-reg-submit {
+  background: linear-gradient(90deg, #2563eb, #3b82f6);
+  color: #fff;
+  border: none;
+  padding: 16px 32px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.inst-reg-submit:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.35);
+}
+
+.inst-reg-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.inst-reg-terms {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 900px) {
+  .inst-reg-grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .inst-reg-page {
+    padding: 16px;
+  }
+
+  .inst-reg-container {
+    padding: 24px;
+  }
+}
+
+
+/* Wrap upload + preview vertically */
+.inst-reg-upload-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Ensure upload button never collapses */
+.inst-reg-upload {
+  width: 100%;
+}
+
+/* Prevent file preview overflow */
+.inst-reg-file {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+
+/* ================= UPLOAD WRAPPER ================= */
+.inst-reg-upload-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+/* Ensure upload button stays full width */
+.inst-reg-upload {
+  width: 100%;
+}
+
+/* Prevent preview overlap */
+.inst-reg-file {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+  .inst-reg-wrapper {
+    background: #f3f4f8; /* remove sharp gradient feel */
+    padding-bottom: 40px;
+  }
+
+  .inst-reg-page {
+    padding: 12px;
+  }
+
+  .inst-reg-container {
+    padding: 20px 16px;
+    border-radius: 14px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+  }
+}
+@media (max-width: 600px) {
+  .inst-reg-header {
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .inst-reg-back {
+    padding: 6px 10px;
+    font-size: 16px;
+  }
+
+  .inst-reg-step-text {
+    font-size: 11px;
+  }
+}
+@media (max-width: 600px) {
+  .inst-reg-title {
+    font-size: 22px;
+    line-height: 1.3;
+  }
+
+  .inst-reg-subtitle {
+    font-size: 13px;
+    margin-bottom: 24px;
+  }
+
+  .inst-reg-section h4 {
+    font-size: 12px;
+    margin-bottom: 12px;
+  }
+}
+@media (max-width: 600px) {
+  .inst-reg-input,
+  .inst-reg-select {
+    padding: 12px 14px;
+    font-size: 14px;
+    border-radius: 10px;
+  }
+
+  .inst-reg-upload {
+    padding: 14px;
+    font-size: 14px;
+    border-radius: 10px;
+  }
+
+  .inst-reg-file {
+    padding: 12px 14px;
+    font-size: 13px;
+  }
+}
+@media (max-width: 600px) {
+  .inst-reg-submit {
+    width: 100%;
+    padding: 14px;
+    font-size: 15px;
+    border-radius: 10px;
+  }
+}
+@media (max-width: 600px) {
+  .inst-reg-container {
+    border-radius: 18px;
+  }
+
+  body {
+    background: #f3f4f8;
+  }
+}

@@ -1,6 +1,11 @@
-import  { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import "./Companies.css";
 import JobDetails from "./JobDetails";
+
+/* =======================
+   Types
+======================= */
+
 
 type Company = {
   id: number;
@@ -9,76 +14,30 @@ type Company = {
   description: string;
   location: string;
   size: string;
-  isRemote?: boolean;
   status: "Active" | "Hiring Frozen";
 };
+
+
+type ApiJobOpening = {
+  id: number;
+  job_id: number;
+  company_name: string;
+  company_address: string;
+  industry_id: number | null;
+  company_size_id: number | null;
+  role_description: string;
+  requirements: string;
+  is_active: boolean;
+};
+
+
 type Props = {
   onBack: () => void;
 };
 
-
-const COMPANIES: Company[] = [
-  {
-    id: 1,
-    name: "TechFlow Systems",
-    industry: "Software Engineering",
-    description:
-      "Leading the way in AI and machine learning solutions for enterprise clients.",
-    location: "San Francisco, CA",
-    size: "500+",
-    status: "Active",
-  },
-  {
-    id: 2,
-    name: "EduGrow",
-    industry: "EdTech",
-    description:
-      "Helping students learn faster through personalized curriculum and AI-driven tutoring.",
-    location: "Austin, TX",
-    size: "50-200",
-    status: "Active",
-  },
-  {
-    id: 3,
-    name: "Apex Banking",
-    industry: "Finance & Banking",
-    description:
-      "Global financial solutions with secure modern banking infrastructure.",
-    location: "London, UK",
-    size: "1000+",
-    status: "Hiring Frozen",
-  },
-  {
-    id: 4,
-    name: "EcoDynamics",
-    industry: "Green Energy",
-    description:
-      "Developing sustainable energy grids powered by next-gen solar technology.",
-    location: "Remote",
-    size: "50-200",
-    status: "Active",
-  },
-  {
-    id: 5,
-    name: "CloudNine Solutions",
-    industry: "Software Engineering",
-    description:
-      "Building next-generation cloud infrastructure and DevOps tools.",
-    location: "Seattle, WA",
-    size: "200-500",
-    status: "Active",
-  },
-  {
-    id: 6,
-    name: "HealthTech Innovations",
-    industry: "Healthcare",
-    description:
-      "Revolutionizing patient care with AI-powered diagnostic platforms.",
-    location: "Boston, MA",
-    size: "100-200",
-    status: "Active",
-  },
-];
+/* =======================
+   Filters
+======================= */
 
 const INDUSTRIES = [
   "All",
@@ -89,56 +48,110 @@ const INDUSTRIES = [
   "Healthcare",
 ];
 
-const LOCATIONS = [
-  "All",
-  "San Francisco, CA",
-  "Austin, TX",
-  "London, UK",
-  "Remote",
-  "Seattle, WA",
-  "Boston, MA",
-];
+const LOCATIONS = ["All"];
+const SIZES = ["All", "50-200", "200-500", "500+", "1000+"];
 
-const SIZES = ["All", "50-200", "100-200", "200-500", "500+", "1000+"];
+/* =======================
+   Component
+======================= */
 
 export default function Companies({ onBack }: Props) {
+  const [companies, setCompanies] = useState<Company[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const [tab, setTab] = useState<"all" | "active">("all");
   const [industry, setIndustry] = useState("All");
   const [location, setLocation] = useState("All");
   const [size, setSize] = useState("All");
-  const [selectedCompanyId, setSelectedCompanyId] =
-    useState<number | null>(null);
+ const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
+
+
+  /* =======================
+     Fetch Companies
+  ======================= */
+
+useEffect(() => {
+  const fetchJobs = async () => {
+    try {
+      const res = await fetch(
+        "https://swachify-india-be-1-mcrb.onrender.com/api/jobs/openings"
+      );
+      const data: ApiJobOpening[] = await res.json();
+
+      // 🔹 group jobs by company name
+      const companyMap = new Map<string, Company>();
+
+      data.forEach(job => {
+        if (!companyMap.has(job.company_name)) {
+          companyMap.set(job.company_name, {
+            id: job.id, // first job id as company id
+            name: job.company_name,
+            industry: job.industry_id
+              ? `Industry ${job.industry_id}`
+              : "Not Specified",
+            description:
+              "Explore job openings and internships at this company.",
+            location: job.company_address || "Location not specified",
+            size: job.company_size_id
+              ? `Size ${job.company_size_id}`
+              : "Not specified",
+            status: job.is_active ? "Active" : "Hiring Frozen",
+          });
+        }
+      });
+
+      setCompanies(Array.from(companyMap.values()));
+    } catch (err) {
+      console.error("Failed to fetch job openings", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchJobs();
+}, []);
+
+
+  /* =======================
+     Filtering Logic
+  ======================= */
 
   const filteredCompanies = useMemo(() => {
-    return COMPANIES.filter(c => {
+    return companies.filter(c => {
       if (tab === "active" && c.status !== "Active") return false;
       if (industry !== "All" && c.industry !== industry) return false;
       if (location !== "All" && c.location !== location) return false;
       if (size !== "All" && c.size !== size) return false;
       return true;
     });
-  }, [tab, industry, location, size]);
+  }, [companies, tab, industry, location, size]);
 
-  /* ✅ FIXED: render JobDetails with correct props */
-  if (selectedCompanyId !== null) {
-    return (
-      <JobDetails
-        companyId={selectedCompanyId}
-        onBack={() => setSelectedCompanyId(null)}
-      />
-    );
-  }
+  /* =======================
+     Job Details View
+  ======================= */
+
+ if (selectedCompany) {
+  return (
+    <JobDetails
+      company={selectedCompany}
+      onBack={() => setSelectedCompany(null)}
+    />
+  );
+}
+
+
+  /* =======================
+     UI
+  ======================= */
 
   return (
+     <div className="companies-wrapper">
     <div className="companies-layout">
       <div className="page-header">
         <div className="header-left">
-         <button className="companies-back-btn" onClick={onBack}>
-  ←
-</button>
-
-
+          <button className="companies-back-btn" onClick={onBack}>
+            ←
+          </button>
           <h2>Companies</h2>
         </div>
       </div>
@@ -178,41 +191,50 @@ export default function Companies({ onBack }: Props) {
         </select>
       </div>
 
-      <div className="company-grid">
-        {filteredCompanies.map(company => (
-          <div key={company.id} className="company-card">
-            <div className="card-header">
-              <div className="avatar">{company.name[0]}</div>
-              <div>
-                <h3>{company.name}</h3>
-                <span className="industry">{company.industry}</span>
+      {loading ? (
+        <div className="loading">Loading companies...</div>
+      ) : (
+        <div className="company-grid">
+          {filteredCompanies.map(company => (
+            <div key={company.id} className="company-card">
+              <div className="card-header">
+                <div className="avatar">{company.name[0]}</div>
+                <div>
+                  <h3>{company.name}</h3>
+                  <span className="industry">{company.industry}</span>
+                </div>
+              </div>
+
+              <p className="desc">{company.description}</p>
+
+              <div className="meta">
+                <span>📍 {company.location}</span>
+                <span>👥 {company.size}</span>
+              </div>
+
+              <div className="card-footer">
+                <span
+                  className={`company-status ${
+                    company.status === "Active" ? "active" : "frozen"
+                  }`}
+                >
+                  {company.status}
+                </span>
+
+                <button
+  type="button"
+  className="primary-btn"
+  onClick={() => setSelectedCompany(company)}
+>
+  View Opportunities
+</button>
+
               </div>
             </div>
-
-            <p className="desc">{company.description}</p>
-
-            <div className="meta">
-              <span>📍 {company.location}</span>
-              <span>👥 {company.size}</span>
-            </div>
-
-           <div className="card-footer">
-  <span className={`company-status ${company.status === "Active" ? "active" : "frozen"}`}>
-    {company.status}
-  </span>
-
-  <button
-    type="button"
-    className="primary-btn"
-    onClick={() => setSelectedCompanyId(company.id)}
-  >
-    View Opportunities
-  </button>
-</div>
-
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
+    </div>
     </div>
   );
 }

@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 
 //import { setUserDetails } from "../../utils/helpers/storage";
 import { Link, useNavigate } from "react-router-dom";
+import { Dropdown } from "antd";
+
 import {
   Button,
   Menu,
@@ -12,11 +14,14 @@ import {
   Input,
   Checkbox,
   message,
-  //Radio,
   Upload,
+  Row,
+  Col,
 } from "antd";
 
-import { Select, TreeSelect } from "antd";
+
+import { Select } from "antd";
+import Logo from "../../assets/swachify-logo.png";
 
 
 import {
@@ -26,7 +31,7 @@ import {
   PlusOutlined,
 } from "@ant-design/icons";
 
-import axios from "axios";
+// import axios from "axios";
 
 
 import { customerRegister, customerLogin } from "../../api/customerAuth";
@@ -40,8 +45,8 @@ const allowOnlyNumbers = (value: string) =>
   value.replace(/[^0-9]/g, "");
 
 // Only letters + spaces
-const allowOnlyLetters = (value: string) =>
-  value.replace(/[^A-Za-z ]/g, "");
+// const allowOnlyLetters = (value: string) =>
+//   value.replace(/[^A-Za-z ]/g, "");
 
 // Letters + numbers (no special chars)
 const allowAlphaNumeric = (value: string) =>
@@ -53,29 +58,28 @@ const allowEmailChars = (value: string) =>
 
 
 
+
 const navItems = [
   { key: "home", label: <Link to="/landing">Home</Link> },
-  { key: "cleaning", label: <Link to="/cleaningservice">Cleaning & Home Services</Link> },
-  { key: "packers", label: <Link to="/LandingPackers">Transport</Link> },
-  { key: "commercial", label: <Link to="/commercial-plots">Buy/Sale/Rentals</Link> },
-  { key: "materials", label: <Link to="/ConstructionMaterials">Raw Materials</Link> },
-  { key: "education", label: <Link to="/education">Education</Link> },
-  {
-    key: "Swachifyproducts",
-    label: <Link to="/swachify-products">Swachify Products</Link>,
-  },
-  { key: "freelancer", label: <Link to="/Freelancer">Freelancer</Link> },
+  // { key: "education", label: <Link to="/education">Education</Link> },
+  // { key: "healthcare", label: <Link to="/healthcare">Health Care</Link> },
+  // { key: "packers", label: <Link to="/LandingPackers">Just Ride</Link> },
+  // { key: "Swachifyproducts", label: <Link to="/swachify-products">Swachify Products</Link>, },
+  // { key: "cleaning", label: <Link to="/cleaningservice">Cleaning & Home Services</Link> },
+  // { key: "commercial", label: <Link to="/commercial-plots">Buy/Sale/Rentals</Link> },
+  // { key: "materials", label: <Link to="/ConstructionMaterials">Raw Materials</Link> }, 
+  // { key: "freelancer", label: <Link to="/Freelancer">Freelancer</Link> },
 ];
 
-const serviceIdToRoute: Record<number, string> = {
-  1: "/app/dashboard/homeservices",
-  2: "/app/dashboard/packers",
-  3: "/app/dashboard/commercials",
-  4: "/app/dashboard/constructions",
-  5: "/app/dashboard/education",
-  6: "/app/dashboard", // or products page if you add one
-  7: "/app/dashboard/healthcare",
-};
+// const serviceIdToRoute: Record<number, string> = {
+//   1: "/app/dashboard/homeservices",
+//   2: "/app/dashboard/packers",
+//   3: "/app/dashboard/commercials",
+//   4: "/app/dashboard/constructions",
+//   5: "/app/dashboard/education",
+//   6: "/app/dashboard", // or products page if you add one
+//   7: "/app/dashboard/healthcare",
+// };
 
 
 
@@ -84,7 +88,7 @@ const { TabPane } = Tabs;
 
 
 const CommonHeader: React.FC<{ selectedKey?: string }> = ({
-  selectedKey = "home",
+  // selectedKey = "home",
 }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [authModalVisible, setAuthModalVisible] = useState(false);
@@ -94,14 +98,22 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
   const [roleType, setRoleType] = useState<RoleType>("vendor");
   const [showRegisterHint, setShowRegisterHint] = useState<"vendor" | "admin" | null>(null);
 
-  const [showProfessionalFields, setShowProfessionalFields] = useState(false);
+  const [showProfessionalFields] = useState(false);
 
-  const [isHealthCareSelected, setIsHealthCareSelected] = useState(false);
+  const [isHealthCareSelected] = useState(false);
   const [doctorRoleSelected, setDoctorRoleSelected] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(
+  !!localStorage.getItem("accessToken")
+);
+const handleLogout = () => {
+  localStorage.clear();          // 🔥 full logout
+  setIsAuthenticated(false);     // UI update
+  navigate("/landing");          // 🔁 redirect to landing
+};
 
-  type UserRole = "customer" | "employee" | "partner" | null;
+  // type UserRole = "customer" | "employee" | "partner" | "admin" | null;
 
-  const [userRole, setUserRole] = useState<UserRole>(null);
+  // const [ setUserRole] = useState<UserRole>(null);
   const [partnerModalVisible, setPartnerModalVisible] = useState(false);
   const [partnerActiveTab, setPartnerActiveTab] = useState<"login" | "register">("register");
 
@@ -120,7 +132,8 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
 
   const [authLoading, setAuthLoading] = useState(false);
   const navigate = useNavigate();
-  const [serviceOpen, setServiceOpen] = useState(false);
+  // const [setServiceOpen] = useState(false);
+const [loginForm] = Form.useForm();
 
 
   const openAuthModal = (tab: "login" | "register" = "login") => {
@@ -128,7 +141,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
     setAuthModalVisible(true);
     setMenuOpen(false);
   };
-  const [hideWorkType, setHideWorkType] = useState(false);
+  // const [hideWorkType, setHideWorkType] = useState(false);
 
 
   const closeAuthModal = () => {
@@ -171,71 +184,94 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
     };
   }, []);
 
-  useEffect(() => {
-    const closeOnScroll = () => {
-      setServiceOpen(false);
-    };
+  // useEffect(() => {
+  //   const closeOnScroll = () => {
+  //     setServiceOpen(false);
+  //   };
 
-    window.addEventListener("scroll", closeOnScroll, true);
+  //   window.addEventListener("scroll", closeOnScroll, true);
 
-    return () => {
-      window.removeEventListener("scroll", closeOnScroll, true);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener("scroll", closeOnScroll, true);
+  //   };
+  // }, []);
 
   const onLogin = async (values: any) => {
     try {
       setAuthLoading(true);
 
       // ================= ADMIN LOGIN =================
-      if (roleType === "admin") {
-        const res = await axios.post(
-          "https://swachify-india-be-1-mcrb.onrender.com/api/admin/login",
-          {
-            username_or_email: values.username.trim(),
-            password: values.password,
-          }
-        );
+      // if (roleType === "admin") {
+      //   const res = await axios.post(
+      //     "https://swachify-india-be-1-mcrb.onrender.com/api/admin/login",
+      //     {
+      //       username_or_email: values.username.trim(),
+      //       password: values.password,
+      //     }
+      //   );
 
 
-        console.log("ADMIN LOGIN RESPONSE:", res.data);
+      //   console.log("ADMIN LOGIN RESPONSE:", res.data);
 
-        localStorage.setItem("token", res.data.access_token);
-        localStorage.setItem("user_role", "freelancer");
-        localStorage.setItem("user_role", "customer");
-
-
+      //   localStorage.setItem("token", res.data.access_token);
+      //   localStorage.setItem("user_role", "freelancer");
+      //   localStorage.setItem("user_role", "customer");
 
 
-        message.success("Admin login successful");
-        setVendorModalVisible(false);
-        navigate("/adminshell/dashboard");
-        return;
-      }
+
+
+      //   message.success("Admin login successful");
+      //   setVendorModalVisible(false);
+      //   navigate("/adminshell/dashboard");
+      //   return;
+      // }
 
       // ================= CUSTOMER LOGIN =================
       const res: any = await customerLogin({
         email_or_phone: values.identifier,
         password: values.password,
       });
+     
+      
+      localStorage.setItem("user_id", res.user_id);
+    
+      
+      localStorage.setItem("email", res.email_or_phone);
 
       localStorage.setItem("accessToken", res.access_token);
       localStorage.setItem("user", JSON.stringify(res));
 
       localStorage.removeItem("isGuest");
 
-      const serviceIds: number[] = res.service_ids || [];
+      // const serviceIds: number[] = res.service_ids || [];
 
-      const firstServiceId = serviceIds[0];
-      const redirectPath =
-        serviceIdToRoute[firstServiceId] || "/app/dashboard";
+      // const firstServiceId = serviceIds[0];
+      // const redirectPath =
+      //   serviceIdToRoute[firstServiceId] || "/app/dashboard";
 
-      console.log("Navigating to:", redirectPath);
+      // console.log("Navigating to:", redirectPath);
       // After successful login
       localStorage.setItem("service_ids", JSON.stringify(res.service_ids));
 
-      closeAuthModal();
-      navigate(redirectPath);
+      // after successful login
+localStorage.setItem("accessToken", res.access_token);
+localStorage.setItem("user", JSON.stringify(res));
+
+// mark as authenticated
+setIsAuthenticated(true);
+
+// close modal
+closeAuthModal();
+const redirectPath = localStorage.getItem("postAuthRedirect");
+
+if (redirectPath) {
+  localStorage.removeItem("postAuthRedirect");
+  navigate(redirectPath);
+}
+
+
+// ❌ DO NOT navigate anywhere
+
 
 
 
@@ -252,64 +288,104 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
     }
   };
 
+  // const onAdminLogin = async (values: any) => {
+  //   try {
+  //     setAuthLoading(true);
+
+  //     const res = await axios.post(
+  //       "https://swachify-india-be-1-mcrb.onrender.com/api/admin/login",
+  //       {
+  //         username_or_email: values.username.trim(),
+  //         password: values.password,
+  //       }
+  //     );
+
+  //     console.log("ADMIN LOGIN RESPONSE:", res.data);
+
+  //     const token =
+  //       res.data?.access_token ||
+  //       res.data?.token ||
+  //       res.data?.accessToken;
+
+  //     if (!token) {
+  //       message.error("Admin token not received");
+  //       return;
+  //     }
+
+  //     localStorage.setItem("token", token);
+
+  //     message.success("Admin login successful");
+  //     setVendorModalVisible(false);
+  //     navigate("/adminshell/dashboard");
+  //   } catch (err: any) {
+  //     message.error(
+  //       err?.response?.data?.message || "Admin login failed"
+  //     );
+  //   } finally {
+  //     setAuthLoading(false);
+  //   }
+  // };
+  useEffect(() => {
+  const token = localStorage.getItem("accessToken");
+  if (token) {
+    setIsAuthenticated(true);
+  }
+}, []);
+
+
   const onAdminLogin = async (values: any) => {
+    setAuthLoading(true);
+
+
     try {
-      setAuthLoading(true);
+      const savedAdmin = localStorage.getItem("STATIC_ADMIN");
 
-      const res = await axios.post(
-        "https://swachify-india-be-1-mcrb.onrender.com/api/admin/login",
-        {
-          username_or_email: values.username.trim(),
-          password: values.password,
-        }
-      );
 
-      console.log("ADMIN LOGIN RESPONSE:", res.data);
-
-      const token =
-        res.data?.access_token ||
-        res.data?.token ||
-        res.data?.accessToken;
-
-      if (!token) {
-        message.error("Admin token not received");
+      if (!savedAdmin) {
+        message.error("No admin registered. Please register first.");
         return;
       }
 
-      localStorage.setItem("token", token);
 
-      message.success("Admin login successful");
-      setVendorModalVisible(false);
-      navigate("/adminshell/dashboard");
-    } catch (err: any) {
-      message.error(
-        err?.response?.data?.message || "Admin login failed"
-      );
+      const admin = JSON.parse(savedAdmin);
+
+
+      if (
+        values.email === admin.email &&
+        values.password === admin.password
+      ) {
+        // fake token
+        localStorage.setItem("token", "STATIC_ADMIN_TOKEN");
+        localStorage.setItem("user_role", "admin");
+
+
+        message.success("Admin login successful");
+
+
+        setVendorModalVisible(false);
+        navigate("/admin/dashboard");
+      } else {
+        message.error("Invalid admin credentials");
+      }
     } finally {
       setAuthLoading(false);
     }
   };
+  // const handleSkipLogin = () => {
+  //   localStorage.setItem("isGuest", "true");
 
-
-  const handleSkipLogin = () => {
-    localStorage.setItem("isGuest", "true");
-
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("user");
-
-
-
-    // ✅ Guest should see ONLY HealthCare
-    localStorage.setItem("service_ids", JSON.stringify([7]));
-
-
-    closeAuthModal();
-    navigate("/app/dashboard");
-  };
+  //   localStorage.removeItem("accessToken");
+  //   localStorage.removeItem("user");
 
 
 
+  //   // ✅ Guest should see ONLY HealthCare
+  //   localStorage.setItem("service_ids", JSON.stringify([7]));
 
+
+  //   closeAuthModal();
+  //   navigate("/app/dashboard");
+  // };
 
 
   // ==========================
@@ -323,30 +399,50 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
     setVendorModalVisible(false);
     message.success("Vendor Login Successful!");
   };
-  const [selectedServices, setSelectedServices] = useState<number[]>([]);
+  // const [selectedServices, setSelectedServices] = useState<number[]>([]);
 
-  const serviceOptions = [
-    { title: "Cleaning & Home Services", value: 1 },
-    { title: "Transport", value: 2 },
-    { title: "Buy/Sell/Rental", value: 3 },
-    { title: "Raw Materials", value: 4 },
-    { title: "Education", value: 5 },
-    { title: "Swachify Products", value: 6 },
-    { title: "HealthCare", value: 7 },
-  ];
+  // const serviceOptions = [
+  //   { title: "Cleaning & Home Services", value: 1 },
+  //   { title: "Just Ride", value: 2 },
+  //   { title: "Buy/Sell/Rental", value: 3 },
+  //   { title: "Raw Materials", value: 4 },
+  //   { title: "Education", value: 5 },
+  //   { title: "Swachify Products", value: 6 },
+  //   { title: "HealthCare", value: 7 },
+  // ];
 
   // ✅ Partner Register/Login handler (Education only)
 
-const onPartnerRegister = (values: any) => {
-  // store selected module
-  localStorage.setItem("partner_module", values.module);
+  const onPartnerRegister = (values: any) => {
+    // store selected module
+    localStorage.setItem("partner_module", values.module);
 
-  message.success("Registration successful. Please login.");
+    message.success("Registration successful. Please login.");
 
-  // ✅ switch to login tab
-  setPartnerActiveTab("login");
-};
+    // ✅ switch to login tab
+    setPartnerActiveTab("login");
+  };
 
+  const onAdminRegister = async (values: any) => {
+    const adminData = {
+      email: values.email,
+      password: values.password,
+      firstName: values.firstName,
+      lastName: values.lastName,
+      mobile: values.mobile,
+    };
+
+
+    // ✅ SAVE ADMIN DETAILS LOCALLY
+    localStorage.setItem("STATIC_ADMIN", JSON.stringify(adminData));
+
+
+    message.success("Admin registered successfully");
+
+
+    // 👉 Go to login tab
+    setVendorActiveTab("login");
+  };
 
   const onPartnerLogin = () => {
     const module = localStorage.getItem("partner_module");
@@ -358,6 +454,7 @@ const onPartnerRegister = (values: any) => {
     }
 
     setPartnerModalVisible(false);
+
 
     // ✅ SAME NAVIGATION YOU ALREADY HAD
     switch (module) {
@@ -393,57 +490,57 @@ const onPartnerRegister = (values: any) => {
     try {
       setAuthLoading(true);
 
-      if (roleType === "admin") {
-        const res = await axios.post(
-          "https://swachify-india-be-1-mcrb.onrender.com/api/admin/login",
-          {
-            first_name: values.first_name,
-            last_name: values.last_name,
-            email: values.email,
-            mobile: values.mobile,
-            gender: values.gender,
-            address: values.address,
-            password: values.password,
-            confirm_password: values.confirm_password,
-          }
-        );
+      // if (roleType === "admin") {
+      //   const res = await axios.post(
+      //     "https://swachify-india-be-1-mcrb.onrender.com/api/admin/login",
+      //     {
+      //       first_name: values.first_name,
+      //       last_name: values.last_name,
+      //       email: values.email,
+      //       mobile: values.mobile,
+      //       gender: values.gender,
+      //       address: values.address,
+      //       password: values.password,
+      //       confirm_password: values.confirm_password,
+      //     }
+      //   );
 
 
-        // 🔍 SEE REAL RESPONSE
-        console.log("ADMIN LOGIN RESPONSE:", res.data);
+      //   // 🔍 SEE REAL RESPONSE
+      //   console.log("ADMIN LOGIN RESPONSE:", res.data);
 
 
-        // ✅ EXTRACT TOKEN SAFELY
-        const token =
-          res.data?.access_token ||
-          res.data?.token ||
-          res.data?.accessToken;
+      //   // ✅ EXTRACT TOKEN SAFELY
+      //   const token =
+      //     res.data?.access_token ||
+      //     res.data?.token ||
+      //     res.data?.accessToken;
 
 
-        if (!token) {
-          message.error("Admin token not received from backend");
-          return;
-        }
+      //   if (!token) {
+      //     message.error("Admin token not received from backend");
+      //     return;
+      //   }
 
 
-        // ✅ STORE TOKEN USING CORRECT KEY
-        localStorage.setItem("token", token);
+      //   // ✅ STORE TOKEN USING CORRECT KEY
+      //   localStorage.setItem("token", token);
 
 
-        message.success("Admin login successful");
-        setVendorModalVisible(false);
-        navigate("/adminshell/dashboard");
-        return;
-      }
-      const roleMap = {
-        customer: 1,
-        employee: 2,
-      };
+      //   message.success("Admin login successful");
+      //   setVendorModalVisible(false);
+      //   navigate("/adminshell/dashboard");
+      //   return;
+      // }
+      // const roleMap = {
+      //   customer: 1,
+      //   employee: 2,
+      // };
 
-      const selectedRole =
-        userRole === "employee"
-          ? roleMap.employee
-          : roleMap.customer;
+      // const selectedRole =
+      //   userRole === "employee"
+      //     ? roleMap.employee
+      //     : roleMap.customer;
 
 
       // ================= CUSTOMER REGISTER =================
@@ -453,16 +550,15 @@ const onPartnerRegister = (values: any) => {
         last_name: values.lastName?.trim() || "DefaultLast",
         email: values.email?.trim() || "user@example.com",
         mobile: values.mobile?.trim() || "9999999999",
-        role_id: selectedRole,
+        // role_id: selectedRole,
         password: values.password || "Default@123",
         confirm_password: values.confirmPassword || "Default@123",
         work_type:
           values.workType === "assigning" ? 1 :
             values.workType === "looking" ? 2 :
               values.workType === "both" ? 3 : 1,
-        service_ids: selectedServices.length > 0
-          ? selectedServices.map(Number) // <--- Convert strings to numbers
-          : [1],
+      service_ids: [1], // default service
+
 
 
         professional_details: values.experience
@@ -474,12 +570,10 @@ const onPartnerRegister = (values: any) => {
             additional_service: values.additionalService?.trim() || "None",
           }
           : undefined,
-        government_id: [
-          {
-            id_type: "aadhaar",
-            id_number: values.aadhaar?.trim() || "000000000000"
-          }
-        ],
+        government_id: {
+  id_type: "aadhaar",
+  id_number: values.aadhaar?.trim() || "000000000000"
+},
 
         // Hard-coded values
         dob: "2001-01-01",
@@ -488,6 +582,7 @@ const onPartnerRegister = (values: any) => {
         district_id: 1,
         address: values.location?.trim() || "Default Address",
         documents: [], // leave empty for now
+        work_type_id:1,
       };
 
       // Call your API
@@ -532,16 +627,20 @@ const onPartnerRegister = (values: any) => {
 
 
       // ✅ OTHERWISE → NORMAL CUSTOMER FLOW
-      const firstServiceId =
-        (loginRes.service_ids && loginRes.service_ids[0]) ||
-        customerPayload.service_ids[0];
+      // const firstServiceId =
+      //   (loginRes.service_ids && loginRes.service_ids[0]) ||
+      //   customerPayload.service_ids[0];
 
-      const redirectPath =
-        serviceIdToRoute[firstServiceId] || "/app/dashboard";
+      // const redirectPath =
+      //   serviceIdToRoute[firstServiceId] || "/app/dashboard";
 
       closeAuthModal();
-      navigate(redirectPath);
-
+      //navigate(redirectPath);
+const redirectPath = localStorage.getItem("postAuthRedirect");
+if (redirectPath) {
+  localStorage.removeItem("postAuthRedirect");
+  navigate(redirectPath);
+}
 
 
 
@@ -567,9 +666,14 @@ const onPartnerRegister = (values: any) => {
   return (
     <>
       <header className="swl-hs-navbar">
-        <div className="swl-hs-navbar-logo">
-          <span className="swl-hs-logo-text">SWACHIFY INDIA</span>
-        </div>
+<div className="swl-hs-navbar-logo">
+  <img src={Logo} alt="Swachify India" className="swl-logo-icon" />
+  <div className="swl-logo-text-wrap">
+    <span className="swl-logo-main">SWACHIFY</span>
+    <span className="swl-logo-sub">India</span>
+  </div>
+</div>
+
 
         <button
           className="swl-mobile-menu-icon"
@@ -580,13 +684,29 @@ const onPartnerRegister = (values: any) => {
           {menuOpen ? <CloseOutlined /> : <MenuOutlined />}
         </button>
 
-        <Menu
-          mode="horizontal"
-          selectedKeys={[selectedKey]}
-          className="swl-hs-navbar-menu"
-          items={navItems}
-        />
-        <Select
+<Menu
+  mode="horizontal"
+  className="swl-hs-navbar-menu"
+  items={[
+    {
+      key: "home",
+      label: <Link to="/landing">Home</Link>,
+    },
+    {
+      key: "services",
+      label: "Explore Services",
+      onClick: () => {
+        document
+          .getElementById("services-section")
+          ?.scrollIntoView({ behavior: "smooth" });
+      },
+    },
+  ]}
+/>
+
+
+
+        {/* <Select
           placeholder="Role"
           style={{ width: 150, marginRight: 12 }}
           onChange={(value: UserRole) => {
@@ -596,10 +716,16 @@ const onPartnerRegister = (values: any) => {
               openAuthModal("register");
             }
 
-          if (value === "partner") {
-  setPartnerActiveTab("register");
-  setPartnerModalVisible(true);
-}
+            if (value === "partner") {
+              setPartnerActiveTab("register");
+              setPartnerModalVisible(true);
+            }
+            if (value === "admin") {
+              setRoleType("admin");          // 🔥 important
+              setVendorActiveTab("admin_register");
+              setShowRegisterHint(null);
+              setVendorModalVisible(true);   // 🔥 open admin modal
+            }
 
           }}
         >
@@ -608,16 +734,44 @@ const onPartnerRegister = (values: any) => {
           <Select.Option value="customer">Customer</Select.Option>
           <Select.Option value="employee">Employee</Select.Option>
           <Select.Option value="partner">Partner</Select.Option>
-        </Select>
+          <Select.Option value="admin">Admin</Select.Option>
+        </Select> */}
 
 
-        <Button
-          className="swl-hs-contact-btn swl-signup-btn"
-          onClick={() => openAuthModal("register")}
-          htmlType="button"
-        >
-          Sign Up
-        </Button>
+       {!isAuthenticated ? (
+  <Button
+    className="swl-hs-contact-btn swl-signup-btn"
+    onClick={() => openAuthModal("register")}
+  >
+    Sign Up
+  </Button>
+) : (
+  <Dropdown
+  placement="bottomRight"
+  menu={{
+    items: [
+      {
+        key: "profile",
+        label: "My Profile",
+        onClick: () => navigate("/profile"),
+      },
+      {
+        key: "logout",
+        label: "Logout",
+        danger: true,
+        onClick: handleLogout,
+      },
+    ],
+  }}
+>
+  <Button
+    type="text"
+    icon={<UserOutlined style={{ fontSize: 22 }} />}
+  />
+</Dropdown>
+
+)}
+
 
       </header>
 
@@ -668,14 +822,16 @@ const onPartnerRegister = (values: any) => {
       >
 
 
-        <div className="auth-header">
-          <UserOutlined className="auth-profile-icon" />
-          <div className="auth-title">
-            {activeAuthTab === "register"
-              ? "Create Your Account"
-              : "Welcome Back"}
-          </div>
-        </div>
+{activeAuthTab === "register" && (
+  <div className="auth-illustration">
+    <div className="auth-avatar">
+      <UserOutlined />
+    </div>
+    <h2>Create Your Account</h2>
+    <p>Join Swachify & start your journey 🚀</p>
+  </div>
+)}
+       
 
 
         <Tabs
@@ -685,35 +841,69 @@ const onPartnerRegister = (values: any) => {
         >
           {/* LOGIN TAB */}
           <TabPane tab="Login" key="login">
-            <Form layout="vertical" onFinish={onLogin} preserve={false}>
-              <Form.Item
+<Form form={loginForm} layout="vertical" onFinish={onLogin} preserve={false}>
+              {/* <Form.Item
                 label="Email / Phone"
                 name="identifier"
                 rules={[
                   { required: true, message: "Email or phone is required" },
                   {
-                    validator: (_, value) => {
-                      if (
-                        !value ||
-                        /^[0-9]{10}$/.test(value) || // phone
-                        /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) // email
-                      ) {
-                        return Promise.resolve();
-                      }
-                      return Promise.reject("Enter valid email or 10-digit phone number");
-                    },
+                   validator: (_, value) => {
+  if (!value) return Promise.reject("Required");
+
+  const isPhone = /^[6-9][0-9]{9}$/.test(value);
+  const isGmail = /^[A-Za-z0-9._%+-]+@gmail\.com$/.test(value);
+
+  if (isPhone || isGmail) return Promise.resolve();
+
+  return Promise.reject("Enter valid 10-digit phone or Gmail ID");
+},
+
                   },
                 ]}
               >
                 <Input placeholder="john@example.com or 9876543210" />
-              </Form.Item>
+              </Form.Item> */}
               <Form.Item
-                label="Password"
-                name="password"
-                rules={[{ required: true, message: "Password is required" }]}
-              >
-                <Input.Password placeholder="Enter password" />
-              </Form.Item>
+  label="Email / Phone"
+  name="identifier"
+  normalize={(v) => {
+    // If user is typing only digits → keep max 10
+    if (typeof v === "string" && /^\d+$/.test(v)) {
+      return v.replace(/\D/g, "").slice(0, 10);
+    }
+    return v; // allow email typing normally
+  }}
+  rules={[
+    { required: true, message: "Email or phone is required" },
+    {
+      validator: (_, value) => {
+        if (!value) return Promise.reject("");
+
+        const isPhone = /^[6-9][0-9]{9}$/.test(value);
+        const isGmail = /^[A-Za-z0-9._%+-]+@gmail\.com$/.test(value);
+
+        if (isPhone || isGmail) return Promise.resolve();
+
+        return Promise.reject("Enter valid 10-digit phone or Gmail ID");
+      },
+    },
+  ]}
+>
+  <Input placeholder="john@example.com or 9876543210" />
+</Form.Item>
+
+              <Form.Item
+  label="Password"
+  name="password"
+  rules={[
+    { required: true, message: "Password is required" },
+    { min: 8, message: "Please enter at least 8 characters" },
+  ]}
+>
+  <Input.Password placeholder="Enter password" />
+</Form.Item>
+
 
               <div className="swl-login-options-row">
                 <Checkbox>Remember me</Checkbox>
@@ -740,7 +930,7 @@ const onPartnerRegister = (values: any) => {
 
               {!hideSkipLogin && (
                 <Form.Item>
-                  <Button block type="default" onClick={handleSkipLogin}>
+                  <Button block type="default" >
                     Skip Login
                   </Button>
                 </Form.Item>
@@ -782,7 +972,7 @@ const onPartnerRegister = (values: any) => {
           <TabPane tab="Register" key="register">
             <Form layout="vertical" onFinish={onRegister} preserve={false}>
 
-              <Form.Item
+              {/* <Form.Item
                 label="Select Services"
                 name="service"
                 rules={[{ required: true, message: "Please select at least one service" }]}
@@ -825,82 +1015,80 @@ const onPartnerRegister = (values: any) => {
 
 
 
-              </Form.Item>
+              </Form.Item> */}
 
+<Row gutter={16}>
+  <Col xs={24} md={12}>
+   <Form.Item
+  label="First Name"
+  name="firstName"
+  normalize={(v) => v?.replace(/[^A-Za-z ]/g, "")}
+  rules={[
+    { required: true, message: "First name is required" },
+    { pattern: /^[A-Za-z ]+$/, message: "Only letters allowed" },
+  ]}
+>
+  <Input placeholder="First name" />
+</Form.Item>
 
-              <Form.Item
-                label="First Name"
-                name="firstName"
-                normalize={(value) =>
-                  value
-                    ?.replace(/[^A-Za-z ]/g, "")
-                    .replace(/\s+/g, " ")
-                    .trim()
-                }
-                rules={[
-                  { required: true, message: "First name is required" },
-                  {
-                    pattern: /^[A-Za-z]+( [A-Za-z]+)*$/,
-                    message: "Only letters allowed",
-                  },
-                ]}
-              >
-                <Input placeholder="Enter first name" />
-              </Form.Item>
+  </Col>
 
+  <Col xs={24} md={12}>
+    <Form.Item
+  label="Last Name"
+  name="lastName"
+  normalize={(v) => v?.replace(/[^A-Za-z ]/g, "")}
+  rules={[
+    { required: true },
+    { pattern: /^[A-Za-z ]+$/, message: "Only letters allowed" },
+  ]}
+>
+  <Input placeholder="Last name" />
+</Form.Item>
 
-
-              <Form.Item
-                label="Last Name"
-                name="lastName"
-                normalize={(value) =>
-                  value
-                    ?.replace(/[^A-Za-z ]/g, "")
-                    .replace(/\s+/g, " ")
-                    .trim()
-                }
-                rules={[
-                  { required: true, message: "Last name is required" },
-                  {
-                    pattern: /^[A-Za-z]+( [A-Za-z]+)*$/,
-                    message: "Only letters allowed",
-                  },
-                ]}
-              >
-                <Input placeholder="Enter last name" />
-              </Form.Item>
+  </Col>
+</Row>
 
 
 
-              <Form.Item
-                label="Mobile Number"
-                name="mobile"
-                normalize={(value) => allowOnlyNumbers(value || "").slice(0, 10)}
-                rules={[
-                  { required: true },
-                  { pattern: /^[6-9][0-9]{9}$/, message: "Invalid mobile number" },
-                ]}
-              >
-                <Input inputMode="numeric" />
-              </Form.Item>
+<Row gutter={16}>
+  <Col xs={24} md={12}>
+    <Form.Item
+  label="Mobile Number"
+  name="mobile"
+  normalize={(v) => allowOnlyNumbers(v || "").slice(0, 10)}
+  rules={[
+    { required: true },
+    { pattern: /^[6-9][0-9]{9}$/, message: "Enter valid 10 digit mobile" },
+  ]}
+>
+  <Input inputMode="numeric" maxLength={10} />
+</Form.Item>
 
 
-              <Form.Item
-                name="email"
-                label="Email"
-                normalize={(value) => value?.toLowerCase().replace(/\s+/g, "")}
-                rules={[
-                  { required: true, message: "Please input the email!" },
-                  { type: "email", message: "Please enter a valid email!" },
-                ]}
-              >
-                <Input placeholder="Enter email" />
-              </Form.Item>
+  </Col>
+
+  <Col xs={24} md={12}>
+    <Form.Item
+  label="Email"
+  name="email"
+  normalize={(v) => allowEmailChars(v || "")}
+  rules={[
+    { required: true, message: "Email required" },
+    { type: "email", message: "Enter valid email" },
+  ]}
+>
+
+      <Input />
+    </Form.Item>
+  </Col>
+</Row>
 
 
 
 
-              <Form.Item
+
+              {/* <Form.Item
                 label="Aadhaar Number"
                 name="aadhaar"
                 normalize={(value) => allowOnlyNumbers(value || "").slice(0, 12)}
@@ -910,20 +1098,20 @@ const onPartnerRegister = (values: any) => {
                 ]}
               >
                 <Input inputMode="numeric" />
-              </Form.Item>
+              </Form.Item> */}
 
 
 
-              <Form.Item
+              {/* <Form.Item
                 label="Location"
                 name="location"
                 rules={[{ required: true }]}
               >
                 <Input placeholder="Enter your location" />
-              </Form.Item>
+              </Form.Item> */}
 
 
-              {!isHealthCareSelected && (
+              {/* {!isHealthCareSelected && (
                 <Form.Item
                   label="Select Work Type"
                   name="workType"
@@ -941,7 +1129,7 @@ const onPartnerRegister = (values: any) => {
                     <Select.Option value="both">Both</Select.Option>
                   </Select>
                 </Form.Item>
-              )}
+              )} */}
 
 
 
@@ -1122,47 +1310,49 @@ const onPartnerRegister = (values: any) => {
 
                 </div>
               )}
+<Row gutter={16}>
+  {/* PASSWORD */}
+  <Col xs={24} md={12}>
+    <Form.Item
+      label="Password"
+      name="password"
+      rules={[
+        { required: true, message: "Password is required" },
+        { min: 8, message: "Password must be at least 8 characters" },
+      ]}
+      hasFeedback
+    >
+      <Input.Password placeholder="Enter password" />
+    </Form.Item>
+  </Col>
 
-              {/* PASSWORD */}
-              <Form.Item
-                label="Password"
-                name="password"
-                rules={[
-                  { required: true, message: "Password is required" },
-                  {
-                    pattern:
-                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{6,}$/,
-                    message:
-                      "Min 6 chars, uppercase, lowercase, number & special character required",
-                  },
-                ]}
-                hasFeedback
-              >
-                <Input.Password />
-              </Form.Item>
+  {/* CONFIRM PASSWORD */}
+  <Col xs={24} md={12}>
+    <Form.Item
+      label="Confirm Password"
+      name="confirmPassword"
+      dependencies={["password"]}
+      hasFeedback
+      rules={[
+        { required: true, message: "Confirm your password" },
+        ({ getFieldValue }) => ({
+          validator(_, value) {
+            if (!value || getFieldValue("password") === value) {
+              return Promise.resolve();
+            }
+            return Promise.reject(
+              new Error("Passwords do not match")
+            );
+          },
+        }),
+      ]}
+    >
+      <Input.Password placeholder="Re-enter password" />
+    </Form.Item>
+  </Col>
+</Row>
 
 
-
-              {/* CONFIRM PASSWORD */}
-              <Form.Item
-                label="Confirm Password"
-                name="confirmPassword"
-                dependencies={["password"]}
-                hasFeedback
-                rules={[
-                  { required: true, message: "Please confirm your password" },
-                  ({ getFieldValue }) => ({
-                    validator(_, value) {
-                      if (!value || getFieldValue("password") === value) {
-                        return Promise.resolve();
-                      }
-                      return Promise.reject("Passwords do not match");
-                    },
-                  }),
-                ]}
-              >
-                <Input.Password />
-              </Form.Item>
 
 
 
@@ -1528,22 +1718,48 @@ const onPartnerRegister = (values: any) => {
 
 
 
+              <Form.Item
+  label="Email / Phone"
+  name="identifier"
+  normalize={(v) => {
+    if (typeof v === "string" && /^\d+$/.test(v)) {
+      return allowOnlyNumbers(v).slice(0, 10);
+    }
+    return v;
+  }}
+  rules={[
+    { required: true, message: "Email or phone is required" },
+    {
+      validator: (_, value) => {
+        if (!value) return Promise.reject("Required");
+
+        const isPhone = /^[6-9][0-9]{9}$/.test(value);
+        const isGmail = /^[A-Za-z0-9._%+-]+@gmail\.com$/.test(value);
+
+        if (isPhone || isGmail) return Promise.resolve();
+
+        return Promise.reject("Enter valid 10-digit phone or Gmail ID");
+      },
+    },
+  ]}
+>
+  <Input placeholder="john@example.com or 9876543210" />
+</Form.Item>
+
+
+
+
                 <Form.Item
-                  label="Email / Phone"
-                  name="identifier"
-                  rules={[{ required: true }]}
-                >
-                  <Input placeholder="Enter email or phone" />
-                </Form.Item>
-                <Form.Item
-                  label="Password"
-                  name="password"
-                  rules={[
-                    { required: true, message: "Password is required" },
-                  ]}
-                >
-                  <Input.Password />
-                </Form.Item>
+  label="Password"
+  name="password"
+  rules={[
+    { required: true, message: "Password is required" },
+    { min: 8, message: "Password must contain at least 8 characters" },
+  ]}
+>
+  <Input.Password />
+</Form.Item>
+
 
 
                 <div style={{ textAlign: "right", marginBottom: 12 }}>
@@ -1579,51 +1795,47 @@ const onPartnerRegister = (values: any) => {
               </Form>
             )}
 
-            {/* ADMIN LOGIN */}
             {roleType === "admin" && (
               <Form layout="vertical" onFinish={onAdminLogin}>
-
 
 
                 <Form.Item
                   label="Email"
                   name="email"
-                  normalize={(value) => allowEmailChars(value || "")}
-                  rules={[
-                    { required: true, type: "email", message: "Invalid email" },
-                  ]}
+                  rules={[{ required: true, type: "email" }]}
                 >
                   <Input />
                 </Form.Item>
 
 
+               <Form.Item
+  label="Password"
+  name="password"
+  rules={[
+    { required: true, message: "Password is required" },
+    { min: 8, message: "Password must contain at least 8 characters" },
+  ]}
+>
+  <Input.Password />
+</Form.Item>
 
 
-                <Form.Item
-                  label="Password"
-                  name="password"
-                  rules={[{ required: true }]}
-                >
-                  <Input.Password />
-                </Form.Item>
 
                 <Button type="primary" danger block htmlType="submit">
                   Login as Admin
                 </Button>
-                {showRegisterHint === "admin" && (
-                  <div style={{ marginTop: 12, textAlign: "center" }}>
-                    <span>Not registered? </span>
-                    <a
-                      onClick={() => {
-                        setVendorActiveTab("admin_register");
-                        setShowRegisterHint(null);
-                      }}
-                      style={{ fontWeight: 500 }}
-                    >
-                      Register as Admin
-                    </a>
-                  </div>
-                )}
+
+
+                {/* ✅ ALWAYS SHOW REGISTER LINK */}
+                <div style={{ marginTop: 12, textAlign: "center" }}>
+                  <span>Not registered? </span>
+                  <a
+                    onClick={() => setVendorActiveTab("admin_register")}
+                    style={{ fontWeight: 500 }}
+                  >
+                    Register as Admin
+                  </a>
+                </div>
 
 
               </Form>
@@ -1639,7 +1851,16 @@ const onPartnerRegister = (values: any) => {
                 layout="vertical"
                 onFinish={(values) => console.log("Vendor Register:", values)}
               >
-                <Form.Item label="Business Name" name="businessName">
+                <Form.Item
+  label="Business Name"
+  name="businessName"
+  normalize={(v) => v?.replace(/[^A-Za-z0-9 ]/g, "")}
+  rules={[
+    { required: true, message: "Business name is required" },
+    { min: 3, message: "Minimum 3 characters required" },
+  ]}
+>
+
                   <Input
                     onChange={(e) =>
                       (e.target.value = allowAlphaNumeric(e.target.value))
@@ -1648,7 +1869,16 @@ const onPartnerRegister = (values: any) => {
                 </Form.Item>
 
 
-                <Form.Item label="Owner Name" name="ownerName" rules={[{ required: true }]}>
+                <Form.Item
+  label="Owner Name"
+  name="ownerName"
+  normalize={(v) => v?.replace(/[^A-Za-z ]/g, "")}
+  rules={[
+    { required: true, message: "Owner name is required" },
+    { pattern: /^[A-Za-z ]+$/, message: "Only letters allowed" },
+  ]}
+>
+
                   <Input />
                 </Form.Item>
 
@@ -1672,7 +1902,7 @@ const onPartnerRegister = (values: any) => {
                     { pattern: /^[6-9][0-9]{9}$/, message: "Invalid mobile number" },
                   ]}
                 >
-                  <Input inputMode="numeric" />
+                  <Input inputMode="numeric" maxLength={10} />
                 </Form.Item>
 
 
@@ -1692,7 +1922,16 @@ const onPartnerRegister = (values: any) => {
                   <Input.TextArea rows={3} />
                 </Form.Item>
 
-                <Form.Item label="Password" name="password" rules={[{ required: true }]}>
+               <Form.Item
+  label="Password"
+  name="password"
+  rules={[
+    { required: true, message: "Password is required" },
+    { min: 8, message: "Password must be at least 8 characters" },
+  ]}
+>
+
+
                   <Input.Password />
                 </Form.Item>
 
@@ -1703,43 +1942,43 @@ const onPartnerRegister = (values: any) => {
             </Tabs.TabPane>
           )}
           {/* ADMIN REGISTER TAB */}
-          {roleType === "admin" && (
+          {roleType === "admin" && vendorActiveTab === "admin_register" && (
             <Tabs.TabPane tab="Register" key="admin_register">
-              <Form layout="vertical" onFinish={onRegister} preserve={false}>
+              <Form layout="vertical" onFinish={onAdminRegister}>
 
-                <Form.Item
-                  label="First Name"
-                  name="firstName"
-                  normalize={(value) => allowOnlyLetters(value || "")}
-                  rules={[
-                    { required: true },
-                    { pattern: /^[A-Za-z ]+$/, message: "Only letters allowed" },
-                  ]}
-                >
+
+               <Form.Item
+  label="First Name"
+  name="firstName"
+  normalize={(v) => v?.replace(/[^A-Za-z ]/g, "")}
+  rules={[
+    { required: true, message: "First name required" },
+    { pattern: /^[A-Za-z ]+$/, message: "Only letters allowed" },
+  ]}
+>
+
                   <Input />
                 </Form.Item>
 
-                <Form.Item
-                  label="Last Name"
-                  name="lastName"
-                  normalize={(value) => allowOnlyLetters(value || "")}
-                  rules={[
-                    { required: true, message: "Last name is required" },
-                    { pattern: /^[A-Za-z ]+$/, message: "Only letters allowed" },
-                  ]}
-                >
-                  <Input placeholder="Enter last name" />
-                </Form.Item>
 
+               <Form.Item
+  label="Last Name"
+  name="lastName"
+  normalize={(v) => v?.replace(/[^A-Za-z ]/g, "")}
+  rules={[
+    { required: true, message: "Last name required" },
+    { pattern: /^[A-Za-z ]+$/, message: "Only letters allowed" },
+  ]}
+>
+
+                  <Input />
+                </Form.Item>
 
 
                 <Form.Item
                   label="Email"
                   name="email"
-                  normalize={(value) => allowEmailChars(value || "")}
-                  rules={[
-                    { required: true, type: "email", message: "Invalid email" },
-                  ]}
+                  rules={[{ required: true, type: "email" }]}
                 >
                   <Input />
                 </Form.Item>
@@ -1748,50 +1987,41 @@ const onPartnerRegister = (values: any) => {
                 <Form.Item
                   label="Mobile Number"
                   name="mobile"
-                  normalize={(value) => allowOnlyNumbers(value || "").slice(0, 10)}
+                   normalize={(value) => allowOnlyNumbers(value || "").slice(0, 10)}
                   rules={[
                     { required: true },
-                    { pattern: /^[6-9][0-9]{9}$/, message: "Invalid mobile number" },
+                    { pattern: /^[6-9][0-9]{9}$/, message: "Invalid mobile number" }
                   ]}
                 >
-                  <Input inputMode="numeric" />
+                  <Input inputMode="numeric" maxLength={10} />
                 </Form.Item>
 
 
                 <Form.Item
-                  label="Gender"
-                  name="gender"
-                  rules={[{ required: true, message: "Please select gender" }]}
+                  label="Password"
+                  name="password"
+                  rules={[
+  { required: true, message: "Password is required" },
+  { min: 8, message: "Password must be at least 8 characters" },
+]}
+
                 >
-                  <Select placeholder="Select Gender">
-                    <Select.Option value={1}>Male</Select.Option>
-                    <Select.Option value={2}>Female</Select.Option>
-                    <Select.Option value={3}>Other</Select.Option>
-                  </Select>
-                </Form.Item>
-
-
-
-
-                <Form.Item label="Address" name="address" rules={[{ required: true }]}>
-                  <Input.TextArea rows={3} />
-                </Form.Item>
-
-                <Form.Item label="Password" name="password" rules={[{ required: true }]}>
                   <Input.Password />
                 </Form.Item>
 
+
                 <Form.Item
                   label="Confirm Password"
-                  name="confirm_password"
+                  name="confirmPassword"
                   dependencies={["password"]}
                   rules={[
                     { required: true },
                     ({ getFieldValue }) => ({
                       validator(_, value) {
-                        return !value || getFieldValue("password") === value
-                          ? Promise.resolve()
-                          : Promise.reject("Passwords do not match");
+                        if (!value || getFieldValue("password") === value) {
+                          return Promise.resolve();
+                        }
+                        return Promise.reject("Passwords do not match");
                       },
                     }),
                   ]}
@@ -1799,9 +2029,11 @@ const onPartnerRegister = (values: any) => {
                   <Input.Password />
                 </Form.Item>
 
-                <Button type="primary" block htmlType="submit" loading={authLoading}>
+
+                <Button type="primary" block htmlType="submit">
                   Register as Admin
                 </Button>
+
 
               </Form>
             </Tabs.TabPane>
@@ -1825,10 +2057,10 @@ const onPartnerRegister = (values: any) => {
       >
 
         <Tabs
-  activeKey={partnerActiveTab}
-  onChange={(key) => setPartnerActiveTab(key as "login" | "register")}
-  centered
->
+          activeKey={partnerActiveTab}
+          onChange={(key) => setPartnerActiveTab(key as "login" | "register")}
+          centered
+        >
 
           <Tabs.TabPane tab="Login" key="login">
             <Form layout="vertical" onFinish={onPartnerLogin}>

@@ -40,6 +40,38 @@ export interface HomeServiceBookingApiResponse {
   order_id?: string;
 }
 
+export interface HomeServiceBookingItem {
+  booking_id: number;
+  module_name: string;
+  sub_module_name: string;
+  service_name: string;
+  sub_service_name: string;
+  full_name: string;
+  mobile: string;
+  email: string;
+  address: string;
+  preferred_date: string;
+  time_slot: string;
+  service_summary: {
+    addons: any[];
+    main_service: string;
+    total_amount: number;
+  };
+  brand_name: string | null;
+  fuel_type_name: string | null;
+  garage_name: string | null;
+  mechanic_name: string;
+  garage_services: any[] | null;
+  item_total: number;
+  convenience_fee: number;
+  total_amount: number;
+  payment_done: boolean;
+  status_name: string | null;
+  created_date: string;
+}
+
+export type HomeServiceBookingsResponse = HomeServiceBookingItem[];
+
 
 
 const API_ENDPOINT = "/api/master/home-service";
@@ -63,6 +95,15 @@ export const bookHomeService = async (
   };
 };
 
+
+export const getAllHomeServiceBookings = async (): Promise<HomeServiceBookingItem[]> => {
+  const res = await api.get<{ status: boolean; data: HomeServiceBookingItem[] }>(
+    "/api/home-service/bookings/all"
+  );
+
+  return res.data.data; // 👈 return the array
+};
+;
 
 
 

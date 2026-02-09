@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./Education.css";
+import { useEffect } from "react";
 
 import Companies from "../Education/Companies";
 import Students from "../Education/Students";
@@ -7,6 +8,13 @@ import type { Student } from "../Education/Students";
 import Internship from "../Education/Internships";
 import CandidateProfile from "../Education/CandidateProfile";
 import TrainingPage from "./TrainingPage";
+import Institutions from "../Education/Institutions";
+import InstitutionAccessMode from "./InstitutionAccessMode";
+import { speak } from "../../../utils/constants/aiVoice";
+
+
+import InstitutionAuthModal from "../../dashboard/Education/InstitutionAuthModal";
+
 
 type Page =
   | "home"
@@ -14,7 +22,11 @@ type Page =
   | "internships"
   | "companies"
   | "training"
+  | "institution-login"   // access mode
+  | "institution-register"// registration form
   | "candidateProfile";
+
+
 
 type TrendingStudent = {
   id: number;
@@ -96,6 +108,42 @@ const Education: React.FC = () => {
   const [selectedStudent, setSelectedStudent] =
     useState<Student | null>(null);
   const [showAllTrending, setShowAllTrending] = useState(false);
+  const [showInstitutionPortal, setShowInstitutionPortal] = useState(false);
+useEffect(() => {
+  speak("Welcome to Education. Explore students, internships, companies and training programs.");
+}, []);
+useEffect(() => {
+  switch (page) {
+    case "students":
+      speak("Welcome to Students section. Discover top performing students.");
+      break;
+
+    case "internships":
+      speak("Welcome to Internships. Find opportunities that shape your career.");
+      break;
+
+    case "companies":
+      speak("Welcome to Companies. Explore hiring organizations.");
+      break;
+
+    case "training":
+      speak("Welcome to Training programs. Upskill yourself with the best courses.");
+      break;
+
+    case "institution-login":
+      speak("Welcome to Institution access portal.");
+      break;
+
+    case "institution-register":
+      speak("Institution registration page. Please fill in the details.");
+      break;
+
+    default:
+      break;
+  }
+}, [page]);
+
+
 
   const trendingStudents = studentsData
     .filter((s) => s.academicScore > 80)
@@ -108,6 +156,8 @@ const Education: React.FC = () => {
   if (page !== "home") {
     return (
       <div className="edu-fullscreen-page">
+  
+
         {page === "students" && (
           <Students
             onBack={() => setPage("home")}
@@ -135,7 +185,17 @@ const Education: React.FC = () => {
 
         {page === "training" && (
           <TrainingPage onBack={() => setPage("home")} />
+          
         )}
+   {page === "institution-login" && (
+  <InstitutionAccessMode onClose={() => setPage("home")} />
+)}
+
+{page === "institution-register" && (
+  <Institutions onBack={() => setPage("home")} />
+)}
+
+
       </div>
     );
   }
@@ -176,6 +236,8 @@ const Education: React.FC = () => {
                 🔍
               </button>
             </div>
+   
+
 
             {searched && (
               <div className="edu-search-result">
@@ -196,27 +258,35 @@ const Education: React.FC = () => {
       <div className="edu-section">
         <h3 className="edu-section-title">Explore Categories</h3>
 
-        <div className="edu-category-grid">
-          <div onClick={() => setPage("students")}>
-            <span className="edu-blue">🎓</span>
-            <p>Students</p>
-          </div>
+      <div className="edu-category-grid">
+  <div onClick={() => setPage("students")}>
+    <span className="edu-blue">🎓</span>
+    <p>Students</p>
+  </div>
 
-          <div onClick={() => setPage("internships")}>
-            <span className="edu-purple">💼</span>
-            <p>Internships</p>
-          </div>
+  <div onClick={() => setPage("internships")}>
+    <span className="edu-purple">💼</span>
+    <p>Internships</p>
+  </div>
 
-          <div onClick={() => setPage("companies")}>
-            <span className="edu-orange">🏢</span>
-            <p>Companies</p>
-          </div>
+  <div onClick={() => setPage("companies")}>
+    <span className="edu-orange">🏢</span>
+    <p>Companies</p>
+  </div>
 
-          <div onClick={() => setPage("training")}>
-            <span className="edu-green">🧭</span>
-            <p>Training</p>
-          </div>
-        </div>
+  <div onClick={() => setPage("training")}>
+    <span className="edu-green">🧭</span>
+    <p>Training</p>
+  </div>
+
+  {/* ✅ NEW */}
+  <div onClick={() => setShowInstitutionPortal(true)}>
+  <span className="edu-red">🏫</span>
+  <p>Institutions</p>
+</div>
+
+</div>
+
       </div>
 
       {/* TRENDING */}
@@ -269,6 +339,25 @@ const Education: React.FC = () => {
             </div>
           ))}
         </div>
+   {showInstitutionPortal && (
+  <InstitutionAuthModal
+    onClose={() => setShowInstitutionPortal(false)}
+
+    // ✅ LOGIN → Access Mode
+    onLoginSuccess={() => {
+      setShowInstitutionPortal(false);
+      setPage("institution-login");
+    }}
+
+    // ✅ REGISTER → Registration Form (THIS FORM)
+    onRegister={() => {
+      setShowInstitutionPortal(false);
+      setPage("institution-register");
+    }}
+  />
+)}
+
+
       </div>
     </div>
   );
