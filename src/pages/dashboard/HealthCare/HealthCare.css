@@ -6701,3 +6701,53 @@
 
 
 
+/* =====================================
+   HEALTHCARE BANNER – BACK BUTTON
+   SAFE ADDITION (NO SIDE EFFECTS)
+   ===================================== */
+
+.hc-hero-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Back button */
+.hc-back-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+
+  background: rgba(255, 255, 255, 0.95);
+  color: #0f172a;
+
+  font-size: 18px;
+  font-weight: 800;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+  transition: all 0.2s ease;
+}
+
+.hc-back-btn:hover {
+  transform: translateX(-2px);
+}
+
+/* 📱 Mobile tuning (banner already stacks) */
+@media (max-width: 768px) {
+  .hc-hero-header {
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .hc-back-btn {
+    width: 34px;
+    height: 34px;
+    font-size: 16px;
+  }
+}
