@@ -210,6 +210,14 @@ useEffect(() => {
         />
 
         <div className="edu-blue-overlay" />
+        {/* 🔙 BACK BUTTON */}
+<button
+  className="edu-hero-back"
+  onClick={() => window.history.back()}
+>
+  ← Back
+</button>
+
 
         <div className="edu-featured-content">
           <div className="edu-featured-left">
