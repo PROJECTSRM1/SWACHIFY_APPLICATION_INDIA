@@ -153,17 +153,15 @@ const Students: React.FC<StudentsProps> = ({ onBack, onSelectStudent }) => {
             <option value="Python">Python</option>
             <option value="CSS">CSS</option>
           </select>
-
-        <select
+<select
   value={internship}
   onChange={(e) => setInternship(e.target.value)}
 >
-  <option value="" disabled hidden>
-    
-  </option>
+  <option value="All">All</option>
   <option value="In Progress">In Progress</option>
   <option value="Completed">Completed</option>
 </select>
+
 
 
         </div>

@@ -48,7 +48,7 @@ const INDUSTRIES = [
   "Healthcare",
 ];
 
-const LOCATIONS = ["All"];
+const LOCATIONS = ["All", "Bangalore","Delhi", "Mumbai", "Hyderabad", "Chennai", "Pune"];
 const SIZES = ["All", "50-200", "200-500", "500+", "1000+"];
 
 /* =======================
@@ -59,7 +59,7 @@ export default function Companies({ onBack }: Props) {
   const [companies, setCompanies] = useState<Company[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const [tab, setTab] = useState<"all" | "active">("all");
+
   const [industry, setIndustry] = useState("All");
   const [location, setLocation] = useState("All");
   const [size, setSize] = useState("All");
@@ -118,13 +118,19 @@ useEffect(() => {
 
   const filteredCompanies = useMemo(() => {
     return companies.filter(c => {
-      if (tab === "active" && c.status !== "Active") return false;
+      // if (tab === "active" && c.status !== "Active") return false;
       if (industry !== "All" && c.industry !== industry) return false;
-      if (location !== "All" && c.location !== location) return false;
+     if (
+  location !== "All" &&
+  !c.location.toLowerCase().includes(location.toLowerCase())
+) {
+  return false;
+}
+
       if (size !== "All" && c.size !== size) return false;
       return true;
     });
-  }, [companies, tab, industry, location, size]);
+  }, [companies, industry, location, size]);
 
   /* =======================
      Job Details View
@@ -156,7 +162,7 @@ useEffect(() => {
         </div>
       </div>
 
-      <div className="tabs">
+      {/* <div className="tabs">
         <button
           className={`tab ${tab === "all" ? "active" : ""}`}
           onClick={() => setTab("all")}
@@ -169,7 +175,7 @@ useEffect(() => {
         >
           Actively Hiring
         </button>
-      </div>
+      </div> */}
 
       <div className="filters">
         <select value={industry} onChange={e => setIndustry(e.target.value)}>

@@ -24,7 +24,7 @@ body {
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   margin-bottom: 12px;
-margin-top: -146px !important;
+margin-top: -px !important;
 }
 
 .header-left {
@@ -118,7 +118,7 @@ margin-top: -146px !important;
     #ffffff 42%,
     #ffffff 100%
   );
-  padding-top: 88px;
+  padding-top: 0px;
   padding-bottom: 80px;
   overflow-x: hidden;
   font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont;
@@ -261,7 +261,7 @@ margin-top: -146px !important;
 /* -------- Tablets -------- */
 @media (max-width: 1024px) {
   .companies-layout {
-    padding: 84px 20px 44px;
+    padding: 0px 20px 44px !important;
   }
 
   .filters {
