@@ -6,6 +6,7 @@ import healthcareService, { type Appointment, type LabItem } from "../../../api/
 import { PaymentsAPI } from "../../../api/customerAuth";
 import CommonHeader from "../../landing/Header";
 import { JitsiMeeting } from "@jitsi/react-sdk";
+import { FiActivity, FiGrid, FiHeart, FiSearch, FiUser } from "react-icons/fi";
 
 
 
@@ -960,7 +961,13 @@ const pharmacyImages = [
 ];
 
 
-
+const filterOptions = [
+  { label: "All", icon: <FiGrid /> },
+  { label: "Cardiology", icon: <FiHeart /> },
+  { label: "Neurology", icon: <FiActivity /> },
+  { label: "Dermatology", icon: <FiUser /> },
+  { label: "General", icon: <FiUser /> },
+];
 
 
 const getDoctorImage = (id: number | string | undefined) => {
@@ -1039,6 +1046,9 @@ const HealthCare: React.FC = () => {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [activeCallAppointment, setActiveCallAppointment] = useState<any | null>(null);
 const [inCall, setInCall] = useState(false);
+const [doctorSearch, setDoctorSearch] = useState("");
+const [doctorFilter, setDoctorFilter] = useState("All");
+
 
 // storing user_id
 const [userId, setUserId] = useState<number | null>(null);
@@ -1843,8 +1853,19 @@ useEffect(() => {
         {/* Banner */}
         <div className="healthcare-banner">
           <div className="healthcare-banner-content">
-            <h2>Feeling unwell?</h2>
-            <p>Describe your symptoms for a quick recommendation.</p>
+            <div className="hc-hero-header">
+    <button
+      className="hc-back-btn"
+      onClick={() => window.history.back()}
+      aria-label="Go back"
+    >
+      ←
+    </button>
+
+    <h2>Feeling unwell?</h2>
+  </div>
+
+  <p>Describe your symptoms for a quick recommendation.</p>
 
             <button
               type="button"
@@ -3591,45 +3612,10 @@ onClick={() => {
         )}
 
         {/* ✅ HOSPITAL DOCTORS SCREEN (ADD HERE) */}
-        {/* {openHospitalDoctors && (
-          <div className="doctor-list-screen">
-            <div className="doctor-list-header">
-              <button
-                className="back-btn"
-                onClick={() => setOpenHospitalDoctors(false)}
-              >
-                ←
-              </button>
 
-              <h2 className="doctor-list-title">
-                {selectedNearbyHospital?.hospital_name} Doctors
-              </h2>
-            </div>
-
-            {hospitalDoctors.map((doc) => (
-              <div
-                key={doc.id}
-                className="hospital-doctor-card"
-                onClick={() => setSelectedDoctor(doc)}
-              >
-                <div className="hospital-doctor-left">
-                  <img src={doc.image} alt={doc.name} />
-
-                  <div className="hospital-doctor-info">
-                    <h3>{doc.name}</h3>
-                    <p className="spec">{doc.speciality}</p>
-
-                    <div className="rating-pill">⭐ {doc.rating}</div>
-                  </div>
-                </div>
-
-                <div className="arrow-circle">→</div>
-              </div>
-            ))}
-          </div>
-        )} */}
-        {openHospitalDoctors && (
+      {openHospitalDoctors && (
   <div className="doctor-list-screen">
+    {/* Header */}
     <div className="doctor-list-header">
       <button
         className="back-btn"
@@ -3643,41 +3629,100 @@ onClick={() => {
       </h2>
     </div>
 
-    {hospitalDoctors.map((doc) => (
-      <div
-        key={doc.id}
-        className="hospital-doctor-card"
-        onClick={() => setSelectedDoctor(doc)}
-      >
-        <div className="hospital-doctor-left">
-          <img src={doc.image} alt={doc.name} />
+    {/* Filter + Search */}
+    <div className="doctor-filters">
+      <div className="filter-tabs">
+        {filterOptions.map((opt) => (
+          <button
+            key={opt.label}
+            className={`filter-btn ${
+              doctorFilter === opt.label ? "active" : ""
+            }`}
+            onClick={() => setDoctorFilter(opt.label)}
+          >
+            <span className="filter-icon">{opt.icon}</span>
+            <span>{opt.label}</span>
+          </button>
+        ))}
+      </div>
 
-          <div className="hospital-doctor-info">
-            <h3>{doc.name}</h3>
+      <div className="doctor-search-wrapper">
+        <FiSearch className="search-icon" />
+        <input
+          type="text"
+          className="doctor-search"
+          placeholder="Search doctors, specialties..."
+          value={doctorSearch}
+          onChange={(e) => setDoctorSearch(e.target.value)}
+        />
+      </div>
+    </div>
 
-            <p className="spec">{doc.speciality}</p>
+    {/* 👇 Scroll ONLY this */}
+    <div className="doctor-list-scroll">
+      {hospitalDoctors
+        .filter((doc) => {
+          const matchesSearch =
+            doc.name.toLowerCase().includes(doctorSearch.toLowerCase()) ||
+            doc.speciality.toLowerCase().includes(doctorSearch.toLowerCase());
 
-            <p className="exp">
-              {doc.experience} years experience
-            </p>
+          const matchesFilter =
+            doctorFilter === "All" || doc.speciality === doctorFilter;
 
-            <div className="rating-row">
-              <span>⭐ {doc.rating}</span>
-              <span className="dot">•</span>
-              <span className={doc.available ? "available" : "unavailable"}>
-                {doc.available ? "Available" : "Not Available"}
-              </span>
+          return matchesSearch && matchesFilter;
+        })
+        .map((doc) => (
+          <div
+            key={doc.id}
+            className="hospital-doctor-card"
+            onClick={() => setSelectedDoctor(doc)}
+          >
+            {/* LEFT */}
+            <div className="hospital-doctor-left">
+              <img
+                src={doc.image}
+                alt={doc.name}
+                className="hospital-doctor-avatar"
+              />
+
+              <div className="hospital-doctor-info">
+                <div className="doctor-name-row">
+                  <h3 className="doctor-name">{doc.name}</h3>
+                  {doc.rating >= 4.8 && (
+                    <span className="top-rated-badge">Top Rated</span>
+                  )}
+                </div>
+
+                <p className="doctor-speciality">{doc.speciality}</p>
+                <p className="doctor-exp">
+                  {doc.experience} years experience
+                </p>
+
+                <div className="doctor-meta-row">
+                  <span className="rating">⭐ {doc.rating}</span>
+                  <span
+                    className={`availability ${
+                      doc.available ? "available" : "unavailable"
+                    }`}
+                  >
+                    {doc.available ? "Available" : "Not Available"}
+                  </span>
+                </div>
+
+                <p className="doctor-price">₹{doc.price}/hr</p>
+              </div>
             </div>
 
-            <p className="price">₹{doc.price}/hr</p>
+            {/* RIGHT */}
+            <div className="doctor-action">
+              <div className="arrow-circle">→</div>
+            </div>
           </div>
-        </div>
-
-        <div className="arrow-circle">→</div>
-      </div>
-    ))}
+        ))}
+    </div>
   </div>
 )}
+
 
 
         {selectedDoctor && (

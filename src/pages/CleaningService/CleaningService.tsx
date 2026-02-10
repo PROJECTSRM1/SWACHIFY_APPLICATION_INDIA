@@ -40,8 +40,16 @@ const homeSubServices = [
 const plumbingSubServices = [
   { title: "Pipe Leakage", icon: "🚿", route: "/plumbing/pipe-leakage" },
   { title: "Tap Fixing", icon: "🚰", route: "/plumbing/tap-fixing" },
-  { title: "Bathroom Fitting", icon: "🛁", route: "/plumbing/bathroom-fitting" },
-  { title: "Water Tank Cleaning", icon: "💧", route: "/plumbing/water-tank-cleaning" },
+  {
+    title: "Bathroom Fitting",
+    icon: "🛁",
+    route: "/plumbing/bathroom-fitting",
+  },
+  {
+    title: "Water Tank Cleaning",
+    icon: "💧",
+    route: "/plumbing/water-tank-cleaning",
+  },
 ];
 
 const paintingSubServices = [
@@ -79,7 +87,7 @@ const popularServices = [
     rating: "4.82",
     reviews: "(284K)",
     image: hero2,
-    tag: "Bestseller"
+    tag: "Bestseller",
   },
   {
     title: "Kitchen Cleaning",
@@ -87,7 +95,7 @@ const popularServices = [
     rating: "4.79",
     reviews: "(178K)",
     image: hero1,
-    tag: "Popular"
+    tag: "Popular",
   },
   {
     title: "Full Home Cleaning",
@@ -95,7 +103,7 @@ const popularServices = [
     rating: "4.85",
     reviews: "(432K)",
     image: hero3,
-    tag: "Trending"
+    tag: "Trending",
   },
   {
     title: "Sofa Cleaning",
@@ -103,31 +111,31 @@ const popularServices = [
     rating: "4.81",
     reviews: "(156K)",
     image: hero4,
-    tag: null
-  }
+    tag: null,
+  },
 ];
 
 const features = [
   {
     icon: "✓",
     title: "Verified Professionals",
-    description: "Background checked & trained professionals"
+    description: "Background checked & trained professionals",
   },
   {
     icon: "⭐",
     title: "Rated Services",
-    description: "Choose from highly rated & reviewed services"
+    description: "Choose from highly rated & reviewed services",
   },
   {
     icon: "🛡️",
     title: "Hassle-free Booking",
-    description: "Book in <60 seconds with instant confirmation"
+    description: "Book in <60 seconds with instant confirmation",
   },
   {
     icon: "💰",
     title: "Transparent Pricing",
-    description: "See fixed prices before you book. No hidden charges"
-  }
+    description: "See fixed prices before you book. No hidden charges",
+  },
 ];
 
 const testimonials = [
@@ -135,23 +143,26 @@ const testimonials = [
     name: "Priya Sharma",
     location: "Mumbai",
     rating: 5,
-    comment: "Excellent service! The cleaning was thorough and the staff was very professional. Highly recommend!",
-    service: "Home Cleaning"
+    comment:
+      "Excellent service! The cleaning was thorough and the staff was very professional. Highly recommend!",
+    service: "Home Cleaning",
   },
   {
     name: "Rajesh Kumar",
     location: "Delhi",
     rating: 5,
-    comment: "Very satisfied with the plumbing work. Quick response and fixed the issue immediately.",
-    service: "Plumbing"
+    comment:
+      "Very satisfied with the plumbing work. Quick response and fixed the issue immediately.",
+    service: "Plumbing",
   },
   {
     name: "Anita Patel",
     location: "Bangalore",
     rating: 4,
-    comment: "Great experience with the AC service. Professional and courteous team.",
-    service: "AC Repair"
-  }
+    comment:
+      "Great experience with the AC service. Professional and courteous team.",
+    service: "AC Repair",
+  },
 ];
 
 const CleaningService: React.FC = () => {
@@ -231,7 +242,9 @@ const CleaningService: React.FC = () => {
           <div className="cs-popular-grid">
             {popularServices.map((service, i) => (
               <div key={i} className="cs-popular-card">
-                {service.tag && <span className="cs-service-tag">{service.tag}</span>}
+                {service.tag && (
+                  <span className="cs-service-tag">{service.tag}</span>
+                )}
                 <div className="cs-popular-image">
                   <img src={service.image} alt={service.title} />
                 </div>
@@ -304,14 +317,20 @@ const CleaningService: React.FC = () => {
                 <div className="cs-testimonial-header">
                   <div>
                     <h4>{testimonial.name}</h4>
-                    <p className="cs-testimonial-location">{testimonial.location}</p>
+                    <p className="cs-testimonial-location">
+                      {testimonial.location}
+                    </p>
                   </div>
                   <div className="cs-testimonial-rating">
                     {"★".repeat(testimonial.rating)}
                   </div>
                 </div>
-                <p className="cs-testimonial-comment">"{testimonial.comment}"</p>
-                <span className="cs-testimonial-service">{testimonial.service}</span>
+                <p className="cs-testimonial-comment">
+                  "{testimonial.comment}"
+                </p>
+                <span className="cs-testimonial-service">
+                  {testimonial.service}
+                </span>
               </div>
             ))}
           </div>
@@ -356,35 +375,63 @@ const CleaningService: React.FC = () => {
             <div className="cs-footer-col">
               <h4>Company</h4>
               <ul>
-                <li><a href="#">About us</a></li>
-                <li><a href="#">Terms & conditions</a></li>
-                <li><a href="#">Privacy policy</a></li>
-                <li><a href="#">Anti discrimination</a></li>
+                <li>
+                  <a href="#">About us</a>
+                </li>
+                <li>
+                  <a href="#">Terms & conditions</a>
+                </li>
+                <li>
+                  <a href="#">Privacy policy</a>
+                </li>
+                <li>
+                  <a href="#">Anti discrimination</a>
+                </li>
               </ul>
             </div>
             <div className="cs-footer-col">
               <h4>For customers</h4>
               <ul>
-                <li><a href="#">UC reviews</a></li>
-                <li><a href="#">Categories near you</a></li>
-                <li><a href="#">Blog</a></li>
-                <li><a href="#">Contact us</a></li>
+                <li>
+                  <a href="#">UC reviews</a>
+                </li>
+                <li>
+                  <a href="#">Categories near you</a>
+                </li>
+                <li>
+                  <a href="#">Blog</a>
+                </li>
+                <li>
+                  <a href="#">Contact us</a>
+                </li>
               </ul>
             </div>
             <div className="cs-footer-col">
               <h4>For partners</h4>
               <ul>
-                <li><a href="#">Register as professional</a></li>
-                <li><a href="#">Partner help center</a></li>
+                <li>
+                  <a href="#">Register as professional</a>
+                </li>
+                <li>
+                  <a href="#">Partner help center</a>
+                </li>
               </ul>
             </div>
             <div className="cs-footer-col">
               <h4>Social links</h4>
               <div className="cs-social-links">
-                <a href="#" className="cs-social-icon">📘</a>
-                <a href="#" className="cs-social-icon">📷</a>
-                <a href="#" className="cs-social-icon">🐦</a>
-                <a href="#" className="cs-social-icon">💼</a>
+                <a href="#" className="cs-social-icon">
+                  📘
+                </a>
+                <a href="#" className="cs-social-icon">
+                  📷
+                </a>
+                <a href="#" className="cs-social-icon">
+                  🐦
+                </a>
+                <a href="#" className="cs-social-icon">
+                  💼
+                </a>
               </div>
             </div>
           </div>
@@ -414,11 +461,11 @@ const CleaningService: React.FC = () => {
                   navigate("/cleaning/home");
                 }
                 if (s.title === "Commercial Cleaning") {
-    navigate("/cleaning/commercial");
-  }
-  if (s.title === "Vehicle Cleaning") {
-    navigate("/cleaning/vehicle");
-  }
+                  navigate("/cleaning/commercial");
+                }
+                if (s.title === "Vehicle Cleaning") {
+                  navigate("/cleaning/vehicle");
+                }
               }}
             >
               <span className="cs-popup-icon">{s.icon}</span>

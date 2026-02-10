@@ -92,6 +92,90 @@
   color: #1e293b;
 }
 
+/* Container for top-level spacing */
+.sw-jr-back-container {
+  padding: 10px 0 20px 0;
+  display: flex;
+  justify-content: flex-start;
+}
+
+/* The styled Back Button */
+.sw-jr-back-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 18px;
+  background-color: #ffffff;
+  color: #000000;
+  border: 1px solid #e0e0e0; /* Subtle border for visibility on white bg */
+  border-radius: 50px;       /* Pill shape from reference */
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  transition: all 0.2s ease;
+}
+
+.sw-jr-back-btn:hover {
+  background-color: #f8f8f8;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+}
+
+.sw-jr-back-btn .arrow {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.sw-jr-header-section {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  padding: 10px 1px;
+}
+
+/* Back button */
+.sw-jr-back-btn {
+  font-size: 14px;           /* smaller */
+  padding: 6px 10px;        /* reduce size */
+  border-radius: 17px;
+  background: transparent;
+  border: 1px solid #ccc;
+  cursor: pointer;
+          top: 14px;
+        left: 14px;
+        font-size: 12px;
+}
+
+/* Arrow spacing */
+.sw-jr-back-btn .arrow {
+  margin-right: 1px;
+}
+
+/* Title */
+.sw-jr-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* 📱 Mobile tweaks */
+@media (max-width: 480px) {
+  .sw-jr-header-section {
+    padding: 10px 3px;
+  }
+
+  .sw-jr-back-btn {
+    font-size: 12px;
+    padding: 5px 8px;
+  }
+
+  .sw-jr-title {
+    font-size: 18px;
+  }
+}
+
+
+
 /* LOCATION BLOCK */
 .sw-jr-locations {
   border-left: 3px solid #e5e7eb;

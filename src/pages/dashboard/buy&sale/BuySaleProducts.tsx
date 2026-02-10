@@ -476,11 +476,18 @@ const filteredProperties = properties.filter((p: Property) => {
 
             {/* HEADER */}
             <header className="mp-web-header">
-              <div className="mp-header-left">
-                <h1>Marketplace</h1>
+           <div className="mp-header-left">
+  <button
+    className="mp-back-btn"
+    onClick={() => window.history.back()}
+    aria-label="Go back"
+  >
+    ←
+  </button>
 
-                
-              </div>
+  <h1>Marketplace</h1>
+</div>
+
 
              <div className="mp-header-actions">
   {/* BUY / RENT DROPDOWN */}
