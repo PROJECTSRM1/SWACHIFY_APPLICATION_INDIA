@@ -7,13 +7,21 @@
     #f3f4f8 42%,
     #ffffff 42%,
     #ffffff 100%
+   
   );
-  color: #1f2937;
+  
   padding-top: 0px;
   padding-bottom: 80px;
   overflow-x: hidden;
   box-sizing: border-box;
   font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont;
+}
+.edu-hero-desc {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #e5e7eb;          /* light text on blue overlay */
+  margin-top: 8px;
+  opacity: 0.95;
 }
 
 .edu-wrapper *,
@@ -33,6 +41,45 @@
   background: #fff;
   box-shadow: 0 20px 48px rgba(0, 0, 0, 0.08);
 }
+/* ================= HERO BACK BUTTON ================= */
+.edu-hero-back {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 3;
+
+  background: rgba(255, 255, 255, 0.92);
+  color: #1f2937;
+
+  border: none;
+  padding: 8px 16px;
+  border-radius: 999px;
+
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.18);
+  transition: all 0.25s ease;
+}
+
+.edu-hero-back:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
+}
+@media (max-width: 420px) {
+  .edu-hero-back {
+    top: 14px;
+    left: 14px;
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+}
+
 
 .edu-featured img {
   position: absolute;
@@ -92,6 +139,10 @@
   padding: 0 16px;
   font-size: 14px;
   outline: none;
+  color: black;
+}
+.edu-featured-search-wrapper {
+  position: relative;
 }
 
 .edu-featured-search button {
@@ -309,4 +360,40 @@
     font-size: 5px;
     padding: 3px 10px;
   }
+  .edu-tag {
+    margin-top: 22px;
+    margin-left: -18px;
+
+  }
+
+}
+
+
+.edu-search-result {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  z-index: 9999;   /* 🔥 THIS FIXES VISIBILITY */
+  padding: 12px;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+.edu-search-result button {
+  display: block;
+  width: 100%;
+  padding: 8px 10px;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  color: #1f2937;          /* 🔥 THIS FIXES IT */
+  font-size: 14px;
+}
+
+.edu-search-result button:hover {
+  background: #f3f4f6;
 }

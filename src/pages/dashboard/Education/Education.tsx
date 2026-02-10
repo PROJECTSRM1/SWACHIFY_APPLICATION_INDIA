@@ -15,6 +15,16 @@ import { speak } from "../../../utils/constants/aiVoice";
 
 import InstitutionAuthModal from "../../dashboard/Education/InstitutionAuthModal";
 
+type TrendingStudent = {
+  id: number;
+  name: string;
+  program: string;
+  academicScore: number;
+  rating: string;
+  status: "active" | "completed";
+  shift: string;
+  avatar: string;
+};
 
 type Page =
   | "home"
@@ -27,79 +37,14 @@ type Page =
   | "candidateProfile";
 
 
-
-type TrendingStudent = {
-  id: number;
-  name: string;
-  program: string;
-  avatar: string;
-  academicScore: number;
-  rating: number;
-  status: "active" | "completed";
-  shift: string;
+type ApiTrendingStudent = {
+  full_name: string;
+  institute: string;
+  degree: string;
+  attendance_percentage: number;
+  active: boolean;
 };
 
-const studentsData: TrendingStudent[] = [
-  {
-    id: 2125,
-    name: "Ananya Rao",
-    program: "B.Tech AI & ML",
-    rating: 4.6,
-    status: "active",
-    academicScore: 91,
-    shift: "09:00 AM - 06:00 PM",
-    avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200",
-  },
-  {
-    id: 2140,
-    name: "Sneha Iyer",
-    program: "B.Tech Information Technology",
-    rating: 4.9,
-    status: "active",
-    academicScore: 97,
-    shift: "09:30 AM - 06:30 PM",
-    avatar: "https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=200",
-  },
-  {
-    id: 2045,
-    name: "Sarah Jenkins",
-    program: "B.Tech Computer Science",
-    rating: 4.8,
-    status: "active",
-    academicScore: 92,
-    shift: "10:00 AM - 07:00 PM",
-    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200",
-  },
-  {
-    id: 2092,
-    name: "Emily Rodriguez",
-    program: "B.E. Information Tech",
-    rating: 4.9,
-    status: "active",
-    academicScore: 95,
-    shift: "10:00 AM - 07:00 PM",
-    avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200",
-  },
-  {
-    id: 2101,
-    name: "David Kim",
-    program: "B.S. Software Eng",
-    rating: 4.7,
-    status: "completed",
-    academicScore: 90,
-    shift: "10:00 AM - 07:00 PM",
-    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200",
-  },
-];
-
-const searchableItems = [
-  "Students",
-  "Internships",
-  "Companies",
-  "Training",
-  "Google Internship",
-  "Harvard University",
-];
 
 const Education: React.FC = () => {
   const [page, setPage] = useState<Page>("home");
@@ -109,6 +54,62 @@ const Education: React.FC = () => {
     useState<Student | null>(null);
   const [showAllTrending, setShowAllTrending] = useState(false);
   const [showInstitutionPortal, setShowInstitutionPortal] = useState(false);
+  const [trendingStudents, setTrendingStudents] = useState<TrendingStudent[]>([]);
+const [loadingTrending, setLoadingTrending] = useState(false);
+const categoriesRef = React.useRef<HTMLDivElement>(null);
+const SEARCH_ITEMS = [
+  { label: "Students", page: "students" },
+  { label: "Internships", page: "internships" },
+  { label: "Companies", page: "companies" },
+  { label: "Training", page: "training" },
+] as const;
+const filteredSearch = SEARCH_ITEMS.filter((item) =>
+  item.label.toLowerCase().includes(query.toLowerCase())
+);
+
+
+useEffect(() => {
+  const fetchTrendingStudents = async () => {
+    try {
+      setLoadingTrending(true);
+      const res = await fetch(
+  "https://swachify-india-be-1-mcrb.onrender.com/internship/application/trending"
+);
+
+      const data: ApiTrendingStudent[] = await res.json();
+
+      const mapped = data
+        .filter((s) => s.active)
+        .sort(
+          (a, b) => b.attendance_percentage - a.attendance_percentage
+        )
+        .map((s, index) => ({
+          id: index + 1,
+          name: s.full_name,
+          program: s.degree,
+          academicScore: s.attendance_percentage,
+          rating: Math.min(5, (s.attendance_percentage / 20)).toFixed(1),
+          status: "active" as const,
+
+          shift: "09:00 AM - 06:00 PM",
+avatar:
+  index % 2 === 0
+    ? `https://randomuser.me/api/portraits/men/${index % 90}.jpg`
+    : `https://randomuser.me/api/portraits/women/${index % 90}.jpg`,
+
+        }));
+
+      setTrendingStudents(mapped);
+    } catch (err) {
+      console.error("Trending fetch failed", err);
+    } finally {
+      setLoadingTrending(false);
+    }
+  };
+
+  fetchTrendingStudents();
+}, []);
+
 useEffect(() => {
   speak("Welcome to Education. Explore students, internships, companies and training programs.");
 }, []);
@@ -145,13 +146,13 @@ useEffect(() => {
 
 
 
-  const trendingStudents = studentsData
-    .filter((s) => s.academicScore > 80)
-    .sort((a, b) => b.academicScore - a.academicScore);
+  // const trendingStudents = studentsData
+  //   .filter((s) => s.academicScore > 80)
+  //   .sort((a, b) => b.academicScore - a.academicScore);
 
-  const filteredResults = searchableItems.filter((item) =>
-    item.toLowerCase().includes(query.toLowerCase())
-  );
+  // const filteredResults = searchableItems.filter((item) =>
+  //   item.toLowerCase().includes(query.toLowerCase())
+  // );
 
   if (page !== "home") {
     return (
@@ -210,16 +211,33 @@ useEffect(() => {
         />
 
         <div className="edu-blue-overlay" />
+        {/* 🔙 BACK BUTTON */}
+<button
+  className="edu-hero-back"
+  onClick={() => window.history.back()}
+>
+  ← Back
+</button>
+
 
         <div className="edu-featured-content">
           <div className="edu-featured-left">
             <span className="edu-tag">FEATURED</span>
             <h2>Top University of the Week</h2>
-            <p>Discover the latest computer science programs...</p>
+           <p className="edu-hero-desc">
+  Discover the latest computer science programs...
+</p>
 
-            <button className="edu-view-details-btn">
-              View Details →
-            </button>
+
+ <button
+  className="edu-view-details-btn"
+  onClick={() =>
+    categoriesRef.current?.scrollIntoView({ behavior: "smooth" })
+  }
+>
+  View Details →
+</button>
+
           </div>
 
           <div className="edu-featured-search-wrapper">
@@ -227,10 +245,11 @@ useEffect(() => {
               <input
                 placeholder="Search colleges, jobs..."
                 value={query}
-                onChange={(e) => {
-                  setQuery(e.target.value);
-                  setSearched(false);
-                }}
+               onChange={(e) => {
+  setQuery(e.target.value);
+  setSearched(true);
+}}
+
               />
               <button onClick={() => query && setSearched(true)}>
                 🔍
@@ -239,23 +258,49 @@ useEffect(() => {
    
 
 
-            {searched && (
-              <div className="edu-search-result">
-                {filteredResults.length ? (
-                  <span>
-                    Found: <b>{filteredResults.join(", ")}</b>
-                  </span>
-                ) : (
-                  <span className="edu-not-found">Not available</span>
-                )}
-              </div>
-            )}
+{searched && query && (
+  <div className="edu-search-result">
+    {/* show what user typed */}
+{filteredSearch.length > 0 && (
+  <div style={{ fontSize: "12px", color: "#6b7280", marginBottom: "6px" }}>
+    Searching for: <b>{query}</b>
+  </div>
+)}
+
+
+    {filteredSearch.length > 0 ? (
+      filteredSearch.map((item) => (
+        <button
+          key={item.label}
+onClick={() => {
+  setPage(item.page as Page);
+
+  setTimeout(() => {
+    setSearched(false);
+    setQuery("");
+  }, 0);
+}}
+
+        >
+          {item.label}
+        </button>
+      ))
+    ) : (
+      <div style={{ fontSize: "13px", color: "#dc2626" }}>
+        ❌ Not found
+      </div>
+    )}
+  </div>
+)}
+
+
           </div>
         </div>
       </div>
 
       {/* CATEGORIES */}
-      <div className="edu-section">
+     <div className="edu-section" ref={categoriesRef}>
+
         <h3 className="edu-section-title">Explore Categories</h3>
 
       <div className="edu-category-grid">
@@ -302,43 +347,42 @@ useEffect(() => {
           </button>
         </div>
 
-        <div className="edu-trending-list">
-          {(showAllTrending
-            ? trendingStudents
-            : trendingStudents.slice(0, 4)
-          ).map((student) => (
-            <div key={student.id} className="edu-trending-row-card">
-              <img
-                src={student.avatar}
-                alt={student.name}
-                className="edu-trending-avatar"
-              />
+<div className="edu-trending-list">
+  {loadingTrending ? (
+    <p className="edu-loading">Loading trending students...</p>
+  ) : trendingStudents.length === 0 ? (
+    <p className="edu-loading">No trending students found</p>
+  ) : (
+    (showAllTrending
+      ? trendingStudents
+      : trendingStudents.slice(0, 4)
+    ).map((student) => (
+      <div key={student.id} className="edu-trending-row-card">
+        <img
+          src={student.avatar}
+          alt={student.name}
+          className="edu-trending-avatar"
+        />
 
-              <div className="edu-trending-info">
-                <h4>{student.name}</h4>
-                <p className="edu-program">{student.program}</p>
-                <p className="edu-score">
-                  {student.academicScore}% Academic Score
-                </p>
+        <div className="edu-trending-info">
+          <h4>{student.name}</h4>
+          <p className="edu-program">{student.program}</p>
+          <p className="edu-score">
+            {student.academicScore}% Attendance
+          </p>
 
-                <div className="edu-trending-footer">
-                  <div className="edu-rating">
-                    <span className="edu-star">⭐</span>
-                    <span>{student.rating}</span>
-                  </div>
-                </div>
+          <div className="edu-rating">
+            ⭐ {student.rating}
+          </div>
 
-                <span
-                  className={`edu-status ${student.status}`}
-                >
-                  {student.status.toUpperCase()}
-                </span>
-
-                <p className="edu-shift">{student.shift}</p>
-              </div>
-            </div>
-          ))}
+          <span className="edu-status active">ACTIVE</span>
+          <p className="edu-shift">{student.shift}</p>
         </div>
+      </div>
+    ))
+  )}
+</div>
+
    {showInstitutionPortal && (
   <InstitutionAuthModal
     onClose={() => setShowInstitutionPortal(false)}

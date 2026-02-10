@@ -25,14 +25,12 @@ import type { ColumnsType } from "antd/es/table";
 import "./Orders.css";
 
 const { Option } = Select;
-const { Search } = Input;
 
 import { getOrders, type Order, type OrderItem } from "./orderStore";
 
 interface OrdersProps {
   onBack: () => void;
 }
-
 
 const Orders: React.FC<OrdersProps> = ({ onBack }) => {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -124,6 +122,7 @@ const Orders: React.FC<OrdersProps> = ({ onBack }) => {
       title: "Order Number",
       dataIndex: "orderNumber",
       key: "orderNumber",
+      align: "center",
       responsive: ["xs", "sm", "md", "lg"],
       render: (orderNumber: string) => (
         <span className="orders-number">{orderNumber}</span>
@@ -132,6 +131,7 @@ const Orders: React.FC<OrdersProps> = ({ onBack }) => {
     {
       title: "Customer",
       key: "customer",
+      align: "center",
       responsive: ["md", "lg"],
       render: (record: Order) => (
         <div>
@@ -144,6 +144,7 @@ const Orders: React.FC<OrdersProps> = ({ onBack }) => {
       title: "Items",
       dataIndex: "items",
       key: "items",
+      align: "center",
       render: (items: OrderItem[]) => (
         <span>
           {items.length} item{items.length > 1 ? "s" : ""}
@@ -154,6 +155,7 @@ const Orders: React.FC<OrdersProps> = ({ onBack }) => {
       title: "Total Amount",
       dataIndex: "totalAmount",
       key: "totalAmount",
+      align: "center",
       responsive: ["xs", "sm", "md", "lg"],
       render: (amount: number) => (
         <span className="orders-amount">₹{amount.toLocaleString()}</span>
@@ -163,6 +165,7 @@ const Orders: React.FC<OrdersProps> = ({ onBack }) => {
       title: "Status",
       dataIndex: "status",
       key: "status",
+      align: "center",
       responsive: ["xs", "sm", "md", "lg"],
       render: (status: string) => (
         <Tag color={getStatusColor(status)}>{status.toUpperCase()}</Tag>
@@ -172,6 +175,7 @@ const Orders: React.FC<OrdersProps> = ({ onBack }) => {
       title: "Payment",
       dataIndex: "paymentStatus",
       key: "paymentStatus",
+      align: "center",
       responsive: ["md", "lg"],
       render: (status: string) => (
         <Tag color={getPaymentStatusColor(status)}>{status.toUpperCase()}</Tag>
@@ -181,6 +185,7 @@ const Orders: React.FC<OrdersProps> = ({ onBack }) => {
       title: "Order Date",
       dataIndex: "orderDate",
       key: "orderDate",
+      align: "center",
       responsive: ["md", "lg"],
       render: (date: string) => formatDate(date),
     },
@@ -188,6 +193,7 @@ const Orders: React.FC<OrdersProps> = ({ onBack }) => {
       title: "Actions",
       key: "actions",
       responsive: ["xs", "sm", "md", "lg"],
+      align: "center",
       render: (record: Order) => (
         <Button
           type="link"
@@ -246,34 +252,36 @@ const Orders: React.FC<OrdersProps> = ({ onBack }) => {
           </div>
         </div>
 
-        {/* Filters */}
-        <Card className="orders-filters-card">
-          <Space size="middle" wrap>
-            <Search
-              placeholder="Search by order number, customer..."
-              prefix={<SearchOutlined />}
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              style={{ width: 300 }}
-              allowClear
-            />
-            <Select
-              value={statusFilter}
-              onChange={setStatusFilter}
-              style={{ width: 150 }}
-            >
-              <Option value="all">All Status</Option>
-              <Option value="pending">Pending</Option>
-              <Option value="processing">Processing</Option>
-              <Option value="shipped">Shipped</Option>
-              <Option value="delivered">Delivered</Option>
-              <Option value="cancelled">Cancelled</Option>
-            </Select>
-          </Space>
-        </Card>
-
         {/* Orders Table */}
-        <Card className="orders-table-card">
+        <Card
+          className="orders-table-card"
+          title="Orders List"
+          extra={
+            <Space size="middle" wrap>
+              <Input
+                placeholder="Search by order number, customer..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                allowClear
+                prefix={<SearchOutlined style={{ color: "#999" }} />}
+                style={{ width: 260 }}
+              />
+
+              <Select
+                value={statusFilter}
+                onChange={setStatusFilter}
+                style={{ width: 160 }}
+              >
+                <Option value="all">All Status</Option>
+                <Option value="pending">Pending</Option>
+                <Option value="processing">Processing</Option>
+                <Option value="shipped">Shipped</Option>
+                <Option value="delivered">Delivered</Option>
+                <Option value="cancelled">Cancelled</Option>
+              </Select>
+            </Space>
+          }
+        >
           {filteredOrders.length === 0 ? (
             <Empty description="No orders found" />
           ) : (
@@ -375,8 +383,8 @@ const Orders: React.FC<OrdersProps> = ({ onBack }) => {
                 )}
                 {(selectedOrder.status === "shipped" ||
                   selectedOrder.status === "delivered") && (
-                    <Timeline.Item color="cyan">Order Shipped</Timeline.Item>
-                  )}
+                  <Timeline.Item color="cyan">Order Shipped</Timeline.Item>
+                )}
                 {selectedOrder.status === "delivered" && (
                   <Timeline.Item color="green">Order Delivered</Timeline.Item>
                 )}

@@ -92,6 +92,90 @@
   color: #1e293b;
 }
 
+/* Container for top-level spacing */
+.sw-jr-back-container {
+  padding: 10px 0 20px 0;
+  display: flex;
+  justify-content: flex-start;
+}
+
+/* The styled Back Button */
+.sw-jr-back-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 18px;
+  background-color: #ffffff;
+  color: #000000;
+  border: 1px solid #e0e0e0; /* Subtle border for visibility on white bg */
+  border-radius: 50px;       /* Pill shape from reference */
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  transition: all 0.2s ease;
+}
+
+.sw-jr-back-btn:hover {
+  background-color: #f8f8f8;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+}
+
+.sw-jr-back-btn .arrow {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.sw-jr-header-section {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  padding: 10px 1px;
+}
+
+/* Back button */
+.sw-jr-back-btn {
+  font-size: 14px;           /* smaller */
+  padding: 6px 10px;        /* reduce size */
+  border-radius: 17px;
+  background: transparent;
+  border: 1px solid #ccc;
+  cursor: pointer;
+          top: 14px;
+        left: 14px;
+        font-size: 12px;
+}
+
+/* Arrow spacing */
+.sw-jr-back-btn .arrow {
+  margin-right: 1px;
+}
+
+/* Title */
+.sw-jr-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* 📱 Mobile tweaks */
+@media (max-width: 480px) {
+  .sw-jr-header-section {
+    padding: 10px 3px;
+  }
+
+  .sw-jr-back-btn {
+    font-size: 12px;
+    padding: 5px 8px;
+  }
+
+  .sw-jr-title {
+    font-size: 18px;
+  }
+}
+
+
+
 /* LOCATION BLOCK */
 .sw-jr-locations {
   border-left: 3px solid #e5e7eb;
@@ -2153,7 +2237,7 @@ body {
 
 html,
 body {
-  height: 100%;
+  /* height: 100%; */
   margin: 0;
   overflow: auto;
   /* desktop only */
@@ -2171,6 +2255,7 @@ body {
 .sw-jr-pr-container {
   min-height: 100vh;
   display: flex;
+    /* min-height: auto;  */
 
   background: linear-gradient(180deg,
       #a7b48c,
@@ -2445,22 +2530,6 @@ body {
   letter-spacing: 1px;
   margin-top: 10px;
 }
-
-
-/* =====================================================
-   MODAL
-   ===================================================== */
-
-.sw-jr-pr-success-modal .ant-modal-content {
-  border-radius: 20px;
-}
-
-.sw-jr-pr-main-check {
-  font-size: 58px;
-  color: #8eb33e;
-}
-
-
 /* =====================================================
    RESPONSIVE
    ===================================================== */
@@ -2480,7 +2549,7 @@ body {
 }
 
 .sw-jr-pr-continue-btn:hover {
-  background-color: #10b981 !important;
+  background-color: #7a9c33 !important;
 }
 
 /* Tablet */
@@ -2585,6 +2654,185 @@ body {
   font-weight: 800;
   color: #8eb33e;
 }
+
+
+/* =====================================================
+   MODAL
+   ===================================================== */
+
+.sw-jr-pr-success-modal .ant-modal-content {
+  border-radius: 20px;
+}
+
+.sw-jr-pr-main-check {
+  font-size: 58px;
+  color: #8eb33e;
+}
+/* Main Modal Container */
+.sw-jr-pr-success-modal .ant-modal-content {
+  background-color: #eef2e7; /* Your Light Sage background */
+  border-radius: 32px;
+  padding: 30px !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+/* Success Icon Section */
+.sw-jr-pr-success-icon-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.sw-jr-pr-main-check {
+  font-size: 80px;
+  color: #8eb33e; /* Your Primary Green */
+}
+
+/* Typography */
+.sw-jr-pr-modal-title {
+  color: #2d3436; /* Dark charcoal for readability */
+  font-size: 24px;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.sw-jr-pr-modal-sub {
+  color: #636e72; 
+  text-align: center;
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+
+.sw-jr-pr-purple-text {
+  color: #8eb33e; /* Overriding 'purple-text' name to match your Green theme */
+  font-weight: 700;
+}
+
+/* Inner Tracking Card */
+.sw-jr-pr-tracking-card {
+  background-color: #ffffff; /* White inner card for contrast against Sage */
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 24px;
+  border: 1px solid rgba(142, 179, 62, 0.1); /* Subtle green border */
+}
+
+.sw-jr-pr-track-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.sw-jr-pr-track-item:last-child {
+  margin-bottom: 0;
+}
+
+.sw-jr-pr-track-label {
+  color: #839192;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+}
+
+.sw-jr-pr-track-value {
+  color: #2d3436;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+/* The Action Button */
+.sw-jr-pr-modal-okay-btn {
+  background-color: #8eb33e !important;
+  border-color: #8eb33e !important;
+  height: 52px !important;
+  border-radius: 16px !important;
+  font-weight: 700 !important;
+  font-size: 16px !important;
+  transition: all 0.3s ease;
+}
+
+.sw-jr-pr-modal-okay-btn:hover {
+  background-color: #7a9c33 !important; /* Slightly darker green on hover */
+  transform: translateY(-1px);
+}
+
+/* Footer Link */
+.sw-jr-pr-track-order-link {
+  text-align: center;
+  margin-top: 20px;
+  color: #8eb33e;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 14px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+/* --- Optimized Mobile View Fix --- */
+@media (max-width: 767px) {
+  /* This targets the invisible wrapper Ant Design creates */
+  .sw-jr-pr-success-modal {
+    top: 0 !important;
+    display: flex !important;
+    align-items: center !important; /* Centers vertically */
+    justify-content: center !important; /* Centers horizontally */
+    height: 100vh !important; /* Makes the wrapper the full height of the screen */
+    padding-bottom: 0 !important;
+    margin: 0 auto !important;
+  }
+
+  /* This is the actual visible card */
+  .sw-jr-pr-success-modal .ant-modal-content {
+    width: 280px !important; /* Compact width */
+    height: auto !important; /* ONLY as tall as the content */
+    min-height: unset !important;
+    padding: 16px 20px !important;
+    border-radius: 20px !important;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    margin: 0 !important; /* Removes any default top/bottom margins */
+  }
+
+  /* Tighten internal elements to keep height small */
+  .sw-jr-pr-success-icon-wrapper {
+    margin-top: 5px !important;
+    margin-bottom: 5px !important;
+  }
+
+  .sw-jr-pr-main-check {
+    font-size: 50px !important;
+  }
+
+  .sw-jr-pr-modal-title {
+    font-size: 18px !important;
+    margin-bottom: 4px !important;
+  }
+
+  .sw-jr-pr-tracking-card {
+    margin: 10px 0 !important;
+    padding: 10px 12px !important;
+  }
+}
+
+@media (max-width: 767px) {
+
+  .sw-jr-pr-success-modal {
+    position: fixed !important;
+    inset: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+     top: 0 !important;
+    inset: 0 !important;          
+    transform: none !important;
+  }
+}
+
+
+
 
 /* Book Ride */
 

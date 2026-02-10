@@ -160,6 +160,44 @@ export interface Appointment {
 export type UserAppointmentsResponse = Appointment[];
 
 
+export interface HospitalDoctor {
+    hospital_id: number;
+    doctor_id: number;
+    doctor_name: string;
+    specialization_id: number;
+    specialization_name: string;
+    experience_years: number;
+    rating: number;
+    fees_per_hour: number;
+    available_from: string; // "HH:mm:ss" or "HH:mm:ss.SSSSSS"
+    available_to: string;
+    is_available: boolean;
+}
+
+export type HospitalDoctorsResponse = HospitalDoctor[];
+
+
+
+//assitants
+
+// types/assistant.ts
+
+export interface Assistant {
+  id: number;
+  name: string;
+  cost_per_visit: string;
+  services: string[];
+  hospital_id: number;
+  rating: string;
+  role: string;
+  is_active: boolean;
+  currency: string;
+}
+
+export type AvailableAssistantsResponse = Assistant[];
+
+
+
 
 
 
@@ -300,6 +338,33 @@ updateCallBookingStatus: async (
     throw error;
   }
 },
+
+
+// 🔹 API Call
+ getHospitalDoctors : async (
+    hospitalId: number
+): Promise<HospitalDoctorsResponse> => {
+    try {
+        const response = await api.get(
+            `/healthcare/hospital/${hospitalId}/doctors`
+        );
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching hospital doctors:", error);
+        throw error;
+    }
+},
+
+ getAvailableAssistants : async (): Promise<AvailableAssistantsResponse> => {
+  try {
+    const response = await api.get("/healthcare/available-assistants");
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching available assistants:", error);
+    throw error;
+  }
+},
+
 
 
 

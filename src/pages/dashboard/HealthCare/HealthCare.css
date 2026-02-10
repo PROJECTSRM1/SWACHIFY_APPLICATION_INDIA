@@ -836,6 +836,8 @@
   border-radius: 50%;
 }
 
+
+
 /* body */
 .live-body {
   overflow-y: auto;
@@ -2186,6 +2188,7 @@
   font-size: 15px;
   font-weight: 800;
   cursor: pointer;
+  
 }
 
 .cancel-btn {
@@ -2507,8 +2510,11 @@
 /* ===== DOCTOR PROFILE SCREEN ===== */
 
 .doctor-profile-screen {
-  padding: 16px;
-  padding-bottom: 96px;
+
+   padding-top: 60px; 
+  overflow-y: auto;
+  height: 100vh;
+  
   /* space for fixed CTA */
 }
 
@@ -2577,7 +2583,6 @@
   color: #6b7280;
 }
 
-
 /* ===== PERSONAL CARE ASSISTANT HEADER ===== */
 .assistant-header {
   display: flex;
@@ -2606,6 +2611,115 @@
   font-weight: 600;
   color: #065f46;
 }
+
+.assistant-title {
+  display: flex;
+  gap: 10px;
+}
+
+.assistant-title h4 {
+  margin: 0;
+  font-size: 15px;
+}
+
+.assistant-title p {
+  margin: 0;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.assistant-price {
+  text-align: right;
+}
+
+.assistant-price .price {
+  color: #0f766e;
+  font-weight: 600;
+}
+
+.assistant-price small {
+  font-size: 11px;
+  color: #6b7280;
+}
+
+.assistant-select-row {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 10px;
+  margin: 12px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.assistant-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.assistant-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.assistant-text p {
+  font-size: 12px;
+  margin: 0;
+  color: #6b7280;
+}
+
+.assistant-services {
+  display: flex;
+  gap: 16px;
+  font-size: 13px;
+  color: #047857;
+}
+
+.assistant-services {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 per row on mobile */
+  gap: 10px 12px;
+  margin-top: 12px;
+    margin: 12px 0 16px;
+  padding-left: 16px;
+}
+
+.assistant-services li {
+  margin-bottom: 6px;
+}
+
+
+@media (min-width: 480px) {
+  .assistant-services {
+    grid-template-columns: repeat(4, 1fr); /* 4 per row on tablets+ */
+  }
+}
+
+@media (max-width: 480px) {
+  .assistant-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .assistant-price {
+    align-self: flex-end;
+  }
+}
+
+@media (max-width: 480px) {
+  .assistant-select-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .assistant-user {
+    width: 100%;
+  }
+}
+
 
 
 /* Toggle Switch */
@@ -2687,7 +2801,8 @@
 
   overflow-y: auto;
   padding: 16px;
-  padding-bottom: 110px;
+  padding-top: 10px !important;
+  /* padding-bottom: 110px; */
   /* space for CTA */
 
   animation: slideIn 0.25s ease-out;
@@ -2741,7 +2856,6 @@
   background: #eef7f5;
   border-radius: 18px;
   margin: 18px 0;
-
   border: 1px solid #d1fae5;
 }
 
@@ -2750,12 +2864,21 @@
    ========================================= */
 
 /* ---------- Doctor Profile Header ---------- */
+
+
 .doctor-profile-header {
-  position: sticky;
+  position: fixed;   /* or sticky */
   top: 0;
-  background: #ffffff;
-  z-index: 10;
-  padding-bottom: 12px;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: #fff;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 16px;
+  border-bottom: 1px solid #eee;
 }
 
 .doctor-profile-header h2 {
@@ -2765,7 +2888,7 @@
 
 /* ---------- Doctor Profile Card ---------- */
 .doctor-profile-card {
-  margin-top: 10px;
+  margin-top: 40px !important;
 }
 
 .doctor-profile-card h2 {
@@ -2851,12 +2974,10 @@
 
 /* ---------- Book Appointment CTA (Doctor Profile ONLY) ---------- */
 .doctor-profile-screen .confirm-btn {
-  position: fixed;
   bottom: 14px;
   left: 14px;
   right: 14px;
   z-index: 50;
-
   background: linear-gradient(135deg, #2563eb, #1e40af);
   border-radius: 18px;
   font-size: 17px;
@@ -2903,6 +3024,7 @@
   padding: 16px;
   z-index: 20000;
   overscroll-behavior: contain;
+
 }
 
 .assistant-popup {
@@ -2912,6 +3034,7 @@
   border-radius: 22px;
   padding: 20px;
   animation: scaleIn 0.25s ease;
+         max-height: 90vh;    
 }
 
 @keyframes scaleIn {
@@ -3102,6 +3225,80 @@
   border-radius: 999px;
   font-weight: 700;
 }
+
+@media (max-width: 480px) {
+  .assistant-popup {
+    padding: 16px 12px;
+  }
+
+  .assistant-card {
+    padding: 10px;
+  }
+
+  .assistant-info h4 {
+    font-size: 14px;
+  }
+
+  .assistant-price {
+    font-size: 13px;
+  }
+
+  .assistant-services {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .assistant-overlay {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .assistant-popup {
+    width: 100%;
+    max-width: 100%;
+    height: 92vh;               /* 🔥 Always fits screen */
+    background: #fff;
+    border-radius: 18px 18px 0 0;
+    display: flex;
+    flex-direction: column;    /* 🔥 Vertical layout */
+    padding: 12px;
+  }
+
+  .assistant-popup h2 {
+    margin: 0 0 6px;
+    font-size: 16px;
+  }
+
+  .assistant-list {
+    flex: 1;                   /* 🔥 Scroll area */
+    overflow-y: auto;
+    margin: 8px 0;
+  }
+
+  .assistant-services {
+    margin: 6px 0;
+    font-size: 12px;
+  }
+
+  .assistant-confirm {
+    position: sticky;
+    bottom: 0;
+    background: #fff;
+    padding: 8px 0 0;
+    display: flex;
+    gap: 10px;
+  }
+
+  .assistant-confirm button {
+    flex: 1;
+    padding: 12px 0;
+    font-size: 12px;
+  }
+}
+
+
 
 /* ===== HOSPITAL DOCTOR LIST – POLISHED ===== */
 
@@ -5961,28 +6158,68 @@
 .call-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.75);
+  background: rgba(0, 0, 0, 0.85);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 9999;
+  padding: 10px;
 }
 
 .call-screen {
   background: #fff;
-  width: 95%;
-  max-width: 800px;
-  padding: 16px;
-  border-radius: 12px;
+  width: 100%;
+  max-width: 1000px;
+  border-radius: 14px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-height: 95vh;
+}
+
+.call-screen h2 {
+  text-align: center;
+  font-size: clamp(1rem, 3vw, 1.4rem);
+  margin: 4px 0;
+}
+
+.call-screen p {
+  text-align: center;
+  font-size: clamp(0.85rem, 2.5vw, 1rem);
+  margin-bottom: 6px;
+}
+
+.jitsi-wrapper {
+  position: relative;
+  width: 100%;
+  flex: 1;
+  background: #000;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.jitsi-wrapper iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .end-call-btn {
-  margin-top: 12px;
-  background: red;
+  margin-top: 8px;
+  background: #e53935;
   color: #fff;
-  padding: 10px 18px;
-  border-radius: 6px;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  font-size: clamp(0.85rem, 2.5vw, 1rem);
+  width: 120px;
 }
+
+
+
+
 .doctor-list-screen {
   position: fixed;
   /* 🔥 key */
@@ -6003,10 +6240,8 @@
 .doctor-image-screen {
   position: fixed;
   inset: 0;
-
   background: #000;
   z-index: 12000;
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -6221,6 +6456,298 @@
   border-color: #2563eb;
 }
 
+
+/* =========================
+   DATE PICKER CLICK FIX
+   ========================= */
+
+.date-input-wrapper {
+  cursor: pointer;
+}
+
+.date-input-wrapper .date-picker {
+  width: 100%;
+  cursor: pointer;
+}
+
+
+
 /****/
 
+/* ============================= */
+/* HOSPITAL DOCTOR LIST UI */
+/* ============================= */
 
+.hospital-doctor-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 20px;
+  margin-bottom: 16px;
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.hospital-doctor-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+}
+
+.hospital-doctor-left {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start; /* 🔥 KEY FIX */
+}
+
+.hospital-doctor-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.hospital-doctor-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* 🔥 FORCE LEFT */
+  text-align: left;        /* 🔥 FORCE LEFT */
+  gap: 4px;
+}
+
+.doctor-name-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.doctor-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.top-rated-badge {
+  background: #e6f7f4;
+  color: #047857;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 999px;
+}
+
+.doctor-speciality {
+  margin-top: 2px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #047857;
+}
+
+.doctor-exp {
+  margin-top: 2px;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+
+.doctor-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+  font-size: 13px;
+}
+
+.rating {
+  font-weight: 600;
+}
+
+.availability.available {
+  color: #16a34a;
+  font-weight: 600;
+}
+
+.availability.unavailable {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+.doctor-price {
+  margin-top: 6px;
+  font-weight: 700;
+  font-size: 15px;
+  color: #111827;
+}
+.doctor-action {
+  display: flex;
+  align-items: center;
+}
+
+.arrow-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #065f46;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.doctor-filters {
+  padding: 12px 16px;
+  background: #fff;
+}
+
+.filter-tabs {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+}
+
+.filter-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid #e5f3f1;
+  background: #f3fbfa;
+  color: #0fb9b1;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+
+.filter-icon {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+}
+
+.filter-btn.active {
+  background: #065f46;
+  color: #fff;
+  border-color: #0fb9b1;
+}
+
+
+.filter-btn:hover {
+  opacity: 0.9;
+}
+
+.doctor-search {
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px 14px 10px 36px;
+  border-radius: 12px;
+  border: 1px solid #e5f3f1;
+  background: #f8fdfc;
+  font-size: 14px;
+  outline: none;
+}
+
+.doctor-search::placeholder {
+  color: #9bbeb9;
+}
+
+
+.doctor-search-wrapper {
+  position: relative;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+  color: #9bbeb9;
+  
+}
+
+.doctor-search-wrapper {
+  position: relative;
+  margin-top: 10px;
+}
+
+.doctor-list-screen {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f9fefe;
+}
+
+.doctor-list-header,
+.doctor-filters {
+  background: #fff;
+  z-index: 10;
+}
+
+.doctor-list-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 16px 20px;
+}
+
+
+
+
+
+/* =====================================
+   HEALTHCARE BANNER – BACK BUTTON
+   SAFE ADDITION (NO SIDE EFFECTS)
+   ===================================== */
+
+.hc-hero-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Back button */
+.hc-back-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+
+  background: rgba(255, 255, 255, 0.95);
+  color: #0f172a;
+
+  font-size: 18px;
+  font-weight: 800;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+  transition: all 0.2s ease;
+}
+
+.hc-back-btn:hover {
+  transform: translateX(-2px);
+}
+
+/* 📱 Mobile tuning (banner already stacks) */
+@media (max-width: 768px) {
+  .hc-hero-header {
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .hc-back-btn {
+    width: 34px;
+    height: 34px;
+    font-size: 16px;
+  }
+}

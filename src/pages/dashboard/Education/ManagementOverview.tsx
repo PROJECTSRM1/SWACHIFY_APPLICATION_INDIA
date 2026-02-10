@@ -179,6 +179,28 @@ const filteredBuses = buses.filter((bus) =>
     .toLowerCase()
     .includes(busSearch.toLowerCase())
 );
+const generateRandomPhone = () => {
+  // Indian-style 10 digit mobile numbers
+  const prefixes = ["9", "8", "7", "6"];
+  const prefix = prefixes[Math.floor(Math.random() * prefixes.length)];
+
+  let number = prefix;
+  for (let i = 0; i < 9; i++) {
+    number += Math.floor(Math.random() * 10);
+  }
+
+  return number;
+};
+const handleContactDriver = () => {
+  const phoneNumber = generateRandomPhone();
+
+  // Optional: show user which number is being called
+  alert(`📞 Calling Driver: ${phoneNumber}`);
+
+  // Open dial pad
+  window.location.href = `tel:${phoneNumber}`;
+};
+
 if (showPayroll) {
   return (
     <Payroll
@@ -567,9 +589,13 @@ if (showFinalExam) {
           </div>
         </div>
 
-        <button className="contact-driver-btn">
-          📞 Contact Driver
-        </button>
+       <button
+  className="contact-driver-btn"
+  onClick={handleContactDriver}
+>
+  📞 Contact Driver
+</button>
+
       </div>
     </div>
   </div>
