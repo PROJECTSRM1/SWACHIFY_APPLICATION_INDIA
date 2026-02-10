@@ -1055,22 +1055,6 @@ useEffect(() => {
 }, []);
 
 
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
   const getDaysInMonth = (date: Date) => {
     return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
   };
@@ -1163,6 +1147,19 @@ const [needAmbulance, setNeedAmbulance] = useState<"Yes" | "No" | "">("");
 const [pickupTime, setPickupTime] = useState<string>("");
 const [showPickupDropdown, setShowPickupDropdown] = useState(false);
 
+// ------------------ RESET FUNCTION (ADD HERE) ------------------
+const resetHospitalBookingForm = () => {
+  setBookingDate("");
+  setBookingTime("");
+  setNeedAmbulance("");
+  setPickupTime("");
+  setShowTimeDropdown(false);
+  setShowPickupDropdown(false);
+};
+
+const dateInputRef = useRef<HTMLInputElement | null>(null);
+
+
 // 🔒 Hospital booking flow helpers
 // 🔒 Hospital booking flow helpers
 const todayISO = new Date().toISOString().split("T")[0];
@@ -1180,7 +1177,7 @@ const canConfirmHospitalBooking =
 // ⏱ Generate continuous time slots
 const generateTimeSlots = (
   startHour = 9,
-  endHour = 18,
+  endHour = 23,
   intervalMinutes = 30
 ) => {
   const slots: string[] = [];
@@ -3176,29 +3173,42 @@ useEffect(() => {
         {openHospitalBooking && selectedNearbyHospital && (
           <div
             className="profile-overlay"
-            onClick={() => setOpenHospitalBooking(false)}
+            onClick={() => {
+              resetHospitalBookingForm();
+              setOpenHospitalBooking(false);
+            }}
+
           >
             <div className="profile-popup" onClick={(e) => e.stopPropagation()}>
               <h2 className="popup-title">Booking Details</h2>
 
-              <div className="popup-section">
-                <label>Appointment Date</label>
+<div className="popup-section">
+  <label>Appointment Date</label>
 
-                <input
-                  type="date"
-                  className="date-picker"
-                  value={bookingDate}
-                  min={todayISO}
-                  onChange={(e) => {
-                  setBookingDate(e.target.value);
-                  setBookingTime("");        // 🔥 reset
-                  setNeedAmbulance("");      // 🔥 reset
-                  setShowTimeDropdown(false);
+  {/* Clickable wrapper */}
+  <div
+    className="date-input-wrapper"
+    onClick={() => {
+      // ✅ Open date picker when clicking anywhere
+      dateInputRef.current?.showPicker();
+    }}
+  >
+    <input
+      ref={dateInputRef}
+      type="date"
+      className="date-picker"
+      value={bookingDate}
+      min={todayISO}
+      onChange={(e) => {
+        setBookingDate(e.target.value);
+        setBookingTime("");        // 🔥 reset
+        setNeedAmbulance("");      // 🔥 reset
+        setShowTimeDropdown(false);
+      }}
+    />
+  </div>
+</div>
 
-                    }}
-                />
-
-              </div>
 
 <div className="popup-section">
   <label>Select Time</label>
@@ -3323,11 +3333,16 @@ onClick={() => {
   className="confirm-btn"
   disabled={!canConfirmHospitalBooking}
   onClick={() => {
-    if (!canConfirmHospitalBooking) return;
-    setOpenHospitalBooking(false);
-       setOpenHospitalDoctors(true)
-  
-  }}
+  if (!canConfirmHospitalBooking) return;
+
+  // ✅ reset form immediately
+  resetHospitalBookingForm();
+
+  // close popup & navigate
+  setOpenHospitalBooking(false);
+  setOpenHospitalDoctors(true);
+}}
+
 >
   Confirm Booking
 </button>
