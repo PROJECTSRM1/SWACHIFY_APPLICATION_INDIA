@@ -76,6 +76,8 @@ const clearFieldError = (field: string) => {
   /* ================= COMMERCIAL (BASIC) ================= */
 const [commercialLocation, setCommercialLocation] = useState("");
 const [commercialArea, setCommercialArea] = useState("");
+const [rating, setRating] = useState<string>("");
+
 
 
   /* ================= COMMON ================= */
@@ -125,6 +127,26 @@ const [hasTV, setHasTV] = useState(false);
 
 //   return numeric.replace(/\B(?=(\d{2})+(?!\d))/g, ",");
 // };
+const handleRatingChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const value = e.target.value;
+
+  // allow empty
+  if (value === "") {
+    setRating("");
+    clearFieldError("rating");
+    return;
+  }
+
+  const num = Number(value);
+
+  if (isNaN(num) || num < 1 || num > 5) {
+    setFieldError("rating", "Rating must be between 1.0 and 5.0");
+    return;
+  }
+
+  clearFieldError("rating");
+  setRating(value);
+};
 
 
   /* ================= IMAGE UPLOAD ================= */
@@ -356,6 +378,43 @@ const handleAlphaValidated =
 />
 {errors.price && <p className="errorText">{errors.price}</p>}
 
+<label>RATING (1.0 – 5.0)</label>
+
+<input
+  type="number"
+  step="0.1"
+  min="1"
+  max="5"
+  placeholder="e.g. 4.5"
+  value={rating}
+  onChange={handleRatingChange}
+  style={{
+    width: "100%",
+    padding: "12px 14px",
+    borderRadius: "10px",
+    border: "1px solid #e5e7eb",
+    fontSize: "14px",
+    outline: "none",
+  }}
+/>
+
+<p
+  style={{
+    marginTop: "4px",
+    fontSize: "13px",
+    fontWeight: 400,
+    color: "#6b7280",
+    lineHeight: "1.4",
+  }}
+>
+Enter a rating between 1.0 and 5.0 (e.g. 4.5)
+</p>
+
+{errors.rating && (
+  <p style={{ color: "#ef4444", fontSize: "12px", marginTop: "4px" }}>
+    {errors.rating}
+  </p>
+)}
 
 
 
