@@ -15444,6 +15444,54 @@ body {
 
 
 
+/* =====================================
+   CONSTRUCTION SERVICES – BACK BUTTON
+===================================== */
+
+.sw-br-bc-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Back button */
+.sw-br-bc-back-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: none;
+
+  background: #ffffff;
+  color: #0f172a;
+
+  font-size: 18px;
+  font-weight: 800;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  transition: all 0.2s ease;
+}
+
+.sw-br-bc-back-btn:hover {
+  transform: translateX(-2px);
+}
+
+/* 📱 Mobile responsive */
+@media (max-width: 768px) {
+  .sw-br-bc-title-row {
+    gap: 8px;
+  }
+
+  .sw-br-bc-back-btn {
+    width: 34px;
+    height: 34px;
+    font-size: 16px;
+  }
+}
 
 
 

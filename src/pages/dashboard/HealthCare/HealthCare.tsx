@@ -1843,8 +1843,19 @@ useEffect(() => {
         {/* Banner */}
         <div className="healthcare-banner">
           <div className="healthcare-banner-content">
-            <h2>Feeling unwell?</h2>
-            <p>Describe your symptoms for a quick recommendation.</p>
+            <div className="hc-hero-header">
+    <button
+      className="hc-back-btn"
+      onClick={() => window.history.back()}
+      aria-label="Go back"
+    >
+      ←
+    </button>
+
+    <h2>Feeling unwell?</h2>
+  </div>
+
+  <p>Describe your symptoms for a quick recommendation.</p>
 
             <button
               type="button"
