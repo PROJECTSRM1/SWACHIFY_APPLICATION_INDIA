@@ -2,6 +2,7 @@
   background: linear-gradient(135deg, #667eea, #764ba2);
   color: #fff;
   text-align: center;
+  margin-top: 3px;
   padding: 80px 20px;
 }
 
@@ -87,4 +88,45 @@
 
 .portfolio-card:hover .portfolio-overlay {
   opacity: 1;
+}
+
+/* FAQ SECTION */
+.portfolio-faq {
+  padding: 80px 20px;
+  background: #f9f9f9;
+}
+
+.faq-container {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.faq-container h2 {
+  font-size: 36px; /* Increased */
+  font-weight: 700;
+  margin-bottom: 50px;
+  color: #1a1a1a;
+}
+
+.faq-item {
+  background: #ffffff;
+  padding: 25px 30px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  text-align: center; /* Align text properly */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.faq-item h4 {
+  font-size: 20px; /* Increased question size */
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #111;
+}
+
+.faq-item p {
+  font-size: 16px; /* Increased answer size */
+  line-height: 1.7;
+  color: #555;
 }
