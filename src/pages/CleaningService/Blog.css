@@ -65,3 +65,91 @@
   border-radius: 6px;
   cursor: pointer;
 }
+/* =========================
+   TABLET (<=1024px)
+========================= */
+@media (max-width: 1024px) {
+  .blog-container {
+    padding: 50px 20px;
+  }
+
+  .blog-hero h1 {
+    font-size: 34px;
+  }
+
+  .blog-hero p {
+    font-size: 16px;
+  }
+
+  .blog-grid {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  }
+}
+
+/* =========================
+   MOBILE (<=768px)
+========================= */
+@media (max-width: 768px) {
+  .blog-hero {
+    padding: 60px 15px;
+  }
+
+  .blog-hero h1 {
+    font-size: 28px;
+  }
+
+  .blog-hero p {
+    font-size: 15px;
+  }
+
+  .blog-container {
+    padding: 40px 15px;
+  }
+
+  .blog-grid {
+    grid-template-columns: 1fr; /* Single column */
+    gap: 20px;
+  }
+
+  .blog-card img {
+    height: 200px;
+  }
+
+  .blog-content {
+    padding: 18px;
+  }
+
+  .blog-content h3 {
+    font-size: 18px;
+  }
+
+  .blog-date {
+    font-size: 13px;
+  }
+
+  .blog-read-btn {
+    padding: 7px 16px;
+    font-size: 14px;
+  }
+}
+
+/* =========================
+   SMALL MOBILE (<=480px)
+========================= */
+@media (max-width: 480px) {
+  .blog-hero h1 {
+    font-size: 22px;
+  }
+
+  .blog-card img {
+    height: 180px;
+  }
+
+  .blog-content h3 {
+    font-size: 16px;
+  }
+
+  .blog-content p {
+    font-size: 14px;
+  }
+}
