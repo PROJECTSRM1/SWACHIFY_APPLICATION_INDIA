@@ -25,7 +25,6 @@ import type { ColumnsType } from "antd/es/table";
 import "./Orders.css";
 
 const { Option } = Select;
-const { Search } = Input;
 
 import { getOrders, type Order, type OrderItem } from "./orderStore";
 
