@@ -3,38 +3,39 @@ import CleaningHeader from "./CleaningHeader";
 import "./CommercialCleaning.css";
 import { Modal, Input, Button } from "antd";
 import commercialvideo from "../../../src/assets/4203186-hd_1920_1080_24fps.mp4";
+import Footer from "../../../src/pages/CleaningService/CleaningServiceFooter";
 import BookCleaningScreenWeb from "../../pages/dashboard/homeservices/BookCleaningScreenWeb";
 import { customerLogin } from "../../api/customerAuth";
 import { useNavigate } from "react-router-dom";
 
 const propertyTypes = [
-  { 
-    title: "Office", 
+  {
+    title: "Office",
     price: 1999,
     icon: "🏢",
     description: "Professional workspace cleaning",
-    features: ["Desk sanitization", "Floor cleaning", "Washroom maintenance"]
+    features: ["Desk sanitization", "Floor cleaning", "Washroom maintenance"],
   },
-  { 
-    title: "Shop", 
+  {
+    title: "Shop",
     price: 1499,
     icon: "🏪",
     description: "Retail space deep cleaning",
-    features: ["Display cleaning", "Floor polishing", "Window cleaning"]
+    features: ["Display cleaning", "Floor polishing", "Window cleaning"],
   },
-  { 
-    title: "Restaurant", 
+  {
+    title: "Restaurant",
     price: 2499,
     icon: "🍽️",
     description: "Food service area cleaning",
-    features: ["Kitchen deep clean", "Dining area", "Grease removal"]
+    features: ["Kitchen deep clean", "Dining area", "Grease removal"],
   },
-  { 
-    title: "Warehouse", 
+  {
+    title: "Warehouse",
     price: 2999,
     icon: "🏭",
     description: "Large-scale industrial cleaning",
-    features: ["High-ceiling cleaning", "Floor scrubbing", "Dust removal"]
+    features: ["High-ceiling cleaning", "Floor scrubbing", "Dust removal"],
   },
 ];
 
@@ -46,44 +47,42 @@ const CommercialCleaning: React.FC = () => {
 
   const [mobile] = useState("");
   const [otp, setOtp] = useState("");
- const [isAuthenticated, setIsAuthenticated] = useState(
-  !!localStorage.getItem("accessToken")
-);
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    !!localStorage.getItem("accessToken"),
+  );
 
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-   const navigate = useNavigate();
-   
-   useEffect(() => {
-  const handleStorageChange = () => {
-    setIsAuthenticated(!!localStorage.getItem("accessToken"));
-  };
+  const navigate = useNavigate();
 
-  window.addEventListener("storage", handleStorageChange);
-  handleStorageChange(); // initial sync
+  useEffect(() => {
+    const handleStorageChange = () => {
+      setIsAuthenticated(!!localStorage.getItem("accessToken"));
+    };
 
-  return () => {
-    window.removeEventListener("storage", handleStorageChange);
-  };
-}, []);
+    window.addEventListener("storage", handleStorageChange);
+    handleStorageChange(); // initial sync
 
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []);
 
   const onLogin = async (values: any) => {
-      try{
-        const res: any = await customerLogin({
-                email_or_phone: values.identifier,
-                password: values.password,
-              });
-              localStorage.setItem("user_id", res.user_id);
-        
-              localStorage.setItem("accessToken", res.access_token);
-              localStorage.setItem("user", JSON.stringify(res));
-      }
-      catch(error){
-        console.error("Login failed:", error);
-      }
+    try {
+      const res: any = await customerLogin({
+        email_or_phone: values.identifier,
+        password: values.password,
+      });
+      localStorage.setItem("user_id", res.user_id);
+
+      localStorage.setItem("accessToken", res.access_token);
+      localStorage.setItem("user", JSON.stringify(res));
+    } catch (error) {
+      console.error("Login failed:", error);
     }
+  };
 
   return (
     <>
@@ -100,7 +99,7 @@ const CommercialCleaning: React.FC = () => {
             <p className="cc-description">
               Professional cleaning solutions for your business premises
             </p>
-            
+
             <div className="cc-stats">
               <div className="cc-stat-item">
                 <span className="cc-stat-icon">⭐</span>
@@ -130,12 +129,12 @@ const CommercialCleaning: React.FC = () => {
 
           <div className="cc-properties-section">
             <h3 className="cc-section-title">Select Your Property Type</h3>
-            
+
             <div className="cc-properties-grid">
               {propertyTypes.map((property, i) => (
-                <div 
-                  key={i} 
-                  className={`cc-property-card ${selected?.title === property.title ? 'cc-card-selected' : ''}`}
+                <div
+                  key={i}
+                  className={`cc-property-card ${selected?.title === property.title ? "cc-card-selected" : ""}`}
                   onClick={() => setSelected(property)}
                 >
                   <div className="cc-card-header">
@@ -163,19 +162,20 @@ const CommercialCleaning: React.FC = () => {
                       <span className="cc-price">₹{property.price}</span>
                     </div>
                     <button
-                      className={`cc-select-btn ${selected?.title === property.title ? 'cc-selected' : ''}`}
+                      className={`cc-select-btn ${selected?.title === property.title ? "cc-selected" : ""}`}
                       onClick={(e) => {
-  e.stopPropagation();
+                        e.stopPropagation();
 
-  if (selected?.title === property.title) {
-    setStep(isAuthenticated ? "booking" : "login");
-  } else {
-    setSelected(property);
-  }
-}}
-
+                        if (selected?.title === property.title) {
+                          setStep(isAuthenticated ? "booking" : "login");
+                        } else {
+                          setSelected(property);
+                        }
+                      }}
                     >
-                      {selected?.title === property.title ? "Book Now →" : "Select"}
+                      {selected?.title === property.title
+                        ? "Book Now →"
+                        : "Select"}
                     </button>
                   </div>
                 </div>
@@ -184,7 +184,9 @@ const CommercialCleaning: React.FC = () => {
           </div>
 
           <div className="cc-benefits">
-            <h3 className="cc-benefits-title">Why Choose Our Commercial Services?</h3>
+            <h3 className="cc-benefits-title">
+              Why Choose Our Commercial Services?
+            </h3>
             <div className="cc-benefits-grid">
               <div className="cc-benefit-item">
                 <div className="cc-benefit-icon">👥</div>
@@ -235,7 +237,9 @@ const CommercialCleaning: React.FC = () => {
                   <span className="cc-badge-icon">⚡</span>
                   <div>
                     <div className="cc-badge-title">Quick Response</div>
-                    <div className="cc-badge-subtitle">Same-day service available</div>
+                    <div className="cc-badge-subtitle">
+                      Same-day service available
+                    </div>
                   </div>
                 </div>
               </div>
@@ -275,8 +279,12 @@ const CommercialCleaning: React.FC = () => {
                   <div className="cc-selected-header">
                     <span className="cc-selected-icon">{selected.icon}</span>
                     <div>
-                      <div className="cc-selected-name">{selected.title} Cleaning</div>
-                      <div className="cc-selected-price">₹{selected.price} onwards</div>
+                      <div className="cc-selected-name">
+                        {selected.title} Cleaning
+                      </div>
+                      <div className="cc-selected-price">
+                        ₹{selected.price} onwards
+                      </div>
                     </div>
                   </div>
                   <button
@@ -292,7 +300,10 @@ const CommercialCleaning: React.FC = () => {
               {!selected && (
                 <div className="cc-help-text">
                   <div className="cc-help-icon">ℹ️</div>
-                  <p>Select a property type above to get started with your commercial cleaning service</p>
+                  <p>
+                    Select a property type above to get started with your
+                    commercial cleaning service
+                  </p>
                 </div>
               )}
             </div>
@@ -316,70 +327,69 @@ const CommercialCleaning: React.FC = () => {
             We'll send a one-time password to your mobile
           </p>
 
-         <Input
-          className="auth-input"
-          placeholder="Email or mobile number"
-          value={identifier}
-          onChange={(e) => setIdentifier(e.target.value)}
-        />
-        
-        <Input.Password
-          className="auth-input"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        
-        
-                 <Button
-          type="primary"
-          block
-          className="auth-button"
-          loading={loading}
-          disabled={!identifier || !password}
-          onClick={async () => {
-            try {
-              setLoading(true);
-        
-              await onLogin({
-                identifier,
-                password,
-              });
-        
-              // ✅ login success → go to booking
-              setStep("booking");
-            } catch (e) {
-              // optional toast
-            } finally {
-              setLoading(false);
-            }
-          }}
-        >
-          Login & Continue
-        </Button>
+          <Input
+            className="auth-input"
+            placeholder="Email or mobile number"
+            value={identifier}
+            onChange={(e) => setIdentifier(e.target.value)}
+          />
+
+          <Input.Password
+            className="auth-input"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+
+          <Button
+            type="primary"
+            block
+            className="auth-button"
+            loading={loading}
+            disabled={!identifier || !password}
+            onClick={async () => {
+              try {
+                setLoading(true);
+
+                await onLogin({
+                  identifier,
+                  password,
+                });
+
+                // ✅ login success → go to booking
+                setStep("booking");
+              } catch (e) {
+                // optional toast
+              } finally {
+                setLoading(false);
+              }
+            }}
+          >
+            Login & Continue
+          </Button>
           <p className="auth-note">
-  Don’t have an account?{" "}
-  <span
-    style={{ color: "#1677ff", cursor: "pointer", fontWeight: 500 }}
-    onClick={() => {
-      // ✅ save where user came from
-      localStorage.setItem(
-        "postAuthRedirect",
-        window.location.pathname
-      );
+            Don’t have an account?{" "}
+            <span
+              style={{ color: "#1677ff", cursor: "pointer", fontWeight: 500 }}
+              onClick={() => {
+                // ✅ save where user came from
+                localStorage.setItem(
+                  "postAuthRedirect",
+                  window.location.pathname,
+                );
 
-      navigate("/");
+                navigate("/");
 
-      setTimeout(() => {
-        if ((window as any).openAuthModal) {
-          (window as any).openAuthModal("register");
-        }
-      }, 0);
-    }}
-  >
-    Register
-  </span>
-</p>
+                setTimeout(() => {
+                  if ((window as any).openAuthModal) {
+                    (window as any).openAuthModal("register");
+                  }
+                }, 0);
+              }}
+            >
+              Register
+            </span>
+          </p>
         </div>
       </Modal>
 
@@ -404,9 +414,7 @@ const CommercialCleaning: React.FC = () => {
             placeholder="Enter OTP"
             maxLength={6}
             value={otp}
-            onChange={(e) =>
-              setOtp(e.target.value.replace(/[^0-9]/g, ""))
-            }
+            onChange={(e) => setOtp(e.target.value.replace(/[^0-9]/g, ""))}
           />
 
           <Button
@@ -429,10 +437,10 @@ const CommercialCleaning: React.FC = () => {
       </Modal>
 
       {/* DONE MODAL */}
-      <Modal 
-        open={step === "done"} 
-        footer={null} 
-        centered 
+      <Modal
+        open={step === "done"}
+        footer={null}
+        centered
         closable={false}
         className="auth-modal success-modal"
       >
@@ -440,9 +448,10 @@ const CommercialCleaning: React.FC = () => {
           <div className="success-icon">🎉</div>
           <h3 className="success-title">Booking Requested!</h3>
           <p className="success-message">
-            Our team will contact you shortly for <strong>{selected?.title}</strong> cleaning service.
+            Our team will contact you shortly for{" "}
+            <strong>{selected?.title}</strong> cleaning service.
           </p>
-          
+
           <div className="success-details">
             <div className="success-detail-row">
               <span className="success-label">Service Type</span>
@@ -485,6 +494,7 @@ const CommercialCleaning: React.FC = () => {
           </div>
         </div>
       )}
+      <Footer></Footer>
     </>
   );
 };

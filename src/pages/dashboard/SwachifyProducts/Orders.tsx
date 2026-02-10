@@ -122,6 +122,7 @@ const Orders: React.FC<OrdersProps> = ({ onBack }) => {
       title: "Order Number",
       dataIndex: "orderNumber",
       key: "orderNumber",
+      align: "center",
       responsive: ["xs", "sm", "md", "lg"],
       render: (orderNumber: string) => (
         <span className="orders-number">{orderNumber}</span>
@@ -130,6 +131,7 @@ const Orders: React.FC<OrdersProps> = ({ onBack }) => {
     {
       title: "Customer",
       key: "customer",
+      align: "center",
       responsive: ["md", "lg"],
       render: (record: Order) => (
         <div>
@@ -142,6 +144,7 @@ const Orders: React.FC<OrdersProps> = ({ onBack }) => {
       title: "Items",
       dataIndex: "items",
       key: "items",
+      align: "center",
       render: (items: OrderItem[]) => (
         <span>
           {items.length} item{items.length > 1 ? "s" : ""}
@@ -152,6 +155,7 @@ const Orders: React.FC<OrdersProps> = ({ onBack }) => {
       title: "Total Amount",
       dataIndex: "totalAmount",
       key: "totalAmount",
+      align: "center",
       responsive: ["xs", "sm", "md", "lg"],
       render: (amount: number) => (
         <span className="orders-amount">₹{amount.toLocaleString()}</span>
@@ -181,6 +185,7 @@ const Orders: React.FC<OrdersProps> = ({ onBack }) => {
       title: "Order Date",
       dataIndex: "orderDate",
       key: "orderDate",
+      align: "center",
       responsive: ["md", "lg"],
       render: (date: string) => formatDate(date),
     },
@@ -188,6 +193,7 @@ const Orders: React.FC<OrdersProps> = ({ onBack }) => {
       title: "Actions",
       key: "actions",
       responsive: ["xs", "sm", "md", "lg"],
+      align: "center",
       render: (record: Order) => (
         <Button
           type="link"
