@@ -1729,6 +1729,58 @@ html, body {
     width: calc(100% - 32px);
   }
 }
+/* ===============================
+   MARKETPLACE BACK BUTTON
+================================ */
+.mp-back-btn {
+  width: 40px;
+  height: 40px;
+
+  border-radius: 50%;
+  border: none;
+
+  background: #ffffff;
+  color: #0f172a;
+
+  font-size: 20px;
+  font-weight: 700;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+  transition: all 0.2s ease;
+}
+
+.mp-back-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 32px rgba(0,0,0,0.18);
+}
+
+/* Align title nicely */
+.mp-header-left h1 {
+  margin: 0;
+}
+@media (max-width: 768px) {
+  .mp-header-left {
+    gap: 12px;
+  }
+
+  .mp-back-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+  }
+
+  .mp-web-header h1 {
+    font-size: 24px;
+    font-weight: 900;
+  }
+}
+
 
 .wishlistToast {
   position: fixed;

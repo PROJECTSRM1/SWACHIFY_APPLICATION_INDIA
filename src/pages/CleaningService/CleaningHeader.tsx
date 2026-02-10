@@ -1,78 +1,71 @@
 import { useState, useEffect } from "react";
 import { Input } from "antd";
-import { Dropdown, Menu,Modal } from "antd";
+import { Dropdown, Menu, Modal } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
-import { 
-  SearchOutlined, 
-  PhoneOutlined, 
+import {
+  SearchOutlined,
+  PhoneOutlined,
   UserOutlined,
   MenuOutlined,
-  CloseOutlined
+  CloseOutlined,
 } from "@ant-design/icons";
 import "./CleaningHeader.css";
-import { getAllHomeServiceBookings, type HomeServiceBookingItem } from "../../api/homeService";
+import {
+  getAllHomeServiceBookings,
+  type HomeServiceBookingItem,
+} from "../../api/homeService";
 
 const CleaningHeader: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showRecentBookings, setShowRecentBookings] = useState(false);
-  const [recentBookings, setRecentBookings] = useState<HomeServiceBookingItem[]>([]);
+  const [recentBookings, setRecentBookings] = useState<
+    HomeServiceBookingItem[]
+  >([]);
 
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(
-  !!localStorage.getItem("accessToken")
-);
-const handleLogout = () => {
-  localStorage.removeItem("accessToken");
-  localStorage.removeItem("refreshToken"); // if you have it
-  setIsAuthenticated(false);
-  navigate("/");
-};
-
-
-const formatDateTime = (iso: string) => {
-  const d = new Date(iso);
-  return d.toLocaleString("en-IN", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: true,
-  });
-};
-
-
-useEffect(() => {
-  const loadBookings = async () => {
-    try {
-      const bookings = await getAllHomeServiceBookings(); // now it's an array
-      setRecentBookings(bookings);
-    } catch (e) {
-      console.error("Failed to load bookings", e);
-      setRecentBookings([]);
-    }
+    !!localStorage.getItem("accessToken"),
+  );
+  const handleLogout = () => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken"); // if you have it
+    setIsAuthenticated(false);
+    navigate("/");
   };
 
-  if (showRecentBookings) {
-    loadBookings();
-  }
-}, [showRecentBookings]);
+  const formatDateTime = (iso: string) => {
+    const d = new Date(iso);
+    return d.toLocaleString("en-IN", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    });
+  };
 
+  useEffect(() => {
+    const loadBookings = async () => {
+      try {
+        const bookings = await getAllHomeServiceBookings(); // now it's an array
+        setRecentBookings(bookings);
+      } catch (e) {
+        console.error("Failed to load bookings", e);
+        setRecentBookings([]);
+      }
+    };
 
+    if (showRecentBookings) {
+      loadBookings();
+    }
+  }, [showRecentBookings]);
 
-
-
-
-
-
-useEffect(() => {
-  const token = localStorage.getItem("accessToken");
-  setIsAuthenticated(!!token);
-}, []);
- 
- 
-
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+    setIsAuthenticated(!!token);
+  }, []);
 
   const getActiveMenu = () => {
     if (location.pathname.startsWith("/cleaning")) return "services";
@@ -111,7 +104,9 @@ useEffect(() => {
               <span className="ch-dropdown-icon">🏠</span>
               <div>
                 <div className="ch-dropdown-title">Home Cleaning</div>
-                <div className="ch-dropdown-desc">Kitchen, bathroom, bedroom & more</div>
+                <div className="ch-dropdown-desc">
+                  Kitchen, bathroom, bedroom & more
+                </div>
               </div>
             </div>
           ),
@@ -128,7 +123,9 @@ useEffect(() => {
               <span className="ch-dropdown-icon">🏢</span>
               <div>
                 <div className="ch-dropdown-title">Commercial Cleaning</div>
-                <div className="ch-dropdown-desc">Office, shop, restaurant & warehouse</div>
+                <div className="ch-dropdown-desc">
+                  Office, shop, restaurant & warehouse
+                </div>
               </div>
             </div>
           ),
@@ -145,7 +142,9 @@ useEffect(() => {
               <span className="ch-dropdown-icon">🚗</span>
               <div>
                 <div className="ch-dropdown-title">Vehicle Cleaning</div>
-                <div className="ch-dropdown-desc">Bike, car & SUV cleaning services</div>
+                <div className="ch-dropdown-desc">
+                  Bike, car & SUV cleaning services
+                </div>
               </div>
             </div>
           ),
@@ -158,26 +157,90 @@ useEffect(() => {
       ]}
     />
   );
-  const profileMenu = (
-  <Menu
-    items={[
-      {
-        key: "recent",
-        label: "Recent Bookings",
-        onClick: () => setShowRecentBookings(true),
-      },
-      {
-        type: "divider",
-      },
-      {
-        key: "logout",
-        label: <span style={{ color: "red" }}>Logout</span>,
-        onClick: handleLogout,
-      },
-    ]}
-  />
-);
+  const supportMenu = (
+    <Menu
+      className="ch-services-dropdown"
+      items={[
+        {
+          key: "contact",
+          label: (
+            <div className="ch-dropdown-item">
+              <span className="ch-dropdown-icon">📞</span>
+              <div>
+                <div className="ch-dropdown-title">Contact Us</div>
+                <div className="ch-dropdown-desc">
+                  Get in touch with our team
+                </div>
+              </div>
+            </div>
+          ),
+          onClick: () => {
+            navigate("/support/contact");
+            setActiveMenu("support");
+            setMobileMenuOpen(false);
+          },
+        },
+        {
+          key: "about",
+          label: (
+            <div className="ch-dropdown-item">
+              <span className="ch-dropdown-icon">🏢</span>
+              <div>
+                <div className="ch-dropdown-title">About Us</div>
+                <div className="ch-dropdown-desc">
+                  Learn more about our company
+                </div>
+              </div>
+            </div>
+          ),
+          onClick: () => {
+            navigate("/support/about");
+            setActiveMenu("support");
+            setMobileMenuOpen(false);
+          },
+        },
+        {
+          key: "faq",
+          label: (
+            <div className="ch-dropdown-item">
+              <span className="ch-dropdown-icon">❓</span>
+              <div>
+                <div className="ch-dropdown-title">FAQ</div>
+                <div className="ch-dropdown-desc">
+                  Frequently asked questions
+                </div>
+              </div>
+            </div>
+          ),
+          onClick: () => {
+            navigate("/support/faq");
+            setActiveMenu("support");
+            setMobileMenuOpen(false);
+          },
+        },
+      ]}
+    />
+  );
 
+  const profileMenu = (
+    <Menu
+      items={[
+        {
+          key: "recent",
+          label: "Recent Bookings",
+          onClick: () => setShowRecentBookings(true),
+        },
+        {
+          type: "divider",
+        },
+        {
+          key: "logout",
+          label: <span style={{ color: "red" }}>Logout</span>,
+          onClick: handleLogout,
+        },
+      ]}
+    />
+  );
 
   const handleNavClick = (menu: typeof activeMenu, path: string) => {
     setActiveMenu(menu);
@@ -196,9 +259,7 @@ useEffect(() => {
               <span>+91 98765 43210</span>
             </a>
             <span className="ch-topbar-divider">|</span>
-            <span className="ch-topbar-text">
-              Mon - Sat: 8:00 AM - 6:00 PM
-            </span>
+            <span className="ch-topbar-text">Mon - Sat: 8:00 AM - 6:00 PM</span>
           </div>
 
           <div className="ch-topbar-right">
@@ -219,8 +280,8 @@ useEffect(() => {
           <div className="ch-logo" onClick={() => handleNavClick("home", "/")}>
             <div className="ch-logo-icon">
               <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5zm0 2.18l8 3.6v8.72c0 4.35-2.96 8.42-8 9.91-5.04-1.49-8-5.56-8-9.91V7.78l8-3.6z"/>
-                <circle cx="12" cy="12" r="4"/>
+                <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5zm0 2.18l8 3.6v8.72c0 4.35-2.96 8.42-8 9.91-5.04-1.49-8-5.56-8-9.91V7.78l8-3.6z" />
+                <circle cx="12" cy="12" r="4" />
               </svg>
             </div>
             <div className="ch-logo-text">
@@ -238,7 +299,11 @@ useEffect(() => {
               Home
             </a>
 
-            <Dropdown overlay={servicesMenu} trigger={["hover"]} placement="bottomCenter">
+            <Dropdown
+              overlay={servicesMenu}
+              trigger={["hover"]}
+              placement="bottomCenter"
+            >
               <a
                 className={`ch-nav-link ch-nav-dropdown ${
                   activeMenu === "services" ? "active" : ""
@@ -263,13 +328,20 @@ useEffect(() => {
             >
               Blog
             </a>
-
-            <a
-              className={`ch-nav-link ${activeMenu === "support" ? "active" : ""}`}
-              onClick={() => handleNavClick("support", "/support")}
+            <Dropdown
+              overlay={supportMenu}
+              trigger={["hover"]}
+              placement="bottomCenter"
             >
-              Support
-            </a>
+              <a
+                className={`ch-nav-link ch-nav-dropdown ${
+                  activeMenu === "support" ? "active" : ""
+                }`}
+              >
+                Support
+                <span className="ch-dropdown-arrow">▼</span>
+              </a>
+            </Dropdown>
           </nav>
 
           {/* Right Section */}
@@ -285,28 +357,30 @@ useEffect(() => {
 
             {/* Login/Profile Button */}
             {!isAuthenticated ? (
-  <button
-    className="ch-profile-btn"
-    onClick={() => {
-      // reuse global auth modal
-      (window as any).openAuthModal?.("login");
-    }}
-  >
-    <UserOutlined />
-    <span>Login</span>
-  </button>
-) : (
-  <Dropdown overlay={profileMenu} trigger={["click"]} placement="bottomRight">
-  <button className="ch-profile-btn">
-    <UserOutlined />
-  </button>
-</Dropdown>
-
-)}
-
+              <button
+                className="ch-profile-btn"
+                onClick={() => {
+                  // reuse global auth modal
+                  (window as any).openAuthModal?.("login");
+                }}
+              >
+                <UserOutlined />
+                <span>Login</span>
+              </button>
+            ) : (
+              <Dropdown
+                overlay={profileMenu}
+                trigger={["click"]}
+                placement="bottomRight"
+              >
+                <button className="ch-profile-btn">
+                  <UserOutlined />
+                </button>
+              </Dropdown>
+            )}
 
             {/* Mobile Menu Toggle */}
-            <button 
+            <button
               className="ch-mobile-toggle"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
@@ -341,19 +415,24 @@ useEffect(() => {
                 <a onClick={() => handleNavClick("services", "/cleaning/home")}>
                   🏠 Home Cleaning
                 </a>
-                <a onClick={() => handleNavClick("services", "/cleaning/commercial")}>
+                <a
+                  onClick={() =>
+                    handleNavClick("services", "/cleaning/commercial")
+                  }
+                >
                   🏢 Commercial Cleaning
                 </a>
-                <a onClick={() => handleNavClick("services", "/cleaning/vehicle")}>
+                <a
+                  onClick={() =>
+                    handleNavClick("services", "/cleaning/vehicle")
+                  }
+                >
                   🚗 Vehicle Cleaning
                 </a>
               </div>
             </div>
 
-            <a
-              className={`ch-mobile-link ${activeMenu === "portfolio" ? "active" : ""}`}
-              onClick={() => handleNavClick("portfolio", "/portfolio")}
-            >
+            <a onClick={() => handleNavClick("portfolio", "/portfolio")}>
               Portfolio
             </a>
 
@@ -400,52 +479,45 @@ useEffect(() => {
   </div>
 </Modal> */}
 
-<Modal
-  open={showRecentBookings}
-  footer={null}
-  centered
-  width={420}
-    style={{ top: 50 }}    
-      bodyStyle={{ padding: 0 }}
-  onCancel={() => setShowRecentBookings(false)}
-  title="🧾 Recent Bookings"
-  className="recent-bookings-modal"
->
-  <div className="recent-bookings-container">
-    {recentBookings.length === 0 && (
-      <p className="rb-empty">No recent bookings found.</p>
-    )}
+      <Modal
+        open={showRecentBookings}
+        footer={null}
+        centered
+        width={420}
+        style={{ top: 50 }}
+        bodyStyle={{ padding: 0 }}
+        onCancel={() => setShowRecentBookings(false)}
+        title="🧾 Recent Bookings"
+        className="recent-bookings-modal"
+      >
+        <div className="recent-bookings-container">
+          {recentBookings.length === 0 && (
+            <p className="rb-empty">No recent bookings found.</p>
+          )}
 
-    {recentBookings.map((item) => (
-      <div key={item.booking_id} className="rb-card">
-        <div className="rb-header">
-          <span className="rb-service">
-            🧹 {item.service_summary?.main_service}
-          </span>
-          <span className="rb-price">
-            ₹{item.service_summary?.total_amount}
-          </span>
+          {recentBookings.map((item) => (
+            <div key={item.booking_id} className="rb-card">
+              <div className="rb-header">
+                <span className="rb-service">
+                  🧹 {item.service_summary?.main_service}
+                </span>
+                <span className="rb-price">
+                  ₹{item.service_summary?.total_amount}
+                </span>
+              </div>
+
+              <div className="rb-meta">
+                <span>📅 {item.preferred_date}</span>
+                <span>⏰ {item.time_slot}</span>
+              </div>
+
+              <div className="rb-booked">
+                🕒 Booked on: {formatDateTime(item.created_date)}
+              </div>
+            </div>
+          ))}
         </div>
-
-        <div className="rb-meta">
-          <span>📅 {item.preferred_date}</span>
-          <span>⏰ {item.time_slot}</span>
-        </div>
-
-        <div className="rb-booked">
-          🕒 Booked on: {formatDateTime(item.created_date)}
-        </div>
-      </div>
-    ))}
-  </div>
-</Modal>
-
-
-
-
-
-
-
+      </Modal>
     </>
   );
 };

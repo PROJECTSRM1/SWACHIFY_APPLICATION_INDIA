@@ -127,14 +127,26 @@ const ConstructionServices: FC<Props> = ({ searchQuery, clearSearch }) => {
 
   return (
     <div className="sw-br-bc-wrapper">
-      <div className="sw-br-bc-header">
-        <span className="sw-br-bc-title">
-          Building & Construction Raw Materials
-        </span>
-        <span className="sw-br-bc-subtitle">
-          {services.length} services available
-        </span>
-      </div>
+   <div className="sw-br-bc-header">
+  <div className="sw-br-bc-title-row">
+    <button
+      className="sw-br-bc-back-btn"
+      onClick={() => window.history.back()}
+      aria-label="Go back"
+    >
+      ←
+    </button>
+
+    <span className="sw-br-bc-title">
+      Building & Construction Raw Materials
+    </span>
+  </div>
+
+  <span className="sw-br-bc-subtitle">
+    {services.length} services available
+  </span>
+</div>
+
 
       {/* GRID */}
       <div className="sw-br-bc-grid">
