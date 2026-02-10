@@ -2188,6 +2188,7 @@
   font-size: 15px;
   font-weight: 800;
   cursor: pointer;
+  
 }
 
 .cancel-btn {
@@ -2509,8 +2510,11 @@
 /* ===== DOCTOR PROFILE SCREEN ===== */
 
 .doctor-profile-screen {
-  padding: 16px;
-  padding-bottom: 96px;
+
+   padding-top: 60px; 
+  overflow-y: auto;
+  height: 100vh;
+  
   /* space for fixed CTA */
 }
 
@@ -2797,7 +2801,8 @@
 
   overflow-y: auto;
   padding: 16px;
-  padding-bottom: 110px;
+  padding-top: 10px !important;
+  /* padding-bottom: 110px; */
   /* space for CTA */
 
   animation: slideIn 0.25s ease-out;
@@ -2859,12 +2864,21 @@
    ========================================= */
 
 /* ---------- Doctor Profile Header ---------- */
+
+
 .doctor-profile-header {
-  position: sticky;
+  position: fixed;   /* or sticky */
   top: 0;
-  background: #ffffff;
-  z-index: 10;
-  padding-bottom: 12px;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: #fff;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 16px;
+  border-bottom: 1px solid #eee;
 }
 
 .doctor-profile-header h2 {
@@ -2874,7 +2888,7 @@
 
 /* ---------- Doctor Profile Card ---------- */
 .doctor-profile-card {
-  margin-top: 10px;
+  margin-top: 40px !important;
 }
 
 .doctor-profile-card h2 {
@@ -2960,12 +2974,10 @@
 
 /* ---------- Book Appointment CTA (Doctor Profile ONLY) ---------- */
 .doctor-profile-screen .confirm-btn {
-  position: fixed;
   bottom: 14px;
   left: 14px;
   right: 14px;
   z-index: 50;
-
   background: linear-gradient(135deg, #2563eb, #1e40af);
   border-radius: 18px;
   font-size: 17px;
