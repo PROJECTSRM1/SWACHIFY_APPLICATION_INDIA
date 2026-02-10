@@ -1,0 +1,217 @@
+/* ===== SWACHIFY PRODUCTS - CLEAN GREEN THEME ===== */
+
+/* ================= GLOBAL BACK BUTTON ================= */
+.sw-products-global-back-btn {
+  position: fixed;
+  top: 85px;
+  left: 24px;
+  width: 44px;
+  height: 44px;
+  border: none;
+
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.sw-products-global-back-btn:hover {
+  transform: translateX(-4px);
+}
+
+.sw-products-global-back-btn svg {
+  font-size: 18px;
+}
+
+/* ================= DASHBOARD CONTAINER ================= */
+
+.sw-products-dashboard-container {
+  width: 100%;
+  min-height: 100vh;
+  padding: 80px 20px 60px;
+}
+
+/* ================= HEADER ================= */
+
+.sw-products-dashboard-header {
+  max-width: 1200px;
+  margin: 0 auto 50px;
+  text-align: center;
+}
+
+.sw-products-dashboard-header h2 {
+  margin: 0;
+  font-size: 49px;
+  font-weight: 700;
+
+  background: linear-gradient(135deg, #059669, #22c55e);
+
+  background-clip: text; /* standard property */
+  -webkit-background-clip: text; /* safari/chrome support */
+
+  color: transparent; /* fallback */
+  -webkit-text-fill-color: transparent;
+}
+.sw-products-dashboard-header p {
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+/* ================= GRID ================= */
+
+.sw-products-dashboard-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+/* ================= CARD ================= */
+
+.sw-products-dashboard-card {
+  height: 300px;
+  border-radius: 20px;
+  padding: 28px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  color: #ffffff;
+  overflow: hidden;
+}
+
+/* Card Gradients */
+
+.sw-products-dashboard-card:nth-child(1) {
+  background: linear-gradient(135deg, #10b981, #34d399);
+}
+
+.sw-products-dashboard-card:nth-child(2) {
+  background: linear-gradient(135deg, #14b8a6, #5eead4);
+}
+
+.sw-products-dashboard-card:nth-child(3) {
+  background: linear-gradient(135deg, #22c55e, #4ade80);
+}
+
+.sw-products-dashboard-card:nth-child(4) {
+  background: linear-gradient(135deg, #059669, #10b981);
+}
+
+.sw-products-dashboard-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(34, 197, 94, 0.3);
+}
+
+/* ================= ICON ================= */
+
+.sw-products-icon-box {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  width: 60px;
+  height: 60px;
+  background: #ffffff;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  color: #059669;
+  transition: 0.3s ease;
+}
+
+.sw-products-dashboard-card:hover .sw-products-icon-box {
+  transform: scale(1.1) rotate(-8deg);
+}
+
+/* ================= TEXT ================= */
+
+.sw-products-dashboard-card h3 {
+  margin: 0 0 8px 0;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.sw-products-dashboard-card p {
+  margin: 0 0 16px 0;
+  font-size: 15px;
+  color: black;
+}
+
+/* ================= TRANSPARENT BUTTON ================= */
+
+.sw-products-action-btn {
+  align-self: flex-start;
+  background: transparent;
+  color: #ffffff;
+  border: none; /* remove border */
+  outline: none; /* remove focus outline */
+  box-shadow: none;
+  padding: 6px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.sw-products-action-btn .arrow {
+  font-size: 22px; /* bigger */
+  font-weight: 800; /* bolder */
+  color: #ffffff;
+  margin-left: 4px;
+  margin-bottom: 3px;
+  transition:
+    transform 0.25s ease,
+    opacity 0.25s ease;
+}
+
+.sw-products-action-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.sw-products-action-btn:hover .arrow {
+  transform: translateX(4px);
+}
+
+/* ================= SUBPAGE ================= */
+
+.sw-products-fullscreen-page {
+  position: fixed;
+  inset: 0;
+  background: #ffffff;
+  z-index: 9999;
+  overflow-y: auto;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 1024px) {
+  .sw-products-dashboard-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .sw-products-dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sw-products-dashboard-card {
+    height: 260px;
+  }
+
+  .sw-products-dashboard-header h2 {
+    font-size: 30px;
+  }
+}

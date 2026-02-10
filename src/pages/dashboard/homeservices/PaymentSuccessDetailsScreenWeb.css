@@ -1,0 +1,206 @@
+/* ================= MODAL ================= */
+
+.ps_modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  display: grid;
+  place-items: center;
+  z-index: 1000;
+}
+
+.ps_modalCardWrapper {
+  width: 100%;
+  max-width: 960px;
+  max-height: 90vh;
+  background: #ffffff;
+  border-radius: 20px;
+  overflow-y: auto;
+}
+
+/* ================= PAGE ================= */
+
+.psw_page {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+}
+
+/* ================= HEADER ================= */
+
+.psw_header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.psw_headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.psw_successIcon {
+  color: #22c55e;
+  font-size: 26px;
+}
+
+.psw_header h1 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+  color: #111827;
+}
+
+.psw_closeBtn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: #111827;
+}
+
+/* ================= CONTENT ================= */
+
+.psw_content {
+  padding: 24px;
+}
+
+/* ================= TIMELINE ================= */
+
+.psw_timeline {
+  margin-bottom: 28px;
+}
+
+.psw_timelineItem {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.psw_dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #cbd5f5;
+  margin-top: 4px;
+}
+
+.psw_dot.active {
+  background: #22c55e;
+}
+
+.psw_timelineTitle {
+  margin: 0;
+  font-weight: 700;
+  color: #111827;
+}
+
+.psw_timelineSub {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+/* ================= GRID ================= */
+
+.psw_grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .psw_grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ================= CARD ================= */
+
+.psw_card {
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 20px;
+  background: #ffffff;
+}
+
+.psw_card h3 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-size: 16px;
+  font-weight: 800;
+  color: #111827;
+}
+
+/* ================= INFO ROW ================= */
+
+.psw_infoRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  color: #374151;
+}
+
+/* ================= PROFESSIONAL ================= */
+
+.psw_professional {
+  text-align: center;
+}
+
+.psw_professional img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 12px;
+}
+
+.psw_professional h4 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.psw_professional p {
+  margin-top: 6px;
+  color: #f59e0b;
+  font-weight: 700;
+}
+
+/* ================= ACTIONS ================= */
+
+.psw_actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 14px;
+}
+
+.psw_actions button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  background: #e5e7eb;
+  font-weight: 700;
+}
+
+.psw_actions button.primary {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.psw_actions button:hover {
+  filter: brightness(1.05);
+}

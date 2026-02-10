@@ -1,0 +1,306 @@
+/* ================= PAGE ================= */
+
+.vs_page {
+  min-height: 100vh;
+  background: #f8fafc;
+  color: #0f172a;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* ================= HEADER ================= */
+
+.vs_header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.vs_header h1 {
+  font-size: 18px;
+  font-weight: 800;
+  margin: 0;
+}
+
+.vs_header button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+/* ================= MAIN ================= */
+
+.vs_main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 20px 80px;
+}
+
+/* ================= VEHICLE TYPE ================= */
+
+.vs_typeRow {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.vs_typeBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 2px solid #e5e7eb;
+  background: #ffffff;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.vs_typeBtn svg {
+  font-size: 18px;
+}
+
+.vs_typeBtn:hover {
+  background: #f1f5f9;
+}
+
+.vs_typeBtn.active {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: #ffffff;
+}
+
+/* ================= BRAND / FUEL ================= */
+
+.vs_row {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.vs_row select {
+  flex: 1;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ================= GARAGES ================= */
+
+.vs_main h3 {
+  font-size: 16px;
+  font-weight: 800;
+  margin-bottom: 14px;
+}
+
+.vs_garageGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 18px;
+}
+
+.vs_garageCard {
+  background: #ffffff;
+  padding: 18px;
+  border-radius: 16px;
+  border: 1px solid #e5e7eb;
+  transition: all 0.2s ease;
+}
+
+.vs_garageCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(15, 23, 42, 0.08);
+}
+
+.vs_garageCard h4 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.vs_garageCard p {
+  margin: 6px 0;
+  font-size: 13px;
+  color: #64748b;
+}
+
+.vs_garageCard button {
+  margin-top: 10px;
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background: #2563eb;
+  color: #ffffff;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+/* ================= MODAL ================= */
+
+.vs_modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.vs_modalCard {
+  background: #ffffff;
+  width: 100%;
+  max-width: 540px;
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: 18px;
+  padding: 20px;
+  position: relative;
+}
+
+/* Close button */
+.vs_close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+/* ================= SERVICES ================= */
+
+.vs_checkRow {
+  display: grid;
+  grid-template-columns: 26px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.vs_checkRow:hover {
+  background: #f8fafc;
+}
+
+.vs_checkRow span {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.vs_checkRow strong {
+  font-size: 14px;
+}
+
+/* ================= DESCRIPTION ================= */
+
+.vs_modalCard textarea {
+  width: 100%;
+  min-height: 90px;
+  resize: vertical;
+  margin-top: 14px;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  font-size: 14px;
+}
+
+/* ================= EMPLOYEES ================= */
+
+.vs_empRow {
+  display: flex;
+  gap: 12px;
+  margin-top: 14px;
+  overflow-x: auto;
+}
+
+.vs_emp {
+  min-width: 90px;
+  background: #f1f5f9;
+  padding: 10px;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid transparent;
+  cursor: pointer;
+}
+
+.vs_emp img {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.vs_emp span {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  margin-top: 6px;
+}
+
+.vs_emp small {
+  font-size: 11px;
+  color: #64748b;
+}
+
+.vs_emp.active {
+  border-color: #2563eb;
+  background: rgba(37, 99, 235, 0.08);
+}
+
+/* ================= FOOTER ================= */
+
+.vs_footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  padding-top: 14px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.vs_footer strong {
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.vs_footer button {
+  padding: 12px 18px;
+  border-radius: 12px;
+  border: none;
+  background: #16a34a;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 640px) {
+  .vs_main {
+    padding-bottom: 120px;
+  }
+
+  .vs_footer {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+  }
+
+  .vs_footer button {
+    width: 100%;
+  }
+}

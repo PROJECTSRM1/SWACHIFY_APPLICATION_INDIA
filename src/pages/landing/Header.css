@@ -1,11 +1,11 @@
-
 .swl-hs-navbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding: 8px 12px;
-  background: #fff;
+
+  padding: 8px 28px;          /* ✅ single source of truth */
+  background:  #4da6ff;;
 
   position: fixed;
   top: 0;
@@ -13,13 +13,17 @@
   right: 0;
   z-index: 1000;
 
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
 .swl-hs-navbar-logo {
   display: flex;
   align-items: center;
   gap: 10px;
+  padding: 6px 10px;
+  border-radius: 10px;
+  background: #f8fafc; /* light gray card */
+    margin-left: 55px;
 }
 
 .swl-hs-logo-text {
@@ -62,6 +66,7 @@
   color: #fff;
   border-radius: 22px;
   font-weight: 600;
+    margin-right: 50px; 
 }
 
 .swl-hs-contact-btn.swl-signup-btn:hover {
@@ -82,7 +87,7 @@
   background: #fff;
   list-style: none;
   padding: 16px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.12);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.12);
 }
 
 .swl-mobile-menu li {
@@ -118,7 +123,7 @@
 
 .swl-hs-rf-classname .ant-modal-content {
   border-radius: 16px;
-  box-shadow: 0 25px 60px rgba(0,0,0,0.18);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.18);
 }
 
 
@@ -153,10 +158,10 @@
 .swl-hs-rf-classname .ant-input-password:focus-within,
 .swl-hs-rf-classname .ant-select-focused .ant-select-selector {
   border-color: var(--swl-gold);
-  box-shadow: 0 0 0 2px rgba(201,165,106,0.25);
+  box-shadow: 0 0 0 2px rgba(201, 165, 106, 0.25);
 }
 
-.swl-hs-rf-classname .ant-form-item-label > label {
+.swl-hs-rf-classname .ant-form-item-label>label {
   font-weight: 500;
   color: var(--swl-text-dark);
 }
@@ -207,7 +212,7 @@
 
 
 .swl-hs-rf-classname {
-  --auth-primary: #d2b06f;          
+  --auth-primary: #d2b06f;
   --auth-primary-hover: #c4a15f;
   --auth-text-dark: #1f2937;
   --auth-border: #e5e7eb;
@@ -216,9 +221,10 @@
   --auth-input-height: 56px;
   --auth-btn-height: 56px;
 }
+
 .swl-hs-rf-classname .ant-modal-content {
   border-radius: 22px;
-  box-shadow: 0 24px 60px rgba(0,0,0,0.18);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
 }
 
 .swl-hs-rf-classname .ant-modal-body {
@@ -250,7 +256,7 @@
   border-radius: 6px;
 }
 
-.swl-hs-rf-classname .ant-form-item-label > label {
+.swl-hs-rf-classname .ant-form-item-label>label {
   font-size: 15px;
   font-weight: 500;
   color: var(--auth-text-dark);
@@ -270,7 +276,7 @@
 .swl-hs-rf-classname .ant-input:focus,
 .swl-hs-rf-classname .ant-input-password:focus-within {
   border-color: var(--auth-primary);
-  box-shadow: 0 0 0 4px rgba(210,176,111,0.25);
+  box-shadow: 0 0 0 4px rgba(210, 176, 111, 0.25);
 }
 
 .swl-login-options-row {
@@ -330,8 +336,7 @@
 }
 
 
-.swl-hs-rf-classname
-.ant-tabs-tabpane:not(.ant-tabs-tabpane-active) {
+.swl-hs-rf-classname .ant-tabs-tabpane:not(.ant-tabs-tabpane-active) {
   overflow: auto;
 }
 
@@ -354,9 +359,7 @@
 }
 
 
-.swl-hs-rf-classname
-.ant-tabs-tabpane-active
-button[type="submit"] {
+.swl-hs-rf-classname .ant-tabs-tabpane-active button[type="submit"] {
   background-color: #d2b06f !important;
   border-color: #d2b06f !important;
   color: #ffffff !important;
@@ -370,17 +373,13 @@ button[type="submit"] {
 }
 
 
-.swl-hs-rf-classname
-.ant-tabs-tabpane-active
-button[type="submit"]:hover {
+.swl-hs-rf-classname .ant-tabs-tabpane-active button[type="submit"]:hover {
   background-color: #c4a15f !important;
   border-color: #c4a15f !important;
 }
 
 
-.swl-hs-rf-classname
-.ant-tabs-tabpane-active
-button[type="button"] {
+.swl-hs-rf-classname .ant-tabs-tabpane-active button[type="button"] {
   height: 56px;
   border-radius: 16px;
   font-size: 16px;
@@ -398,24 +397,21 @@ button[type="button"] {
    VENDOR & ADMIN BUTTON COLORS
    =============================== */
 
-.ant-modal
-.ant-tabs-tabpane-active
-button[type="submit"] {
-  background-color: #c4a15f!important;   /* 🔵 CHANGE COLOR HERE */
-  border-color: #c4a15f !important;
-  color: #ffffff !important;
-}
+/* .ant-modal .ant-tabs-tabpane-active button[type="submit"] {
+  /* background-color: #c4a15f !important; */
+  /* 🔵 CHANGE COLOR HERE */
+  /* border-color: #c4a15f !important; */
+  /* color: #ffffff !important; */
+/* } */ */
 
 /* Hover */
-.ant-modal
-.ant-tabs-tabpane-active
-button[type="submit"]:hover {
-  background-color:  #c4a15f !important;
-  border-color:  #c4a15f !important;
+.ant-modal .ant-tabs-tabpane-active button[type="submit"]:hover {
+  background-color: #c4a15f !important;
+  border-color: #c4a15f !important;
 }
 
 .ant-modal .ant-form a {
-  color:  #c4a15f !important;  
+  color: #c4a15f !important;
   font-weight: 600;
   cursor: pointer;
 }
@@ -439,6 +435,7 @@ button[type="submit"]:hover {
 .ant-tabs-tab:not(.ant-tabs-tab-active) .ant-tabs-tab-btn {
   color: #c4a15f !important;
 }
+
 .ant-tabs-ink-bar {
   background-color: #c4a15f !important;
 }
@@ -461,6 +458,7 @@ button[type="submit"]:hover {
   font-weight: 700;
   color: #1f2937;
 }
+
 /* ===============================
    AUTH INPUT ALIGNMENT FIX
 ================================ */
@@ -472,13 +470,15 @@ button[type="submit"]:hover {
 
 /* Fix Password wrapper alignment */
 .swl-hs-rf-classname .ant-input-password {
-  padding: 0 !important; /* remove uneven padding */
+  padding: 0 !important;
+  /* remove uneven padding */
 }
 
 /* Fix inner password input */
 .swl-hs-rf-classname .ant-input-password .ant-input {
   padding-left: 18px !important;
-  padding-right: 44px !important; /* space for eye icon */
+  padding-right: 44px !important;
+  /* space for eye icon */
   height: 56px;
 }
 
@@ -493,6 +493,7 @@ button[type="submit"]:hover {
   height: 56px;
   align-items: center;
 }
+
 /* ===============================
    FIX PASSWORD BLUE BACKGROUND
 ================================ */
@@ -502,7 +503,8 @@ button[type="submit"]:hover {
   height: 56px !important;
   border-radius: 16px !important;
   padding: 0 16px !important;
-  background-color: #eaf2ff !important; /* same as email */
+  background-color: #eaf2ff !important;
+  /* same as email */
   display: flex;
   align-items: center;
 }
@@ -631,18 +633,12 @@ button[type="submit"]:hover {
     max-width: none !important;
   }
 
-  /* Full control modal width */
-  .swl-hs-rf-classname.ant-modal {
-    width: 100vw !important;
-    max-width: 100vw !important;
-    left: 0 !important;
-    right: 0 !important;
-    top: 0 !important;
-  }
+
 
   /* Inner content fit */
   .swl-hs-rf-classname .ant-modal-content {
-    width: calc(100vw - 16px) !important; /* safe inset */
+    width: calc(100vw - 16px) !important;
+    /* safe inset */
     margin: 8px auto !important;
     border-radius: 12px !important;
   }
@@ -694,31 +690,30 @@ button[type="submit"]:hover {
     margin-bottom: 6px !important;
   }
 }
+
 /* =================================================
    FINAL FIX — TreeSelect MULTI auto height (SAFE)
 ================================================= */
 
 /* ONLY for multiple select */
 .swl-hs-rf-classname .ant-select-multiple .ant-select-selector {
-  min-height: 38px !important;   /* base input height */
-  height: auto !important;       /* 🔥 allow grow */
+  min-height: 38px !important;
+  /* base input height */
+  height: auto !important;
+  /* 🔥 allow grow */
   align-items: flex-start !important;
   padding-top: 6px !important;
   padding-bottom: 6px !important;
 }
 
 /* Chips wrap correctly */
-.swl-hs-rf-classname
-.ant-select-multiple
-.ant-select-selection-overflow {
+.swl-hs-rf-classname .ant-select-multiple .ant-select-selection-overflow {
   display: flex !important;
   flex-wrap: wrap !important;
 }
 
 /* Chip (tag) styling */
-.swl-hs-rf-classname
-.ant-select-multiple
-.ant-select-selection-item {
+.swl-hs-rf-classname .ant-select-multiple .ant-select-selection-item {
   height: 20px;
   line-height: 18px;
   font-size: 12px;
@@ -727,9 +722,611 @@ button[type="submit"]:hover {
 }
 
 /* Keep arrow vertically centered */
-.swl-hs-rf-classname
-.ant-select-multiple
-.ant-select-arrow {
+.swl-hs-rf-classname .ant-select-multiple .ant-select-arrow {
   top: 50%;
   transform: translateY(-50%);
+}
+
+.partner-form {
+  color: #ffffff;
+}
+
+.partner-form .ant-form-item-label>label {
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.partner-form input,
+.partner-form .ant-input-password,
+.partner-form .ant-select-selector {
+  background: #0b1220 !important;
+  border: none !important;
+  color: #ffffff !important;
+  border-radius: 14px;
+}
+
+.partner-form input::placeholder {
+  color: #94a3b8;
+}
+
+.partner-form .ant-select-arrow {
+  color: #ffffff;
+}
+
+.partner-title {
+  text-align: center;
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #ffffff;
+}
+
+.partner-register-btn {
+  background: #0b5cff;
+  height: 48px;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* =========================
+   Partner Registration Modal
+========================= */
+
+.partner-modal .ant-modal-content {
+  border-radius: 16px;
+  background: #ffffff;
+}
+
+.partner-modal .ant-modal-body {
+  padding: 20px;
+
+  /* ✅ control height */
+  overflow-y: auto;
+  /* ✅ enable scroll */
+}
+
+/* Reduce modal width feeling */
+.partner-modal {
+  max-width: 380px;
+}
+
+/* Mobile optimisation */
+@media (max-width: 480px) {
+  .partner-modal {
+    width: 92% !important;
+  }
+
+  .partner-modal .ant-modal-body {
+  
+    padding: 16px;
+  }
+}
+
+/* Smooth scrollbar */
+.partner-modal .ant-modal-body::-webkit-scrollbar {
+  width: 4px;
+}
+
+.partner-modal .ant-modal-body::-webkit-scrollbar-thumb {
+  background-color: #d0d0d0;
+  border-radius: 4px;
+}
+
+/* Title styling */
+.partner-modal h2 {
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+/* ===============================
+   FIX Select dropdown inside modal
+================================ */
+
+.partner-modal .ant-select-dropdown {
+  z-index: 1055;
+  /* above modal content */
+}
+
+/* Prevent modal clipping dropdown */
+
+
+/* Dropdown height control */
+.partner-modal .ant-select-dropdown {
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+/* Smooth dropdown scroll */
+.partner-modal .ant-select-dropdown::-webkit-scrollbar {
+  width: 4px;
+}
+
+.partner-modal .ant-select-dropdown::-webkit-scrollbar-thumb {
+  background: #cfcfcf;
+  border-radius: 4px;
+}
+
+
+/* =====================================================
+   MODERN AUTH UI – 2025 GEN-Z THEME (SINGLE FILE)
+   Works with your existing AntD + Header.tsx
+===================================================== */
+
+/* ---------- COLOR SYSTEM ---------- */
+:root {
+  --auth-gradient: linear-gradient(135deg, #14b8a6 0%, #0ea5e9 100%);
+  --auth-card-bg: rgba(255, 255, 255, 0.96);
+
+  --auth-primary: #14b8a6;
+  --auth-primary-hover: #0d9488;
+
+  --auth-text-dark: #0f172a;
+  --auth-text-muted: #64748b;
+
+  --auth-input-bg: #f8fafc;
+  --auth-border: #e2e8f0;
+
+  --auth-radius-lg: 26px;
+  --auth-radius-md: 16px;
+}
+
+/* ---------- FULL MODAL BACKGROUND ---------- */
+.swl-hs-rf-classname.ant-modal {
+  background: var(--auth-gradient);
+}
+
+/* ---------- CARD ---------- */
+.swl-hs-rf-classname .ant-modal-content {
+  background: var(--auth-card-bg);
+  border-radius: var(--auth-radius-lg);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.28);
+  overflow: hidden;
+}
+
+/* ---------- BODY SPACING ---------- */
+.swl-hs-rf-classname .ant-modal-body {
+  padding: 32px 34px;
+}
+
+/* ---------- HEADER ---------- */
+.auth-header {
+  text-align: center;
+  margin-bottom: 26px;
+}
+
+.auth-profile-icon {
+  font-size: 48px;
+  color: var(--auth-primary);
+  margin-bottom: 6px;
+}
+
+.auth-title {
+  font-size: 30px;
+  font-weight: 800;
+  color: var(--auth-text-dark);
+}
+
+/* ---------- TABS ---------- */
+.swl-hs-rf-classname .ant-tabs-nav {
+  margin-bottom: 28px;
+}
+
+.swl-hs-rf-classname .ant-tabs-tab {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--auth-text-muted);
+}
+
+.swl-hs-rf-classname .ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: var(--auth-primary) !important;
+}
+
+.swl-hs-rf-classname .ant-tabs-ink-bar {
+  height: 4px;
+  border-radius: 10px;
+  background: var(--auth-primary);
+}
+
+/* ---------- INPUTS ---------- */
+.swl-hs-rf-classname .ant-input,
+.swl-hs-rf-classname .ant-input-password,
+.swl-hs-rf-classname .ant-input-affix-wrapper {
+  height: 54px;
+  border-radius: var(--auth-radius-md);
+  background: var(--auth-input-bg);
+  border: 1px solid var(--auth-border);
+  font-size: 15px;
+  padding: 0 18px;
+}
+
+/* Password inner input */
+.swl-hs-rf-classname .ant-input-password input {
+  background: transparent !important;
+}
+
+/* Focus state */
+.swl-hs-rf-classname .ant-input:focus,
+.swl-hs-rf-classname .ant-input-affix-wrapper-focused {
+  border-color: var(--auth-primary);
+  box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.25);
+}
+
+/* Labels */
+.swl-hs-rf-classname .ant-form-item-label > label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--auth-text-dark);
+}
+
+/* ---------- PRIMARY BUTTON (KEY MODERN FEEL) ---------- */
+.swl-hs-rf-classname button[type="submit"] {
+  height: 56px;
+  border-radius: 999px;
+  font-size: 16px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #14b8a6, #0ea5e9);
+  border: none;
+  color: #ffffff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.swl-hs-rf-classname button[type="submit"]:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 28px rgba(14, 165, 233, 0.35);
+}
+
+/* ---------- SECONDARY BUTTON ---------- */
+.swl-hs-rf-classname .ant-btn-default {
+  height: 54px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+/* ---------- LINKS ---------- */
+.swl-hs-rf-classname a,
+.swl-forgot-password-text {
+  color: var(--auth-primary);
+  font-weight: 600;
+}
+
+.swl-hs-rf-classname a:hover,
+.swl-forgot-password-text:hover {
+  color: var(--auth-primary-hover);
+}
+
+/* ---------- FORM SPACING ---------- */
+.swl-hs-rf-classname .ant-form-item {
+  margin-bottom: 16px;
+}
+
+/* ---------- MOBILE OPTIMIZATION ---------- */
+@media (max-width: 480px) {
+  .swl-hs-rf-classname .ant-modal-body {
+    padding: 22px 18px;
+  }
+
+  .auth-title {
+    font-size: 24px;
+  }
+
+  .auth-profile-icon {
+    font-size: 38px;
+  }
+
+  .swl-hs-rf-classname .ant-input,
+  .swl-hs-rf-classname .ant-input-password,
+  .swl-hs-rf-classname .ant-input-affix-wrapper {
+    height: 48px;
+    font-size: 14px;
+  }
+
+  .swl-hs-rf-classname button[type="submit"] {
+    height: 48px;
+    font-size: 15px;
+  }
+}
+
+
+/* ===============================
+   REGISTER ILLUSTRATION HEADER
+================================ */
+
+.auth-illustration {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.auth-avatar {
+  width: 88px;
+  height: 88px;
+  margin: 0 auto 12px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #14b8a6, #0ea5e9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-avatar svg {
+  font-size: 42px;
+  color: #ffffff;
+}
+
+.auth-illustration h2 {
+  font-size: 26px;
+  font-weight: 800;
+  margin-bottom: 4px;
+  color: #0f172a;
+}
+
+.auth-illustration p {
+  font-size: 14px;
+  color: #64748b;
+}
+/* =====================================
+   COLOR OVERRIDE ONLY (NO UI DAMAGE)
+===================================== */
+
+/* Tabs text color */
+.swl-hs-rf-classname .ant-tabs-tab-btn,
+.swl-hs-rf-classname .ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: #14b8a6 !important;
+}
+
+/* Tabs underline */
+.swl-hs-rf-classname .ant-tabs-ink-bar {
+  background: linear-gradient(135deg, #14b8a6, #0ea5e9) !important;
+}
+
+/* Register / Login PRIMARY button */
+.swl-hs-rf-classname button[type="submit"] {
+  background: linear-gradient(135deg, #14b8a6, #0ea5e9) !important;
+  border: none !important;
+  color: #ffffff !important;
+}
+
+/* Hover SAME COLOR (no login color coming) */
+.swl-hs-rf-classname button[type="submit"]:hover,
+.swl-hs-rf-classname button[type="submit"]:focus {
+  background: linear-gradient(135deg, #14b8a6, #0ea5e9) !important;
+  border: none !important;
+  color: #ffffff !important;
+}
+
+/* Links (Forgot password, etc.) */
+.swl-hs-rf-classname a,
+.swl-forgot-password-text {
+  color: #14b8a6 !important;
+}
+
+.swl-hs-rf-classname a:hover,
+.swl-forgot-password-text:hover {
+  color: #0ea5e9 !important;
+}
+/* =========================================
+   🔥 FORCE OVERRIDE AUTH COLORS (FINAL)
+========================================= */
+
+/* Tabs text (Login / Register) */
+.swl-hs-rf-classname.ant-modal
+.ant-tabs-tab-active
+.ant-tabs-tab-btn {
+  color: #14b8a6 !important;
+}
+
+.swl-hs-rf-classname.ant-modal
+.ant-tabs-tab-btn {
+  color: #64748b !important;
+}
+
+/* Tabs underline */
+.swl-hs-rf-classname.ant-modal
+.ant-tabs-ink-bar {
+  background: linear-gradient(135deg, #14b8a6, #0ea5e9) !important;
+}
+
+/* PRIMARY buttons (Login / Register) */
+.swl-hs-rf-classname.ant-modal
+button[type="submit"] {
+  background: linear-gradient(135deg, #14b8a6, #0ea5e9) !important;
+  border: none !important;
+  color: #fff !important;
+}
+
+/* Hover SAME COLOR */
+.swl-hs-rf-classname.ant-modal
+button[type="submit"]:hover {
+  background: linear-gradient(135deg, #14b8a6, #0ea5e9) !important;
+  color: #fff !important;
+}
+
+/* Links (Forgot password / vendor / admin) */
+.swl-hs-rf-classname.ant-modal a,
+.swl-hs-rf-classname.ant-modal .swl-forgot-password-text {
+  color: #14b8a6 !important;
+}
+
+.swl-hs-rf-classname.ant-modal a:hover,
+.swl-hs-rf-classname.ant-modal .swl-forgot-password-text:hover {
+  color: #0ea5e9 !important;
+}
+/* =========================================
+   REMOVE SCROLL – REGISTER TAB ONLY
+========================================= */
+
+/* Register tab pane – allow full height */
+.swl-hs-rf-classname
+.ant-tabs-tabpane-active {
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+/* Modal body – stop forcing scroll */
+.swl-hs-rf-classname
+.ant-modal-body {
+  max-height: none !important;
+  overflow-y: visible !important;
+}
+/* ===============================
+   AUTH MODAL – PERFECT HEIGHT FIT
+================================ */
+
+.swl-hs-rf-classname.ant-modal {
+  max-width: 420px;
+}
+
+/* Body height control */
+.swl-hs-rf-classname .ant-modal-body {
+  padding: 20px 22px !important;
+}
+
+/* Reduce spacing between fields */
+.swl-hs-rf-classname .ant-form-item {
+  margin-bottom: 10px !important;
+}
+
+/* Inputs compact */
+.swl-hs-rf-classname .ant-input,
+.swl-hs-rf-classname .ant-input-password,
+.swl-hs-rf-classname .ant-input-affix-wrapper {
+  height: 42px !important;
+  border-radius: 12px !important;
+}
+
+/* Buttons */
+.swl-hs-rf-classname button {
+  height: 42px !important;
+  font-size: 14px !important;
+}
+
+/* Mobile FINAL SAFETY */
+@media (max-width: 480px) {
+  .swl-hs-rf-classname .ant-modal-body {
+    padding: 14px 14px !important;
+  }
+
+  .swl-hs-rf-classname .ant-form-item {
+    margin-bottom: 8px !important;
+  }
+}
+
+@media (max-width: 768px) {
+
+  /* Allow modal to scroll vertically */
+  .swl-hs-rf-classname.ant-modal {
+    top: 0 !important;
+    margin: 0 auto !important;
+  }
+
+  /* Enable scroll inside modal */
+  .swl-hs-rf-classname .ant-modal-body {
+    max-height: calc(100vh - 100px) !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Tabs pane must not block scroll */
+  .swl-hs-rf-classname .ant-tabs-tabpane-active {
+    overflow: visible !important;
+  }
+}
+/* 🔥 GLOBAL HORIZONTAL SCROLL KILL */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden !important;
+}
+
+/* Modal container */
+
+/* Modal content */
+.swl-hs-rf-classname .ant-modal-content {
+  max-width: 100%;
+  overflow-x: hidden !important;
+}
+
+/* Modal body – vertical ok, horizontal no */
+.swl-hs-rf-classname .ant-modal-body {
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+/* Tabs + forms safety */
+.swl-hs-rf-classname .ant-tabs,
+.swl-hs-rf-classname .ant-form {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+
+/* ===============================
+   PREMIUM HEADER LOOK
+================================ */
+
+.swl-hs-navbar {
+  background: lightskyblue;
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+
+/* Logo */
+.swl-logo-icon {
+  width: 44px;
+  height: 44px;
+   object-fit: contain;
+}
+
+.swl-logo-text-wrap {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.swl-logo-main {
+  font-size: 1.2rem;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  background: linear-gradient(135deg, #14b8a6, #0ea5e9);
+
+  background-clip: text;            /* ✅ standard */
+  -webkit-background-clip: text;    /* ✅ webkit */
+  -webkit-text-fill-color: transparent;
+}
+
+
+.swl-logo-sub {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #64748b;
+}
+
+/* Center menu */
+.swl-hs-navbar-menu .ant-menu-item {
+  font-size: 15px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.swl-hs-navbar-menu .ant-menu-item:hover {
+  color: #14b8a6;
+}
+
+/* Signup button – HERO CTA */
+.swl-signup-btn {
+  background: linear-gradient(135deg, #14b8a6, #0ea5e9);
+  border: none;
+  color: #fff;
+  padding: 0 22px;
+  height: 40px;
+  border-radius: 999px;
+  font-weight: 700;
+  box-shadow: 0 8px 20px rgba(14, 165, 233, 0.35);
+    margin-right: 12px;   
+}
+
+.swl-signup-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px rgba(14, 165, 233, 0.45);
 }

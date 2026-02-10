@@ -1,0 +1,190 @@
+/* PAGE */
+.cs_page {
+  min-height: 100vh;
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+/* HEADER */
+.cs_header {
+  display: grid;
+  grid-template-columns: 44px 1fr 44px;
+  align-items: center;
+  padding: 14px 20px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.cs_backBtn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+
+.cs_headerTitle {
+  margin: 0;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+/* MAIN */
+.cs_main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 20px 80px;
+}
+
+/* INTRO */
+.cs_intro h2 {
+  margin: 0 0 8px;
+  font-size: 28px;
+  font-weight: 900;
+}
+
+.cs_intro p {
+  margin: 0;
+  font-size: 16px;
+  color: #64748b;
+}
+
+/* GRID */
+.cs_grid {
+  margin-top: 28px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 18px;
+}
+
+/* CARD */
+.cs_card {
+  border: 2px solid #e5e7eb;
+  border-radius: 16px;
+  background: #ffffff;
+  padding: 18px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+
+  cursor: pointer;
+  text-align: left;
+
+  transition: border 0.2s ease, box-shadow 0.2s ease,
+    transform 0.15s ease;
+}
+
+.cs_card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+}
+
+.cs_cardActive {
+  border-color: #2563eb;
+  box-shadow: 0 14px 34px rgba(37, 99, 235, 0.25);
+}
+
+/* ICON */
+.cs_iconBox {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: #f1f5f9;
+  display: grid;
+  place-items: center;
+  color: #64748b;
+}
+
+.cs_iconBox.active {
+  background: rgba(37, 99, 235, 0.12);
+  color: #2563eb;
+}
+
+/* CARD BODY */
+.cs_cardBody h3 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.cs_cardBody p {
+  margin: 4px 0 0;
+  font-size: 14px;
+  color: #64748b;
+}
+
+/* PRICE */
+.cs_price {
+  margin-top: auto;
+  font-size: 15px;
+  font-weight: 900;
+  color: #2563eb;
+}
+
+.cs_price.quote {
+  color: #475569;
+  font-weight: 700;
+}
+
+/* CONTINUE BUTTON */
+.cs_continueWrapper {
+  margin-top: 36px;
+  display: flex;
+  justify-content: center;
+}
+
+.cs_continueBtn {
+  width: 100%;
+  max-width: 420px;
+  border: none;
+  cursor: pointer;
+
+  background: #2563eb;
+  color: #ffffff;
+
+  padding: 16px 18px;
+  font-size: 16px;
+  font-weight: 900;
+
+  border-radius: 14px;
+  box-shadow: 0 12px 28px rgba(37, 99, 235, 0.25);
+
+  transition: transform 0.1s ease, filter 0.15s ease;
+}
+
+.cs_continueBtn:hover {
+  filter: brightness(1.05);
+}
+
+.cs_continueBtn:active {
+  transform: scale(0.98);
+}
+
+/* MOBILE STICKY CTA */
+@media (max-width: 640px) {
+  .cs_main {
+    padding: 24px 16px 120px;
+  }
+
+  .cs_intro h2 {
+    font-size: 22px;
+  }
+
+  .cs_continueWrapper {
+    position: sticky;
+    bottom: 12px;
+    padding: 12px;
+    background: linear-gradient(
+      to top,
+      rgba(248, 250, 252, 0.98),
+      rgba(248, 250, 252, 0.6),
+      transparent
+    );
+  }
+
+  .cs_continueBtn {
+    max-width: none;
+  }
+}

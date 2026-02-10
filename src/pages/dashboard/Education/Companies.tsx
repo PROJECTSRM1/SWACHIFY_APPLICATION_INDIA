@@ -1,217 +1,240 @@
-import { useState } from "react";
-import { Button, Select } from "antd";
+import { useEffect, useMemo, useState } from "react";
 import "./Companies.css";
+import JobDetails from "./JobDetails";
 
-const { Option } = Select;
+/* =======================
+   Types
+======================= */
+
 
 type Company = {
   id: number;
   name: string;
   industry: string;
+  description: string;
   location: string;
-  size: "Small" | "Medium" | "Large";
-  jobs: number;
-  internships: number;
+  size: string;
+  status: "Active" | "Hiring Frozen";
 };
 
-const COMPANIES: Company[] = [
-  {
-    id: 1,
-    name: "Tech Innovators Pvt Ltd",
-    industry: "IT",
-    location: "Bangalore",
-    size: "Large",
-    jobs: 12,
-    internships: 5,
-  },
-  {
-    id: 2,
-    name: "Brand Masters Inc",
-    industry: "Marketing",
-    location: "Mumbai",
-    size: "Medium",
-    jobs: 6,
-    internships: 3,
-  },
-  {
-    id: 3,
-    name: "Analytics Hub",
-    industry: "Finance",
-    location: "Pune",
-    size: "Small",
-    jobs: 4,
-    internships: 6,
-  },
-  {
-    id: 4,
-    name: "Creative Studio",
-    industry: "Design",
-    location: "Hyderabad",
-    size: "Small",
-    jobs: 3,
-    internships: 4,
-  },
-  {
-    id: 5,
-    name: "Investment Solutions",
-    industry: "Finance",
-    location: "Delhi",
-    size: "Large",
-    jobs: 15,
-    internships: 7,
-  },
-  {
-    id: 6,
-    name: "Media House Publications",
-    industry: "Media",
-    location: "Madurai",
-    size: "Medium",
-    jobs: 8,
-    internships: 8,
-  },
+
+type ApiJobOpening = {
+  id: number;
+  job_id: number;
+  company_name: string;
+  company_address: string;
+  industry_id: number | null;
+  company_size_id: number | null;
+  role_description: string;
+  requirements: string;
+  is_active: boolean;
+};
+
+
+type Props = {
+  onBack: () => void;
+};
+
+/* =======================
+   Filters
+======================= */
+
+const INDUSTRIES = [
+  "All",
+  "Software Engineering",
+  "EdTech",
+  "Finance & Banking",
+  "Green Energy",
+  "Healthcare",
 ];
 
-type CompaniesProps = {
-  onBack?: () => void;
-};
+const LOCATIONS = ["All"];
+const SIZES = ["All", "50-200", "200-500", "500+", "1000+"];
 
-export default function Companies({ onBack }: CompaniesProps) {
+/* =======================
+   Component
+======================= */
 
-  const [showFilters, setShowFilters] = useState(false);
-  const [industry, setIndustry] = useState("all");
-  const [location, setLocation] = useState("all");
-  const [size, setSize] = useState("all");
-  const [sort, setSort] = useState<"relevance" | "jobs">("relevance");
+export default function Companies({ onBack }: Props) {
+  const [companies, setCompanies] = useState<Company[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const filteredCompanies = COMPANIES
-    .filter(c => (industry === "all" ? true : c.industry === industry))
-    .filter(c => (location === "all" ? true : c.location === location))
-    .filter(c => (size === "all" ? true : c.size === size))
-    .sort((a, b) => (sort === "jobs" ? b.jobs - a.jobs : 0));
+  const [tab, setTab] = useState<"all" | "active">("all");
+  const [industry, setIndustry] = useState("All");
+  const [location, setLocation] = useState("All");
+  const [size, setSize] = useState("All");
+ const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
+
+
+  /* =======================
+     Fetch Companies
+  ======================= */
+
+useEffect(() => {
+  const fetchJobs = async () => {
+    try {
+      const res = await fetch(
+        "https://swachify-india-be-1-mcrb.onrender.com/api/jobs/openings"
+      );
+      const data: ApiJobOpening[] = await res.json();
+
+      // 🔹 group jobs by company name
+      const companyMap = new Map<string, Company>();
+
+      data.forEach(job => {
+        if (!companyMap.has(job.company_name)) {
+          companyMap.set(job.company_name, {
+            id: job.id, // first job id as company id
+            name: job.company_name,
+            industry: job.industry_id
+              ? `Industry ${job.industry_id}`
+              : "Not Specified",
+            description:
+              "Explore job openings and internships at this company.",
+            location: job.company_address || "Location not specified",
+            size: job.company_size_id
+              ? `Size ${job.company_size_id}`
+              : "Not specified",
+            status: job.is_active ? "Active" : "Hiring Frozen",
+          });
+        }
+      });
+
+      setCompanies(Array.from(companyMap.values()));
+    } catch (err) {
+      console.error("Failed to fetch job openings", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchJobs();
+}, []);
+
+
+  /* =======================
+     Filtering Logic
+  ======================= */
+
+  const filteredCompanies = useMemo(() => {
+    return companies.filter(c => {
+      if (tab === "active" && c.status !== "Active") return false;
+      if (industry !== "All" && c.industry !== industry) return false;
+      if (location !== "All" && c.location !== location) return false;
+      if (size !== "All" && c.size !== size) return false;
+      return true;
+    });
+  }, [companies, tab, industry, location, size]);
+
+  /* =======================
+     Job Details View
+  ======================= */
+
+ if (selectedCompany) {
+  return (
+    <JobDetails
+      company={selectedCompany}
+      onBack={() => setSelectedCompany(null)}
+    />
+  );
+}
+
+
+  /* =======================
+     UI
+  ======================= */
 
   return (
-    <div className="page">
-      {/* HEADER */}
-      <div className="header">
-<div className="back" onClick={() => onBack?.()}>←</div>
-        <div className="title">Companies</div>
-        <Button
-          className="filter-btn"
-          onClick={() => setShowFilters(prev => !prev)}
-        >
-          Filters
-        </Button>
+     <div className="companies-wrapper">
+    <div className="companies-layout">
+      <div className="page-header">
+        <div className="header-left">
+          <button className="companies-back-btn" onClick={onBack}>
+            ←
+          </button>
+          <h2>Companies</h2>
+        </div>
       </div>
 
-      {/* FILTER PANEL */}
-      {showFilters && (
-        <div className="filter-panel">
-          <h3>Filter & Sort</h3>
+      <div className="tabs">
+        <button
+          className={`tab ${tab === "all" ? "active" : ""}`}
+          onClick={() => setTab("all")}
+        >
+          All Companies
+        </button>
+        <button
+          className={`tab ${tab === "active" ? "active" : ""}`}
+          onClick={() => setTab("active")}
+        >
+          Actively Hiring
+        </button>
+      </div>
 
-          <div className="filter-row">
-            <div>
-              <label>Industry</label>
-              <Select value={industry} onChange={setIndustry} style={{ width: "100%" }}>
-                <Option value="all">All Industries</Option>
-                <Option value="IT">IT</Option>
-                <Option value="Marketing">Marketing</Option>
-                <Option value="Finance">Finance</Option>
-                <Option value="Design">Design</Option>
-                <Option value="Media">Media</Option>
-              </Select>
+      <div className="filters">
+        <select value={industry} onChange={e => setIndustry(e.target.value)}>
+          {INDUSTRIES.map(i => (
+            <option key={i}>{i}</option>
+          ))}
+        </select>
+
+        <select value={location} onChange={e => setLocation(e.target.value)}>
+          {LOCATIONS.map(l => (
+            <option key={l}>{l}</option>
+          ))}
+        </select>
+
+        <select value={size} onChange={e => setSize(e.target.value)}>
+          {SIZES.map(s => (
+            <option key={s}>{s}</option>
+          ))}
+        </select>
+      </div>
+
+      {loading ? (
+        <div className="loading">Loading companies...</div>
+      ) : (
+        <div className="company-grid">
+          {filteredCompanies.map(company => (
+            <div key={company.id} className="company-card">
+              <div className="card-header">
+                <div className="avatar">{company.name[0]}</div>
+                <div>
+                  <h3>{company.name}</h3>
+                  <span className="industry">{company.industry}</span>
+                </div>
+              </div>
+
+              <p className="desc">{company.description}</p>
+
+              <div className="meta">
+                <span>📍 {company.location}</span>
+                <span>👥 {company.size}</span>
+              </div>
+
+              <div className="card-footer">
+                <span
+                  className={`company-status ${
+                    company.status === "Active" ? "active" : "frozen"
+                  }`}
+                >
+                  {company.status}
+                </span>
+
+                <button
+  type="button"
+  className="primary-btn"
+  onClick={() => setSelectedCompany(company)}
+>
+  View Opportunities
+</button>
+
+              </div>
             </div>
-
-            <div>
-              <label>Location</label>
-              <Select value={location} onChange={setLocation} style={{ width: "100%" }}>
-                <Option value="all">All Locations</Option>
-                <Option value="Bangalore">Bangalore</Option>
-                <Option value="Mumbai">Mumbai</Option>
-                <Option value="Pune">Pune</Option>
-                <Option value="Hyderabad">Hyderabad</Option>
-                <Option value="Delhi">Delhi</Option>
-                <Option value="Madurai">Madurai</Option>
-              </Select>
-            </div>
-
-            <div>
-              <label>Company Size</label>
-              <Select value={size} onChange={setSize} style={{ width: "100%" }}>
-                <Option value="all">All Sizes</Option>
-                <Option value="Small">Small (10–100 employees)</Option>
-                <Option value="Medium">Medium (100–500 employees)</Option>
-                <Option value="Large">Large (500+ employees)</Option>
-              </Select>
-            </div>
-          </div>
-
-          <div className="sort">
-            <Button
-              className={sort === "relevance" ? "sort-active" : ""}
-              onClick={() => setSort("relevance")}
-            >
-              Relevance
-            </Button>
-
-            <Button
-              className={sort === "jobs" ? "sort-active" : ""}
-              onClick={() => setSort("jobs")}
-            >
-              Most Opportunities
-            </Button>
-          </div>
-
-          <Button className="black-btn" onClick={() => setShowFilters(false)}>
-            Apply Filters
-          </Button>
+          ))}
         </div>
       )}
-
-      {/* COMPANY LIST */}
-      <div className="list">
-        {filteredCompanies.map(company => (
-          <div key={company.id} className="company-card">
-            <div className="company-top">
-              <div className="company-icon">🏢</div>
-
-              <div className="company-info">
-                <h3>{company.name}</h3>
-
-                <div className="company-size">
-                  {company.size}
-                </div>
-
-                <div className="company-meta">
-                  <div className="location">
-                    📍 <span>{company.location}</span>
-                  </div>
-                  <span className="pill">{company.industry}</span>
-                </div>
-
-                <p className="company-desc">
-                  Digital media company producing content across multiple platforms.
-                </p>
-              </div>
-            </div>
-
-            <div className="openings-box">
-              <div>
-                <span className="label">Job Openings</span>
-                <span className="count">{company.jobs}</span>
-              </div>
-
-              <div>
-                <span className="label">Internship Openings</span>
-                <span className="count">{company.internships}</span>
-              </div>
-            </div>
-
-            <Button className="cta-btn" block>
-              View Opportunities
-            </Button>
-          </div>
-        ))}
-      </div>
+    </div>
     </div>
   );
 }

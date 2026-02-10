@@ -1,0 +1,293 @@
+.sd-page {
+  max-width: 900px;
+  margin: auto;
+  padding: 32px;
+  background: transparent !important;
+}
+.sd-wrapper {
+  min-height: 100vh;
+  background: linear-gradient(
+    135deg,
+    #f3f4f8 0%,
+    #f3f4f8 42%,
+    #ffffff 42%,
+    #ffffff 100%
+  );
+  /* padding-top: 88px; */
+  padding-bottom: 80px;
+  overflow-x: hidden;
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont;
+}
+/* HEADER */
+.sd-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.sd-back {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  border: none;
+  background: #fff;
+  box-shadow: 0 4px 14px rgba(0,0,0,.08);
+  cursor: pointer;
+}
+
+.sd-menu {
+  margin-left: auto;
+  font-size: 20px;
+}
+
+/* PROFILE */
+.sd-profile-card {
+  background: #fff;
+  padding: 24px;
+  border-radius: 18px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  box-shadow: 0 12px 32px rgba(0,0,0,.08);
+}
+
+.sd-avatar {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.sd-profile-info h3 {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.sd-profile-info p {
+  color: #6b7280;
+}
+
+.sd-id {
+  display: inline-block;
+  margin-top: 6px;
+  background: #e0f2fe;
+  color: #0369a1;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+}
+
+/* INFO CARD */
+.sd-info-card {
+  background: #fff;
+  margin-top: 18px;
+  padding: 20px;
+  border-radius: 16px;
+}
+
+.sd-info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.sd-info-row:last-child {
+  border-bottom: none;
+}
+
+/* SECTION */
+.sd-section {
+  margin: 26px 0 12px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+/* DOCS */
+.sd-doc {
+  background: #fff;
+  padding: 14px;
+  border-radius: 14px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+/* SCHOLARSHIP */
+.sd-scholarship {
+  background: #e8f2ff;
+  padding: 20px;
+  border-radius: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+}
+
+/* FEES */
+.sd-fee {
+  background: #fff;
+  padding: 16px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 10px;
+}
+
+.sd-fee strong {
+  margin-left: auto;
+}
+
+.paid { border-left: 6px solid #22c55e; }
+.overdue { border-left: 6px solid #ef4444; }
+.upcoming { border-left: 6px solid #9ca3af; }
+
+/* Academic Progress */
+.sd-progress {
+  background: transparent;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.sd-progress > div {
+  background: #fff;
+  padding: 18px;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0,0,0,.06);
+}
+
+.sd-progress span {
+  display: block;
+  color: #6b7280;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.sd-progress strong {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+
+.sd-progress span {
+  color: #6b7280;
+}
+
+.blue {
+  color: #1677ff;
+}
+
+/* ACTIONS */
+.sd-primary {
+  margin-top: 24px;
+  width: 100%;
+  padding: 14px;
+  background: #1677ff;
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.sd-secondary {
+  margin-top: 12px;
+  width: 100%;
+  padding: 14px;
+  background: #fff;
+  border: 2px solid #1677ff;
+  color: #1677ff;
+  border-radius: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* 3-dot dropdown */
+.sd-dropdown {
+  position: absolute;
+  top: 32px;
+  right: 0;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 28px rgba(0,0,0,0.12);
+  min-width: 180px;
+  padding: 6px;
+  z-index: 20;
+}
+
+.sd-dropdown div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.sd-dropdown div:hover {
+  background: #f3f4f6;
+}
+
+.sd-dropdown .danger {
+  color: #ef4444;
+}
+/* Editable inputs */
+.sd-input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  margin-bottom: 10px;
+  outline: none;
+}
+
+.sd-input:focus {
+  border-color: #1677ff;
+  box-shadow: 0 0 0 2px rgba(22,119,255,0.15);
+}
+
+/* Save / Cancel buttons */
+.sd-edit-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.sd-save {
+  background: #1677ff;
+  color: #fff;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.sd-cancel {
+  background: #f3f4f6;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+
+/* RESPONSIVE */
+@media (max-width: 700px) {
+  .sd-profile-card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .sd-progress {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+}

@@ -1,0 +1,299 @@
+.epd-container {
+  background:
+    radial-gradient(
+      circle at top,
+      #eef2ff 0%,
+      #f1f5ff 35%,
+      #f8fafc 70%
+    );
+  min-height: 100vh;
+  padding-bottom: 40px;
+  font-family: Inter, system-ui, -apple-system;
+}
+
+/* ================= HEADER ================= */
+
+.epd-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 10px 16px;           /* ⬅ reduced height */
+  margin: 10px 14px;
+
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  border-radius: 12px;
+
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25);
+}
+
+.epd-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.epd-header h2 {
+  font-size: 16px;              /* ⬅ smaller */
+  margin: 0;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.epd-header p {
+  font-size: 12px;
+  color: #dbeafe;
+  margin-top: 2px;
+}
+
+.epd-header-icon {
+  width: 32px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #ffffff;
+}
+
+/* ================= STATS ================= */
+
+.epd-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* ⬅ side by side */
+  gap: 14px;
+  padding: 0 16px;
+  margin-top: 12px;
+}
+
+.epd-stat-card {
+  background: linear-gradient(180deg, #ffffff, #f8fafc);
+  border-radius: 16px;
+  padding: 14px;
+
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
+
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.epd-stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.18);
+}
+
+.epd-stat-left {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+
+.epd-stat-left {
+  display: flex;
+  align-items: flex-start;
+}
+
+/* 👇 THIS IS THE KEY FIX */
+.epd-stat-text {
+  margin-left: 250px;   /* ✅ moves circled content right */
+}
+
+
+.epd-stat-icon-wrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.epd-blue .epd-stat-icon-wrap {
+  background: linear-gradient(135deg, #e0edff, #eff6ff);
+  color: #2563eb;
+}
+
+.epd-orange .epd-stat-icon-wrap {
+  background: linear-gradient(135deg, #fff7ed, #ffedd5);
+  color: #f59e0b;
+}
+
+.epd-stat-text h3 {
+  font-size: 22px;
+  font-weight: 800;
+  margin: 0;
+  color: #020617;
+}
+
+.epd-stat-text p {
+  margin-top: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+}
+
+/* ================= SECTION HEADER ================= */
+
+.epd-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 16px 10px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  color: #334155;
+}
+
+.epd-section-header span:first-child {
+  position: relative;
+}
+
+
+/* STUDENTS BY BRANCH */
+.epd-section-header:nth-of-type(2) {
+  color: #5bec07;
+}
+
+.epd-section-header:nth-of-type(2) span:first-child::after {
+  background: linear-gradient(90deg, #2563eb, #60a5fa);
+}
+
+/* INTERNSHIP TRACKING */
+.epd-section-header:nth-of-type(3) {
+  color: hsl(19, 93%, 46%);
+}
+
+.epd-section-header:nth-of-type(3) span:first-child::after {
+  background: linear-gradient(90deg, #04f75d, #7aee0e);
+}
+
+/* ================= BRANCH ================= */
+
+.epd-branches {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  padding: 0 16px;
+}
+
+.epd-branch-card {
+  background: linear-gradient(180deg, #ffffff, #f8fafc);
+  border-radius: 18px;
+  padding: 14px;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+}
+
+.epd-branch-card span {
+  color: #475569;
+  font-weight: 700;
+}
+
+.epd-branch-card h3 {
+  font-size: 20px;
+  margin: 6px 0 10px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.epd-progress {
+  height: 7px;
+  background: #e5e7eb;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.epd-progress div {
+  height: 100%;
+  background: linear-gradient(90deg, #2563eb, #60a5fa);
+}
+
+/* ================= INTERNSHIP ================= */
+
+.epd-internship-card {
+  background: linear-gradient(135deg, #ffffff, #f8fafc);
+  margin: 12px 16px;
+  padding: 16px;
+  border-radius: 20px;
+  box-shadow: 0 12px 26px rgba(2, 6, 23, 0.1);
+}
+
+.epd-internship-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.epd-status {
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.epd-status.green {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.epd-status.blue {
+  background: #e0edff;
+  color: #1d4ed8;
+}
+
+/* ================= PARTNER CARD ================= */
+
+.epd-partner-card {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  margin: 16px;
+  padding: 18px;
+  border-radius: 22px;
+  color: #ffffff;
+  box-shadow: 0 18px 40px rgba(37, 99, 235, 0.4);
+}
+
+.epd-report-btn {
+  width: 100%;
+  background: #ffffff;
+  border: none;
+  color: #1e40af;
+  padding: 12px;
+  border-radius: 14px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 900px) {
+  .epd-branches {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .epd-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .epd-header h2 {
+    font-size: 15px;
+  }
+}  
+
+.epd-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 16px 10px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+}

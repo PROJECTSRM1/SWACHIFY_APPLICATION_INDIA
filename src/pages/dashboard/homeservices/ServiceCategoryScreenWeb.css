@@ -1,0 +1,200 @@
+/* ================= MODAL OVERLAY ================= */
+
+.sc_modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(8px);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 999;
+  animation: overlayFade 0.35s ease forwards;
+}
+
+@keyframes overlayFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ================= MODAL CARD ================= */
+
+.sc_modalCard {
+  width: min(92vw, 960px);
+  max-height: 90vh;
+
+  background: #ffffff;
+  border-radius: 22px;
+  box-shadow: 0 40px 120px rgba(0, 0, 0, 0.35);
+
+  overflow: hidden;
+
+  animation: modalEnter 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes modalEnter {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ================= PAGE ================= */
+
+.scw_page {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+}
+
+/* ================= HEADER ================= */
+
+.scw_header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 14px 18px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(8px);
+
+  border-bottom: 1px solid #e5e7eb;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+}
+
+.scw_header h1 {
+  font-size: 18px;
+  font-weight: 800;
+  margin: 0;
+  color: #111827;
+}
+
+.scw_iconBtn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #374151;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  transition: background 0.25s ease;
+}
+
+.scw_iconBtn:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+/* ================= CONTENT ================= */
+
+.scw_content {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.scw_content::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.scw_sectionTitle {
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  color: #111827;
+}
+
+/* ================= CARDS ================= */
+
+.scw_cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.scw_card {
+  background: #ffffff;
+  border-radius: 18px;
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
+  cursor: pointer;
+
+  display: flex;
+  flex-direction: column;
+
+  opacity: 0;
+  animation: cardFadeUp 0.5s ease forwards;
+
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+}
+
+.scw_card:nth-child(1) { animation-delay: 0.05s; }
+.scw_card:nth-child(2) { animation-delay: 0.15s; }
+.scw_card:nth-child(3) { animation-delay: 0.25s; }
+
+@keyframes cardFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.scw_card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+
+.scw_card div {
+  padding: 14px;
+}
+
+.scw_card h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 800;
+  color: #111827;
+}
+
+.scw_card p {
+  margin-top: 6px;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/* ================= INTERACTIONS ================= */
+
+.scw_card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 50px rgba(37, 99, 235, 0.25);
+  border-color: #2563eb;
+}
+
+.scw_card:active {
+  transform: scale(0.97);
+}

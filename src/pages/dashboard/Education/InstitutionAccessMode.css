@@ -1,0 +1,314 @@
+/* ================= PAGE ================= */
+
+.access-wrapper {
+  min-height: 100vh;
+  background: linear-gradient(
+    135deg,
+    #f3f4f8 0%,
+    #f3f4f8 45%,
+    #ffffff 45%,
+    #ffffff 100%
+  );
+  padding: 55px 24px;
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont;
+
+  overflow-y: hidden;
+  overflow-x: hidden;
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  margin-top: -81px;
+}
+
+/* Chrome / Safari / Edge */
+.access-wrapper::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+/* ================= PAGE ================= */
+
+.access-page {
+  background: transparent !important;
+}
+
+/* ================= CONTAINER ================= */
+
+.access-container {
+  max-width: 1040px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+/* ================= HEADER ================= */
+
+.access-header {
+  grid-column: span 2;
+  display: grid;
+  grid-template-columns: 40px 1fr 40px;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.access-header h2 {
+  text-align: center;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  margin-top: 50px;
+}
+
+.access-close {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* ================= TITLE ================= */
+
+.access-title {
+  grid-column: span 2;
+  text-align: center;
+  font-size: 38px;
+  font-weight: 800;
+  margin-top: -48px;
+}
+
+.access-subtitle {
+  grid-column: span 2;
+  text-align: center;
+  color: #6b7280;
+  font-size: 15px;
+  margin-bottom: -12px;
+  margin-top: -22px;
+}
+
+/* ================= CARD ================= */
+
+.access-card {
+  background: #ffffff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ================= CARD MEDIA ================= */
+
+.access-card-media {
+  height: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.student-bg {
+  background: linear-gradient(135deg, #0ea5e9, #22d3ee);
+}
+
+.management-bg {
+  background: linear-gradient(135deg, #6366f1, #818cf8);
+}
+
+.access-icon {
+  background: #ffffff;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+}
+
+/* ================= CARD BODY ================= */
+
+.access-card-body {
+  padding: 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.access-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.access-card-body h3 {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.access-card-body p {
+  font-size: 14.5px;
+  color: #6b7280;
+  line-height: 1.6;
+  margin: 12px 0 22px;
+}
+
+/* ================= BADGES ================= */
+
+.access-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.preview {
+  background: #e0f2fe;
+  color: #0284c7;
+}
+
+.admin {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+/* ================= BUTTON ================= */
+
+.access-btn {
+  margin-top: auto;
+  width: 100%;
+  padding: 14px;
+  border-radius: 14px;
+  border: none;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.access-btn.primary {
+  background: #1677ff;
+  color: #ffffff;
+}
+
+/* ================= FOOTER ================= */
+
+.access-footer {
+  grid-column: span 2;
+  text-align: center;
+}
+
+.access-link {
+  color: #1677ff;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.access-status {
+  margin-bottom: -62px;
+  font-size: 13px;
+  color: #16a34a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  background: #22c55e;
+  border-radius: 50%;
+}
+
+/* ================= MOBILE RESPONSIVE (ONLY CHANGES HERE) ================= */
+
+@media (max-width: 768px) {
+  .access-container {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .access-header,
+  .access-title,
+  .access-subtitle,
+  .access-footer {
+    grid-column: span 1;
+    margin-top: -75px;
+  }
+
+  .access-title {
+    font-size: 26px;
+    margin-top: 0;
+  }
+
+  .access-subtitle {
+    margin-top: 6px;
+    margin-bottom: 16px;
+  }
+
+  .access-card-media {
+    height: 110px;
+  }
+
+  .access-card-body {
+    padding: 20px;
+  }
+
+  .access-status {
+    margin-bottom: 0;
+    margin-top: 12px;
+  }
+}
+/* ================= MOBILE FIX – ALLOW SCROLL ================= */
+
+@media (max-width: 768px) {
+  .access-wrapper {
+    min-height: auto;      /* let content define height */
+    height: auto;
+    overflow-y: auto;      /* ✅ ENABLE SCROLL */
+    padding-bottom: 40px; /* space for footer */
+    margin-top: 0;
+  }
+}
+.access-card-media {
+  height: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  position: relative;
+}
+
+/* overlay */
+.access-card-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.35),
+    rgba(0, 0, 0, 0.15)
+  );
+}
+
+/* keep icon above */
+.access-icon {
+  position: relative;
+  z-index: 1;
+}
+
+/* gradients stay */
+.student-bg {
+  background-color: #0ea5e9;
+}
+
+.management-bg {
+  background-color: #6366f1;
+}

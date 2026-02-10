@@ -24,7 +24,7 @@ export interface CustomerRegisterPayload {
   work_type: number;
   service_ids: number[];
 
-  government_id: GovernmentId[];
+  government_id: GovernmentId;
 
   professional_details?: ProfessionalDetails;
 }
@@ -56,6 +56,15 @@ export interface LoginResponse {
 export interface RegisterResponse {
   message: string;
 }
+
+export type EmployeeOption = {
+  employee_id: number;
+  name: string;
+  address: string;
+  rating: number;
+};
+
+
 
 export const customerRegister = async (data: CustomerRegisterPayload) => {
   const res = await api.post<RegisterResponse>("api/auth/register", data);
@@ -126,7 +135,7 @@ export const customerLogout = async () => {
 export const PaymentsAPI = {
   
   createOrder: async (bookingId: number, amount: number) => {
-    const res = await api.post("api/v1/payments/create-order", {
+    const res = await api.post("/api/payment/create-order", {
       bookingId,
       amount,
     });
@@ -140,7 +149,7 @@ export const PaymentsAPI = {
     signature: string,
     home_service_id:number
   ) => {
-    const res = await api.post("api/v1/payments/verify-payment", {
+    const res = await api.post("/api/payment/verify-payment", {
       order_id: orderId,
       payment_id: paymentId,
       signature,
@@ -157,6 +166,34 @@ export const getLoggedInUserIdSafe = (): number | null => {
   if (!id) return null;
   return Number(id);
 };
+
+
+export type EmployeeOptionsResponse = EmployeeOption[];
+
+export const getAllOptions = async (booking_id: string) => {
+  const res = await api.get<EmployeeOptionsResponse>(
+    `/api/allocation/options/${booking_id}`
+  );
+  return res.data;
+};
+
+
+export const allocateEmployeeManually = async (
+  booking_id: number | string,
+  employee_id: number | string
+) => {
+  const res = await api.post(`/api/allocation/manual/${booking_id}/${employee_id}`);
+  return res.data; 
+};
+
+export const allocateAutoEmployee = async(
+  booking_id: number | string
+)=>{
+  const res = await api.post(`/api/allocation/auto/${booking_id}`)
+  return res.data;
+}
+
+
 
 
 

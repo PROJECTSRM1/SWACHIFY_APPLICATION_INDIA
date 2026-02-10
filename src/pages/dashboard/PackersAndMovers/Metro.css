@@ -1,0 +1,823 @@
+:root {
+  --bg: #f6f9f3;
+  /* light green page bg */
+  --surface: #ffffff;
+  --surface-alt: #eef5e8;
+  /* light green cards */
+
+  --primary: #8db33f;
+  /* main green */
+  --primary-dark: #7aa12f;
+  --primary-light: #e7f3d6;
+
+  --text-strong: #1f2937;
+  --text-medium: #4b5563;
+  --text-light: #6b7280;
+
+  --border: #dbe7c9;
+
+  --radius-lg: 18px;
+  --radius-md: 14px;
+
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+  --font: "Inter", sans-serif;
+}
+
+/* --------------------------------------------
+   GLOBAL PAGE
+-------------------------------------------- */
+.sw-jr-page {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--bg);
+  padding: 20px;
+}
+
+.sw-jr-center-box {
+  max-width: none;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+
+}
+
+
+
+/* --------------------------------------------
+   HEADER
+-------------------------------------------- */
+.sw-jr-header {
+  background: transparent;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.sw-jr-header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.sw-jr-icon-box {
+  width: 52px;
+  height: 52px;
+  background: var(--primary);
+  border-radius: var(--radius-md);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 26px;
+  color: white;
+  box-shadow: var(--shadow);
+}
+
+.sw-jr-title {
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--text-strong);
+}
+
+.sw-jr-location {
+  font-size: 12px;
+  color: var(--text-medium);
+  letter-spacing: 1px;
+}
+
+.sw-jr-history-btn {
+  width: 46px;
+  height: 46px;
+  background: var(--surface-alt);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: var(--text-medium);
+  transition: var(--transition);
+}
+
+.sw-jr-history-btn:hover {
+  background: var(--primary-light);
+}
+
+/* --------------------------------------------
+   BOOK TICKET CARD
+-------------------------------------------- */
+/* FULL-WIDTH SLIM BOOK CARD */
+.sw-jr-book-card {
+  width: 100%;
+  background: var(--primary);
+  color: white;
+
+  border-radius: 14px;
+  padding: 20px;
+
+  box-shadow: none;
+}
+
+.sw-jr-book-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(99, 102, 241, 0.35);
+}
+
+/* BOOK TITLE */
+.sw-jr-book-title {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/* SUBTITLE */
+.sw-jr-book-sub {
+  font-size: 13px;
+  margin-top: 4px;
+  opacity: 0.95;
+}
+
+/* ARROW RIGHT SIDE */
+.sw-jr-arrow {
+  position: absolute;
+  right: 28px;
+  font-size: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* --------------------------------------------
+   RECENT TICKETS (clean white theme)
+-------------------------------------------- */
+.sw-jr-section-title {
+  margin-top: 12px;
+  font-size: 14px;
+  letter-spacing: 2px;
+  color: var(--text-light);
+  font-weight: 600;
+}
+
+.sw-jr-ticket-card {
+  background: var(--surface-alt);
+  border-radius: 14px;
+  border: 1px solid var(--border);
+
+  padding: 16px;
+  margin-top: 12px;
+  box-shadow: none;
+}
+
+.sw-jr-ticket-place {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-strong);
+}
+
+.sw-jr-ticket-meta {
+  margin-top: 6px;
+  font-size: 14px;
+  color: var(--text-light);
+}
+
+/* --------------------------------------------
+   PLAN TRIP — INPUTS
+-------------------------------------------- */
+
+.sw-jr-back-btn {
+  margin-bottom: 1px;
+  font-size: 14px;
+  color: var(--primary);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.sw-jr-big-title {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--text-strong);
+  margin-bottom: 10px;
+}
+
+/* Single card */
+.sw-jr-input-card {
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px;
+}
+
+.sw-jr-input-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-light);
+  margin-bottom: 6px;
+}
+
+.sw-jr-input-box {
+  background: white;
+  border-radius: 12px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+}
+
+.sw-jr-input-box:hover {
+  border-color: var(--primary);
+}
+
+/* Swap */
+.sw-jr-swap-wrap {
+  text-align: center;
+  margin: 4px 0;
+}
+
+.sw-jr-swap-arrow {
+  font-size: 20px;
+  color: var(--primary);
+  line-height: 1;
+}
+
+/* --------------------------------------------
+   TRIP TABS
+-------------------------------------------- */
+
+.sw-jr-trip-tabs {
+  display: flex;
+  background: var(--surface-alt);
+  padding: 6px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  margin-top: 3px;
+}
+
+.sw-jr-trip-tab {
+  flex: 1;
+  padding: 12px 0;
+  text-align: center;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--text-light);
+  transition: var(--transition);
+}
+
+.sw-jr-trip-tab.active {
+  background: var(--primary);
+  color: white;
+  box-shadow: var(--shadow);
+}
+
+/* --------------------------------------------
+   FARE + PAY BUTTON
+-------------------------------------------- */
+.sw-jr-fare-box {
+  margin-top: 12px;
+  text-align: center;
+}
+
+.sw-jr-fare-label {
+  font-size: 14px;
+  color: var(--text-light);
+  margin-left: 90px;
+}
+
+.sw-jr-fare-amount {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-strong);
+  margin-left: 80px;
+}
+
+.sw-jr-pay-btn {
+  width: 100%;
+  background: var(--primary);
+  padding: 16px;
+  border-radius: 14px;
+
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+
+  box-shadow: none;
+}
+
+.sw-jr-pay-btn:hover {
+  background: var(--primary-dark);
+}
+
+.sw-jr-popup-box,
+.sw-jr-qr-card {
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* --------------------------------------------
+   STATION PICKER POPUP (WHITE THEME)
+-------------------------------------------- */
+
+
+
+
+
+
+
+
+.sw-jr-popup-station {
+  display: flex;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.sw-jr-popup-station:hover {
+  background: var(--primary-light);
+}
+
+
+.sw-jr-popup-metrohub {
+  width: 100%;
+  max-width: 520px;
+  /* ⭐ card width */
+
+  background: var(--surface-alt);
+  /* ⭐ green theme */
+  border: 1px solid var(--border);
+
+  border-radius: 18px;
+  /* ⭐ rounded */
+  padding: 18px;
+
+  max-height: 70vh;
+  /* scroll inside only */
+  overflow-y: auto;
+
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18);
+}
+
+/* --------------------------------------------
+   QR TICKET POPUP
+-------------------------------------------- */
+
+.sw-jr-ticket-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3000;
+}
+
+.sw-jr-qr-card {
+  background: white;
+  width: 90%;
+  max-width: 430px;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+/* Header */
+.sw-jr-qr-header {
+  background: var(--primary);
+  color: white;
+  padding: 18px 22px;
+  font-weight: 700;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Route */
+.sw-jr-qr-route {
+  background: var(--primary-light);
+  padding: 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* center vertically */
+  text-align: center;
+  /* cleaner look */
+}
+
+
+.sw-jr-qr-label {
+  color: var(--text-medium);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.sw-jr-qr-value {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text-strong);
+}
+
+.sw-jr-qr-arrow {
+  font-size: 22px;
+  color: var(--primary);
+  margin: 0 12px;
+}
+
+/* QR Box */
+.sw-jr-qr-whitebox {
+  padding: 30px 24px;
+  text-align: center;
+}
+
+.sw-jr-qr-img {
+  width: 190px;
+  height: 190px;
+  margin: auto;
+}
+
+/* Info */
+.sw-jr-qr-info {
+  text-align: center;
+  /* center text */
+  font-size: 14px;
+  color: var(--text-medium);
+  margin-top: 10px;
+  margin-bottom: 12px;
+}
+
+
+/* DONE BUTTON */
+.sw-jr-qr-done-btn {
+  width: 100%;
+  background: var(--primary);
+  padding: 16px 0;
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: center;
+  /* center the text */
+  border-radius: 0 0 24px 24px;
+}
+
+
+
+.sw-jr-popup-list {
+  max-height: none;
+  /* remove limit */
+  overflow: auto;
+  /* remove inner scrolling */
+  padding-right: 0;
+  flex: 1;
+}
+
+
+.sw-jr-popup-station {
+  padding: 14px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+
+.sw-jr-popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding: 6px 2px;
+}
+
+/* --------------------------------------------
+   Animations
+-------------------------------------------- */
+@keyframes slideUp {
+  from {
+    transform: translateY(60px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+
+/* WRAPPER WIDTH CONTROL */
+
+
+/* BOOK TICKET CARD – slim + full width */
+.sw-jr-book-card {
+  width: 100%;
+  color: white;
+
+  padding: 22px 26px;
+  /* 🔥 Reduced height */
+  border-radius: 22px;
+
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.25);
+  cursor: pointer;
+  transition: 0.25s ease;
+
+  margin-top: 10px;
+}
+
+.sw-jr-book-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(99, 102, 241, 0.35);
+}
+
+/* BOOK TEXT — reduced & clean */
+.sw-jr-book-title {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.sw-jr-book-sub {
+  font-size: 13px;
+  margin-top: 4px;
+  opacity: 0.95;
+}
+
+.sw-jr-arrow {
+  font-size: 22px;
+  /* smaller arrow */
+  margin-top: 10px;
+  text-align: right;
+}
+
+
+
+
+.sw-jr-popup-metrohub .sw-jr-page {
+  height: auto !important;
+  min-height: auto !important;
+  overflow: visible !important;
+  padding: 0;
+}
+
+.sw-jr-popup-fullscreen {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+
+
+/* FIX: WIDER POPUP + SCROLLBAR INSIDE + NO DOUBLE SCROLL */
+
+
+/* POPUP MAIN BOX – fixed height rectangle */
+.sw-jr-popup-box {
+  width: 100%;
+  max-width: 480px !important;
+  /* slightly wider for better layout */
+  background: #ffffff;
+  border-radius: 20px;
+  /* 🔥 Rectangle feel */
+  padding: 26px 28px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18);
+
+  max-height: 70vh !important;
+  /* ⭐ Fixed rectangle height */
+  overflow: hidden !important;
+  /* Prevent outer scroll */
+}
+
+/* SCROLLABLE LIST INSIDE POPUP */
+.sw-jr-popup-list {
+  max-height: 55vh !important;
+  /* fits inside rectangle perfectly */
+  overflow-y: scroll !important;
+  overflow-x: hidden;
+
+  /* ⭐ Invisible scrollbar */
+  scrollbar-width: none;
+}
+
+.sw-jr-popup-list::-webkit-scrollbar {
+  display: none;
+}
+
+.sw-jr-popup-overlay {
+  position: fixed;
+  inset: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(4px);
+
+  overflow: hidden;
+  /* ❌ remove scroll */
+  z-index: 2000;
+}
+
+/* MAIN POPUP BOX — RECTANGLE SHAPE */
+.sw-jr-popup-box {
+  width: 650px;
+  /* 🔥 wider */
+  max-width: 95vw;
+
+  height: 70vh;
+  /* 🔥 shorter */
+  max-height: 70vh;
+
+  background: #fff;
+  border-radius: 20px;
+  padding: 24px;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+  /* prevent outer scroll */
+}
+
+/* SCROLL AREA INSIDE POPUP */
+.sw-jr-popup-list {
+  max-height: 60vh !important;
+  overflow-y: auto !important;
+  scrollbar-width: none;
+}
+
+.sw-jr-popup-list::-webkit-scrollbar {
+  display: none;
+}
+
+/* VERY IMPORTANT FIX: REMOVE WIDTH LIMIT */
+.sw-jr-page,
+.sw-jr-center-box {
+  max-width: none !important;
+  width: 100%;
+  padding: 16px;
+}
+
+.sw-jr-center-box {
+  width: 100%;
+  max-width: 520px;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 12px;
+  margin: auto;
+  padding: 0;
+}
+
+.sw-jr-pay-btn {
+  width: 100%;
+  background: var(--primary);
+  padding: 16px;
+
+  display: flex;
+  /* 🔥 key */
+  align-items: center;
+  /* vertical center */
+  justify-content: center;
+  /* horizontal center */
+
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+
+  border-radius: 14px;
+  cursor: pointer;
+}
+
+/* RECENT TICKETS SCROLL AREA */
+.sw-jr-recent-scroll {
+  margin-top: 12px;
+  max-height: 260px;
+  /* 👈 controls visible area */
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+/* Optional clean scrollbar */
+.sw-jr-recent-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sw-jr-recent-scroll::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+@media (max-width: 480px) {
+  .sw-jr-center-box {
+    height: 100vh;
+    gap: 8px;
+    /* tighter spacing */
+  }
+
+  .sw-jr-big-title {
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+
+  .sw-jr-input-card {
+    padding: 10px;
+  }
+
+  .sw-jr-input-box {
+    padding: 10px 12px;
+  }
+
+  .sw-jr-swap-wrap {
+    margin: 4px 0;
+  }
+
+  .sw-jr-trip-tabs {
+    padding: 4px;
+  }
+
+  .sw-jr-trip-tab {
+    padding: 10px 0;
+    font-size: 13px;
+  }
+
+  .sw-jr-fare-box {
+    margin-top: 6px;
+  }
+
+  .sw-jr-fare-amount {
+    font-size: 22px;
+  }
+
+  .sw-jr-pay-btn {
+    padding: 14px;
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 900px) and (min-width: 481px) {
+
+  .sw-jr-center-box {
+    height: 100vh;
+    gap: 8px;
+    /* tighter than desktop */
+  }
+
+  .sw-jr-big-title {
+    font-size: 26px;
+    margin-bottom: 10px;
+  }
+
+  .sw-jr-input-card {
+    padding: 12px;
+  }
+
+  .sw-jr-input-box {
+    padding: 12px 14px;
+  }
+
+  .sw-jr-swap-wrap {
+    margin: 4px 0;
+  }
+
+  .sw-jr-trip-tabs {
+    padding: 4px;
+  }
+
+  .sw-jr-trip-tab {
+    padding: 10px 0;
+    font-size: 14px;
+  }
+
+  .sw-jr-fare-box {
+    margin-top: 6px;
+  }
+
+  .sw-jr-fare-amount {
+    font-size: 24px;
+  }
+
+  .sw-jr-pay-btn {
+    padding: 14px;
+    font-size: 15px;
+  }
+}
+
+.sw-jr-book-card {
+  position: relative;
+  /* needed for absolute arrow */
+}
+
+.sw-jr-arrow {
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  /* ✅ vertical center */
+  font-size: 22px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .sw-jr-book-card:hover .sw-jr-arrow {
+    color: #ffffff;
+    /* ✅ white on hover */
+  }
+}

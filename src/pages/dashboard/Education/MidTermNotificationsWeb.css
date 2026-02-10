@@ -1,0 +1,515 @@
+/* =========================================================
+   EXAM WEB – FULLY SCOPED STYLES
+   Root scope: .examw-scope
+   ========================================================= */
+
+/* ================= ROOT RESET ================= */
+.examw-scope {
+  box-sizing: border-box;
+  font-family: Inter, system-ui, sans-serif;
+  color: #0f172a;
+}
+
+.examw-scope *,
+.examw-scope *::before,
+.examw-scope *::after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+/* ================= PAGE ================= */
+.examw-scope.examw-page {
+  min-height: 100vh;
+  padding: 32px 20px 64px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  background: linear-gradient(
+    135deg,
+    #f3f4f8 0%,
+    #f3f4f8 42%,
+    #ffffff 42%,
+    #ffffff 100%
+  );
+
+  border-radius: 24px;
+}
+
+/* ================= HEADER ================= */
+.examw-scope .examw-header {
+  width: 100%;
+  max-width: 980px;
+
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  margin-bottom: 20px;
+}
+
+.examw-scope .examw-back-btn {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+
+  padding: 6px 14px;
+  border-radius: 10px;
+
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.examw-scope .examw-back-btn:hover {
+  background: #f1f5f9;
+}
+
+.examw-scope .examw-title {
+  font-size: 26px;
+  font-weight: 800;
+  text-align: center;
+  flex: 1;
+}
+
+/* ================= INFO BANNER ================= */
+.examw-scope .examw-info {
+  width: 100%;
+  max-width: 900px;
+
+  background: #eef2ff;
+  color: #1e3a8a;
+
+  border-radius: 16px;
+  padding: 14px 18px;
+
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 26px;
+}
+
+/* ================= CARD ================= */
+.examw-scope .examw-card {
+  width: 100%;
+  max-width: 900px;
+
+  background: #ffffff;
+  border-radius: 22px;
+  padding: 26px 28px;
+  margin-bottom: 28px;
+
+  border: 1px solid #e5e7eb;
+  box-shadow:
+    0 20px 40px rgba(15, 23, 42, 0.08),
+    0 4px 12px rgba(15, 23, 42, 0.05);
+}
+
+/* ================= DATE HEADER ================= */
+.examw-scope .examw-date-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  font-size: 14px;
+  font-weight: 800;
+  margin-bottom: 14px;
+}
+
+.examw-scope .examw-date-row span {
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 600;
+}
+
+/* ================= EXAM ROW ================= */
+.examw-scope .examw-exam {
+  display: grid;
+  grid-template-columns: 6px 1fr auto;
+  gap: 18px;
+
+  padding: 18px;
+  border-radius: 14px;
+  margin-top: 12px;
+
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.examw-scope .examw-exam:hover {
+  background: #f8fafc;
+}
+
+.examw-scope .examw-exam-bar {
+  width: 6px;
+  border-radius: 4px;
+  background: #2563eb;
+}
+
+.examw-scope .examw-exam strong {
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.examw-scope .examw-exam p {
+  font-size: 13px;
+  color: #64748b;
+  margin-top: 6px;
+}
+
+.examw-scope .examw-exam-location {
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+  align-self: center;
+}
+
+/* ================= ACTIONS ================= */
+.examw-scope .examw-actions {
+  width: 100%;
+  max-width: 900px;
+
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+
+  margin-top: 30px;
+}
+
+/* ================= BUTTONS ================= */
+.examw-scope .examw-btn {
+  padding: 14px 22px;
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+
+  background: #ffffff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.examw-scope .examw-btn:hover {
+  background: #f1f5f9;
+}
+
+.examw-scope .examw-btn-primary {
+  background: linear-gradient(135deg, #2563eb, #3b82f6);
+  color: #ffffff;
+  border: none;
+
+  box-shadow: 0 14px 30px rgba(37, 99, 235, 0.45);
+}
+
+.examw-scope .examw-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px rgba(37, 99, 235, 0.55);
+}
+
+/* ================= STAFF ================= */
+.examw-scope .examw-staff-card {
+  width: 100%;
+  max-width: 720px;
+
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 18px;
+
+  padding: 22px;
+  margin-bottom: 20px;
+
+  border-radius: 18px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+
+  box-shadow: 0 12px 26px rgba(15, 23, 42, 0.06);
+}
+
+.examw-scope .examw-staff-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #2563eb;
+  color: #ffffff;
+
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.examw-scope .examw-staff-card p {
+  font-size: 13px;
+  color: #64748b;
+  margin-top: 4px;
+}
+
+/* ================= FORMS ================= */
+.examw-scope .examw-label {
+  margin-top: 18px;
+  font-weight: 700;
+}
+
+.examw-scope .examw-select {
+  width: 100%;
+  max-width: 420px;
+  padding: 14px 16px;
+  margin-top: 12px;
+
+  border-radius: 14px;
+  border: 1px solid #cbd5f5;
+  background: #ffffff;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ================= RESPONSIVE ================= */
+
+/* ---- Laptops (≤1200px) ---- */
+@media (max-width: 1200px) {
+  .examw-scope .examw-card {
+    max-width: 820px;
+  }
+}
+
+/* ---- Tablets (≤992px) ---- */
+@media (max-width: 992px) {
+  .examw-scope .examw-title {
+    font-size: 22px;
+  }
+
+  .examw-scope .examw-card {
+    padding: 22px;
+  }
+}
+
+/* ---- Mobile (≤768px) ---- */
+@media (max-width: 768px) {
+  .examw-scope.examw-page {
+    padding: 24px 14px 48px;
+  }
+
+  .examw-scope .examw-card {
+    padding: 18px;
+  }
+
+  .examw-scope .examw-exam {
+    grid-template-columns: 6px 1fr;
+  }
+
+  .examw-scope .examw-exam-location {
+    margin-top: 6px;
+  }
+
+  .examw-scope .examw-actions {
+    flex-direction: column;
+  }
+
+  .examw-scope .examw-btn,
+  .examw-scope .examw-btn-primary {
+    width: 100%;
+  }
+}
+
+/* ---- Small Mobile (≤480px) ---- */
+@media (max-width: 480px) {
+  .examw-scope .examw-title {
+    font-size: 18px;
+  }
+}
+
+.examw-btn-primary {
+  margin-top: 24px;
+}
+
+.examw-card p {
+  margin-top: 6px;
+}
+
+
+
+/* ================= REMINDER CARD ================= */
+.examw-reminder-card {
+  width: 100%;
+  max-width: 900px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 22px;
+  margin-bottom: 20px;
+
+  border-radius: 18px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+}
+
+.examw-reminder-card p {
+  font-size: 13px;
+  color: #64748b;
+  margin-top: 6px;
+}
+
+.examw-delete {
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.examw-delete:hover {
+  color: #dc2626;
+}
+
+/* ================= ROW ================= */
+.examw-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+}
+
+
+/* ================= NOTIFICATION LOGS ================= */
+
+.examw-logs-wrapper {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.examw-log-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  padding: 18px 20px;
+  margin-bottom: 16px;
+
+  background: #0b1220;
+  color: #e5e7eb;
+
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+}
+
+/* ICON */
+.examw-log-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 18px;
+  font-weight: 900;
+}
+
+/* SUCCESS */
+.examw-log-icon.success {
+  background: rgba(34, 197, 94, 0.18);
+  color: #22c55e;
+}
+
+/* ERROR */
+.examw-log-icon.error {
+  background: rgba(239, 68, 68, 0.18);
+  color: #ef4444;
+}
+
+/* TEXT */
+.examw-log-text strong {
+  font-size: 15px;
+  font-weight: 700;
+  display: block;
+}
+
+.examw-log-text p {
+  font-size: 13px;
+  color: #94a3b8;
+  margin-top: 6px;
+}
+/* ================= STAFF ASSIGNMENTS ================= */
+
+.examw-staff-card {
+  width: 100%;
+  max-width: 720px;
+
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  padding: 22px 26px;
+  margin: 0 auto 22px;
+
+  background: #ffffff;
+  border-radius: 22px;
+
+  border: 1px solid #e5e7eb;
+  box-shadow:
+    0 18px 40px rgba(15, 23, 42, 0.08),
+    0 6px 16px rgba(15, 23, 42, 0.05);
+}
+
+/* AVATAR */
+.examw-staff-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+
+  background: linear-gradient(135deg, #2563eb, #3b82f6);
+  color: #ffffff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 18px;
+  font-weight: 800;
+}
+
+/* TEXT */
+.examw-staff-card strong {
+  font-size: 16px;
+  font-weight: 800;
+  display: block;
+}
+
+.examw-staff-card p {
+  font-size: 13px;
+  color: #64748b;
+  margin-top: 6px;
+}
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 768px) {
+  .examw-log-card {
+    padding: 16px;
+  }
+
+  .examw-staff-card {
+    padding: 18px;
+    gap: 16px;
+  }
+
+  .examw-staff-avatar {
+    width: 48px;
+    height: 48px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .examw-log-text strong {
+    font-size: 14px;
+  }
+
+  .examw-log-text p {
+    font-size: 12px;
+  }
+}

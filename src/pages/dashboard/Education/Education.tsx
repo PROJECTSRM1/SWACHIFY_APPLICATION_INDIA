@@ -1,160 +1,374 @@
 import React, { useState } from "react";
 import "./Education.css";
+import { useEffect } from "react";
 
 import Companies from "../Education/Companies";
 import Students from "../Education/Students";
-import JobsPage from "../Education/Jobs";
+import type { Student } from "../Education/Students";
 import Internship from "../Education/Internships";
+import CandidateProfile from "../Education/CandidateProfile";
+import TrainingPage from "./TrainingPage";
+import Institutions from "../Education/Institutions";
+import InstitutionAccessMode from "./InstitutionAccessMode";
+import { speak } from "../../../utils/constants/aiVoice";
+
+
+import InstitutionAuthModal from "../../dashboard/Education/InstitutionAuthModal";
+
+
+type Page =
+  | "home"
+  | "students"
+  | "internships"
+  | "companies"
+  | "training"
+  | "institution-login"   // access mode
+  | "institution-register"// registration form
+  | "candidateProfile";
 
 
 
-
-interface CardItem {
+type TrendingStudent = {
   id: number;
-  title: string;
-  description: string;
-  icon: string;
-  isDummy?: boolean;
-}
+  name: string;
+  program: string;
+  avatar: string;
+  academicScore: number;
+  rating: number;
+  status: "active" | "completed";
+  shift: string;
+};
 
-const cards: CardItem[] = [
+const studentsData: TrendingStudent[] = [
   {
-    id: 1,
-    title: "Students",
-    description: "Browse student profiles and connect with talented individuals",
-    icon: "🎓",
+    id: 2125,
+    name: "Ananya Rao",
+    program: "B.Tech AI & ML",
+    rating: 4.6,
+    status: "active",
+    academicScore: 91,
+    shift: "09:00 AM - 06:00 PM",
+    avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200",
   },
   {
-    id: 2,
-    title: "Jobs",
-    description: "Explore job opportunities and career openings",
-    icon: "💼",
+    id: 2140,
+    name: "Sneha Iyer",
+    program: "B.Tech Information Technology",
+    rating: 4.9,
+    status: "active",
+    academicScore: 97,
+    shift: "09:30 AM - 06:30 PM",
+    avatar: "https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=200",
   },
   {
-    id: 3,
-    title: "Internships",
-    description: "Find internship programs and gain experience",
-    icon: "👥",
+    id: 2045,
+    name: "Sarah Jenkins",
+    program: "B.Tech Computer Science",
+    rating: 4.8,
+    status: "active",
+    academicScore: 92,
+    shift: "10:00 AM - 07:00 PM",
+    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200",
   },
   {
-    id: 4,
-    title: "Companies",
-    description: "Discover companies and their opportunities",
-    icon: "🏢",
+    id: 2092,
+    name: "Emily Rodriguez",
+    program: "B.E. Information Tech",
+    rating: 4.9,
+    status: "active",
+    academicScore: 95,
+    shift: "10:00 AM - 07:00 PM",
+    avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200",
   },
   {
-    id: 5,
-    title: "Corporate Training",
-    description: "Professional training programs for skill development",
-    icon: "📦",
-    isDummy: true,
+    id: 2101,
+    name: "David Kim",
+    program: "B.S. Software Eng",
+    rating: 4.7,
+    status: "completed",
+    academicScore: 90,
+    shift: "10:00 AM - 07:00 PM",
+    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200",
   },
 ];
 
+const searchableItems = [
+  "Students",
+  "Internships",
+  "Companies",
+  "Training",
+  "Google Internship",
+  "Harvard University",
+];
+
 const Education: React.FC = () => {
-  const [showAll, setShowAll] = useState(false);
+  const [page, setPage] = useState<Page>("home");
+  const [query, setQuery] = useState("");
+  const [searched, setSearched] = useState(false);
+  const [selectedStudent, setSelectedStudent] =
+    useState<Student | null>(null);
+  const [showAllTrending, setShowAllTrending] = useState(false);
+  const [showInstitutionPortal, setShowInstitutionPortal] = useState(false);
+useEffect(() => {
+  speak("Welcome to Education. Explore students, internships, companies and training programs.");
+}, []);
+useEffect(() => {
+  switch (page) {
+    case "students":
+      speak("Welcome to Students section. Discover top performing students.");
+      break;
+
+    case "internships":
+      speak("Welcome to Internships. Find opportunities that shape your career.");
+      break;
+
+    case "companies":
+      speak("Welcome to Companies. Explore hiring organizations.");
+      break;
+
+    case "training":
+      speak("Welcome to Training programs. Upskill yourself with the best courses.");
+      break;
+
+    case "institution-login":
+      speak("Welcome to Institution access portal.");
+      break;
+
+    case "institution-register":
+      speak("Institution registration page. Please fill in the details.");
+      break;
+
+    default:
+      break;
+  }
+}, [page]);
+
+
+
+  const trendingStudents = studentsData
+    .filter((s) => s.academicScore > 80)
+    .sort((a, b) => b.academicScore - a.academicScore);
+
+  const filteredResults = searchableItems.filter((item) =>
+    item.toLowerCase().includes(query.toLowerCase())
+  );
+
+  if (page !== "home") {
+    return (
+      <div className="edu-fullscreen-page">
   
-  const [page, setPage] = useState<"education" | "companies">("education");
 
-const [activeCard, setActiveCard] = useState<
-  "companies" | "students" | "jobs" | "internships" | null
->(null);
+        {page === "students" && (
+          <Students
+            onBack={() => setPage("home")}
+            onSelectStudent={(student) => {
+              setSelectedStudent(student);
+              setPage("candidateProfile");
+            }}
+          />
+        )}
+
+        {page === "candidateProfile" && selectedStudent && (
+          <CandidateProfile
+            student={selectedStudent}
+            onBack={() => setPage("students")}
+          />
+        )}
+
+        {page === "internships" && (
+          <Internship onBack={() => setPage("home")} />
+        )}
+
+        {page === "companies" && (
+          <Companies onBack={() => setPage("home")} />
+        )}
+
+        {page === "training" && (
+          <TrainingPage onBack={() => setPage("home")} />
+          
+        )}
+   {page === "institution-login" && (
+  <InstitutionAccessMode onClose={() => setPage("home")} />
+)}
+
+{page === "institution-register" && (
+  <Institutions onBack={() => setPage("home")} />
+)}
 
 
+      </div>
+    );
+  }
 
+  return (
+    <div className="edu-wrapper">
+      {/* FEATURED */}
+      <div className="edu-featured">
+        <img
+          src="https://images.unsplash.com/photo-1562774053-701939374585?w=1400"
+          alt="featured"
+        />
 
-const handleBack = () => {
-  setPage("education");
-  setActiveCard(null);
-};
-
-
-return (
-  <>
-    {page === "education" && (
-      <div className="education-container">
-        {/* HEADER */}
-        <div className="education-header">
-          <div>
-            <h2>Education</h2>
-            <p>5 services available</p>
-          </div>
-
-          <button
-            className="view-all-btn"
-            onClick={() => setShowAll(prev => !prev)}
-          >
-            {showAll ? "Show Less" : "View All Services"}
-          </button>
-        </div>
-
-        {/* CARDS */}
-        <div className="education-grid">
-          {cards
-            .filter(card => showAll || !card.isDummy)
-            .map(card => (
-              <div className="education-card" key={card.id}>
-                <div className="icon-box">{card.icon}</div>
-                <h3>{card.title}</h3>
-                <p>{card.description}</p>
-
+        <div className="edu-blue-overlay" />
+        {/* 🔙 BACK BUTTON */}
 <button
-  className="details-btn"
-  onClick={() => {
-    if (card.title === "Students") {
-      setActiveCard("students");
-      setPage("companies");
-    }
-
-    if (card.title === "Companies") {
-      setActiveCard("companies");
-      setPage("companies");
-    }
-
-    if (card.title === "Jobs") {
-      setActiveCard("jobs");
-      setPage("companies");
-    }
-
-    if (card.title === "Internships") {
-      setActiveCard("internships");
-      setPage("companies");
-    }
-  }}
+  className="edu-hero-back"
+  onClick={() => window.history.back()}
 >
-  View Details
+  ← Back
 </button>
 
 
+        <div className="edu-featured-content">
+          <div className="edu-featured-left">
+            <span className="edu-tag">FEATURED</span>
+            <h2>Top University of the Week</h2>
+            <p>Discover the latest computer science programs...</p>
+
+            <button className="edu-view-details-btn">
+              View Details →
+            </button>
+          </div>
+
+          <div className="edu-featured-search-wrapper">
+            <div className="edu-featured-search">
+              <input
+                placeholder="Search colleges, jobs..."
+                value={query}
+                onChange={(e) => {
+                  setQuery(e.target.value);
+                  setSearched(false);
+                }}
+              />
+              <button onClick={() => query && setSearched(true)}>
+                🔍
+              </button>
+            </div>
+   
+
+
+            {searched && (
+              <div className="edu-search-result">
+                {filteredResults.length ? (
+                  <span>
+                    Found: <b>{filteredResults.join(", ")}</b>
+                  </span>
+                ) : (
+                  <span className="edu-not-found">Not available</span>
+                )}
               </div>
-            ))}
+            )}
+          </div>
         </div>
       </div>
-    )}
 
-{page === "companies" && (
-  <div className="fullscreen-page">
-    {activeCard === "companies" && (
-      <Companies onBack={handleBack} />
-    )}
+      {/* CATEGORIES */}
+      <div className="edu-section">
+        <h3 className="edu-section-title">Explore Categories</h3>
 
-    {activeCard === "students" && (
-      <Students onBack={handleBack} />
-    )}
-
-    {activeCard === "jobs" && (
-      <JobsPage onBack={handleBack} />
-    )}
-
-    {activeCard === "internships" && (
-      <Internship onBack={handleBack} />
-    )}
+      <div className="edu-category-grid">
+  <div onClick={() => setPage("students")}>
+    <span className="edu-blue">🎓</span>
+    <p>Students</p>
   </div>
+
+  <div onClick={() => setPage("internships")}>
+    <span className="edu-purple">💼</span>
+    <p>Internships</p>
+  </div>
+
+  <div onClick={() => setPage("companies")}>
+    <span className="edu-orange">🏢</span>
+    <p>Companies</p>
+  </div>
+
+  <div onClick={() => setPage("training")}>
+    <span className="edu-green">🧭</span>
+    <p>Training</p>
+  </div>
+
+  {/* ✅ NEW */}
+  <div onClick={() => setShowInstitutionPortal(true)}>
+  <span className="edu-red">🏫</span>
+  <p>Institutions</p>
+</div>
+
+</div>
+
+      </div>
+
+      {/* TRENDING */}
+      <div className="edu-section">
+        <div className="edu-trending-header">
+          <h3 className="edu-trending-title">Trending Now</h3>
+
+          <button
+            className="edu-view-all-btn"
+            onClick={() => setShowAllTrending(!showAllTrending)}
+          >
+            {showAllTrending ? "Show Less" : "View All"}
+          </button>
+        </div>
+
+        <div className="edu-trending-list">
+          {(showAllTrending
+            ? trendingStudents
+            : trendingStudents.slice(0, 4)
+          ).map((student) => (
+            <div key={student.id} className="edu-trending-row-card">
+              <img
+                src={student.avatar}
+                alt={student.name}
+                className="edu-trending-avatar"
+              />
+
+              <div className="edu-trending-info">
+                <h4>{student.name}</h4>
+                <p className="edu-program">{student.program}</p>
+                <p className="edu-score">
+                  {student.academicScore}% Academic Score
+                </p>
+
+                <div className="edu-trending-footer">
+                  <div className="edu-rating">
+                    <span className="edu-star">⭐</span>
+                    <span>{student.rating}</span>
+                  </div>
+                </div>
+
+                <span
+                  className={`edu-status ${student.status}`}
+                >
+                  {student.status.toUpperCase()}
+                </span>
+
+                <p className="edu-shift">{student.shift}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+   {showInstitutionPortal && (
+  <InstitutionAuthModal
+    onClose={() => setShowInstitutionPortal(false)}
+
+    // ✅ LOGIN → Access Mode
+    onLoginSuccess={() => {
+      setShowInstitutionPortal(false);
+      setPage("institution-login");
+    }}
+
+    // ✅ REGISTER → Registration Form (THIS FORM)
+    onRegister={() => {
+      setShowInstitutionPortal(false);
+      setPage("institution-register");
+    }}
+  />
 )}
 
-  </>
-);
 
+      </div>
+    </div>
+  );
 };
 
 export default Education;

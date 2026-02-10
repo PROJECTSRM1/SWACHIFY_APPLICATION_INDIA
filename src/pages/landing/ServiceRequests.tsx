@@ -60,14 +60,14 @@ export default function ServiceRequest() {
   const navigate = useNavigate();
   const [expandedCards, setExpandedCards] = useState<Record<number, boolean>>({});
   const toggleExpand = (id: number) => {
-  setExpandedCards((prev) => ({
-    ...prev,
-    [id]: !prev[id],
-  }));
-};
+    setExpandedCards((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
 
 
-  
+
 
 
   useEffect(() => {
@@ -75,24 +75,24 @@ export default function ServiceRequest() {
       try {
         setLoading(true);
         const res = await fetch(
-          "https://swachify-india-be-1-mcrb.onrender.com/api/home-service"
+          "https://swachify-india-be-1-mcrb.onrender.com/api/master/home-service"
         );
         const data = await res.json();
         const mapped: Request[] = Array.isArray(data)
           ? data.map((item: any, index: number) => ({
-              id: item.id ?? index,
-              name: item.full_name ?? "Customer",
-              title: "Cleaning Request",
-              desc: `Property size: ${item.property_size_sqft} sqft`,
-              category: "Cleaning",
-              urgency: "medium",
-              distanceKm: 2.5,
-              place: item.address ?? "Nearby",
-              timeAgo: new Date(item.preferred_date).toLocaleDateString(),
-              price: "Price on visit",
-              rating: 4.5,
-              urgentFlag: false,
-            }))
+            id: item.id ?? index,
+            name: item.full_name ?? "Customer",
+            title: "Cleaning Request",
+            desc: `Property size: ${item.property_size_sqft} sqft`,
+            category: "Cleaning",
+            urgency: "medium",
+            distanceKm: 2.5,
+            place: item.address ?? "Nearby",
+            timeAgo: new Date(item.preferred_date).toLocaleDateString(),
+            price: "Price on visit",
+            rating: 4.5,
+            urgentFlag: false,
+          }))
           : [];
 
         setRequests(mapped);
@@ -233,65 +233,64 @@ export default function ServiceRequest() {
                   <Col key={r.id} xs={24} sm={12} md={8} lg={7}>
                     <Card className="sw-fr-sr-card" bordered={false}>
 
-  {/* HEADER */}
-  <div className="sw-fr-sr-card-header">
-    <Space size="small">
-      {r.urgentFlag && <Tag className="sw-fr-sr-urgent">🔥 Urgent</Tag>}
-      <Tag className="sw-fr-sr-distance">{r.distanceKm} km</Tag>
-    </Space>
-  </div>
+                      {/* HEADER */}
+                      <div className="sw-fr-sr-card-header">
+                        <Space size="small">
+                          {r.urgentFlag && <Tag className="sw-fr-sr-urgent">🔥 Urgent</Tag>}
+                          <Tag className="sw-fr-sr-distance">{r.distanceKm} km</Tag>
+                        </Space>
+                      </div>
 
-  {/* CONTENT (THIS MUST GROW) */}
-  <div className="sw-fr-sr-card-content">
-    <h3 className="sw-fr-sr-card-title">{r.title}</h3>
+                      {/* CONTENT (THIS MUST GROW) */}
+                      <div className="sw-fr-sr-card-content">
+                        <h3 className="sw-fr-sr-card-title">{r.title}</h3>
 
-    <div className="sw-fr-sr-line">👤 {r.name}</div>
+                        <div className="sw-fr-sr-line">👤 {r.name}</div>
 
-    <div className="sw-fr-sr-line">
-      Property size: {r.desc.replace("Property size: ", "")}
-    </div>
+                        <div className="sw-fr-sr-line">
+                          Property size: {r.desc.replace("Property size: ", "")}
+                        </div>
 
-    <div className="sw-fr-sr-line">
-      <EnvironmentOutlined />
-      <span
-        className={`sw-fr-sr-address ${
-          expandedCards[r.id] ? "expanded" : ""
-        }`}
-      >
-        {r.place}
-      </span>
-    </div>
+                        <div className="sw-fr-sr-line">
+                          <EnvironmentOutlined />
+                          <span
+                            className={`sw-fr-sr-address ${expandedCards[r.id] ? "expanded" : ""
+                              }`}
+                          >
+                            {r.place}
+                          </span>
+                        </div>
 
-    {r.place.length > 60 && (
-      <span
-        className="sw-fr-sr-view-more"
-        onClick={() => toggleExpand(r.id)}
-      >
-        {expandedCards[r.id] ? "View less" : "View more"}
-      </span>
-    )}
+                        {r.place.length > 60 && (
+                          <span
+                            className="sw-fr-sr-view-more"
+                            onClick={() => toggleExpand(r.id)}
+                          >
+                            {expandedCards[r.id] ? "View less" : "View more"}
+                          </span>
+                        )}
 
-    <div className="sw-fr-sr-line">
-      <ClockCircleOutlined /> {r.timeAgo}
-    </div>
+                        <div className="sw-fr-sr-line">
+                          <ClockCircleOutlined /> {r.timeAgo}
+                        </div>
 
-    <div className="sw-fr-sr-rating-row">
-      <Rate disabled value={Math.round(r.rating)} />
-      <span>{r.rating.toFixed(1)}</span>
-    </div>
-  </div>
+                        <div className="sw-fr-sr-rating-row">
+                          <Rate disabled value={Math.round(r.rating)} />
+                          <span>{r.rating.toFixed(1)}</span>
+                        </div>
+                      </div>
 
-  {/* FOOTER (MUST STAY AT BOTTOM) */}
-  <div className="sw-fr-sr-card-footer">
-    <div className="sw-fr-sr-price">$ {r.price}</div>
+                      {/* FOOTER (MUST STAY AT BOTTOM) */}
+                      <div className="sw-fr-sr-card-footer">
+                        <div className="sw-fr-sr-price">$ {r.price}</div>
 
-    <div className="sw-fr-sr-actions">
-      <Button className="sw-fr-sr-accept">Accept</Button>
-      <Button className="sw-fr-sr-details">Details</Button>
-    </div>
-  </div>
+                        <div className="sw-fr-sr-actions">
+                          <Button className="sw-fr-sr-accept">Accept</Button>
+                          <Button className="sw-fr-sr-details">Details</Button>
+                        </div>
+                      </div>
 
-</Card>
+                    </Card>
 
                   </Col>
                 ))}

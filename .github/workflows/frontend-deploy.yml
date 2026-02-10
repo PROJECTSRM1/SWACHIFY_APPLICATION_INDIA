@@ -7,32 +7,50 @@ on:
 
 jobs:
   deploy:
+    name: Deploy Swachify Frontend (DEV)
     runs-on: self-hosted
 
     steps:
-      - name: Pull latest DEV code
+      # 1️⃣ Force checkout DEV branch (MOST IMPORTANT STEP)
+      - name: Checkout DEV branch safely
         run: |
           cd /home/projects/services/SWACHIFY_APPLICATION_INDIA
-          git fetch --all
+          git fetch origin
           git checkout dev
-          git pull origin dev
+          git reset --hard origin/dev
+          git clean -fd
 
+      # 2️⃣ Show commit (debug – optional but useful)
+      - name: Show latest commit
+        run: |
+          cd /home/projects/services/SWACHIFY_APPLICATION_INDIA
+          git log -1 --oneline
+
+      # 3️⃣ Install dependencies
       - name: Install dependencies
         run: |
           cd /home/projects/services/SWACHIFY_APPLICATION_INDIA
           npm install
 
+      # 4️⃣ Build frontend
       - name: Build frontend
         run: |
           cd /home/projects/services/SWACHIFY_APPLICATION_INDIA
+          rm -rf dist
           npm run build
+          echo "=== BUILD OUTPUT ==="
+          ls -la dist | head -20
 
-      - name: Deploy dist to DEV Nginx folder
+      # 5️⃣ Deploy to DEV Nginx folder
+      - name: Deploy to DEV Nginx folder
         run: |
           sudo rm -rf /var/www/swachify-dev/*
           sudo cp -r /home/projects/services/SWACHIFY_APPLICATION_INDIA/dist/* /var/www/swachify-dev/
+          sudo chown -R www-data:www-data /var/www/swachify-dev
+          sudo chmod -R 755 /var/www/swachify-dev
 
-      - name: Reload Nginx
+      # 6️⃣ Test & Reload Nginx
+      - name: Test & Reload Nginx
         run: |
+          sudo nginx -t
           sudo systemctl reload nginx
-
