@@ -3602,43 +3602,7 @@ onClick={() => {
         )}
 
         {/* ✅ HOSPITAL DOCTORS SCREEN (ADD HERE) */}
-        {/* {openHospitalDoctors && (
-          <div className="doctor-list-screen">
-            <div className="doctor-list-header">
-              <button
-                className="back-btn"
-                onClick={() => setOpenHospitalDoctors(false)}
-              >
-                ←
-              </button>
 
-              <h2 className="doctor-list-title">
-                {selectedNearbyHospital?.hospital_name} Doctors
-              </h2>
-            </div>
-
-            {hospitalDoctors.map((doc) => (
-              <div
-                key={doc.id}
-                className="hospital-doctor-card"
-                onClick={() => setSelectedDoctor(doc)}
-              >
-                <div className="hospital-doctor-left">
-                  <img src={doc.image} alt={doc.name} />
-
-                  <div className="hospital-doctor-info">
-                    <h3>{doc.name}</h3>
-                    <p className="spec">{doc.speciality}</p>
-
-                    <div className="rating-pill">⭐ {doc.rating}</div>
-                  </div>
-                </div>
-
-                <div className="arrow-circle">→</div>
-              </div>
-            ))}
-          </div>
-        )} */}
         {openHospitalDoctors && (
   <div className="doctor-list-screen">
     <div className="doctor-list-header">
@@ -3654,39 +3618,54 @@ onClick={() => {
       </h2>
     </div>
 
-    {hospitalDoctors.map((doc) => (
-      <div
-        key={doc.id}
-        className="hospital-doctor-card"
-        onClick={() => setSelectedDoctor(doc)}
-      >
-        <div className="hospital-doctor-left">
-          <img src={doc.image} alt={doc.name} />
+{hospitalDoctors.map((doc) => (
+  <div
+    key={doc.id}
+    className="hospital-doctor-card"
+    onClick={() => setSelectedDoctor(doc)}
+  >
+    {/* LEFT */}
+    <div className="hospital-doctor-left">
+      <img
+        src={doc.image}
+        alt={doc.name}
+        className="hospital-doctor-avatar"
+      />
 
-          <div className="hospital-doctor-info">
-            <h3>{doc.name}</h3>
-
-            <p className="spec">{doc.speciality}</p>
-
-            <p className="exp">
-              {doc.experience} years experience
-            </p>
-
-            <div className="rating-row">
-              <span>⭐ {doc.rating}</span>
-              <span className="dot">•</span>
-              <span className={doc.available ? "available" : "unavailable"}>
-                {doc.available ? "Available" : "Not Available"}
-              </span>
-            </div>
-
-            <p className="price">₹{doc.price}/hr</p>
-          </div>
+      <div className="hospital-doctor-info">
+        <div className="doctor-name-row">
+          <h3 className="doctor-name">{doc.name}</h3>
+          {doc.rating >= 4.8 && (
+            <span className="top-rated-badge">Top Rated</span>
+          )}
         </div>
 
-        <div className="arrow-circle">→</div>
+        <p className="doctor-speciality">{doc.speciality}</p>
+
+        <p className="doctor-exp">{doc.experience} years experience</p>
+
+        <div className="doctor-meta-row">
+          <span className="rating">⭐ {doc.rating}</span>
+          <span className="dot">•</span>
+          <span
+            className={`availability ${
+              doc.available ? "available" : "unavailable"
+            }`}
+          >
+            {doc.available ? "Available" : "Not Available"}
+          </span>
+        </div>
+
+        <p className="doctor-price">₹{doc.price}/hr</p>
       </div>
-    ))}
+    </div>
+
+    {/* RIGHT */}
+    <div className="doctor-action">
+      <div className="arrow-circle">→</div>
+    </div>
+  </div>
+))}
   </div>
 )}
 
