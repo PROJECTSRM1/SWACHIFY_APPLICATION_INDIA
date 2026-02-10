@@ -102,6 +102,45 @@ const Portfolio: React.FC = () => {
           />
         )}
       </Modal>
+      <section className="portfolio-faq">
+        <div className="faq-container">
+          <h2>Frequently Asked Questions</h2>
+
+          <div className="faq-item">
+            <h4>How often should I schedule professional cleaning?</h4>
+            <p>
+              For residential spaces, we recommend weekly or bi-weekly cleaning.
+              Commercial spaces may require daily or customized schedules
+              depending on usage.
+            </p>
+          </div>
+
+          <div className="faq-item">
+            <h4>Do you bring your own cleaning supplies?</h4>
+            <p>
+              Yes, our team brings professional-grade equipment and eco-friendly
+              cleaning products for all services.
+            </p>
+          </div>
+
+          <div className="faq-item">
+            <h4>Are your cleaning professionals insured?</h4>
+            <p>
+              Absolutely. All our cleaning experts are trained,
+              background-checked, and fully insured.
+            </p>
+          </div>
+
+          <div className="faq-item">
+            <h4>How can I book a cleaning service?</h4>
+            <p>
+              You can contact us through our website, phone, or request a quote
+              directly from our contact page.
+            </p>
+          </div>
+        </div>
+      </section>
+
       <Footer></Footer>
     </>
   );

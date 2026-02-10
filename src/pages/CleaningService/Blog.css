@@ -3,6 +3,10 @@
   color: white;
   text-align: center;
   padding: 80px 20px;
+  margin-top: 3px;
+}
+.blog-hero p {
+  color: #fff;
 }
 
 .blog-hero h1 {
