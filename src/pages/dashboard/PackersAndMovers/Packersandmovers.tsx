@@ -283,10 +283,16 @@ useEffect(() => {
       
            <Layout className="sw-jr-layout">
                   <Sider width={420} className="sw-jr-left-panel">
-          <h1 className="sw-jr-title">
-         Just Ride
-          
-          </h1>
+      <div className="sw-jr-header-section">
+      <div className="sw-jr-back-container">
+        <button className="sw-jr-back-btn" onClick={() => navigate(-1)}>
+          <span className="arrow">←</span> Back
+        </button>
+      </div>
+      <h1 className="sw-jr-title">Just Ride</h1>
+    </div>
+
+
           
           
           
