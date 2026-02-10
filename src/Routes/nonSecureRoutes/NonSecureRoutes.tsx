@@ -42,6 +42,7 @@ import HomeServiceBooking from '../../pages/CleaningService/HomeServiceBooking';
 import SwachifyProducts from '../../pages/dashboard/SwachifyProducts/SwachifyProducts';
 import BuysaleProducts from   '../../pages/dashboard/buy&sale/BuySaleProducts';
 import Rawmaterials from'../../pages/building/building';
+import Profile from "../../pages/landing/Profile";
 
 export const NonSecureRoutes = () => {
   //const navigate = useNavigate();
@@ -111,6 +112,7 @@ export const NonSecureRoutes = () => {
   path="/cleaning/home/:category"
   element={<HomeCleaningCategory />}
 />
+<Route path="/profile" element={<Profile />} />
 <Route
   path="/cleaning/commercial"
   element={<CommercialCleaning />}
