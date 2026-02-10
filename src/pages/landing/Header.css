@@ -3,8 +3,9 @@
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding: 8px 12px;
-  background: #fff;
+
+  padding: 8px 28px;          /* ✅ single source of truth */
+  background:  #4da6ff;;
 
   position: fixed;
   top: 0;
@@ -22,6 +23,7 @@
   padding: 6px 10px;
   border-radius: 10px;
   background: #f8fafc; /* light gray card */
+    margin-left: 55px;
 }
 
 .swl-hs-logo-text {
@@ -64,7 +66,7 @@
   color: #fff;
   border-radius: 22px;
   font-weight: 600;
-  margin-right: -10px;
+    margin-right: 50px; 
 }
 
 .swl-hs-contact-btn.swl-signup-btn:hover {
@@ -1263,10 +1265,11 @@ html, body {
 ================================ */
 
 .swl-hs-navbar {
-  background: #ffffff;
+  background: lightskyblue;
   backdrop-filter: blur(8px);
   border-bottom: 1px solid rgba(0, 0, 0, 0.04);
 }
+
 
 /* Logo */
 .swl-logo-icon {
@@ -1320,6 +1323,7 @@ html, body {
   border-radius: 999px;
   font-weight: 700;
   box-shadow: 0 8px 20px rgba(14, 165, 233, 0.35);
+    margin-right: 12px;   
 }
 
 .swl-signup-btn:hover {

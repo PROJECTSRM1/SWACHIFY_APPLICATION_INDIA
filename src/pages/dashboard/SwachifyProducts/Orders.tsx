@@ -33,7 +33,6 @@ interface OrdersProps {
   onBack: () => void;
 }
 
-
 const Orders: React.FC<OrdersProps> = ({ onBack }) => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [filteredOrders, setFilteredOrders] = useState<Order[]>([]);
@@ -163,6 +162,7 @@ const Orders: React.FC<OrdersProps> = ({ onBack }) => {
       title: "Status",
       dataIndex: "status",
       key: "status",
+      align: "center",
       responsive: ["xs", "sm", "md", "lg"],
       render: (status: string) => (
         <Tag color={getStatusColor(status)}>{status.toUpperCase()}</Tag>
@@ -172,6 +172,7 @@ const Orders: React.FC<OrdersProps> = ({ onBack }) => {
       title: "Payment",
       dataIndex: "paymentStatus",
       key: "paymentStatus",
+      align: "center",
       responsive: ["md", "lg"],
       render: (status: string) => (
         <Tag color={getPaymentStatusColor(status)}>{status.toUpperCase()}</Tag>
@@ -246,34 +247,36 @@ const Orders: React.FC<OrdersProps> = ({ onBack }) => {
           </div>
         </div>
 
-        {/* Filters */}
-        <Card className="orders-filters-card">
-          <Space size="middle" wrap>
-            <Search
-              placeholder="Search by order number, customer..."
-              prefix={<SearchOutlined />}
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              style={{ width: 300 }}
-              allowClear
-            />
-            <Select
-              value={statusFilter}
-              onChange={setStatusFilter}
-              style={{ width: 150 }}
-            >
-              <Option value="all">All Status</Option>
-              <Option value="pending">Pending</Option>
-              <Option value="processing">Processing</Option>
-              <Option value="shipped">Shipped</Option>
-              <Option value="delivered">Delivered</Option>
-              <Option value="cancelled">Cancelled</Option>
-            </Select>
-          </Space>
-        </Card>
-
         {/* Orders Table */}
-        <Card className="orders-table-card">
+        <Card
+          className="orders-table-card"
+          title="Orders List"
+          extra={
+            <Space size="middle" wrap>
+              <Input
+                placeholder="Search by order number, customer..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                allowClear
+                prefix={<SearchOutlined style={{ color: "#999" }} />}
+                style={{ width: 260 }}
+              />
+
+              <Select
+                value={statusFilter}
+                onChange={setStatusFilter}
+                style={{ width: 160 }}
+              >
+                <Option value="all">All Status</Option>
+                <Option value="pending">Pending</Option>
+                <Option value="processing">Processing</Option>
+                <Option value="shipped">Shipped</Option>
+                <Option value="delivered">Delivered</Option>
+                <Option value="cancelled">Cancelled</Option>
+              </Select>
+            </Space>
+          }
+        >
           {filteredOrders.length === 0 ? (
             <Empty description="No orders found" />
           ) : (
@@ -375,8 +378,8 @@ const Orders: React.FC<OrdersProps> = ({ onBack }) => {
                 )}
                 {(selectedOrder.status === "shipped" ||
                   selectedOrder.status === "delivered") && (
-                    <Timeline.Item color="cyan">Order Shipped</Timeline.Item>
-                  )}
+                  <Timeline.Item color="cyan">Order Shipped</Timeline.Item>
+                )}
                 {selectedOrder.status === "delivered" && (
                   <Timeline.Item color="green">Order Delivered</Timeline.Item>
                 )}
