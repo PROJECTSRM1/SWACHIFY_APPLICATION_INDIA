@@ -3,38 +3,39 @@ import CleaningHeader from "./CleaningHeader";
 import "./HomeCleaning.css";
 import { useNavigate } from "react-router-dom";
 import cleaning from "../../../src/assets/5592525-hd_1920_1080_24fps.mp4";
+import Footer from "../../../src/pages/CleaningService/CleaningServiceFooter";
 
 const homeCleaningServices = [
-  { 
-    title: "Kitchen Cleaning", 
+  {
+    title: "Kitchen Cleaning",
     icon: "🍳",
-    description: "Deep clean for kitchen & appliances"
-  },
-  { 
-    title: "Bathroom Cleaning", 
-    icon: "🚿",
-    description: "Sanitize & sparkle your bathrooms"
-  },
-  { 
-    title: "Sofa Cleaning", 
-    icon: "🛋️",
-    description: "Professional upholstery care"
-  },
-  { 
-    title: "Bedroom Cleaning", 
-    icon: "🛏️",
-    description: "Complete bedroom refresh"
-  },
-  { 
-    title: "Window Cleaning", 
-    icon: "🪟",
-    description: "Crystal clear windows inside-out"
+    description: "Deep clean for kitchen & appliances",
   },
   {
-  title: "Full Deep Cleaning",
-  icon: "🏠",
-  description: "Complete home deep cleaning"
-}
+    title: "Bathroom Cleaning",
+    icon: "🚿",
+    description: "Sanitize & sparkle your bathrooms",
+  },
+  {
+    title: "Sofa Cleaning",
+    icon: "🛋️",
+    description: "Professional upholstery care",
+  },
+  {
+    title: "Bedroom Cleaning",
+    icon: "🛏️",
+    description: "Complete bedroom refresh",
+  },
+  {
+    title: "Window Cleaning",
+    icon: "🪟",
+    description: "Crystal clear windows inside-out",
+  },
+  {
+    title: "Full Deep Cleaning",
+    icon: "🏠",
+    description: "Complete home deep cleaning",
+  },
 ];
 
 const HomeCleaning: React.FC = () => {
@@ -49,7 +50,8 @@ const HomeCleaning: React.FC = () => {
           <div className="hc-header">
             <h1 className="hc-title">Home Cleaning Services</h1>
             <p className="hc-subtitle">
-              Professional cleaning at your doorstep • Verified professionals • Safe & Secure
+              Professional cleaning at your doorstep • Verified professionals •
+              Safe & Secure
             </p>
           </div>
 
@@ -118,6 +120,7 @@ const HomeCleaning: React.FC = () => {
           </div>
         </div>
       </section>
+      <Footer></Footer>
     </div>
   );
 };

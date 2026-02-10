@@ -5,70 +5,105 @@ import "./VehicleCleaning.css";
 import BookCleaningScreenWeb from "../../pages/dashboard/homeservices/BookCleaningScreenWeb";
 import { customerLogin } from "../../api/customerAuth";
 import { useNavigate } from "react-router";
-
+import Footer from "../../../src/pages/CleaningService/CleaningServiceFooter";
 type VehicleType = "Bike" | "Car" | "SUV";
 
 const vehiclePackages: Record<
   VehicleType,
-  { 
-    title: string; 
-    price: number; 
+  {
+    title: string;
+    price: number;
     duration: string;
     features: string[];
   }[]
 > = {
   Bike: [
-    { 
-      title: "Basic Bike Wash", 
-      price: 199, 
+    {
+      title: "Basic Bike Wash",
+      price: 199,
       duration: "20 mins",
-      features: ["Exterior wash", "Tire cleaning", "Dashboard wipe"]
+      features: ["Exterior wash", "Tire cleaning", "Dashboard wipe"],
     },
-    { 
-      title: "Premium Bike Wash", 
-      price: 299, 
+    {
+      title: "Premium Bike Wash",
+      price: 299,
       duration: "35 mins",
-      features: ["Deep exterior wash", "Engine bay cleaning", "Polish & shine", "Seat cleaning"]
+      features: [
+        "Deep exterior wash",
+        "Engine bay cleaning",
+        "Polish & shine",
+        "Seat cleaning",
+      ],
     },
   ],
   Car: [
-    { 
-      title: "Exterior Car Wash", 
-      price: 399, 
+    {
+      title: "Exterior Car Wash",
+      price: 399,
       duration: "30 mins",
-      features: ["Pressure wash", "Foam treatment", "Tire shine", "Windows cleaning"]
+      features: [
+        "Pressure wash",
+        "Foam treatment",
+        "Tire shine",
+        "Windows cleaning",
+      ],
     },
-    { 
-      title: "Interior + Exterior", 
-      price: 699, 
+    {
+      title: "Interior + Exterior",
+      price: 699,
       duration: "60 mins",
-      features: ["Complete exterior wash", "Vacuum cleaning", "Dashboard polish", "Seat cleaning"]
+      features: [
+        "Complete exterior wash",
+        "Vacuum cleaning",
+        "Dashboard polish",
+        "Seat cleaning",
+      ],
     },
-    { 
-      title: "Deep Car Cleaning", 
-      price: 999, 
+    {
+      title: "Deep Car Cleaning",
+      price: 999,
       duration: "90 mins",
-      features: ["Premium exterior wash", "Interior detailing", "AC vent cleaning", "Wax polish"]
+      features: [
+        "Premium exterior wash",
+        "Interior detailing",
+        "AC vent cleaning",
+        "Wax polish",
+      ],
     },
   ],
   SUV: [
-    { 
-      title: "Exterior SUV Wash", 
-      price: 499, 
+    {
+      title: "Exterior SUV Wash",
+      price: 499,
       duration: "40 mins",
-      features: ["Heavy-duty wash", "Under-chassis spray", "Tire treatment", "Window shine"]
+      features: [
+        "Heavy-duty wash",
+        "Under-chassis spray",
+        "Tire treatment",
+        "Window shine",
+      ],
     },
-    { 
-      title: "Interior + Exterior", 
-      price: 899, 
+    {
+      title: "Interior + Exterior",
+      price: 899,
       duration: "75 mins",
-      features: ["Complete exterior", "Full interior vacuum", "Dashboard & console", "Seat treatment"]
+      features: [
+        "Complete exterior",
+        "Full interior vacuum",
+        "Dashboard & console",
+        "Seat treatment",
+      ],
     },
-    { 
-      title: "Deep SUV Cleaning", 
-      price: 1299, 
+    {
+      title: "Deep SUV Cleaning",
+      price: 1299,
       duration: "120 mins",
-      features: ["Premium exterior", "Complete interior detailing", "Engine bay wash", "Premium wax coating"]
+      features: [
+        "Premium exterior",
+        "Complete interior detailing",
+        "Engine bay wash",
+        "Premium wax coating",
+      ],
     },
   ],
 };
@@ -76,11 +111,11 @@ const vehiclePackages: Record<
 const vehicleIcons: Record<VehicleType, string> = {
   Bike: "🏍️",
   Car: "🚗",
-  SUV: "🚙"
+  SUV: "🚙",
 };
 
 const VehicleCleaning: React.FC = () => {
-   const navigate = useNavigate();
+  const navigate = useNavigate();
   const [vehicleType, setVehicleType] = useState<VehicleType | null>(null);
   const [cart, setCart] = useState<any[]>([]);
   const [step, setStep] = useState<
@@ -90,41 +125,40 @@ const VehicleCleaning: React.FC = () => {
   const [mobile, setMobile] = useState("");
   const [otp, setOtp] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(
-  !!localStorage.getItem("accessToken")
-);
+    !!localStorage.getItem("accessToken"),
+  );
 
-useEffect(() => {
-  const handleStorageChange = () => {
-    setIsAuthenticated(!!localStorage.getItem("accessToken"));
-  };
+  useEffect(() => {
+    const handleStorageChange = () => {
+      setIsAuthenticated(!!localStorage.getItem("accessToken"));
+    };
 
-  window.addEventListener("storage", handleStorageChange);
-  handleStorageChange(); // initial sync
+    window.addEventListener("storage", handleStorageChange);
+    handleStorageChange(); // initial sync
 
-  return () => {
-    window.removeEventListener("storage", handleStorageChange);
-  };
-}, []);
-  
-const [identifier, setIdentifier] = useState("");
-const [password, setPassword] = useState("");
-const [loading, setLoading] = useState(false);
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []);
+
+  const [identifier, setIdentifier] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const total = cart.reduce((s, i) => s + i.price, 0);
   const onLogin = async (values: any) => {
-      try{
-        const res: any = await customerLogin({
-                email_or_phone: values.identifier,
-                password: values.password,
-              });
-              localStorage.setItem("user_id", res.user_id);
-        
-              localStorage.setItem("accessToken", res.access_token);
-              localStorage.setItem("user", JSON.stringify(res));
-      }
-      catch(error){
-        console.error("Login failed:", error);
-      }
+    try {
+      const res: any = await customerLogin({
+        email_or_phone: values.identifier,
+        password: values.password,
+      });
+      localStorage.setItem("user_id", res.user_id);
+
+      localStorage.setItem("accessToken", res.access_token);
+      localStorage.setItem("user", JSON.stringify(res));
+    } catch (error) {
+      console.error("Login failed:", error);
     }
+  };
 
   const addToCart = (item: any) => {
     if (!cart.find((c) => c.title === item.title)) {
@@ -156,7 +190,7 @@ const [loading, setLoading] = useState(false);
             <p className="vc-description">
               Professional cleaning for your bike, car, or SUV
             </p>
-            
+
             <div className="vc-stats">
               <div className="vc-stat-item">
                 <span className="vc-stat-icon">⭐</span>
@@ -188,11 +222,11 @@ const [loading, setLoading] = useState(false);
           {!vehicleType && (
             <div className="vc-selection-section">
               <h3 className="vc-section-title">Select Your Vehicle Type</h3>
-              
+
               <div className="vc-vehicle-grid">
                 {(["Bike", "Car", "SUV"] as VehicleType[]).map((v) => (
-                  <div 
-                    key={v} 
+                  <div
+                    key={v}
                     className="vc-vehicle-card"
                     onClick={() => setVehicleType(v)}
                   >
@@ -200,9 +234,7 @@ const [loading, setLoading] = useState(false);
                       <span className="vc-vehicle-icon">{vehicleIcons[v]}</span>
                     </div>
                     <h4 className="vc-vehicle-name">{v}</h4>
-                    <button className="vc-select-btn">
-                      Select {v}
-                    </button>
+                    <button className="vc-select-btn">Select {v}</button>
                   </div>
                 ))}
               </div>
@@ -211,7 +243,10 @@ const [loading, setLoading] = useState(false);
                 <div className="vc-info-icon">ℹ️</div>
                 <div>
                   <strong>Choose your vehicle type</strong>
-                  <p>We offer customized cleaning packages for each vehicle category</p>
+                  <p>
+                    We offer customized cleaning packages for each vehicle
+                    category
+                  </p>
                 </div>
               </div>
             </div>
@@ -222,10 +257,16 @@ const [loading, setLoading] = useState(false);
             <div className="vc-packages-section">
               <div className="vc-selected-vehicle">
                 <div className="vc-selected-header">
-                  <span className="vc-selected-icon">{vehicleIcons[vehicleType]}</span>
+                  <span className="vc-selected-icon">
+                    {vehicleIcons[vehicleType]}
+                  </span>
                   <div>
-                    <h3 className="vc-section-title">{vehicleType} Cleaning Packages</h3>
-                    <p className="vc-selected-subtitle">Choose one or more packages</p>
+                    <h3 className="vc-section-title">
+                      {vehicleType} Cleaning Packages
+                    </h3>
+                    <p className="vc-selected-subtitle">
+                      Choose one or more packages
+                    </p>
                   </div>
                 </div>
                 <button className="vc-change-btn" onClick={resetSelection}>
@@ -236,11 +277,11 @@ const [loading, setLoading] = useState(false);
               <div className="vc-packages">
                 {vehiclePackages[vehicleType].map((pkg, i) => {
                   const isAdded = cart.find((c) => c.title === pkg.title);
-                  
+
                   return (
-                    <div 
-                      key={i} 
-                      className={`vc-package-card ${isAdded ? 'vc-card-added' : ''}`}
+                    <div
+                      key={i}
+                      className={`vc-package-card ${isAdded ? "vc-card-added" : ""}`}
                     >
                       <div className="vc-package-header">
                         <div>
@@ -271,8 +312,10 @@ const [loading, setLoading] = useState(false);
                           <span className="vc-price">₹{pkg.price}</span>
                         </div>
                         <button
-                          className={`vc-add-btn ${isAdded ? 'vc-added' : ''}`}
-                          onClick={() => isAdded ? removeFromCart(pkg) : addToCart(pkg)}
+                          className={`vc-add-btn ${isAdded ? "vc-added" : ""}`}
+                          onClick={() =>
+                            isAdded ? removeFromCart(pkg) : addToCart(pkg)
+                          }
                         >
                           {isAdded ? "Remove" : "Add"}
                         </button>
@@ -326,16 +369,22 @@ const [loading, setLoading] = useState(false);
               <div className="vc-cart-header">
                 <h4 className="vc-cart-title">Your Cart</h4>
                 {cart.length > 0 && (
-                  <span className="vc-cart-count">{cart.length} item{cart.length > 1 ? 's' : ''}</span>
+                  <span className="vc-cart-count">
+                    {cart.length} item{cart.length > 1 ? "s" : ""}
+                  </span>
                 )}
               </div>
 
               {vehicleType && (
                 <div className="vc-cart-vehicle">
-                  <span className="vc-cart-vehicle-icon">{vehicleIcons[vehicleType]}</span>
+                  <span className="vc-cart-vehicle-icon">
+                    {vehicleIcons[vehicleType]}
+                  </span>
                   <div>
                     <div className="vc-cart-vehicle-type">{vehicleType}</div>
-                    <div className="vc-cart-vehicle-label">Selected Vehicle</div>
+                    <div className="vc-cart-vehicle-label">
+                      Selected Vehicle
+                    </div>
                   </div>
                 </div>
               )}
@@ -344,10 +393,14 @@ const [loading, setLoading] = useState(false);
                 <div className="vc-empty-cart">
                   <div className="vc-empty-icon">🛒</div>
                   <p className="vc-empty-text">
-                    {vehicleType ? "No packages selected" : "Select a vehicle to start"}
+                    {vehicleType
+                      ? "No packages selected"
+                      : "Select a vehicle to start"}
                   </p>
                   <p className="vc-empty-subtext">
-                    {vehicleType ? "Add cleaning packages to your cart" : "Choose your vehicle type first"}
+                    {vehicleType
+                      ? "Add cleaning packages to your cart"
+                      : "Choose your vehicle type first"}
                   </p>
                 </div>
               ) : (
@@ -356,12 +409,18 @@ const [loading, setLoading] = useState(false);
                     {cart.map((item, i) => (
                       <div key={i} className="vc-cart-item">
                         <div className="vc-cart-item-details">
-                          <span className="vc-cart-item-name">{item.title}</span>
-                          <span className="vc-cart-item-duration">{item.duration}</span>
+                          <span className="vc-cart-item-name">
+                            {item.title}
+                          </span>
+                          <span className="vc-cart-item-duration">
+                            {item.duration}
+                          </span>
                         </div>
                         <div className="vc-cart-item-price-section">
-                          <strong className="vc-cart-item-price">₹{item.price}</strong>
-                          <button 
+                          <strong className="vc-cart-item-price">
+                            ₹{item.price}
+                          </strong>
+                          <button
                             className="vc-remove-btn"
                             onClick={() => removeFromCart(item)}
                             title="Remove"
@@ -378,16 +437,18 @@ const [loading, setLoading] = useState(false);
                       <span className="vc-total-label">Total Amount</span>
                       <strong className="vc-total-amount">₹{total}</strong>
                     </div>
-                    
+
                     <div className="vc-savings-info">
                       💰 Professional service at your doorstep
                     </div>
                   </div>
 
                   <button
-  className="vc-proceed-btn"
-  onClick={() => setStep(isAuthenticated ? "booking" : "login")}
->
+                    className="vc-proceed-btn"
+                    onClick={() =>
+                      setStep(isAuthenticated ? "booking" : "login")
+                    }
+                  >
                     <span>Proceed to Book</span>
                     <span className="vc-btn-arrow">→</span>
                   </button>
@@ -427,71 +488,70 @@ const [loading, setLoading] = useState(false);
             We'll send a one-time password to your mobile
           </p>
 
-         <Input
-          className="auth-input"
-          placeholder="Email or mobile number"
-          value={identifier}
-          onChange={(e) => setIdentifier(e.target.value)}
-        />
-        
-        <Input.Password
-          className="auth-input"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        
-        
-                 <Button
-          type="primary"
-          block
-          className="auth-button"
-          loading={loading}
-          disabled={!identifier || !password}
-          onClick={async () => {
-            try {
-              setLoading(true);
-        
-              await onLogin({
-                identifier,
-                password,
-              });
-        
-              // ✅ login success → go to booking
-              setStep("booking");
-            } catch (e) {
-              // optional toast
-            } finally {
-              setLoading(false);
-            }
-          }}
-        >
-          Login & Continue
-        </Button>
+          <Input
+            className="auth-input"
+            placeholder="Email or mobile number"
+            value={identifier}
+            onChange={(e) => setIdentifier(e.target.value)}
+          />
 
-           <p className="auth-note">
-  Don’t have an account?{" "}
-  <span
-    style={{ color: "#1677ff", cursor: "pointer", fontWeight: 500 }}
-    onClick={() => {
-      // ✅ save where user came from
-      localStorage.setItem(
-        "postAuthRedirect",
-        window.location.pathname
-      );
+          <Input.Password
+            className="auth-input"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
 
-      navigate("/");
+          <Button
+            type="primary"
+            block
+            className="auth-button"
+            loading={loading}
+            disabled={!identifier || !password}
+            onClick={async () => {
+              try {
+                setLoading(true);
 
-      setTimeout(() => {
-        if ((window as any).openAuthModal) {
-          (window as any).openAuthModal("register");
-        }
-      }, 0);
-    }}
-  >
-    Register
-  </span>
-</p>
+                await onLogin({
+                  identifier,
+                  password,
+                });
+
+                // ✅ login success → go to booking
+                setStep("booking");
+              } catch (e) {
+                // optional toast
+              } finally {
+                setLoading(false);
+              }
+            }}
+          >
+            Login & Continue
+          </Button>
+
+          <p className="auth-note">
+            Don’t have an account?{" "}
+            <span
+              style={{ color: "#1677ff", cursor: "pointer", fontWeight: 500 }}
+              onClick={() => {
+                // ✅ save where user came from
+                localStorage.setItem(
+                  "postAuthRedirect",
+                  window.location.pathname,
+                );
+
+                navigate("/");
+
+                setTimeout(() => {
+                  if ((window as any).openAuthModal) {
+                    (window as any).openAuthModal("register");
+                  }
+                }, 0);
+              }}
+            >
+              Register
+            </span>
+          </p>
         </div>
       </Modal>
 
@@ -516,9 +576,7 @@ const [loading, setLoading] = useState(false);
             placeholder="Enter OTP"
             maxLength={6}
             value={otp}
-            onChange={(e) =>
-              setOtp(e.target.value.replace(/[^0-9]/g, ""))
-            }
+            onChange={(e) => setOtp(e.target.value.replace(/[^0-9]/g, ""))}
           />
 
           <Button
@@ -571,6 +629,7 @@ const [loading, setLoading] = useState(false);
           </div>
         </div>
       )}
+      <Footer></Footer>
     </>
   );
 };
