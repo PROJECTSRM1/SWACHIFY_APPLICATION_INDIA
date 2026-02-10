@@ -178,6 +178,27 @@ export type HospitalDoctorsResponse = HospitalDoctor[];
 
 
 
+//assitants
+
+// types/assistant.ts
+
+export interface Assistant {
+  id: number;
+  name: string;
+  cost_per_visit: string;
+  services: string[];
+  hospital_id: number;
+  rating: string;
+  role: string;
+  is_active: boolean;
+  currency: string;
+}
+
+export type AvailableAssistantsResponse = Assistant[];
+
+
+
+
 
 
 /* =========================
@@ -332,7 +353,18 @@ updateCallBookingStatus: async (
         console.error("Error fetching hospital doctors:", error);
         throw error;
     }
-}
+},
+
+ getAvailableAssistants : async (): Promise<AvailableAssistantsResponse> => {
+  try {
+    const response = await api.get("/healthcare/available-assistants");
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching available assistants:", error);
+    throw error;
+  }
+},
+
 
 
 

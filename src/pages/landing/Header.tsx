@@ -687,21 +687,21 @@ if (redirectPath) {
 <Menu
   mode="horizontal"
   className="swl-hs-navbar-menu"
-  items={[
-    {
-      key: "home",
-      label: <Link to="/landing">Home</Link>,
-    },
-    {
-      key: "services",
-      label: "Explore Services",
-      onClick: () => {
-        document
-          .getElementById("services-section")
-          ?.scrollIntoView({ behavior: "smooth" });
-      },
-    },
-  ]}
+  // items={[
+  //   {
+  //     key: "home",
+  //     label: <Link to="/landing">Home</Link>,
+  //   },
+  //   {
+  //     key: "services",
+  //     label: "Explore Services",
+  //     onClick: () => {
+  //       document
+  //         .getElementById("services-section")
+  //         ?.scrollIntoView({ behavior: "smooth" });
+  //     },
+  //   },
+  // ]}
 />
 
 
