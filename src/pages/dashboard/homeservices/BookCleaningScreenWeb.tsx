@@ -149,6 +149,7 @@ const BookCleaningScreenWeb: React.FC<Props> = ({
   const [loadingLocation, setLoadingLocation] = useState(false);
   const [showProfessionalModal, setShowProfessionalModal] = useState(false);
 const [chosenProfessional, setChosenProfessional] = useState<any>(null);
+const [locationError, setLocationError] = useState<string | null>(null);
 
 
   const getCurrentLocation = async () => {
@@ -186,6 +187,39 @@ const [chosenProfessional, setChosenProfessional] = useState<any>(null);
   const [customerName, setCustomerName] = useState("");
   const [contactNumber, setContactNumber] = useState("");
   const [manualAddress, setManualAddress] = useState("");
+  const [pincode, setPincode] = useState("");
+
+const [errors, setErrors] = useState<{
+  customerName?: string;
+  contactNumber?: string;
+  manualAddress?: string;
+  pincode?: string;
+}>({});
+const onlyNumbers = (value: string) => value.replace(/\D/g, "");
+
+// const validateLocationFields = () => {
+//   const newErrors: typeof errors = {};
+
+//   if (!customerName.trim() || customerName.length < 3) {
+//     newErrors.customerName = "Please enter a valid full name";
+//   }
+
+//   if (!/^[6-9]\d{9}$/.test(contactNumber)) {
+//     newErrors.contactNumber = "Enter a valid 10-digit mobile number";
+//   }
+
+//   if (!manualAddress.trim()) {
+//     newErrors.manualAddress = "Address is required";
+//   }
+
+//   if (!/^\d{6}$/.test(pincode)) {
+//     newErrors.pincode = "Enter a valid 6-digit PIN code";
+//   }
+
+//   setErrors(newErrors);
+//   return Object.keys(newErrors).length === 0;
+// };
+
 
   /* ---------- IMAGES ---------- */
   const [images, setImages] = useState<File[]>([]);
@@ -207,6 +241,37 @@ const [chosenProfessional, setChosenProfessional] = useState<any>(null);
   const removeImage = (index: number) => {
     setImages((prev) => prev.filter((_, i) => i !== index));
   };
+
+  const validateLocationSection = () => {
+  // Case 1: Current Location
+  if (locationType === "default") {
+    if (!currentAddress || currentAddress.trim().length < 10) {
+      setLocationError("Please allow location access or add address manually.");
+      return false;
+    }
+  }
+
+  // Case 2: Manual Address
+  if (locationType === "other") {
+    if (!customerName.trim()) {
+      setLocationError("Full name is required.");
+      return false;
+    }
+
+    if (!/^[6-9]\d{9}$/.test(contactNumber)) {
+      setLocationError("Enter a valid 10-digit mobile number.");
+      return false;
+    }
+
+    if (!manualAddress || manualAddress.trim().length < 10) {
+      setLocationError("Please enter complete service address.");
+      return false;
+    }
+  }
+
+  setLocationError(null);
+  return true;
+};
 
   /* ---------- PRICING ---------- */
   const floorAreaCost = floorArea ? Number(floorArea) * FLOOR_AREA_RATE : 0;
@@ -234,10 +299,12 @@ const [chosenProfessional, setChosenProfessional] = useState<any>(null);
   const removeService = (id: string) => {
     setServices((prev) => prev.filter((s) => s.id !== id));
   };
+  const today = new Date().toISOString().split("T")[0];
 
   console.log("Selected Addons:", addService, removeService);
 
   const validateAndCheckout = async () => {
+    if (!validateLocationSection()) return;
     if (extraHours > 0 && !reason.trim()) {
       setReasonError(true);
       return;
@@ -257,6 +324,7 @@ const [chosenProfessional, setChosenProfessional] = useState<any>(null);
 
 
   const [showPaymentModal, setShowPaymentModal] = useState(false);
+  
 
   const closeAll = () => {
     setShowPaymentModal(false);
@@ -449,38 +517,87 @@ const AVAILABLE_PROFESSIONALS = [
 
             {locationType === "other" && (
               <div className="uc_formGroup uc_formGroup--stagger">
-                <div className="uc_inputWrapper">
-                  <MdPerson className="uc_inputIcon" />
-                  <input
-                    className="uc_input"
-                    value={customerName}
-                    onChange={(e) => setCustomerName(e.target.value)}
-                    placeholder="Full Name"
-                  />
-                </div>
+  {/* FULL NAME */}
+  <div className="uc_inputWrapper">
+    <MdPerson className="uc_inputIcon" />
+    <input
+      className="uc_input"
+      value={customerName}
+      onChange={(e) => {
+        setCustomerName(e.target.value);
+        setErrors((p) => ({ ...p, customerName: undefined }));
+      }}
+      placeholder="Full Name"
+      maxLength={50}
+    />
+    {errors.customerName && (
+      <span className="uc_errorText">{errors.customerName}</span>
+    )}
+  </div>
 
-                <div className="uc_inputWrapper">
-                  <MdPhone className="uc_inputIcon" />
-                  <input
-                    className="uc_input"
-                    value={contactNumber}
-                    onChange={(e) => setContactNumber(e.target.value)}
-                    placeholder="Mobile Number"
-                    type="tel"
-                  />
-                </div>
+  {/* MOBILE NUMBER */}
+  <div className="uc_inputWrapper">
+    <MdPhone className="uc_inputIcon" />
+    <input
+      className="uc_input"
+      type="tel"
+      value={contactNumber}
+      onChange={(e) => {
+        const value = onlyNumbers(e.target.value).slice(0, 10);
+        setContactNumber(value);
+        setErrors((p) => ({ ...p, contactNumber: undefined }));
+      }}
+      placeholder="Mobile Number"
+      maxLength={10}
+    />
+    {errors.contactNumber && (
+      <span className="uc_errorText">{errors.contactNumber}</span>
+    )}
+  </div>
 
-                <div className="uc_inputWrapper uc_inputWrapper--textarea">
-                  <MdLocationOn className="uc_inputIcon" />
-                  <textarea
-                    className="uc_textarea"
-                    value={manualAddress}
-                    onChange={(e) => setManualAddress(e.target.value)}
-                    placeholder="Complete Address (Building, Street, Landmark)"
-                  />
-                </div>
-              </div>
+  {/* PIN CODE */}
+  <div className="uc_inputWrapper">
+    <MdLocationOn className="uc_inputIcon" />
+    <input
+      className="uc_input"
+      type="text"
+      value={pincode}
+      onChange={(e) => {
+        const value = onlyNumbers(e.target.value).slice(0, 6);
+        setPincode(value);
+        setErrors((p) => ({ ...p, pincode: undefined }));
+      }}
+      placeholder="PIN Code"
+      maxLength={6}
+    />
+    {errors.pincode && (
+      <span className="uc_errorText">{errors.pincode}</span>
+    )}
+  </div>
+
+  {/* ADDRESS */}
+  <div className="uc_inputWrapper uc_inputWrapper--textarea">
+    <MdLocationOn className="uc_inputIcon" />
+    <textarea
+      className="uc_textarea"
+      value={manualAddress}
+      onChange={(e) => {
+        setManualAddress(e.target.value);
+        setErrors((p) => ({ ...p, manualAddress: undefined }));
+      }}
+      placeholder="Complete Address (Building, Street, Landmark)"
+      maxLength={250}
+    />
+    {errors.manualAddress && (
+      <span className="uc_errorText">{errors.manualAddress}</span>
+    )}
+  </div>
+</div>
+
             )}
+            {locationError && (
+  <p className="uc_errorText">{locationError}</p>
+)}
           </section>
 
           {/* ALLOCATION SECTION */}
@@ -636,6 +753,7 @@ const AVAILABLE_PROFESSIONALS = [
                   className="uc_input"
                   type="date"
                   value={date}
+                  min={today}
                   onChange={(e) => setDate(e.target.value)}
                 />
               </div>
