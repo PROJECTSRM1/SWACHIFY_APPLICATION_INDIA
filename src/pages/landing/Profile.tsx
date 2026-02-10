@@ -6,6 +6,11 @@ import "./Profile.css";
 
 const Profile: React.FC = () => {
   const navigate = useNavigate();
+  type SectionType = "education" | "noc" | "expertise" | null;
+
+const [activeSection, setActiveSection] = useState<SectionType>(null);
+const [nocClear, setNocClear] = useState<"yes" | "no" | null>(null);
+
 
   // mock user data
   const [user, setUser] = useState({
@@ -63,11 +68,27 @@ const Profile: React.FC = () => {
         </div>
       </div>
 
-      <div className="profile-card section-card">Education Qualification</div>
-      <div className="profile-card section-card">NOC Details</div>
-      <div className="profile-card section-card">
-        Freelancer / Employee Expertise
-      </div>
+<div
+  className={`profile-card section-card ${activeSection === "education" ? "active" : ""}`}
+  onClick={() => setActiveSection("education")}
+>
+  Education Qualification
+</div>
+
+<div
+  className={`profile-card section-card ${activeSection === "noc" ? "active" : ""}`}
+  onClick={() => setActiveSection("noc")}
+>
+  NOC Details
+</div>
+
+<div
+  className={`profile-card section-card ${activeSection === "expertise" ? "active" : ""}`}
+  onClick={() => setActiveSection("expertise")}
+>
+  Freelancer / Employee Expertise
+</div>
+
     </div>
 
     {/* RIGHT COLUMN */}
@@ -85,6 +106,91 @@ const Profile: React.FC = () => {
           <span>{user.location}</span>
         </div>
       </div>
+{activeSection === "education" && (
+  <div className="profile-card">
+    <h2>Education Qualification</h2>
+
+    <Input placeholder="Degree (e.g. B.Tech Computer Science)" />
+    <Input placeholder="Institution (e.g. Stanford University)" style={{ marginTop: 12 }} />
+    <Input placeholder="Percentage (e.g. 85%)" style={{ marginTop: 12 }} />
+    <Input placeholder="Years (MM/YYYY - MM/YYYY)" style={{ marginTop: 12 }} />
+    <Input placeholder="Internship Join Date" style={{ marginTop: 12 }} />
+  </div>
+)}
+{activeSection === "noc" && (
+  <div className="profile-card">
+    <h2>NOC Details</h2>
+
+<div className="noc-radio-group">
+  <p className="noc-label">Candidate Case Clear</p>
+
+  <div className="radio-options">
+    <label>
+      <input
+        type="radio"
+        name="noc"
+        value="yes"
+        checked={nocClear === "yes"}
+        onChange={() => setNocClear("yes")}
+      />
+      Yes
+    </label>
+
+    <label>
+      <input
+        type="radio"
+        name="noc"
+        value="no"
+        checked={nocClear === "no"}
+        onChange={() => setNocClear("no")}
+      />
+      No
+    </label>
+  </div>
+</div>
+
+
+
+    {nocClear === "yes" && (
+      <>
+        <Input placeholder="Certificate Number" style={{ marginTop: 12 }} />
+        <Input placeholder="Near Police Station" style={{ marginTop: 12 }} />
+        <Input placeholder="Issue Year (e.g. 2024)" style={{ marginTop: 12 }} />
+      </>
+    )}
+
+    {nocClear === "no" && (
+      <>
+        <Input placeholder="Case Number" style={{ marginTop: 12 }} />
+        <Input placeholder="Near Police Station" style={{ marginTop: 12 }} />
+        <Input placeholder="Issue Year (e.g. 2024)" style={{ marginTop: 12 }} />
+      </>
+    )}
+  </div>
+)}
+{activeSection === "expertise" && (
+  <div className="profile-card">
+    <h2>Freelancer / Employee Expertise</h2>
+
+    <Input placeholder="Services (UI Design, Web Dev...)" />
+    <Input placeholder="Years of Experience (e.g. 5)" style={{ marginTop: 12 }} />
+    <Input.TextArea
+      placeholder="Additional Skills"
+      rows={4}
+      style={{ marginTop: 12 }}
+    />
+
+    <div className="radio-row" style={{ marginTop: 12 }}>
+      <span>Driving License</span>
+      <label>
+        <input type="radio" name="dl" /> Yes
+      </label>
+      <label>
+        <input type="radio" name="dl" /> No
+      </label>
+    </div>
+  </div>
+)}
 
       <div className="profile-card">
         <h2>Customize Dashboard</h2>
