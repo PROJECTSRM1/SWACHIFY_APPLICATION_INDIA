@@ -6457,6 +6457,19 @@
 }
 
 
+/* =========================
+   DATE PICKER CLICK FIX
+   ========================= */
+
+.date-input-wrapper {
+  cursor: pointer;
+}
+
+.date-input-wrapper .date-picker {
+  width: 100%;
+  cursor: pointer;
+}
+
 
 
 /****/
