@@ -1330,3 +1330,61 @@ html, body {
   transform: translateY(-1px);
   box-shadow: 0 12px 28px rgba(14, 165, 233, 0.45);
 }
+
+
+@media (max-width: 768px) {
+
+ 
+  .swl-hs-navbar {
+    padding: 8px 12px;
+    height: 56px;
+  }
+
+ 
+  .swl-hs-navbar-logo {
+    margin-left: 0 !important;
+    padding: 4px 8px;
+  }
+
+  .swl-signup-btn {
+    margin-right: 0 !important;
+    padding: 0 14px;
+    height: 34px;
+    font-size: 13px;
+  }
+
+ 
+  .swl-mobile-menu-icon {
+    display: flex;
+    align-items: center;
+    font-size: 22px;
+  }
+
+
+  .swl-hs-navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+
+  .swl-hs-navbar-logo {
+    position: absolute;
+    left: 120px !important;
+    transform: translateX(-50%);
+  }
+
+ 
+  .swl-logo-main {
+    font-size: 1rem;
+  }
+
+  .swl-logo-sub {
+    font-size: 0.6rem;
+  }
+
+
+  .swl-hs-navbar-menu {
+    display: none !important;
+  }
+}

@@ -1055,22 +1055,6 @@ useEffect(() => {
 }, []);
 
 
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
   const getDaysInMonth = (date: Date) => {
     return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
   };
@@ -1163,6 +1147,19 @@ const [needAmbulance, setNeedAmbulance] = useState<"Yes" | "No" | "">("");
 const [pickupTime, setPickupTime] = useState<string>("");
 const [showPickupDropdown, setShowPickupDropdown] = useState(false);
 
+// ------------------ RESET FUNCTION (ADD HERE) ------------------
+const resetHospitalBookingForm = () => {
+  setBookingDate("");
+  setBookingTime("");
+  setNeedAmbulance("");
+  setPickupTime("");
+  setShowTimeDropdown(false);
+  setShowPickupDropdown(false);
+};
+
+const dateInputRef = useRef<HTMLInputElement | null>(null);
+
+
 // 🔒 Hospital booking flow helpers
 // 🔒 Hospital booking flow helpers
 const todayISO = new Date().toISOString().split("T")[0];
@@ -1180,7 +1177,7 @@ const canConfirmHospitalBooking =
 // ⏱ Generate continuous time slots
 const generateTimeSlots = (
   startHour = 9,
-  endHour = 18,
+  endHour = 23,
   intervalMinutes = 30
 ) => {
   const slots: string[] = [];
@@ -3176,29 +3173,42 @@ useEffect(() => {
         {openHospitalBooking && selectedNearbyHospital && (
           <div
             className="profile-overlay"
-            onClick={() => setOpenHospitalBooking(false)}
+            onClick={() => {
+              resetHospitalBookingForm();
+              setOpenHospitalBooking(false);
+            }}
+
           >
             <div className="profile-popup" onClick={(e) => e.stopPropagation()}>
               <h2 className="popup-title">Booking Details</h2>
 
-              <div className="popup-section">
-                <label>Appointment Date</label>
+<div className="popup-section">
+  <label>Appointment Date</label>
 
-                <input
-                  type="date"
-                  className="date-picker"
-                  value={bookingDate}
-                  min={todayISO}
-                  onChange={(e) => {
-                  setBookingDate(e.target.value);
-                  setBookingTime("");        // 🔥 reset
-                  setNeedAmbulance("");      // 🔥 reset
-                  setShowTimeDropdown(false);
+  {/* Clickable wrapper */}
+  <div
+    className="date-input-wrapper"
+    onClick={() => {
+      // ✅ Open date picker when clicking anywhere
+      dateInputRef.current?.showPicker();
+    }}
+  >
+    <input
+      ref={dateInputRef}
+      type="date"
+      className="date-picker"
+      value={bookingDate}
+      min={todayISO}
+      onChange={(e) => {
+        setBookingDate(e.target.value);
+        setBookingTime("");        // 🔥 reset
+        setNeedAmbulance("");      // 🔥 reset
+        setShowTimeDropdown(false);
+      }}
+    />
+  </div>
+</div>
 
-                    }}
-                />
-
-              </div>
 
 <div className="popup-section">
   <label>Select Time</label>
@@ -3323,11 +3333,16 @@ onClick={() => {
   className="confirm-btn"
   disabled={!canConfirmHospitalBooking}
   onClick={() => {
-    if (!canConfirmHospitalBooking) return;
-    setOpenHospitalBooking(false);
-       setOpenHospitalDoctors(true)
-  
-  }}
+  if (!canConfirmHospitalBooking) return;
+
+  // ✅ reset form immediately
+  resetHospitalBookingForm();
+
+  // close popup & navigate
+  setOpenHospitalBooking(false);
+  setOpenHospitalDoctors(true);
+}}
+
 >
   Confirm Booking
 </button>
@@ -3576,43 +3591,7 @@ onClick={() => {
         )}
 
         {/* ✅ HOSPITAL DOCTORS SCREEN (ADD HERE) */}
-        {/* {openHospitalDoctors && (
-          <div className="doctor-list-screen">
-            <div className="doctor-list-header">
-              <button
-                className="back-btn"
-                onClick={() => setOpenHospitalDoctors(false)}
-              >
-                ←
-              </button>
 
-              <h2 className="doctor-list-title">
-                {selectedNearbyHospital?.hospital_name} Doctors
-              </h2>
-            </div>
-
-            {hospitalDoctors.map((doc) => (
-              <div
-                key={doc.id}
-                className="hospital-doctor-card"
-                onClick={() => setSelectedDoctor(doc)}
-              >
-                <div className="hospital-doctor-left">
-                  <img src={doc.image} alt={doc.name} />
-
-                  <div className="hospital-doctor-info">
-                    <h3>{doc.name}</h3>
-                    <p className="spec">{doc.speciality}</p>
-
-                    <div className="rating-pill">⭐ {doc.rating}</div>
-                  </div>
-                </div>
-
-                <div className="arrow-circle">→</div>
-              </div>
-            ))}
-          </div>
-        )} */}
         {openHospitalDoctors && (
   <div className="doctor-list-screen">
     <div className="doctor-list-header">
@@ -3628,39 +3607,54 @@ onClick={() => {
       </h2>
     </div>
 
-    {hospitalDoctors.map((doc) => (
-      <div
-        key={doc.id}
-        className="hospital-doctor-card"
-        onClick={() => setSelectedDoctor(doc)}
-      >
-        <div className="hospital-doctor-left">
-          <img src={doc.image} alt={doc.name} />
+{hospitalDoctors.map((doc) => (
+  <div
+    key={doc.id}
+    className="hospital-doctor-card"
+    onClick={() => setSelectedDoctor(doc)}
+  >
+    {/* LEFT */}
+    <div className="hospital-doctor-left">
+      <img
+        src={doc.image}
+        alt={doc.name}
+        className="hospital-doctor-avatar"
+      />
 
-          <div className="hospital-doctor-info">
-            <h3>{doc.name}</h3>
-
-            <p className="spec">{doc.speciality}</p>
-
-            <p className="exp">
-              {doc.experience} years experience
-            </p>
-
-            <div className="rating-row">
-              <span>⭐ {doc.rating}</span>
-              <span className="dot">•</span>
-              <span className={doc.available ? "available" : "unavailable"}>
-                {doc.available ? "Available" : "Not Available"}
-              </span>
-            </div>
-
-            <p className="price">₹{doc.price}/hr</p>
-          </div>
+      <div className="hospital-doctor-info">
+        <div className="doctor-name-row">
+          <h3 className="doctor-name">{doc.name}</h3>
+          {doc.rating >= 4.8 && (
+            <span className="top-rated-badge">Top Rated</span>
+          )}
         </div>
 
-        <div className="arrow-circle">→</div>
+        <p className="doctor-speciality">{doc.speciality}</p>
+
+        <p className="doctor-exp">{doc.experience} years experience</p>
+
+        <div className="doctor-meta-row">
+          <span className="rating">⭐ {doc.rating}</span>
+          <span className="dot">•</span>
+          <span
+            className={`availability ${
+              doc.available ? "available" : "unavailable"
+            }`}
+          >
+            {doc.available ? "Available" : "Not Available"}
+          </span>
+        </div>
+
+        <p className="doctor-price">₹{doc.price}/hr</p>
       </div>
-    ))}
+    </div>
+
+    {/* RIGHT */}
+    <div className="doctor-action">
+      <div className="arrow-circle">→</div>
+    </div>
+  </div>
+))}
   </div>
 )}
 
