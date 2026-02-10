@@ -6,6 +6,7 @@ import healthcareService, { type Appointment, type LabItem } from "../../../api/
 import { PaymentsAPI } from "../../../api/customerAuth";
 import CommonHeader from "../../landing/Header";
 import { JitsiMeeting } from "@jitsi/react-sdk";
+import { FiActivity, FiGrid, FiHeart, FiSearch, FiUser } from "react-icons/fi";
 
 
 
@@ -960,7 +961,13 @@ const pharmacyImages = [
 ];
 
 
-
+const filterOptions = [
+  { label: "All", icon: <FiGrid /> },
+  { label: "Cardiology", icon: <FiHeart /> },
+  { label: "Neurology", icon: <FiActivity /> },
+  { label: "Dermatology", icon: <FiUser /> },
+  { label: "General", icon: <FiUser /> },
+];
 
 
 const getDoctorImage = (id: number | string | undefined) => {
@@ -1039,6 +1046,9 @@ const HealthCare: React.FC = () => {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [activeCallAppointment, setActiveCallAppointment] = useState<any | null>(null);
 const [inCall, setInCall] = useState(false);
+const [doctorSearch, setDoctorSearch] = useState("");
+const [doctorFilter, setDoctorFilter] = useState("All");
+
 
 // storing user_id
 const [userId, setUserId] = useState<number | null>(null);
@@ -3592,8 +3602,9 @@ onClick={() => {
 
         {/* ✅ HOSPITAL DOCTORS SCREEN (ADD HERE) */}
 
-        {openHospitalDoctors && (
+      {openHospitalDoctors && (
   <div className="doctor-list-screen">
+    {/* Header */}
     <div className="doctor-list-header">
       <button
         className="back-btn"
@@ -3607,56 +3618,100 @@ onClick={() => {
       </h2>
     </div>
 
-{hospitalDoctors.map((doc) => (
-  <div
-    key={doc.id}
-    className="hospital-doctor-card"
-    onClick={() => setSelectedDoctor(doc)}
-  >
-    {/* LEFT */}
-    <div className="hospital-doctor-left">
-      <img
-        src={doc.image}
-        alt={doc.name}
-        className="hospital-doctor-avatar"
-      />
-
-      <div className="hospital-doctor-info">
-        <div className="doctor-name-row">
-          <h3 className="doctor-name">{doc.name}</h3>
-          {doc.rating >= 4.8 && (
-            <span className="top-rated-badge">Top Rated</span>
-          )}
-        </div>
-
-        <p className="doctor-speciality">{doc.speciality}</p>
-
-        <p className="doctor-exp">{doc.experience} years experience</p>
-
-        <div className="doctor-meta-row">
-          <span className="rating">⭐ {doc.rating}</span>
-          <span className="dot">•</span>
-          <span
-            className={`availability ${
-              doc.available ? "available" : "unavailable"
+    {/* Filter + Search */}
+    <div className="doctor-filters">
+      <div className="filter-tabs">
+        {filterOptions.map((opt) => (
+          <button
+            key={opt.label}
+            className={`filter-btn ${
+              doctorFilter === opt.label ? "active" : ""
             }`}
+            onClick={() => setDoctorFilter(opt.label)}
           >
-            {doc.available ? "Available" : "Not Available"}
-          </span>
-        </div>
+            <span className="filter-icon">{opt.icon}</span>
+            <span>{opt.label}</span>
+          </button>
+        ))}
+      </div>
 
-        <p className="doctor-price">₹{doc.price}/hr</p>
+      <div className="doctor-search-wrapper">
+        <FiSearch className="search-icon" />
+        <input
+          type="text"
+          className="doctor-search"
+          placeholder="Search doctors, specialties..."
+          value={doctorSearch}
+          onChange={(e) => setDoctorSearch(e.target.value)}
+        />
       </div>
     </div>
 
-    {/* RIGHT */}
-    <div className="doctor-action">
-      <div className="arrow-circle">→</div>
+    {/* 👇 Scroll ONLY this */}
+    <div className="doctor-list-scroll">
+      {hospitalDoctors
+        .filter((doc) => {
+          const matchesSearch =
+            doc.name.toLowerCase().includes(doctorSearch.toLowerCase()) ||
+            doc.speciality.toLowerCase().includes(doctorSearch.toLowerCase());
+
+          const matchesFilter =
+            doctorFilter === "All" || doc.speciality === doctorFilter;
+
+          return matchesSearch && matchesFilter;
+        })
+        .map((doc) => (
+          <div
+            key={doc.id}
+            className="hospital-doctor-card"
+            onClick={() => setSelectedDoctor(doc)}
+          >
+            {/* LEFT */}
+            <div className="hospital-doctor-left">
+              <img
+                src={doc.image}
+                alt={doc.name}
+                className="hospital-doctor-avatar"
+              />
+
+              <div className="hospital-doctor-info">
+                <div className="doctor-name-row">
+                  <h3 className="doctor-name">{doc.name}</h3>
+                  {doc.rating >= 4.8 && (
+                    <span className="top-rated-badge">Top Rated</span>
+                  )}
+                </div>
+
+                <p className="doctor-speciality">{doc.speciality}</p>
+                <p className="doctor-exp">
+                  {doc.experience} years experience
+                </p>
+
+                <div className="doctor-meta-row">
+                  <span className="rating">⭐ {doc.rating}</span>
+                  <span
+                    className={`availability ${
+                      doc.available ? "available" : "unavailable"
+                    }`}
+                  >
+                    {doc.available ? "Available" : "Not Available"}
+                  </span>
+                </div>
+
+                <p className="doctor-price">₹{doc.price}/hr</p>
+              </div>
+            </div>
+
+            {/* RIGHT */}
+            <div className="doctor-action">
+              <div className="arrow-circle">→</div>
+            </div>
+          </div>
+        ))}
     </div>
   </div>
-))}
-  </div>
 )}
+
 
 
         {selectedDoctor && (
