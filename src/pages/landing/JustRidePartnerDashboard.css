@@ -1910,7 +1910,7 @@
 }
 
 /* Main Content */
-* Changed from Grid to Flex to ensure vertical stacking */
+/* Changed from Grid to Flex to ensure vertical stacking */
 .dashboard-content-full {
   display: flex;
   flex-direction: column;
@@ -2925,7 +2925,7 @@ background-color: #F1F5F9; /* Subtle grayish-blue background */
 
 
 
-* ride */
+/* ride */
 
 /* Improved Route Card */
 .ride-route-card {
