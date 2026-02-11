@@ -7,7 +7,7 @@ import {
   Ticket,
   CreditCard,
   BarChart,
-  Settings,
+ 
 } from "lucide-react";
 type TicketStatus = "Pending" | "InProgress" | "Closed";
 
@@ -68,8 +68,9 @@ const handleLogout = () => {
 };
 
 const [activeView, setActiveView] = useState<
-  "dashboard" | "tickets" | "bookings"
+  "dashboard" | "tickets" | "bookings" | "payments" | "reports"
 >("dashboard");
+
 
 const [ticketCards, setTicketCards] = useState<TicketCard[]>([
   // -------- Pending --------
@@ -403,6 +404,39 @@ const filteredBookings = bookings.filter((booking) =>
 );
 
 
+// ================= PAYMENTS LOGIC =================
+const [paymentFilter, setPaymentFilter] = useState<
+  "All" | "Paid" | "Unpaid"
+>("All");
+
+const totalRevenue = bookings
+  .filter((b) => b.paymentStatus === "Paid")
+  .reduce((sum, b) => sum + b.amount, 0);
+
+const unpaidAmount = bookings
+  .filter((b) => b.paymentStatus === "Unpaid")
+  .reduce((sum, b) => sum + b.amount, 0);
+
+const filteredPayments =
+  paymentFilter === "All"
+    ? bookings
+    : bookings.filter(
+        (b) => b.paymentStatus === paymentFilter
+      );
+// ================= REPORTS LOGIC =================
+const totalBookings = bookings.length;
+
+const completedWork = bookings.filter(
+  (b) => b.workStatus === "Completed"
+).length;
+
+const pendingWork = bookings.filter(
+  (b) => b.workStatus === "Pending"
+).length;
+
+const closedTickets = ticketCards.filter(
+  (t) => t.status === "Closed"
+).length;
 
   return (
     <div className="admin-dashboard">
@@ -463,20 +497,31 @@ const filteredBookings = bookings.filter((booking) =>
       <span>Tickets</span>
     </a>
 
-    <a className="admin-dashboard__menu-item">
-      <CreditCard size={18} />
-      <span>Payments</span>
-    </a>
+    <a
+  className={`admin-dashboard__menu-item ${
+    activeView === "payments"
+      ? "admin-dashboard__menu-item--active"
+      : ""
+  }`}
+  onClick={() => setActiveView("payments")}
+>
+  <CreditCard size={18} />
+  <span>Payments</span>
+</a>
 
-    <a className="admin-dashboard__menu-item">
-      <BarChart size={18} />
-      <span>Reports</span>
-    </a>
 
-    <a className="admin-dashboard__menu-item">
-      <Settings size={18} />
-      <span>Settings</span>
-    </a>
+    <a
+  className={`admin-dashboard__menu-item ${
+    activeView === "reports"
+      ? "admin-dashboard__menu-item--active"
+      : ""
+  }`}
+  onClick={() => setActiveView("reports")}
+>
+  <BarChart size={18} />
+  <span>Reports</span>
+</a>
+
   </nav>
 
   {/* 🔴 LOGOUT AT BOTTOM */}
@@ -500,8 +545,13 @@ const filteredBookings = bookings.filter((booking) =>
 
         {activeView === "dashboard" && (
           <>
+          <h1 className="admin-dashboard__main-title">
+  Admin Dashboard
+</h1>
+
             {/* KPI Cards */}
             <section className="admin-dashboard__stats">
+              
              <div
   className="admin-dashboard__stat-card clickable"
 onClick={() => {
@@ -598,6 +648,7 @@ onClick={() => {
 
               </table>
             </section>
+            
           </>
         )}
         {activeView === "bookings" && (
@@ -748,6 +799,102 @@ onClick={() => {
   </section>
 )}
 
+{/* ================= PAYMENTS ================= */}
+{activeView === "payments" && (
+  <section className="admin-dashboard__payments">
+    <h2>Payments Overview</h2>
+
+    <div className="admin-dashboard__stats">
+      <div className="admin-dashboard__stat-card">
+        <p>Total Revenue</p>
+        <h2>₹{totalRevenue}</h2>
+      </div>
+
+      <div className="admin-dashboard__stat-card">
+        <p>Unpaid Amount</p>
+        <h2>₹{unpaidAmount}</h2>
+      </div>
+    </div>
+
+    <div className="payments-filter-wrapper">
+  <select
+    className="payments-filter"
+    value={paymentFilter}
+    onChange={(e) =>
+      setPaymentFilter(
+        e.target.value as "All" | "Paid" | "Unpaid"
+      )
+    }
+  >
+    <option value="All">All</option>
+    <option value="Paid">Paid</option>
+    <option value="Unpaid">Unpaid</option>
+  </select>
+</div>
+
+
+    <table className="admin-dashboard__bookings-table">
+      <thead>
+        <tr>
+          <th>Booking ID</th>
+          <th>Customer</th>
+          <th>Amount</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {filteredPayments.map((payment) => (
+          <tr key={payment.id}>
+            <td>{payment.id}</td>
+            <td>{payment.customer}</td>
+            <td>₹{payment.amount}</td>
+            <td>{payment.paymentStatus}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </section>
+)}
+{/* ================= REPORTS ================= */}
+{activeView === "reports" && (
+  <section className="admin-dashboard__reports">
+    <h2>Business Reports</h2>
+
+    <div className="admin-dashboard__stats">
+      <div className="admin-dashboard__stat-card">
+        <p>Total Bookings</p>
+        <h2>{totalBookings}</h2>
+      </div>
+
+      <div className="admin-dashboard__stat-card">
+        <p>Total Tickets</p>
+        <h2>{totalTicketsCount}</h2>
+      </div>
+
+      <div className="admin-dashboard__stat-card">
+        <p>Closed Tickets</p>
+        <h2>{closedTickets}</h2>
+      </div>
+
+      <div className="admin-dashboard__stat-card">
+        <p>Completed Work</p>
+        <h2>{completedWork}</h2>
+      </div>
+
+      <div className="admin-dashboard__stat-card">
+        <p>Pending Work</p>
+        <h2>{pendingWork}</h2>
+      </div>
+
+      <div className="admin-dashboard__stat-card">
+        <p>Total Revenue</p>
+        <h2>₹{totalRevenue}</h2>
+      </div>
+    </div>
+  </section>
+)}
+
 
       </main>
       {/* ================= ASSIGN FREELANCER POPUP ================= */}
@@ -863,14 +1010,13 @@ onClick={() => {
               <td className="email">{f.name.toLowerCase()}@gmail.com</td>
               <td>Hyderabad</td>
 
-              <td>
-                <span className="skill-pill">{f.skills[0]}</span>
-                {f.skills.length > 1 && (
-                  <span className="skill-more">
-                    +{f.skills.length - 1} more
-                  </span>
-                )}
-              </td>
+            <td>
+  <span className="skill-pill">
+    {f.skills[0]}
+  </span>
+</td>
+
+
 
               <td>NA</td>
               <td>5+ years</td>
