@@ -3,7 +3,7 @@ import "./Blog.css";
 import CleaningHeader from "./CleaningHeader";
 import Footer from "../../../src/pages/CleaningService/CleaningServiceFooter";
 import blog1 from "../../assets/CleaningServices/LR2.jpg";
-import blog2 from "../../assets/CleaningServices/Kitchen1.jpg";
+import blog2 from "../../assets/CleaningServices/KItchen1.jpg";
 import blog3 from "../../assets/CleaningServices/Cleaning1.png";
 
 const blogs = [
