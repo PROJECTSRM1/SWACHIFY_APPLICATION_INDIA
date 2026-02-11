@@ -1,0 +1,221 @@
+.portfolio-hero {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #fff;
+  text-align: center;
+  margin-top: 3px;
+  padding: 80px 20px;
+}
+
+.portfolio-hero h1 {
+  font-size: 42px;
+  margin-bottom: 10px;
+}
+
+.portfolio-hero p {
+  color: #fff;
+}
+
+.portfolio-container {
+  padding: 60px 40px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* FILTER BUTTONS */
+
+.portfolio-filters {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.portfolio-filter-btn {
+  border: none;
+  background: #e2e8f0;
+  padding: 10px 20px;
+  margin: 5px;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: 0.3s;
+  font-weight: 500;
+}
+
+.portfolio-filter-btn.active,
+.portfolio-filter-btn:hover {
+  background: #16a34a;
+  color: #fff;
+}
+
+/* GRID */
+
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 25px;
+}
+
+.portfolio-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.portfolio-card img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  transition: 0.4s;
+}
+
+/* HOVER EFFECT */
+
+.portfolio-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  opacity: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: 0.4s;
+}
+
+.portfolio-card:hover img {
+  transform: scale(1.1);
+}
+
+.portfolio-card:hover .portfolio-overlay {
+  opacity: 1;
+}
+
+/* FAQ SECTION */
+.portfolio-faq {
+  padding: 80px 20px;
+  background: #f9f9f9;
+}
+
+.faq-container {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.faq-container h2 {
+  font-size: 36px; /* Increased */
+  font-weight: 700;
+  margin-bottom: 50px;
+  color: #1a1a1a;
+}
+
+.faq-item {
+  background: #ffffff;
+  padding: 25px 30px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  text-align: center; /* Align text properly */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.faq-item h4 {
+  font-size: 20px; /* Increased question size */
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #111;
+}
+
+.faq-item p {
+  font-size: 16px; /* Increased answer size */
+  line-height: 1.7;
+  color: #555;
+}
+/* =========================
+   TABLET (<=1024px)
+========================= */
+@media (max-width: 1024px) {
+  .portfolio-container {
+    padding: 50px 20px;
+  }
+
+  .portfolio-hero h1 {
+    font-size: 34px;
+  }
+
+  .portfolio-hero p {
+    font-size: 16px;
+  }
+}
+
+/* =========================
+   MOBILE (<=768px)
+========================= */
+@media (max-width: 768px) {
+  .portfolio-hero {
+    padding: 60px 15px;
+  }
+
+  .portfolio-hero h1 {
+    font-size: 28px;
+  }
+
+  .portfolio-hero p {
+    font-size: 15px;
+  }
+
+  .portfolio-container {
+    padding: 40px 15px;
+  }
+
+  .portfolio-card img {
+    height: 220px;
+  }
+
+  .portfolio-overlay h4 {
+    font-size: 16px;
+  }
+
+  .portfolio-overlay span {
+    font-size: 13px;
+  }
+
+  /* FAQ Fix */
+  .faq-container h2 {
+    font-size: 26px;
+  }
+
+  .faq-item {
+    text-align: left; /* looks better on mobile */
+    padding: 20px;
+  }
+
+  .faq-item h4 {
+    font-size: 18px;
+  }
+
+  .faq-item p {
+    font-size: 14px;
+  }
+}
+
+/* =========================
+   SMALL MOBILE (<=480px)
+========================= */
+@media (max-width: 480px) {
+  .portfolio-hero h1 {
+    font-size: 22px;
+  }
+
+  .portfolio-filter-btn {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+
+  .portfolio-grid {
+    gap: 18px;
+  }
+
+  .portfolio-card img {
+    height: 200px;
+  }
+}

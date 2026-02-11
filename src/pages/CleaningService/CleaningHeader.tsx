@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import { Input } from "antd";
+
 import { Dropdown, Menu,Modal } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Input, Button, message } from "antd";
 import { 
   SearchOutlined, 
   PhoneOutlined, 
@@ -11,6 +12,7 @@ import {
 } from "@ant-design/icons";
 import "./CleaningHeader.css";
 import { getAllHomeServiceBookings, type HomeServiceBookingItem } from "../../api/homeService";
+import { customerLogin } from "../../api/customerAuth";
 
 const CleaningHeader: React.FC = () => {
   const location = useLocation();
@@ -18,10 +20,37 @@ const CleaningHeader: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showRecentBookings, setShowRecentBookings] = useState(false);
   const [recentBookings, setRecentBookings] = useState<HomeServiceBookingItem[]>([]);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+const [identifier, setIdentifier] = useState("");
+const [password, setPassword] = useState("");
+const [loading, setLoading] = useState(false);
 
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(
   !!localStorage.getItem("accessToken")
 );
+const handleLogin = async () => {
+  try {
+    setLoading(true);
+
+    const res: any = await customerLogin({
+      email_or_phone: identifier,
+      password,
+    });
+
+    localStorage.setItem("accessToken", res.access_token);
+    localStorage.setItem("user", JSON.stringify(res));
+
+    setIsAuthenticated(true);
+    setShowLoginModal(false);
+
+    message.success("Login successful");
+  } catch (e) {
+    message.error("Invalid credentials");
+  } finally {
+    setLoading(false);
+  }
+};
+
 const handleLogout = () => {
   localStorage.removeItem("accessToken");
   localStorage.removeItem("refreshToken"); // if you have it
@@ -285,16 +314,14 @@ useEffect(() => {
 
             {/* Login/Profile Button */}
             {!isAuthenticated ? (
-  <button
-    className="ch-profile-btn"
-    onClick={() => {
-      // reuse global auth modal
-      (window as any).openAuthModal?.("login");
-    }}
-  >
-    <UserOutlined />
-    <span>Login</span>
-  </button>
+ <button
+  className="ch-profile-btn"
+  onClick={() => setShowLoginModal(true)}
+>
+  <UserOutlined />
+  <span>Login</span>
+</button>
+
 ) : (
   <Dropdown overlay={profileMenu} trigger={["click"]} placement="bottomRight">
   <button className="ch-profile-btn">
@@ -439,6 +466,60 @@ useEffect(() => {
     ))}
   </div>
 </Modal>
+<Modal
+  open={showLoginModal}
+  footer={null}
+  centered
+  onCancel={() => setShowLoginModal(false)}
+  className="auth-modal"
+  closable={false}
+>
+  <div className="auth-container">
+    
+    {/* Header */}
+    <div className="auth-header">
+      <h2>Welcome Back 👋</h2>
+      <p>Login to continue booking your service</p>
+    </div>
+
+    {/* Inputs */}
+    <div className="auth-body">
+      <Input
+        size="large"
+        placeholder="Email or Mobile Number"
+        value={identifier}
+        onChange={(e) => setIdentifier(e.target.value)}
+        className="auth-input"
+      />
+
+      <Input.Password
+        size="large"
+        placeholder="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        className="auth-input"
+      />
+
+      <Button
+        type="primary"
+        size="large"
+        block
+        loading={loading}
+        disabled={!identifier || !password}
+        onClick={handleLogin}
+        className="auth-button"
+      >
+        Login
+      </Button>
+    </div>
+
+    
+   
+
+  </div>
+</Modal>
+
+
 
 
 

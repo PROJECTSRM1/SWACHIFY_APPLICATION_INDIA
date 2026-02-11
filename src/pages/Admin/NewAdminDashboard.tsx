@@ -1,704 +1,912 @@
-import { useEffect, useRef, useState } from "react";
-import {
-
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-} from "recharts";
+import { useState } from "react"; // ✅ ADDED
 import "./AdminDashboard.css";
-import { DatePicker } from "antd";
-// import type { RangePickerProps } from "antd/es/date-picker";
-import dayjs, { Dayjs } from "dayjs";
-import { Dropdown, Button } from "antd";
-import type { MenuProps } from "antd";
+import {
+  LayoutDashboard,
+  Calendar,
 
-import { DownOutlined } from "@ant-design/icons";
+  Ticket,
+  CreditCard,
+  BarChart,
+  Settings,
+} from "lucide-react";
+type TicketStatus = "Pending" | "InProgress" | "Closed";
 
-
-const { RangePicker } = DatePicker;
-
-
-
-/* ================= TYPES ================= */
-
-type Menu =
-  | "dashboard"
-  | "users"
-  | "freelancers"
-  | "services"
-  | "settings";
-
-type MetricType = "users" | "freelancers";
-
-/* ================= ROOT ================= */
-
-export default function AdminDashboard() {
-  const [active, setActive] = useState<Menu>("dashboard");
-  const [open, setOpen] = useState(false);
-const [profileOpen, setProfileOpen] = useState(false);
-const profileRef = useRef<HTMLDivElement | null>(null);
-useEffect(() => {
-  const handleClickOutside = (e: MouseEvent) => {
-    if (
-      profileRef.current &&
-      !profileRef.current.contains(e.target as Node)
-    ) {
-      setProfileOpen(false);
-    }
-  };
-
-  document.addEventListener("mousedown", handleClickOutside);
-  return () => {
-    document.removeEventListener("mousedown", handleClickOutside);
-  };
-}, []);
-
-const handleLogout = () => {
-  localStorage.clear();
-  sessionStorage.clear();
-  window.location.href = "/";
-};
-
- return (
-  <div className="ad-root">
-    <div className="ad-layout">
-      {/* SIDEBAR */}
-      <aside className={`ad-sidebar ${open ? "open" : ""}`}>
-        <div className="ad-sidebar-header">
-          {/* LOGO WITH LETTER */}
-          <div className="ad-logo">S</div>
-          <div>
-            <span>SUPER ADMIN</span>
-          </div>
-        </div>
-
-        <nav className="ad-menu">
-          {["dashboard", "users", "freelancers", "services"].map((item) => (
-            <button
-              key={item}
-              className={active === item ? "active" : ""}
-              onClick={() => {
-                setActive(item as Menu);
-                setOpen(false);
-              }}
-            >
-              {item.charAt(0).toUpperCase() + item.slice(1)}
-            </button>
-          ))}
-        </nav>
-
-        <div className="ad-sidebar-footer">
-          <button
-            className={active === "settings" ? "active" : ""}
-            onClick={() => setActive("settings")}
-          >
-            Settings
-          </button>
-        </div>
-      </aside>
-
-      {/* MAIN */}
-      <div className="ad-main">
-        <header className="ad-topbar">
-          <div className="ad-left">
-            <div
-              className="ad-hamburger"
-onClick={() => {
-  setOpen(!open);
-  setTimeout(() => {
-    window.dispatchEvent(new Event("resize"));
-  }, 350);
-}}
-            >
-              {open ? "✖" : "☰"}
-            </div>
-
-            <h2>
-              {active === "freelancers"
-                ? "Freelancer Analytics"
-                : "Admin Dashboard"}
-            </h2>
-          </div>
-
-          {/* PROFILE */}
-          <div className="ad-profile" ref={profileRef}>
-            <div
-              className="ad-avatar"
-              onClick={() => setProfileOpen(!profileOpen)}
-            >
-              👤
-            </div>
-
-            {profileOpen && (
-              <div className="ad-profile-menu">
-                <button onClick={handleLogout}>Logout</button>
-              </div>
-            )}
-          </div>
-        </header>
-
-        <main className="ad-content">
-          {active === "dashboard" && <DashboardView />}
-          {active === "freelancers" && <FreelancerView />}
-
-          {active !== "dashboard" && active !== "freelancers" && (
-            <div className="placeholder">
-              <h3>{active.toUpperCase()}</h3>
-              <p>Content will be shown here</p>
-            </div>
-          )}
-        </main>
-      </div>
-    </div>
-  </div>
-);
-
+interface TicketCard {
+  id: string;
+  customer: string;
+  serviceType: string;
+  bookingCount: number;
+  address: string;
+  date: string;
+  amount: number;
+  status: TicketStatus;   // ⬅️ change here
+  assignedFreelancer?: string;
 }
 
-/* ================= DASHBOARD ================= */
 
-function DashboardView() {
 
-  const [metricInput, setMetricInput] =
-    useState<MetricType>("users");
 
-const [singleDate, setSingleDate] = useState<[Dayjs | null, Dayjs | null]>([
-  dayjs("2025-01-01"),
-  dayjs("2025-01-31"),
+const AdminDashboard = () => {
+  const [bookingSearch, setBookingSearch] = useState("");
+  const [showFreelancerPopup, setShowFreelancerPopup] = useState(false);
+const [freelancerView, setFreelancerView] = useState<"pending" | "total">(
+  "pending"
+);
+const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const handleRejectFreelancer = (id: string) => {
+  setFreelancers((prev) =>
+    prev.filter((f) => f.id !== id)
+  );
+};
+
+
+  const [ticketFilter, setTicketFilter] = useState<
+  "All" | "Pending" | "InProgress" | "Closed"
+>("All");
+
+const assignFreelancer = (freelancerName: string) => {
+  setTicketCards((prev) =>
+    prev.map((ticket) =>
+      ticket.id === selectedTicketId
+        ? {
+            ...ticket,
+            status: "InProgress", // ⬅️ IMPORTANT
+            assignedFreelancer: freelancerName,
+          }
+        : ticket
+    )
+  );
+
+  setShowFreelancerModal(false);
+  setSelectedTicketId(null);
+};
+const handleLogout = () => {
+ 
+
+  window.history.back(); // ⬅️ GO BACK
+};
+
+const [activeView, setActiveView] = useState<
+  "dashboard" | "tickets" | "bookings"
+>("dashboard");
+
+const [ticketCards, setTicketCards] = useState<TicketCard[]>([
+  // -------- Pending --------
+  {
+    id: "REQ-001",
+    customer: "Rahul",
+    serviceType: "2BHK Flat Cleaning",
+    bookingCount: 1,
+    address: "Flat 302, Green View Apartments, Madhapur",
+    date: "09 Feb, 10:00 AM",
+    amount: 1200,
+    status: "Pending",
+  },
+  {
+    id: "REQ-002",
+    customer: "Suresh",
+    serviceType: "Sofa Cleaning",
+    bookingCount: 2,
+    address: "KPHB Phase 2",
+    date: "10 Feb, 11:00 AM",
+    amount: 1800,
+    status: "Pending",
+  },
+  {
+    id: "REQ-003",
+    customer: "Meena",
+    serviceType: "Bathroom Cleaning",
+    bookingCount: 1,
+    address: "Miyapur",
+    date: "10 Feb, 01:00 PM",
+    amount: 600,
+    status: "Pending",
+  },
+  {
+    id: "REQ-004",
+    customer: "Arjun",
+    serviceType: "Office Cleaning",
+    bookingCount: 1,
+    address: "Hitech City",
+    date: "11 Feb, 09:00 AM",
+    amount: 3000,
+    status: "Pending",
+  },
+
+  // -------- InProgress --------
+  {
+    id: "REQ-005",
+    customer: "Anita",
+    serviceType: "Kitchen Deep-Cleaning",
+    bookingCount: 1,
+    address: "Palm Meadows, Gachibowli",
+    date: "09 Feb, 02:00 PM",
+    amount: 800,
+    status: "InProgress",
+    assignedFreelancer: "Sunita",
+  },
+  {
+    id: "REQ-006",
+    customer: "Karthik",
+    serviceType: "1BHK Flat Cleaning",
+    bookingCount: 1,
+    address: "Kondapur",
+    date: "10 Feb, 03:00 PM",
+    amount: 1000,
+    status: "InProgress",
+    assignedFreelancer: "Ravi",
+  },
+  {
+    id: "REQ-007",
+    customer: "Priya",
+    serviceType: "Sofa + Carpet Cleaning",
+    bookingCount: 3,
+    address: "Manikonda",
+    date: "11 Feb, 12:00 PM",
+    amount: 2200,
+    status: "InProgress",
+    assignedFreelancer: "Ravi",
+  },
+  {
+    id: "REQ-008",
+    customer: "Vikram",
+    serviceType: "Move-out Cleaning",
+    bookingCount: 1,
+    address: "Jubilee Hills",
+    date: "11 Feb, 05:00 PM",
+    amount: 4500,
+    status: "InProgress",
+    assignedFreelancer: "Sunita",
+  },
+
+  // -------- Closed --------
+  {
+    id: "REQ-009",
+    customer: "Naveen",
+    serviceType: "Bathroom Deep Cleaning",
+    bookingCount: 2,
+    address: "Begumpet",
+    date: "07 Feb, 10:30 AM",
+    amount: 1200,
+    status: "Closed",
+  },
+  {
+    id: "REQ-010",
+    customer: "Asha",
+    serviceType: "Kitchen Cleaning",
+    bookingCount: 1,
+    address: "LB Nagar",
+    date: "07 Feb, 01:00 PM",
+    amount: 700,
+    status: "Closed",
+  },
+  {
+    id: "REQ-011",
+    customer: "Rohit",
+    serviceType: "Full Home Cleaning",
+    bookingCount: 1,
+    address: "Banjara Hills",
+    date: "06 Feb, 09:00 AM",
+    amount: 3500,
+    status: "Closed",
+  },
+  {
+    id: "REQ-012",
+    customer: "Divya",
+    serviceType: "Sofa Cleaning",
+    bookingCount: 2,
+    address: "Nallagandla",
+    date: "06 Feb, 11:00 AM",
+    amount: 1600,
+    status: "Closed",
+  },
+  {
+    id: "REQ-013",
+    customer: "Sanjay",
+    serviceType: "Office Cleaning",
+    bookingCount: 1,
+    address: "Gachibowli",
+    date: "05 Feb, 10:00 AM",
+    amount: 4000,
+    status: "Closed",
+  },
+  {
+    id: "REQ-014",
+    customer: "Neha",
+    serviceType: "1BHK Cleaning",
+    bookingCount: 1,
+    address: "Madhapur",
+    date: "05 Feb, 03:00 PM",
+    amount: 900,
+    status: "Closed",
+  },
+  {
+    id: "REQ-015",
+    customer: "Imran",
+    serviceType: "Balcony Cleaning",
+    bookingCount: 1,
+    address: "Tolichowki",
+    date: "04 Feb, 04:30 PM",
+    amount: 500,
+    status: "Closed",
+  },
+]);
+const totalTicketsCount = ticketCards.length;
+
+const inProgressTicketsCount = ticketCards.filter(
+  (ticket: TicketCard) => ticket.status === "InProgress"
+).length;
+
+
+const filteredTickets =
+  ticketFilter === "All"
+    ? ticketCards
+    : ticketCards.filter((ticket) => ticket.status === ticketFilter);
+
+interface Freelancer {
+  id: string;
+  name: string;
+  skills: string[];
+  isAvailable: boolean;
+  status: "pending" | "approved";
+}
+
+
+const [freelancers, setFreelancers] = useState<Freelancer[]>([ 
+  {
+    id: "F001",
+    name: "Ravi",
+    skills: ["Home Cleaning", "Full Home Cleaning"],
+    isAvailable: true,
+    status: "pending",
+  },
+  {
+    id: "F002",
+    name: "Sunita",
+    skills: ["Kitchen Cleaning", "Bathroom Cleaning"],
+    isAvailable: true,
+    status: "pending",
+  },
+  {
+    id: "F003",
+    name: "Akhil",
+    skills: ["Sofa Cleaning", "Carpet Cleaning"],
+    isAvailable: false,
+    status: "pending",
+  },
+  {
+    id: "F004",
+    name: "Kiran",
+    skills: ["Move-out Cleaning", "Balcony Cleaning"],
+    isAvailable: true,
+    status: "pending",
+  },
+  {
+    id: "F005",
+    name: "Sneha",
+    skills: ["Bathroom Deep Cleaning", "Tile Cleaning"],
+    isAvailable: true,
+    status: "pending",
+  },
+
+  // -------- Approved (Total Freelancers) --------
+  {
+    id: "F006",
+    name: "Pooja",
+    skills: ["1BHK Cleaning", "2BHK Cleaning"],
+    isAvailable: true,
+    status: "approved",
+  },
+  {
+    id: "F007",
+    name: "Manoj",
+    skills: ["Office Cleaning"],
+    isAvailable: true,
+    status: "approved",
+  },
+  {
+    id: "F008",
+    name: "Arif",
+    skills: ["Sofa Cleaning", "Chair Cleaning"],
+    isAvailable: true,
+    status: "approved",
+  },
+  {
+    id: "F009",
+    name: "Lakshman",
+    skills: ["Villa Cleaning", "Full Home Cleaning"],
+    isAvailable: false,
+    status: "approved",
+  },
+  {
+    id: "F010",
+    name: "Farah",
+    skills: ["Kitchen Cleaning", "Dishwash Area Cleaning"],
+    isAvailable: true,
+    status: "approved",
+  },
 ]);
 
-const [quickLabel, setQuickLabel] = useState("Quick Select");
+// ✅ ADD HERE (right below freelancers state)
+const pendingFreelancers = freelancers.filter(
+  (f) => f.status === "pending"
+);
 
-const applyQuickRange = (key: string) => {
-  let start: Dayjs;
-  let end: Dayjs;
-  let label = "Quick Select";
+const totalFreelancers = freelancers.filter(
+  (f) => f.status === "approved"
+);
 
-  switch (key) {
-    case "today":
-      start = dayjs();
-      end = dayjs();
-      label = "Today";
-      break;
+const handleApproveFreelancer = (id: string) => {
+  setFreelancers((prev) =>
+    prev.map((f) =>
+      f.id === id
+        ? { ...f, status: "approved" }
+        : f
+    )
+  );
 
-    case "yesterday":
-      start = dayjs().subtract(1, "day");
-      end = dayjs().subtract(1, "day");
-      label = "Yesterday";
-      break;
-
-    case "week":
-      start = dayjs().subtract(6, "day");
-      end = dayjs();
-      label = "Last 1 Week";
-      break;
-
-    case "month":
-      start = dayjs().subtract(1, "month");
-      end = dayjs();
-      label = "Last 1 Month";
-      break;
-
-    case "3months":
-      start = dayjs().subtract(3, "month");
-      end = dayjs();
-      label = "Last 3 Months";
-      break;
-
-    default:
-      return;
-  }
-
-  const from = start.format("YYYY-MM-DD");
-  const to = end.format("YYYY-MM-DD");
-
-  setSingleDate([start, end]);
-  setFromMonth(from);
-  setToMonth(to);
-  setQuickLabel(label);
+  // optional: auto-switch to Total tab
+  setFreelancerView("total");
 };
 
-useEffect(() => {
-  window.dispatchEvent(new Event("resize"));
-}, []);
+const [showFreelancerModal, setShowFreelancerModal] = useState(false);
+const [selectedTicketId, setSelectedTicketId] = useState<string | null>(null);
 
 
 
-const quickMenu: MenuProps["items"] = [
-  { key: "today", label: "Today" },
-  { key: "yesterday", label: "Yesterday" },
-  { key: "week", label: "Last 1 Week" },
-  { key: "month", label: "Last 1 Month" },
-  { key: "3months", label: "Last 3 Months" },
+interface Booking {
+  id: string;
+  customer: string;
+  location: string;
+  serviceType: string;
+  paymentStatus: "Paid" | "Unpaid";
+  workStatus: "Pending" | "In Progress" | "Completed";
+  assignedTo?: string;
+  amount: number;
+}
+
+const bookings: Booking[] = [
+  {
+    id: "BK-001",
+    customer: "Rahul",
+    location: "Madhapur",
+    serviceType: "2BHK Flat Cleaning",
+    paymentStatus: "Paid",
+    workStatus: "Completed",
+    assignedTo: "Ravi",
+    amount: 1200,
+  },
+  {
+    id: "BK-002",
+    customer: "Anita",
+    location: "Gachibowli",
+    serviceType: "Kitchen Cleaning",
+    paymentStatus: "Paid",
+    workStatus: "In Progress",
+    assignedTo: "Sunita",
+    amount: 800,
+  },
+  {
+    id: "BK-003",
+    customer: "Suresh",
+    location: "KPHB",
+    serviceType: "Office Cleaning",
+    paymentStatus: "Unpaid",
+    workStatus: "Pending",
+    amount: 3000,
+  },
 ];
 
+const filteredBookings = bookings.filter((booking) =>
+  booking.customer.toLowerCase().includes(bookingSearch.toLowerCase())
+);
 
-  /* APPLIED STATE */
-  const [metric, setMetric] = useState<MetricType>("users");
- const [fromMonth, setFromMonth] = useState("2025-01-01");
-const [toMonth, setToMonth] = useState("2025-01-31");
-
-
-  /* DATA */
-  const [chartData, setChartData] = useState<any[]>([]);
-  const [total, setTotal] = useState(0);
-  const [topCategory, setTopCategory] = useState("");
-  const [activeToday, setActiveToday] = useState(0);
-  const [verification, setVerification] = useState(0);
-  
-
-  useEffect(() => {
-    calculate();
-  }, [metric, fromMonth, toMonth]);
-  
-
-
-  const calculate = () => {
-  
-  const base =
-    metric === "users"
-      ? {
-          Housing: 1200,
-          Education: 900,
-          Products: 1800,
-          Healthcare: 1500,
-        }
-      : {
-          Housing: 600,
-          Education: 480,
-          Products: 1100,
-          Healthcare: 900,
-        };
-
-  const from = dayjs(fromMonth);
-  const to = dayjs(toMonth);
-
-  const days = Math.max(to.diff(from, "day") + 1, 1);
-
-  
-  const DAILY_DIVISOR = 30;
-
-  const data = Object.entries(base).map(([name, monthlyValue]) => {
-    const dailyAvg = monthlyValue / DAILY_DIVISOR;
-
-    
-    const noise = Math.random() * 0.15 + 0.9; 
-
-    return {
-      name,
-      value: Math.round(dailyAvg * days * noise),
-    };
-  });
-
-  setChartData(data);
-
-  const sum = data.reduce((s, d) => s + d.value, 0);
-  const top = data.reduce((a, b) => (a.value > b.value ? a : b));
-
-  setTotal(sum);
-  setTopCategory(top.name);
-
-  
-  setActiveToday(Math.round(sum / days));
-
-  setVerification(metric === "users" ? 98.2 : 94.5);
-};
 
 
   return (
-    <>
-      {/* FILTERS */}
-      <div className="ad-filters">
-        <div className="ad-filter-item">
-          <label>Metrics Category</label>
-          <select
-  className="ad-select"
-  value={metricInput}
-  onChange={(e) => {
-    const value = e.target.value as MetricType;
-    setMetricInput(value);
-    setMetric(value); 
-  }}
+    <div className="admin-dashboard">
+      {isSidebarOpen && (
+  <div
+    className="sidebar-overlay"
+    onClick={() => setIsSidebarOpen(false)}
+  />
+)}
+
+<aside
+  className={`admin-dashboard__sidebar ${
+    isSidebarOpen ? "sidebar-open" : ""
+  }`}
 >
+  <button
+  className="sidebar-close"
+  onClick={() => setIsSidebarOpen(false)}
+>
+  ✕
+</button>
 
-            <option value="users">Users</option>
-            <option value="freelancers">Freelancers</option>
-          </select>
-        </div>
-
-        
-
-<div className="ad-filter-item">
-  <label>Date Range</label>
-
-  <div style={{ display: "flex", gap: 10 }}>
-    {/* DATE PICKER */}
- <RangePicker
-  value={singleDate}
-  format="YYYY-MM-DD"
-  allowClear={false}
-onChange={(dates) => {
-  if (!dates) return;
-
-  const [start, end] = dates;
-  if (!start || !end) return;
-
-  setSingleDate([start, end]);
-
-  setFromMonth(start.format("YYYY-MM-DD"));
-  setToMonth(end.format("YYYY-MM-DD"));
-
-  setQuickLabel("Custom Range");
-}}
-
-  style={{ height: 42, borderRadius: 10 }}
-/>
-
-
-
-   
-    <Dropdown
-      menu={{
-        items: quickMenu,
-        onClick: ({ key }) => applyQuickRange(key),
-      }}
+  <nav className="admin-dashboard__menu">
+    {/* MENU ITEMS */}
+    <a
+      className={`admin-dashboard__menu-item ${
+        activeView === "dashboard"
+          ? "admin-dashboard__menu-item--active"
+          : ""
+      }`}
+      onClick={() => setActiveView("dashboard")}
     >
-      <Button
-  style={{ height: 42, borderRadius: 10 }}
->
-  {quickLabel} <DownOutlined />
-</Button>
+      <LayoutDashboard size={18} />
+      <span>Dashboard</span>
+    </a>
 
-    </Dropdown>
+    <a
+      className={`admin-dashboard__menu-item ${
+        activeView === "bookings"
+          ? "admin-dashboard__menu-item--active"
+          : ""
+      }`}
+      onClick={() => setActiveView("bookings")}
+    >
+      <Calendar size={18} />
+      <span>Bookings</span>
+    </a>
+
+    <a
+      className={`admin-dashboard__menu-item ${
+        activeView === "tickets"
+          ? "admin-dashboard__menu-item--active"
+          : ""
+      }`}
+      onClick={() => setActiveView("tickets")}
+    >
+      <Ticket size={18} />
+      <span>Tickets</span>
+    </a>
+
+    <a className="admin-dashboard__menu-item">
+      <CreditCard size={18} />
+      <span>Payments</span>
+    </a>
+
+    <a className="admin-dashboard__menu-item">
+      <BarChart size={18} />
+      <span>Reports</span>
+    </a>
+
+    <a className="admin-dashboard__menu-item">
+      <Settings size={18} />
+      <span>Settings</span>
+    </a>
+  </nav>
+
+  {/* 🔴 LOGOUT AT BOTTOM */}
+  <div className="admin-dashboard__logout">
+    <button onClick={handleLogout}>
+      Logout
+    </button>
   </div>
+</aside>
+
+      {/* Main Content */}
+      <main className="admin-dashboard__content">{/* MOBILE HEADER */}
+<div className="mobile-header">
+  <button
+    className="hamburger-btn"
+    onClick={() => setIsSidebarOpen(true)}
+  >
+    ☰
+  </button>
+</div>
+
+        {activeView === "dashboard" && (
+          <>
+            {/* KPI Cards */}
+            <section className="admin-dashboard__stats">
+             <div
+  className="admin-dashboard__stat-card clickable"
+onClick={() => {
+  setFreelancerView("pending"); // default
+  setShowFreelancerPopup(true);
+}}
+>
+  <p className="admin-dashboard__stat-label">Freelancers</p>
+  <h2 className="admin-dashboard__stat-value">32</h2>
 </div>
 
 
 
+            <div
+  className="admin-dashboard__stat-card clickable"
+  onClick={() => setActiveView("tickets")}
+>
+  <p className="admin-dashboard__stat-label">
+    Total Tickets
+  </p>
+  <h2 className="admin-dashboard__stat-value">
+    {totalTicketsCount}
+  </h2>
+</div>
 
 
+<div
+  className="admin-dashboard__stat-card clickable"
+  onClick={() => {
+    setActiveView("tickets");       
+    setTicketFilter("InProgress");   
+  }}
+>
+  <p className="admin-dashboard__stat-label">
+    In-Progress
+  </p>
+  <h2 className="admin-dashboard__stat-value">
+    {inProgressTicketsCount}
+  </h2>
+</div>
 
-      
+
+            </section>
+
+            {/* Recent Bookings */}
+            <section className="admin-dashboard__table">
+              <h3 className="admin-dashboard__table-title">
+                Recent Bookings
+              </h3>
+
+              <table className="admin-dashboard__table-content">
+                <thead>
+                  <tr>
+                    <th>Customer</th>
+                    <th>Service</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr>
+                    <td>Rahul</td>
+                    <td>Home Cleaning</td>
+                    <td>09 Feb</td>
+                    <td>
+                      <span className="admin-dashboard__status admin-dashboard__status--completed">
+                        Completed
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Anita</td>
+                    <td>Bathroom Cleaning</td>
+                    <td>09 Feb</td>
+                    <td>
+                      <span className="admin-dashboard__status admin-dashboard__status--pending">
+                        Pending
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Suresh</td>
+                    <td>Office Cleaning</td>
+                    <td>08 Feb</td>
+                    <td>
+                      <span className="admin-dashboard__status admin-dashboard__status--cancelled">
+                        Cancelled
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+    
+
+              </table>
+            </section>
+          </>
+        )}
+        {activeView === "bookings" && (
+  <section className="admin-dashboard__bookings">
+    <div className="admin-dashboard__bookings-header">
+      <div>
+        <h2>All Bookings</h2>
+<p>Showing {filteredBookings.length} records</p>
       </div>
 
-      {/* CHART */}
-      <div className="ad-card">
-        <h3>
-          {metric === "users"
-            ? "User Registrations by Category"
-            : "Freelancer Registrations by Category"}
-        </h3>
+      <div className="admin-dashboard__bookings-actions">
+        <input
+  type="text"
+  placeholder="Search customer..."
+  className="admin-dashboard__search"
+  value={bookingSearch}
+  onChange={(e) => setBookingSearch(e.target.value)}
+/>
 
-<div className="ad-chart">
-  {chartData.length > 0 && (
-    <ResponsiveContainer width="100%" height={260}>
-      <BarChart
-        data={chartData}
-        margin={{ top: 20, right: 16, left: 0, bottom: 12 }}
-      >
-        <defs>
-          <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#2563eb" stopOpacity={0.95} />
-            <stop offset="100%" stopColor="#60a5fa" stopOpacity={0.85} />
-          </linearGradient>
-        </defs>
+<button
+  className="admin-dashboard__reset-btn"
+  onClick={() => setBookingSearch("")}
+>
+  Reset
+</button>
+      </div>
+    </div>
 
-        <XAxis dataKey="name" tickLine={false} axisLine={false} />
-        <YAxis tickLine={false} axisLine={false} />
-        <Tooltip />
+    <table className="admin-dashboard__bookings-table">
+      <thead>
+        <tr>
+          <th>Booking ID</th>
+          <th>Customer Name</th>
+          <th>Location</th>
+          <th>Service Type</th>
+          <th>Payment Status</th>
+          <th>Work Status</th>
+          <th>Assigned To</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
 
-        <Bar
-          dataKey="value"
-          fill="url(#barGradient)"
-          radius={[8, 8, 0, 0]}
-          maxBarSize={32}
-        />
-      </BarChart>
-    </ResponsiveContainer>
+      <tbody>
+{filteredBookings.map((booking) => (
+          <tr key={booking.id}>
+            <td>{booking.id}</td>
+            <td>{booking.customer}</td>
+            <td>{booking.location}</td>
+            <td>{booking.serviceType}</td>
+            <td>{booking.paymentStatus}</td>
+            <td>{booking.workStatus}</td>
+            <td>{booking.assignedTo || "-"}</td>
+            <td>₹{booking.amount}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </section>
+)}
+
+
+{/* ================= CLEANING SERVICE TICKETS ================= */}
+{activeView === "tickets" && (
+  <section className="admin-dashboard__tickets">
+    <div className="admin-dashboard__tickets-header">
+  <h2 className="admin-dashboard__page-title">
+    Cleaning Service Requests
+  </h2>
+
+  <select
+    className="admin-dashboard__filter-dropdown"
+    value={ticketFilter}
+    onChange={(e) =>
+      setTicketFilter(
+        e.target.value as "All" | "Pending" | "InProgress" | "Closed"
+      )
+    }
+  >
+    <option value="All">All</option>
+    <option value="Pending">Pending</option>
+    <option value="InProgress">In Progress</option>
+    <option value="Closed">Closed</option>
+  </select>
+</div>
+
+
+
+{filteredTickets.map((ticket) => (
+    <div className="admin-dashboard__ticket-card">
+  <div className="admin-dashboard__ticket-header">
+    <h3>{ticket.serviceType}</h3>
+    {ticket.assignedFreelancer && (
+  <div className="admin-dashboard__assigned">
+    👤 Assigned to <strong>{ticket.assignedFreelancer}</strong>
+  </div>
+)}
+
+
+
+
+    <span
+  className={`admin-dashboard__status admin-dashboard__status--${ticket.status.toLowerCase()}`}
+>
+  {ticket.status}
+</span>
+
+  </div>
+
+  {/* Address */}
+  <p className="admin-dashboard__ticket-address">
+    📍 {ticket.address}
+  </p>
+
+  {/* Meta Info */}
+  <div className="admin-dashboard__ticket-meta">
+    <span>
+      <strong>Customer:</strong> {ticket.customer}
+    </span>
+    <span>
+      <strong>Date:</strong> {ticket.date}
+    </span>
+    <span>
+      <strong>Bookings:</strong> {ticket.bookingCount}
+    </span>
+    <span>
+      <strong>Payment:</strong> ₹{ticket.amount}
+    </span>
+  </div>
+
+  {/* Action */}
+  {ticket.status === "Pending" && (
+    <div className="admin-dashboard__ticket-action">
+  <button
+  className="admin-dashboard__accept-btn"
+  onClick={() => {
+    setSelectedTicketId(ticket.id);
+    setShowFreelancerModal(true);
+  }}
+>
+  Assign Freelancer
+</button>
+
+    </div>
   )}
 </div>
 
+    ))}
+  </section>
+)}
 
 
-        <div className="card-footer">
-          <span className="green">Avg Growth +12.5%</span>
-          <span className="pill">
-            Total {metric}: {total.toLocaleString()}
-          </span>
+      </main>
+      {/* ================= ASSIGN FREELANCER POPUP ================= */}
+{showFreelancerModal && (
+  <div
+    className="admin-dashboard__modal"
+    onClick={() => setShowFreelancerModal(false)}
+  >
+    <div
+      className="admin-dashboard__modal-content"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <h3>Assign Freelancer</h3>
+
+      {freelancers.map((freelancer) => (
+        <div
+          key={freelancer.id}
+          className={`admin-dashboard__freelancer-card ${
+            !freelancer.isAvailable ? "disabled" : ""
+          }`}
+        >
+          <div>
+            <p><strong>{freelancer.name}</strong></p>
+            <p>Skills: {freelancer.skills.join(", ")}</p>
+            <p>Status: {freelancer.isAvailable ? "Available" : "Busy"}</p>
+          </div>
+
+          {freelancer.isAvailable && (
+            <button onClick={() => assignFreelancer(freelancer.name)}>
+              Assign
+            </button>
+          )}
         </div>
-      </div>
+      ))}
 
-      {/* KPIs */}
-      <div className="ad-kpis">
-        <KPI title="Top Category" value={topCategory} />
-        <KPI
-          title="Active Today"
-          value={activeToday.toLocaleString()}
-        />
-        <KPI title="Verification Rate" value={`${verification}%`} />
-      </div>
-    </>
-  );
-}
-
-/* ================= FREELANCERS ================= */
-
-function FreelancerView() {
-    const [singleDate, setSingleDate] = useState<[Dayjs | null, Dayjs | null]>([
-  dayjs().subtract(6, "day"),
-  dayjs(),
-]);
-
-const [fromDate, setFromDate] = useState(
-  dayjs().subtract(6, "day").format("YYYY-MM-DD")
-);
-const [toDate, setToDate] = useState(
-  dayjs().format("YYYY-MM-DD")
-);
-
-const [quickLabel, setQuickLabel] = useState("Last 1 Week");
-const applyQuickRange = (key: string) => {
-  let start: Dayjs;
-  let end: Dayjs;
-  let label = "Quick Select";
-
-  switch (key) {
-    case "today":
-      start = dayjs();
-      end = dayjs();
-      label = "Today";
-      break;
-
-    case "yesterday":
-      start = dayjs().subtract(1, "day");
-      end = dayjs().subtract(1, "day");
-      label = "Yesterday";
-      break;
-
-    case "week":
-      start = dayjs().subtract(6, "day");
-      end = dayjs();
-      label = "Last 1 Week";
-      break;
-
-    case "month":
-      start = dayjs().subtract(1, "month");
-      end = dayjs();
-      label = "Last 1 Month";
-      break;
-
-    case "3months":
-      start = dayjs().subtract(3, "month");
-      end = dayjs();
-      label = "Last 3 Months";
-      break;
-
-    default:
-      return;
-  }
-
-  setSingleDate([start, end]);
-  setFromDate(start.format("YYYY-MM-DD"));
-  setToDate(end.format("YYYY-MM-DD"));
-  setQuickLabel(label);
-};
-const quickMenu: MenuProps["items"] = [
-  { key: "today", label: "Today" },
-  { key: "yesterday", label: "Yesterday" },
-  { key: "week", label: "Last 1 Week" },
-  { key: "month", label: "Last 1 Month" },
-  { key: "3months", label: "Last 3 Months" },
-];
-
-
-
-  const [kpis, setKpis] = useState({
-    registrations: 2842,
-    verified: 1905,
-    pending: 428,
-    active: "88.5%",
-  });
-
-  const [chartData, setChartData] = useState<any[]>([]);
-
-
-useEffect(() => {
-  calculate();
-}, [fromDate, toDate]);
-
-
-const calculate = () => {
-  const base = {
-    "Housing/Cleaning": 1200,
-    Education: 820,
-    "Raw Materials": 540,
-    Swachify: 980,
-    "Buy/Sell/Rent": 720,
-    Healthcare: 1350,
-    Justride: 460,
-  };
-
-  const from = dayjs(fromDate);
-  const to = dayjs(toDate);
-  const days = Math.max(to.diff(from, "day") + 1, 1);
-
-  const DAILY_DIVISOR = 30;
-
-  const data = Object.entries(base).map(([name, monthly]) => {
-    const dailyAvg = monthly / DAILY_DIVISOR;
-    return {
-      name,
-      value: Math.round(dailyAvg * days),
-    };
-  });
-
-  setChartData(data);
-
-  const total = data.reduce((s, d) => s + d.value, 0);
-
-const verified = Math.round(total * 0.65);
-const pending = Math.round(total * 0.15);
-
-// activity scales with date range
-const activityFactor = Math.min(1, 30 / days); // 1 for <=30 days, lower after
-const activePercent = Math.round((verified / total) * activityFactor * 100);
-
-setKpis({
-  registrations: total,
-  verified,
-  pending,
-  active: `${activePercent}%`,
-});
-
-
-};
-
-
-  return (
-    <>
-      {/* PAGE HEADER */}
-      <h1 className="ad-page-title">Workforce Overview</h1>
-      <p className="ad-page-desc">
-        Monitoring registration trends across all service categories for
-        freelancers and employees.
-      </p>
-
-    
-      <div className="ad-filters">
-  <div className="ad-filter-item">
-    <label>Date Range</label>
-
-    <div style={{ display: "flex", gap: 10 }}>
-      <RangePicker
-        value={singleDate}
-        format="YYYY-MM-DD"
-        allowClear={false}
-        onChange={(dates) => {
-          if (!dates) return;
-
-          const [start, end] = dates;
-          if (!start || !end) return;
-
-          setSingleDate([start, end]);
-          setFromDate(start.format("YYYY-MM-DD"));
-          setToDate(end.format("YYYY-MM-DD"));
-          setQuickLabel("Custom Range");
-        }}
-        style={{ height: 42, borderRadius: 10 }}
-      />
-
-      <Dropdown
-        menu={{
-          items: quickMenu,
-          onClick: ({ key }) => applyQuickRange(key),
-        }}
+      <button
+        style={{ marginTop: "16px" }}
+        onClick={() => setShowFreelancerModal(false)}
       >
-        <Button style={{ height: 42, borderRadius: 10 }}>
-          {quickLabel} <DownOutlined />
-        </Button>
-      </Dropdown>
+        Close
+      </button>
     </div>
+  </div>
+)}
+
+{showFreelancerPopup && (
+  <div
+    className="admin-dashboard__modal"
+    onClick={() => setShowFreelancerPopup(false)}
+  >
+    <div
+      className="admin-dashboard__modal-content large"
+      onClick={(e) => e.stopPropagation()}
+    >
+      {/* HEADER */}
+      <div className="freelancer-modal-header">
+  <div className="header-row">
+    {/* TOGGLE */}
+    <div className="freelancer-toggle">
+      <button
+        className={`toggle-btn ${
+          freelancerView === "pending" ? "active" : ""
+        }`}
+        onClick={() => setFreelancerView("pending")}
+      >
+        Pending Freelancers
+      </button>
+
+      <button
+        className={`toggle-btn ${
+          freelancerView === "total" ? "active" : ""
+        }`}
+        onClick={() => setFreelancerView("total")}
+      >
+        Total Freelancers
+      </button>
+    </div>
+
+    {/* CLOSE */}
+    <button
+      className="close-btn"
+      onClick={() => setShowFreelancerPopup(false)}
+    >
+      ✕
+    </button>
   </div>
 </div>
 
 
-      {/* KPI CARDS – ONE ROW */}
-      <div className="freelancer-kpis">
-        <KPI title="New Registrations" value={kpis.registrations.toLocaleString()} />
-        <KPI title="Verified Profiles" value={kpis.verified.toLocaleString()} />
-        <KPI title="Pending Approvals" value={kpis.pending.toLocaleString()} />
-        <KPI title="Active Status" value={kpis.active} />
-      </div>
-
-      {/* BAR CHART */}
-      <div className="ad-card">
-        <h3>Registration by Category</h3>
-        <p className="ad-muted">
-          Workforce distribution across key service verticals
-        </p>
-
-        <div className="ad-chart">
-          <ResponsiveContainer width="100%" height={320}>
-            <BarChart data={chartData}>
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Bar dataKey="value" fill="#10b981" radius={[6, 6, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-      </div>
 
       {/* TABLE */}
-      <div className="ad-card">
-        <h3>Recent Freelancer Registrations</h3>
+      <table className="freelancer-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>City</th>
+            <th>Skills</th>
+            <th>PAN</th>
+            <th>Experience</th>
+            {freelancerView === "pending" && <th>Actions</th>}
+          </tr>
+        </thead>
 
-        <table className="ad-table">
-          <thead>
-            <tr>
-              <th>Freelancer</th>
-              <th>Category</th>
-              <th>Date Joined</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Alex Rivera</td>
-              <td>Healthcare</td>
-              <td>Oct 24, 2023</td>
-              <td><span className="status verified">Verified</span></td>
-            </tr>
-            <tr>
-              <td>Sarah Chen</td>
-              <td>Education</td>
-              <td>Oct 23, 2023</td>
-              <td><span className="status pending">Pending</span></td>
-            </tr>
-            <tr>
-              <td>Marcus Thorne</td>
-              <td>Housing/Cleaning</td>
-              <td>Oct 22, 2023</td>
-              <td><span className="status verified">Verified</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </>
-  );
-}
+        <tbody>
+          
+{(freelancerView === "pending"
+  ? pendingFreelancers
+  : totalFreelancers
+).map((f) => (
+            <tr key={f.id}>
+              <td className="name">{f.name}</td>
+              <td className="email">{f.name.toLowerCase()}@gmail.com</td>
+              <td>Hyderabad</td>
 
+              <td>
+                <span className="skill-pill">{f.skills[0]}</span>
+                {f.skills.length > 1 && (
+                  <span className="skill-more">
+                    +{f.skills.length - 1} more
+                  </span>
+                )}
+              </td>
 
-/* ================= SHARED ================= */
+              <td>NA</td>
+              <td>5+ years</td>
 
-function KPI({ title, value }: { title: string; value: string }) {
-  return (
-    <div className="ad-kpi">
-      <span className="ad-kpi-label">{title}</span>
-      <div className="ad-kpi-value">{value}</div>
+              {/* ACTIONS ONLY FOR PENDING */}
+              {freelancerView === "pending" && (
+  <td className="actions">
+    <button
+      className="approve"
+      onClick={() => handleApproveFreelancer(f.id)}
+      title="Approve"
+    >
+      ✓
+    </button>
+
+   <button
+  className="reject"
+  title="Reject"
+  onClick={() => handleRejectFreelancer(f.id)}
+>
+  ✕
+</button>
+
+  </td>
+)}
+
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+)}
+
     </div>
   );
-}
+};
+
+export default AdminDashboard;
