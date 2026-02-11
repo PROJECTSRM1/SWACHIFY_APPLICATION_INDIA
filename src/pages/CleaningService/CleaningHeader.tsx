@@ -472,32 +472,53 @@ useEffect(() => {
   centered
   onCancel={() => setShowLoginModal(false)}
   className="auth-modal"
-  title="Login to continue"
+  closable={false}
 >
-  <Input
-    placeholder="Email or Mobile Number"
-    value={identifier}
-    onChange={(e) => setIdentifier(e.target.value)}
-    style={{ marginBottom: 12 }}
-  />
+  <div className="auth-container">
+    
+    {/* Header */}
+    <div className="auth-header">
+      <h2>Welcome Back 👋</h2>
+      <p>Login to continue booking your service</p>
+    </div>
 
-  <Input.Password
-    placeholder="Password"
-    value={password}
-    onChange={(e) => setPassword(e.target.value)}
-    style={{ marginBottom: 16 }}
-  />
+    {/* Inputs */}
+    <div className="auth-body">
+      <Input
+        size="large"
+        placeholder="Email or Mobile Number"
+        value={identifier}
+        onChange={(e) => setIdentifier(e.target.value)}
+        className="auth-input"
+      />
 
-  <Button
-    type="primary"
-    block
-    loading={loading}
-    disabled={!identifier || !password}
-    onClick={handleLogin}
-  >
-    Login
-  </Button>
+      <Input.Password
+        size="large"
+        placeholder="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        className="auth-input"
+      />
+
+      <Button
+        type="primary"
+        size="large"
+        block
+        loading={loading}
+        disabled={!identifier || !password}
+        onClick={handleLogin}
+        className="auth-button"
+      >
+        Login
+      </Button>
+    </div>
+
+    
+   
+
+  </div>
 </Modal>
+
 
 
 
