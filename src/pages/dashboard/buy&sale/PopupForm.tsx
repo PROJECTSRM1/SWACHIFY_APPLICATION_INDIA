@@ -10,7 +10,7 @@ export default function SellItemWeb({ onClose }: SellItemWebProps) {
   const [listingType, setListingType] = useState<"sell" | "rent">("sell");
   const [propertyType, setPropertyType] = useState<string>("Apartment");
   const [itemCondition, setItemCondition] = useState<string>("New Item");
-  const [price, setPrice] = useState<string>("");
+  const [price, ] = useState<string>("");
   const [errors, setErrors] = useState<Record<string, string>>({});
 
 
