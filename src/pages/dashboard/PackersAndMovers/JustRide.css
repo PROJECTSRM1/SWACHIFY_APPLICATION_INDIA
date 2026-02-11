@@ -2519,7 +2519,14 @@ body {
   background: #f4f7ef;
   padding-top: 10px;
   padding-bottom: 8px;
+   display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center;
+  margin-top: 20px;
+  width: 100%;
 }
+
+
 
 .sw-jr-pr-continue-btn {
   height: 52px !important;
@@ -2529,6 +2536,18 @@ body {
   font-weight: 700 !important;
   letter-spacing: 1px;
   margin-top: 10px;
+   width: 260px;      /* Medium width */
+  height: 48px;      /* Good height */
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+     /* ⭐ increase width */
+  width: 100%;
+  max-width: 1200px;
+}
+
+.sw-jr-pr-continue-btn:hover{
+    background: #8eb33e !important;
 }
 /* =====================================================
    RESPONSIVE
@@ -2832,6 +2851,268 @@ body {
 }
 
 
+/* ITEM DESCRIPTION HEADER */
+.sw-jr-pr-desc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+/* ITEM DESCRIPTION LABEL */
+.sw-jr-pr-desc-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #222;
+}
+
+/* MANDATORY BADGE BUTTON */
+.sw-jr-pr-mandatory-tag {
+  background: #7bb241;
+  color: #fff;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-weight: 500;
+  display: inline-block;
+  box-shadow: 0 2px 4px rgba(255, 77, 79, 0.3);
+  cursor: default;
+}
+
+/* DESCRIPTION CARD */
+.sw-jr-pr-desc-card-container {
+  background: #f9f9f9;
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid #e6e6e6;
+  margin-top: 15px;
+}
+
+/* TEXTAREA */
+.sw-jr-pr-desc-input {
+  margin-top: 8px;
+  border-radius: 8px !important;
+  border: 1px solid #ccc !important;
+}
+
+/* INLINE ERROR */
+.sw-jr-pr-error-inline {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #d4380d;
+  margin-top: 6px;
+  font-size: 13px;
+}
+
+
+
+/* TOTAL LABEL */
+.sw-jr-pr-total-label {
+  text-align: center;
+  font-size: 14px;
+  color: #5a7444;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+/* TOTAL BUTTON INSIDE INVOICE */
+.sw-jr-pr-total-btn {
+  display: block;
+  margin: 0 auto;
+  padding: 10px 28px;
+  font-size: 26px;
+  font-weight: 700;
+  background-color: #7fae31;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: default;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+.sw-jr-pr-total-btn:hover {
+  opacity: 1;
+}
+
+
+.sw-jr-pr-invoice-details,
+.sw-jr-pr-invoice-card,
+.sw-jr-pr-invoice-card * {
+  text-align: left !important;
+}
+
+
+.sw-jr-pr-invoice-row {
+  display: grid;
+  grid-template-columns: 20px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+}
+
+
+.sw-jr-pr-invoice-row div {
+  display: flex;
+  flex-direction: column;
+}
+
+.sw-jr-pr-invoice-card {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px;
+  border-radius: 12px;
+}
+
+
+.sw-jr-pr-invoice-row {
+  display: grid;
+  grid-template-columns: 24px 1fr auto;
+  align-items: start;
+  padding: 12px 0;
+  gap: 10px;
+}
+
+.sw-jr-pr-invoice-row div {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.sw-jr-pr-invoice-card {
+  padding: 30px 40px; /* Previously too big */
+}
+
+.sw-jr-pr-invoice-details {
+  margin-top: 20px;
+}
+
+
+/* Modern Invoice Box */
+.invoice-box {
+  width: 100%;
+  max-width: 600px;
+  margin: 20px auto;
+  background: #f7fceb;
+  padding: 32px;
+  border-radius: 14px;
+  border: 2px solid #9cc867;
+  font-family: "Inter", sans-serif;
+}
+
+.invoice-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 14px 0;
+  font-size: 16px;
+}
+
+.invoice-item .subtext {
+  font-size: 12px;
+  color: #687076;
+  margin-top: 4px;
+}
+
+.value {
+  font-weight: 600;
+}
+
+.free {
+  color: #4caf50;
+  font-weight: 700;
+}
+
+.divider {
+  border: 0;
+  border-top: 1px dashed #cccccc;
+  margin: 20px 0;
+}
+
+.invoice-total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.total-value {
+  background: #8bc34a;
+  padding: 10px 22px;
+  color: white;
+  border-radius: 10px;
+  font-size: 20px;
+}
+
+
+/* --- Professional Invoice Layout --- */
+
+.invoice-box {
+  width: 100%;
+  max-width: 550px;
+  margin: 20px auto;
+  padding: 28px 32px;
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #d7e4c6;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+  font-family: "Inter", sans-serif;
+}
+
+.invoice-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 14px 0;
+  font-size: 16px;
+  border-bottom: 1px solid #eef5e6;
+}
+
+.invoice-row:last-child {
+  border-bottom: none;
+}
+
+.invoice-row .sub {
+  font-size: 12px;
+  color: #7b7b7b;
+  margin-top: 4px;
+}
+
+.amount {
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.free {
+  color: #28a745;
+  font-weight: 700;
+}
+
+.sep {
+  border: none;
+  border-top: 1px dashed #d8d8d8;
+  margin: 20px 0;
+}
+
+.invoice-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 5px;
+}
+
+.total-badge {
+  background: #85c744;
+  padding: 10px 24px;
+  border-radius: 10px;
+  color: white;
+  font-size: 20px;
+  box-shadow: 0px 2px 6px rgba(0,0,0,0.15);
+}
+
+
 
 
 /* Book Ride */
@@ -2915,6 +3196,7 @@ body {
 .sw-jr-bk-input-row {
   display: flex;
   gap: 16px;
+  flex-wrap: wrap; 
 }
 
 .sw-jr-bk-icon-column {
@@ -2952,10 +3234,20 @@ body {
   letter-spacing: 1px;
 }
 
+.sw-jr-bk-field-column {
+  flex: 1;              /* input column takes available space */
+  min-width: 200px;     /* prevents being too small on mobile */
+}
 .sw-jr-bk-input-web input {
-  color: #f1f5f9 !important;
+  color: #000 !important;
   font-size: 16px !important;
+
   padding: 4px 0 !important;
+  width: 100%;
+    max-width: 100%;      /* prevent overflow */
+  box-sizing: border-box;
+
+
 }
 
 /* Shortcuts */
@@ -3017,6 +3309,7 @@ body {
 .sw-jr-bk-input-web.ant-input::placeholder {
   /* color: rgba(255, 255, 255, 0.6) !important;  */
   opacity: 1;
+  font-weight: 500 !important;
   /* Required for Firefox */
   color: #000000 !important;
 }
@@ -3027,13 +3320,13 @@ body {
   color: #000000 !important;
 }
 
-.sw-jr-bk-input-web input::-moz-placeholder {
+/* .sw-jr-bk-input-web input::-moz-placeholder {
   color: rgba(255, 255, 255, 0.6) !important;
 }
 
 .sw-jr-bk-input-web input:-ms-input-placeholder {
   color: rgba(255, 255, 255, 0.6) !important;
-}
+} */
 
 /* Container for the list */
 .sw-jr-bk-results-container {
@@ -3525,12 +3818,10 @@ body {
 .sw-jr-bk-input-web {
   color: #1a1a1a !important;
   /* Visible text */
-  font-weight: 500;
+  font-weight: 500 !important;
 }
 
-.sw-jr-bk-input-web::placeholder {
-  color: #94a3b8 !important;
-}
+
 
 /* Icons */
 .sw-jr-bk-icon-p {
@@ -3750,6 +4041,8 @@ body {
   font-weight: 700;
 }
 
+
+
 .sw-jr-bk-input-web input {
   color: var(--text-dark) !important;
 }
@@ -3898,12 +4191,13 @@ body {
 .sw-jr-bk-input-web input,
 .sw-jr-bk-route-text p {
   color: #000000 !important;
+ 
 }
 
+
+
 /* Placeholder text */
-.sw-jr-bk-input-web input::placeholder {
-  color: #6b7280 !important;
-}
+
 
 /* Pickup icon (dot / pin) */
 .sw-jr-bk-icon-p {
@@ -4345,6 +4639,164 @@ body {
 
 
 /* Book Ride */
+
+
+.sw-jr-auth-modal .ant-modal-content {
+  background: #ffffff;
+  border-radius: 18px;
+   padding: 28px 32px 24px 32px;
+
+}
+
+.sw-jr-auth-box {
+  text-align: center;
+    padding-top: 0;
+}
+
+.sw-jr-auth-icon {
+  font-size: 44px;
+  margin-bottom: 12px;
+}
+
+.sw-jr-auth-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: #4d7c0f;
+  margin-bottom: 20px;
+}
+
+.sw-jr-auth-input,
+.sw-jr-auth-input input {
+  background-color: #f6f9f3 !important;
+  border: none !important;
+  border-radius: 14px;
+  height: 48px;
+  font-size: 15px;
+}
+
+.sw-jr-auth-input {
+  margin-bottom: 14px;
+}
+
+.sw-jr-auth-button {
+  height: 48px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  background: linear-gradient(90deg, #8eb33e, #7aa62f);
+  border: none;
+  color: #ffffff;
+  box-shadow: 0 6px 16px rgba(142, 179, 62, 0.35);
+  transition: all 0.2s ease;
+    margin-top: 8px;
+}
+
+.sw-jr-auth-button:hover {
+  background-color: #8eb33e !important;
+  transform: translateY(-1px);
+}
+
+.sw-jr-auth-button:disabled {
+   background: linear-gradient(90deg, #8eb33e, #7aa62f);
+  color: #9aa0a6;
+  box-shadow: none;
+}
+
+.sw-jr-auth-button,
+.sw-jr-auth-button:hover,
+.sw-jr-auth-button:focus,
+.sw-jr-auth-button:active {
+  background: linear-gradient(90deg, #8eb33e, #7aa62f) !important;
+  border: none !important;
+  color: #ffffff !important;
+    margin-top: 8px;
+}
+
+.sw-jr-auth-button:active {
+  transform: scale(0.98);
+}
+
+
+.sw-jr-auth-note {
+  margin-top: 16px;
+  font-size: 13px;
+  color: #666;
+}
+
+.sw-jr-auth-register {
+  color: #8eb33e;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.sw-jr-auth-close {
+  font-size: 18px;
+  color: #7aa62f;
+}
+
+/* --- Base Styles (Desktop/Tablet) --- */
+/* .sw-auth-modal.ant-modal {
+  width: 400px !important; 
+  padding-bottom: 0;
+} */
+
+/* --- Mobile Views --- */
+/* --- Mobile Views --- */
+@media (max-width: 480px) {
+  /* This prevents the modal from sticking to the top/bottom */
+  .sw-jr-auth-modal.ant-modal {
+    top: 0 !important;
+    padding-bottom: 0 !important;
+    margin: 20px auto !important; /* Forces a gap at the top and bottom */
+    width: 90% !important;
+    
+  }
+
+  .sw-jr-auth-modal .ant-modal-content {
+    /* Ensure the content itself doesn't have a forced height */
+    height: auto !important;
+    min-height: unset !important;
+    padding: 20px !important;
+    border-radius: 20px !important;
+  }
+
+  /* Make the icon and title a bit smaller to save vertical space */
+  .sw-jr-auth-icon {
+    font-size: 32px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .sw-jr-auth-title {
+    font-size: 18px !important;
+    margin-bottom: 12px !important;
+  }
+}
+
+
+@media (max-width: 768px) and (min-width: 481px) {
+  .sw-jr-auth-modal .ant-modal {
+    width: 80% !important;
+  }
+
+  .sw-jr-auth-title {
+    font-size: 19px;
+  }
+}
+@media (min-width: 1024px) {
+  .sw-jr-auth-modal .ant-modal {
+    width: 420px !important;
+  }
+
+  .sw-jr-auth-title {
+    font-size: 22px;
+  }
+}
+
+
+
+
+
+
 
 
 
