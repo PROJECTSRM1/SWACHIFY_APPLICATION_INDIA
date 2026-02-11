@@ -10,7 +10,7 @@ export default function SellItemWeb({ onClose }: SellItemWebProps) {
   const [listingType, setListingType] = useState<"sell" | "rent">("sell");
   const [propertyType, setPropertyType] = useState<string>("Apartment");
   const [itemCondition, setItemCondition] = useState<string>("New Item");
-  const [price, setPrice] = useState<string>("");
+  const [price, ] = useState<string>("");
   const [errors, setErrors] = useState<Record<string, string>>({});
 
 
@@ -99,7 +99,21 @@ const [hasSecurity, setHasSecurity] = useState(false);
 const [hasTV, setHasTV] = useState(false);
 
 
-  
+  const [numberOfFloors, setNumberOfFloors] = useState("");
+const [roomsPerFloor, setRoomsPerFloor] = useState("");
+const [bedsPerRoom, setBedsPerRoom] = useState("");
+const [defaultSharing, setDefaultSharing] = useState("4-Sharing");
+
+const [oneSharingPrice, setOneSharingPrice] = useState("");
+const [twoSharingPrice, setTwoSharingPrice] = useState("");
+const [threeSharingPrice, setThreeSharingPrice] = useState("");
+const [fourSharingPrice, setFourSharingPrice] = useState("");
+
+const [currentBillExcluded, setCurrentBillExcluded] = useState("Yes");
+
+const [hostelLocation, setHostelLocation] = useState("");
+const [hostelArea, setHostelArea] = useState("");
+
 
   
 
@@ -191,6 +205,23 @@ const unformatNumber = (value: string) => value.replace(/,/g, "");
   }
 
   const listing = {
+
+rating,
+numberOfFloors,
+roomsPerFloor,
+bedsPerRoom,
+defaultSharing,
+
+oneSharingPrice: unformatNumber(oneSharingPrice),
+twoSharingPrice: unformatNumber(twoSharingPrice),
+threeSharingPrice: unformatNumber(threeSharingPrice),
+fourSharingPrice: unformatNumber(fourSharingPrice),
+
+currentBillExcluded,
+hostelLocation,
+hostelArea,
+
+
   id: Date.now(),
   listingType,
   propertyType,
@@ -368,17 +399,8 @@ const handleAlphaValidated =
               <option>Old Item</option>
             </select>
 
-            {/* PRICE */}
-            <label>{isHostel ? "PRICE PER MONTH (₹)" : "PRICE (₹)"}</label>
-<input
-  inputMode="numeric"
-  value={price}
-  placeholder="Enter price"
-  onChange={handleNumericValidated(setPrice, "price")}
-/>
-{errors.price && <p className="errorText">{errors.price}</p>}
 
-<label>RATING (1.0 – 5.0)</label>
+<label>RATING (1.0 – 5.0)<span className="required">*</span></label>
 
 <input
   type="number"
@@ -680,36 +702,132 @@ Enter a rating between 1.0 and 5.0 (e.g. 4.5)
       <option>Girls</option>
       <option>Co-living</option>
     </select>
+   <label>
+  NUMBER OF FLOORS <span className="required">*</span>
+</label>
 
-    <div className="sellRow">
-      <div>
-        <label>TOTAL ROOMS</label>
-        <input
+<input
   inputMode="numeric"
-  value={totalRooms}
-  onChange={handleNumericValidated(setTotalRooms, "totalRooms")}
+  placeholder="e.g., 3"
+  value={numberOfFloors}
+  onChange={handleNumericValidated(setNumberOfFloors, "numberOfFloors")}
 />
-{errors.totalRooms && (
-  <p className="errorText">{errors.totalRooms}</p>
-)}
 
-      </div>
+<div className="sellRow">
+  <div>
+    <label>
+      TOTAL ROOMS <span className="required">*</span>
+    </label>
+    <input
+      inputMode="numeric"
+      placeholder="60"
+      value={totalRooms}
+      onChange={handleNumericValidated(setTotalRooms, "totalRooms")}
+    />
+  </div>
 
-      <div>
-        <label>AVAILABLE ROOMS</label>
-        <input
-  inputMode="numeric"
-  value={availableRooms}
-  onChange={handleNumericValidated(setAvailableRooms, "availableRooms")}
-/>
-{errors.availableRooms && (
-  <p className="errorText">{errors.availableRooms}</p>
-)}
+  <div>
+    <label>
+      AVAILABLE ROOMS <span className="required">*</span>
+    </label>
+    <input
+      inputMode="numeric"
+      placeholder="15"
+      value={availableRooms}
+      onChange={handleNumericValidated(setAvailableRooms, "availableRooms")}
+    />
+  </div>
+</div>
 
-      </div>
+
+<div className="sellRow">
+  <div>
+    <label>
+      ROOMS PER FLOOR <span className="required">*</span>
+    </label>
+    <input
+      inputMode="numeric"
+      placeholder="20"
+      value={roomsPerFloor}
+      onChange={handleNumericValidated(setRoomsPerFloor, "roomsPerFloor")}
+    />
+  </div>
+
+  <div>
+    <label>
+      BEDS PER ROOM <span className="required">*</span>
+    </label>
+    <input
+      inputMode="numeric"
+      placeholder="4"
+      value={bedsPerRoom}
+      onChange={handleNumericValidated(setBedsPerRoom, "bedsPerRoom")}
+    />
+  </div>
+</div>
+
+<label>DEFAULT SHARING TYPE (Display)</label>
+<select
+  value={defaultSharing}
+  onChange={(e) => setDefaultSharing(e.target.value)}
+>
+  <option>1-Sharing</option>
+  <option>2-Sharing</option>
+  <option>3-Sharing</option>
+  <option>4-Sharing</option>
+</select>
+<div className="pricingCard">
+  <div className="pricingHeader">
+    <h4>Pricing Per Sharing Type</h4>
+    <p>Enter monthly rent for each sharing option</p>
+  </div>
+
+  <div className="sellRow">
+    <div>
+      <label>1-Sharing (₹/month) <span className="required">*</span></label>
+      <input
+        inputMode="numeric"
+        placeholder="12000"
+        value={oneSharingPrice}
+        onChange={handleNumericValidated(setOneSharingPrice, "oneSharingPrice")}
+      />
     </div>
 
-    <label>FOOD INCLUDED</label>
+    <div>
+      <label>2-Sharing (₹/month) <span className="required">*</span></label>
+      <input
+        inputMode="numeric"
+        placeholder="8000"
+        value={twoSharingPrice}
+        onChange={handleNumericValidated(setTwoSharingPrice, "twoSharingPrice")}
+      />
+    </div>
+  </div>
+
+  <div className="sellRow">
+    <div>
+      <label>3-Sharing (₹/month) <span className="required">*</span></label>
+      <input
+        inputMode="numeric"
+        placeholder="6000"
+        value={threeSharingPrice}
+        onChange={handleNumericValidated(setThreeSharingPrice, "threeSharingPrice")}
+      />
+    </div>
+
+    <div>
+      <label>4-Sharing (₹/month) <span className="required">*</span></label>
+      <input
+        inputMode="numeric"
+        placeholder="5000"
+        value={fourSharingPrice}
+        onChange={handleNumericValidated(setFourSharingPrice, "fourSharingPrice")}
+      />
+    </div>
+  </div>
+</div>
+
+   <label>FOOD INCLUDED</label>
     <select
       value={foodIncluded}
       onChange={(e) => setFoodIncluded(e.target.value)}
@@ -717,6 +835,32 @@ Enter a rating between 1.0 and 5.0 (e.g. 4.5)
       <option>Yes</option>
       <option>No</option>
     </select>
+<label>CURRENT BILL EXCLUDED</label>
+<select
+  value={currentBillExcluded}
+  onChange={(e) => setCurrentBillExcluded(e.target.value)}
+>
+  <option>Yes</option>
+  <option>No</option>
+</select>
+<label>LOCATION</label>
+<input
+  value={hostelLocation}
+  onChange={(e) => setHostelLocation(e.target.value)}
+  placeholder="Full Address"
+/>
+
+<label>AREA</label>
+<input
+  value={hostelArea}
+  onChange={(e) => setHostelArea(e.target.value)}
+  placeholder="Downtown / Suburb"
+/>
+
+
+  
+
+ 
 
     <label>SERVICES & AMENITIES</label>
 
@@ -726,6 +870,7 @@ Enter a rating between 1.0 and 5.0 (e.g. 4.5)
     className={`amenityCard ${hasAC ? "active" : ""}`}
     onClick={() => setHasAC(!hasAC)}
   >
+      {hasAC && <div className="tickMark">✓</div>}
     <span className="amenityIcon">❄️</span>
     <span>AC</span>
   </div>
@@ -734,6 +879,8 @@ Enter a rating between 1.0 and 5.0 (e.g. 4.5)
     className={`amenityCard ${hasWifi ? "active" : ""}`}
     onClick={() => setHasWifi(!hasWifi)}
   >
+    {hasWifi && <div className="tickMark">✓</div>}
+
     <span className="amenityIcon">📶</span>
     <span>WiFi</span>
   </div>
@@ -742,6 +889,8 @@ Enter a rating between 1.0 and 5.0 (e.g. 4.5)
     className={`amenityCard ${hasLaundry ? "active" : ""}`}
     onClick={() => setHasLaundry(!hasLaundry)}
   >
+    {hasLaundry && <div className="tickMark">✓</div>}
+
     <span className="amenityIcon">🧺</span>
     <span>Laundry</span>
   </div>
@@ -750,6 +899,8 @@ Enter a rating between 1.0 and 5.0 (e.g. 4.5)
     className={`amenityCard ${hasParking ? "active" : ""}`}
     onClick={() => setHasParking(!hasParking)}
   >
+    {hasParking && <div className="tickMark">✓</div>}
+
     <span className="amenityIcon">🅿️</span>
     <span>Parking</span>
   </div>
@@ -759,6 +910,8 @@ Enter a rating between 1.0 and 5.0 (e.g. 4.5)
     className={`amenityCard ${hasTV ? "active" : ""}`}
     onClick={() => setHasTV(!hasTV)}
   >
+    {hasTV && <div className="tickMark">✓</div>}
+
     <span className="amenityIcon">📺</span>
     <span>TV</span>
   </div>
@@ -767,6 +920,8 @@ Enter a rating between 1.0 and 5.0 (e.g. 4.5)
     className={`amenityCard ${hasSecurity ? "active" : ""}`}
     onClick={() => setHasSecurity(!hasSecurity)}
   >
+    {hasSecurity && <div className="tickMark">✓</div>}
+
     <span className="amenityIcon">🛡️</span>
     <span>Security</span>
   </div>
