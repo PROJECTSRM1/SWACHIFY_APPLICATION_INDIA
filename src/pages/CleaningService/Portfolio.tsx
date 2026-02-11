@@ -5,7 +5,7 @@ import CleaningHeader from "./CleaningHeader";
 import Footer from "../../../src/pages/CleaningService/CleaningServiceFooter";
 
 import p1 from "../../assets/CleaningServices/LR2.jpg";
-import p2 from "../../assets/CleaningServices/Kitchen1.jpg";
+import p2 from "../../assets/CleaningServices/KItchen1.jpg";
 import p3 from "../../assets/CleaningServices/Cleaning1.png";
 import p4 from "../../assets/CleaningServices/Kitchen2.jpg";
 
