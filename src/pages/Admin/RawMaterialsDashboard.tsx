@@ -4,7 +4,6 @@ import {
   BuildOutlined,
   DollarOutlined,
   ShoppingCartOutlined,
-//   TransactionOutlined,
   TeamOutlined,
 } from "@ant-design/icons";
 
@@ -12,9 +11,13 @@ import "./RawMaterialsDashboard.css";
 
 interface Props {
   activePage: string;
+  setActivePage: (page: string) => void;
 }
 
-const RawMaterialsDashboard: React.FC<Props> = ({ activePage }) => {
+const RawMaterialsDashboard: React.FC<Props> = ({
+  activePage,
+  setActivePage,
+}) => {
 
   /* ================= DATA ================= */
 
@@ -47,140 +50,120 @@ const RawMaterialsDashboard: React.FC<Props> = ({ activePage }) => {
   const totalMaterials = materials.length;
   const totalSuppliers = suppliers.length;
 
-  if (activePage === "Settings") return null;
+  /* ================= COMMON WRAPPER ================= */
+
+  const renderPage = (title: string, table: React.ReactNode) => (
+    <div className="raw-page-wrapper">
+      <div className="raw-section-header">
+        <h3>{title}</h3>
+      </div>
+      <Card className="raw-main-card">
+        {table}
+      </Card>
+    </div>
+  );
 
   /* ================= MATERIALS ================= */
 
   if (activePage === "Materials") {
-    return (
-      <Card className="raw-main-card">
-        <h3 className="section-title">All Materials</h3>
-        <Table
-          dataSource={materials}
-          pagination={false}
-          columns={[
-            { title: "Material", dataIndex: "name", align: "left" },
-            { title: "Supplier", dataIndex: "supplier", align: "left" },
-            { title: "Price (₹)", dataIndex: "price", align: "left" },
-            { title: "Stock", dataIndex: "stock", align: "left" },
-          ]}
-        />
-      </Card>
+    return renderPage(
+      "Material Management",
+      <Table
+        dataSource={materials}
+        pagination={false}
+        columns={[
+          { title: "Material", dataIndex: "name" },
+          { title: "Supplier", dataIndex: "supplier" },
+          { title: "Price (₹)", dataIndex: "price" },
+          { title: "Stock", dataIndex: "stock" },
+        ]}
+      />
     );
   }
 
   /* ================= SUPPLIERS ================= */
 
   if (activePage === "Suppliers") {
-    return (
-      <Card className="raw-main-card">
-        <h3 className="section-title">Suppliers</h3>
-        <Table
-          dataSource={suppliers}
-          pagination={false}
-          columns={[
-            { title: "Supplier Name", dataIndex: "name", align: "left" },
-            { title: "Contact", dataIndex: "contact", align: "left" },
-            { title: "Materials Supplied", dataIndex: "materials", align: "left" },
-          ]}
-        />
-      </Card>
+    return renderPage(
+      "Supplier Management",
+      <Table
+        dataSource={suppliers}
+        pagination={false}
+        columns={[
+          { title: "Supplier Name", dataIndex: "name" },
+          { title: "Contact", dataIndex: "contact" },
+          { title: "Materials Supplied", dataIndex: "materials" },
+        ]}
+      />
     );
   }
 
   /* ================= ORDERS ================= */
 
   if (activePage === "Orders") {
-    return (
-      <Card className="raw-main-card">
-        <h3 className="section-title">Orders</h3>
-        <Table
-          dataSource={orders}
-          pagination={false}
-          columns={[
-            { title: "Order ID", dataIndex: "id", align: "left" },
-            { title: "Material", dataIndex: "material", align: "left" },
-            { title: "Quantity", dataIndex: "quantity", align: "left" },
-            { title: "Amount (₹)", dataIndex: "amount", align: "left" },
-            {
-              title: "Status",
-              dataIndex: "status",
-              align: "left",
-              render: (status) =>
-                status === "Delivered"
-                  ? <Tag color="green">Delivered</Tag>
-                  : <Tag color="orange">Pending</Tag>,
-            },
-          ]}
-        />
-      </Card>
-    );
-  }
-
-  /* ================= TRANSACTIONS ================= */
-
-  if (activePage === "Transactions") {
-    return (
-      <Card className="raw-main-card">
-        <h3 className="section-title">Transactions</h3>
-        <Table
-          dataSource={transactions}
-          pagination={false}
-          columns={[
-            { title: "Transaction ID", dataIndex: "id", align: "left" },
-            { title: "Vendor", dataIndex: "vendor", align: "left" },
-            { title: "Amount (₹)", dataIndex: "amount", align: "left" },
-            { title: "Date", dataIndex: "date", align: "left" },
-            {
-              title: "Status",
-              dataIndex: "status",
-              align: "left",
-              render: (status) =>
-                status === "Completed"
-                  ? <Tag color="green">Completed</Tag>
-                  : <Tag color="orange">Pending</Tag>,
-            },
-          ]}
-        />
-      </Card>
+    return renderPage(
+      "Order Management",
+      <Table
+        dataSource={orders}
+        pagination={false}
+        columns={[
+          { title: "Order ID", dataIndex: "id" },
+          { title: "Material", dataIndex: "material" },
+          { title: "Quantity", dataIndex: "quantity" },
+          { title: "Amount (₹)", dataIndex: "amount" },
+          {
+            title: "Status",
+            dataIndex: "status",
+            render: (status) =>
+              status === "Delivered"
+                ? <Tag color="green">Delivered</Tag>
+                : <Tag color="orange">Pending</Tag>,
+          },
+        ]}
+      />
     );
   }
 
   /* ================= REVENUE ================= */
 
-  if (activePage === "Revenue") {
+if (activePage === "Revenue") {
 
-    const avgOrderValue =
-      totalOrders > 0 ? Math.round(totalRevenue / totalOrders) : 0;
+  return (
+    <div className="raw-dashboard-wrapper">
 
-    return (
-      <div className="raw-dashboard-wrapper">
+      <Row gutter={[20, 20]} style={{ marginBottom: 30 }}>
 
-        <Row gutter={[20, 20]} style={{ marginBottom: 30 }}>
+        <Col xs={24} sm={12} md={6}>
+          <Card className="raw-stat-card revenue-card">
+            <Statistic title="Total Revenue" value={totalRevenue} prefix="₹" />
+          </Card>
+        </Col>
 
-          <Col xs={24} sm={12} md={6}>
-            <Card className="raw-card highlight">
-              <Statistic title="Total Revenue" value={totalRevenue} prefix="₹" />
-            </Card>
-          </Col>
+        <Col xs={24} sm={12} md={6}>
+          <Card className="raw-stat-card order-card">
+            <Statistic title="Total Orders" value={totalOrders} />
+          </Card>
+        </Col>
 
-          <Col xs={24} sm={12} md={6}>
-            <Card className="raw-card order-card">
-              <Statistic title="Total Orders" value={totalOrders} />
-            </Card>
-          </Col>
+      </Row>
 
-          <Col xs={24} sm={12} md={6}>
-            <Card className="raw-card material-card">
-              <Statistic title="Avg Order Value" value={avgOrderValue} prefix="₹" />
-            </Card>
-          </Col>
+      {renderPage(
+        "Revenue Transactions",
+        <Table
+          dataSource={transactions}
+          pagination={false}
+          columns={[
+            { title: "Transaction ID", dataIndex: "id" },
+            { title: "Vendor", dataIndex: "vendor" },
+            { title: "Amount (₹)", dataIndex: "amount" },
+            { title: "Date", dataIndex: "date" },
+          ]}
+        />
+      )}
 
-        </Row>
-
-      </div>
-    );
-  }
+    </div>
+  );
+}
 
   /* ================= DASHBOARD ================= */
 
@@ -190,45 +173,57 @@ const RawMaterialsDashboard: React.FC<Props> = ({ activePage }) => {
       <Row gutter={[20, 20]} style={{ marginBottom: 30 }}>
 
         <Col xs={24} sm={12} md={6}>
-          <Card className="raw-card material-card">
+          <Card
+            className="raw-stat-card material-card"
+            onClick={() => setActivePage("Materials")}
+          >
             <Statistic title="Materials" value={totalMaterials} prefix={<BuildOutlined />} />
           </Card>
         </Col>
 
         <Col xs={24} sm={12} md={6}>
-          <Card className="raw-card highlight">
+          <Card
+            className="raw-stat-card revenue-card"
+            onClick={() => setActivePage("Revenue")}
+          >
             <Statistic title="Revenue" value={totalRevenue} prefix={<DollarOutlined />} />
           </Card>
         </Col>
 
         <Col xs={24} sm={12} md={6}>
-          <Card className="raw-card order-card">
+          <Card
+            className="raw-stat-card order-card"
+            onClick={() => setActivePage("Orders")}
+          >
             <Statistic title="Orders" value={totalOrders} prefix={<ShoppingCartOutlined />} />
           </Card>
         </Col>
 
         <Col xs={24} sm={12} md={6}>
-          <Card className="raw-card supplier-card">
+          <Card
+            className="raw-stat-card supplier-card"
+            onClick={() => setActivePage("Suppliers")}
+          >
             <Statistic title="Suppliers" value={totalSuppliers} prefix={<TeamOutlined />} />
           </Card>
         </Col>
 
       </Row>
 
-      <Card className="raw-main-card">
-        <h3 className="section-title">Recent Orders</h3>
+      {renderPage(
+        "Recent Orders",
         <Table
           dataSource={orders}
           pagination={false}
           columns={[
-            { title: "Order ID", dataIndex: "id", align: "left" },
-            { title: "Material", dataIndex: "material", align: "left" },
-            { title: "Quantity", dataIndex: "quantity", align: "left" },
-            { title: "Amount (₹)", dataIndex: "amount", align: "left" },
-            { title: "Status", dataIndex: "status", align: "left" },
+            { title: "Order ID", dataIndex: "id" },
+            { title: "Material", dataIndex: "material" },
+            { title: "Quantity", dataIndex: "quantity" },
+            { title: "Amount (₹)", dataIndex: "amount" },
+            { title: "Status", dataIndex: "status" },
           ]}
         />
-      </Card>
+      )}
 
     </div>
   );

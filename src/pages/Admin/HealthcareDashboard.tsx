@@ -50,6 +50,7 @@ const HealthcareDashboard: React.FC<Props> = ({
   activePage,
   setActivePage,
 }) => {
+
   /* ================= DATA ================= */
 
   const doctorsData: Doctor[] = [
@@ -90,11 +91,7 @@ const HealthcareDashboard: React.FC<Props> = ({
       title: "Status",
       dataIndex: "status",
       render: (status: string) => (
-        <span
-          className={`status-badge ${
-            status === "Active" ? "active" : "inactive"
-          }`}
-        >
+        <span className={`status-badge ${status === "Active" ? "active" : "inactive"}`}>
           {status}
         </span>
       ),
@@ -115,11 +112,7 @@ const HealthcareDashboard: React.FC<Props> = ({
       title: "Status",
       dataIndex: "status",
       render: (status: string) => (
-        <span
-          className={`status-badge ${
-            status === "Approved" ? "active" : "inactive"
-          }`}
-        >
+        <span className={`status-badge ${status === "Approved" ? "active" : "inactive"}`}>
           {status}
         </span>
       ),
@@ -132,58 +125,25 @@ const HealthcareDashboard: React.FC<Props> = ({
     { title: "Report Type", dataIndex: "type" },
   ];
 
-  /* ================= TABLE RENDERERS ================= */
+  /* ================= PAGE RENDERERS ================= */
 
-  const renderDoctors = () => (
-    <Card className="healthcare-main-card">
-      <Table<Doctor>
-        pagination={false}
-        scroll={{ x: "max-content" }}
-        dataSource={doctorsData}
-        columns={doctorColumns}
-      />
-    </Card>
-  );
-
-  const renderHospitals = () => (
-    <Card className="healthcare-main-card">
-      <Table<Hospital>
-        pagination={false}
-        scroll={{ x: "max-content" }}
-        dataSource={hospitalsData}
-        columns={hospitalColumns}
-      />
-    </Card>
-  );
-
-  const renderClaims = () => (
-    <Card className="healthcare-main-card">
-      <Table<Claim>
-        pagination={false}
-        scroll={{ x: "max-content" }}
-        dataSource={claimsData}
-        columns={claimColumns}
-      />
-    </Card>
-  );
-
-  const renderReports = () => (
-    <Card className="healthcare-main-card">
-      <Table<Report>
-        pagination={false}
-        scroll={{ x: "max-content" }}
-        dataSource={reportsData}
-        columns={reportColumns}
-      />
-    </Card>
+  const renderPage = (title: string, table: React.ReactNode) => (
+    <div className="healthcare-page-wrapper">
+      <div className="healthcare-section-header">
+        <h3>{title}</h3>
+      </div>
+      <Card className="healthcare-main-card">
+        {table}
+      </Card>
+    </div>
   );
 
   /* ================= DASHBOARD ================= */
 
-const renderDashboard = () => (
+ const renderDashboard = () => (
   <div className="healthcare-dashboard-wrapper">
 
-    {/* ===== STAT CARDS ===== */}
+    {/* STAT CARDS */}
     <Row gutter={[20, 20]} style={{ marginBottom: 24 }}>
       <Col xs={24} sm={12} md={6}>
         <Card
@@ -238,19 +198,16 @@ const renderDashboard = () => (
       </Col>
     </Row>
 
-    {/* ===== DOCTOR MANAGEMENT SECTION ===== */}
-    <Card className="healthcare-main-card">
-      <div className="healthcare-section-header">
-        <h3>Doctor Management</h3>
-      </div>
-
+    {/* ONLY DOCTOR MANAGEMENT */}
+    {renderPage(
+      "Doctor Management",
       <Table<Doctor>
         pagination={false}
         scroll={{ x: "max-content" }}
         dataSource={doctorsData}
         columns={doctorColumns}
       />
-    </Card>
+    )}
 
   </div>
 );
@@ -258,11 +215,32 @@ const renderDashboard = () => (
   return (
     <div className="healthcare-wrapper">
       <div className="healthcare-container">
+
         {activePage === "Dashboard" && renderDashboard()}
-        {activePage === "Doctors" && renderDoctors()}
-        {activePage === "Hospitals" && renderHospitals()}
-        {activePage === "Medical Claims" && renderClaims()}
-        {activePage === "Medical Reports" && renderReports()}
+        {activePage === "Doctors" &&
+          renderPage("Doctor Management",
+            <Table<Doctor> pagination={false} scroll={{ x: "max-content" }}
+              dataSource={doctorsData} columns={doctorColumns} />
+          )}
+
+        {activePage === "Hospitals" &&
+          renderPage("Hospital Management",
+            <Table<Hospital> pagination={false} scroll={{ x: "max-content" }}
+              dataSource={hospitalsData} columns={hospitalColumns} />
+          )}
+
+        {activePage === "Medical Claims" &&
+          renderPage("Medical Claims Management",
+            <Table<Claim> pagination={false} scroll={{ x: "max-content" }}
+              dataSource={claimsData} columns={claimColumns} />
+          )}
+
+        {activePage === "Medical Reports" &&
+          renderPage("Medical Reports Management",
+            <Table<Report> pagination={false} scroll={{ x: "max-content" }}
+              dataSource={reportsData} columns={reportColumns} />
+          )}
+
       </div>
     </div>
   );

@@ -13,7 +13,6 @@ import {
   ShoppingCartOutlined,
   HomeOutlined,
   BuildOutlined,
-  SettingOutlined,
   LogoutOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
@@ -25,6 +24,7 @@ import JustRideDashboard from "./JustRideDashboard";
 import ProductsDashboard from "./ProductsDashboard";
 import BuySellDashboard from "./BuySellDashboard";
 import RawMaterialsDashboard from "./RawMaterialsDashboard";
+import FreelancerDashboard from "./FreelancerDashboard";
 
 import "./AdminDashboard.css";
 
@@ -60,32 +60,77 @@ const handleLogout = () => {
      RENDER CONTENT
   ============================== */
 
-  const renderContent = () => {
-    switch (selectedService) {
-     case "Healthcare":
-  return (
-    <HealthcareDashboard
-      activePage={selectedPage}
-      setActivePage={setSelectedPage}
-    />
-  );
+const renderContent = () => {
+  switch (selectedService) {
 
-      case "Cleaning":
-        return <CleaningDashboard activePage={selectedPage} />;
-      case "Education":
-        return <EducationDashboard activePage={selectedPage} />;
-      case "JustRide":
-        return <JustRideDashboard activePage={selectedPage} />;
-      case "Products":
-        return <ProductsDashboard activePage={selectedPage} />;
-      case "BuySell":
-        return <BuySellDashboard activePage={selectedPage} />;
-      case "RawMaterials":
-        return <RawMaterialsDashboard activePage={selectedPage} />;
-      default:
-        return null;
-    }
-  };
+    case "Healthcare":
+      return (
+        <HealthcareDashboard
+          activePage={selectedPage}
+          setActivePage={setSelectedPage}
+        />
+      );
+
+    case "Cleaning":
+      return (
+        <CleaningDashboard
+          activePage={selectedPage}
+          setActivePage={setSelectedPage}
+        />
+      );
+
+    case "Education":
+      return (
+        <EducationDashboard
+          activePage={selectedPage}
+          setActivePage={setSelectedPage}
+        />
+      );
+
+    case "JustRide":
+      return (
+        <JustRideDashboard
+          activePage={selectedPage}
+          setActivePage={setSelectedPage}
+        />
+      );
+
+    case "Products":
+      return (
+        <ProductsDashboard
+          activePage={selectedPage}
+          setActivePage={setSelectedPage}
+        />
+      );
+
+    case "BuySell":
+      return (
+        <BuySellDashboard
+          activePage={selectedPage}
+          setActivePage={setSelectedPage}
+        />
+      );
+
+    case "RawMaterials":
+      return (
+        <RawMaterialsDashboard
+          activePage={selectedPage}
+          setActivePage={setSelectedPage}
+        />
+      );
+
+    case "Freelancer":
+      return (
+        <FreelancerDashboard
+          activePage={selectedPage}
+          setActivePage={setSelectedPage}
+        />
+      );
+
+    default:
+      return null;
+  }
+};
 
   /* =============================
      SIDEBAR MENU FIELDS
@@ -179,7 +224,25 @@ const handleLogout = () => {
             <Menu.Item key="Revenue" icon={<DollarOutlined />}>Revenue</Menu.Item>
           </>
         );
+        case "Freelancer":
+  return (
+    <>
+      <Menu.Item key="Dashboard" icon={<DashboardOutlined />}>
+        Dashboard
+      </Menu.Item>
 
+      <Menu.Item key="Active Freelancers" icon={<UserOutlined />}>
+        Active Freelancers
+      </Menu.Item>
+
+      <Menu.Item key="Pending Freelancers" icon={<CalendarOutlined />}>
+        Pending Freelancers
+      </Menu.Item>
+
+      <Menu.Item key="Rejected Freelancers" icon={<FileTextOutlined />}>
+        Rejected Freelancers
+      </Menu.Item>
+    </>);
       default:
         return null;
     }
@@ -206,9 +269,7 @@ const Sidebar = (
 
       <Menu.Divider />
 
-      <Menu.Item key="Settings" icon={<SettingOutlined />}>
-        Settings
-      </Menu.Item>
+    
 
       <Menu.Item
         key="Logout"
@@ -266,6 +327,7 @@ const Sidebar = (
             <option value="Products">Swachify Products</option>
             <option value="BuySell">Buy / Sale / Rentals</option>
             <option value="RawMaterials">Raw Materials</option>
+            <option value="Freelancer">Freelancer</option>
           </select>
         </div>
 

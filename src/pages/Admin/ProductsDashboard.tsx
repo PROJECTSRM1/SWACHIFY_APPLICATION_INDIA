@@ -11,53 +11,22 @@ import "./ProductsDashboard.css";
 
 interface Props {
   activePage: string;
+  setActivePage: (page: string) => void;
 }
 
-const ProductsDashboard: React.FC<Props> = ({ activePage }) => {
+const ProductsDashboard: React.FC<Props> = ({
+  activePage,
+  setActivePage,
+}) => {
 
-  /* ================= REAL SWACHIFY PRODUCTS ================= */
+  /* ================= DATA ================= */
 
   const products = [
-    {
-      key: 1,
-      name: "Organic Jute Shopping Bag",
-      category: "Entrepreneur",
-      price: 550,
-      rating: 4.6,
-      stock: 30,
-    },
-    {
-      key: 2,
-      name: "Bamboo Toothbrush Set",
-      category: "Sustainable",
-      price: 800,
-      rating: 4.6,
-      stock: 45,
-    },
-    {
-      key: 3,
-      name: "Recycled Paper Notebooks",
-      category: "Recycled",
-      price: 450,
-      rating: 4.3,
-      stock: 50,
-    },
-    {
-      key: 4,
-      name: "Reusable Beeswax Wraps",
-      category: "Sustainable",
-      price: 650,
-      rating: 4.5,
-      stock: 35,
-    },
-    {
-      key: 5,
-      name: "Eco-Friendly Cleaning Kit",
-      category: "Cleaners",
-      price: 1200,
-      rating: 4.7,
-      stock: 20,
-    },
+    { key: 1, name: "Organic Jute Shopping Bag", category: "Entrepreneur", price: 550, rating: 4.6, stock: 30 },
+    { key: 2, name: "Bamboo Toothbrush Set", category: "Sustainable", price: 800, rating: 4.6, stock: 45 },
+    { key: 3, name: "Recycled Paper Notebooks", category: "Recycled", price: 450, rating: 4.3, stock: 50 },
+    { key: 4, name: "Reusable Beeswax Wraps", category: "Sustainable", price: 650, rating: 4.5, stock: 35 },
+    { key: 5, name: "Eco-Friendly Cleaning Kit", category: "Cleaners", price: 1200, rating: 4.7, stock: 20 },
   ];
 
   const orders = [
@@ -68,161 +37,116 @@ const ProductsDashboard: React.FC<Props> = ({ activePage }) => {
 
   const totalProducts = products.length;
   const totalRevenue = orders.reduce((acc, o) => acc + o.amount, 0);
-  const totalCategories = 4;
+  const totalCategories = new Set(products.map(p => p.category)).size;
+  const totalOrders = orders.length;
 
-  /* ================= SETTINGS ================= */
+  /* ================= COMMON WRAPPER ================= */
 
-  if (activePage === "Settings") return null;
+  const renderPage = (title: string, table: React.ReactNode) => (
+    <div className="products-page-wrapper">
+      <div className="products-section-header">
+        <h3>{title}</h3>
+      </div>
+      <Card className="products-main-card">
+        {table}
+      </Card>
+    </div>
+  );
 
   /* ================= PRODUCTS PAGE ================= */
 
   if (activePage === "Products") {
-    return (
-      <Card className="products-main-card">
-        <h3 className="section-title">All Swachify Products</h3>
-        <Table
-          dataSource={products}
-          pagination={false}
-          columns={[
-            { title: "Product Name", dataIndex: "name", align: "left" },
-            { title: "Category", dataIndex: "category", align: "left" },
-            { title: "Price (₹)", dataIndex: "price", align: "left" },
-            { title: "Rating", dataIndex: "rating", align: "left" },
-            { title: "Stock", dataIndex: "stock", align: "left" },
-          ]}
-        />
-      </Card>
+    return renderPage(
+      "Product Management",
+      <Table
+        dataSource={products}
+        pagination={false}
+        columns={[
+          { title: "Product Name", dataIndex: "name" },
+          { title: "Category", dataIndex: "category" },
+          { title: "Price (₹)", dataIndex: "price" },
+          { title: "Rating", dataIndex: "rating" },
+          { title: "Stock", dataIndex: "stock" },
+        ]}
+      />
     );
   }
 
   /* ================= ORDERS PAGE ================= */
 
   if (activePage === "Orders") {
-    return (
-      <Card className="products-main-card">
-        <h3 className="section-title">Orders</h3>
-        <Table
-          dataSource={orders}
-          pagination={false}
-          columns={[
-            { title: "Order ID", dataIndex: "id", align: "left" },
-            { title: "Product", dataIndex: "product", align: "left" },
-            { title: "Amount (₹)", dataIndex: "amount", align: "left" },
-            {
-              title: "Status",
-              dataIndex: "status",
-              align: "left",
-              render: (status) =>
-                status === "Delivered" ? (
-                  <Tag color="green">Delivered</Tag>
-                ) : (
-                  <Tag color="orange">Pending</Tag>
-                ),
-            },
-          ]}
-        />
-      </Card>
+    return renderPage(
+      "Order Management",
+      <Table
+        dataSource={orders}
+        pagination={false}
+        columns={[
+          { title: "Order ID", dataIndex: "id" },
+          { title: "Product", dataIndex: "product" },
+          { title: "Amount (₹)", dataIndex: "amount" },
+          {
+            title: "Status",
+            dataIndex: "status",
+            render: (status) =>
+              status === "Delivered" ? (
+                <Tag color="green">Delivered</Tag>
+              ) : (
+                <Tag color="orange">Pending</Tag>
+              ),
+          },
+        ]}
+      />
     );
   }
 
   /* ================= REVENUE PAGE ================= */
 
- if (activePage === "Revenue") {
+  if (activePage === "Revenue") {
+    return (
+      <div className="products-dashboard-wrapper">
 
-  const totalOrders = orders.length;
-  const averageOrderValue =
-    totalOrders > 0 ? Math.round(totalRevenue / totalOrders) : 0;
+        <Row gutter={[20, 20]} style={{ marginBottom: 30 }}>
+          <Col xs={24} sm={12} md={6}>
+            <Card className="products-stat-card revenue-card">
+              <Statistic title="Total Revenue" value={totalRevenue} prefix="₹" />
+            </Card>
+          </Col>
 
-  const revenueByCategory = [
-    { key: 1, category: "Entrepreneur", revenue: 550 },
-    { key: 2, category: "Sustainable", revenue: 1450 },
-    { key: 3, category: "Cleaners", revenue: 1200 },
-  ];
+          <Col xs={24} sm={12} md={6}>
+            <Card className="products-stat-card orders-card">
+              <Statistic title="Total Orders" value={totalOrders} />
+            </Card>
+          </Col>
+        </Row>
 
-  const monthlyRevenue = [
-    { key: 1, month: "Jan", revenue: 8000 },
-    { key: 2, month: "Feb", revenue: 12000 },
-    { key: 3, month: "Mar", revenue: 9500 },
-  ];
-
-  return (
-    <div className="products-dashboard-wrapper">
-
-      {/* Top Revenue Stats */}
-      <Row gutter={[20, 20]} style={{ marginBottom: 30 }}>
-
-        <Col xs={24} sm={12} md={6}>
-          <Card className="products-card revenue-card">
-            <Statistic
-              title="Total Revenue"
-              value={totalRevenue}
-              prefix="₹"
-            />
-          </Card>
-        </Col>
-
-        <Col xs={24} sm={12} md={6}>
-          <Card className="products-card orders-card">
-            <Statistic
-              title="Total Orders"
-              value={totalOrders}
-            />
-          </Card>
-        </Col>
-
-        <Col xs={24} sm={12} md={6}>
-          <Card className="products-card product-card">
-            <Statistic
-              title="Avg Order Value"
-              value={averageOrderValue}
-              prefix="₹"
-            />
-          </Card>
-        </Col>
-
-      </Row>
-
-      {/* Revenue by Category */}
-      <Card className="products-main-card" style={{ marginBottom: 30 }}>
-        <h3 className="section-title">Revenue by Category</h3>
-        <Table
-          dataSource={revenueByCategory}
-          pagination={false}
-          columns={[
-            { title: "Category", dataIndex: "category", align: "left" },
-            { title: "Revenue (₹)", dataIndex: "revenue", align: "left" },
-          ]}
-        />
-      </Card>
-
-      {/* Monthly Revenue */}
-      <Card className="products-main-card">
-        <h3 className="section-title">Monthly Revenue</h3>
-        <Table
-          dataSource={monthlyRevenue}
-          pagination={false}
-          columns={[
-            { title: "Month", dataIndex: "month", align: "left" },
-            { title: "Revenue (₹)", dataIndex: "revenue", align: "left" },
-          ]}
-        />
-      </Card>
-
-    </div>
-  );
-}
-
+        {renderPage(
+          "Revenue Details",
+          <Table
+            dataSource={orders}
+            pagination={false}
+            columns={[
+              { title: "Order ID", dataIndex: "id" },
+              { title: "Product", dataIndex: "product" },
+              { title: "Amount (₹)", dataIndex: "amount" },
+            ]}
+          />
+        )}
+      </div>
+    );
+  }
 
   /* ================= DASHBOARD ================= */
 
   return (
     <div className="products-dashboard-wrapper">
 
-      {/* Attractive Cards */}
       <Row gutter={[20, 20]} style={{ marginBottom: 30 }}>
 
         <Col xs={24} sm={12} md={6}>
-          <Card className="products-card product-card">
+          <Card
+            className="products-stat-card product-card"
+            onClick={() => setActivePage("Products")}
+          >
             <Statistic
               title="Total Products"
               value={totalProducts}
@@ -232,7 +156,10 @@ const ProductsDashboard: React.FC<Props> = ({ activePage }) => {
         </Col>
 
         <Col xs={24} sm={12} md={6}>
-          <Card className="products-card revenue-card">
+          <Card
+            className="products-stat-card revenue-card"
+            onClick={() => setActivePage("Revenue")}
+          >
             <Statistic
               title="Revenue"
               value={totalRevenue}
@@ -242,7 +169,7 @@ const ProductsDashboard: React.FC<Props> = ({ activePage }) => {
         </Col>
 
         <Col xs={24} sm={12} md={6}>
-          <Card className="products-card category-card">
+          <Card className="products-stat-card category-card">
             <Statistic
               title="Categories"
               value={totalCategories}
@@ -252,10 +179,13 @@ const ProductsDashboard: React.FC<Props> = ({ activePage }) => {
         </Col>
 
         <Col xs={24} sm={12} md={6}>
-          <Card className="products-card orders-card">
+          <Card
+            className="products-stat-card orders-card"
+            onClick={() => setActivePage("Orders")}
+          >
             <Statistic
               title="Orders"
-              value={orders.length}
+              value={totalOrders}
               prefix={<OrderedListOutlined />}
             />
           </Card>
@@ -263,20 +193,18 @@ const ProductsDashboard: React.FC<Props> = ({ activePage }) => {
 
       </Row>
 
-      {/* Recent Orders */}
-      <Card className="products-main-card">
-        <h3 className="section-title">Recent Orders</h3>
+      {renderPage(
+        "Recent Orders",
         <Table
           dataSource={orders}
           pagination={false}
           columns={[
-            { title: "Order ID", dataIndex: "id", align: "left" },
-            { title: "Product", dataIndex: "product", align: "left" },
-            { title: "Amount (₹)", dataIndex: "amount", align: "left" },
+            { title: "Order ID", dataIndex: "id" },
+            { title: "Product", dataIndex: "product" },
+            { title: "Amount (₹)", dataIndex: "amount" },
             {
               title: "Status",
               dataIndex: "status",
-              align: "left",
               render: (status) =>
                 status === "Delivered" ? (
                   <Tag color="green">Delivered</Tag>
@@ -286,7 +214,7 @@ const ProductsDashboard: React.FC<Props> = ({ activePage }) => {
             },
           ]}
         />
-      </Card>
+      )}
 
     </div>
   );

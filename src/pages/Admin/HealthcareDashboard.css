@@ -133,3 +133,16 @@
   font-size: 18px;
   font-weight: 600;
 }
+.healthcare-page-wrapper {
+  margin-bottom: 24px;
+}
+
+.healthcare-section-header {
+  margin-bottom: 16px;
+}
+
+.healthcare-section-header h3 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+}

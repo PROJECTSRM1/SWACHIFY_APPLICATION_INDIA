@@ -10,11 +10,15 @@ import "./JustRideDashboard.css";
 
 interface Props {
   activePage: string;
+  setActivePage?: (page: string) => void;
 }
 
-const JustRideDashboard: React.FC<Props> = ({ activePage }) => {
+const JustRideDashboard: React.FC<Props> = ({
+  activePage,
+  setActivePage,
+}) => {
 
-  /* ================= MOCK DATA ================= */
+  /* ================= DATA ================= */
 
   const driversData = [
     { key: 1, name: "Ramesh", vehicle: "Swift", rides: 120 },
@@ -29,43 +33,57 @@ const JustRideDashboard: React.FC<Props> = ({ activePage }) => {
   ];
 
   const totalDrivers = driversData.length;
-  const totalRides = driversData.reduce((acc, d) => acc + d.rides, 0);
-  const totalRevenue = ridesData.reduce((acc, r) => acc + r.fare, 0);
+const totalRides = ridesData.length;
+const totalRevenue = ridesData.reduce((acc, r) => acc + r.fare, 0);
+
+  /* ================= COMMON PAGE WRAPPER ================= */
+
+  const renderPage = (title: string, table: React.ReactNode) => (
+    <div className="ride-page-wrapper">
+      <div className="ride-section-header">
+        <h3>{title}</h3>
+      </div>
+
+      <Card className="ride-main-card">
+        {table}
+      </Card>
+    </div>
+  );
 
   /* ================= DRIVERS PAGE ================= */
 
   if (activePage === "Drivers") {
-    return (
-      <Card className="ride-main-card">
-        <Table
-          dataSource={driversData}
-          pagination={false}
-          columns={[
-            { title: "Driver Name", dataIndex: "name", align: "left" },
-            { title: "Vehicle", dataIndex: "vehicle", align: "left" },
-            { title: "Total Rides", dataIndex: "rides", align: "left" },
-          ]}
-        />
-      </Card>
+    return renderPage(
+      "Driver Management",
+      <Table
+        dataSource={driversData}
+        pagination={false}
+        scroll={{ x: "max-content" }}
+        columns={[
+          { title: "Driver Name", dataIndex: "name" },
+          { title: "Vehicle", dataIndex: "vehicle" },
+          { title: "Total Rides", dataIndex: "rides" },
+        ]}
+      />
     );
   }
 
   /* ================= RIDES PAGE ================= */
 
   if (activePage === "Rides") {
-    return (
-      <Card className="ride-main-card">
-        <Table
-          dataSource={ridesData}
-          pagination={false}
-          columns={[
-            { title: "Rider", dataIndex: "rider", align: "left" },
-            { title: "Driver", dataIndex: "driver", align: "left" },
-            { title: "Fare", dataIndex: "fare", align: "left" },
-            { title: "Status", dataIndex: "status", align: "left" },
-          ]}
-        />
-      </Card>
+    return renderPage(
+      "Ride Management",
+      <Table
+        dataSource={ridesData}
+        pagination={false}
+        scroll={{ x: "max-content" }}
+        columns={[
+          { title: "Rider", dataIndex: "rider" },
+          { title: "Driver", dataIndex: "driver" },
+          { title: "Fare", dataIndex: "fare" },
+          { title: "Status", dataIndex: "status" },
+        ]}
+      />
     );
   }
 
@@ -77,7 +95,7 @@ const JustRideDashboard: React.FC<Props> = ({ activePage }) => {
 
         <Row gutter={[20, 20]} style={{ marginBottom: 24 }}>
           <Col xs={24} md={8}>
-            <Card className="ride-card highlight">
+            <Card className="ride-stat-card revenue-card">
               <Statistic
                 title="Total Revenue"
                 value={totalRevenue}
@@ -87,85 +105,91 @@ const JustRideDashboard: React.FC<Props> = ({ activePage }) => {
           </Col>
         </Row>
 
-        <Card className="ride-main-card">
+        {renderPage(
+          "Revenue Details",
           <Table
             dataSource={ridesData}
             pagination={false}
+            scroll={{ x: "max-content" }}
             columns={[
-              { title: "Rider", dataIndex: "rider", align: "left" },
-              { title: "Driver", dataIndex: "driver", align: "left" },
-              { title: "Fare", dataIndex: "fare", align: "left" },
-              { title: "Status", dataIndex: "status", align: "left" },
+              { title: "Rider", dataIndex: "rider" },
+              { title: "Driver", dataIndex: "driver" },
+              { title: "Fare", dataIndex: "fare" },
+              { title: "Status", dataIndex: "status" },
             ]}
           />
-        </Card>
-
+        )}
       </div>
     );
   }
 
   /* ================= DASHBOARD ================= */
 
-  if (activePage === "Dashboard") {
-    return (
-      <div className="ride-dashboard-wrapper">
+  return (
+    <div className="ride-dashboard-wrapper">
 
-        {/* Stats */}
-        <Row gutter={[20, 20]} style={{ marginBottom: 24 }}>
-          <Col xs={24} sm={12} md={8}>
-            <Card className="ride-card">
-              <Statistic
-                title="Total Drivers"
-                value={totalDrivers}
-                prefix={<UserOutlined />}
-              />
-            </Card>
-          </Col>
+      {/* STAT CARDS */}
+      <Row gutter={[20, 20]} style={{ marginBottom: 24 }}>
 
-          <Col xs={24} sm={12} md={8}>
-            <Card className="ride-card">
-              <Statistic
-                title="Total Rides"
-                value={totalRides}
-                prefix={<CarOutlined />}
-              />
-            </Card>
-          </Col>
+        <Col xs={24} sm={12} md={8}>
+          <Card
+            className="ride-stat-card drivers-card"
+            onClick={() => setActivePage?.("Drivers")}
+          >
+            <Statistic
+              title="Total Drivers"
+              value={totalDrivers}
+              prefix={<UserOutlined />}
+            />
+          </Card>
+        </Col>
 
-          <Col xs={24} sm={12} md={8}>
-            <Card className="ride-card highlight">
-              <Statistic
-                title="Revenue"
-                value={totalRevenue}
-                prefix={<DollarOutlined />}
-              />
-            </Card>
-          </Col>
-        </Row>
+        <Col xs={24} sm={12} md={8}>
+          <Card
+            className="ride-stat-card rides-card"
+            onClick={() => setActivePage?.("Rides")}
+          >
+            <Statistic
+              title="Total Rides"
+              value={totalRides}
+              prefix={<CarOutlined />}
+            />
+          </Card>
+        </Col>
 
-        {/* Recent Rides */}
-        <Card className="ride-main-card">
-          <div className="ride-section-header">
-            <h3>Recent Rides</h3>
-          </div>
+        <Col xs={24} sm={12} md={8}>
+          <Card
+            className="ride-stat-card revenue-card"
+            onClick={() => setActivePage?.("Revenue")}
+          >
+            <Statistic
+              title="Total Revenue"
+              value={totalRevenue}
+              prefix={<DollarOutlined />}
+            />
+          </Card>
+        </Col>
 
-          <Table
-            dataSource={ridesData}
-            pagination={false}
-            columns={[
-              { title: "Rider", dataIndex: "rider", align: "left" },
-              { title: "Driver", dataIndex: "driver", align: "left" },
-              { title: "Fare", dataIndex: "fare", align: "left" },
-              { title: "Status", dataIndex: "status", align: "left" },
-            ]}
-          />
-        </Card>
+      </Row>
 
-      </div>
-    );
-  }
+      {/* RECENT RIDES */}
+      {renderPage(
+        "Recent Rides",
+        <Table
+          dataSource={ridesData}
+          pagination={false}
+          scroll={{ x: "max-content" }}
+          columns={[
+            { title: "Rider", dataIndex: "rider" },
+            { title: "Driver", dataIndex: "driver" },
+            { title: "Fare", dataIndex: "fare" },
+            { title: "Status", dataIndex: "status" },
+          ]}
+        />
+      )}
 
-  return null;
+    </div>
+  );
 };
 
 export default JustRideDashboard;
