@@ -11,9 +11,13 @@ import "./BuySellDashboard.css";
 
 interface Props {
   activePage: string;
+  setActivePage: (page: string) => void;
 }
 
-const BuySellDashboard: React.FC<Props> = ({ activePage }) => {
+const BuySellDashboard: React.FC<Props> = ({
+  activePage,
+  setActivePage,
+}) => {
 
   /* ================= DATA ================= */
 
@@ -30,220 +34,141 @@ const BuySellDashboard: React.FC<Props> = ({ activePage }) => {
   ];
 
   const transactions = [
-    {
-      key: 1,
-      id: "#TXN001",
-      client: "Ramesh",
-      property: "2BHK Apartment",
-      amount: 5500000,
-      date: "12 Feb 2026",
-      status: "Completed",
-    },
-    {
-      key: 2,
-      id: "#TXN002",
-      client: "Suresh",
-      property: "Villa in Gachibowli",
-      amount: 12500000,
-      date: "15 Feb 2026",
-      status: "Completed",
-    },
-    {
-      key: 3,
-      id: "#TXN003",
-      client: "Anita",
-      property: "3BHK Flat",
-      amount: 7800000,
-      date: "18 Feb 2026",
-      status: "Pending",
-    },
+    { key: 1, id: "#TXN001", client: "Ramesh", property: "2BHK Apartment", amount: 5500000, date: "12 Feb 2026", status: "Completed" },
+    { key: 2, id: "#TXN002", client: "Suresh", property: "Villa in Gachibowli", amount: 12500000, date: "15 Feb 2026", status: "Completed" },
+    { key: 3, id: "#TXN003", client: "Anita", property: "3BHK Flat", amount: 7800000, date: "18 Feb 2026", status: "Pending" },
   ];
 
   const totalProperties = properties.length;
   const totalDeals = deals.length;
+  const totalTransactions = transactions.length;
   const totalRevenue = transactions.reduce((acc, t) => acc + t.amount, 0);
 
-  /* ================= SETTINGS ================= */
-  if (activePage === "Settings") return null;
+  /* ================= COMMON PAGE WRAPPER ================= */
+
+  const renderPage = (title: string, table: React.ReactNode) => (
+    <div className="buysell-page-wrapper">
+      <div className="buysell-section-header">
+        <h3>{title}</h3>
+      </div>
+      <Card className="buysell-main-card">
+        {table}
+      </Card>
+    </div>
+  );
 
   /* ================= PROPERTIES ================= */
+
   if (activePage === "Properties") {
-    return (
-      <Card className="buysell-main-card">
-        <h3 className="section-title">All Properties</h3>
-        <Table
-          dataSource={properties}
-          pagination={false}
-          columns={[
-            { title: "Property", dataIndex: "title", align: "left" },
-            { title: "Location", dataIndex: "location", align: "left" },
-            { title: "Price (₹)", dataIndex: "price", align: "left" },
-            {
-              title: "Status",
-              dataIndex: "status",
-              align: "left",
-              render: (status) =>
-                status === "Sold"
-                  ? <Tag color="red">Sold</Tag>
-                  : <Tag color="green">Available</Tag>,
-            },
-          ]}
-        />
-      </Card>
+    return renderPage(
+      "Property Management",
+      <Table
+        dataSource={properties}
+        pagination={false}
+        columns={[
+          { title: "Property", dataIndex: "title" },
+          { title: "Location", dataIndex: "location" },
+          { title: "Price (₹)", dataIndex: "price" },
+          {
+            title: "Status",
+            dataIndex: "status",
+            render: (status) =>
+              status === "Sold"
+                ? <Tag color="red">Sold</Tag>
+                : <Tag color="green">Available</Tag>,
+          },
+        ]}
+      />
     );
   }
 
   /* ================= DEALS ================= */
+
   if (activePage === "Deals") {
-    return (
-      <Card className="buysell-main-card">
-        <h3 className="section-title">Deals</h3>
-        <Table
-          dataSource={deals}
-          pagination={false}
-          columns={[
-            { title: "Deal ID", dataIndex: "id", align: "left" },
-            { title: "Property", dataIndex: "property", align: "left" },
-            { title: "Amount (₹)", dataIndex: "amount", align: "left" },
-            {
-              title: "Status",
-              dataIndex: "status",
-              align: "left",
-              render: (status) =>
-                status === "Closed"
-                  ? <Tag color="green">Closed</Tag>
-                  : <Tag color="orange">Pending</Tag>,
-            },
-          ]}
-        />
-      </Card>
+    return renderPage(
+      "Deal Management",
+      <Table
+        dataSource={deals}
+        pagination={false}
+        columns={[
+          { title: "Deal ID", dataIndex: "id" },
+          { title: "Property", dataIndex: "property" },
+          { title: "Amount (₹)", dataIndex: "amount" },
+          {
+            title: "Status",
+            dataIndex: "status",
+            render: (status) =>
+              status === "Closed"
+                ? <Tag color="green">Closed</Tag>
+                : <Tag color="orange">Pending</Tag>,
+          },
+        ]}
+      />
     );
   }
 
   /* ================= TRANSACTIONS ================= */
+
   if (activePage === "Transactions") {
-    return (
-      <Card className="buysell-main-card">
-        <h3 className="section-title">Transactions</h3>
-        <Table
-          dataSource={transactions}
-          pagination={false}
-          columns={[
-            { title: "Transaction ID", dataIndex: "id", align: "left" },
-            { title: "Client", dataIndex: "client", align: "left" },
-            { title: "Property", dataIndex: "property", align: "left" },
-            { title: "Amount (₹)", dataIndex: "amount", align: "left" },
-            { title: "Date", dataIndex: "date", align: "left" },
-            {
-              title: "Status",
-              dataIndex: "status",
-              align: "left",
-              render: (status) =>
-                status === "Completed"
-                  ? <Tag color="green">Completed</Tag>
-                  : <Tag color="orange">Pending</Tag>,
-            },
-          ]}
-        />
-      </Card>
+    return renderPage(
+      "Transaction Management",
+      <Table
+        dataSource={transactions}
+        pagination={false}
+        columns={[
+          { title: "Transaction ID", dataIndex: "id" },
+          { title: "Client", dataIndex: "client" },
+          { title: "Property", dataIndex: "property" },
+          { title: "Amount (₹)", dataIndex: "amount" },
+          { title: "Date", dataIndex: "date" },
+          {
+            title: "Status",
+            dataIndex: "status",
+            render: (status) =>
+              status === "Completed"
+                ? <Tag color="green">Completed</Tag>
+                : <Tag color="orange">Pending</Tag>,
+          },
+        ]}
+      />
     );
   }
 
   /* ================= REVENUE ================= */
-if (activePage === "Revenue") {
 
-  const totalTransactions = transactions.length;
-  const avgDealValue =
-    totalTransactions > 0
-      ? Math.round(totalRevenue / totalTransactions)
-      : 0;
+  if (activePage === "Revenue") {
+    return (
+      <div className="buysell-dashboard-wrapper">
 
-  const monthlyRevenue = [
-    { key: 1, month: "Jan", revenue: 8500000 },
-    { key: 2, month: "Feb", revenue: 9200000 },
-    { key: 3, month: "Mar", revenue: 7800000 },
-  ];
+        <Row gutter={[20, 20]} style={{ marginBottom: 30 }}>
+          <Col xs={24} sm={12} md={6}>
+            <Card className="buysell-stat-card revenue-card">
+              <Statistic title="Total Revenue" value={totalRevenue} prefix="₹" />
+            </Card>
+          </Col>
 
-  const revenueByProperty = [
-    { key: 1, type: "Apartments", revenue: 13300000 },
-    { key: 2, type: "Villas", revenue: 12500000 },
-    { key: 3, type: "Flats", revenue: 7800000 },
-  ];
+          <Col xs={24} sm={12} md={6}>
+            <Card className="buysell-stat-card transaction-card">
+              <Statistic title="Total Transactions" value={totalTransactions} />
+            </Card>
+          </Col>
+        </Row>
 
-  const thisMonthRevenue = 9200000;
-
-  const topProperty = "Villa in Gachibowli";
-
-  return (
-    <div className="buysell-dashboard-wrapper">
-
-      {/* TOP ANALYTICS CARDS */}
-      <Row gutter={[20, 20]} style={{ marginBottom: 30 }}>
-
-        <Col xs={24} sm={12} md={6}>
-          <Card className="buysell-card highlight">
-            <Statistic title="Total Revenue" value={totalRevenue} prefix="₹" />
-          </Card>
-        </Col>
-
-        <Col xs={24} sm={12} md={6}>
-          <Card className="buysell-card deal-card">
-            <Statistic title="Total Transactions" value={totalTransactions} />
-          </Card>
-        </Col>
-
-        <Col xs={24} sm={12} md={6}>
-          <Card className="buysell-card property-card">
-            <Statistic title="Avg Deal Value" value={avgDealValue} prefix="₹" />
-          </Card>
-        </Col>
-
-        <Col xs={24} sm={12} md={6}>
-          <Card className="buysell-card transaction-card">
-            <Statistic title="This Month Revenue" value={thisMonthRevenue} prefix="₹" />
-          </Card>
-        </Col>
-
-      </Row>
-
-      {/* REVENUE BY PROPERTY TYPE */}
-      <Card className="buysell-main-card" style={{ marginBottom: 30 }}>
-        <h3 className="section-title">Revenue by Property Type</h3>
-        <Table
-          dataSource={revenueByProperty}
-          pagination={false}
-          columns={[
-            { title: "Property Type", dataIndex: "type", align: "left" },
-            { title: "Revenue (₹)", dataIndex: "revenue", align: "left" },
-          ]}
-        />
-      </Card>
-
-      {/* MONTHLY REVENUE */}
-      <Card className="buysell-main-card" style={{ marginBottom: 30 }}>
-        <h3 className="section-title">Monthly Revenue</h3>
-        <Table
-          dataSource={monthlyRevenue}
-          pagination={false}
-          columns={[
-            { title: "Month", dataIndex: "month", align: "left" },
-            { title: "Revenue (₹)", dataIndex: "revenue", align: "left" },
-          ]}
-        />
-      </Card>
-
-      {/* TOP PERFORMING PROPERTY */}
-      <Card className="buysell-main-card">
-        <h3 className="section-title">Top Performing Property</h3>
-        <p style={{ fontSize: "16px", fontWeight: 500 }}>
-          🏆 {topProperty}
-        </p>
-      </Card>
-
-    </div>
-  );
-}
-
+        {renderPage(
+          "Revenue Transactions",
+          <Table
+            dataSource={transactions}
+            pagination={false}
+            columns={[
+              { title: "Transaction ID", dataIndex: "id" },
+              { title: "Client", dataIndex: "client" },
+              { title: "Amount (₹)", dataIndex: "amount" },
+            ]}
+          />
+        )}
+      </div>
+    );
+  }
 
   /* ================= DASHBOARD ================= */
 
@@ -253,7 +178,10 @@ if (activePage === "Revenue") {
       <Row gutter={[20, 20]} style={{ marginBottom: 30 }}>
 
         <Col xs={24} sm={12} md={6}>
-          <Card className="buysell-card property-card">
+          <Card
+            className="buysell-stat-card property-card"
+            onClick={() => setActivePage("Properties")}
+          >
             <Statistic
               title="Properties Listed"
               value={totalProperties}
@@ -263,7 +191,10 @@ if (activePage === "Revenue") {
         </Col>
 
         <Col xs={24} sm={12} md={6}>
-          <Card className="buysell-card highlight">
+          <Card
+            className="buysell-stat-card revenue-card"
+            onClick={() => setActivePage("Revenue")}
+          >
             <Statistic
               title="Revenue"
               value={totalRevenue}
@@ -273,7 +204,10 @@ if (activePage === "Revenue") {
         </Col>
 
         <Col xs={24} sm={12} md={6}>
-          <Card className="buysell-card deal-card">
+          <Card
+            className="buysell-stat-card deal-card"
+            onClick={() => setActivePage("Deals")}
+          >
             <Statistic
               title="Deals"
               value={totalDeals}
@@ -283,10 +217,13 @@ if (activePage === "Revenue") {
         </Col>
 
         <Col xs={24} sm={12} md={6}>
-          <Card className="buysell-card transaction-card">
+          <Card
+            className="buysell-stat-card transaction-card"
+            onClick={() => setActivePage("Transactions")}
+          >
             <Statistic
               title="Transactions"
-              value={transactions.length}
+              value={totalTransactions}
               prefix={<TransactionOutlined />}
             />
           </Card>
@@ -294,30 +231,20 @@ if (activePage === "Revenue") {
 
       </Row>
 
-      {/* Recent Transactions */}
-      <Card className="buysell-main-card">
-        <h3 className="section-title">Recent Transactions</h3>
+      {renderPage(
+        "Recent Transactions",
         <Table
           dataSource={transactions}
           pagination={false}
           columns={[
-            { title: "Transaction ID", dataIndex: "id", align: "left" },
-            { title: "Client", dataIndex: "client", align: "left" },
-            { title: "Property", dataIndex: "property", align: "left" },
-            { title: "Amount (₹)", dataIndex: "amount", align: "left" },
-            { title: "Date", dataIndex: "date", align: "left" },
-            {
-              title: "Status",
-              dataIndex: "status",
-              align: "left",
-              render: (status) =>
-                status === "Completed"
-                  ? <Tag color="green">Completed</Tag>
-                  : <Tag color="orange">Pending</Tag>,
-            },
+            { title: "Transaction ID", dataIndex: "id" },
+            { title: "Client", dataIndex: "client" },
+            { title: "Property", dataIndex: "property" },
+            { title: "Amount (₹)", dataIndex: "amount" },
+            { title: "Date", dataIndex: "date" },
           ]}
         />
-      </Card>
+      )}
 
     </div>
   );

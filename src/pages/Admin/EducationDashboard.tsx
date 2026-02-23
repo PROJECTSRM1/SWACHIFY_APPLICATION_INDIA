@@ -10,9 +10,15 @@ import "./EducationDashboard.css";
 
 interface Props {
   activePage: string;
+  setActivePage: (page: string) => void;
 }
 
-const EducationDashboard: React.FC<Props> = ({ activePage }) => {
+const EducationDashboard: React.FC<Props> = ({
+  activePage,
+  setActivePage,
+}) => {
+
+  /* ================= DATA ================= */
 
   const coursesData = [
     { key: 1, name: "React Course", students: 120, revenue: 120000 },
@@ -27,42 +33,55 @@ const EducationDashboard: React.FC<Props> = ({ activePage }) => {
   ];
 
   const totalCourses = coursesData.length;
-  const totalStudents = coursesData.reduce((acc, c) => acc + c.students, 0);
+  const totalStudents = studentsData.length;
   const totalRevenue = coursesData.reduce((acc, c) => acc + c.revenue, 0);
+
+  /* ================= COMMON PAGE WRAPPER ================= */
+
+  const renderPage = (title: string, table: React.ReactNode) => (
+    <div className="education-page-wrapper">
+      <div className="education-section-header">
+        <h3>{title}</h3>
+      </div>
+      <Card className="education-main-card">
+        {table}
+      </Card>
+    </div>
+  );
 
   /* ================= COURSES PAGE ================= */
 
   if (activePage === "Courses") {
-    return (
-      <Card className="education-main-card">
-        <Table
-          dataSource={coursesData}
-          pagination={false}
-          columns={[
-            { title: "Course Name", dataIndex: "name", align: "left" },
-            { title: "Students", dataIndex: "students", align: "left" },
-            { title: "Revenue", dataIndex: "revenue", align: "left" },
-          ]}
-        />
-      </Card>
+    return renderPage(
+      "Course Management",
+      <Table
+        dataSource={coursesData}
+        pagination={false}
+        scroll={{ x: "max-content" }}
+        columns={[
+          { title: "Course Name", dataIndex: "name" },
+          { title: "Students", dataIndex: "students" },
+          { title: "Revenue", dataIndex: "revenue" },
+        ]}
+      />
     );
   }
 
   /* ================= STUDENTS PAGE ================= */
 
   if (activePage === "Students") {
-    return (
-      <Card className="education-main-card">
-        <Table
-          dataSource={studentsData}
-          pagination={false}
-          columns={[
-            { title: "Student Name", dataIndex: "name", align: "left" },
-            { title: "Course", dataIndex: "course", align: "left" },
-            { title: "Fee Paid", dataIndex: "fee", align: "left" },
-          ]}
-        />
-      </Card>
+    return renderPage(
+      "Student Management",
+      <Table
+        dataSource={studentsData}
+        pagination={false}
+        scroll={{ x: "max-content" }}
+        columns={[
+          { title: "Student Name", dataIndex: "name" },
+          { title: "Course", dataIndex: "course" },
+          { title: "Fee Paid", dataIndex: "fee" },
+        ]}
+      />
     );
   }
 
@@ -74,7 +93,7 @@ const EducationDashboard: React.FC<Props> = ({ activePage }) => {
 
         <Row gutter={[20, 20]} style={{ marginBottom: 24 }}>
           <Col xs={24} md={8}>
-            <Card className="education-card highlight">
+            <Card className="education-stat-card revenue-card">
               <Statistic
                 title="Total Revenue"
                 value={totalRevenue}
@@ -84,36 +103,35 @@ const EducationDashboard: React.FC<Props> = ({ activePage }) => {
           </Col>
         </Row>
 
-        <Card className="education-main-card">
-          <div className="education-section-header">
-            <h3>Revenue by Course</h3>
-          </div>
-
+        {renderPage(
+          "Revenue Details",
           <Table
             dataSource={coursesData}
             pagination={false}
             columns={[
-              { title: "Course Name", dataIndex: "name", align: "left" },
-              { title: "Students", dataIndex: "students", align: "left" },
-              { title: "Revenue", dataIndex: "revenue", align: "left" },
+              { title: "Course Name", dataIndex: "name" },
+              { title: "Students", dataIndex: "students" },
+              { title: "Revenue", dataIndex: "revenue" },
             ]}
           />
-        </Card>
-
+        )}
       </div>
     );
   }
 
-  
-/* ================= DEFAULT DASHBOARD ================= */
+  /* ================= DASHBOARD ================= */
 
-if (activePage === "Dashboard") {
   return (
     <div className="education-dashboard-wrapper">
 
+      {/* STAT CARDS */}
       <Row gutter={[20, 20]} style={{ marginBottom: 24 }}>
-        <Col xs={24} sm={12} md={12}>
-          <Card className="education-card">
+
+        <Col xs={24} sm={12} md={8}>
+          <Card
+            className="education-stat-card courses-card"
+            onClick={() => setActivePage("Courses")}
+          >
             <Statistic
               title="Total Courses"
               value={totalCourses}
@@ -122,8 +140,11 @@ if (activePage === "Dashboard") {
           </Card>
         </Col>
 
-        <Col xs={24} sm={12} md={12}>
-          <Card className="education-card">
+        <Col xs={24} sm={12} md={8}>
+          <Card
+            className="education-stat-card students-card"
+            onClick={() => setActivePage("Students")}
+          >
             <Statistic
               title="Total Students"
               value={totalStudents}
@@ -131,30 +152,38 @@ if (activePage === "Dashboard") {
             />
           </Card>
         </Col>
+
+        <Col xs={24} sm={12} md={8}>
+          <Card
+            className="education-stat-card revenue-card"
+            onClick={() => setActivePage("Revenue")}
+          >
+            <Statistic
+              title="Total Revenue"
+              value={totalRevenue}
+              prefix={<DollarOutlined />}
+            />
+          </Card>
+        </Col>
+
       </Row>
 
-      <Card className="education-main-card">
-        <div className="education-section-header">
-          <h3>Student Management</h3>
-        </div>
-
+      {/* STUDENT MANAGEMENT PREVIEW */}
+      {renderPage(
+        "Recent Students",
         <Table
           dataSource={studentsData}
           pagination={false}
           columns={[
-            { title: "Student Name", dataIndex: "name", align: "left" },
-            { title: "Course", dataIndex: "course", align: "left" },
-            { title: "Fee Paid", dataIndex: "fee", align: "left" },
+            { title: "Student Name", dataIndex: "name" },
+            { title: "Course", dataIndex: "course" },
+            { title: "Fee Paid", dataIndex: "fee" },
           ]}
         />
-      </Card>
+      )}
 
     </div>
   );
-}
-
-return null;
-
 };
 
 export default EducationDashboard;

@@ -10,9 +10,16 @@ import "./CleaningDashboard.css";
 
 interface Props {
   activePage: string;
+  setActivePage: (page: string) => void;
 }
 
-const CleaningDashboard: React.FC<Props> = ({ activePage }) => {
+const CleaningDashboard: React.FC<Props> = ({
+  activePage,
+  setActivePage,
+}) => {
+
+  /* ================= DATA ================= */
+
   const cleanersData = [
     { key: 1, name: "Ramesh", rating: 4.8, status: "Active" },
     { key: 2, name: "Suresh", rating: 4.5, status: "Active" },
@@ -26,6 +33,7 @@ const CleaningDashboard: React.FC<Props> = ({ activePage }) => {
       service: "Deep Cleaning",
       date: "10 Feb 2026",
       status: "Completed",
+      amount: 5000,
     },
     {
       key: 2,
@@ -34,6 +42,7 @@ const CleaningDashboard: React.FC<Props> = ({ activePage }) => {
       service: "Kitchen Cleaning",
       date: "14 Feb 2026",
       status: "Pending",
+      amount: 3500,
     },
     {
       key: 3,
@@ -42,175 +51,184 @@ const CleaningDashboard: React.FC<Props> = ({ activePage }) => {
       service: "Bathroom Cleaning",
       date: "18 Feb 2026",
       status: "Completed",
+      amount: 4000,
     },
   ];
 
-  if (activePage === "Settings" || activePage === "Logout") {
-    return null;
-  }
+  const totalCleaners = cleanersData.length;
+  const totalBookings = bookingsData.length;
+  const totalRevenue = bookingsData.reduce(
+    (acc, booking) => acc + booking.amount,
+    0
+  );
 
-  /* CLEANERS PAGE */
+  /* ================= COMMON PAGE WRAPPER ================= */
+
+  const renderPage = (title: string, table: React.ReactNode) => (
+    <div className="cleaning-page-wrapper">
+      <div className="cleaning-section-header">
+        <h3>{title}</h3>
+      </div>
+      <Card className="cleaning-main-card">{table}</Card>
+    </div>
+  );
+
+  /* ================= CLEANERS PAGE ================= */
+
   if (activePage === "Cleaners") {
-    return (
-      <Card className="cleaning-main-card">
-        <Table
-          dataSource={cleanersData}
-          pagination={false}
-          columns={[
-            { title: "Name", dataIndex: "name", align: "left" },
-            { title: "Rating", dataIndex: "rating", align: "left" },
-            {
-              title: "Status",
-              dataIndex: "status",
-              align: "left",
-              render: (status) => (
-                <span className="cleaning-status active">{status}</span>
-              ),
-            },
-          ]}
-        />
-      </Card>
+    return renderPage(
+      "Cleaner Management",
+      <Table
+        dataSource={cleanersData}
+        pagination={false}
+        columns={[
+          { title: "Name", dataIndex: "name" },
+          { title: "Rating", dataIndex: "rating" },
+          {
+            title: "Status",
+            dataIndex: "status",
+            render: (status) => (
+              <span className="cleaning-status active">{status}</span>
+            ),
+          },
+        ]}
+      />
     );
   }
 
-  /* BOOKINGS PAGE */
+  /* ================= BOOKINGS PAGE ================= */
+
   if (activePage === "Bookings") {
-    return (
-      <Card className="cleaning-main-card">
-        <Table
-          dataSource={bookingsData}
-          pagination={false}
-          columns={[
-            { title: "Booking ID", dataIndex: "id", align: "left" },
-            { title: "Customer", dataIndex: "customer", align: "left" },
-            { title: "Service", dataIndex: "service", align: "left" },
-            { title: "Date", dataIndex: "date", align: "left" },
-            {
-              title: "Status",
-              dataIndex: "status",
-              align: "left",
-              render: (status) => (
-                <span
-                  className={
-                    status === "Completed"
-                      ? "cleaning-status active"
-                      : "cleaning-status pending"
-                  }
-                >
-                  {status}
-                </span>
-              ),
-            },
-          ]}
-        />
-      </Card>
+    return renderPage(
+      "Booking Management",
+      <Table
+        dataSource={bookingsData}
+        pagination={false}
+        columns={[
+          { title: "Booking ID", dataIndex: "id" },
+          { title: "Customer", dataIndex: "customer" },
+          { title: "Service", dataIndex: "service" },
+          { title: "Date", dataIndex: "date" },
+          {
+            title: "Status",
+            dataIndex: "status",
+            render: (status) => (
+              <span
+                className={
+                  status === "Completed"
+                    ? "cleaning-status active"
+                    : "cleaning-status pending"
+                }
+              >
+                {status}
+              </span>
+            ),
+          },
+        ]}
+      />
     );
   }
 
-  /* REVENUE PAGE */
+  /* ================= REVENUE PAGE ================= */
+
   if (activePage === "Revenue") {
     return (
-      <Row gutter={[20, 20]}>
-        <Col xs={24} md={8}>
-          <Card className="cleaning-card highlight">
-            <Statistic
-              title="Monthly Revenue"
-              value={250000}
-              prefix={<DollarOutlined />}
-            />
-          </Card>
-        </Col>
-      </Row>
-    );
-  }
+      <div className="cleaning-dashboard-wrapper">
 
+        <Row gutter={[20, 20]} style={{ marginBottom: 24 }}>
+          <Col xs={24} md={8}>
+            <Card className="cleaning-stat-card revenue-card">
+              <Statistic
+                title="Total Revenue"
+                value={totalRevenue}
+                prefix={<DollarOutlined />}
+              />
+            </Card>
+          </Col>
+        </Row>
 
-return (
-  <div className="cleaning-dashboard-wrapper">
-
-    {/* STATS CARDS */}
-    <Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
-      <Col xs={24} sm={12} md={8}>
-        <Card className="cleaning-card">
-          <Statistic
-            title="Total Cleaners"
-            value={85}
-            prefix={<TeamOutlined />}
-          />
-        </Card>
-      </Col>
-
-      <Col xs={24} sm={12} md={8}>
-        <Card className="cleaning-card">
-          <Statistic
-            title="Bookings"
-            value={320}
-            prefix={<CalendarOutlined />}
-          />
-        </Card>
-      </Col>
-
-      <Col xs={24} sm={12} md={8}>
-        <Card className="cleaning-card highlight">
-          <Statistic
-            title="Revenue"
-            value={250000}
-            prefix={<DollarOutlined />}
-          />
-        </Card>
-      </Col>
-    </Row>
-
-    {/* BOOKING MANAGEMENT FULL WIDTH */}
-    <Row>
-      <Col span={24}>
-        <Card className="cleaning-main-card">
-          <div className="cleaning-section-header">
-            <h3>Booking Management</h3>
-            <button className="cleaning-view-btn">View All</button>
-          </div>
-
+        {renderPage(
+          "Revenue Details",
           <Table
             dataSource={bookingsData}
             pagination={false}
             columns={[
-              { title: "Booking ID", dataIndex: "id", align: "left" },
-              { title: "Customer", dataIndex: "customer", align: "left" },
-              { title: "Service", dataIndex: "service", align: "left" },
-              { title: "Date", dataIndex: "date", align: "left" },
-              {
-                title: "Status",
-                dataIndex: "status",
-                align: "left",
-                render: (status) => (
-                  <span
-                    className={
-                      status === "Completed"
-                        ? "cleaning-status active"
-                        : "cleaning-status pending"
-                    }
-                  >
-                    {status}
-                  </span>
-                ),
-              },
-              {
-                title: "Action",
-                align: "left",
-                render: () => (
-                  <button className="cleaning-action-btn">View</button>
-                ),
-              },
+              { title: "Booking ID", dataIndex: "id" },
+              { title: "Customer", dataIndex: "customer" },
+              { title: "Service", dataIndex: "service" },
+              { title: "Amount", dataIndex: "amount" },
+              { title: "Date", dataIndex: "date" },
             ]}
           />
-        </Card>
-      </Col>
-    </Row>
+        )}
+      </div>
+    );
+  }
 
-  </div>
-);
+  /* ================= DASHBOARD ================= */
 
+  return (
+    <div className="cleaning-dashboard-wrapper">
 
+      <Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
+
+        <Col xs={24} sm={12} md={8}>
+          <Card
+            className="cleaning-stat-card cleaners-card"
+            onClick={() => setActivePage("Cleaners")}
+          >
+            <Statistic
+              title="Total Cleaners"
+              value={totalCleaners}
+              prefix={<TeamOutlined />}
+            />
+          </Card>
+        </Col>
+
+        <Col xs={24} sm={12} md={8}>
+          <Card
+            className="cleaning-stat-card bookings-card"
+            onClick={() => setActivePage("Bookings")}
+          >
+            <Statistic
+              title="Total Bookings"
+              value={totalBookings}
+              prefix={<CalendarOutlined />}
+            />
+          </Card>
+        </Col>
+
+        <Col xs={24} sm={12} md={8}>
+          <Card
+            className="cleaning-stat-card revenue-card"
+            onClick={() => setActivePage("Revenue")}
+          >
+            <Statistic
+              title="Total Revenue"
+              value={totalRevenue}
+              prefix={<DollarOutlined />}
+            />
+          </Card>
+        </Col>
+
+      </Row>
+
+      {renderPage(
+        "Recent Bookings",
+        <Table
+          dataSource={bookingsData}
+          pagination={false}
+          columns={[
+            { title: "Booking ID", dataIndex: "id" },
+            { title: "Customer", dataIndex: "customer" },
+            { title: "Service", dataIndex: "service" },
+            { title: "Date", dataIndex: "date" },
+          ]}
+        />
+      )}
+
+    </div>
+  );
 };
 
 export default CleaningDashboard;
