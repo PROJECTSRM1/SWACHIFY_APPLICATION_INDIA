@@ -1,1565 +1,182 @@
-/* ===============================
-   Base Layout
-================================ */
-.admin-dashboard {
-  display: flex;
+/* =========================
+   MAIN LAYOUT
+========================= */
+
+.admin-layout {
   min-height: 100vh;
-  background: #f8fafc;
+  background: #f7f9fc;
 }
-/* ===============================
-   Sidebar
-================================ */
-.admin-dashboard__sidebar {
-  width: 240px;
-  background: #1e293b;
+
+/* =========================
+   SIDEBAR (DESKTOP)
+========================= */
+
+.admin-sider {
+  background: linear-gradient(180deg, #1f3c88, #1b2a60);
   color: white;
-
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-
-  display: flex;
-  flex-direction: column;
-  padding: 16px 12px;
-  transition: transform 0.3s ease;
-  z-index: 1000;
 }
 
+.sidebar-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
 
-.admin-dashboard__brand {
-  font-size: 22px;
-  font-weight: 700;
-  color: #2bb673;
-  margin-bottom: 36px;
+.sidebar-header {
+  font-size: 20px;
+  font-weight: 600;
+  padding: 22px 18px;
   text-align: center;
+  color: white;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.admin-dashboard__menu {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
+/* =========================
+   SIDEBAR MENU (DESKTOP)
+========================= */
 
-.admin-dashboard__menu-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 14px;
-  border-radius: 10px;
-  color: #cbd5e1;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.admin-dashboard__menu-item:hover,
-.admin-dashboard__menu-item--active {
-  background-color: #2bb673;
-  color: #ffffff;
-}
-
-/* ===============================
-   Main Content
-================================ */
-.admin-dashboard__content {
-  margin-left: 240px;
+.sidebar-menu {
+  background: transparent !important;
   flex: 1;
-  min-height: 100vh;
-  padding: 32px;
-  overflow-y: auto;
+  border-right: none !important;
 }
 
-/* ===============================
-   KPI CARDS (Modern Soft Theme)
-================================ */
-
-.admin-dashboard__stat-card {
-  border-radius: 20px;
-  padding: 28px;
-  transition: all 0.25s ease;
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
-}
-
-/* --- Freelancers Card (Light Blue) --- */
-.admin-dashboard__stat-card:nth-child(1) {
-  background: #d2e5f9;   /* soft light blue */
-}
-
-.admin-dashboard__stat-card:nth-child(1) .admin-dashboard__stat-value {
-  color: #2563eb;        /* professional blue */
-}
-
-
-/* --- Total Tickets Card --- */
-.admin-dashboard__stat-card:nth-child(2) {
-  background: #f0fdf4;          /* soft green */
-}
-
-.admin-dashboard__stat-card:nth-child(2) .admin-dashboard__stat-value {
-  color: #15803d;               /* deep green */
-}
-
-/* --- In Progress Card --- */
-.admin-dashboard__stat-card:nth-child(3) {
-  background: #fff7ed;          /* soft orange */
-}
-
-.admin-dashboard__stat-card:nth-child(3) .admin-dashboard__stat-value {
-  color: #c2410c;               /* deep orange */
-}
-
-/* Label text */
-.admin-dashboard__stat-label {
+.sidebar-menu .ant-menu-item {
+  color: white !important;
   font-size: 15px;
-  color: #475569;               /* muted slate */
-  font-weight: 500;
-}
-
-/* Numbers */
-.admin-dashboard__stat-value {
-  font-size: 42px;
-  font-weight: 700;
-  margin-top: 12px;
-}
-
-
-/* ===============================
-   Tables (Bookings & Tickets)
-================================ */
-.admin-dashboard__table {
-  background-color: #ffffff;
-  padding: 24px;
-  border-radius: 16px;
-  margin-bottom: 32px;
-}
-
-.admin-dashboard__table-title {
-  margin-bottom: 20px;
-  font-size: 18px;
-  font-weight: 600;
-  color: #111827;
-}
-
-.admin-dashboard__table-content {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.admin-dashboard__table-content th {
-  text-align: left;
-  padding-bottom: 12px;
-  font-size: 14px;
-  color: #374151;
-}
-
-.admin-dashboard__table-content td {
-  padding: 16px 0;
-  border-top: 1px solid #e5e7eb;
-  font-size: 14px;
-  color: #1f2937;
-}
-
-/* ===============================
-   Status & Priority Pills
-================================ */
-.admin-dashboard__status {
-  display: inline-block;
-  padding: 6px 14px;
-  border-radius: 999px;
-  font-size: 13px;
-  font-weight: 600;
-  text-align: center;
-}
-
-/* Booking / Ticket Status */
-.admin-dashboard__status--completed {
-  background-color: #e7f8f1;
-  color: #2bb673;
-}
-
-.admin-dashboard__status--pending {
-  background-color: #fff4d6;
-  color: #f59e0b;
-}
-
-.admin-dashboard__status--cancelled {
-  background-color: #fdecec;
-  color: #ef4444;
-}
-
-/* ===============================
-   Ticket Priority (reuse same pill)
-================================ */
-.admin-dashboard__priority--high {
-  background-color: #fdecec;
-  color: #dc2626;
-}
-
-.admin-dashboard__priority--medium {
-  background-color: #fff4d6;
-  color: #d97706;
-}
-
-.admin-dashboard__priority--low {
-  background-color: #e7f8f1;
-  color: #16a34a;
-}
-
-/* ===============================
-   Responsive (Optional but Safe)
-================================ */
-@media (max-width: 900px) {
-  .admin-dashboard {
-    flex-direction: column;
-  }
-
-  .admin-dashboard__sidebar {
-    width: 100%;
-  }
-}
-
-
-/* ===============================
-   Assign Freelancer Modal
-================================ */
-
-/* Dark overlay */
-.admin-dashboard__modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(6px);
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  z-index: 9999;
-}
-
-/* Popup box */
-.admin-dashboard__modal-content {
-  background: #ffffff;
-  width: 520px;
-  max-width: 90%;
-  max-height: 85vh;
-
-  padding: 28px;
-  border-radius: 16px;
-
-  overflow-y: auto;
-
-  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.35);
-
-  animation: popupIn 0.25s ease-out;
-}
-
-/* Popup animation */
-@keyframes popupIn {
-  from {
-    transform: scale(0.9);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-/* Modal title */
-.admin-dashboard__modal-content h3 {
-  margin-bottom: 20px;
-  font-size: 20px;
-  font-weight: 600;
-  color: #111827;
-}
-
-/* Freelancer row */
-.admin-dashboard__freelancer-card {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  padding: 14px 16px;
-  margin-bottom: 14px;
-
-  transition: all 0.2s ease;
-}
-
-.admin-dashboard__freelancer-card:hover {
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-}
-
-/* Disabled (Busy freelancer) */
-.admin-dashboard__freelancer-card.disabled {
-  background: #f9fafb;
-  opacity: 0.6;
-}
-
-/* Freelancer text */
-.admin-dashboard__freelancer-card p {
-  margin: 0;
-  font-size: 14px;
-  color: #374151;
-  text-align: left ;
-}
-
-/* Assign button */
-.admin-dashboard__freelancer-card button {
-  background: #2bb673;
-  color: white;
-  border: none;
-  padding: 8px 18px;
-  border-radius: 999px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-.admin-dashboard__freelancer-card button:hover {
-  background: #239a5f;
-}
-
-/* Close button */
-.admin-dashboard__modal-content > button {
-  background: transparent;
-  border: none;
-  color: #ef4444;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-}
-/* ===============================
-   Cleaning Service Tickets (FIX)
-================================ */
-
-.admin-dashboard__tickets {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-/* Ticket Card */
-.admin-dashboard__ticket-card {
-  background: #ffffff;
-  border-radius: 18px;
-  padding: 24px 28px;
-
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.06);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.admin-dashboard__ticket-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.1);
-}
-
-/* Header */
-.admin-dashboard__ticket-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 14px;
-}
-
-.admin-dashboard__ticket-header h3 {
-  font-size: 20px;
-  font-weight: 600;
-  color: #111827;
-}
-
-/* Address */
-.admin-dashboard__ticket-address {
-  font-size: 14px;
-  color: #374151;
-  margin-bottom: 16px;
-}
-
-/* Meta info grid */
-.admin-dashboard__ticket-meta {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 14px;
-  margin-bottom: 16px;
-}
-
-.admin-dashboard__ticket-meta span {
-  background: #f9fafb;
-  padding: 10px 12px;
-  border-radius: 10px;
-  font-size: 14px;
-  color: #374151;
-}
-
-/* Action row */
-.admin-dashboard__ticket-action {
-  display: flex;
-  justify-content: flex-end;
-}
-
-/* Assign button */
-.admin-dashboard__accept-btn {
-  background: #2bb673;
-  color: white;
-  border: none;
-  padding: 10px 22px;
-  border-radius: 999px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-.admin-dashboard__accept-btn:hover {
-  background: #239a5f;
-}
-
-.admin-dashboard__assigned {
-  margin-top: 8px;
-  padding: 6px 10px;
-  background: #ecfeff;
-  color: #0369a1;
-  border-radius: 6px;
-  font-size: 14px;
-  font-weight: 500;
-}
-
-/* Dropdown */
-/* ===============================
-   Tickets Header (FORCED ONE ROW)
-================================ */
-
-.admin-dashboard__tickets-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  width: 100%;          /* force full row */
-  max-width: 100%;
-
-  margin-bottom: 24px;
-
-  /* OVERRIDE any parent centering */
-  text-align: left;
-}
-
-/* ===============================
-   Page Title
-================================ */
-
-.admin-dashboard__page-title {
-  margin: 0;
-  font-size: 22px;
-  font-weight: 600;
-  color: #111827;
-
-  white-space: nowrap;  /* keep in one line */
-  text-align: left;
-}
-
-/* ===============================
-   Enhanced Filter Dropdown
-================================ */
-
-.admin-dashboard__filter-dropdown {
-  width: 150px;
-  height: 38px;
-
-  padding: 6px 36px 6px 12px;
-  font-size: 14px;
-  font-weight: 500;
-  color: #111827;
-
-  background-color: #ffffff;
-
-  border: 1px solid #d1d5db;
+  margin: 6px 10px;
   border-radius: 8px;
-
-  cursor: pointer;
-  outline: none;
-
-  /* Remove native arrow */
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-
-  /* Custom arrow */
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%236b7280' stroke-width='2' viewBox='0 0 24 24'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 10px center;
-  background-size: 16px;
-
-  /* Subtle elevation */
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: all 0.2s ease;
 }
 
-/* Hover */
-.admin-dashboard__filter-dropdown:hover {
-  border-color: #9ca3af;
+.sidebar-menu .ant-menu-item:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
 }
 
-/* Focus */
-.admin-dashboard__filter-dropdown:focus {
-  border-color: #22c55e;
-  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.15);
+.sidebar-menu .ant-menu-item-selected {
+  background: rgba(255, 255, 255, 0.18) !important;
 }
 
-/* ===============================
-   Status Badges
-================================ */
+/* =========================
+   HEADER
+========================= */
 
-.admin-dashboard__status {
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 500;
-}
-
-.admin-dashboard__status--pending {
-  background: #fef3c7;
-  color: #92400e;
-}
-
-.admin-dashboard__status--inprogress {
-  background: #e0f2fe;
-  color: #0369a1;
-}
-
-.admin-dashboard__status--closed {
-  background: #dcfce7;
-  color: #166534;
-}
-
-/* Bookings */
-
-/* ================= BOOKINGS PAGE ================= */
-
-.admin-dashboard__bookings {
-  background: #ffffff;
-  padding: 24px;
-  border-radius: 16px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
-}
-
-/* Header */
-.admin-dashboard__bookings-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.admin-dashboard__bookings-header h2 {
-  font-size: 22px;
-  font-weight: 700;
-  color: #111827;
-}
-
-.admin-dashboard__bookings-header p {
-  margin-top: 4px;
-  color: #6b7280;
-  font-size: 14px;
-}
-
-/* Actions */
-.admin-dashboard__bookings-actions {
-  display: flex;
-  gap: 12px;
-}
-
-.admin-dashboard__search {
-  height: 36px;                 /* ⬅️ same as Reset button */
-  padding: 0 14px;              /* no vertical padding */
-  border-radius: 10px;
-  border: 1px solid #e5e7eb;
-  font-size: 14px;
-  width: 260px;
-  outline: none;
-
-  display: flex;
-  align-items: center;
-}
-
-
-.admin-dashboard__search:focus {
-  outline: none;
-  border-color: #22c55e;
-}
-
-.admin-dashboard__reset-btn {
-  padding: 6px 14px;        /* ⬅️ reduced height */
-  height: 36px;             /* ⬅️ fixed height */
-  line-height: 1;
-  border-radius: 10px;
-  border: 1px solid #e5e7eb;
-  background: #ffffff;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-
-.admin-dashboard__reset-btn:hover {
-  background: #f9fafb;
-}
-
-/* ================= BOOKINGS TABLE ================= */
-
-.admin-dashboard__bookings-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  background: #ffffff;
-  border-radius: 14px;
-  overflow: hidden;
-}
-
-.admin-dashboard__bookings-table thead {
-  background: #f9fafb;
-}
-
-.admin-dashboard__bookings-table th {
-  text-align: left;
-  padding: 14px 16px;
-  font-size: 13px;
-  font-weight: 600;
-  color: #374151;
-  border-bottom: 1px solid #e5e7eb;
-}
-
-.admin-dashboard__bookings-table td {
-  padding: 14px 16px;
-  font-size: 14px;
-  color: #111827;
-  border-bottom: 1px solid #f1f5f9;
-}
-
-/* Row hover */
-.admin-dashboard__bookings-table tbody tr:hover {
-  background: #f9fafb;
-}
-
-/* ================= STATUS PILLS ================= */
-
-.status-pill {
-  display: inline-block;
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 600;
-}
-
-/* Payment */
-.status-paid {
-  background: #dcfce7;
-  color: #166534;
-}
-
-.status-unpaid {
-  background: #fee2e2;
-  color: #991b1b;
-}
-
-/* Work */
-.status-completed {
-  background: #e0f2fe;
-  color: #075985;
-}
-
-.status-inprogress {
-  background: #fef3c7;
-  color: #92400e;
-}
-
-.status-pending {
-  background: #e5e7eb;
-  color: #374151;
-}
-
-/* Amount */
-.booking-amount {
-  font-weight: 600;
-}
-
-/* pending request */
-
-/* ===============================
-   THEME VARIABLES
-================================ */
-:root {
-  --primary-green: #22c55e;
-  --dark-text: #0f172a;
-  --muted-text: #64748b;
-  --card-bg: #ffffff;
-  --page-bg: #f8fafc;
-  --border-light: #e5e7eb;
-  --shadow-soft: 0 10px 30px rgba(15, 23, 42, 0.06);
-}
-
-/* ===============================
-   LAYOUT
-================================ */
-.admin-dashboard {
-  display: flex;
-  min-height: 100vh;
-  background: var(--page-bg);
-  font-family: "Inter", system-ui, sans-serif;
-}
-
-.admin-dashboard__content {
-  flex: 1;
-  padding: 32px;
-  overflow-y: auto;
-}
-
-/* ===============================
-   SIDEBAR
-================================ */
-.admin-dashboard__sidebar {
-  width: 260px;
-  background: #1e293b;
-  padding: 24px 16px;
-}
-
-.admin-dashboard__menu {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.admin-dashboard__menu-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
-  border-radius: 12px;
-  color: #cbd5f5;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-.admin-dashboard__menu-item:hover {
-  background: rgba(255, 255, 255, 0.08);
-}
-
-.admin-dashboard__menu-item--active {
-  background: #22c55e;
-  color: #ffffff;
-}
-
-/* ===============================
-   KPI CARDS
-================================ */
-.admin-dashboard__stats {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  margin-bottom: 32px;
-}
-
-.admin-dashboard__stat-card {
-  background: #ffffff;
-  padding: 28px;
-  border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
-  transition: all 0.25s ease;
-  min-width: 260px;
-}
-
-.admin-dashboard__stat-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
-}
-
-.admin-dashboard__stat-card p {
-  font-size: 14px;
-  color: #6b7280;
-  margin-bottom: 12px;
-  font-weight: 500;
-}
-
-.admin-dashboard__stat-card h2 {
-  font-size: 28px;
-  font-weight: 700;
-  color: #111827;
-}
-
-
-.admin-dashboard__stat-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
-}
-
-.admin-dashboard__stat-label {
-  font-size: 15px;
-  color: var(--muted-text);
-  font-weight: 500;
-}
-
-.admin-dashboard__stat-value {
-  font-size: 42px;
-  font-weight: 700;
-  color: var(--primary-green);
-  margin-top: 12px;
-}
-
-/* ===============================
-   TABLE SECTIONS
-================================ */
-.admin-dashboard__table,
-.admin-dashboard__bookings {
-  background: var(--card-bg);
-  border-radius: 20px;
-  box-shadow: var(--shadow-soft);
-  padding: 24px;
-}
-
-.admin-dashboard__table-title {
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--dark-text);
-  margin-bottom: 16px;
-}
-
-/* ===============================
-   BOOKINGS HEADER
-================================ */
-.admin-dashboard__bookings-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.admin-dashboard__bookings-header h2 {
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--dark-text);
-}
-
-.admin-dashboard__bookings-header p {
-  font-size: 14px;
-  color: var(--muted-text);
-}
-
-/* ===============================
-   SEARCH + RESET
-================================ */
-.admin-dashboard__bookings-actions {
-  display: flex;
-  gap: 12px;
-}
-
-.admin-dashboard__search {
-  height: 40px;
-  padding: 0 14px;
-  border-radius: 10px;
-  border: 1px solid var(--border-light);
-  font-size: 14px;
-  width: 220px;
-}
-
-.admin-dashboard__reset-btn {
-  height: 40px;
+.admin-header {
+  height: 60px;
   padding: 0 18px;
-  border-radius: 10px;
-  border: 1px solid var(--border-light);
-  background: #ffffff;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-.admin-dashboard__reset-btn:hover {
-  background: #f1f5f9;
-}
-
-/* ===============================
-   TABLE STYLES
-================================ */
-.admin-dashboard__table-content,
-.admin-dashboard__bookings-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.admin-dashboard__bookings-table th {
-  background: #f1f5f9;
-  padding: 14px;
-  text-align: left;
-  font-size: 13px;
-  color: var(--dark-text);
-  font-weight: 600;
-}
-
-.admin-dashboard__bookings-table td {
-  padding: 16px 14px;
-  font-size: 14px;
-  color: #334155;
-  border-top: 1px solid var(--border-light);
-}
-
-/* ===============================
-   STATUS PILLS
-================================ */
-.admin-dashboard__status {
-  padding: 6px 14px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 600;
-  display: inline-block;
-}
-
-.admin-dashboard__status--completed {
-  background: #dcfce7;
-  color: #15803d;
-}
-
-.admin-dashboard__status--pending {
-  background: #fef3c7;
-  color: #92400e;
-}
-
-.admin-dashboard__status--inprogress {
-  background: #e0f2fe;
-  color: #0369a1;
-}
-
-.admin-dashboard__status--closed {
-  background: #f1f5f9;
-  color: #475569;
-}
-
-/* ===============================
-   TICKET CARDS
-================================ */
-.admin-dashboard__ticket-card {
-  background: var(--card-bg);
-  border-radius: 18px;
-  padding: 20px;
-  box-shadow: var(--shadow-soft);
-  margin-bottom: 16px;
-}
-
-.admin-dashboard__ticket-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.admin-dashboard__ticket-header h3 {
-  font-size: 18px;
-  color: var(--dark-text);
-}
-
-.admin-dashboard__ticket-address {
-  margin: 12px 0;
-  font-size: 14px;
-  color: var(--muted-text);
-}
-
-.admin-dashboard__ticket-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  font-size: 14px;
-}
-
-.admin-dashboard__accept-btn {
-  background: var(--primary-green);
-  color: #ffffff;
-  border: none;
-  padding: 10px 18px;
-  border-radius: 10px;
-  cursor: pointer;
-}
-
-/* ===============================
-   MODAL
-================================ */
-.admin-dashboard__modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(15, 23, 42, 0.45);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.admin-dashboard__modal-content {
-  background: #ffffff;
-  border-radius: 20px;
-  padding: 24px;
-  width: 420px;
-  max-height: 80vh;
-  overflow-y: auto;
-}
-
-.admin-dashboard__freelancer-card {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 14px;
-  border-radius: 14px;
-  border: 1px solid var(--border-light);
-  margin-bottom: 12px;
-}
-
-.admin-dashboard__freelancer-card button {
-  background: var(--primary-green);
-  color: #ffffff;
-  border: none;
-  padding: 8px 14px;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.admin-dashboard__freelancer-card.disabled {
-  opacity: 0.5;
-  pointer-events: none;
-}
-
-/* clickable KPI card */
-.clickable {
-  cursor: pointer;
-}
-.clickable:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 24px rgba(0,0,0,0.08);
-}
-
-/* large modal */
-.admin-dashboard__modal-content.large {
-  width: 90%;
-  max-width: 1200px;
-  max-height: 85vh;
-  overflow-y: auto;
-}
-
-/* modal header */
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-}
-
-.close-btn {
-  background: none;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
-}
-
-/* freelancer table */
-.freelancer-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.freelancer-table th {
-  padding: 14px;
-  text-align: left;
-  background: #f1f5f9;
-  color: #334155;
-  font-weight: 600;
-}
-
-.freelancer-table td {
-  padding: 14px;
-  border-bottom: 1px solid #eee;
-}
-
-/* skills */
-.skill-pill {
- 
-  padding: 6px 12px;
-  border-radius: 999px;
-  font-size: 13px;
-  background: #dcfce7;
-  color: #166534;
-
-
-}
-
-.skill-more {
-  margin-left: 8px;
-  color: #2d4cff;
-  font-size: 13px;
-}
-
-/* actions */
-.actions {
-  display: flex;
-  gap: 10px;
-}
-
-.actions button {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: 1px solid #c4b5fd;
-  cursor: pointer;
-  background: #ffffff;
-  transition: all 0.2s ease;
-}
-
-/* total freelancer */
-.freelancer-modal-header {
-  margin-bottom: 16px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid #e5e7eb;
-}
-
-.header-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.header-top h3 {
-  font-size: 20px;
-  font-weight: 600;
-  color: #0f172a;
-}
-
-.header-bottom {
-  margin-top: 12px;
-}
-
-.freelancer-filter {
-  width: 260px;
-  height: 40px;
-  padding: 0 12px;
-  border-radius: 8px;
-  border: 1px solid #c7d2fe;
-  background: #f5f3ff;
-  color: #4f46e5;
-  font-weight: 500;
-}
-
-.close-btn {
-  font-size: 20px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #475569;
-}
-
-.close-btn:hover {
-  color: #ef4444;
-}
-
-.freelancer-toggle {
-  display: inline-flex;
-  background: #f1f5f9;
-  border-radius: 12px;
-  padding: 4px;
-  gap: 4px;
-}
-
-.toggle-btn {
-  min-width: 170px;
-  height: 40px;
-  padding: 0 16px;
-  border-radius: 10px;
-  border: none;
-  background: transparent;
-  color: #475569;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.toggle-btn:hover {
-  color: #16a34a;
-}
-
-
-.toggle-btn.active {
-  background: #22c55e;
-  color: #ffffff;
-  box-shadow: 0 4px 10px rgba(34, 197, 94, 0.25);
-}
-
-
-.freelancer-modal-header {
-  padding-bottom: 16px;
-  border-bottom: 1px solid #e5e7eb;
-  margin-bottom: 16px;
-}
-
-.header-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-/* Close button */
-.close-btn {
-  border: none;
-  background: transparent;
-  font-size: 22px;
-  cursor: pointer;
-  color: #64748b;
-  line-height: 1;
-}
-
-.close-btn:hover {
-  color: #ef4444;
-}
-
-/* SIDEBAR */
-.admin-dashboard__sidebar {
-  width: 240px;
-  background: #1e293b;
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  height: 100vh; /* IMPORTANT */
-  padding: 16px 12px;
-}
-
-/* MENU */
-.admin-dashboard__menu {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.admin-dashboard__menu-item {
+  background: white;
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px 14px;
-  border-radius: 12px;
-  cursor: pointer;
-  color: #c7d2fe;
-  transition: background 0.2s;
+  border-bottom: 1px solid #eaeaea;
 }
 
-.admin-dashboard__menu-item:hover {
-  background: #334155;
+/* Compact Dropdown */
+
+.service-select {
+  height: 32px;
+  padding: 4px 10px;
+  font-size: 13px;
+  border-radius: 6px;
+  border: 1px solid #d9d9d9;
+  min-width: 150px;
+  max-width: 200px;
+  background: white;
+  transition: 0.2s ease;
 }
 
-.admin-dashboard__menu-item--active {
-  background: #22c55e;
-  color: #fff;
+.service-select:focus {
+  outline: none;
+  border-color: #1f3c88;
+  box-shadow: 0 0 0 2px rgba(31, 60, 136, 0.1);
 }
 
-/* LOGOUT WRAPPER */
-.admin-dashboard__logout {
-  margin-top: auto; /* 🔥 pushes logout to bottom */
-  padding: 12px;
-}
+/* =========================
+   CONTENT AREA
+========================= */
 
-/* LOGOUT BUTTON */
-.admin-dashboard__logout button {
+.admin-content {
+  padding: 24px;
+  background: #f7f9fc;
+  min-height: calc(100vh - 60px);
   width: 100%;
-  background: #f8f4f4;
-  color: rgb(231, 87, 87);
-  border: none;
-  padding: 12px;
-  border-radius: 14px;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
 }
-/* 
-.admin-dashboard__logout button:hover {
-  background: #dc2626;
-} */
 
-/* ================= MOBILE HEADER ================= */
-.mobile-header {
+
+
+
+/* =========================
+   MOBILE STYLES
+========================= */
+
+.mobile-menu-btn {
   display: none;
-  padding: 12px;
-  background: #f8fafc;
 }
 
-.hamburger-btn {
-  font-size: 24px;
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-
-/* ================= SIDEBAR BASE ================= */
-.admin-dashboard__sidebar {
-  width: 240px;
-  background: #1e293b;
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  padding: 16px 12px;
-  transition: transform 0.3s ease;
-}
-
-/* ================= MOBILE BEHAVIOR ================= */
-@media (max-width: 768px) {
-  .mobile-header {
-    display: block;
+/* Tablet & Below */
+@media (max-width: 992px) {
+  .admin-sider {
+    display: none !important;
   }
 
-  .admin-dashboard__sidebar {
-    position: fixed;
-    left: 0;
-    top: 0;
-    z-index: 1001;
-    transform: translateX(-100%);
+  .mobile-menu-btn {
+    display: inline-flex;
   }
 
-  .admin-dashboard__sidebar.sidebar-open {
-    transform: translateX(0);
-  }
-}
-
-/* ================= OVERLAY ================= */
-.sidebar-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.4);
-  z-index: 1000;
-}
-
-/* ================= CLOSE BUTTON ================= */
-.sidebar-close {
-  display: none;
-  background: none;
-  border: none;
-  color: white;
-  font-size: 22px;
-  margin-bottom: 10px;
-  align-self: flex-end;
-  cursor: pointer;
-}
-
-@media (max-width: 768px) {
-  .sidebar-close {
-    display: block;
-  }
-}
-
-/* media querys */
-
-/* ===============================
-   MOBILE FIXES (FINAL)
-================================ */
-/* ================= MOBILE FIX ================= */
-@media (max-width: 768px) {
-
-  .admin-dashboard {
-    flex-direction: column;
+  .admin-header {
+    justify-content: space-between;
   }
 
-  /* Sidebar hidden by default */
-  .admin-dashboard__sidebar {
-    transform: translateX(-100%);
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 240px;
+  /* Drawer Sidebar Fix */
+  .ant-drawer-body {
+    padding: 0 !important;
+  }
+
+  .sidebar-container {
     height: 100vh;
+    background: white;
   }
 
-  .admin-dashboard__sidebar.sidebar-open {
-    transform: translateX(0);
+  .sidebar-header {
+    background: #1f3c88;
+    color: white;
   }
 
-  /* Content full width */
-  .admin-dashboard__content {
-    margin-left: 0;
+  /* MOBILE TEXT BLACK */
+  .sidebar-menu .ant-menu-item {
+    color: black !important;
+  }
+
+  .sidebar-menu .ant-menu-item-selected {
+    background: #e6f0ff !important;
+  }
+
+  .sidebar-menu .ant-menu-item:hover {
+    background: #f2f6ff !important;
+  }
+}
+
+/* Small Phones */
+@media (max-width: 768px) {
+  .admin-content {
     padding: 16px;
   }
 
-  /* Mobile header */
-  .mobile-header {
-    display: flex;
-    align-items: center;
-    height: 50px;
-    padding: 0 12px;
-    background: #f8fafc;
-    position: sticky;
-    top: 0;
-    z-index: 900;
+  .service-select {
+    height: 30px;
+    font-size: 12px;
+    min-width: 130px;
   }
 
-  /* KPI Cards */
-  .admin-dashboard__stats {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-
-  /* Ticket meta */
-  .admin-dashboard__ticket-meta {
-    grid-template-columns: 1fr;
-  }
-
-  /* Tables scroll */
-  .admin-dashboard__bookings,
-  .admin-dashboard__table {
-    overflow-x: auto;
-  }
-
-  table {
-    min-width: 600px;
-  }
-}
-/* ===== FIX BOOKINGS HEADER MOBILE ===== */
-@media (max-width: 768px) {
-
-  .admin-dashboard__bookings-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-  }
-
-  .admin-dashboard__bookings-header h2 {
-    font-size: 20px;
-  }
-
-  .admin-dashboard__bookings-header p {
-    margin-top: 4px;
-  }
-
-  .admin-dashboard__bookings-actions {
-    width: 100%;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .admin-dashboard__search {
-    width: 100%;
-  }
-
-  .admin-dashboard__reset-btn {
-    width: 100%;
-  }
-}
-@media (max-width: 768px) {
-
-  /* Ticket Header Stack */
-  .admin-dashboard__ticket-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
-
-  /* Title full width */
-  .admin-dashboard__ticket-header h3 {
+  .sidebar-header {
     font-size: 18px;
-    line-height: 1.3;
+    padding: 18px;
   }
-
-  /* Assigned badge full width */
-  .admin-dashboard__assigned {
-    width: fit-content;
-  }
-
-  /* Status badge spacing */
-  .admin-dashboard__status {
-    margin-top: 4px;
-  }
-
-  /* Meta section stack */
-  .admin-dashboard__ticket-meta {
-    grid-template-columns: 1fr;
-  }
-
-  /* Prevent ugly word break */
-  .admin-dashboard__ticket-card {
-    word-break: break-word;
-  }
-
-  .admin-dashboard__tickets-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-  }
-
-  .admin-dashboard__page-title {
-    font-size: 20px;
-    white-space: normal;   /* allow wrapping */
-    line-height: 1.3;
-  }
-
-  .admin-dashboard__filter-dropdown {
-    width: 100%;
-  }
-
 }
 
-
-/* Hide scrollbar but allow scroll */
-.admin-dashboard__modal-content {
-  overflow-y: auto;
-
-  /* Hide scrollbar - Chrome, Edge, Safari */
-  scrollbar-width: none;       /* Firefox */
-  -ms-overflow-style: none;    /* IE 10+ */
-}
-
-.admin-dashboard__modal-content::-webkit-scrollbar {
-  display: none;               /* Chrome, Safari */
-}
-
-.admin-dashboard__main-title {
-  font-size: 26px;
-  font-weight: 700;
-  color: #0f172a;
-  margin-bottom: 24px;
-  text-align: left;
-
-
-}
-
-/* ================= PAYMENTS FILTER ================= */
-
-.payments-filter-wrapper {
-  display: flex;
-  justify-content: flex-start;  /* LEFT aligned */
-  align-items: center;
-  margin-bottom: 16px;
-}
-
-.payments-filter {
-  width: 150px;
-  padding: 6px 30px 6px 12px;
-  font-size: 13px;
-  border-radius: 8px;
-  border: 1px solid #d1d5db;
-  background-color: #ffffff;
-  cursor: pointer;
-  outline: none;
-  transition: all 0.2s ease;
-}
-
-
-.payments-filter {
-  appearance: none;
-  background-repeat: no-repeat;
-  background-position: right 8px center;
-  background-size: 14px;
-}
-
-.payments-filter:hover {
-  border-color: #2563eb;
-}
-
-.payments-filter:focus {
-  border-color: #2563eb;
-  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+/* Extra Small */
+@media (max-width: 480px) {
+  .admin-content {
+    padding: 12px;
+  }
 }

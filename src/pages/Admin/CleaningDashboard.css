@@ -1,0 +1,153 @@
+.cleaning-dashboard-wrapper {
+  width: 100%;
+  padding: 16px;
+}
+
+/* STAT CARDS */
+.cleaning-card {
+  border-radius: 14px;
+  transition: 0.3s ease;
+}
+
+/* BOOKING CARD STYLE */
+.cleaning-booking-card {
+  border-radius: 14px;
+  transition: 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.cleaning-booking-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.booking-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.cleaning-booking-card h4 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+
+.cleaning-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.cleaning-card.highlight {
+  background: linear-gradient(135deg, #43e97b, #38f9d7);
+  color: white;
+}
+
+/* MAIN MANAGEMENT CARD */
+.cleaning-main-card {
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+}
+
+/* TABLE FIX */
+.cleaning-main-card .ant-table-thead > tr > th {
+  background: #f4f6fb !important;
+  font-weight: 600;
+  text-align: left !important;
+  padding: 14px 18px !important;
+}
+
+.cleaning-main-card .ant-table-tbody > tr > td {
+  text-align: left !important;
+  padding: 16px 18px !important;
+}
+
+.cleaning-main-card .ant-table-tbody > tr:hover {
+  background: #f9fbff !important;
+}
+
+/* SECTION HEADER */
+.cleaning-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.cleaning-section-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.cleaning-view-btn {
+  background: #1f3c88;
+  color: white;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.cleaning-view-btn:hover {
+  background: #162c66;
+}
+
+/* STATUS BADGES */
+.cleaning-status {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.cleaning-status.active {
+  background: #e6f7ec;
+  color: #1f9d55;
+}
+
+.cleaning-status.pending {
+  background: #fff4e5;
+  color: #b26a00;
+}
+
+/* ACTION BUTTON */
+.cleaning-action-btn {
+  background: #f0f4ff;
+  color: #1f3c88;
+  border: none;
+  padding: 5px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.cleaning-action-btn:hover {
+  background: #d6e0ff;
+}
+
+/* MOBILE RESPONSIVE */
+@media (max-width: 768px) {
+  .cleaning-dashboard-wrapper {
+    padding: 10px;
+  }
+
+  .cleaning-section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .cleaning-view-btn {
+    align-self: flex-end;
+  }
+
+  .stat-card {
+    height: 100px;
+  }
+}
