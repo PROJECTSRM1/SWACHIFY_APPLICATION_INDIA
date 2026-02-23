@@ -1,0 +1,90 @@
+.education-dashboard-wrapper {
+  width: 100%;
+  padding: 16px;
+}
+
+/* ===== STAT CARDS ===== */
+
+.education-card {
+  border-radius: 16px;
+  transition: all 0.3s ease;
+}
+
+.education-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+}
+
+/* ===== MAIN MANAGEMENT CARD ===== */
+
+.education-main-card {
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+}
+
+/* ===== SECTION HEADER ===== */
+
+.education-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.education-section-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.education-view-btn {
+  background: #3b4cca;
+  color: white;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.education-view-btn:hover {
+  background: #2e3da1;
+}
+
+/* ===== TABLE FIX ALIGNMENT ===== */
+
+.education-main-card .ant-table-thead > tr > th {
+  background: #f4f6fb !important;
+  font-weight: 600;
+  text-align: left !important;
+  padding: 14px 18px !important;
+}
+
+.education-main-card .ant-table-tbody > tr > td {
+  text-align: left !important;
+  padding: 16px 18px !important;
+}
+
+.education-main-card .ant-table-tbody > tr:hover {
+  background: #f9fbff !important;
+}
+
+/* ===== MOBILE RESPONSIVE ===== */
+
+@media (max-width: 768px) {
+
+  .education-dashboard-wrapper {
+    padding: 10px;
+  }
+
+  .education-section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .education-view-btn {
+    align-self: flex-end;
+  }
+}

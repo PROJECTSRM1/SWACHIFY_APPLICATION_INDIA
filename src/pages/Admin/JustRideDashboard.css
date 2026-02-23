@@ -1,0 +1,68 @@
+.ride-dashboard-wrapper {
+  width: 100%;
+  padding: 16px;
+}
+
+/* ===== STAT CARDS ===== */
+
+.ride-card {
+  border-radius: 16px;
+  transition: all 0.3s ease;
+}
+
+.ride-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+}
+
+.ride-card.highlight {
+  background: linear-gradient(135deg, #36d1dc, #5b86e5);
+  color: white;
+}
+
+/* ===== MAIN TABLE CARD ===== */
+
+.ride-main-card {
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+}
+
+/* ===== SECTION HEADER ===== */
+
+.ride-section-header {
+  margin-bottom: 16px;
+}
+
+.ride-section-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* ===== TABLE FIX ALIGNMENT ===== */
+
+.ride-main-card .ant-table-thead > tr > th {
+  background: #f4f6fb !important;
+  font-weight: 600;
+  text-align: left !important;
+  padding: 14px 18px !important;
+}
+
+.ride-main-card .ant-table-tbody > tr > td {
+  text-align: left !important;
+  padding: 16px 18px !important;
+}
+
+.ride-main-card .ant-table-tbody > tr:hover {
+  background: #f9fbff !important;
+}
+
+/* ===== MOBILE ===== */
+
+@media (max-width: 768px) {
+
+  .ride-dashboard-wrapper {
+    padding: 10px;
+  }
+
+}
