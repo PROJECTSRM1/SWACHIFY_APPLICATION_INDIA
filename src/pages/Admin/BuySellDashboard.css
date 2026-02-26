@@ -1,0 +1,72 @@
+.buysell-dashboard-wrapper {
+  width: 100%;
+  padding: 20px;
+}
+
+/* ===== CARDS ===== */
+
+.buysell-card {
+  border-radius: 18px;
+  transition: 0.3s ease;
+  color: white;
+}
+
+.buysell-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* COLORS */
+
+.property-card {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+.highlight {
+  background: linear-gradient(135deg, #f7971e, #ffd200);
+}
+
+.deal-card {
+  background: linear-gradient(135deg, #36d1dc, #5b86e5);
+}
+
+.transaction-card {
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+}
+
+/* TABLE CARD */
+
+.buysell-main-card {
+  border-radius: 18px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+
+.section-title {
+  margin-bottom: 18px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* TABLE ALIGNMENT */
+
+.buysell-main-card .ant-table-thead > tr > th {
+  text-align: left !important;
+  padding: 14px 18px !important;
+}
+
+.buysell-main-card .ant-table-tbody > tr > td {
+  text-align: left !important;
+  padding: 16px 18px !important;
+}
+
+.buysell-main-card .ant-table-tbody > tr:hover {
+  background: #f9fbff !important;
+}
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+  .buysell-dashboard-wrapper {
+    padding: 12px;
+  }
+}

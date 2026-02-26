@@ -1,0 +1,68 @@
+.raw-dashboard-wrapper {
+  width: 100%;
+  padding: 20px;
+}
+
+.raw-card {
+  border-radius: 18px;
+  transition: 0.3s ease;
+  color: white;
+}
+
+.raw-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Colors */
+
+.material-card {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+.highlight {
+  background: linear-gradient(135deg, #8e9eab, #eef2f3);
+  color: #1f1f1f;
+}
+
+.order-card {
+  background: linear-gradient(135deg, #36d1dc, #5b86e5);
+}
+
+.transaction-card {
+  background: linear-gradient(135deg, #ff9966, #ff5e62);
+}
+
+.raw-main-card {
+  border-radius: 18px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+
+.section-title {
+  margin-bottom: 18px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.raw-main-card .ant-table-thead > tr > th {
+  text-align: left !important;
+  padding: 14px 18px !important;
+}
+
+.raw-main-card .ant-table-tbody > tr > td {
+  text-align: left !important;
+  padding: 16px 18px !important;
+}
+
+.raw-main-card .ant-table-tbody > tr:hover {
+  background: #f9fbff !important;
+}
+
+@media (max-width: 768px) {
+  .raw-dashboard-wrapper {
+    padding: 12px;
+  }
+}
+.supplier-card {
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+}

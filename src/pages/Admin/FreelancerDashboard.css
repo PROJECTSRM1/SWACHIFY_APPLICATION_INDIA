@@ -1,0 +1,198 @@
+/* =========================================
+   FREELANCER DASHBOARD WRAPPER
+========================================= */
+
+.freelancer-dashboard-container {
+  width: 100%;
+  padding: 20px;
+  background: #f6f8fc;
+  min-height: 100vh;
+}
+
+/* =========================================
+   STAT CARDS
+========================================= */
+
+.freelancer-stat-card {
+  border-radius: 18px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+  padding: 12px;
+}
+
+.freelancer-stat-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* Unique colored cards */
+
+.freelancer-stat-active {
+  background: #e8f7ee;
+}
+
+.freelancer-stat-pending {
+  background: #fff6e5;
+}
+
+.freelancer-stat-rejected {
+  background: #fdeaea;
+}
+
+/* Statistic alignment */
+
+.freelancer-stat-card .ant-statistic {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.freelancer-stat-card .ant-statistic-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #555;
+}
+
+.freelancer-stat-card .ant-statistic-content {
+  font-size: 22px;
+  font-weight: 600;
+  color: #222;
+}
+
+/* =========================================
+   MAIN TABLE CARD
+========================================= */
+
+.freelancer-table-card {
+  margin-top: 20px;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* Section Header */
+
+.freelancer-section-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+/* =========================================
+   TABLE STYLING
+========================================= */
+
+.freelancer-table-card .ant-table-wrapper {
+  overflow-x: auto;
+}
+
+.freelancer-table-card .ant-table {
+  min-width: 600px;
+}
+
+.freelancer-table-card .ant-table-thead > tr > th {
+  background: #f3f6fb !important;
+  font-weight: 600;
+  text-align: left !important;
+  padding: 16px 20px !important;
+}
+
+.freelancer-table-card .ant-table-tbody > tr > td {
+  padding: 16px 20px !important;
+  text-align: left;
+}
+
+.freelancer-table-card .ant-table-tbody > tr:hover > td {
+  background: #f9fbff !important;
+}
+
+/* =========================================
+   STATUS BADGES
+========================================= */
+
+.freelancer-status-badge {
+  padding: 5px 12px;
+  border-radius: 14px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.freelancer-status-active {
+  background: #dff6e7;
+  color: #1f8f4e;
+}
+
+.freelancer-status-pending {
+  background: #fff1cc;
+  color: #b58100;
+}
+
+.freelancer-status-rejected {
+  background: #fde2e2;
+  color: #c62828;
+}
+
+/* =========================================
+   MOBILE RESPONSIVE
+========================================= */
+
+@media (max-width: 1024px) {
+  .freelancer-dashboard-container {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .freelancer-dashboard-container {
+    padding: 12px;
+  }
+
+  .freelancer-stat-card {
+    padding: 16px;
+  }
+
+  .freelancer-stat-card .ant-statistic-content {
+    font-size: 18px;
+  }
+
+  .freelancer-table-card {
+    border-radius: 14px;
+  }
+
+  .freelancer-table-card .ant-table-thead > tr > th,
+  .freelancer-table-card .ant-table-tbody > tr > td {
+    padding: 12px !important;
+    font-size: 13px;
+  }
+
+  .freelancer-section-title {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .freelancer-stat-card {
+    border-radius: 14px;
+  }
+
+  .freelancer-stat-card .ant-statistic {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .freelancer-stat-card .ant-statistic-title {
+    font-size: 13px;
+  }
+
+  .freelancer-stat-card .ant-statistic-content {
+    font-size: 16px;
+  }
+
+  .freelancer-table-card .ant-table {
+    min-width: 520px;
+  }
+}

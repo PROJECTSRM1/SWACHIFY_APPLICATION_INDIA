@@ -1,0 +1,148 @@
+.healthcare-wrapper {
+  padding: 24px;
+  background: #f5f7fb;
+  min-height: 100vh;
+}
+
+.healthcare-container {
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+/* STAT CARDS */
+
+.healthcare-stat-card {
+  border-radius: 16px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.25s ease;
+  padding: 8px;
+}
+
+.healthcare-stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+}
+
+.doctors-card { background: #eef2ff; }
+.hospitals-card { background: #e6f7f1; }
+.claims-card { background: #fff4e6; }
+.reports-card { background: #e8f3ff; }
+
+.healthcare-stat-card .ant-statistic {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* TABLE CARD */
+
+.healthcare-main-card {
+  margin-top: 20px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+}
+
+/* Enable horizontal scroll */
+.healthcare-main-card .ant-table-wrapper {
+  overflow-x: auto;
+}
+
+.healthcare-main-card .ant-table {
+  min-width: 600px;
+}
+
+/* Table Header */
+
+.healthcare-main-card .ant-table-thead > tr > th {
+  background: #f3f6fb !important;
+  font-weight: 600;
+  text-align: left !important;
+  padding: 16px 20px !important;
+}
+
+/* Table Body */
+
+.healthcare-main-card .ant-table-tbody > tr > td {
+  padding: 16px 20px !important;
+  text-align: left;
+}
+
+.healthcare-main-card .ant-table-tbody > tr:hover > td {
+  background: #fafcff !important;
+}
+
+/* STATUS BADGES */
+
+.status-badge {
+  padding: 5px 12px;
+  border-radius: 14px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-badge.active {
+  background: #e6f7ec;
+  color: #1f9d55;
+}
+
+.status-badge.inactive {
+  background: #fdecea;
+  color: #d93025;
+}
+
+/* MOBILE RESPONSIVE */
+
+@media (max-width: 768px) {
+  .healthcare-wrapper {
+    padding: 12px;
+  }
+
+  .healthcare-stat-card {
+    padding: 14px;
+  }
+
+  .healthcare-main-card {
+    border-radius: 12px;
+  }
+
+  .healthcare-main-card .ant-table-thead > tr > th,
+  .healthcare-main-card .ant-table-tbody > tr > td {
+    padding: 12px !important;
+    font-size: 13px;
+  }
+}
+/* ===== DASHBOARD WRAPPER ===== */
+
+.healthcare-dashboard-wrapper {
+  width: 100%;
+}
+
+/* ===== SECTION HEADER ===== */
+
+.healthcare-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.healthcare-section-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+.healthcare-page-wrapper {
+  margin-bottom: 24px;
+}
+
+.healthcare-section-header {
+  margin-bottom: 16px;
+}
+
+.healthcare-section-header h3 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+}
