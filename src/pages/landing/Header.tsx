@@ -768,7 +768,6 @@ if (redirectPath) {
     icon={<UserOutlined style={{ fontSize: 22 }} />}
   />
 </Dropdown>
-
 )}
 
 
