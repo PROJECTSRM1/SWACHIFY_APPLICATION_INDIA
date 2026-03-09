@@ -1,7 +1,7 @@
 import { useState } from "react";
 import CommonHeader from "../../landing/Header";
 import FooterSection from "../../landing/FooterSection";
-import "./myFood.css";
+import "./MyFood.css";
 import { useNavigate } from "react-router-dom";
 
 import {
