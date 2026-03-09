@@ -117,7 +117,7 @@ type UserRole = "customer" | "employee" | "partner" | "admin";
   const [partnerActiveTab, setPartnerActiveTab] = useState<"login" | "register">("register");
 
 
-
+console.log(userRole);
 
 
   const [activeAuthTab, setActiveAuthTab] = useState<"login" | "register">(
