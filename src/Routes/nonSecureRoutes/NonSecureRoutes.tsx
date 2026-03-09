@@ -45,6 +45,7 @@ import Rawmaterials from "../../pages/building/building";
 import Profile from "../../pages/landing/Profile";
 import Blog from "../../pages/CleaningService/Blog";
 import Support from "../../pages/CleaningService/Support";
+import MyFood from "../../pages/dashboard/MyFood/MyFood";
 
 export const NonSecureRoutes = () => {
   //const navigate = useNavigate();
@@ -132,6 +133,7 @@ export const NonSecureRoutes = () => {
       <Route path="/swachifyproducts" element={<SwachifyProducts />} />
       <Route path="/buysaleproducts" element={<BuysaleProducts />} />
       <Route path="/rawmaterials" element={<Rawmaterials />} />
+      <Route path="/MyFood" element={<MyFood />} />
 
       {/* rentals landing page */}
       <Route path="/rentals" element={<Landingrentals />} />
