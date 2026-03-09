@@ -111,9 +111,8 @@ const handleLogout = () => {
   navigate("/landing");          // 🔁 redirect to landing
 };
 
-  // type UserRole = "customer" | "employee" | "partner" | "admin" | null;
-
-  // const [ setUserRole] = useState<UserRole>(null);
+type UserRole = "customer" | "employee" | "partner" | "admin";
+ const [userRole, setUserRole] = useState<UserRole | null>(null);
   const [partnerModalVisible, setPartnerModalVisible] = useState(false);
   const [partnerActiveTab, setPartnerActiveTab] = useState<"login" | "register">("register");
 
@@ -706,10 +705,10 @@ if (redirectPath) {
 
 
 
-        {/* <Select
+         <Select
           placeholder="Role"
           style={{ width: 150, marginRight: 12 }}
-          onChange={(value: UserRole) => {
+          onChange={(value) => {
             setUserRole(value);
 
             if (value === "customer" || value === "employee") {
@@ -735,7 +734,7 @@ if (redirectPath) {
           <Select.Option value="employee">Employee</Select.Option>
           <Select.Option value="partner">Partner</Select.Option>
           <Select.Option value="admin">Admin</Select.Option>
-        </Select> */}
+        </Select> 
 
 
        {!isAuthenticated ? (
@@ -769,7 +768,6 @@ if (redirectPath) {
     icon={<UserOutlined style={{ fontSize: 22 }} />}
   />
 </Dropdown>
-
 )}
 
 
