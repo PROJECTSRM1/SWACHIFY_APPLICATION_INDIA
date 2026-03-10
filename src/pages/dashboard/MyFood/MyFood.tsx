@@ -107,13 +107,16 @@ const MyFood = () => {
 
         <div className="search-container">
           <div className="search-bar">
-            <input type="text" placeholder="Search dishes, restaurants..." />
             <SearchOutlined className="search-icon" />
+            <input type="text" placeholder="Search dishes, restaurants..." />
           </div>
 
           <div className="cart-btn">
-            <ShoppingCartOutlined />
-            <span>{cart}</span>
+            <div className="cart-icon-wrapper">
+              <ShoppingCartOutlined className="cart-icon" />
+              <span className="cart-count">{cart}</span>
+            </div>
+            <span className="cart-label">Cart</span>
           </div>
         </div>
       </section>

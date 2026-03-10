@@ -16,6 +16,8 @@ import BookRide from "../pages/dashboard/PackersAndMovers/BookRide";
 import MetroHubPage from "../pages/dashboard/PackersAndMovers/MetroHubPage";
 import ProductPartnerDashboard from "../pages/dashboard/SwachifyProducts/ProductPartnerDashboard";
 import NewAdminDashboard from "../pages/Admin/NewAdminDashboard";
+import PartnerAuth from "../pages/landing/PartnerAuth";
+
 
 export const AppRoutes = () => {
   return (
@@ -30,6 +32,7 @@ export const AppRoutes = () => {
         <Route path="/swiftparcel" element={<SwiftParcel />} />
         <Route path="/metrohub" element={<MetroHubPage />} />
         <Route path="/bookride" element={<BookRide />} />
+        <Route path="/partner-auth" element={<PartnerAuth />} />
 
         <Route
           path="/app/*"

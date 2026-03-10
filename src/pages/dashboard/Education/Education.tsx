@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import "./Education.css";
 import { useEffect } from "react";
-
+import { institutions } from "./institutionsData";
+import type { Institution } from "./institutionsData";
 import Companies from "../Education/Companies";
 import Students from "../Education/Students";
 import type { Student } from "../Education/Students";
@@ -11,20 +12,10 @@ import TrainingPage from "./TrainingPage";
 import Institutions from "../Education/Institutions";
 import InstitutionAccessMode from "./InstitutionAccessMode";
 import { speak } from "../../../utils/constants/aiVoice";
-
-
-import InstitutionAuthModal from "../../dashboard/Education/InstitutionAuthModal";
-
-type TrendingStudent = {
-  id: number;
-  name: string;
-  program: string;
-  academicScore: number;
-  rating: string;
-  status: "active" | "completed";
-  shift: string;
-  avatar: string;
-};
+import InstitutionDetails from "./InstitutionDetails";
+import TrainingHubWeb from "./TrainingHubWeb";
+import GovernmentCoursesWeb from "./GovernmentCoursesWeb";
+import InstitutionAuthModal from "../../dashboard/Education/InstitutionAuthModal"
 
 type Page =
   | "home"
@@ -34,28 +25,25 @@ type Page =
   | "training"
   | "institution-login"   // access mode
   | "institution-register"// registration form
+   | "training-hub"
+ | "government-courses"
   | "candidateProfile";
 
 
-type ApiTrendingStudent = {
-  full_name: string;
-  institute: string;
-  degree: string;
-  attendance_percentage: number;
-  active: boolean;
-};
 
 
 const Education: React.FC = () => {
   const [page, setPage] = useState<Page>("home");
-  const [query, setQuery] = useState("");
-  const [searched, setSearched] = useState(false);
+  
   const [selectedStudent, setSelectedStudent] =
     useState<Student | null>(null);
-  const [showAllTrending, setShowAllTrending] = useState(false);
-  const [showInstitutionPortal, setShowInstitutionPortal] = useState(false);
-  const [trendingStudents, setTrendingStudents] = useState<TrendingStudent[]>([]);
-const [loadingTrending, setLoadingTrending] = useState(false);
+const [filter,setFilter] = useState("All");
+const [showAllTrending,setShowAllTrending] = useState(false);
+const [showInstitutionPortal,setShowInstitutionPortal] = useState(false);
+const [selectedInstitution,setSelectedInstitution] =
+useState<Institution | null>(null);
+const [query,setQuery] = useState("")
+const [searched,setSearched] = useState(false)
 const categoriesRef = React.useRef<HTMLDivElement>(null);
 const SEARCH_ITEMS = [
   { label: "Students", page: "students" },
@@ -63,52 +51,16 @@ const SEARCH_ITEMS = [
   { label: "Companies", page: "companies" },
   { label: "Training", page: "training" },
 ] as const;
+const filteredInstitutions =
+filter === "All"
+? institutions
+: institutions.filter((i: Institution)=> i.type === filter);
 const filteredSearch = SEARCH_ITEMS.filter((item) =>
   item.label.toLowerCase().includes(query.toLowerCase())
 );
 
 
-useEffect(() => {
-  const fetchTrendingStudents = async () => {
-    try {
-      setLoadingTrending(true);
-      const res = await fetch(
-  "https://swachify-india-be-1-mcrb.onrender.com/internship/application/trending"
-);
 
-      const data: ApiTrendingStudent[] = await res.json();
-
-      const mapped = data
-        .filter((s) => s.active)
-        .sort(
-          (a, b) => b.attendance_percentage - a.attendance_percentage
-        )
-        .map((s, index) => ({
-          id: index + 1,
-          name: s.full_name,
-          program: s.degree,
-          academicScore: s.attendance_percentage,
-          rating: Math.min(5, (s.attendance_percentage / 20)).toFixed(1),
-          status: "active" as const,
-
-          shift: "09:00 AM - 06:00 PM",
-avatar:
-  index % 2 === 0
-    ? `https://randomuser.me/api/portraits/men/${index % 90}.jpg`
-    : `https://randomuser.me/api/portraits/women/${index % 90}.jpg`,
-
-        }));
-
-      setTrendingStudents(mapped);
-    } catch (err) {
-      console.error("Trending fetch failed", err);
-    } finally {
-      setLoadingTrending(false);
-    }
-  };
-
-  fetchTrendingStudents();
-}, []);
 
 useEffect(() => {
   speak("Welcome to Education. Explore students, internships, companies and training programs.");
@@ -153,9 +105,17 @@ useEffect(() => {
   // const filteredResults = searchableItems.filter((item) =>
   //   item.toLowerCase().includes(query.toLowerCase())
   // );
-
+if(selectedInstitution){
+  return(
+    <InstitutionDetails
+      institution={selectedInstitution}
+      onBack={()=>setSelectedInstitution(null)}
+    />
+  )
+}
   if (page !== "home") {
     return (
+  
       <div className="edu-fullscreen-page">
   
 
@@ -169,12 +129,12 @@ useEffect(() => {
           />
         )}
 
-        {page === "candidateProfile" && selectedStudent && (
-          <CandidateProfile
-            student={selectedStudent}
-            onBack={() => setPage("students")}
-          />
-        )}
+{page === "candidateProfile" && selectedStudent !== null && (
+  <CandidateProfile
+    student={selectedStudent}
+    onBack={() => setPage("students")}
+  />
+)}
 
         {page === "internships" && (
           <Internship onBack={() => setPage("home")} />
@@ -184,10 +144,21 @@ useEffect(() => {
           <Companies onBack={() => setPage("home")} />
         )}
 
-        {page === "training" && (
-          <TrainingPage onBack={() => setPage("home")} />
-          
-        )}
+{page === "training-hub" && (
+  <TrainingHubWeb
+    onBack={() => setPage("home")}
+    onOpenGovernment={() => setPage("government-courses")}
+    onOpenIT={() => setPage("training")}
+  />
+)}
+
+{page === "government-courses" && (
+  <GovernmentCoursesWeb onBack={() => setPage("training-hub")} />
+)}
+
+{page === "training" && (
+  <TrainingPage onBack={() => setPage("training-hub")} />
+)}
    {page === "institution-login" && (
   <InstitutionAccessMode onClose={() => setPage("home")} />
 )}
@@ -196,9 +167,9 @@ useEffect(() => {
   <Institutions onBack={() => setPage("home")} />
 )}
 
-
+      
       </div>
-    );
+    );    
   }
 
   return (
@@ -319,10 +290,10 @@ onClick={() => {
     <p>Companies</p>
   </div>
 
-  <div onClick={() => setPage("training")}>
-    <span className="edu-green">🧭</span>
-    <p>Training</p>
-  </div>
+<div onClick={() => setPage("training-hub")}>
+  <span className="edu-green">🧭</span>
+  <p>Training</p>
+</div>
 
   {/* ✅ NEW */}
   <div onClick={() => setShowInstitutionPortal(true)}>
@@ -346,41 +317,44 @@ onClick={() => {
             {showAllTrending ? "Show Less" : "View All"}
           </button>
         </div>
-
+<select
+value={filter}
+onChange={(e)=>setFilter(e.target.value)}
+className="edu-filter"
+>
+<option value="All">All</option>
+<option value="Primary School">Primary School</option>
+<option value="High School">High School</option>
+<option value="Inter">Inter</option>
+<option value="Graduation">Graduation</option>
+<option value="Training">Training</option>
+</select>
 <div className="edu-trending-list">
-  {loadingTrending ? (
-    <p className="edu-loading">Loading trending students...</p>
-  ) : trendingStudents.length === 0 ? (
-    <p className="edu-loading">No trending students found</p>
-  ) : (
-    (showAllTrending
-      ? trendingStudents
-      : trendingStudents.slice(0, 4)
-    ).map((student) => (
-      <div key={student.id} className="edu-trending-row-card">
-        <img
-          src={student.avatar}
-          alt={student.name}
-          className="edu-trending-avatar"
-        />
 
-        <div className="edu-trending-info">
-          <h4>{student.name}</h4>
-          <p className="edu-program">{student.program}</p>
-          <p className="edu-score">
-            {student.academicScore}% Attendance
-          </p>
+{filteredInstitutions.map((inst: Institution)=>(
+<div
+key={inst.id}
+className="edu-trending-card"
+onClick={()=>setSelectedInstitution(inst)}
+>
 
-          <div className="edu-rating">
-            ⭐ {student.rating}
-          </div>
+<img src={inst.image} />
 
-          <span className="edu-status active">ACTIVE</span>
-          <p className="edu-shift">{student.shift}</p>
-        </div>
-      </div>
-    ))
-  )}
+<h4>{inst.name}</h4>
+
+<p>{inst.city}</p>
+
+<span className="seat">
+{inst.seats} Seats Available
+</span>
+
+<div className="rating">
+⭐ {inst.rating}
+</div>
+
+</div>
+))}
+
 </div>
 
    {showInstitutionPortal && (
