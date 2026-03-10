@@ -159,7 +159,9 @@
 /* TEXT COLORS FIXED FOR WHITE CARD */
 .service {
   color: #475569;
-  font-size: 14px;
+  font-size: 13px;
+  margin-right: 110px;
+  white-space: nowrap;   
 }
 
 .status {
@@ -232,6 +234,8 @@
   justify-content: space-between;
   align-items: center;
   margin-top: auto;
+  background: white;
+  padding: 0px 0px 0px;
 }
 
 /* STACK STARTING AT + PRICE */
@@ -310,7 +314,7 @@
 
 /* ===== FIX MERGE ISSUE: LOCK RATING BADGE ===== */
 .card-header .rating {
-  position: static !important;     /* kills absolute/sticky */
+  position: static !important;     
   width: auto !important;
   max-width: fit-content !important;
 
@@ -332,6 +336,8 @@
 
   white-space: nowrap;
   flex-shrink: 0;
+    margin-left: auto;          
+  align-self: flex-start;
 }
 .card.disabled {
   opacity: 0.6;
@@ -360,9 +366,9 @@
   color: #334155;
   margin-top: 6px;
 
-  white-space: nowrap;     /* 🔒 forces one line */
-  overflow: hidden;        /* safety */
-  text-overflow: ellipsis; /* safety (won’t trigger normally) */
+  white-space: nowrap;     
+  overflow: hidden;        
+  text-overflow: ellipsis; 
 }
 /* STATUS DOT COLORS */
 .status {
@@ -489,35 +495,24 @@
     white-space: nowrap;
   }
 }
-/* ========================================= */
-/* ✅ MOBILE ONLY: NAME + RATING ALIGN FIX   */
-/* ========================================= */
 @media (max-width: 640px) {
 
-  /* Keep header row horizontal */
   .card-header {
+    display: flex !important;
     align-items: flex-start !important;
     gap: 8px;
   }
 
-  /* Name: allow 2 lines, slightly smaller */
-  .card-header h3 {
-    font-size: 15px;
-    line-height: 1.25;
-
-    display: -webkit-box;
-
-    -webkit-box-orient: vertical;
-
-    overflow: hidden;
+  .card-header > div:first-child {
+    flex: 1;
+    min-width: 0;
   }
 
-  /* ⭐ Rating: move up beside name */
   .card-header .rating {
-    margin-top: 2px !important;
+    margin-left: auto !important;
+    flex-shrink: 0;
     padding: 5px 8px;
     font-size: 12px;
-    align-self: flex-start;
     white-space: nowrap;
   }
 }

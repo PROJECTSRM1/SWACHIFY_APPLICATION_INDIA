@@ -132,7 +132,7 @@ const serviceProviders: ServiceProvider[] = [
   
   {
     id: "24",
-    name: "Priya Mani",
+    name: "Manish",
     service: "Chef",
     cuisineStyle: "South",
     rating: 4.9,
