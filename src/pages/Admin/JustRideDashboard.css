@@ -26,11 +26,11 @@
 /* Colored cards */
 
 .drivers-card {
-  background: #e8f2ff;
+  background: #679fe9;
 }
 
 .rides-card {
-  background: #e6f7f1;
+  background: #cef7e2;
 }
 
 .revenue-card {
@@ -98,4 +98,40 @@
     padding: 12px !important;
     font-size: 13px;
   }
+}
+/* ===== DRIVER MODAL SCOPED ===== */
+
+.driver-details-modal .ant-modal-content {
+  border-radius: 16px;
+  padding: 24px 28px;
+}
+
+.driver-details-modal .ant-modal-header {
+  border-bottom: none;
+  padding-bottom: 10px;
+}
+
+.driver-details-modal .ant-modal-title {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.driver-details-modal .ant-modal-body {
+  padding-top: 10px;
+}
+
+/* ===== DRIVER TABLE ALIGNMENT ===== */
+
+.driver-details-table .ant-table-thead > tr > th {
+  text-align: center !important;
+  font-weight: 600;
+}
+
+.driver-details-table .ant-table-tbody > tr > td:first-child {
+  text-align: left !important;
+}
+
+.driver-details-table .ant-table-tbody > tr > td:nth-child(2),
+.driver-details-table .ant-table-tbody > tr > td:nth-child(3) {
+  text-align: center !important;
 }

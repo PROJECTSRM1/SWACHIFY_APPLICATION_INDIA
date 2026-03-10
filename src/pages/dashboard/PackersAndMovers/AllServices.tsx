@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Card, Row, Col, Input, Select } from "antd";
 import { useNavigate } from "react-router-dom";
 import { LeftOutlined } from "@ant-design/icons";
+import { SearchOutlined } from "@ant-design/icons";
+
+
 import "./JustRide.css";
 
 
@@ -16,6 +19,7 @@ const services = [
     info: "3 tickets available nearby",
     icon: "🚇",
     km: "0.5 km",
+    category: "commute",
   },
   {
     name: "Parcel",
@@ -23,6 +27,7 @@ const services = [
     info: "12 couriers nearby",
     icon: "📦",
     km: "Instant pick",
+    category: "delivery",
   },
   {
     name: "Scooty",
@@ -30,6 +35,7 @@ const services = [
     info: "8 available nearby",
     icon: "🛵",
     km: "1.2 km",
+    category: "commute",
   },
   {
     name: "Bike",
@@ -37,13 +43,15 @@ const services = [
     info: "15 available nearby",
     icon: "🏍️",
     km: "0.8 km",
+    category: "commute",
   },
   {
-    name: "Cab Non AC",   
+    name: "Cab Non AC",
     price: "$8.00",
     info: "5 available nearby",
     icon: "🚕",
     km: "2.1 km",
+    category: "commute",
   },
   {
     name: "Auto",
@@ -51,6 +59,7 @@ const services = [
     info: "2 available nearby",
     icon: "🛺",
     km: "0.3 km",
+    category: "commute",
   },
   {
     name: "Cab Premium",
@@ -58,6 +67,7 @@ const services = [
     info: "4 available nearby",
     icon: "🚘",
     km: "1.5 km",
+    category: "luxury",
   },
   {
     name: "Auto Seat Share",
@@ -65,6 +75,7 @@ const services = [
     info: "Ready to go",
     icon: "👥",
     km: "0.2 km",
+    category: "commute",
   },
   {
     name: "Bike Lite",
@@ -72,6 +83,7 @@ const services = [
     info: "20+ available",
     icon: "🚲",
     km: "0.1 km",
+    category: "commute",
   },
   {
     name: "Shared Auto",
@@ -79,6 +91,7 @@ const services = [
     info: "Frequent availability",
     icon: "🧑‍🤝‍🧑",
     km: "Multiple",
+    category: "commute",
   },
   {
     name: "Cab Priority",
@@ -86,6 +99,7 @@ const services = [
     info: "1 available nearby",
     icon: "⭐",
     km: "3 mins",
+    category: "luxury",
   },
   {
     name: "Travel",
@@ -93,8 +107,10 @@ const services = [
     info: "Inter-city bookings",
     icon: "✈️",
     km: "Plan trip",
+    category: "luxury",
   },
 ];
+
 
 
 const AllServices: React.FC = () => {
@@ -103,6 +119,8 @@ const AllServices: React.FC = () => {
 const [pickupValue, setPickupValue] = useState("");
 const [dropValue, setDropValue] = useState("");
 const [searchQuery, setSearchQuery] = useState("");
+const [activeTab, setActiveTab] = useState("all");
+
 
 const getCurrentLocation = () => {
   if (!navigator.geolocation) return;
@@ -129,9 +147,17 @@ useEffect(() => {
 }, [pickupType]);
 
 
-const filteredServices = services.filter((service) =>
-  service.name.toLowerCase().includes(searchQuery.toLowerCase())
-);
+const filteredServices = services.filter((service) => {
+  const matchSearch = service.name
+    .toLowerCase()
+    .includes(searchQuery.toLowerCase());
+
+  const matchCategory =
+    activeTab === "all" ? true : service.category === activeTab;
+
+  return matchSearch && matchCategory;
+});
+
 
 
 
@@ -202,17 +228,42 @@ const filteredServices = services.filter((service) =>
   style={{ marginTop: "12px", marginBottom: "16px" }}
   value={searchQuery}
   onChange={(e) => setSearchQuery(e.target.value)}
+  prefix={<SearchOutlined style={{ color: "#9ca3af" }} />}
 />
 
 
 
         {/* TABS */}
         <div className="sw-js-as-tabs">
-          <button className="sw-js-as-tab active">All Services</button>
-          <button className="sw-js-as-tab">Commute</button>
-          <button className="sw-js-as-tab">Delivery</button>
-          <button className="sw-js-as-tab">Luxury</button>
-        </div>
+  <button
+    className={`sw-js-as-tab ${activeTab === "all" ? "active" : ""}`}
+    onClick={() => setActiveTab("all")}
+  >
+    All Services
+  </button>
+
+  <button
+    className={`sw-js-as-tab ${activeTab === "commute" ? "active" : ""}`}
+    onClick={() => setActiveTab("commute")}
+  >
+    Commute
+  </button>
+
+  <button
+    className={`sw-js-as-tab ${activeTab === "delivery" ? "active" : ""}`}
+    onClick={() => setActiveTab("delivery")}
+  >
+    Delivery
+  </button>
+
+  <button
+    className={`sw-js-as-tab ${activeTab === "luxury" ? "active" : ""}`}
+    onClick={() => setActiveTab("luxury")}
+  >
+    Luxury
+  </button>
+</div>
+
 
       <div
   className="sw-js-as-title"
