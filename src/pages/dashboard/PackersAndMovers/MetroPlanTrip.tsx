@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import QRCode from "qrcode";
 import "./Metro.css";
+import { customerLogin } from "../../../api/customerAuth";
+import { Button, Input, message, Modal } from "antd";
+import { useNavigate } from "react-router-dom";
+
 
 const stations = [
   { name: "Miyapur", line: "Red" },
@@ -69,6 +73,32 @@ const MetroPlanTrip: React.FC<{ closePlan: () => void; showQR: (d: any) => void 
   const [dropoff, setDropoff] = useState("Select");
   const [tripType, setTripType] = useState("oneway");
 
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [identifier, setIdentifier] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  
+  
+  
+  
+  // Example auth check (replace with your real auth logic)
+ 
+  
+  
+  const onLogin = async (values: any) => {
+    const res: any = await customerLogin({
+      email_or_phone: values.identifier,
+      password: values.password,
+    });
+  
+    localStorage.setItem("user_id", res.user_id);
+    localStorage.setItem("accessToken", res.access_token);
+    localStorage.setItem("user", JSON.stringify(res));
+  };
+  
+  
+
   const calculateFare = () => {
     if (boarding === "Select" || dropoff === "Select") return 0;
 
@@ -88,31 +118,40 @@ const MetroPlanTrip: React.FC<{ closePlan: () => void; showQR: (d: any) => void 
   const fare = calculateFare();
 
   const handlePay = async () => {
-    if (boarding === "Select" || dropoff === "Select") {
-      alert("Please select stations.");
-      return;
-    }
+   const isLoggedIn = !!localStorage.getItem("accessToken");
+    console.log("isLoggedIn:", isLoggedIn);
 
-    const ticketId = `T-${Math.floor(100000 + Math.random() * 900000)}`;
+  if (!isLoggedIn) {
+    setShowLoginModal(true);   // 🔐 open login popup
+    return;
+  }
 
-    const qrPayload = {
-      from: boarding,
-      to: dropoff,
-      tripType,
-      fare,
-      ticketId,
-      time: Date.now()
-    };
+  if (boarding === "Select" || dropoff === "Select") {
+    alert("Please select stations.");
+    return;
+  }
 
-    const qrUrl = await QRCode.toDataURL(JSON.stringify(qrPayload));
+  const ticketId = `T-${Math.floor(100000 + Math.random() * 900000)}`;
 
-    showQR({
-      ...qrPayload,
-      qr: qrUrl
-    });
-
-    closePlan();
+  const qrPayload = {
+    from: boarding,
+    to: dropoff,
+    tripType,
+    fare,
+    ticketId,
+    time: Date.now()
   };
+
+  const qrUrl = await QRCode.toDataURL(JSON.stringify(qrPayload));
+
+  showQR({
+    ...qrPayload,
+    qr: qrUrl
+  });
+
+  closePlan();
+};
+
 
   return (
     <div className="sw-jr-page">
@@ -168,7 +207,12 @@ const MetroPlanTrip: React.FC<{ closePlan: () => void; showQR: (d: any) => void 
           <div className="sw-jr-fare-amount">₹{fare}</div>
         </div>
 
-        <div className="sw-jr-pay-btn" onClick={handlePay}>
+        <div className="sw-jr-pay-btn" 
+          onClick={() => {
+    console.log("PAY CLICKED");
+    handlePay();
+  }}
+        >
           PAY ₹{fare} & BOOK
         </div>
       </div>
@@ -208,6 +252,96 @@ const MetroPlanTrip: React.FC<{ closePlan: () => void; showQR: (d: any) => void 
           </div>
         </div>
       )}
+
+      <Modal
+  open={showLoginModal}
+  footer={null}
+  centered
+  onCancel={() => setShowLoginModal(false)}
+  className="sw-jr-auth-modal"
+  closeIcon={<span className="sw-jr-auth-close">✕</span>}
+>
+  <div className="sw-jr-auth-box">
+   <div className="sw-jr-auth-icon">🔐</div>
+
+
+    <h3 className="sw-jr-auth-title">Login to continue</h3>
+
+    <Input
+      className="sw-jr-auth-input"
+      placeholder="Email or mobile number"
+      value={identifier}
+      onChange={(e) => setIdentifier(e.target.value)}
+    />
+
+    <Input.Password
+      className="sw-jr-auth-input"
+      placeholder="Password"
+      value={password}
+      onChange={(e) => setPassword(e.target.value)}
+    />
+
+    <Button
+      type="primary"
+      block
+      className="sw-jr-auth-button"
+      loading={loading}
+      // disabled={!identifier || !password}
+      onClick={async () => {
+  try {
+    setLoading(true);
+    await onLogin({ identifier, password });
+
+    setShowLoginModal(false);
+    handlePay();   // 🔁 continue booking after login
+  } catch {
+    message.error("Login failed. Please try again.");
+  } finally {
+    setLoading(false);
+  }
+}}
+
+     
+    >
+      Login & Continue
+    </Button>
+
+    <p className="sw-jr-auth-note">
+      Don’t have an account?{" "}
+      <span
+  className="sw-jr-auth-register"
+  onClick={() => {
+
+
+    // save redirect
+    localStorage.setItem("postAuthRedirect", window.location.pathname);
+
+    // close modal
+    setShowLoginModal(false);
+
+    // go to landing page
+    navigate("/");
+
+    // open register popup on landing
+    setTimeout(() => {
+      const win = window as any;
+      if (win.openAuthModal) {
+        win.openAuthModal("register");
+      } else {
+        console.warn("openAuthModal not found");
+      }
+    },0);
+  }}
+>
+  Register
+</span>
+
+
+
+   
+    </p>
+  </div>
+</Modal>
 
     </div>
   );

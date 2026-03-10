@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Input, Button, Card, Divider, Avatar, Badge, message } from "antd";
+import React, {  useEffect, useState } from "react";
+import { Input, Button, Card, Divider, Avatar, Badge, message, Modal } from "antd";
 import {
   ArrowLeftOutlined,
   EnvironmentFilled,
@@ -10,10 +10,13 @@ import {
   MessageFilled,
   CloseOutlined,
   RightOutlined,
-  CheckCircleFilled
+  CheckCircleFilled,
+  AimOutlined
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import "./JustRide.css"
+import { customerLogin } from "../../../api/customerAuth";
+
 
 const BookRide: React.FC = () => {
   const navigate = useNavigate();
@@ -34,6 +37,34 @@ const BookRide: React.FC = () => {
   
 const [driverStatus, setDriverStatus] = useState("Finding driver...");
 const [arrivalTime, _setArrivalTime] = useState(7);
+const [showLoginModal, setShowLoginModal] = useState(false);
+const [identifier, setIdentifier] = useState("");
+const [password, setPassword] = useState("");
+const [loading, setLoading] = useState(false);
+
+
+
+
+// Example auth check (replace with your real auth logic)
+const isLoggedIn = !!localStorage.getItem("accessToken");
+
+
+const onLogin = async (values: any) => {
+  const res: any = await customerLogin({
+    email_or_phone: values.identifier,
+    password: values.password,
+  });
+
+  localStorage.setItem("user_id", res.user_id);
+  localStorage.setItem("accessToken", res.access_token);
+  localStorage.setItem("user", JSON.stringify(res));
+};
+
+
+
+
+
+
 
 
  const rideOptions = [
@@ -156,6 +187,48 @@ const [arrivalTime, _setArrivalTime] = useState(7);
   }
 };
 
+useEffect(() => {
+  if (!showLoginModal) {
+    setIdentifier("");
+    setPassword("");
+    setLoading(false);
+  }
+}, [showLoginModal]);
+
+const handleUseCurrentLocation = async () => {
+  if (!navigator.geolocation) {
+    message.error("Geolocation not supported");
+    return;
+  }
+
+  message.loading("Fetching current location...", 1);
+
+  navigator.geolocation.getCurrentPosition(
+    async (pos) => {
+      const { latitude, longitude } = pos.coords;
+
+      try {
+        const res = await fetch(
+          `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}`
+        );
+        const data = await res.json();
+
+        const address = data?.display_name || `Lat ${latitude}, Lng ${longitude}`;
+        setPickup(address);
+        message.success("Location set");
+      } catch {
+        setPickup(`Lat ${latitude}, Lng ${longitude}`);
+        message.warning("Using coordinates only");
+      }
+    },
+    () => message.error("Location permission denied")
+  );
+};
+
+
+
+
+
 
 
 
@@ -253,30 +326,46 @@ const [arrivalTime, _setArrivalTime] = useState(7);
                   </div>
                   <div className="sw-jr-bk-field-column">
                     <label>PICKUP LOCATION</label>
-                  <Input 
-  placeholder="Current Location..." 
-  variant="borderless" 
+
+
+<Input
+  placeholder="Current Location..."
+  variant="borderless"
   className="sw-jr-bk-input-web"
   value={pickup}
   onChange={(e) => setPickup(e.target.value)}
+  suffix={
+    <AimOutlined
+      onClick={handleUseCurrentLocation}
+      style={{
+        fontSize: "18px",
+        color: "#1677ff",
+        cursor: "pointer",
+      }}
+    />
+  }
 />
+
+
                   </div>
                 </div>
-                <div className="sw-jr-bk-input-row">
-                  <div className="sw-jr-bk-icon-column">
-                    <EnvironmentFilled className="sw-jr-bk-icon-d" />
-                  </div>
-                  <div className="sw-jr-bk-field-column">
-                    <label>DROP-OFF LOCATION</label>
-                   <Input 
-  placeholder="Search destination..." 
-  variant="borderless" 
-  className="sw-jr-bk-input-web"
-  value={dropoff}
-  onChange={(e) => setDropoff(e.target.value)}
-/>
-                  </div>
-                </div>
+            <div className="sw-jr-bk-input-row">
+  <div className="sw-jr-bk-icon-column">
+    <EnvironmentFilled className="sw-jr-bk-icon-d" />
+  </div>
+
+  <div className="sw-jr-bk-field-column">
+    <label>DROP-OFF LOCATION</label>
+    <Input 
+      placeholder="Search destination..." 
+      variant="borderless" 
+      className="sw-jr-bk-input-web"
+      value={dropoff}
+      onChange={(e) => setDropoff(e.target.value)}
+    />
+  </div>
+</div>
+
               </div>
 
               {!showResults ? (
@@ -312,15 +401,26 @@ const [arrivalTime, _setArrivalTime] = useState(7);
                       </div>
                     ))}
                   </div>
-                  <Button 
-                    type="primary" block 
-                    className="sw-jr-bk-confirm-btn" 
-                    style={{marginTop: '20px'}}
-                    disabled={!selectedRide}
-                    onClick={handleConfirmBooking}
-                  >
-                    BOOK {selectedRide ? selectedRide.name.toUpperCase() : "RIDE"}
-                  </Button>
+                  <Button
+  type="primary"
+  block
+  className="sw-jr-bk-confirm-btn"
+  disabled={!selectedRide}
+  onClick={() => {
+  if (!isLoggedIn) {
+    setShowLoginModal(true);
+  } else {
+    handleConfirmBooking();
+  }
+}}
+
+
+
+>
+  BOOK {selectedRide ? selectedRide.name.toUpperCase() : "RIDE"}
+</Button>
+
+              
                 </div>
               )}
             </>
@@ -376,9 +476,106 @@ const [arrivalTime, _setArrivalTime] = useState(7);
   </div>
 )}
 
+<Modal
+  open={showLoginModal}
+  footer={null}
+  centered
+  onCancel={() => setShowLoginModal(false)}
+  className="sw-jr-auth-modal"
+  closeIcon={<span className="sw-jr-auth-close">✕</span>}
+>
+  <div className="sw-jr-auth-box">
+   <div className="sw-jr-auth-icon">🔐</div>
+
+
+    <h3 className="sw-jr-auth-title">Login to continue</h3>
+
+    <Input
+      className="sw-jr-auth-input"
+      placeholder="Email or mobile number"
+      value={identifier}
+      onChange={(e) => setIdentifier(e.target.value)}
+    />
+
+    <Input.Password
+      className="sw-jr-auth-input"
+      placeholder="Password"
+      value={password}
+      onChange={(e) => setPassword(e.target.value)}
+    />
+
+    <Button
+      type="primary"
+      block
+      className="sw-jr-auth-button"
+      loading={loading}
+      // disabled={!identifier || !password}
+      onClick={async () => {
+        try {
+          setLoading(true);
+          await onLogin({ identifier, password });
+          setShowLoginModal(false);
+          handleConfirmBooking();
+        } catch {
+          message.error("Login failed. Please try again.");
+        } finally {
+          setLoading(false);
+        }
+      }}
+    >
+      Login & Continue
+    </Button>
+
+    <p className="sw-jr-auth-note">
+      Don’t have an account?{" "}
+      <span
+  className="sw-jr-auth-register"
+  onClick={() => {
+
+
+    // save redirect
+    localStorage.setItem("postAuthRedirect", window.location.pathname);
+
+    // close modal
+    setShowLoginModal(false);
+
+    // go to landing page
+    navigate("/");
+
+    // open register popup on landing
+    setTimeout(() => {
+      const win = window as any;
+      if (win.openAuthModal) {
+        win.openAuthModal("register");
+      } else {
+        console.warn("openAuthModal not found");
+      }
+    },0);
+  }}
+>
+  Register
+</span>
+
+
+
+   
+    </p>
+  </div>
+</Modal>
+
+
+
+
+
 
         <p className="sw-jr-bk-footer-hint">Safe • Reliable • Premium</p>
       </div>
+
+
+
+
+
+
     </div>
   );
 };

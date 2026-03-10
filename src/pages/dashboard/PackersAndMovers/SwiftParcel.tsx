@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Input, Button, Divider, Modal, message } from 'antd';
+import { Input, Button, Modal, message } from 'antd';
 import {
   EnvironmentOutlined, UserOutlined, PhoneOutlined,
   ArrowRightOutlined, EnvironmentFilled, CodeSandboxOutlined,
@@ -9,9 +9,14 @@ import {
   CarOutlined, WarningFilled
 } from '@ant-design/icons';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { PaymentsAPI } from '../../../api/customerAuth';
-
+import { customerLogin, PaymentsAPI } from '../../../api/customerAuth';
+import { MapContainer, TileLayer, Marker, Polyline } from "react-leaflet";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
+import { useEffect } from "react";
 import "./JustRide.css";
+import { useMap } from "react-leaflet";
+
 
 
 
@@ -28,6 +33,102 @@ const SwiftParcel: React.FC = () => {
   const [otherDescription, setOtherDescription] = useState('');
   const location = useLocation();
   const redirectTo = location.state?.redirectTo || "/";
+   const [showLoginModal, setShowLoginModal] = useState(false);
+
+  
+  const [identifier, setIdentifier] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const [showTrackPage, setShowTrackPage] = useState(false);
+  // Fake route (Gurgaon demo)
+const pickup: [number, number] = [28.4595, 77.0266];
+const drop: [number, number] = [28.4708, 77.0400];
+
+const [riderPosition, setRiderPosition] = useState<[number, number]>(pickup);
+const [routeCoords, setRouteCoords] = useState<[number, number][]>([]);
+
+
+const riderIcon = L.divIcon({
+  className: "",
+  html: `<div id="rider-icon">🏍️</div>`,
+  iconSize: [40, 40],
+  iconAnchor: [20, 20],
+});
+
+
+
+useEffect(() => {
+  if (!showTrackPage) return;
+
+  const fetchRoute = async () => {
+    const response = await fetch(
+      `https://router.project-osrm.org/route/v1/driving/${pickup[1]},${pickup[0]};${drop[1]},${drop[0]}?overview=full&geometries=geojson`
+    );
+
+    const data = await response.json();
+    const coords = data.routes[0].geometry.coordinates.map(
+      (c: [number, number]) => [c[1], c[0]]
+    );
+
+    setRouteCoords(coords);
+  };
+
+  fetchRoute();
+}, [showTrackPage]);
+
+
+useEffect(() => {
+  if (!routeCoords.length) return;
+
+  let index = 0;
+
+const interval = setInterval(() => {
+  const current = routeCoords[index];
+  const next = routeCoords[index + 1];
+
+  setRiderPosition(current);
+
+  if (next) {
+    const angle =
+      (Math.atan2(next[1] - current[1], next[0] - current[0]) *
+        180) /
+      Math.PI;
+
+    const el = document.getElementById("rider-icon");
+    if (el) {
+      el.style.transform = `rotate(${angle}deg)`;
+    }
+  }
+
+  index += 2; // 👈 skip some points for smoothness
+
+  if (index >= routeCoords.length - 1) {
+    clearInterval(interval);
+  }
+}, 60);
+
+
+
+
+  return () => clearInterval(interval);
+}, [routeCoords]);
+
+const isLoggedIn = !!localStorage.getItem("accessToken");
+
+const onLogin = async (values: any) => {
+  const res: any = await customerLogin({
+    email_or_phone: values.identifier,
+    password: values.password,
+  });
+  
+
+  localStorage.setItem("user_id", res.user_id);
+  localStorage.setItem("accessToken", res.access_token);
+  localStorage.setItem("user", JSON.stringify(res));
+};
+
+
 
 
   const handleOk = () => {
@@ -114,38 +215,44 @@ const SwiftParcel: React.FC = () => {
   };
 
   const handleContinue = () => {
-    // Step 1 Validation
-    if (currentStep === 1) {
-      if (!dropOff || !receiverName || !phone) {
-        message.error("Please fill in all recipient details");
-        return;
-      }
-      if (phone.length < 10) {
-        message.error("Please enter a valid mobile number");
-        return;
-      }
+  // Step 1 Validation
+  if (currentStep === 1) {
+    if (!dropOff || !receiverName || !phone) {
+      message.error("Please fill in all recipient details");
+      return;
     }
 
-    // Step 2 Validation (The "Other" Logic)
-    if (currentStep === 2) {
-      if (selectedItems.length === 0) {
-        message.warning("Please select at least one item to continue");
-        return;
-      }
-      // If 'other' is selected, check if description is provided
-      if (selectedItems.includes('other') && !otherDescription.trim()) {
-        message.error("Please describe the item to continue");
-        return;
-      }
+    if (phone.length < 10) {
+      message.error("Please enter a valid mobile number");
+      return;
+    }
+  }
+
+  // Step 2 Validation + 🔐 Login Check
+  if (currentStep === 2) {
+    if (selectedItems.length === 0) {
+      message.warning("Please select at least one item to continue");
+      return;
     }
 
-    // Navigation
-    if (currentStep < 3) {
-      setCurrentStep(currentStep + 1);
-    } else {
-      handlePayment();
+    if (selectedItems.includes("other") && !otherDescription.trim()) {
+      message.error("Please describe the item to continue");
+      return;
     }
-  };
+
+    if (!isLoggedIn) {
+      setShowLoginModal(true);   // 🔐 open login modal
+      return;
+    }
+  }
+
+  // Navigation
+  if (currentStep < 3) {
+    setCurrentStep((prev) => prev + 1);
+  } else {
+    handlePayment();
+  }
+};
 
 
 
@@ -194,7 +301,8 @@ const SwiftParcel: React.FC = () => {
             <div className="sw-jr-pr-step-icon"><CreditCardOutlined /></div>
             <span>Payment</span>
           </div>
-        </div>
+        </div>   
+
 
         {/* STEP 1: DETAILS */}
         {currentStep === 1 && (
@@ -335,49 +443,56 @@ const SwiftParcel: React.FC = () => {
         )}
 
         {/* STEP 3: PAYMENT */}
-        {currentStep === 3 && (
-          <div className="sw-jr-pr-content-fade">
-            <div className="sw-jr-pr-invoice-card">
-              <div className="sw-jr-pr-invoice-header">
-                <div>
-                  <h2 className="sw-jr-pr-invoice-title">Invoice</h2>
-                  <p className="sw-jr-pr-order-id">ORDER #SP-1681</p>
-                </div>
-                <div className="sw-jr-pr-invoice-icon-box">
-                  <CreditCardOutlined />
-                </div>
-              </div>
+        {/* STEP 3: PAYMENT */}
+{currentStep === 3 && (
+  <div className="sw-jr-pr-content-fade">
+    <div className="sw-jr-pr-invoice-card">
 
-              <div className="sw-jr-pr-invoice-details">
-                <div className="sw-jr-pr-invoice-row">
-                  <span className="sw-jr-pr-dot">●</span>
-                  <span className="sw-jr-pr-item-name">Base Delivery Fee</span>
-                  <span className="sw-jr-pr-price">₹45.00</span>
-                </div>
-                <div className="sw-jr-pr-invoice-row">
-                  <span className="sw-jr-pr-dot">●</span>
-                  <div>
-                    <span className="sw-jr-pr-item-name">Distance Surcharge</span>
-                    <p className="sw-jr-pr-subtext">12.4 KM @ ₹5/KM</p>
-                  </div>
-                  <span className="sw-jr-pr-price">₹62.00</span>
-                </div>
-                <div className="sw-jr-pr-invoice-row">
-                  <span className="sw-jr-pr-dot">●</span>
-                  <span className="sw-jr-pr-item-name">Insurance Coverage</span>
-                  <span className="sw-jr-pr-free-badge">FREE</span>
-                </div>
-                <Divider className="sw-jr-pr-invoice-divider" dashed />
-                <div className="sw-jr-pr-total-row">
-                  <div>
-                    <p className="sw-jr-pr-total-label">TOTAL AMOUNT</p>
-                    <h1 className="sw-jr-pr-total-price">₹107</h1>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+      {/* Header */}
+      <div className="sw-jr-pr-invoice-header">
+        <div>
+          <h2 className="sw-jr-pr-invoice-title">Invoice</h2>
+          <p className="sw-jr-pr-order-id">ORDER #SP-1681</p>
+        </div>
+        <div className="sw-jr-pr-invoice-icon-box">
+          <CreditCardOutlined />
+        </div>
+      </div>
+
+      {/* NEW INVOICE UI */}
+      <div className="sw-jr-pr-invoice-box">
+
+    <div className="sw-jr-pr-invoice-row">
+        <span>Base Delivery Fee</span>
+        <span className="sw-jr-pr-amount">₹45.00</span>
+    </div>
+
+    <div className="sw-jr-pr-invoice-row">
+        <div>
+            <span>Distance Surcharge</span>
+            <p className="sw-jr-pr-sub">12.4 KM @ ₹5/KM</p>
+        </div>
+        <span className="sw-jr-pr-amount">₹62.00</span>
+    </div>
+
+    <div className="sw-jr-pr-invoice-row">
+        <span>Insurance Coverage</span>
+        <span className="sw-jr-pr-free">FREE</span>
+    </div>
+
+    <hr className="sw-jr-pr-sep" />
+
+    <div className="sw-jr-pr-invoice-total">
+        <span>Total Amount</span>
+        <span className="sw-jr-pr-total-badge">₹107</span>
+    </div>
+
+</div>
+
+    </div> {/* END invoice-card */}
+  </div>
+)}
+
 
 
 
@@ -386,9 +501,9 @@ const SwiftParcel: React.FC = () => {
         {/* FOOTER */}
         <div className="sw-jr-pr-footer">
           <Button
-            type="primary"
-            block
-            className={`sw-jr-pr-continue-btn ${currentStep === 3 ? 'final' : ''}`}
+  type="primary"
+  className={`sw-jr-pr-continue-btn ${currentStep === 3 ? 'final' : ''}`}
+
             onClick={handleContinue}
             aria-label={currentStep === 3 ? 'Confirm and Pay' : 'Continue to Next Step'}
           >
@@ -404,7 +519,7 @@ const SwiftParcel: React.FC = () => {
           centered
           destroyOnClose
           className="sw-jr-pr-success-modal"
-          width={340}
+          width={360}
         >
           <div className="sw-jr-pr-success-icon-wrapper">
             <CheckCircleFilled className="sw-jr-pr-main-check" />
@@ -412,7 +527,7 @@ const SwiftParcel: React.FC = () => {
 
           <h2 className="sw-jr-pr-modal-title">Payment Successful!</h2>
           <p className="sw-jr-pr-modal-sub">
-            Your delivery has been booked for <br />
+            Your delivery has been booked for <br />     
             <span className="sw-jr-pr-purple-text">Express Delivery</span>
           </p>
 
@@ -422,6 +537,9 @@ const SwiftParcel: React.FC = () => {
               <span className="sw-jr-pr-track-value">SP460821</span>
             </div>
             <div className="sw-jr-pr-track-item">
+
+
+                 
               <span className="sw-jr-pr-track-label"><CarOutlined /> ETA</span>
               <span className="sw-jr-pr-track-value">15-20 mins</span>
             </div>
@@ -441,12 +559,243 @@ const SwiftParcel: React.FC = () => {
           >
             OKAY
           </Button>
+          <div
+  className="sw-jr-pr-track-order-link"
+  onClick={() => {
+    setIsModalVisible(false);
+    setShowTrackPage(true);
+  }}
+>
+  Track My Order
+</div>
 
-          <div className="sw-jr-pr-track-order-link">Track My Order</div>
+
+         
         </Modal>
       </div>
+         <Modal
+        open={showLoginModal}
+        footer={null}
+        centered
+        onCancel={() => setShowLoginModal(false)}
+        className="sw-jr-auth-modal"
+        closeIcon={<span className="sw-jr-auth-close">✕</span>}
+      >
+        <div className="sw-jr-auth-box">
+         <div className="sw-jr-auth-icon">🔐</div>
+      
+      
+          <h3 className="sw-jr-auth-title">Login to continue</h3>
+      
+          <Input
+            className="sw-jr-auth-input"
+            placeholder="Email or mobile number"
+            value={identifier}
+            onChange={(e) => setIdentifier(e.target.value)}
+          />
+      
+          <Input.Password
+            className="sw-jr-auth-input"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+      
+          <Button
+            type="primary"
+            block
+            className="sw-jr-auth-button"
+            loading={loading}
+            // disabled={!identifier || !password}
+            onClick={async () => {
+              try {
+                setLoading(true);
+                await onLogin({ identifier, password });
+                setShowLoginModal(false);
+                   setCurrentStep(3); 
+            
+              } catch {
+                message.error("Login failed. Please try again.");
+              } finally {
+                setLoading(false);
+              }
+            }}
+          >
+            Login & Continue
+          </Button>
+      
+          <p className="sw-jr-auth-note">
+            Don’t have an account?{" "}
+            <span
+        className="sw-jr-auth-register"
+        onClick={() => {
+      
+      
+          // save redirect
+          localStorage.setItem("postAuthRedirect", window.location.pathname);
+      
+          // close modal
+          setShowLoginModal(false);
+      
+          // go to landing page
+          navigate("/");
+      
+          // open register popup on landing
+          setTimeout(() => {
+            const win = window as any;
+            if (win.openAuthModal) {
+              win.openAuthModal("register");
+            } else {
+              console.warn("openAuthModal not found");
+            }
+          },0);
+        }}
+      >
+        Register
+      </span>
+          </p>
+        </div>
+      </Modal>
+      
+      {showTrackPage && (
+  <div className="sw-jr-pr-track-page">
+    <div className="sw-jr-pr-track-header">
+      <Button className="sw-jr-pr-track-back" onClick={() =>{ setShowTrackPage(false)
+            setIsModalVisible(true)}
+      }>← Back</Button>
+      <h2>Track My Order</h2>
+    </div>
+
+    <div className="sw-jr-pr-track-card">
+      <div className="sw-jr-pr-track-top">
+        <div className="sw-jr-pr-track-id">Tracking ID: <b>SP460821</b></div>
+        <div className="sw-jr-pr-track-bar">
+          <div className="sw-jr-pr-track-bar-fill" />
+        </div>
+      </div>
+
+      <div className="sw-jr-pr-track-body">
+        <div className="sw-jr-pr-track-timeline">
+          <div className="sw-jr-pr-track-step sw-jr-pr-done">📦 Order Confirmed</div>
+          <div className="sw-jr-pr-track-step sw-jr-pr-done">🛵 Rider Assigned</div>
+          <div className="sw-jr-pr-track-step sw-jr-pr-active">🚚 On the Way</div>
+          <div className="sw-jr-pr-track-step">📍 Out for Delivery</div>
+          <div className="sw-jr-pr-track-step">✅ Delivered</div>
+        </div>
+
+        <div className="sw-jr-pr-track-side">
+          <div className="sw-jr-pr-track-rider">
+            <img src="https://i.pravatar.cc/100?img=12" alt="rider" />
+            <div>
+              <b>Ramesh Kumar</b>
+              <p>Delivery Partner</p>
+              <span>📞 +91 9876543210</span>
+            </div>
+          </div>
+
+          <div className="sw-jr-pr-track-eta">
+            ⏱ ETA: <b>15–20 mins</b>
+          </div>
+
+          <div className="sw-jr-pr-track-map">
+
+            <MapContainer
+  center={pickup}
+  zoom={14}
+  style={{ height: "240px", borderRadius: "16px" }}
+>
+  <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+
+  {/* Rider */}
+  <Marker position={riderPosition} icon={riderIcon} />
+
+  {/* Destination */}
+  <Marker
+  position={drop}
+  icon={L.divIcon({
+    className: "",
+    html: `<div style="
+      background:#22c55e;
+      width:20px;
+      height:20px;
+      border-radius:50%;
+      border:3px solid white;
+      box-shadow:0 0 12px rgba(34,197,94,0.7);
+    "></div>`,
+    iconSize: [20, 20],
+  })}
+/>
+
+
+
+  {/* Route Line */}
+  {routeCoords.length > 0 && (
+  <>
+    {/* Shadow Line */}
+    <Polyline
+  positions={routeCoords}
+  pathOptions={{
+    color: "#22c55e",
+    weight: 6,
+    opacity: 0.9,
+    lineCap: "round",
+    lineJoin: "round",
+    dashArray: "8 8", 
+  }}
+/>
+
+   
+
+    {/* Main Route */}
+    <Polyline
+  positions={routeCoords}
+  pathOptions={{
+    color: "#000",
+    weight: 10,
+    opacity: 0.08,
+  }}
+/>
+
+   
+  </>
+)}
+
+<AutoFollow position={riderPosition} />
+
+  
+</MapContainer>
+
+         
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
+                
+
+
+
+           
+
+
     </div >
   );
 };
 
 export default SwiftParcel;
+
+function AutoFollow({ position }: { position: [number, number] }) {
+  const map = useMap();
+
+  useEffect(() => {
+    map.setView(position, map.getZoom(), {
+      animate: true,
+    }); 
+   }, [position]);
+
+  return null;
+}
+
+
+
