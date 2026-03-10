@@ -10,8 +10,13 @@ import {
 } from '@ant-design/icons';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { customerLogin, PaymentsAPI } from '../../../api/customerAuth';
-
+import { MapContainer, TileLayer, Marker, Polyline } from "react-leaflet";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
+import { useEffect } from "react";
 import "./JustRide.css";
+import { useMap } from "react-leaflet";
+
 
 
 
@@ -35,6 +40,80 @@ const SwiftParcel: React.FC = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const [showTrackPage, setShowTrackPage] = useState(false);
+  // Fake route (Gurgaon demo)
+const pickup: [number, number] = [28.4595, 77.0266];
+const drop: [number, number] = [28.4708, 77.0400];
+
+const [riderPosition, setRiderPosition] = useState<[number, number]>(pickup);
+const [routeCoords, setRouteCoords] = useState<[number, number][]>([]);
+
+
+const riderIcon = L.divIcon({
+  className: "",
+  html: `<div id="rider-icon">🏍️</div>`,
+  iconSize: [40, 40],
+  iconAnchor: [20, 20],
+});
+
+
+
+useEffect(() => {
+  if (!showTrackPage) return;
+
+  const fetchRoute = async () => {
+    const response = await fetch(
+      `https://router.project-osrm.org/route/v1/driving/${pickup[1]},${pickup[0]};${drop[1]},${drop[0]}?overview=full&geometries=geojson`
+    );
+
+    const data = await response.json();
+    const coords = data.routes[0].geometry.coordinates.map(
+      (c: [number, number]) => [c[1], c[0]]
+    );
+
+    setRouteCoords(coords);
+  };
+
+  fetchRoute();
+}, [showTrackPage]);
+
+
+useEffect(() => {
+  if (!routeCoords.length) return;
+
+  let index = 0;
+
+const interval = setInterval(() => {
+  const current = routeCoords[index];
+  const next = routeCoords[index + 1];
+
+  setRiderPosition(current);
+
+  if (next) {
+    const angle =
+      (Math.atan2(next[1] - current[1], next[0] - current[0]) *
+        180) /
+      Math.PI;
+
+    const el = document.getElementById("rider-icon");
+    if (el) {
+      el.style.transform = `rotate(${angle}deg)`;
+    }
+  }
+
+  index += 2; // 👈 skip some points for smoothness
+
+  if (index >= routeCoords.length - 1) {
+    clearInterval(interval);
+  }
+}, 60);
+
+
+
+
+  return () => clearInterval(interval);
+}, [routeCoords]);
+
 const isLoggedIn = !!localStorage.getItem("accessToken");
 
 const onLogin = async (values: any) => {
@@ -42,6 +121,7 @@ const onLogin = async (values: any) => {
     email_or_phone: values.identifier,
     password: values.password,
   });
+  
 
   localStorage.setItem("user_id", res.user_id);
   localStorage.setItem("accessToken", res.access_token);
@@ -221,7 +301,8 @@ const onLogin = async (values: any) => {
             <div className="sw-jr-pr-step-icon"><CreditCardOutlined /></div>
             <span>Payment</span>
           </div>
-        </div>
+        </div>   
+
 
         {/* STEP 1: DETAILS */}
         {currentStep === 1 && (
@@ -379,31 +460,31 @@ const onLogin = async (values: any) => {
       </div>
 
       {/* NEW INVOICE UI */}
-      <div className="invoice-box">
+      <div className="sw-jr-pr-invoice-box">
 
-    <div className="invoice-row">
+    <div className="sw-jr-pr-invoice-row">
         <span>Base Delivery Fee</span>
-        <span className="amount">₹45.00</span>
+        <span className="sw-jr-pr-amount">₹45.00</span>
     </div>
 
-    <div className="invoice-row">
+    <div className="sw-jr-pr-invoice-row">
         <div>
             <span>Distance Surcharge</span>
-            <p className="sub">12.4 KM @ ₹5/KM</p>
+            <p className="sw-jr-pr-sub">12.4 KM @ ₹5/KM</p>
         </div>
-        <span className="amount">₹62.00</span>
+        <span className="sw-jr-pr-amount">₹62.00</span>
     </div>
 
-    <div className="invoice-row">
+    <div className="sw-jr-pr-invoice-row">
         <span>Insurance Coverage</span>
-        <span className="free">FREE</span>
+        <span className="sw-jr-pr-free">FREE</span>
     </div>
 
-    <hr className="sep" />
+    <hr className="sw-jr-pr-sep" />
 
-    <div className="invoice-total">
+    <div className="sw-jr-pr-invoice-total">
         <span>Total Amount</span>
-        <span className="total-badge">₹107</span>
+        <span className="sw-jr-pr-total-badge">₹107</span>
     </div>
 
 </div>
@@ -438,7 +519,7 @@ const onLogin = async (values: any) => {
           centered
           destroyOnClose
           className="sw-jr-pr-success-modal"
-          width={340}
+          width={360}
         >
           <div className="sw-jr-pr-success-icon-wrapper">
             <CheckCircleFilled className="sw-jr-pr-main-check" />
@@ -446,7 +527,7 @@ const onLogin = async (values: any) => {
 
           <h2 className="sw-jr-pr-modal-title">Payment Successful!</h2>
           <p className="sw-jr-pr-modal-sub">
-            Your delivery has been booked for <br />
+            Your delivery has been booked for <br />     
             <span className="sw-jr-pr-purple-text">Express Delivery</span>
           </p>
 
@@ -456,6 +537,9 @@ const onLogin = async (values: any) => {
               <span className="sw-jr-pr-track-value">SP460821</span>
             </div>
             <div className="sw-jr-pr-track-item">
+
+
+                 
               <span className="sw-jr-pr-track-label"><CarOutlined /> ETA</span>
               <span className="sw-jr-pr-track-value">15-20 mins</span>
             </div>
@@ -475,8 +559,18 @@ const onLogin = async (values: any) => {
           >
             OKAY
           </Button>
+          <div
+  className="sw-jr-pr-track-order-link"
+  onClick={() => {
+    setIsModalVisible(false);
+    setShowTrackPage(true);
+  }}
+>
+  Track My Order
+</div>
 
-          <div className="sw-jr-pr-track-order-link">Track My Order</div>
+
+         
         </Modal>
       </div>
          <Modal
@@ -559,15 +653,149 @@ const onLogin = async (values: any) => {
       >
         Register
       </span>
-      
-      
-      
-         
           </p>
         </div>
       </Modal>
+      
+      {showTrackPage && (
+  <div className="sw-jr-pr-track-page">
+    <div className="sw-jr-pr-track-header">
+      <Button className="sw-jr-pr-track-back" onClick={() =>{ setShowTrackPage(false)
+            setIsModalVisible(true)}
+      }>← Back</Button>
+      <h2>Track My Order</h2>
+    </div>
+
+    <div className="sw-jr-pr-track-card">
+      <div className="sw-jr-pr-track-top">
+        <div className="sw-jr-pr-track-id">Tracking ID: <b>SP460821</b></div>
+        <div className="sw-jr-pr-track-bar">
+          <div className="sw-jr-pr-track-bar-fill" />
+        </div>
+      </div>
+
+      <div className="sw-jr-pr-track-body">
+        <div className="sw-jr-pr-track-timeline">
+          <div className="sw-jr-pr-track-step sw-jr-pr-done">📦 Order Confirmed</div>
+          <div className="sw-jr-pr-track-step sw-jr-pr-done">🛵 Rider Assigned</div>
+          <div className="sw-jr-pr-track-step sw-jr-pr-active">🚚 On the Way</div>
+          <div className="sw-jr-pr-track-step">📍 Out for Delivery</div>
+          <div className="sw-jr-pr-track-step">✅ Delivered</div>
+        </div>
+
+        <div className="sw-jr-pr-track-side">
+          <div className="sw-jr-pr-track-rider">
+            <img src="https://i.pravatar.cc/100?img=12" alt="rider" />
+            <div>
+              <b>Ramesh Kumar</b>
+              <p>Delivery Partner</p>
+              <span>📞 +91 9876543210</span>
+            </div>
+          </div>
+
+          <div className="sw-jr-pr-track-eta">
+            ⏱ ETA: <b>15–20 mins</b>
+          </div>
+
+          <div className="sw-jr-pr-track-map">
+
+            <MapContainer
+  center={pickup}
+  zoom={14}
+  style={{ height: "240px", borderRadius: "16px" }}
+>
+  <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+
+  {/* Rider */}
+  <Marker position={riderPosition} icon={riderIcon} />
+
+  {/* Destination */}
+  <Marker
+  position={drop}
+  icon={L.divIcon({
+    className: "",
+    html: `<div style="
+      background:#22c55e;
+      width:20px;
+      height:20px;
+      border-radius:50%;
+      border:3px solid white;
+      box-shadow:0 0 12px rgba(34,197,94,0.7);
+    "></div>`,
+    iconSize: [20, 20],
+  })}
+/>
+
+
+
+  {/* Route Line */}
+  {routeCoords.length > 0 && (
+  <>
+    {/* Shadow Line */}
+    <Polyline
+  positions={routeCoords}
+  pathOptions={{
+    color: "#22c55e",
+    weight: 6,
+    opacity: 0.9,
+    lineCap: "round",
+    lineJoin: "round",
+    dashArray: "8 8", 
+  }}
+/>
+
+   
+
+    {/* Main Route */}
+    <Polyline
+  positions={routeCoords}
+  pathOptions={{
+    color: "#000",
+    weight: 10,
+    opacity: 0.08,
+  }}
+/>
+
+   
+  </>
+)}
+
+<AutoFollow position={riderPosition} />
+
+  
+</MapContainer>
+
+         
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
+                
+
+
+
+           
+
+
     </div >
   );
 };
 
 export default SwiftParcel;
+
+function AutoFollow({ position }: { position: [number, number] }) {
+  const map = useMap();
+
+  useEffect(() => {
+    map.setView(position, map.getZoom(), {
+      animate: true,
+    }); 
+   }, [position]);
+
+  return null;
+}
+
+
+

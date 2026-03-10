@@ -633,6 +633,7 @@
   background: #fff;
   border-radius: 20px;
   padding: 24px;
+  
 
   display: flex;
   flex-direction: column;
@@ -806,6 +807,29 @@
     padding: 14px;
     font-size: 15px;
   }
+}
+
+@media (max-width: 768px){
+.sw-jr-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sw-jr-popup-box {
+  width: calc(100% - 28px);   /* creates side spacing */
+  max-width: 410px;           /* prevents it from getting too wide */
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 20px;
+  padding: 16px;
+}
 }
 
 .sw-jr-book-card {
@@ -1044,3 +1068,44 @@
   }
 }
 
+
+.sw-jr-popup-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 10px;
+
+}
+
+/* Metro Line Colors */
+.sw-jr-popup-dot.red {
+  background-color: #e53935;
+}
+
+.sw-jr-popup-dot.blue {
+  background-color: #1e88e5;
+}
+
+.sw-jr-popup-dot.green {
+  background-color: #43a047;
+}
+
+.sw-jr-popup-dot.interchange {
+  background-color: #fbc02d;
+}
+
+.sw-jr-popup-station {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+  gap: 10px;
+}
+
+.sw-jr-popup-station:hover {
+  background: #f5f5f5;
+}
+
+.sw-jr-popup-close{
+  cursor: default;
+}
