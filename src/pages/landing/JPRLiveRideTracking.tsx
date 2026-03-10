@@ -8,7 +8,7 @@ interface Props {
   ride: ActiveRide;
   onComplete: () => void;
   onCancel: () => void;
-}
+}             
 
 const LiveRideTrackingWeb: React.FC<Props> = ({ ride, onComplete, onCancel }) => {
   const [stage, setStage] = useState<'pickup' | 'trip' | 'dropoff'>('pickup');
@@ -66,7 +66,9 @@ const LiveRideTrackingWeb: React.FC<Props> = ({ ride, onComplete, onCancel }) =>
         </div>
         <div className="ride-info-right">
           <div className="ride-fare">₹{ride.fare}</div>
-          <div className="ride-payment">{ride.paymentMethod}</div>
+          <div className="ride-payment">
+  {ride.paymentMethod === "cash" ? "💵 Cash" : "📱 UPI"}
+</div>
         </div>
       </div>
 
@@ -133,7 +135,7 @@ const LiveRideTrackingWeb: React.FC<Props> = ({ ride, onComplete, onCancel }) =>
           </div>
           <div className="customer-actions">
   <button className="action-btn call-btn">
-    <FaPhone />
+    <FaPhone /> 
   </button>
 
   <button className="action-btn msg-btn">
