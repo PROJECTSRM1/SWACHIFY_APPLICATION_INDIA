@@ -23,11 +23,8 @@ import {
   ThunderboltOutlined,
   EnvironmentOutlined,
 } from "@ant-design/icons";
-
-  
 import CommonHeader from "./Header";
 import { useNavigate } from "react-router-dom";
-
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
@@ -136,14 +133,6 @@ const handleAddNewRider = () => {
     setNewRiderForm({ firstName: '', lastName: '', phone: '' }); // Reset form
   }
 };
-
-
-
-
-
-
-
-
   const handleUseMyLocation = () => {
     if (!navigator.geolocation) return;
     navigator.geolocation.getCurrentPosition(async (pos) => {
@@ -157,37 +146,6 @@ const handleAddNewRider = () => {
       setPickupSuggestions([]);
     });
   };
-
-
-//   const fetchPickupSuggestions = async (query: string) => {
-//   if (!query) {
-//     setPickupSuggestions([]);
-//     return;
-//   }
-//   const res = await fetch(
-//     `https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&q=${encodeURIComponent(
-//       query
-//     )}&limit=10&countrycodes=IN`
-//   );
-//   const data = await res.json();
-//   setPickupSuggestions(data);
-// };
-
-// const fetchDestinationSuggestions = async (query: string) => {
-//   if (!query) {
-//     setDestinationSuggestions([]);
-//     return;
-//   }
-//   const res = await fetch(
-//     `https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&q=${encodeURIComponent(
-//       query
-//     )}&limit=10&countrycodes=IN`
-//   );
-//   const data = await res.json();
-//   setDestinationSuggestions(data);
-// };
-
-
 
 // PICKUP
 useEffect(() => {
@@ -215,17 +173,6 @@ useEffect(() => {
   };
 }, [pickupText, justSelectedPickup]);
 
-
-
-
-
-
-
-
-
-
-
-
 // DESTINATION
 useEffect(() => {
   if (!destinationText || justSelectedDestination) return;
@@ -252,9 +199,6 @@ useEffect(() => {
   };
 }, [destinationText, justSelectedDestination]);
 
-
-
-
 const rideTypes = [
   { type: "Bike", icon: bike },
   { type: "Scooty", icon: scooty },
@@ -263,15 +207,45 @@ const rideTypes = [
   { type: "Car", icon: car },
 ];
 
-const generateNearbyRides = (pickup: any, count = 6) => {
-  if (!pickup) return [];
+
+const calculateDistanceKm = (pickup: any, destination: any) => {
+  if (!pickup || !destination) return 0;
+
+  const p1 = L.latLng(pickup.lat, pickup.lng);
+  const p2 = L.latLng(destination.lat, destination.lng);
+
+  const distanceMeters = p1.distanceTo(p2);
+  const distanceKm = distanceMeters / 1000;
+
+  return distanceKm;
+};
+
+const priceConfig: any = {
+  Bike: { base: 20, perKm: 6 },
+  Scooty: { base: 25, perKm: 7 },
+  Auto: { base: 35, perKm: 10 },
+  "Cab Non-AC": { base: 50, perKm: 13 },
+  Car: { base: 60, perKm: 15 },
+};
+
+const generateNearbyRides = (pickup: any, destination: any, count = 6) => {
+  if (!pickup || !destination) return [];
+
+  const distanceKm = calculateDistanceKm(pickup, destination);
 
   const rides = [];
+
   for (let i = 0; i < count; i++) {
     const latOffset = (Math.random() - 0.5) / 500;
     const lngOffset = (Math.random() - 0.5) / 500;
 
-    const randomRide = rideTypes[Math.floor(Math.random() * rideTypes.length)];
+    const randomRide =
+      rideTypes[Math.floor(Math.random() * rideTypes.length)];
+
+    const config = priceConfig[randomRide.type];
+
+    const estimatedPrice =
+      config.base + distanceKm * config.perKm + Math.random() * 10;
 
     rides.push({
       id: i,
@@ -279,30 +253,22 @@ const generateNearbyRides = (pickup: any, count = 6) => {
       icon: randomRide.icon,
       lat: pickup.lat + latOffset,
       lng: pickup.lng + lngOffset,
-      price: (Math.random() * 60 + 30).toFixed(0),
+      price: Math.round(estimatedPrice),
+      distance: distanceKm.toFixed(1),
     });
   }
 
   return rides;
 };
 
-
 useEffect(() => {
   if (pickup && destination) {
-    const rides = generateNearbyRides(pickup, 6);
+   const rides = generateNearbyRides(pickup, destination, 6);
     setAvailableRides(rides);
   } else {
     setAvailableRides([]);
   }
 }, [pickup, destination]);
-
-
-
-
-
-
-
-
 
   return (
     <div className="sw-jr-container full-width" >
@@ -315,16 +281,12 @@ useEffect(() => {
         <Sider width={420} className="sw-jr-left-panel">
            <div className="sw-jr-header-section">
       <div className="sw-jr-back-container">
-        <button className="sw-jr-back-btn" onClick={() => navigate(-1)}>
+        <button className="sw-jr-back-btn" onClick={() => navigate("/landing")}>
           <span className="arrow">←</span> Back
         </button>
       </div>
       <h1 className="sw-jr-title">Just Ride</h1>
     </div>
-
-
-
-
           <div className="sw-jr-modes">
   <div
     className={`sw-jr-mode-pill ${location.pathname === "/bookride" ? "sw-jr-mode-active" : ""}`}
@@ -356,10 +318,12 @@ useEffect(() => {
 </div>
 
 
+<div className="sw-jr-location-card-wrapper">
+<div className="sw-jr-location-card">
 
 
 
-          {/* Pickup Input */}
+            {/* Pickup Input */}
 
           <div className="sw-jr-location-block" style={{ position: "relative", marginBottom: 12 }}>
   <label className="sw-jr-label">Pickup location</label>
@@ -417,8 +381,6 @@ useEffect(() => {
   )}
 </div>
 
-
-
 {/* Dropoff Input */}
 
 <div className="sw-jr-location-block" style={{ position: "relative" }}>
@@ -448,8 +410,6 @@ useEffect(() => {
 }}
   prefix={<SearchOutlined />}
 />
-
-
 
 {destinationSuggestions.length > 0 && (
   <div className="sw-jr-suggestions-list">
@@ -481,12 +441,9 @@ useEffect(() => {
   </div>
 )}
 
-
-
-  
 </div>
-
-
+</div>
+</div>
 
 {/* THE "FOR ME" TRIGGER PILL */}
 <div style={{ marginTop: '16px', marginBottom: '16px' }}>
@@ -512,9 +469,6 @@ useEffect(() => {
   </div>
 </div>
 
-
-
-
 {!pickup && !destination && (
   <div className="sw-jr-pre-booking">
 
@@ -535,22 +489,14 @@ useEffect(() => {
 ))}
     </div>
 
-  
-
-
-
-
 <div className="sw-jr-tip-box-main">
      <div className="sw-jr-tip-box">
       💡 Tip: Use the GPS icon to auto-set your pickup location.
     </div>
 </div>
  
-
   </div>
 )}
-
-
 
 {/* Available Rides Section */}
 {pickup && destination && availableRides.length > 0 && (
@@ -578,7 +524,6 @@ useEffect(() => {
   </div>
 )}
 
-
 {recentPlaces.length > 0 && (
   <div className="sw-jr-recent">
     <h4 className="sw-jr-recent-title">Recent destinations</h4>
@@ -597,16 +542,6 @@ useEffect(() => {
     ))}
   </div>
 )}
-
-
-
-
-
-
-
-
-
-
 
         </Sider>
 
@@ -651,13 +586,14 @@ useEffect(() => {
       </Button>
     </div>
   ]}
-  width={500} // Matches the wider look in image_3e8e75.png
+  width={500}
+ // Matches the wider look in image_3e8e75.png
   centered
   className="sw-jr-rider-selector-modal"
-  closeIcon={<span style={{ fontSize: '20px', color: '#000' }}>✕</span>}
+  closeIcon={<span style={{ fontSize: '20px', color: '#7aa62f' }}>✕</span>}
 >
   <div style={{ padding: '24px 0 0 0' }}>
-    <h2 style={{ fontSize: '22px', fontWeight: 'bold', padding: '0 24px', marginBottom: '20px' }}>
+    <h2>
       Choose a rider
     </h2>
 
@@ -697,7 +633,7 @@ useEffect(() => {
       >
         <div className="sw-jr-rider-avatar-container">
           <div className="sw-jr-add-rider-icon-bg">
-            <UserAddOutlined style={{ fontSize: '20px' }} />
+            <UserAddOutlined style={{ fontSize: '20px', color:"#7aa62f" }} />
           </div>
         </div>
         <div className="sw-jr-rider-details">
@@ -710,35 +646,36 @@ useEffect(() => {
 
 {/* MODAL 2: NEW RIDER FORM */}
 <Modal
-  title={<div style={{ fontSize: '22px', fontWeight: 'bold'}}>New rider</div>}
+  title={<div style={{ fontSize: '22px', fontWeight: 'bold', color: '#7aa62f'}}>New rider</div>}
   open={isNewRiderModalVisible}
   onCancel={() => {
     setIsNewRiderModalVisible(false); // Close New Rider
     setIsRiderModalVisible(true);     // Open Choose Rider
   }}
   footer={null}
-  width={550} // Increased width to match reference
+ width={550}// Increased width to match reference
+
   centered
   className="sw-jr-details-modal"
 >
   <div style={{ padding: '0 4px' }}>
-    <p style={{ color: '#000', fontSize: '18px', marginBottom: '20px' }}>
+    <p className="sw-jr-name-driver">
       Drivers will see this name.
     </p>
     
     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
       <div>
-        <label style={{ fontWeight: 500, display: 'block', marginBottom: '8px' }}>First name</label>
+        <label  className = "sw-jr-others-label" >First name</label>
         <Input 
           placeholder="First name" 
-          className="premium-input"
+          className="sw-jr-premium-input"
           value={newRiderForm.firstName}
           onChange={e => setNewRiderForm({...newRiderForm, firstName: e.target.value})} 
         />
       </div>
 
       <div>
-        <label style={{ fontWeight: 500, display: 'block', marginBottom: '8px' }}>Last name</label>
+        <label className = "sw-jr-others-label" >Last name</label>
         <Input 
           placeholder="Last name" 
           className="sw-jr-premium-input"
@@ -748,12 +685,12 @@ useEffect(() => {
       </div>
 
       <div>
-        <label style={{ fontWeight: 500, display: 'block', marginBottom: '8px' }}>Phone number</label>
+        <label className="sw-jr-others-phone-no" >Phone number</label>
         <div style={{ display: 'flex', gap: '10px' }}>
           {/* Country Selector - matches image_3e257b.png */}
           <Select
             defaultValue="IN"
-            style={{ width: 100, height: '48px' }}
+           
             className="sw-jrpremium-select"
             suffixIcon={<DownOutlined />}
           >
@@ -771,7 +708,7 @@ useEffect(() => {
       </div>
       
       {/* THE ADDITIONAL TEXT (Legal/Disclaimer) */}
-      <div style={{ color: '#666', fontSize: '14px', lineHeight: '1.5', marginTop: '10px' }}>
+      <div className="sw-jr-others-disclaimer" >
         <p>JustRide won't share this phone number with drivers.</p>
         <p style={{ marginTop: '15px' }}>
           By tapping "Add rider", you confirm that your friend agreed to share 
@@ -796,9 +733,6 @@ useEffect(() => {
     </div>
   </div>
 </Modal>
-
-
-
     </div>
   );
 };

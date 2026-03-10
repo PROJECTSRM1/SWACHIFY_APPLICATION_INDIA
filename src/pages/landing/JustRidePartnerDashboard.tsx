@@ -15,6 +15,7 @@ import LiveRideTracking from './JPRLiveRideTracking';
 import { SERVICE_CONFIG } from './JRPData'; 
 import type { Ride } from './JRPtypes';
 import { FaBolt, FaCog, FaCompass, FaDollarSign, FaExclamationCircle, FaGift, FaStar } from 'react-icons/fa';
+import { MdLocationOn } from 'react-icons/md';
 
 
 
@@ -68,6 +69,7 @@ const DriverDashboard: React.FC<Props> = ({ MOCK_NOTIFICATIONS }) => {
     pickup: 'Koramangala',
     dropoff: 'MG Road',
     fare: Math.floor(Math.random()*500)+50,
+    paymentMethod: Math.random() > 0.5 ? 'cash' : 'upi',
     status: 'in_progress',
     distance: `${(Math.random()*10+1).toFixed(1)} km`,
     duration: `${Math.floor(Math.random()*30+5)} min`,
@@ -211,7 +213,8 @@ useEffect(() => {
   );
 
   return (
-    <div className="dashboard-wrapper-full">
+        <div className="jr-partner-dashboard-page">
+             <div className="dashboard-wrapper-full">
       {/* Topbar */}
       <header className="dashboard-topbar">
         <div className="topbar-left">
@@ -243,6 +246,15 @@ useEffect(() => {
           'You are Offline'}
         </span>
       </div>
+
+           <div className="current-location-bar">
+  <MdLocationOn className="location-icon" />
+
+  <span className="location-label">Current Location</span>
+  <span className="location-separator">:</span>
+
+  <span className="location-city">Koramangala, Bengaluru</span>
+</div>
 
 
  
@@ -289,10 +301,19 @@ useEffect(() => {
 
     <div className="history-list">
       {filteredRides.length === 0 ? (
-        <div className="empty-state">
-          <div className="empty-state-text">No rides found</div>
-          <div className="empty-state-subtext">Try adjusting your filters</div>
-        </div>
+       <div className="empty-state-card">
+  <div className="empty-icon">
+    <svg viewBox="0 0 512 512" width="40" height="40">
+      <path
+        fill="currentColor"
+        d="M509.5 184.6L458.9 32.8C452.4 13.2 434.1 0 413.4 0H272v192h238.7c-.4-2.5-.4-5-1.2-7.4zM240 0H98.6c-20.7 0-39 13.2-45.5 32.8L2.5 184.6c-.8 2.4-.8 4.9-1.2 7.4H240V0zM0 224v240c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V224H0z"
+      />
+    </svg>
+  </div>
+
+  <div className="empty-title">No rides found</div>
+  <div className="empty-subtitle">Try adjusting your filters</div>
+</div>
       ) : (
         filteredRides.map((ride: Ride) => {
           const config = SERVICE_CONFIG[ride.serviceType];
@@ -609,6 +630,8 @@ useEffect(() => {
         notificationCount={unreadCount}
       />
     </div>
+        </div>
+ 
   );
 };
 
