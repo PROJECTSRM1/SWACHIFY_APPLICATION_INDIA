@@ -716,9 +716,8 @@ if (redirectPath) {
             }
 
             if (value === "partner") {
-              setPartnerActiveTab("register");
-              setPartnerModalVisible(true);
-            }
+  navigate("/partner-auth");
+}
             if (value === "admin") {
               setRoleType("admin");          // 🔥 important
               setVendorActiveTab("admin_register");
