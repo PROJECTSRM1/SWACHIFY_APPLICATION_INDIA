@@ -1,0 +1,74 @@
+.products-dashboard-wrapper {
+  width: 100%;
+  padding: 20px;
+}
+
+/* CARDS */
+
+.products-card {
+  border-radius: 18px;
+  transition: 0.3s ease;
+  color: white;
+}
+
+.products-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Color Styles */
+
+.product-card {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+.revenue-card {
+  background: linear-gradient(135deg, #43e97b, #38f9d7);
+}
+
+.category-card {
+  background: linear-gradient(135deg, #ff9966, #ff5e62);
+}
+
+.orders-card {
+  background: linear-gradient(135deg, #36d1dc, #5b86e5);
+}
+
+/* TABLE CARD */
+
+.products-main-card {
+  border-radius: 18px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* TITLE */
+
+.section-title {
+  margin-bottom: 18px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* TABLE ALIGNMENT */
+
+.products-main-card .ant-table-thead > tr > th {
+  text-align: left !important;
+  padding: 14px 18px !important;
+}
+
+.products-main-card .ant-table-tbody > tr > td {
+  text-align: left !important;
+  padding: 16px 18px !important;
+}
+
+.products-main-card .ant-table-tbody > tr:hover {
+  background: #f9fbff !important;
+}
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+  .products-dashboard-wrapper {
+    padding: 12px;
+  }
+}
