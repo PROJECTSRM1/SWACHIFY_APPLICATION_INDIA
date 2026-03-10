@@ -35,7 +35,7 @@ import {
 
 
 import { customerRegister, customerLogin } from "../../api/customerAuth";
-
+import PartnerAuth from "../landing/PartnerAuth";
 import "./Header.css";
 
 // ================= INPUT SANITIZERS =================
@@ -102,6 +102,7 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
 
   const [isHealthCareSelected] = useState(false);
   const [doctorRoleSelected, setDoctorRoleSelected] = useState(false);
+ const [partnerAuthVisible, setPartnerAuthVisible] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(
   !!localStorage.getItem("accessToken")
 );
@@ -715,8 +716,8 @@ if (redirectPath) {
               openAuthModal("register");
             }
 
-            if (value === "partner") {
-  navigate("/partner-auth");
+           if (value === "partner") {
+  setPartnerAuthVisible(true);
 }
             if (value === "admin") {
               setRoleType("admin");          // 🔥 important
@@ -2182,7 +2183,16 @@ if (redirectPath) {
         </Tabs>
       </Modal>
 
-
+<Modal
+  open={partnerAuthVisible}
+  onCancel={() => setPartnerAuthVisible(false)}
+  footer={null}
+  centered
+  width={500}
+  destroyOnClose
+>
+  <PartnerAuth />
+</Modal>
 
     </>
   );
