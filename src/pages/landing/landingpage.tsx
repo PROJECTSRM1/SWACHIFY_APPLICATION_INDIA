@@ -16,6 +16,7 @@ import {
   ShoppingCartOutlined,
   UserOutlined,
   CoffeeOutlined,
+  TeamOutlined
 } from "@ant-design/icons";
 
 /* IMAGES */
@@ -84,7 +85,14 @@ const services = [
     icon: <CoffeeOutlined />,
     route: "/MyFood",
     image: img8,
-    gradient: "linear-gradient(135deg,#64748b,#94a3b8)",
+    gradient: "linear-gradient(135deg,#ff6b35,#ff9f1c)",
+  },
+   {
+    title: "Freelancers",
+    icon: <TeamOutlined />,
+    route: "/Freelancers",
+    image: img1,
+   gradient: "linear-gradient(135deg,#ec4899,#f43f5e)",
   },
 ];
 
