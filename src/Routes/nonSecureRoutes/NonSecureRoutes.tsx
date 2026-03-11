@@ -48,6 +48,7 @@ import Support from "../../pages/CleaningService/Support";
 import MyFood from "../../pages/dashboard/MyFood/MyFood";
 import RestaurantView from "../../pages/dashboard/MyFood/RestaurantView";
 import FoodDetails from "../../pages/dashboard/MyFood/FoodDetails";
+import Freelancer from "../../pages/landing/Freelancer";
 
 export const NonSecureRoutes = () => {
   //const navigate = useNavigate();
@@ -138,6 +139,7 @@ export const NonSecureRoutes = () => {
       <Route path="/MyFood" element={<MyFood />} />
       <Route path="/restaurant/:id" element={<RestaurantView />} />
       <Route path="/food-details" element={<FoodDetails />} />
+      <Route path="/Freelancers" element={<Freelancer />} />
 
       {/* rentals landing page */}
       <Route path="/rentals" element={<Landingrentals />} />
