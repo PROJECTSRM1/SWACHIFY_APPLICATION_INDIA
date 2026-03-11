@@ -1,6 +1,6 @@
 import { useState } from "react";
 import CommonHeader from "../../landing/Header";
-import FooterSection from "../../landing/FooterSection";
+// import FooterSection from "../../landing/FooterSection";
 import "./MyFood.css";
 import { useNavigate } from "react-router-dom";
 
@@ -145,12 +145,15 @@ const MyFood = () => {
       {/* RESTAURANTS */}
 
       <section className="food-section">
-        <h2>Popular Restaurants</h2>
+        <h2>Open Restaurants</h2>
 
         <div className="restaurant-grid">
           {restaurants.map((r, i) => (
-            <div key={i} className="restaurant-card">
-              {/* <img src={r.img} /> */}
+            <div
+              key={i}
+              className="restaurant-card"
+              onClick={() => navigate(`/restaurant/${i}`)}
+            >
               <img src={r.img} alt={r.name} />
 
               <div className="restaurant-info">
@@ -172,16 +175,7 @@ const MyFood = () => {
         </div>
       </section>
 
-      {/* FLOATING CART */}
-
-      {/* {cart > 0 && (
-        <div className="floating-cart">
-          <ShoppingCartOutlined />
-          <span>{cart}</span>
-        </div>
-      )} */}
-
-      <FooterSection selectedKey="myfood" />
+      {/* <FooterSection selectedKey="myfood" /> */}
     </div>
   );
 };

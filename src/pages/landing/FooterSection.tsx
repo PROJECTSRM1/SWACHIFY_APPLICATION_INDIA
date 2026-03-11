@@ -96,6 +96,11 @@ const FooterSection: React.FC<FooterSectionProps> = ({ selectedKey }) => {
                 Admin
               </Link>
             </li>
+            <li>
+              <Link to="/MyFood" onClick={() => window.scrollTo(0, 0)}>
+                MyFood
+              </Link>
+            </li>
 
             {/* <li>
               <a
