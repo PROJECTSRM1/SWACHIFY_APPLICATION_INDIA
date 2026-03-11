@@ -46,6 +46,8 @@ import Profile from "../../pages/landing/Profile";
 import Blog from "../../pages/CleaningService/Blog";
 import Support from "../../pages/CleaningService/Support";
 import MyFood from "../../pages/dashboard/MyFood/MyFood";
+import RestaurantView from "../../pages/dashboard/MyFood/RestaurantView";
+import FoodDetails from "../../pages/dashboard/MyFood/FoodDetails";
 import Freelancer from "../../pages/landing/Freelancer";
 
 export const NonSecureRoutes = () => {
@@ -135,6 +137,8 @@ export const NonSecureRoutes = () => {
       <Route path="/buysaleproducts" element={<BuysaleProducts />} />
       <Route path="/rawmaterials" element={<Rawmaterials />} />
       <Route path="/MyFood" element={<MyFood />} />
+      <Route path="/restaurant/:id" element={<RestaurantView />} />
+      <Route path="/food-details" element={<FoodDetails />} />
       <Route path="/Freelancers" element={<Freelancer />} />
 
       {/* rentals landing page */}
