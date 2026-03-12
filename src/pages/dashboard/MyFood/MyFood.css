@@ -104,6 +104,7 @@
 .search-bar:focus-within {
   border-color: #ff6b35;
   box-shadow: 0 0 0 2px rgba(255, 107, 53, 0.15);
+  transform: translateY(-2px);
 }
 
 /* search-dropdown*/
@@ -125,7 +126,10 @@
   z-index: 100;
 
   text-align: left;
-  margin-top: 16px;
+  margin-top: 36px;
+
+  max-height: 420px; /*These two line makes Restaurants Scroll in Dropdown*/
+  overflow-y: auto;
 }
 
 /*Dropdown Headings*/
@@ -138,6 +142,23 @@
   margin-top: 12px;
 
   color: #374151;
+}
+
+/*Small Improvement for Dropdown */
+
+.search-dropdown {
+  animation: dropdownFade 0.2s ease;
+}
+
+@keyframes dropdownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /*Recent Keywords Chips*/
@@ -159,12 +180,16 @@
 
   cursor: pointer;
 
-  transition: 0.2s;
+  transition: all 0.2s ease;
 }
 
 .keyword:hover {
   background: #ff6b35;
   color: white;
+  transform: translateY(-2px);
+}
+.keyword:active {
+  transform: scale(0.95);
 }
 
 /*Restaurant Result Row*/
@@ -180,12 +205,13 @@
 
   border-bottom: 1px solid #f1f5f9;
 
-  transition: 0.2s;
+  transition: all 0.2s ease;
 }
 /*Hover Effect*/
 
 .search-restaurant:hover {
   background: #f9fafb;
+  transform: translateX(4px);
 }
 
 /*Restaurant Image*/
@@ -276,7 +302,7 @@
 /* SECTION */
 
 .food-section {
-  padding: 50px 10%;
+  padding: 50px 1%;
 }
 
 .food-section h2 {
@@ -342,14 +368,16 @@
   overflow: hidden;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
   transition: 0.3s;
+  transition: all 0.25s ease;
 }
 
 .restaurant-card:hover {
-  transform: translateY(-6px);
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
 }
 
 .restaurant-card img {
-  width: 100%;
+  width: 98%;
   height: 200px;
   object-fit: cover;
 }
