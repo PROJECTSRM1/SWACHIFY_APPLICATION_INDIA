@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import "./BuysaleProducts.css";
-import RentFilterPanel from "./RentFilterPanel";
+import RentFilterPanel, { type FilterState } from "./RentFilterPanel";
 import RentDetailPage from "./RentDetailPage";
 
 type Property = {
@@ -150,6 +150,8 @@ const [showPopularAll,setShowPopularAll] = useState(false)
 const [showLocationAll,setShowLocationAll] = useState(false)
 
 const [selectedLocation,setSelectedLocation] = useState<string | null>(null)
+const [searchTerm, setSearchTerm] = useState("");
+const [activeFilters, setActiveFilters] = useState<FilterState | null>(null);
 
 const toggleFavorite = (id:string)=>{
 if(favorites.includes(id)){
@@ -159,9 +161,46 @@ setFavorites([...favorites,id])
 }
 }
 
-const filteredProperties = selectedLocation
-? PROPERTIES.filter(p=>p.location === selectedLocation)
-: PROPERTIES
+const filteredProperties = useMemo(() => {
+  return PROPERTIES.filter((p) => {
+    // 1. Location filter
+    if (selectedLocation && p.location !== selectedLocation) {
+        return false;
+    }
+
+    // 2. Search term
+    if (searchTerm) {
+      const lowerSearch = searchTerm.toLowerCase();
+      if (!p.name.toLowerCase().includes(lowerSearch) && !p.location.toLowerCase().includes(lowerSearch)) {
+        return false;
+      }
+    }
+
+    // 3. Panel Filters
+    if (activeFilters) {
+      if (activeFilters.lookingFor !== "Both" && p.status !== activeFilters.lookingFor) {
+          return false;
+      }
+      
+      const priceNumeric = parseInt(p.price.replace(/[^0-9]/g, ""));
+      if (priceNumeric < activeFilters.priceMin) return false;
+      if (activeFilters.priceMax > 0 && priceNumeric > activeFilters.priceMax) return false;
+
+      // Type filtering
+      if (activeFilters.propertyTypes.length > 0) {
+         let matchType = false;
+         for (const t of activeFilters.propertyTypes) {
+             if (p.name.toLowerCase().includes(t.toLowerCase()) || p.description.toLowerCase().includes(t.toLowerCase())) {
+                 matchType = true;
+             }
+         }
+         if (!matchType) return false;
+      }
+    }
+
+    return true;
+  });
+}, [selectedLocation, searchTerm, activeFilters]);
 
 return(
 
@@ -173,7 +212,9 @@ return(
 
 <input
 className="buysale-search-input"
-placeholder="Search Property"
+placeholder="Search Property or Location"
+value={searchTerm}
+onChange={(e) => setSearchTerm(e.target.value)}
 />
 
 <button
@@ -356,8 +397,8 @@ onClick={()=>setShowLocationAll(!showLocationAll)}
 
 <div
 key={loc.id}
-className="buysale-location-chip"
-onClick={()=>setSelectedLocation(loc.name)}
+className={`buysale-location-chip ${selectedLocation === loc.name ? "active" : ""}`}
+onClick={()=>setSelectedLocation(selectedLocation === loc.name ? null : loc.name)}
 >
 
 <img src={loc.image} className="buysale-location-img"/>
@@ -447,7 +488,13 @@ toggleFavorite(item.id)
 
 <RentFilterPanel
 onClose={()=>setShowFilter(false)}
-onApply={(filters)=>console.log(filters)}
+onApply={(filters) => setActiveFilters(filters)}
+onReset={() => {
+  setActiveFilters(null);
+  setSelectedLocation(null);
+  setSearchTerm("");
+  setShowFilter(false);
+}}
 />
 
 )}
