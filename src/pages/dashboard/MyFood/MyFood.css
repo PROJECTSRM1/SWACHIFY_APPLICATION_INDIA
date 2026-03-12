@@ -31,11 +31,28 @@
 
 /* SEARCH AREA */
 
-.search-container {
-  display: flex;
+/* .search-container { */
+/* position: relative; IMPORTANT for dropdown positioning */
+
+/* display: flex;
   align-items: center;
   justify-content: center;
   gap: 14px;
+  margin-top: 25px;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+} */
+
+.search-container {
+  position: relative;
+
+  display: flex;
+  align-items: flex-start; /* important */
+  justify-content: center;
+
+  gap: 14px;
+
   margin-top: 25px;
   width: 80%;
   margin-left: auto;
@@ -46,6 +63,7 @@
 
 .search-bar {
   flex: 1;
+  position: relative;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -86,6 +104,110 @@
 .search-bar:focus-within {
   border-color: #ff6b35;
   box-shadow: 0 0 0 2px rgba(255, 107, 53, 0.15);
+}
+
+/* search-dropdown*/
+
+.search-dropdown {
+  position: absolute;
+
+  top: 60px;
+  left: 0;
+  width: calc(100% - 50px); /* keeps space for cart */
+
+  background: white;
+  border-radius: 16px;
+
+  padding: 20px;
+
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+
+  z-index: 100;
+
+  text-align: left;
+  margin-top: 16px;
+}
+
+/*Dropdown Headings*/
+
+.search-dropdown h4 {
+  font-size: 15px;
+  font-weight: 600;
+
+  margin-bottom: 12px;
+  margin-top: 12px;
+
+  color: #374151;
+}
+
+/*Recent Keywords Chips*/
+.keyword-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  margin-bottom: 18px;
+}
+
+.keyword {
+  padding: 8px 14px;
+
+  background: #f3f4f6;
+  border-radius: 20px;
+
+  font-size: 14px;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.keyword:hover {
+  background: #ff6b35;
+  color: white;
+}
+
+/*Restaurant Result Row*/
+
+.search-restaurant {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  padding: 10px 0;
+
+  cursor: pointer;
+
+  border-bottom: 1px solid #f1f5f9;
+
+  transition: 0.2s;
+}
+/*Hover Effect*/
+
+.search-restaurant:hover {
+  background: #f9fafb;
+}
+
+/*Restaurant Image*/
+
+.search-restaurant img {
+  width: 50px;
+  height: 50px;
+
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+/*Restaurant Text*/
+
+.search-restaurant p {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.search-restaurant span {
+  font-size: 13px;
+  color: #6b7280;
 }
 
 /* CART BUTTON */
@@ -248,30 +370,6 @@
   color: #ff6b35;
 }
 
-/* FLOATING CART */
-/* 
-.floating-cart {
-  position: fixed;
-  bottom: 30px;
-  right: 40px;
-  background: #ff6b35;
-  color: white;
-  padding: 16px;
-  border-radius: 50%;
-  font-size: 20px;
-  cursor: pointer;
-}
-
-.floating-cart span {
-  position: absolute;
-  top: -6px;
-  right: -6px;
-  background: #1f2937;
-  padding: 4px 6px;
-  border-radius: 50%;
-  font-size: 12px;
-} */
-
 /* Food Cards Animation */
 .featured-card img {
   width: 100%;
@@ -296,4 +394,24 @@
 
 .featured-grid::-webkit-scrollbar-track {
   background: transparent;
+}
+
+/*No Restaurants Found*/
+.no-results {
+  padding: 20px;
+  text-align: center;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+/*Cross Icon to Clear the text*/
+.clear-icon {
+  font-size: 18px;
+  color: #9ca3af;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.clear-icon:hover {
+  color: #ff6b35;
 }
