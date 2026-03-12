@@ -1,6 +1,6 @@
-import { useState } from "react";
+// import { useState } from "react";
 import CommonHeader from "../../landing/Header";
-import FooterSection from "../../landing/FooterSection";
+// import FooterSection from "../../landing/FooterSection";
 import "./MyFood.css";
 import { useNavigate } from "react-router-dom";
 
@@ -17,42 +17,50 @@ import {
 const featured = [
   {
     name: "Pizza",
+    slug: "pizza",
     img: "https://images.unsplash.com/photo-1604382354936-07c5d9983bd3",
   },
   {
     name: "Burger",
+    slug: "burger",
     img: "https://images.unsplash.com/photo-1550547660-d9450f859349",
   },
   {
     name: "Sushi",
+    slug: "sushi",
     img: "https://images.unsplash.com/photo-1579584425555-c3ce17fd4351",
   },
   {
     name: "Pasta",
+    slug: "pasta",
     img: "https://images.unsplash.com/photo-1525755662778-989d0524087e",
   },
   {
     name: "Tacos",
+    slug: "tacos",
     img: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38",
   },
   {
     name: "Noodles",
+    slug: "noodles",
     img: "https://images.unsplash.com/photo-1585032226651-759b368d7246",
   },
   {
     name: "Ramen",
+    slug: "ramen",
     img: "https://images.unsplash.com/photo-1557872943-16a5ac26437e",
   },
   {
     name: "Chilli Chicken",
+    slug: "chilliChicken",
     img: "https://images.unsplash.com/photo-1604909052743-94e838986d24",
   },
   {
     name: "Soup",
+    slug: "soup",
     img: "https://images.unsplash.com/photo-1547592180-85f173990554",
   },
 ];
-
 /* RESTAURANTS */
 
 const restaurants = [
@@ -88,7 +96,16 @@ const restaurants = [
 
 const MyFood = () => {
   const navigate = useNavigate();
-  const [cart, setCart] = useState(0);
+
+
+
+const handleCategoryClick = (slug: string) => {
+  navigate(`/category/${slug}`);
+};
+
+
+
+  // const [cart, setCart] = useState(0);
 
   return (
     <div className="food-root">
@@ -114,7 +131,7 @@ const MyFood = () => {
           <div className="cart-btn">
             <div className="cart-icon-wrapper">
               <ShoppingCartOutlined className="cart-icon" />
-              <span className="cart-count">{cart}</span>
+              {/* <span className="cart-count">{cart}</span> */}
             </div>
             <span className="cart-label">Cart</span>
           </div>
@@ -125,32 +142,39 @@ const MyFood = () => {
 
       <section className="food-section">
         <h2>All Categories</h2>
-
+        
         <div className="featured-grid">
-          {featured.map((item, i) => (
-            <div key={i} className="featured-card">
-              {/* <img src={item.img} /> */}
-              <img src={item.img} alt={item.name} />
-              <div className="featured-overlay">
-                <h3>{item.name}</h3>
-                <button onClick={() => setCart(cart + 1)} className="add-btn">
-                  <ShoppingCartOutlined /> Add
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
+  {featured.map((item, i) => (
+    <div
+      key={i}
+      className="featured-card"
+      onClick={() => handleCategoryClick(item.slug)}
+      style={{ cursor: "pointer" }}
+    >
+      <img src={item.img} alt={item.name} />
+
+      <div className="featured-overlay">
+        <h3>{item.name}</h3>
+      </div>
+    </div>
+  ))}
+</div>
+
+      
       </section>
 
       {/* RESTAURANTS */}
 
       <section className="food-section">
-        <h2>Popular Restaurants</h2>
+        <h2>Open Restaurants</h2>
 
         <div className="restaurant-grid">
           {restaurants.map((r, i) => (
-            <div key={i} className="restaurant-card">
-              {/* <img src={r.img} /> */}
+            <div
+              key={i}
+              className="restaurant-card"
+              onClick={() => navigate(`/restaurant/${i}`)}
+            >
               <img src={r.img} alt={r.name} />
 
               <div className="restaurant-info">
@@ -172,16 +196,7 @@ const MyFood = () => {
         </div>
       </section>
 
-      {/* FLOATING CART */}
-
-      {/* {cart > 0 && (
-        <div className="floating-cart">
-          <ShoppingCartOutlined />
-          <span>{cart}</span>
-        </div>
-      )} */}
-
-      <FooterSection selectedKey="myfood" />
+      {/* <FooterSection selectedKey="myfood" /> */}
     </div>
   );
 };
