@@ -1,0 +1,173 @@
+/* PAGE */
+
+.restaurant-page {
+  background: #fafafa;
+  min-height: 100vh;
+  padding: 40px 10%;
+  font-family: "Inter", sans-serif;
+}
+
+/* HEADER */
+
+.restaurant-top {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.restaurant-top h2 {
+  font-size: 26px;
+  font-weight: 600;
+}
+
+/* RESTAURANT IMAGE */
+
+.restaurant-image img {
+  width: 100%;
+  height: 360px;
+  object-fit: cover;
+  border-radius: 18px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+/* DETAILS */
+
+.restaurant-details {
+  margin-top: 25px;
+}
+
+.restaurant-details h1 {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.restaurant-details p {
+  color: #6b7280;
+  font-size: 18px;
+  line-height: 1.8;
+
+  max-width: 1620px;
+  margin: 12px auto 0;
+
+  text-align: left;
+  opacity: 0.85;
+}
+
+/* META */
+
+.restaurant-meta {
+  margin-top: 16px;
+  display: flex;
+  gap: 30px;
+  color: #ff6b35;
+  font-weight: 500;
+}
+
+/* CATEGORY TABS */
+
+.menu-tabs {
+  margin-top: 30px;
+  display: flex;
+  gap: 14px;
+}
+
+.tab {
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: 1px solid #e5e7eb;
+  background: white;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.tab:hover {
+  border-color: #ff6b35;
+}
+
+.tab.active {
+  background: #3b82f6;
+  color: white;
+  border: none;
+}
+
+/* FOOD GRID */
+
+.food-grid {
+  margin-top: 30px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 26px;
+}
+
+/* FOOD CARD */
+
+.food-card {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  transition: 0.25s;
+}
+
+.food-card:hover {
+  transform: translateY(-6px);
+}
+
+/* IMAGE */
+
+.food-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+
+/* FOOD INFO */
+
+.food-info {
+  padding: 16px;
+}
+
+.food-info h3 {
+  font-size: 18px;
+}
+
+.food-info p {
+  color: #6b7280;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+/* PRICE + ADD */
+
+.food-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+/* PRICE */
+
+.food-bottom span {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* ADD BUTTON */
+
+.food-add-btn {
+  background: #ff6b35;
+  border: none;
+  color: white;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.food-add-btn:hover {
+  transform: scale(1.1);
+}
