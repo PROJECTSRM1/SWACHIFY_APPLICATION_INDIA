@@ -1,816 +1,359 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./BuysaleProducts.css";
-import {
-  MdSearch,
-  MdLocationOn,
-  MdStar,
-  MdExpandMore,
-  MdAdd,
-} from "react-icons/md";
+import RentFilterPanel from "./RentFilterPanel";
+import RentDetailPage from "./RentDetailPage";
 
-
-const handleDelete = (
-  id: string,
-  setProperties: React.Dispatch<React.SetStateAction<any[]>>
-) => {
-  const stored = JSON.parse(
-    localStorage.getItem("marketplace_listings") || "[]"
-  );
-
-  const updated = stored.filter((item: any) => String(item.id) !== id);
-
-  localStorage.setItem("marketplace_listings", JSON.stringify(updated));
-
-  // refresh UI
-  const refreshed = [
-    ...getUserListings(),
-    ...DUMMY_PROPERTIES,
-  ];
-
-  setProperties(refreshed);
-};
-
-
-import Modal from "./ForBuysale";
-import SellItem from "./PopupForm";
-import BuyerPageWeb from "./CardDetails";
-
-/* =======================
-   TYPES
-======================= */
-export interface Property {
-  id: string;
-  title: string;
-  price: string;
-  image: string;
-  rating: number;
-  area: string;
-sqft?: string;
-  bhk?: string;
-  distance: string;
-  listingType: "buy" | "rent";
-  category: "land" | "apartment" | "house" | "vehicle" | "commercial"| "hostel";
-  itemCondition?: "New Item" | "Old Item";
-
-  landType?: string;
-  ownerName?: string;
-  documents?: string[];
-  registrationStatus?: string;
-  registrationValue?: string;
-  marketValue?: string;
-  description?: string;
-
-  isUserListing?: boolean;
-
-  hostelType?: string;
-  totalRooms?: string;
-  availableRooms?: string;
-  foodIncluded?: string;
-  hasAC?: boolean;
-  hasWifi?: boolean;
-  hasLaundry?: boolean;
-  hasParking?: boolean;
-  hasSecurity?: boolean;
+type Property = {
+id:string
+name:string
+location:string
+price:string
+rating:number
+image:string
+images:string[]
+bedrooms:number
+bathrooms:number
+area:number
+build:number
+parking:string
+status:string
+description:string
+agent:{
+name:string
+role:string
+image:string
+}
 }
 
-/* =======================
-   DUMMY DATA (UNCHANGED – ALL CARDS KEPT)
-======================= */
+const PROPERTIES = [
+{
+id: "1",
+name: "Ayana Homestay",
+location: "Imogiri, Yogyakarta",
+price: "$310/month",
+rating: 4.8,
+image:"https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80",
+images:[
+"https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80",
+"https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=80",
+"https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=600&q=80"
+],
+bedrooms:3,
+bathrooms:2,
+area:1200,
+build:2019,
+parking:"1 Indoor",
+status:"For Rent",
+description:"Beautiful property with modern design and full facilities located near restaurants and schools.",
+agent:{
+name:"Esther Howard",
+role:"Real Estate Agent",
+image:"https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200"
+}
+},
 
+{
+id:"2",
+name:"Bali Komang Guest",
+location:"Nusa Penida, Bali",
+price:"$180/night",
+rating:4.5,
+image:"https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=600&q=80",
+images:[
+"https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=600&q=80",
+"https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=80"
+],
+bedrooms:2,
+bathrooms:1,
+area:900,
+build:2018,
+parking:"Outdoor",
+status:"For Rent",
+description:"Comfortable guest house with scenic views in Bali.",
+agent:{
+name:"Brooklyn Simmons",
+role:"Property Agent",
+image:"https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200"
+}
+},
 
-const DUMMY_PROPERTIES: Property[] = [
+{
+id:"3",
+name:"Maharani Villa",
+location:"Yogyakarta",
+price:"$320/month",
+rating:4.5,
+image:"https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=80",
+images:[
+"https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=80",
+"https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80"
+],
+bedrooms:4,
+bathrooms:3,
+area:1500,
+build:2020,
+parking:"2 Indoor",
+status:"For Rent",
+description:"Luxury villa with private pool and modern interior.",
+agent:{
+name:"Jenny Wilson",
+role:"Property Agent",
+image:"https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200"
+}
+}
+];
+
+const TOP_LOCATIONS = [
   {
     id: "1",
-    title: "1 BHK Villa in Downtown",
-    price: "₹1,20,000",
-    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
-    rating: 4.9,
-    area: "Hyderabad",
-    sqft: "1200",
-    bhk: "1 BHK",
-    distance: "2.7 km away",
-    listingType: "buy",
-    category: "house",
+    name: "Malang",
+    image:
+      "https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?w=200&q=80",
   },
-
+  {
+    id: "2",
+    name: "Bali",
+    image:
+      "https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=200&q=80",
+  },
   {
     id: "3",
-    title: "Open Land Near Highway",
-    price: "₹2,40,000",
-    image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80",
-    rating: 4.8,
-    area: "Shamshabad",
-    sqft: "2000",
-    distance: "6.3 km away",
-    listingType: "buy",
-    category: "land",
+    name: "Yogyakarta",
+    image:
+      "https://images.unsplash.com/photo-1570130405657-8e3eb4a9a0e2?w=200&q=80",
   },
-
-  {
-    id: "4",
-    title: "3 BHK Independent House",
-    price: "₹1,80,000",
-    image: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=800&q=80",
-    rating: 4.7,
-    area: "Kukatpally",
-    sqft: "1600",
-    bhk: "3 BHK",
-    distance: "3.8 km away",
-    listingType: "buy",
-    category: "house",
-  },
-
-  {
-    id: "5",
-    title: "2 BHK Apartment for Rent",
-    price: "₹18,000 / month",
-    image: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=800&q=80",
-    rating: 4.6,
-    area: "Gachibowli",
-    sqft: "1100",
-    bhk: "2 BHK",
-    distance: "1.5 km away",
-    listingType: "rent",
-    category: "apartment",
-  },
-
-  /* VEHICLES */
-  {
-    id: "10",
-    title: "Yamaha R15 V4",
-    price: "₹1,82,000",
-    image: "https://images.unsplash.com/photo-1609630875171-b1321377ee65?auto=format&fit=crop&w=800&q=80",
-    rating: 4.5,
-    area: "Kukatpally",
-    sqft: "",
-    distance: "2.6 km away",
-    listingType: "buy",
-    category: "vehicle",
-  },
-  {
-    id: "16",
-    title: "Hyundai i20 Sportz",
-    price: "₹9,40,000",
-    image: "https://th.bing.com/th/id/OIP.ZKNVZarz3HYsUlg24taeLwHaEK?w=290&h=180&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3",
-    rating: 4.5,
-    area: "Uppal",
-    sqft: "",
-    distance: "3.9 km away",
-    listingType: "buy",
-    category: "vehicle",
-  },
- {
-  id: "hostel_101",
-  title: "Boys Hostel in Kukatpally",
-  price: "₹8,500 / month",
-  image: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=800&q=80",
-  rating: 4.6,
-  area: "Kukatpally",
-  distance: "1.2 km away",
-  listingType: "rent",
-  category: "hostel",
-
-  // Hostel-specific fields
-  hostelType: "Boys",
-  totalRooms: "25",
-  availableRooms: "5",
-  foodIncluded: "Yes",
-
-  // Amenities
-  hasAC: true,
-  hasWifi: true,
-  hasLaundry: true,
-  hasParking: false,
-  hasSecurity: true,
-}
-
-
-
 ];
 
+export default function BuysaleProducts() {
+  const [favorites, setFavorites] = useState<string[]>([]);
+  const [showFilter, setShowFilter] = useState(false);
+  const [selectedProperty, setSelectedProperty] =
+  useState<Property | null>(null);
 
-const PROPERTY_TYPE_OPTIONS = [
-  { label: "All", category: "all" },
-
-  { label: "Apartment", category: "apartment" },
-  { label: "Villa", category: "house" },
-  { label: "Independent House", category: "house" },
-
-  { label: "Land", category: "land" },
-
-  { label: "Bike", category: "vehicle" },
-  { label: "Car", category: "vehicle" },
-  { label: "Lorry", category: "vehicle" },
-  { label: "Auto", category: "vehicle" },
-  { label: "Hostel", category: "hostel" },
-];
-
-const formatIndianPrice = (value?: string | number) => {
-  if (!value) return "0";
-
-  const numeric = String(value).replace(/[^0-9]/g, "");
-  if (!numeric) return "0";
-
-  return numeric.replace(/\B(?=(\d{2})+(?!\d))/g, ",");
-};
-
-const getRandomDistance = () => {
-  const km = (Math.random() * 8 + 0.5).toFixed(1); 
-  return `${km} km away`;
-};
-
-
-
-
-// ✅ READ USER POSTED LISTINGS FROM LOCAL STORAGE
-const getUserListings = (): (Property & { isUserListing: boolean })[] => {
-  const stored = JSON.parse(
-    localStorage.getItem("marketplace_listings") || "[]"
-  );
-
-  return stored.map((item: any) => {
-    const isHostel = item.propertyType === "Hostel";
-    const isHouse =
-  ["Apartment", "Villa", "Independent House"].includes(item.propertyType);
-
-
-    return {
-  id: String(item.id),
-
-  // ✅ TITLE
-  title: isHostel
-    ? `${item.hostelType} Hostel`
-    : isHouse
-    ? `${item.bhk || ""} ${item.propertyType}`
-    : item.propertyType === "Land"
-    ? "Land for Sale"
-    : item.propertyType,
-    itemCondition: item.itemCondition,
-
-  // ✅ PRICE
-  price:
-    item.listingType === "rent"
-      ? `₹${formatIndianPrice(item.price)} / month`
-      : `₹${formatIndianPrice(item.price)}`,
-
-  image: item.images?.[0],
-  images: item.images,
-
-  rating: 4.5,
-  area: item.landArea || item.area || "Near Your Area",
-  distance: getRandomDistance(),
-
-  // ✅ CATEGORY (FIXED)
-  category: isHostel
-    ? "hostel"
-    : item.propertyType === "Land"
-    ? "land"
-    : item.propertyType === "Bike" ||
-      item.propertyType === "Car" ||
-      item.propertyType === "Auto" ||
-      item.propertyType === "Lorry"
-    ? "vehicle"
-    : isHouse
-    ? "house"
-    : "commercial",
-
-  listingType: item.listingType === "rent" ? "rent" : "buy",
-
-  // ===== HOUSE =====
-  bhk: isHouse ? item.bhk : undefined,
-  sqft: isHouse ? item.sqft : item.landSqft,
-
-  // ===== LAND (ONLY LAND) =====
-  landType: item.propertyType === "Land" ? item.landType : undefined,
-  ownerName: item.propertyType === "Land" ? item.registeredOwner : undefined,
-  documents: item.propertyType === "Land" ? item.documents : undefined,
-  registrationStatus:
-    item.propertyType === "Land" ? item.registrationStatus : undefined,
-  registrationValue:
-    item.propertyType === "Land" ? item.registrationValue : undefined,
-  marketValue:
-    item.propertyType === "Land" ? item.marketValue : undefined,
-
-  // ===== HOSTEL =====
-  hostelType: item.hostelType,
-  totalRooms: item.totalRooms,
-  availableRooms: item.availableRooms,
-  foodIncluded: item.foodIncluded,
-  hasAC: item.hasAC,
-  hasWifi: item.hasWifi,
-  hasLaundry: item.hasLaundry,
-  hasParking: item.hasParking,
-  hasSecurity: item.hasSecurity,
-
-  isUserListing: true,
-};
-
-  });
-};
-
-
-
-
-
-/* =======================
-   COMPONENT
-======================= */
-export default function MarketplaceWeb() {
-  const [openSellForm, setOpenSellForm] = useState(false);
-  const [selectedProperty, setSelectedProperty] = useState<Property | null>(null);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [location, setLocation] = useState("Detecting location...");
-  const [manualLocation, setManualLocation] = useState<string | null>(null);
-  const [editingLocation, setEditingLocation] = useState(false);
-const [tempLocation, setTempLocation] = useState("");
-const [isWishlistActive, setIsWishlistActive] = useState(false);
-const [wishlistIds, setWishlistIds] = useState<string[]>([]);
-
-
-
-  const [properties, setProperties] = useState<
-  (Property & { isUserListing?: boolean })[]
->([]);
-
-  const [filterType, setFilterType] = useState<"all" | "buy" | "rent">("all");
-
-  const [activeCategory, setActiveCategory] = useState<
-    "all" | "land" | "apartment" | "house" | "vehicle" | "commercial"
-  >("all");
-
-  const [showDropdown, setShowDropdown] = useState(false);
-
-  /* FILTER STATES (UNCHANGED) */
-  const [showPropertyType, setShowPropertyType] = useState(false);
-  const [showDateFilter, setShowDateFilter] = useState(false);
-  const [showRatingFilter, setShowRatingFilter] = useState(false);
-  const [ratingFilter, setRatingFilter] = useState<number | null>(null);
-
-  /* LABEL STATES (UI ONLY) */
-  const [propertyTypeLabel, setPropertyTypeLabel] = useState("Property Type");
-  const [dateLabel, setDateLabel] = useState("Updated Date");
-  const [ratingLabel, setRatingLabel] = useState("Ratings");
-
-  useEffect(() => {
-  const syncWishlist = () => {
-    const stored = JSON.parse(
-      localStorage.getItem("marketplace_wishlist") || "[]"
-    );
-    setWishlistIds(stored.map((item: any) => item.id));
+  const toggleFavorite = (id: string) => {
+    if (favorites.includes(id)) {
+      setFavorites(favorites.filter((f) => f !== id));
+    } else {
+      setFavorites([...favorites, id]);
+    }
   };
-
-  // initial sync
-  syncWishlist();
-
-  // 🔥 listen for wishlist updates
-  window.addEventListener("wishlist-change", syncWishlist);
-
-  return () =>
-    window.removeEventListener("wishlist-change", syncWishlist);
-}, []);
-
-
- useEffect(() => {
-  const userListings = getUserListings();
-  setProperties([...userListings, ...DUMMY_PROPERTIES]);
-
-  if (!manualLocation) {
-    detectLocation();
-  }
-}, [manualLocation]);
-
-useEffect(() => {
-  const stored = JSON.parse(
-    localStorage.getItem("marketplace_wishlist") || "[]"
-  );
-
-  setWishlistIds(stored.map((item: any) => item.id));
-}, []);
-
-
-useEffect(() => {
-  const refreshListings = () => {
-    const userListings = getUserListings();
-    setProperties([...userListings, ...DUMMY_PROPERTIES]);
-  };
-
-  window.addEventListener("listing-added", refreshListings);
-  return () =>
-    window.removeEventListener("listing-added", refreshListings);
-}, []);
-
- const detectLocation = () => {
-  if (!navigator.geolocation) {
-    setLocation("Near Your Area");
-    return;
-  }
-
-  navigator.geolocation.getCurrentPosition(
-    async (position) => {
-      const { latitude, longitude } = position.coords;
-
-      try {
-        const res = await fetch(
-          `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
-        );
-        const data = await res.json();
-        const address = data.address || {};
-
-        const city =
-          address.city ||
-          address.town ||
-          address.village ||
-          address.suburb ||
-          address.county ||
-          "";
-
-        const state = address.state || "";
-
-        if (city && state) {
-          setLocation(`Near ${city}, ${state}`);
-        } else if (city) {
-          setLocation(`Near ${city}`);
-        } else if (state) {
-          setLocation(`Near ${state}`);
-        } else {
-          setLocation("Near Your Area");
-        }
-      } catch {
-        setLocation("Near Your Area");
-      }
-    },
-    () => setLocation("Near Your Area")
-  );
-};
-
-
-
-  /* =======================
-     FILTER LOGIC (100% SAME)
-  ======================= */
-const filteredProperties = properties.filter((p: Property) => {
-  if (isWishlistActive && !wishlistIds.includes(p.id)) return false;
-
-  const matchesType =
-    filterType === "all" ? true : p.listingType === filterType;
-
-  const matchesCategory =
-    activeCategory === "all" ? true : p.category === activeCategory;
-
-  const matchesSearch = p.title
-    .toLowerCase()
-    .includes(searchQuery.toLowerCase());
-
-  const matchesRating =
-    ratingFilter === null ? true : p.rating >= ratingFilter;
-
-  return matchesType && matchesCategory && matchesSearch && matchesRating;
-});
-
 
   return (
-    <>
-      <div className="mp-page">
-        <section className="mp-marketplace-section">
-          <div className="mp-container">
+    <div className="buysale-container">
 
-            {/* HEADER */}
-            <header className="mp-web-header">
-           <div className="mp-header-left">
-  <button
-    className="mp-back-btn"
-    onClick={() => window.history.back()}
-    aria-label="Go back"
-  >
-    ←
-  </button>
+      {/* SEARCH */}
+      <div className="buysale-search-container">
 
-  <h1>Marketplace</h1>
-</div>
+        <input
+          className="buysale-search-input"
+          placeholder="Search Property"
+        />
 
-
-             <div className="mp-header-actions">
-  {/* BUY / RENT DROPDOWN */}
-  <div className="mp-dropdown-wrapper">
-    <div className="mp-buy-toggle">
-  <button
-    className={filterType === "buy" ? "active" : ""}
-    onClick={() => setFilterType("buy")}
-  >
-    Buy
-  </button>
-
-  <button
-    className={filterType === "rent" ? "active" : ""}
-    onClick={() => setFilterType("rent")}
-  >
-    Rent
-  </button>
-</div>
-
-
-    {showDropdown && (
-      <div className="mp-dropdown-menu">
-        {["rent"].map((t) => (
-          <div
-            key={t}
-            onClick={() => {
-              setFilterType(t as any);
-              setShowDropdown(false);
-            }}
-          >
-            {t === "buy" ? "Buy" : "Rent"}
-          </div>
-        ))}
-      </div>
-    )}
-  </div>
-
-  {/* SELL / RENT BUTTON */}
-  <button className="mp-sell-btn" onClick={() => setOpenSellForm(true)}>
-    <MdAdd /> Sell / Rent
-  </button>
-</div>
-
-
-            </header>
-
-            {/* SEARCH + FILTERS */}
-            <div className="mp-search-filter-row">
-              <div className="mp-search-box wide">
-                <MdSearch />
-                <input
-                  placeholder="Search homes, cars, land..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-              </div>
-
-              <div className="mp-top-filters">
-
-                {/* PROPERTY TYPE */}
-<button
-  onClick={() => {
-    setShowPropertyType(!showPropertyType);
-    setShowDateFilter(false);
-    setShowRatingFilter(false);
-  }}
->
-  {propertyTypeLabel} <MdExpandMore />
-
-  {showPropertyType && (
-    <div className="mp-filter-dropdown">
-      {PROPERTY_TYPE_OPTIONS.map((item) => (
-        <div
-          key={item.label}
-          onClick={() => {
-            setPropertyTypeLabel(item.label);
-            setActiveCategory(item.category as any);
-            setShowPropertyType(false);
-          }}
+        <button
+          className="buysale-filter-btn"
+          onClick={() => setShowFilter(true)}
         >
-          {item.label}
+          Filter
+        </button>
+
+      </div>
+
+      {/* BANNER */}
+
+      <div className="buysale-banner">
+
+        <div className="buysale-banner-left">
+
+          <h2 className="buysale-banner-title">
+            GET YOUR 20% <br /> CASHBACK
+          </h2>
+
+          <p className="buysale-banner-expiry">
+            *Expired 20 March 2026
+          </p>
+
         </div>
-      ))}
-    </div>
-  )}
-</button>
 
+        <img
+          className="buysale-banner-image"
+          src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=400&q=80"
+        />
 
-                {/* UPDATED DATE */}
-                <button onClick={() => {
-                  setShowDateFilter(!showDateFilter);
-                  setShowPropertyType(false);
-                  setShowRatingFilter(false);
-                }}>
-                  {dateLabel} <MdExpandMore />
-                  {showDateFilter && (
-                    <div className="mp-filter-dropdown">
-                      {["All Time", "Today", "Last 7 Days", "Last 30 Days"].map(
-                        (d) => (
-                          <div
-                            key={d}
-                            onClick={() => {
-                              setDateLabel(d);
-                              setShowDateFilter(false);
-                            }}
-                          >
-                            {d}
-                          </div>
-                        )
-                      )}
-                    </div>
-                  )}
-                </button>
+      </div>
 
-                {/* RATINGS */}
-                <button onClick={() => {
-                  setShowRatingFilter(!showRatingFilter);
-                  setShowPropertyType(false);
-                  setShowDateFilter(false);
-                }}>
-                  {ratingLabel} <MdExpandMore />
-                  {showRatingFilter && (
-                    <div className="mp-filter-dropdown">
-                      {[null, 4.5, 4.0, 3.5].map((r) => (
-                        <div
-                          key={String(r)}
-                          onClick={() => {
-                            setRatingFilter(r);
-                            setRatingLabel(
-                              r === null ? "All Ratings" : `${r}+ Stars`
-                            );
-                            setShowRatingFilter(false);
-                          }}
-                        >
-                          {r === null ? "All Ratings" : `${r}+ Stars`}
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </button>
-                {/* RATINGS */}
-<button
-  className={isWishlistActive ? "active" : ""}
-  onClick={() => setIsWishlistActive(!isWishlistActive)}
->
-  ❤️ Wishlist
-</button>
+      {/* RECOMMENDED */}
 
+      <div className="buysale-section-header">
 
+        <h3 className="buysale-section-title">Recommended</h3>
+
+        <span className="buysale-seeall">See all</span>
+
+      </div>
+
+      <div className="buysale-recommended-row">
+
+        {PROPERTIES.map((item) => {
+
+          const isFav = favorites.includes(item.id);
+
+          return (
+            <div key={item.id} className="buysale-rec-card">
+
+              <img
+                src={item.image}
+                className="buysale-rec-image"
+              />
+
+              <div className="buysale-rec-overlay">
+
+                <h4 className="buysale-rec-name">
+                  {item.name}
+                </h4>
+
+                <p className="buysale-rec-location">
+                  {item.location}
+                </p>
 
               </div>
+
+              <button
+                className="buysale-heart-btn"
+                onClick={() => toggleFavorite(item.id)}
+              >
+                {isFav ? "❤️" : "🤍"}
+              </button>
+
+              <div className="buysale-price-badge">
+                {item.price}
+              </div>
+
             </div>
+          );
 
-            
-{/* LOCATION */}
-<div className="mp-location-bar compact">
-  <div>
-    <span className="mp-label">CURRENT LOCATION</span>
+        })}
 
-    <div className="mp-loc-row">
-      <MdLocationOn />
+      </div>
 
-      {!editingLocation ? (
-        <>
-          <strong>{location}</strong>
-          <span
-            className="mp-change"
-            onClick={() => {
-              setTempLocation("");
-              setEditingLocation(true);
-            }}
-          >
-            Change
-          </span>
-        </>
-      ) : (
-        <>
-          <input
-            className="mp-location-input"
-            placeholder="Enter city or area"
-            value={tempLocation}
-            onChange={(e) => setTempLocation(e.target.value)}
-            autoFocus
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && tempLocation.trim()) {
-                const formatted = `Near ${tempLocation.trim()}`;
-                setManualLocation(formatted);
-                setLocation(formatted);
-                setEditingLocation(false);
-              }
-            }}
-          />
-          <span
-            className="mp-change"
-            onClick={() => {
-              if (tempLocation.trim()) {
-                const formatted = `Near ${tempLocation.trim()}`;
-                setManualLocation(formatted);
-                setLocation(formatted);
-              }
-              setEditingLocation(false);
-            }}
-          >
-            Save
-          </span>
-        </>
-      )}
-    </div>
-  </div>
-</div>
+      {/* TOP LOCATIONS */}
 
+      <div className="buysale-section-header">
 
-            {/* CATEGORY BUTTONS */}
-            <div className="mp-categories">
-              {["all", "land", "apartment", "house", "commercial", "vehicle","hostel"].map(
-                (c) => (
+        <h3 className="buysale-section-title">
+          Top Locations
+        </h3>
+
+      </div>
+
+      <div className="buysale-location-row">
+
+        {TOP_LOCATIONS.map((loc) => (
+
+          <div key={loc.id} className="buysale-location-chip">
+
+            <img
+              src={loc.image}
+              className="buysale-location-img"
+            />
+
+            <span className="buysale-location-name">
+              {loc.name}
+            </span>
+
+          </div>
+
+        ))}
+
+      </div>
+
+      {/* POPULAR */}
+
+      <div className="buysale-section-header">
+
+        <h3 className="buysale-section-title">
+          Popular for you
+        </h3>
+
+      </div>
+
+      <div className="buysale-list">
+
+        {PROPERTIES.map((item) => {
+
+          const isFav = favorites.includes(item.id);
+
+          return (
+
+           <div
+  key={item.id}
+  className="buysale-list-card"
+  onClick={() => setSelectedProperty(item)}
+>
+
+              <img
+                src={item.image}
+                className="buysale-list-image"
+              />
+
+              <div className="buysale-list-info">
+
+                <div className="buysale-list-top">
+
+                  <h4>{item.name}</h4>
+
                   <button
-                    key={c}
-                    className={activeCategory === c ? "active" : ""}
-                    onClick={() => setActiveCategory(c as any)}
+                    onClick={() => toggleFavorite(item.id)}
                   >
-                    {c.charAt(0).toUpperCase() + c.slice(1)}
+                    {isFav ? "❤️" : "🤍"}
                   </button>
-                )
-              )}
-            </div>
-
-            {/* GRID */}
-            <div className="mp-property-grid">
-              {filteredProperties.map((p) => (
-                <div
-                  key={p.id}
-                  className="mp-property-card"
-                  onClick={() => setSelectedProperty(p)}
-                >
-                  <div className="mp-image-wrapper">
-  <img src={p.image} alt={p.title} />
-
-  <div className="mp-badges">
-  <span className="mp-badge">
-    {p.listingType === "buy" ? "FOR SALE" : "FOR RENT"}
-  </span>
-
-  {p.itemCondition && (
-    <span
-      className={`mp-condition ${
-        p.itemCondition === "New Item" ? "new" : "used"
-      }`}
-    >
-      {p.itemCondition === "New Item" ? "NEW" : "USED"}
-    </span>
-  )}
-</div>
-
-
-  <div className="mp-rating">
-    <MdStar /> {p.rating}
-  </div>
-
-  {/* ❌ DELETE BUTTON – ONLY USER POSTED CARD */}
-  {"isUserListing" in p && p.isUserListing && (
-    <button
-      className="mp-delete-btn"
-      onClick={(e) => {
-        e.stopPropagation();
-        handleDelete(p.id, setProperties);
-      }}
-    >
-      ✕
-    </button>
-  )}
-</div>
-
-
-                  <div className="mp-card-body">
-  <h3 className="mp-card-title">{p.title}</h3>
-
-  <div className="mp-price">{p.price}</div>
-
-  <div className="mp-card-row">
-    📍 {p.area}
-  </div>
-
-  {p.sqft && (
-    <div className="mp-card-row">
-      📐 {p.sqft} sqft
-    </div>
-  )}
-
-  {p.bhk && (
-    <div className="mp-card-row">
-      🛏 {p.bhk}
-    </div>
-  )}
-
-  <div className="mp-card-row muted">
-    📍 {p.distance}
-  </div>
-</div>
 
                 </div>
-              ))}
+
+                <p className="buysale-list-location">
+                  {item.location}
+                </p>
+
+                <div className="buysale-list-footer">
+
+                  <span className="buysale-list-price">
+                    {item.price}
+                  </span>
+
+                  <span className="buysale-rating">
+                    ⭐ {item.rating}
+                  </span>
+
+                </div>
+
+              </div>
+
             </div>
 
-          </div>
-        </section>
+          );
+
+        })}
+
       </div>
 
-      {openSellForm && (
-        <Modal onClose={() => setOpenSellForm(false)}>
-          <SellItem onClose={() => setOpenSellForm(false)} />
-        </Modal>
-      )}
+      {/* FILTER PANEL */}
 
-      {selectedProperty && (
-        <Modal onClose={() => setSelectedProperty(null)}>
-          <BuyerPageWeb
-            property={selectedProperty}
-            onBack={() => setSelectedProperty(null)}
-          />
-        </Modal>
+      {showFilter && (
+
+        <RentFilterPanel
+          onClose={() => setShowFilter(false)}
+          onApply={(filters) => console.log(filters)}
+        />
+
       )}
-    </>
+      {selectedProperty && (
+  <div className="detail-modal-overlay">
+    <RentDetailPage
+      property={selectedProperty}
+      onClose={() => setSelectedProperty(null)}
+    />
+  </div>
+)}
+
+    </div>
   );
 }

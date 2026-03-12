@@ -1,0 +1,707 @@
+/* ===== PAGE WRAPPER ===== */
+
+.rdpage-wrapper{
+background:#f6f8fb;
+color:#1e293b;
+min-height:100vh;
+font-family:Inter,system-ui;
+padding-bottom:110px;
+}
+
+
+/* ===== HEADER ===== */
+
+.rdpage-header{
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:18px 24px;
+background:#ffffff;
+border-bottom:1px solid #e5e7eb;
+}
+
+.rdpage-header h2{
+font-size:18px;
+font-weight:700;
+}
+
+.rdpage-header button{
+background:#ffffff;
+border:1px solid #e5e7eb;
+padding:8px 12px;
+border-radius:10px;
+cursor:pointer;
+}
+
+.rdpage-header-actions{
+display:flex;
+gap:10px;
+}
+
+
+/* ===== IMAGE SECTION ===== */
+
+.rdpage-carousel{
+padding:20px;
+max-width:900px;
+margin:auto;
+}
+
+.rdpage-main-img{
+width:100%;
+height:360px;
+border-radius:18px;
+object-fit:cover;
+box-shadow:0 10px 30px rgba(0,0,0,0.08);
+}
+
+
+/* dots */
+
+.rdpage-dots{
+display:flex;
+justify-content:center;
+gap:6px;
+margin-top:12px;
+}
+
+.rdpage-dot{
+width:8px;
+height:8px;
+border-radius:10px;
+background:#d1d5db;
+cursor:pointer;
+}
+
+.rdpage-dot.active{
+width:20px;
+background:#14b8a6;
+}
+
+
+/* thumbnails */
+
+.rdpage-thumbs{
+display:flex;
+gap:12px;
+margin-top:16px;
+overflow-x:auto;
+}
+
+.rdpage-thumb{
+width:95px;
+height:70px;
+border-radius:12px;
+object-fit:cover;
+cursor:pointer;
+border:2px solid transparent;
+}
+
+.rdpage-thumb.active{
+border-color:#14b8a6;
+}
+
+
+/* ===== PROPERTY INFO ===== */
+
+.rdpage-info{
+max-width:900px;
+margin:auto;
+padding:0 20px;
+margin-top:10px;
+}
+
+.rdpage-title-row{
+display:flex;
+justify-content:space-between;
+align-items:flex-start;
+gap:10px;
+}
+
+.rdpage-title{
+font-size:26px;
+font-weight:800;
+}
+
+.rdpage-price{
+font-size:20px;
+font-weight:800;
+color:#14b8a6;
+}
+
+.rdpage-location{
+color:#64748b;
+font-size:14px;
+margin-top:6px;
+}
+
+
+/* ===== PROPERTY DETAILS ===== */
+
+.rdpage-details{
+max-width:900px;
+margin:auto;
+padding:20px;
+}
+
+.rdpage-details-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:25px;
+margin-top:10px;
+}
+
+.rdpage-details-item span{
+font-size:13px;
+color:#64748b;
+}
+
+.rdpage-details-item h4{
+margin-top:4px;
+font-size:16px;
+font-weight:700;
+}
+
+
+/* ===== DESCRIPTION ===== */
+
+.rdpage-description{
+max-width:900px;
+margin:auto;
+padding:0 20px 20px;
+}
+
+.rdpage-description p{
+color:#475569;
+line-height:1.7;
+}
+
+
+/* ===== AGENT CARD ===== */
+
+.rdpage-agent-card{
+max-width:900px;
+margin:auto;
+background:#ffffff;
+border-radius:18px;
+padding:18px;
+display:flex;
+align-items:center;
+gap:14px;
+box-shadow:0 6px 20px rgba(0,0,0,0.06);
+margin-bottom:30px;
+}
+
+.rdpage-agent-card img{
+width:60px;
+height:60px;
+border-radius:50%;
+object-fit:cover;
+}
+
+.rdpage-agent-info h4{
+font-size:16px;
+font-weight:700;
+}
+
+.rdpage-agent-info p{
+font-size:13px;
+color:#64748b;
+}
+
+.rdpage-agent-btn{
+margin-left:auto;
+display:flex;
+gap:12px;
+}
+
+.rdpage-agent-btn button{
+width:40px;
+height:40px;
+border-radius:50%;
+border:1px solid #14b8a6;
+background:#ffffff;
+color:#14b8a6;
+cursor:pointer;
+}
+
+
+/* ===== MAP ===== */
+
+.rdpage-map-section{
+max-width:900px;
+margin:auto;
+padding:0 20px;
+}
+
+.rdpage-map-box{
+height:220px;
+background:#e5e7eb;
+border-radius:16px;
+display:flex;
+align-items:center;
+justify-content:center;
+color:#64748b;
+}
+
+
+/* ===== REVIEWS ===== */
+
+.rdpage-reviews{
+max-width:900px;
+margin:auto;
+padding:20px;
+}
+
+.rdpage-review-header{
+display:flex;
+justify-content:space-between;
+}
+
+.rdpage-review-card{
+background:#ffffff;
+border-radius:16px;
+padding:18px;
+margin-top:14px;
+box-shadow:0 6px 20px rgba(0,0,0,0.05);
+}
+
+
+/* ===== RENT BUTTON ===== */
+
+.rdpage-bottom-bar{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+background:#ffffff;
+padding:18px;
+border-top:1px solid #e5e7eb;
+}
+
+.rdpage-rent-btn{
+width:100%;
+background:#14b8a6;
+color:#fff;
+border:none;
+padding:18px;
+font-size:17px;
+font-weight:700;
+border-radius:14px;
+cursor:pointer;
+}
+
+
+/* ===== BOOKING MODAL ===== */
+
+.rdpage-booking-overlay{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.5);
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:1000;
+}
+
+.rdpage-booking-modal{
+background:#ffffff;
+border-radius:20px;
+padding:28px;
+width:420px;
+max-width:95%;
+}
+
+.rdpage-booking-card{
+display:flex;
+gap:14px;
+margin-bottom:20px;
+}
+
+.rdpage-booking-card img{
+width:80px;
+height:80px;
+border-radius:10px;
+object-fit:cover;
+}
+
+
+/* payment options */
+
+.rdpage-payment-option{
+display:flex;
+justify-content:space-between;
+padding:14px 0;
+border-bottom:1px solid #e5e7eb;
+cursor:pointer;
+}
+
+.rdpage-payment-option:hover{
+color:#14b8a6;
+}
+
+
+/* confirm button */
+
+.rdpage-confirm-btn{
+width:100%;
+background:#14b8a6;
+color:#fff;
+border:none;
+padding:16px;
+border-radius:12px;
+margin-top:20px;
+font-weight:700;
+}
+
+
+/* ===== RESPONSIVE ===== */
+
+@media(max-width:768px){
+
+.rdpage-main-img{
+height:260px;
+}
+
+.rdpage-details-grid{
+grid-template-columns:repeat(2,1fr);
+}
+
+.rdpage-agent-card{
+flex-wrap:wrap;
+}
+
+.rdpage-booking-modal{
+position:fixed;
+bottom:0;
+width:100%;
+border-radius:20px 20px 0 0;
+}
+
+}
+
+@media(max-width:480px){
+
+.rdpage-title{
+font-size:20px;
+}
+
+.rdpage-price{
+font-size:16px;
+}
+
+.rdpage-thumb{
+width:70px;
+height:60px;
+}
+
+}
+.rdpage-date-row{
+display:flex;
+gap:10px;
+margin-bottom:15px;
+}
+
+.rdpage-date-row input{
+flex:1;
+padding:10px;
+border-radius:10px;
+border:none;
+background:#162233;
+color:white;
+}
+
+/* CARD PAGE */
+
+.rdpage-card-page{
+background:#071423;
+padding:25px;
+border-radius:20px;
+width:360px;
+}
+
+.rdpage-card-header{
+display:flex;
+align-items:center;
+gap:10px;
+margin-bottom:20px;
+color:white;
+}
+
+.credit-card-ui{
+margin-bottom:25px;
+}
+
+.credit-card{
+background:linear-gradient(135deg,#5b4bff,#6d5bff);
+padding:25px;
+border-radius:18px;
+color:white;
+}
+
+.card-type{
+font-size:16px;
+opacity:.9;
+margin-bottom:20px;
+}
+
+.card-number{
+font-size:22px;
+letter-spacing:2px;
+margin-bottom:20px;
+}
+
+.card-bottom{
+display:flex;
+justify-content:space-between;
+font-size:14px;
+}
+
+/* FORM */
+
+.card-form label{
+display:block;
+margin-bottom:6px;
+color:#cfd8e3;
+}
+
+.card-form input{
+width:100%;
+padding:12px;
+border-radius:12px;
+border:none;
+background:#0f1e30;
+color:white;
+margin-bottom:15px;
+}
+
+.card-form-row{
+display:flex;
+gap:10px;
+}
+
+.add-card-btn{
+width:100%;
+padding:14px;
+border:none;
+border-radius:25px;
+background:#1fb5a8;
+color:white;
+font-size:16px;
+cursor:pointer;
+}
+
+/* SUCCESS */
+
+.rdpage-success{
+background:#081320;
+padding:40px;
+border-radius:16px;
+text-align:center;
+color:white;
+width:320px;
+}
+/* ===== DATE PICKER ===== */
+
+.rdpage-date-row{
+display:flex;
+gap:10px;
+margin-bottom:18px;
+}
+
+.rdpage-date-row input{
+flex:1;
+padding:12px;
+border-radius:10px;
+border:1px solid #e5e7eb;
+background:#ffffff;
+color:#1e293b;
+font-size:14px;
+}
+
+
+/* ===== CARD PAGE ===== */
+
+.rdpage-card-page{
+background:#ffffff;
+padding:30px;
+border-radius:20px;
+width:420px;
+max-width:95%;
+max-height:90vh;
+overflow-y:auto;
+}
+
+/* header */
+
+.rdpage-card-header{
+display:flex;
+align-items:center;
+gap:12px;
+margin-bottom:24px;
+color:#1e293b;
+}
+
+.rdpage-card-header button{
+background:#f1f5f9;
+border:none;
+width:36px;
+height:36px;
+border-radius:10px;
+cursor:pointer;
+}
+
+
+/* credit card */
+
+.credit-card-ui{
+margin-bottom:30px;
+}
+
+.credit-card{
+background:linear-gradient(135deg,#5b4bff,#6d5bff);
+padding:26px;
+border-radius:20px;
+color:white;
+box-shadow:0 12px 25px rgba(0,0,0,0.15);
+}
+
+.card-type{
+font-size:15px;
+opacity:.9;
+margin-bottom:20px;
+}
+
+.card-number{
+font-size:22px;
+letter-spacing:2px;
+margin-bottom:20px;
+font-weight:600;
+}
+
+.card-bottom{
+display:flex;
+justify-content:space-between;
+font-size:14px;
+opacity:.95;
+}
+
+
+/* ===== FORM ===== */
+
+.card-form label{
+display:block;
+margin-bottom:6px;
+color:#334155;
+font-size:13px;
+font-weight:600;
+}
+
+.card-form input{
+width:100%;
+padding:14px;
+border-radius:12px;
+border:1px solid #e5e7eb;
+background:#f8fafc;
+color:#1e293b;
+margin-bottom:16px;
+font-size:14px;
+outline:none;
+}
+
+.card-form input:focus{
+border-color:#14b8a6;
+background:#ffffff;
+}
+
+.card-form-row{
+display:flex;
+gap:12px;
+}
+
+
+/* add card button */
+
+.add-card-btn{
+width:100%;
+padding:16px;
+border:none;
+border-radius:30px;
+background:#14b8a6;
+color:white;
+font-size:16px;
+font-weight:600;
+cursor:pointer;
+transition:.2s;
+}
+
+.add-card-btn:hover{
+background:#0f9f93;
+}
+
+
+/* ===== SUCCESS ===== */
+
+.rdpage-success{
+background:#ffffff;
+padding:40px;
+border-radius:18px;
+text-align:center;
+color:#1e293b;
+width:340px;
+box-shadow:0 10px 30px rgba(0,0,0,0.15);
+}
+
+.rdpage-success h1{
+font-size:40px;
+color:#14b8a6;
+margin-bottom:10px;
+}
+
+
+/* ===== BOOKING MODAL SCROLL FIX ===== */
+
+.rdpage-booking-modal{
+background:#ffffff;
+border-radius:20px;
+padding:28px;
+width:420px;
+max-width:95%;
+max-height:90vh;
+overflow-y:auto;
+}
+
+
+/* ===== MOBILE FIXES ===== */
+
+@media(max-width:768px){
+
+.rdpage-booking-modal{
+position:fixed;
+bottom:0;
+width:100%;
+max-height:90vh;
+overflow-y:auto;
+border-radius:20px 20px 0 0;
+}
+
+.rdpage-card-page{
+position:fixed;
+bottom:0;
+width:100%;
+max-height:90vh;
+overflow-y:auto;
+border-radius:20px 20px 0 0;
+}
+
+}
+
+
+/* ===== PREVENT BOTTOM BUTTON OVERLAP ===== */
+
+.rdpage-wrapper{
+padding-bottom:140px;
+}
