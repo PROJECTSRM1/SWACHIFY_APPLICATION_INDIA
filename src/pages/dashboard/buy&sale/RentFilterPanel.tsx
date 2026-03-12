@@ -20,9 +20,10 @@ const DEFAULT_FILTERS: FilterState = {
 type Props = {
   onClose: () => void;
   onApply: (filters: FilterState) => void;
+  onReset?: () => void;
 };
 
-export default function RentFilterPanel({ onClose, onApply }: Props) {
+export default function RentFilterPanel({ onClose, onApply, onReset }: Props) {
   const [filters, setFilters] = useState<FilterState>(DEFAULT_FILTERS);
 
   const baseTypes = ["Apartment", "Penthouse", "Hotel", "Villa"];
@@ -150,7 +151,10 @@ export default function RentFilterPanel({ onClose, onApply }: Props) {
 
           <button
             className="reset-btn"
-            onClick={() => setFilters(DEFAULT_FILTERS)}
+            onClick={() => {
+              setFilters(DEFAULT_FILTERS);
+              if (onReset) onReset();
+            }}
           >
             Reset
           </button>
