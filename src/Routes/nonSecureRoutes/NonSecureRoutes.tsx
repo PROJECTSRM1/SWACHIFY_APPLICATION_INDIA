@@ -47,6 +47,7 @@ import Blog from "../../pages/CleaningService/Blog";
 import Support from "../../pages/CleaningService/Support";
 import MyFood from "../../pages/dashboard/MyFood/MyFood";
 import Freelancer from "../../pages/landing/Freelancer";
+import { DoctorDashboard, HospitalDashboard, LabDashboard, MedicalStoreDashboard } from "../../pages/dashboard/HealthCare/PartnerDashboard";
 
 export const NonSecureRoutes = () => {
   //const navigate = useNavigate();
@@ -136,6 +137,11 @@ export const NonSecureRoutes = () => {
       <Route path="/rawmaterials" element={<Rawmaterials />} />
       <Route path="/MyFood" element={<MyFood />} />
       <Route path="/Freelancers" element={<Freelancer />} />
+
+      <Route path="partner/hospital/dashboard" element={<HospitalDashboard />} />
+      <Route path="partner/lab/dashboard" element={<LabDashboard />} />
+      <Route path="partner/medicalstore/dashboard" element={<MedicalStoreDashboard />} />
+      <Route path="partner/doctor/dashboard" element={<DoctorDashboard />} />
 
       {/* rentals landing page */}
       <Route path="/rentals" element={<Landingrentals />} />
