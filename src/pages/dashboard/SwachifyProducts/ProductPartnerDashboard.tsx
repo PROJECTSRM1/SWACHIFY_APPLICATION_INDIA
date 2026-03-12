@@ -3,7 +3,9 @@ import { ShoppingBag, Box, Trash2 } from "lucide-react";
 import "./ProductPartnerDashboard.css";
 import { getProducts, updateProduct, deleteProduct, type Product } from "./productStore";
 import { getOrders, type Order } from "./orderStore";
-import { Modal, Form, Input, message } from "antd";
+import { Modal, Form, Input, message, Button } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
+import RegisterProduct from "./RegisterProduct";
 
 const ProductPartnerDashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState<"orders" | "inventory">("orders");
@@ -12,6 +14,7 @@ const ProductPartnerDashboard: React.FC = () => {
 
   // Edit Modal State
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [form] = Form.useForm();
 
@@ -102,7 +105,14 @@ const ProductPartnerDashboard: React.FC = () => {
             {activeTab === "orders" ? "Order Management" : "Inventory Manager"}
           </h1>
           <div className="header-actions">
-            {/* Action buttons could go here */}
+            <Button 
+                type="primary" 
+                icon={<PlusOutlined />} 
+                onClick={() => setIsRegisterModalOpen(true)}
+                className="add-btn-web"
+            >
+                Add New Product
+            </Button>
           </div>
         </header>
 
@@ -201,6 +211,23 @@ const ProductPartnerDashboard: React.FC = () => {
             <Input type="number" />
           </Form.Item>
         </Form>
+      </Modal>
+
+      {/* Register Modal */}
+      <Modal
+        title={null}
+        open={isRegisterModalOpen}
+        onCancel={() => setIsRegisterModalOpen(false)}
+        footer={null}
+        width={800}
+        className="sw-register-modal"
+      >
+        <RegisterProduct 
+          hideHeader
+          onBack={() => {
+            setIsRegisterModalOpen(false);
+            loadData();
+        }} />
       </Modal>
     </div>
   );

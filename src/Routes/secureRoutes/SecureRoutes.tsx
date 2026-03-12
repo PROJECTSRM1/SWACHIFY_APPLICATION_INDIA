@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import HeaderBar from "../../components/header/header";
+import Footer from "../../components/footer/Footer";
 
 import Dashboard from "../../pages/dashboard/Dashboard";
 import CleaningService from "../../pages/dashboard/cleaningservice/CleaningService";
@@ -23,6 +24,7 @@ export const SecureRoutes = () => {
   return (
     <>
       <HeaderBar />
+      <Footer />
 
       <Routes>
         {/* DASHBOARD LAYOUT (ONLY ONCE) */}

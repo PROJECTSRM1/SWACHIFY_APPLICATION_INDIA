@@ -551,12 +551,23 @@ useEffect(() => {
           }
         };
 
+        const markNotificationRead = (id: string) => {
+  setNotifications((prev) =>
+    prev.map((n) =>
+      n.id === id ? { ...n, read: true } : n
+    )
+  );
+};
+
+
+
         const bgColor = `${getColor(notification.type)}33`; // light transparent bg
 
         return (
           <div
             key={notification.id}
             className={`notification-card ${!notification.read ? 'unread' : ''}`}
+            onClick={() => markNotificationRead(notification.id)}
           >
             <div className="notification-icon" style={{ backgroundColor: bgColor }}>
               {getIcon(notification.type)}

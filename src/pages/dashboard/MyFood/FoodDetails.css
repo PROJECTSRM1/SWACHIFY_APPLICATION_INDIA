@@ -1,0 +1,266 @@
+/* PAGE */
+
+.details-page {
+  background: #fafafa;
+  min-height: 100vh;
+  padding: 40px 10%;
+  font-family: "Inter", sans-serif;
+}
+
+/* HEADER */
+
+.details-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.details-header h2 {
+  font-size: 26px;
+  font-weight: 600;
+}
+
+/* IMAGE */
+/* IMAGE WRAPPER */
+
+.details-image-wrapper {
+  width: 100%;
+  max-width: 1000px;
+  height: 380px;
+
+  margin: 0 auto;
+
+  border-radius: 20px;
+  overflow: hidden;
+
+  background: #fff;
+
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* IMAGE */
+
+.details-image-wrapper img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center;
+
+  transition: transform 0.4s ease;
+}
+
+/* subtle hover like modern websites */
+
+.details-image-wrapper:hover img {
+  transform: scale(1.03);
+}
+
+.details-content {
+  margin-top: 24px;
+}
+
+.details-content h1 {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.details-content p {
+  color: #6b7280;
+  font-size: 18px;
+  line-height: 1.8;
+  margin-top: 12px;
+  opacity: 0.85;
+  text-align: left;
+}
+
+/* RESTAURANT BADGE */
+
+.restaurant-badge {
+  display: inline-block;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  padding: 6px 14px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+/* META */
+
+.meta {
+  margin-top: 16px;
+  display: flex;
+  gap: 30px;
+  color: #ff6b35;
+  font-weight: 500;
+}
+
+/* SIZE */
+
+.size-options {
+  margin-top: 14px;
+  margin-bottom: 14px;
+  display: flex;
+  gap: 14px;
+}
+
+.size {
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: 1px solid #e5e7eb;
+  background: white;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.size:hover {
+  border-color: #ff6b35;
+}
+
+.size.active {
+  background: #3b82f6;
+  color: white;
+  border: none;
+}
+
+/* INGREDIENTS */
+
+.ingredients {
+  margin-top: 16px;
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.ingredient {
+  padding: 8px 16px;
+  background: white;
+  border-radius: 18px;
+  border: 1px solid #e5e7eb;
+  font-size: 14px;
+}
+
+/* FOOTER */
+
+.details-footer {
+  margin-top: 40px;
+  padding: 24px;
+
+  background: white;
+  border-radius: 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* PRICE */
+
+.price {
+  font-size: 30px;
+  font-weight: 700;
+  color: #22c55e;
+  min-width: 120px;
+}
+/* QUANTITY */
+
+.qty {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f9fafb;
+  padding: 6px 12px;
+  border-radius: 10px;
+}
+
+.qty button {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: none;
+
+  background: white;
+  cursor: pointer;
+
+  font-size: 18px;
+  font-weight: 600;
+
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.qty span {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.qty button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ADD TO CART */
+
+.details-cart-btn {
+  background: #ff6b35;
+  border: none;
+  color: white;
+  padding: 14px 30px;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.details-cart-btn:hover {
+  transform: scale(1.05);
+}
+
+.details-cart-btn.added {
+  background-color: #ff8c5a;
+}
+
+
+.restaurant-badge {
+  display: inline-flex;
+  align-items: center;
+  background-color: rgba(255, 77, 79, 0.1); /* Very light red background */
+  color: #ff4d4f; /* Primary red color */
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* The Red Dot */
+.restaurant-badge::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  background-color: #ff4d4f; /* Solid red dot */
+  border-radius: 50%;
+  margin-right: 8px; /* Space between dot and text */
+  display: inline-block;
+  
+  /* Optional: Add a subtle pulse animation to make it "live" */
+  animation: pulse-red 2s infinite;
+}
+
+/* Optional Pulse Animation */
+@keyframes pulse-red {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 77, 79, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(255, 77, 79, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 77, 79, 0);
+  }
+}
