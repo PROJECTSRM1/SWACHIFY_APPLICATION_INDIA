@@ -27,24 +27,20 @@ image:string
 
 const PROPERTIES = [
 {
-id: "1",
-name: "Ayana Homestay",
-location: "Imogiri, Yogyakarta",
-price: "$310/month",
-rating: 4.8,
+id:"1",
+name:"Ayana Homestay",
+location:"Yogyakarta",
+price:"$310/month",
+rating:4.8,
 image:"https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80",
-images:[
-"https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80",
-"https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=80",
-"https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=600&q=80"
-],
+images:["https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80"],
 bedrooms:3,
 bathrooms:2,
 area:1200,
 build:2019,
 parking:"1 Indoor",
 status:"For Rent",
-description:"Beautiful property with modern design and full facilities located near restaurants and schools.",
+description:"Beautiful property with modern design.",
 agent:{
 name:"Esther Howard",
 role:"Real Estate Agent",
@@ -55,21 +51,18 @@ image:"https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200"
 {
 id:"2",
 name:"Bali Komang Guest",
-location:"Nusa Penida, Bali",
+location:"Bali",
 price:"$180/night",
 rating:4.5,
 image:"https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=600&q=80",
-images:[
-"https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=600&q=80",
-"https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=80"
-],
+images:["https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=600&q=80"],
 bedrooms:2,
 bathrooms:1,
 area:900,
 build:2018,
 parking:"Outdoor",
 status:"For Rent",
-description:"Comfortable guest house with scenic views in Bali.",
+description:"Comfortable guest house.",
 agent:{
 name:"Brooklyn Simmons",
 role:"Property Agent",
@@ -80,280 +73,400 @@ image:"https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200"
 {
 id:"3",
 name:"Maharani Villa",
-location:"Yogyakarta",
+location:"Jakarta",
 price:"$320/month",
 rating:4.5,
 image:"https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=80",
-images:[
-"https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=80",
-"https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80"
-],
+images:["https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=80"],
 bedrooms:4,
 bathrooms:3,
 area:1500,
 build:2020,
 parking:"2 Indoor",
 status:"For Rent",
-description:"Luxury villa with private pool and modern interior.",
+description:"Luxury villa.",
 agent:{
 name:"Jenny Wilson",
 role:"Property Agent",
 image:"https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200"
 }
+},
+
+{
+id:"4",
+name:"Apartement Landmark",
+location:"Malang",
+price:"$320/month",
+rating:4.7,
+image:"https://images.unsplash.com/photo-1486325212027-8081e485255e?w=600&q=80",
+images:["https://images.unsplash.com/photo-1486325212027-8081e485255e?w=600&q=80"],
+bedrooms:2,
+bathrooms:2,
+area:1100,
+build:2021,
+parking:"Indoor",
+status:"For Rent",
+description:"Modern apartment.",
+agent:{
+name:"Alex John",
+role:"Property Agent",
+image:"https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200"
 }
-];
+}
+]
 
 const TOP_LOCATIONS = [
-  {
-    id: "1",
-    name: "Malang",
-    image:
-      "https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?w=200&q=80",
-  },
-  {
-    id: "2",
-    name: "Bali",
-    image:
-      "https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=200&q=80",
-  },
-  {
-    id: "3",
-    name: "Yogyakarta",
-    image:
-      "https://images.unsplash.com/photo-1570130405657-8e3eb4a9a0e2?w=200&q=80",
-  },
-];
+{
+id:"1",
+name:"Malang",
+image:"https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?w=200&q=80"
+},
+{
+id:"2",
+name:"Bali",
+image:"https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=200&q=80"
+},
+{
+id:"3",
+name:"Yogyakarta",
+image:"https://images.unsplash.com/photo-1570130405657-8e3eb4a9a0e2?w=200&q=80"
+},
+{
+id:"4",
+name:"Jakarta",
+image:"https://images.unsplash.com/photo-1555899434-94d1368aa7af?w=200&q=80"
+}
+]
 
-export default function BuysaleProducts() {
-  const [favorites, setFavorites] = useState<string[]>([]);
-  const [showFilter, setShowFilter] = useState(false);
-  const [selectedProperty, setSelectedProperty] =
-  useState<Property | null>(null);
+export default function BuysaleProducts(){
 
-  const toggleFavorite = (id: string) => {
-    if (favorites.includes(id)) {
-      setFavorites(favorites.filter((f) => f !== id));
-    } else {
-      setFavorites([...favorites, id]);
-    }
-  };
+const [favorites,setFavorites] = useState<string[]>([])
+const [showFilter,setShowFilter] = useState(false)
+const [selectedProperty,setSelectedProperty] = useState<Property | null>(null)
 
-  return (
-    <div className="buysale-container">
+const [showNearbyAll,setShowNearbyAll] = useState(false)
+const [showRecommendedAll,setShowRecommendedAll] = useState(false)
+const [showPopularAll,setShowPopularAll] = useState(false)
+const [showLocationAll,setShowLocationAll] = useState(false)
 
-      {/* SEARCH */}
-      <div className="buysale-search-container">
+const [selectedLocation,setSelectedLocation] = useState<string | null>(null)
 
-        <input
-          className="buysale-search-input"
-          placeholder="Search Property"
-        />
+const toggleFavorite = (id:string)=>{
+if(favorites.includes(id)){
+setFavorites(favorites.filter(f=>f!==id))
+}else{
+setFavorites([...favorites,id])
+}
+}
 
-        <button
-          className="buysale-filter-btn"
-          onClick={() => setShowFilter(true)}
-        >
-          Filter
-        </button>
+const filteredProperties = selectedLocation
+? PROPERTIES.filter(p=>p.location === selectedLocation)
+: PROPERTIES
 
-      </div>
+return(
 
-      {/* BANNER */}
+<div className="buysale-container">
 
-      <div className="buysale-banner">
+{/* SEARCH */}
 
-        <div className="buysale-banner-left">
+<div className="buysale-search-container">
 
-          <h2 className="buysale-banner-title">
-            GET YOUR 20% <br /> CASHBACK
-          </h2>
+<input
+className="buysale-search-input"
+placeholder="Search Property"
+/>
 
-          <p className="buysale-banner-expiry">
-            *Expired 20 March 2026
-          </p>
+<button
+className="buysale-filter-btn"
+onClick={()=>setShowFilter(true)}
+>
+Filter
+</button>
 
-        </div>
+</div>
 
-        <img
-          className="buysale-banner-image"
-          src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=400&q=80"
-        />
+{/* BANNER */}
 
-      </div>
+<div className="buysale-banner">
 
-      {/* RECOMMENDED */}
+<div className="buysale-banner-left">
 
-      <div className="buysale-section-header">
+<h2 className="buysale-banner-title">
+GET YOUR 20% <br/> CASHBACK
+</h2>
 
-        <h3 className="buysale-section-title">Recommended</h3>
+<p className="buysale-banner-expiry">
+*Expired 20 March 2026
+</p>
 
-        <span className="buysale-seeall">See all</span>
+</div>
 
-      </div>
+<img
+className="buysale-banner-image"
+src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=400&q=80"
+/>
 
-      <div className="buysale-recommended-row">
+</div>
 
-        {PROPERTIES.map((item) => {
+{/* RECOMMENDED */}
 
-          const isFav = favorites.includes(item.id);
+<div className="buysale-section-header">
 
-          return (
-            <div key={item.id} className="buysale-rec-card">
+<h3 className="buysale-section-title">Recommended</h3>
 
-              <img
-                src={item.image}
-                className="buysale-rec-image"
-              />
+<span
+className="buysale-seeall"
+onClick={()=>setShowRecommendedAll(!showRecommendedAll)}
+>
+{showRecommendedAll ? "See less" : "See all"}
+</span>
 
-              <div className="buysale-rec-overlay">
+</div>
 
-                <h4 className="buysale-rec-name">
-                  {item.name}
-                </h4>
+<div className="buysale-recommended-row">
 
-                <p className="buysale-rec-location">
-                  {item.location}
-                </p>
+{(showRecommendedAll ? filteredProperties : filteredProperties.slice(0,3)).map((item)=>{
 
-              </div>
+const isFav = favorites.includes(item.id)
 
-              <button
-                className="buysale-heart-btn"
-                onClick={() => toggleFavorite(item.id)}
-              >
-                {isFav ? "❤️" : "🤍"}
-              </button>
+return(
 
-              <div className="buysale-price-badge">
-                {item.price}
-              </div>
-
-            </div>
-          );
-
-        })}
-
-      </div>
-
-      {/* TOP LOCATIONS */}
-
-      <div className="buysale-section-header">
-
-        <h3 className="buysale-section-title">
-          Top Locations
-        </h3>
-
-      </div>
-
-      <div className="buysale-location-row">
-
-        {TOP_LOCATIONS.map((loc) => (
-
-          <div key={loc.id} className="buysale-location-chip">
-
-            <img
-              src={loc.image}
-              className="buysale-location-img"
-            />
-
-            <span className="buysale-location-name">
-              {loc.name}
-            </span>
-
-          </div>
-
-        ))}
-
-      </div>
-
-      {/* POPULAR */}
-
-      <div className="buysale-section-header">
-
-        <h3 className="buysale-section-title">
-          Popular for you
-        </h3>
-
-      </div>
-
-      <div className="buysale-list">
-
-        {PROPERTIES.map((item) => {
-
-          const isFav = favorites.includes(item.id);
-
-          return (
-
-           <div
-  key={item.id}
-  className="buysale-list-card"
-  onClick={() => setSelectedProperty(item)}
+<div
+key={item.id}
+className="buysale-rec-card"
+onClick={()=>setSelectedProperty(item)}
 >
 
-              <img
-                src={item.image}
-                className="buysale-list-image"
-              />
+<img src={item.image} className="buysale-rec-image"/>
 
-              <div className="buysale-list-info">
+<div className="buysale-rec-overlay">
 
-                <div className="buysale-list-top">
+<h4 className="buysale-rec-name">{item.name}</h4>
+<p className="buysale-rec-location">{item.location}</p>
 
-                  <h4>{item.name}</h4>
+</div>
 
-                  <button
-                    onClick={() => toggleFavorite(item.id)}
-                  >
-                    {isFav ? "❤️" : "🤍"}
-                  </button>
+<button
+className="buysale-heart-btn"
+onClick={(e)=>{
+e.stopPropagation()
+toggleFavorite(item.id)
+}}
+>
+{isFav ? "❤️" : "🤍"}
+</button>
 
-                </div>
+<div className="buysale-price-badge">{item.price}</div>
 
-                <p className="buysale-list-location">
-                  {item.location}
-                </p>
+</div>
 
-                <div className="buysale-list-footer">
+)
 
-                  <span className="buysale-list-price">
-                    {item.price}
-                  </span>
+})}
 
-                  <span className="buysale-rating">
-                    ⭐ {item.rating}
-                  </span>
+</div>
 
-                </div>
+{/* NEARBY */}
 
-              </div>
+<div className="buysale-section-header">
 
-            </div>
+<h3 className="buysale-section-title">Nearby</h3>
 
-          );
+<span
+className="buysale-seeall"
+onClick={()=>setShowNearbyAll(!showNearbyAll)}
+>
+{showNearbyAll ? "See less" : "See all"}
+</span>
 
-        })}
+</div>
 
-      </div>
+<div className="buysale-list">
 
-      {/* FILTER PANEL */}
+{(showNearbyAll ? filteredProperties : filteredProperties.slice(0,3)).map((item)=>{
 
-      {showFilter && (
+const isFav = favorites.includes(item.id)
 
-        <RentFilterPanel
-          onClose={() => setShowFilter(false)}
-          onApply={(filters) => console.log(filters)}
-        />
+return(
 
-      )}
-      {selectedProperty && (
-  <div className="detail-modal-overlay">
-    <RentDetailPage
-      property={selectedProperty}
-      onClose={() => setSelectedProperty(null)}
-    />
-  </div>
+<div
+key={item.id}
+className="buysale-list-card"
+onClick={()=>setSelectedProperty(item)}
+>
+
+<img src={item.image} className="buysale-list-image"/>
+
+<div className="buysale-list-info">
+
+<div className="buysale-list-top">
+
+<h4>{item.name}</h4>
+
+<button
+onClick={(e)=>{
+e.stopPropagation()
+toggleFavorite(item.id)
+}}
+>
+{isFav ? "❤️" : "🤍"}
+</button>
+
+</div>
+
+<p className="buysale-list-location">{item.location}</p>
+
+<div className="buysale-list-footer">
+
+<span className="buysale-list-price">{item.price}</span>
+<span className="buysale-rating">⭐ {item.rating}</span>
+
+</div>
+
+</div>
+
+</div>
+
+)
+
+})}
+
+</div>
+
+{/* TOP LOCATIONS */}
+
+<div className="buysale-section-header">
+
+<h3 className="buysale-section-title">
+Top Locations
+</h3>
+
+<span
+className="buysale-seeall"
+onClick={()=>setShowLocationAll(!showLocationAll)}
+>
+{showLocationAll ? "See less" : "See all"}
+</span>
+
+</div>
+
+<div className="buysale-location-row">
+
+{(showLocationAll ? TOP_LOCATIONS : TOP_LOCATIONS.slice(0,3)).map((loc)=>(
+
+<div
+key={loc.id}
+className="buysale-location-chip"
+onClick={()=>setSelectedLocation(loc.name)}
+>
+
+<img src={loc.image} className="buysale-location-img"/>
+
+<span className="buysale-location-name">
+{loc.name}
+</span>
+
+</div>
+
+))}
+
+</div>
+
+{/* POPULAR */}
+
+<div className="buysale-section-header">
+
+<h3 className="buysale-section-title">
+Popular for you
+</h3>
+
+<span
+className="buysale-seeall"
+onClick={()=>setShowPopularAll(!showPopularAll)}
+>
+{showPopularAll ? "See less" : "See all"}
+</span>
+
+</div>
+
+<div className="buysale-list">
+
+{(showPopularAll ? filteredProperties : filteredProperties.slice(0,3)).map((item)=>{
+
+const isFav = favorites.includes(item.id)
+
+return(
+
+<div
+key={item.id}
+className="buysale-list-card"
+onClick={()=>setSelectedProperty(item)}
+>
+
+<img src={item.image} className="buysale-list-image"/>
+
+<div className="buysale-list-info">
+
+<div className="buysale-list-top">
+
+<h4>{item.name}</h4>
+
+<button
+onClick={(e)=>{
+e.stopPropagation()
+toggleFavorite(item.id)
+}}
+>
+{isFav ? "❤️" : "🤍"}
+</button>
+
+</div>
+
+<p className="buysale-list-location">{item.location}</p>
+
+<div className="buysale-list-footer">
+
+<span className="buysale-list-price">{item.price}</span>
+<span className="buysale-rating">⭐ {item.rating}</span>
+
+</div>
+
+</div>
+
+</div>
+
+)
+
+})}
+
+</div>
+
+{/* FILTER PANEL */}
+
+{showFilter && (
+
+<RentFilterPanel
+onClose={()=>setShowFilter(false)}
+onApply={(filters)=>console.log(filters)}
+/>
+
 )}
 
-    </div>
-  );
+{selectedProperty && (
+
+<div className="detail-modal-overlay">
+
+<RentDetailPage
+property={selectedProperty}
+onClose={()=>setSelectedProperty(null)}
+/>
+
+</div>
+
+)}
+
+</div>
+
+)
+
 }
