@@ -30,6 +30,18 @@ const restaurants: RestaurantMenu[] = [
     time: "20 min",
     img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5",
     categories: {
+      Pizza: [
+        {
+          name: "Margherita Pizza",
+          price: 18,
+          img: "https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?w=800",
+        },
+        {
+          name: "Pepperoni Pizza",
+          price: 20,
+          img: "https://images.unsplash.com/photo-1628840042765-356cda07504e?w=800",
+        },
+      ],
       Burger: [
         {
           name: "Burger Ferguson",

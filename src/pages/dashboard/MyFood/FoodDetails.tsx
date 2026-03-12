@@ -34,6 +34,14 @@ if (!item) {
 
   const sizes = ["10", "14", "16"];
 
+  const sizePriceMultiplier: Record<string, number> = {
+    "10": 1,
+    "14": 1.3,
+    "16": 1.6,
+  };
+
+  const finalPrice = Math.round(item.price * sizePriceMultiplier[size]) * qty;
+
   const ingredients = ["Salt", "Protein", "Herbs", "Spices", "Greens"];
 
   const restaurantName = restaurant?.name || item?.restaurant;
@@ -76,6 +84,7 @@ if (!item) {
               onClick={() => setSize(s)}
             >
               {s}"
+              {/* {s}" (${Math.round(item.price * sizePriceMultiplier[s])}) */}
             </button>
           ))}
         </div>
@@ -96,7 +105,7 @@ if (!item) {
       {/* FOOTER */}
 
       <div className="details-footer">
-       <span className="price">${(item.price || 0) * qty}</span>
+        <span className="price">${finalPrice}</span>
 
         <div className="qty">
           <button

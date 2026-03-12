@@ -1,7 +1,7 @@
 // src/pages/landing/SwachifyProducts.tsx
 import React from "react";
-import CommonHeader from "../../pages/landing/Header";
-import FooterSection from "../../pages/landing/FooterSection";
+import HeaderBar from "../../components/header/header";
+import Footer from "../../components/footer/Footer";
 
 import { Row, Col, Card, Button, Tag } from "antd";
 import {
@@ -65,7 +65,7 @@ const COMBO_PACKS: ComboPack[] = (swachifyProducts.comboPacks || []) as ComboPac
 const SwachifyProducts: React.FC = () => {
   return (
     <div className="sw-sp-page">
-      <CommonHeader selectedKey="Swachifyproducts" />
+      <HeaderBar />
 
       {/* HERO */}
       <section className="sw-sp-hero">
@@ -215,7 +215,7 @@ const SwachifyProducts: React.FC = () => {
         </section>
       </main>
 
-      <FooterSection selectedKey="Swachifyproducts" />
+      <Footer />
     </div>
   );
 };
