@@ -5,10 +5,29 @@ import { ArrowLeftOutlined } from "@ant-design/icons";
 import "./FoodDetails.css";
 
 const FoodDetails = () => {
-  const navigate = useNavigate();
-  const { state } = useLocation();
 
-  const { item, restaurant } = state;
+
+  const navigate = useNavigate();
+  const [added, setAdded] = useState(false);
+
+
+  const handleAddToCart = () => {
+  setAdded(true);
+
+  setTimeout(() => {
+    navigate("/MyFood");
+  }, 1000);
+};
+
+
+  const location = useLocation();
+const { item, restaurant } = location.state || {};
+
+
+
+if (!item) {
+  return <div>No item selected</div>;
+}
 
   const [size, setSize] = useState("14");
   const [qty, setQty] = useState(1);
@@ -25,6 +44,10 @@ const FoodDetails = () => {
 
   const ingredients = ["Salt", "Protein", "Herbs", "Spices", "Greens"];
 
+  const restaurantName = restaurant?.name || item?.restaurant;
+
+  
+
   return (
     <div className="details-page">
       <div className="details-header">
@@ -32,11 +55,11 @@ const FoodDetails = () => {
         <h2>Details</h2>
       </div>
       <div className="details-image-wrapper">
-        <img src={item.img} className="details-image" />
+        <img src={item.img} alt={item.name} className="details-image" />
       </div>
 
       <div className="details-content">
-        <div className="restaurant-badge">{restaurant.name}</div>
+        <div className="restaurant-badge">{restaurantName}</div>
 
         <h1>{item.name}</h1>
 
@@ -45,9 +68,9 @@ const FoodDetails = () => {
           fresh herbs and house-made sauce.
         </p>
 
-        <div className="meta">
-          ⭐ {restaurant.rating} | 🚚 Free | ⏱ {restaurant.time}
-        </div>
+       <div className="meta">
+  ⭐⭐ {restaurant?.rating ?? item?.rating ?? 4.5} | 🚚 Free | ⏱  {restaurant?.time ?? "25 min"}
+</div>
 
         {/* SIZE */}
 
@@ -97,7 +120,14 @@ const FoodDetails = () => {
           <button onClick={() => setQty((prev) => prev + 1)}>+</button>
         </div>
 
-        <button className="details-cart-btn">ADD TO CART</button>
+        <button
+  className={`details-cart-btn ${added ? "added" : ""}`}
+  onClick={handleAddToCart}
+>
+  {added ? "ADDED TO CART" : "ADD TO CART"}
+</button>
+
+
       </div>
     </div>
   );

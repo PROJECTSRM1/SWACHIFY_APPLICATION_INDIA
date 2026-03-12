@@ -1,12 +1,12 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   ArrowLeftOutlined,
   SearchOutlined,
-  FilterOutlined,
   PlusOutlined,
   StarFilled,
   ClockCircleOutlined,
   ShoppingOutlined,
+  ControlOutlined,
 } from "@ant-design/icons";
 
 import { useNavigate, useParams } from "react-router-dom";
@@ -20,7 +20,44 @@ const CategoryPage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [showFilter, setShowFilter] = useState(false);
+  const [sortType, setSortType] = useState("default");
+  const dropdownRef = useRef<HTMLDivElement>(null);
+const filterRef = useRef<HTMLDivElement>(null);
+const searchRef = useRef<HTMLDivElement>(null);
+
+
+useEffect(() => {
+
+  const handleClickOutside = (event: MouseEvent) => {
+  const target = event.target as Node;
+
+  // Dropdown and Filter logic
+  if (dropdownRef.current && !dropdownRef.current.contains(target)) {
+    setShowDropdown(false);
+  }
+  if (filterRef.current && !filterRef.current.contains(target)) {
+    setShowFilter(false);
+  }
+
+  // Search logic
+  if (searchRef.current && !searchRef.current.contains(target)) {
+    // Only close if we are actually clicking outside the search area
+    setSearchOpen(false);
+  }
+};
+
+
+  document.addEventListener("mousedown", handleClickOutside);
+
+  return () => {
+    document.removeEventListener("mousedown", handleClickOutside);
+  };
+}, []);
+
+  
   const inputRef = useRef<HTMLInputElement>(null);
+
   const navigate = useNavigate();
 
 
@@ -51,13 +88,14 @@ const CategoryPage: React.FC = () => {
       img: "https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?q=80&w=800",
     },
     {
-      id: 2,
-      name: "Pepperoni Feast",
-      restaurant: "Rose Garden",
-      price: 15,
-      rating: 4.6,
-      img: "https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?q=80&w=800",
-    },
+  id: 2,
+  name: "Pepperoni Feast",
+  restaurant: "Rose Garden",
+  price: 15,
+  rating: 4.6,
+ img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800&auto=format&fit=crop"
+},
+   
     {
       id: 3,
       name: "BBQ Chicken Pizza",
@@ -810,10 +848,24 @@ const currentCuisine = cuisineData[key] || cuisineData.pizza;
      GENERIC SEARCH FILTER
   -------------------------------- */
 
-  const filteredItems = items.filter((item: any) =>
-    item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    item.restaurant.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  let filteredItems = items.filter((item: any) =>
+  item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  item.restaurant.toLowerCase().includes(searchQuery.toLowerCase())
+);
+
+// Sorting
+if (sortType === "topRated") {
+  filteredItems = [...filteredItems].sort((a, b) => b.rating - a.rating);
+}
+
+if (sortType === "lowHigh") {
+  filteredItems = [...filteredItems].sort((a, b) => a.price - b.price);
+}
+
+if (sortType === "highLow") {
+  filteredItems = [...filteredItems].sort((a, b) => b.price - a.price);
+}
+ 
 
   const filteredRestaurants = restaurants.filter((res: any) =>
     res.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -834,8 +886,9 @@ const currentCuisine = cuisineData[key] || cuisineData.pizza;
     
             <ArrowLeftOutlined />
           </button>
+          <div ref={dropdownRef}>
 
-          <div 
+                 <div 
            className="dropdown-selector"
     onClick={() => setShowDropdown(!showDropdown)}
           >
@@ -859,37 +912,105 @@ const currentCuisine = cuisineData[key] || cuisineData.pizza;
   )}
         </div>
 
-        <div className="header-right">
-
-          <div className={`search-wrapper ${searchOpen ? "open" : ""}`}>
-
-            <button
-              className="icon-btn search-btn"
-              onClick={() => {
-                setSearchOpen(!searchOpen);
-                setTimeout(() => inputRef.current?.focus(), 200);
-              }}
-            >
-              <SearchOutlined />
-            </button>
-
-            <input
-              ref={inputRef}
-              type="text"
-              placeholder="Search cuisine or restaurant..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
 
           </div>
 
-          <button className="icon-btn">
-            <FilterOutlined />
-          </button>
+     
+
+        <div className="header-right">
+
+          <div ref={searchRef} className={`search-wrapper ${searchOpen ? "open" : ""}`}>
+
+  <button
+    className="icon-btn search-btn"
+    onClick={() => {
+      setSearchOpen(!searchOpen);
+      setTimeout(() => inputRef.current?.focus(), 200);
+    }}
+  >
+    <SearchOutlined />
+  </button>
+
+  <input
+    ref={inputRef}
+    type="text"
+    placeholder="Search cuisine or restaurant..."
+    value={searchQuery}
+    onChange={(e) => setSearchQuery(e.target.value)}
+  />
+
+  {/* CLEAR BUTTON */}
+  {searchQuery && (
+    <button
+      className="clear-btn"
+      onClick={() => setSearchQuery("")}
+    >
+      ✕
+    </button>
+  )}
+
+</div>
+
+      
+
+   <button className="icon-btn" onClick={() => setShowFilter(!showFilter)}>
+  <ControlOutlined style={{ fontSize: '18px' }} />
+</button>
 
         </div>
 
       </header>
+      <div ref={filterRef}>
+               {showFilter && (
+  <div className="filter-dropdown">
+
+    <h4>SORT BY</h4>
+
+    <div
+      className={`filter-item ${sortType === "default" ? "active" : ""}`}
+      onClick={() => {
+        setSortType("default");
+        setShowFilter(false);
+      }}
+    >
+      Default
+    </div>
+
+    <div
+      className={`filter-item ${sortType === "topRated" ? "active" : ""}`}
+      onClick={() => {
+        setSortType("topRated");
+        setShowFilter(false);
+      }}
+    >
+      ⭐ Top Rated
+    </div>
+
+    <div
+      className={`filter-item ${sortType === "lowHigh" ? "active" : ""}`}
+      onClick={() => {
+        setSortType("lowHigh");
+        setShowFilter(false);
+      }}
+    >
+      ↑ Price: Low to High
+    </div>
+
+    <div
+      className={`filter-item ${sortType === "highLow" ? "active" : ""}`}
+      onClick={() => {
+        setSortType("highLow");
+        setShowFilter(false);
+      }}
+    >
+      ↓ Price: High to Low
+    </div>
+
+  </div>
+)}
+   
+      </div>
+   
 
       {/* CONTENT */}
 
@@ -904,10 +1025,18 @@ const currentCuisine = cuisineData[key] || cuisineData.pizza;
           </h2>
 
           <div className="product-grid">
-
             {filteredItems.map((pizza: any) => (
 
-              <div key={pizza.id} className="product-card">
+                    <div
+                    key={pizza.id}
+                    className="product-card"
+                   onClick={() =>
+                    navigate("/food-details", {
+                       state: { item: pizza } 
+                 })
+           }
+                     >
+
 
                 <div className="product-image-wrapper">
                   <img src={pizza.img} alt={pizza.name} />
