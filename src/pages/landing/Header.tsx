@@ -102,23 +102,23 @@ const CommonHeader: React.FC<{ selectedKey?: string }> = ({
 
   const [isHealthCareSelected] = useState(false);
   const [doctorRoleSelected, setDoctorRoleSelected] = useState(false);
- const [partnerAuthVisible, setPartnerAuthVisible] = useState(false);
+  const [partnerAuthVisible, setPartnerAuthVisible] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(
-  !!localStorage.getItem("accessToken")
-);
-const handleLogout = () => {
-  localStorage.clear();          // 🔥 full logout
-  setIsAuthenticated(false);     // UI update
-  navigate("/landing");          // 🔁 redirect to landing
-};
+    !!localStorage.getItem("accessToken")
+  );
+  const handleLogout = () => {
+    localStorage.clear();          // 🔥 full logout
+    setIsAuthenticated(false);     // UI update
+    navigate("/landing");          // 🔁 redirect to landing
+  };
 
-type UserRole = "customer" | "employee" | "partner" | "admin";
- const [userRole, setUserRole] = useState<UserRole | null>(null);
+  type UserRole = "customer" | "employee" | "partner" | "admin";
+  const [userRole, setUserRole] = useState<UserRole | null>(null);
   const [partnerModalVisible, setPartnerModalVisible] = useState(false);
   const [partnerActiveTab, setPartnerActiveTab] = useState<"login" | "register">("register");
 
 
-console.log(userRole);
+  console.log(userRole);
 
 
   const [activeAuthTab, setActiveAuthTab] = useState<"login" | "register">(
@@ -133,7 +133,7 @@ console.log(userRole);
   const [authLoading, setAuthLoading] = useState(false);
   const navigate = useNavigate();
   // const [setServiceOpen] = useState(false);
-const [loginForm] = Form.useForm();
+  const [loginForm] = Form.useForm();
 
 
   const openAuthModal = (tab: "login" | "register" = "login") => {
@@ -231,11 +231,11 @@ const [loginForm] = Form.useForm();
         email_or_phone: values.identifier,
         password: values.password,
       });
-     
-      
+
+
       localStorage.setItem("user_id", res.user_id);
-    
-      
+
+
       localStorage.setItem("email", res.email_or_phone);
 
       localStorage.setItem("accessToken", res.access_token);
@@ -254,23 +254,23 @@ const [loginForm] = Form.useForm();
       localStorage.setItem("service_ids", JSON.stringify(res.service_ids));
 
       // after successful login
-localStorage.setItem("accessToken", res.access_token);
-localStorage.setItem("user", JSON.stringify(res));
+      localStorage.setItem("accessToken", res.access_token);
+      localStorage.setItem("user", JSON.stringify(res));
 
-// mark as authenticated
-setIsAuthenticated(true);
+      // mark as authenticated
+      setIsAuthenticated(true);
 
-// close modal
-closeAuthModal();
-const redirectPath = localStorage.getItem("postAuthRedirect");
+      // close modal
+      closeAuthModal();
+      const redirectPath = localStorage.getItem("postAuthRedirect");
 
-if (redirectPath) {
-  localStorage.removeItem("postAuthRedirect");
-  navigate(redirectPath);
-}
+      if (redirectPath) {
+        localStorage.removeItem("postAuthRedirect");
+        navigate(redirectPath);
+      }
 
 
-// ❌ DO NOT navigate anywhere
+      // ❌ DO NOT navigate anywhere
 
 
 
@@ -326,11 +326,11 @@ if (redirectPath) {
   //   }
   // };
   useEffect(() => {
-  const token = localStorage.getItem("accessToken");
-  if (token) {
-    setIsAuthenticated(true);
-  }
-}, []);
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      setIsAuthenticated(true);
+    }
+  }, []);
 
 
   const onAdminLogin = async (values: any) => {
@@ -414,15 +414,19 @@ if (redirectPath) {
   // ✅ Partner Register/Login handler (Education only)
 
   const onPartnerRegister = (values: any) => {
-    // store selected module
+
+    // module save
     localStorage.setItem("partner_module", values.module);
+
+    // healthcare category save
+    if (values.module === "healthcare") {
+      localStorage.setItem("partner_category", values.category);
+    }
 
     message.success("Registration successful. Please login.");
 
-    // ✅ switch to login tab
     setPartnerActiveTab("login");
   };
-
   const onAdminRegister = async (values: any) => {
     const adminData = {
       email: values.email,
@@ -467,9 +471,22 @@ if (redirectPath) {
         break;
 
       case "healthcare":
-        navigate("/partner/healthcare/dashboard");
-        break;
+        const category = localStorage.getItem("partner_category");
 
+        if (category === "Hospital") {
+          navigate("/partner/hospital/dashboard");
+        }
+        else if (category === "Lab") {
+          navigate("/partner/lab/dashboard");
+        }
+        else if (category === "Medical Store") {
+          navigate("/partner/medicalstore/dashboard");
+        }
+        else if (category === "Doctor") {
+          navigate("/partner/doctor/dashboard");
+        }
+
+        break;
       case "products":
         navigate("/partner/products/dashboard");
         break;
@@ -557,7 +574,7 @@ if (redirectPath) {
           values.workType === "assigning" ? 1 :
             values.workType === "looking" ? 2 :
               values.workType === "both" ? 3 : 1,
-      service_ids: [1], // default service
+        service_ids: [1], // default service
 
 
 
@@ -571,9 +588,9 @@ if (redirectPath) {
           }
           : undefined,
         government_id: {
-  id_type: "aadhaar",
-  id_number: values.aadhaar?.trim() || "000000000000"
-},
+          id_type: "aadhaar",
+          id_number: values.aadhaar?.trim() || "000000000000"
+        },
 
         // Hard-coded values
         dob: "2001-01-01",
@@ -582,7 +599,7 @@ if (redirectPath) {
         district_id: 1,
         address: values.location?.trim() || "Default Address",
         documents: [], // leave empty for now
-        work_type_id:1,
+        work_type_id: 1,
       };
 
       // Call your API
@@ -636,11 +653,11 @@ if (redirectPath) {
 
       closeAuthModal();
       //navigate(redirectPath);
-const redirectPath = localStorage.getItem("postAuthRedirect");
-if (redirectPath) {
-  localStorage.removeItem("postAuthRedirect");
-  navigate(redirectPath);
-}
+      const redirectPath = localStorage.getItem("postAuthRedirect");
+      if (redirectPath) {
+        localStorage.removeItem("postAuthRedirect");
+        navigate(redirectPath);
+      }
 
 
 
@@ -666,13 +683,13 @@ if (redirectPath) {
   return (
     <>
       <header className="swl-hs-navbar">
-<div className="swl-hs-navbar-logo">
-  <img src={Logo} alt="Swachify India" className="swl-logo-icon" />
-  <div className="swl-logo-text-wrap">
-    <span className="swl-logo-main">SWACHIFY</span>
-    <span className="swl-logo-sub">India</span>
-  </div>
-</div>
+        <div className="swl-hs-navbar-logo">
+          <img src={Logo} alt="Swachify India" className="swl-logo-icon" />
+          <div className="swl-logo-text-wrap">
+            <span className="swl-logo-main">SWACHIFY</span>
+            <span className="swl-logo-sub">India</span>
+          </div>
+        </div>
 
 
         <button
@@ -684,29 +701,29 @@ if (redirectPath) {
           {menuOpen ? <CloseOutlined /> : <MenuOutlined />}
         </button>
 
-<Menu
-  mode="horizontal"
-  className="swl-hs-navbar-menu"
-  // items={[
-  //   {
-  //     key: "home",
-  //     label: <Link to="/landing">Home</Link>,
-  //   },
-  //   {
-  //     key: "services",
-  //     label: "Explore Services",
-  //     onClick: () => {
-  //       document
-  //         .getElementById("services-section")
-  //         ?.scrollIntoView({ behavior: "smooth" });
-  //     },
-  //   },
-  // ]}
-/>
+        <Menu
+          mode="horizontal"
+          className="swl-hs-navbar-menu"
+        // items={[
+        //   {
+        //     key: "home",
+        //     label: <Link to="/landing">Home</Link>,
+        //   },
+        //   {
+        //     key: "services",
+        //     label: "Explore Services",
+        //     onClick: () => {
+        //       document
+        //         .getElementById("services-section")
+        //         ?.scrollIntoView({ behavior: "smooth" });
+        //     },
+        //   },
+        // ]}
+        />
 
 
 
-         <Select
+        <Select
           placeholder="Role"
           style={{ width: 150, marginRight: 12 }}
           onChange={(value) => {
@@ -716,9 +733,9 @@ if (redirectPath) {
               openAuthModal("register");
             }
 
-           if (value === "partner") {
-  setPartnerAuthVisible(true);
-}
+            if (value === "partner") {
+              setPartnerAuthVisible(true);
+            }
             if (value === "admin") {
               setRoleType("admin");          // 🔥 important
               setVendorActiveTab("admin_register");
@@ -734,41 +751,41 @@ if (redirectPath) {
           <Select.Option value="employee">Employee</Select.Option>
           <Select.Option value="partner">Partner</Select.Option>
           <Select.Option value="admin">Admin</Select.Option>
-        </Select> 
+        </Select>
 
 
-       {!isAuthenticated ? (
-  <Button
-    className="swl-hs-contact-btn swl-signup-btn"
-    onClick={() => openAuthModal("register")}
-  >
-    Sign Up
-  </Button>
-) : (
-  <Dropdown
-  placement="bottomRight"
-  menu={{
-    items: [
-      {
-        key: "profile",
-        label: "My Profile",
-        onClick: () => navigate("/profile"),
-      },
-      {
-        key: "logout",
-        label: "Logout",
-        danger: true,
-        onClick: handleLogout,
-      },
-    ],
-  }}
->
-  <Button
-    type="text"
-    icon={<UserOutlined style={{ fontSize: 22 }} />}
-  />
-</Dropdown>
-)}
+        {!isAuthenticated ? (
+          <Button
+            className="swl-hs-contact-btn swl-signup-btn"
+            onClick={() => openAuthModal("register")}
+          >
+            Sign Up
+          </Button>
+        ) : (
+          <Dropdown
+            placement="bottomRight"
+            menu={{
+              items: [
+                {
+                  key: "profile",
+                  label: "My Profile",
+                  onClick: () => navigate("/profile"),
+                },
+                {
+                  key: "logout",
+                  label: "Logout",
+                  danger: true,
+                  onClick: handleLogout,
+                },
+              ],
+            }}
+          >
+            <Button
+              type="text"
+              icon={<UserOutlined style={{ fontSize: 22 }} />}
+            />
+          </Dropdown>
+        )}
 
 
       </header>
@@ -820,16 +837,16 @@ if (redirectPath) {
       >
 
 
-{activeAuthTab === "register" && (
-  <div className="auth-illustration">
-    <div className="auth-avatar">
-      <UserOutlined />
-    </div>
-    <h2>Create Your Account</h2>
-    <p>Join Swachify & start your journey 🚀</p>
-  </div>
-)}
-       
+        {activeAuthTab === "register" && (
+          <div className="auth-illustration">
+            <div className="auth-avatar">
+              <UserOutlined />
+            </div>
+            <h2>Create Your Account</h2>
+            <p>Join Swachify & start your journey 🚀</p>
+          </div>
+        )}
+
 
 
         <Tabs
@@ -839,7 +856,7 @@ if (redirectPath) {
         >
           {/* LOGIN TAB */}
           <TabPane tab="Login" key="login">
-<Form form={loginForm} layout="vertical" onFinish={onLogin} preserve={false}>
+            <Form form={loginForm} layout="vertical" onFinish={onLogin} preserve={false}>
               {/* <Form.Item
                 label="Email / Phone"
                 name="identifier"
@@ -863,44 +880,44 @@ if (redirectPath) {
                 <Input placeholder="john@example.com or 9876543210" />
               </Form.Item> */}
               <Form.Item
-  label="Email / Phone"
-  name="identifier"
-  normalize={(v) => {
-    // If user is typing only digits → keep max 10
-    if (typeof v === "string" && /^\d+$/.test(v)) {
-      return v.replace(/\D/g, "").slice(0, 10);
-    }
-    return v; // allow email typing normally
-  }}
-  rules={[
-    { required: true, message: "Email or phone is required" },
-    {
-      validator: (_, value) => {
-        if (!value) return Promise.reject("");
+                label="Email / Phone"
+                name="identifier"
+                normalize={(v) => {
+                  // If user is typing only digits → keep max 10
+                  if (typeof v === "string" && /^\d+$/.test(v)) {
+                    return v.replace(/\D/g, "").slice(0, 10);
+                  }
+                  return v; // allow email typing normally
+                }}
+                rules={[
+                  { required: true, message: "Email or phone is required" },
+                  {
+                    validator: (_, value) => {
+                      if (!value) return Promise.reject("");
 
-        const isPhone = /^[6-9][0-9]{9}$/.test(value);
-        const isGmail = /^[A-Za-z0-9._%+-]+@gmail\.com$/.test(value);
+                      const isPhone = /^[6-9][0-9]{9}$/.test(value);
+                      const isGmail = /^[A-Za-z0-9._%+-]+@gmail\.com$/.test(value);
 
-        if (isPhone || isGmail) return Promise.resolve();
+                      if (isPhone || isGmail) return Promise.resolve();
 
-        return Promise.reject("Enter valid 10-digit phone or Gmail ID");
-      },
-    },
-  ]}
->
-  <Input placeholder="john@example.com or 9876543210" />
-</Form.Item>
+                      return Promise.reject("Enter valid 10-digit phone or Gmail ID");
+                    },
+                  },
+                ]}
+              >
+                <Input placeholder="john@example.com or 9876543210" />
+              </Form.Item>
 
               <Form.Item
-  label="Password"
-  name="password"
-  rules={[
-    { required: true, message: "Password is required" },
-    { min: 8, message: "Please enter at least 8 characters" },
-  ]}
->
-  <Input.Password placeholder="Enter password" />
-</Form.Item>
+                label="Password"
+                name="password"
+                rules={[
+                  { required: true, message: "Password is required" },
+                  { min: 8, message: "Please enter at least 8 characters" },
+                ]}
+              >
+                <Input.Password placeholder="Enter password" />
+              </Form.Item>
 
 
               <div className="swl-login-options-row">
@@ -1015,72 +1032,72 @@ if (redirectPath) {
 
               </Form.Item> */}
 
-<Row gutter={16}>
-  <Col xs={24} md={12}>
-   <Form.Item
-  label="First Name"
-  name="firstName"
-  normalize={(v) => v?.replace(/[^A-Za-z ]/g, "")}
-  rules={[
-    { required: true, message: "First name is required" },
-    { pattern: /^[A-Za-z ]+$/, message: "Only letters allowed" },
-  ]}
->
-  <Input placeholder="First name" />
-</Form.Item>
+              <Row gutter={16}>
+                <Col xs={24} md={12}>
+                  <Form.Item
+                    label="First Name"
+                    name="firstName"
+                    normalize={(v) => v?.replace(/[^A-Za-z ]/g, "")}
+                    rules={[
+                      { required: true, message: "First name is required" },
+                      { pattern: /^[A-Za-z ]+$/, message: "Only letters allowed" },
+                    ]}
+                  >
+                    <Input placeholder="First name" />
+                  </Form.Item>
 
-  </Col>
+                </Col>
 
-  <Col xs={24} md={12}>
-    <Form.Item
-  label="Last Name"
-  name="lastName"
-  normalize={(v) => v?.replace(/[^A-Za-z ]/g, "")}
-  rules={[
-    { required: true },
-    { pattern: /^[A-Za-z ]+$/, message: "Only letters allowed" },
-  ]}
->
-  <Input placeholder="Last name" />
-</Form.Item>
+                <Col xs={24} md={12}>
+                  <Form.Item
+                    label="Last Name"
+                    name="lastName"
+                    normalize={(v) => v?.replace(/[^A-Za-z ]/g, "")}
+                    rules={[
+                      { required: true },
+                      { pattern: /^[A-Za-z ]+$/, message: "Only letters allowed" },
+                    ]}
+                  >
+                    <Input placeholder="Last name" />
+                  </Form.Item>
 
-  </Col>
-</Row>
-
-
-
-<Row gutter={16}>
-  <Col xs={24} md={12}>
-    <Form.Item
-  label="Mobile Number"
-  name="mobile"
-  normalize={(v) => allowOnlyNumbers(v || "").slice(0, 10)}
-  rules={[
-    { required: true },
-    { pattern: /^[6-9][0-9]{9}$/, message: "Enter valid 10 digit mobile" },
-  ]}
->
-  <Input inputMode="numeric" maxLength={10} />
-</Form.Item>
+                </Col>
+              </Row>
 
 
-  </Col>
 
-  <Col xs={24} md={12}>
-    <Form.Item
-  label="Email"
-  name="email"
-  normalize={(v) => allowEmailChars(v || "")}
-  rules={[
-    { required: true, message: "Email required" },
-    { type: "email", message: "Enter valid email" },
-  ]}
->
+              <Row gutter={16}>
+                <Col xs={24} md={12}>
+                  <Form.Item
+                    label="Mobile Number"
+                    name="mobile"
+                    normalize={(v) => allowOnlyNumbers(v || "").slice(0, 10)}
+                    rules={[
+                      { required: true },
+                      { pattern: /^[6-9][0-9]{9}$/, message: "Enter valid 10 digit mobile" },
+                    ]}
+                  >
+                    <Input inputMode="numeric" maxLength={10} />
+                  </Form.Item>
 
-      <Input />
-    </Form.Item>
-  </Col>
-</Row>
+
+                </Col>
+
+                <Col xs={24} md={12}>
+                  <Form.Item
+                    label="Email"
+                    name="email"
+                    normalize={(v) => allowEmailChars(v || "")}
+                    rules={[
+                      { required: true, message: "Email required" },
+                      { type: "email", message: "Enter valid email" },
+                    ]}
+                  >
+
+                    <Input />
+                  </Form.Item>
+                </Col>
+              </Row>
 
 
 
@@ -1308,47 +1325,47 @@ if (redirectPath) {
 
                 </div>
               )}
-<Row gutter={16}>
-  {/* PASSWORD */}
-  <Col xs={24} md={12}>
-    <Form.Item
-      label="Password"
-      name="password"
-      rules={[
-        { required: true, message: "Password is required" },
-        { min: 8, message: "Password must be at least 8 characters" },
-      ]}
-      hasFeedback
-    >
-      <Input.Password placeholder="Enter password" />
-    </Form.Item>
-  </Col>
+              <Row gutter={16}>
+                {/* PASSWORD */}
+                <Col xs={24} md={12}>
+                  <Form.Item
+                    label="Password"
+                    name="password"
+                    rules={[
+                      { required: true, message: "Password is required" },
+                      { min: 8, message: "Password must be at least 8 characters" },
+                    ]}
+                    hasFeedback
+                  >
+                    <Input.Password placeholder="Enter password" />
+                  </Form.Item>
+                </Col>
 
-  {/* CONFIRM PASSWORD */}
-  <Col xs={24} md={12}>
-    <Form.Item
-      label="Confirm Password"
-      name="confirmPassword"
-      dependencies={["password"]}
-      hasFeedback
-      rules={[
-        { required: true, message: "Confirm your password" },
-        ({ getFieldValue }) => ({
-          validator(_, value) {
-            if (!value || getFieldValue("password") === value) {
-              return Promise.resolve();
-            }
-            return Promise.reject(
-              new Error("Passwords do not match")
-            );
-          },
-        }),
-      ]}
-    >
-      <Input.Password placeholder="Re-enter password" />
-    </Form.Item>
-  </Col>
-</Row>
+                {/* CONFIRM PASSWORD */}
+                <Col xs={24} md={12}>
+                  <Form.Item
+                    label="Confirm Password"
+                    name="confirmPassword"
+                    dependencies={["password"]}
+                    hasFeedback
+                    rules={[
+                      { required: true, message: "Confirm your password" },
+                      ({ getFieldValue }) => ({
+                        validator(_, value) {
+                          if (!value || getFieldValue("password") === value) {
+                            return Promise.resolve();
+                          }
+                          return Promise.reject(
+                            new Error("Passwords do not match")
+                          );
+                        },
+                      }),
+                    ]}
+                  >
+                    <Input.Password placeholder="Re-enter password" />
+                  </Form.Item>
+                </Col>
+              </Row>
 
 
 
@@ -1716,47 +1733,47 @@ if (redirectPath) {
 
 
 
-              <Form.Item
-  label="Email / Phone"
-  name="identifier"
-  normalize={(v) => {
-    if (typeof v === "string" && /^\d+$/.test(v)) {
-      return allowOnlyNumbers(v).slice(0, 10);
-    }
-    return v;
-  }}
-  rules={[
-    { required: true, message: "Email or phone is required" },
-    {
-      validator: (_, value) => {
-        if (!value) return Promise.reject("Required");
+                <Form.Item
+                  label="Email / Phone"
+                  name="identifier"
+                  normalize={(v) => {
+                    if (typeof v === "string" && /^\d+$/.test(v)) {
+                      return allowOnlyNumbers(v).slice(0, 10);
+                    }
+                    return v;
+                  }}
+                  rules={[
+                    { required: true, message: "Email or phone is required" },
+                    {
+                      validator: (_, value) => {
+                        if (!value) return Promise.reject("Required");
 
-        const isPhone = /^[6-9][0-9]{9}$/.test(value);
-        const isGmail = /^[A-Za-z0-9._%+-]+@gmail\.com$/.test(value);
+                        const isPhone = /^[6-9][0-9]{9}$/.test(value);
+                        const isGmail = /^[A-Za-z0-9._%+-]+@gmail\.com$/.test(value);
 
-        if (isPhone || isGmail) return Promise.resolve();
+                        if (isPhone || isGmail) return Promise.resolve();
 
-        return Promise.reject("Enter valid 10-digit phone or Gmail ID");
-      },
-    },
-  ]}
->
-  <Input placeholder="john@example.com or 9876543210" />
-</Form.Item>
+                        return Promise.reject("Enter valid 10-digit phone or Gmail ID");
+                      },
+                    },
+                  ]}
+                >
+                  <Input placeholder="john@example.com or 9876543210" />
+                </Form.Item>
 
 
 
 
                 <Form.Item
-  label="Password"
-  name="password"
-  rules={[
-    { required: true, message: "Password is required" },
-    { min: 8, message: "Password must contain at least 8 characters" },
-  ]}
->
-  <Input.Password />
-</Form.Item>
+                  label="Password"
+                  name="password"
+                  rules={[
+                    { required: true, message: "Password is required" },
+                    { min: 8, message: "Password must contain at least 8 characters" },
+                  ]}
+                >
+                  <Input.Password />
+                </Form.Item>
 
 
 
@@ -1806,16 +1823,16 @@ if (redirectPath) {
                 </Form.Item>
 
 
-               <Form.Item
-  label="Password"
-  name="password"
-  rules={[
-    { required: true, message: "Password is required" },
-    { min: 8, message: "Password must contain at least 8 characters" },
-  ]}
->
-  <Input.Password />
-</Form.Item>
+                <Form.Item
+                  label="Password"
+                  name="password"
+                  rules={[
+                    { required: true, message: "Password is required" },
+                    { min: 8, message: "Password must contain at least 8 characters" },
+                  ]}
+                >
+                  <Input.Password />
+                </Form.Item>
 
 
 
@@ -1850,14 +1867,14 @@ if (redirectPath) {
                 onFinish={(values) => console.log("Vendor Register:", values)}
               >
                 <Form.Item
-  label="Business Name"
-  name="businessName"
-  normalize={(v) => v?.replace(/[^A-Za-z0-9 ]/g, "")}
-  rules={[
-    { required: true, message: "Business name is required" },
-    { min: 3, message: "Minimum 3 characters required" },
-  ]}
->
+                  label="Business Name"
+                  name="businessName"
+                  normalize={(v) => v?.replace(/[^A-Za-z0-9 ]/g, "")}
+                  rules={[
+                    { required: true, message: "Business name is required" },
+                    { min: 3, message: "Minimum 3 characters required" },
+                  ]}
+                >
 
                   <Input
                     onChange={(e) =>
@@ -1868,14 +1885,14 @@ if (redirectPath) {
 
 
                 <Form.Item
-  label="Owner Name"
-  name="ownerName"
-  normalize={(v) => v?.replace(/[^A-Za-z ]/g, "")}
-  rules={[
-    { required: true, message: "Owner name is required" },
-    { pattern: /^[A-Za-z ]+$/, message: "Only letters allowed" },
-  ]}
->
+                  label="Owner Name"
+                  name="ownerName"
+                  normalize={(v) => v?.replace(/[^A-Za-z ]/g, "")}
+                  rules={[
+                    { required: true, message: "Owner name is required" },
+                    { pattern: /^[A-Za-z ]+$/, message: "Only letters allowed" },
+                  ]}
+                >
 
                   <Input />
                 </Form.Item>
@@ -1920,14 +1937,14 @@ if (redirectPath) {
                   <Input.TextArea rows={3} />
                 </Form.Item>
 
-               <Form.Item
-  label="Password"
-  name="password"
-  rules={[
-    { required: true, message: "Password is required" },
-    { min: 8, message: "Password must be at least 8 characters" },
-  ]}
->
+                <Form.Item
+                  label="Password"
+                  name="password"
+                  rules={[
+                    { required: true, message: "Password is required" },
+                    { min: 8, message: "Password must be at least 8 characters" },
+                  ]}
+                >
 
 
                   <Input.Password />
@@ -1945,29 +1962,29 @@ if (redirectPath) {
               <Form layout="vertical" onFinish={onAdminRegister}>
 
 
-               <Form.Item
-  label="First Name"
-  name="firstName"
-  normalize={(v) => v?.replace(/[^A-Za-z ]/g, "")}
-  rules={[
-    { required: true, message: "First name required" },
-    { pattern: /^[A-Za-z ]+$/, message: "Only letters allowed" },
-  ]}
->
+                <Form.Item
+                  label="First Name"
+                  name="firstName"
+                  normalize={(v) => v?.replace(/[^A-Za-z ]/g, "")}
+                  rules={[
+                    { required: true, message: "First name required" },
+                    { pattern: /^[A-Za-z ]+$/, message: "Only letters allowed" },
+                  ]}
+                >
 
                   <Input />
                 </Form.Item>
 
 
-               <Form.Item
-  label="Last Name"
-  name="lastName"
-  normalize={(v) => v?.replace(/[^A-Za-z ]/g, "")}
-  rules={[
-    { required: true, message: "Last name required" },
-    { pattern: /^[A-Za-z ]+$/, message: "Only letters allowed" },
-  ]}
->
+                <Form.Item
+                  label="Last Name"
+                  name="lastName"
+                  normalize={(v) => v?.replace(/[^A-Za-z ]/g, "")}
+                  rules={[
+                    { required: true, message: "Last name required" },
+                    { pattern: /^[A-Za-z ]+$/, message: "Only letters allowed" },
+                  ]}
+                >
 
                   <Input />
                 </Form.Item>
@@ -1985,7 +2002,7 @@ if (redirectPath) {
                 <Form.Item
                   label="Mobile Number"
                   name="mobile"
-                   normalize={(value) => allowOnlyNumbers(value || "").slice(0, 10)}
+                  normalize={(value) => allowOnlyNumbers(value || "").slice(0, 10)}
                   rules={[
                     { required: true },
                     { pattern: /^[6-9][0-9]{9}$/, message: "Invalid mobile number" }
@@ -1999,9 +2016,9 @@ if (redirectPath) {
                   label="Password"
                   name="password"
                   rules={[
-  { required: true, message: "Password is required" },
-  { min: 8, message: "Password must be at least 8 characters" },
-]}
+                    { required: true, message: "Password is required" },
+                    { min: 8, message: "Password must be at least 8 characters" },
+                  ]}
 
                 >
                   <Input.Password />
@@ -2168,7 +2185,24 @@ if (redirectPath) {
                   <Select.Option value="ride">Just Ride</Select.Option>
                 </Select>
               </Form.Item>
-
+              <Form.Item shouldUpdate={(prev, cur) => prev.module !== cur.module}>
+                {({ getFieldValue }) =>
+                  getFieldValue("module") === "healthcare" ? (
+                    <Form.Item
+                      label="Select Healthcare Category"
+                      name="category"
+                      rules={[{ required: true, message: "Please select category" }]}
+                    >
+                      <Select placeholder="Choose category">
+                        <Select.Option value="Hospital">Hospital</Select.Option>
+                        <Select.Option value="Lab">Lab</Select.Option>
+                        <Select.Option value="Medical Store">Medical Store</Select.Option>
+                        <Select.Option value="Doctor">Doctor</Select.Option>
+                      </Select>
+                    </Form.Item>
+                  ) : null
+                }
+              </Form.Item>
               <Button
                 type="primary"
                 block
@@ -2183,16 +2217,16 @@ if (redirectPath) {
         </Tabs>
       </Modal>
 
-<Modal
-  open={partnerAuthVisible}
-  onCancel={() => setPartnerAuthVisible(false)}
-  footer={null}
-  centered
-  width={500}
-  destroyOnClose
->
-  <PartnerAuth />
-</Modal>
+      <Modal
+        open={partnerAuthVisible}
+        onCancel={() => setPartnerAuthVisible(false)}
+        footer={null}
+        centered
+        width={500}
+        destroyOnClose
+      >
+        <PartnerAuth />
+      </Modal>
 
     </>
   );

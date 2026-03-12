@@ -50,6 +50,7 @@ import CategoryPage from "../../pages/dashboard/MyFood/CategoryPage";
 import RestaurantView from "../../pages/dashboard/MyFood/RestaurantView";
 import FoodDetails from "../../pages/dashboard/MyFood/FoodDetails";
 import Freelancer from "../../pages/landing/Freelancer";
+import { DoctorDashboard, HospitalDashboard, LabDashboard, MedicalStoreDashboard } from "../../pages/dashboard/HealthCare/PartnerDashboard";
 
 export const NonSecureRoutes = () => {
   //const navigate = useNavigate();
@@ -142,6 +143,11 @@ export const NonSecureRoutes = () => {
       <Route path="/restaurant/:id" element={<RestaurantView />} />
       <Route path="/food-details" element={<FoodDetails />} />
       <Route path="/Freelancers" element={<Freelancer />} />
+
+      <Route path="partner/hospital/dashboard" element={<HospitalDashboard />} />
+      <Route path="partner/lab/dashboard" element={<LabDashboard />} />
+      <Route path="partner/medicalstore/dashboard" element={<MedicalStoreDashboard />} />
+      <Route path="partner/doctor/dashboard" element={<DoctorDashboard />} />
 
       {/* rentals landing page */}
       <Route path="/rentals" element={<Landingrentals />} />
