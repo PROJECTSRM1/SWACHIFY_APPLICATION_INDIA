@@ -224,7 +224,6 @@
   background-color: #ff8c5a;
 }
 
-
 .restaurant-badge {
   display: inline-flex;
   align-items: center;
@@ -247,7 +246,7 @@
   border-radius: 50%;
   margin-right: 8px; /* Space between dot and text */
   display: inline-block;
-  
+
   /* Optional: Add a subtle pulse animation to make it "live" */
   animation: pulse-red 2s infinite;
 }
@@ -262,5 +261,125 @@
   }
   100% {
     box-shadow: 0 0 0 0 rgba(255, 77, 79, 0);
+  }
+}
+
+/* CART POPUP OVERLAY */
+
+.cart-popup-overlay {
+  position: fixed;
+  inset: 0;
+
+  background: rgba(0, 0, 0, 0.45);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 999;
+
+  animation: fadePopup 0.25s ease;
+}
+
+/* POPUP CARD */
+
+.cart-popup {
+  background: white;
+
+  padding: 28px 32px;
+
+  border-radius: 16px;
+
+  /* width: 320px; */
+  width: 374px;
+
+  text-align: center;
+
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+
+  animation: popupScale 0.25s ease;
+}
+
+.cart-popup h2 {
+  margin-bottom: 10px;
+}
+
+.cart-popup p {
+  color: #6b7280;
+  margin-top: 6px;
+}
+
+/* BUTTON AREA */
+
+.popup-buttons {
+  margin-top: 22px;
+
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+/* CONTINUE BUTTON */
+
+.continue-btn {
+  padding: 10px 16px;
+
+  border-radius: 10px;
+  border: none;
+
+  background: #f3f4f6;
+
+  cursor: pointer;
+
+  font-weight: 500;
+
+  transition: 0.2s;
+}
+
+.continue-btn:hover {
+  background: #e5e7eb;
+}
+
+/* VIEW CART BUTTON */
+
+.view-cart-btn {
+  padding: 16px 16px;
+
+  border-radius: 10px;
+  border: none;
+
+  background: #ff6b35;
+  color: white;
+
+  cursor: pointer;
+
+  font-weight: 600;
+
+  transition: 0.2s;
+}
+
+.view-cart-btn:hover {
+  transform: scale(1.05);
+}
+
+/* POPUP ANIMATIONS */
+
+@keyframes popupScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadePopup {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }

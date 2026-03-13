@@ -5,29 +5,38 @@ import { ArrowLeftOutlined } from "@ant-design/icons";
 import "./FoodDetails.css";
 
 const FoodDetails = () => {
-
-
   const navigate = useNavigate();
-  const [added, setAdded] = useState(false);
+  const [added] = useState(false);
 
+  const [showPopup, setShowPopup] = useState(false);
 
   const handleAddToCart = () => {
-  setAdded(true);
+    const existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
 
-  setTimeout(() => {
-    navigate("/MyFood");
-  }, 1000);
-};
+    const newItem = {
+      name: item.name,
+      img: item.img,
+      price: finalPrice,
+      qty: qty,
+      size: size,
+      restaurant: restaurantName,
+    };
 
+    existingCart.push(newItem);
+
+    localStorage.setItem("cart", JSON.stringify(existingCart));
+
+    window.dispatchEvent(new Event("cartUpdated"));
+
+    setShowPopup(true);
+  };
 
   const location = useLocation();
-const { item, restaurant } = location.state || {};
+  const { item, restaurant } = location.state || {};
 
-
-
-if (!item) {
-  return <div>No item selected</div>;
-}
+  if (!item) {
+    return <div>No item selected</div>;
+  }
 
   const [size, setSize] = useState("14");
   const [qty, setQty] = useState(1);
@@ -45,8 +54,6 @@ if (!item) {
   const ingredients = ["Salt", "Protein", "Herbs", "Spices", "Greens"];
 
   const restaurantName = restaurant?.name || item?.restaurant;
-
-  
 
   return (
     <div className="details-page">
@@ -68,9 +75,10 @@ if (!item) {
           fresh herbs and house-made sauce.
         </p>
 
-       <div className="meta">
-  ⭐⭐ {restaurant?.rating ?? item?.rating ?? 4.5} | 🚚 Free | ⏱  {restaurant?.time ?? "25 min"}
-</div>
+        <div className="meta">
+          ⭐⭐ {restaurant?.rating ?? item?.rating ?? 4.5} | 🚚 Free | ⏱{" "}
+          {restaurant?.time ?? "25 min"}
+        </div>
 
         {/* SIZE */}
 
@@ -121,14 +129,38 @@ if (!item) {
         </div>
 
         <button
-  className={`details-cart-btn ${added ? "added" : ""}`}
-  onClick={handleAddToCart}
->
-  {added ? "ADDED TO CART" : "ADD TO CART"}
-</button>
-
-
+          className={`details-cart-btn ${added ? "added" : ""}`}
+          onClick={handleAddToCart}
+        >
+          {added ? "ADDED TO CART" : "ADD TO CART"}
+        </button>
       </div>
+      {showPopup && (
+        <div className="cart-popup-overlay" onClick={() => setShowPopup(false)}>
+          <div className="cart-popup" onClick={(e) => e.stopPropagation()}>
+            <h2>Added to Cart 🛒</h2>
+
+            <p>
+              {qty} × {item.name} ({size}")
+            </p>
+
+            <p>₹{finalPrice}</p>
+
+            <div className="popup-buttons">
+              <button onClick={() => navigate(-1)} className="continue-btn">
+                CONTINUE SHOPPING
+              </button>
+
+              <button
+                onClick={() => navigate("/cart")}
+                className="view-cart-btn"
+              >
+                VIEW CART
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

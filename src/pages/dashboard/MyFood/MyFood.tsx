@@ -111,8 +111,30 @@ const MyFood = () => {
   const [query, setQuery] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
   const [filteredRestaurants, setFilteredRestaurants] = useState(restaurants);
+  const [cartCount, setCartCount] = useState(0);
 
   const recentKeywords = ["Burger", "Sushi", "Pizza", "Tacos"];
+
+  const updateCartCount = () => {
+    const storedCart = JSON.parse(localStorage.getItem("cart") || "[]");
+
+    const totalItems = storedCart.reduce(
+      (sum: number, item: any) => sum + item.qty,
+      0,
+    );
+
+    setCartCount(totalItems);
+  };
+
+  useEffect(() => {
+    updateCartCount();
+
+    window.addEventListener("cartUpdated", updateCartCount);
+
+    return () => {
+      window.removeEventListener("cartUpdated", updateCartCount);
+    };
+  }, []);
 
   const handleCategoryClick = (slug: string) => {
     navigate(`/category/${slug}`);
@@ -279,11 +301,13 @@ const MyFood = () => {
             </div>
           )}
 
-          <div className="cart-btn">
+          <div className="cart-btn" onClick={() => navigate("/cart")}>
             <div className="cart-icon-wrapper">
               <ShoppingCartOutlined className="cart-icon" />
-              {/* <span className="cart-count">{cart}</span> */}
+
+              {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
             </div>
+
             <span className="cart-label">Cart</span>
           </div>
         </div>

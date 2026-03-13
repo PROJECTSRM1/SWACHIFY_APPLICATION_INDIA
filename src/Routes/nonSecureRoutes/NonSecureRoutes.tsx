@@ -50,6 +50,7 @@ import CategoryPage from "../../pages/dashboard/MyFood/CategoryPage";
 import RestaurantView from "../../pages/dashboard/MyFood/RestaurantView";
 import FoodDetails from "../../pages/dashboard/MyFood/FoodDetails";
 import Freelancer from "../../pages/landing/Freelancer";
+import Cart from "../../pages/dashboard/MyFood/Cart";
 
 export const NonSecureRoutes = () => {
   //const navigate = useNavigate();
@@ -142,6 +143,7 @@ export const NonSecureRoutes = () => {
       <Route path="/restaurant/:id" element={<RestaurantView />} />
       <Route path="/food-details" element={<FoodDetails />} />
       <Route path="/Freelancers" element={<Freelancer />} />
+      <Route path="/cart" element={<Cart />} />
 
       {/* rentals landing page */}
       <Route path="/rentals" element={<Landingrentals />} />
