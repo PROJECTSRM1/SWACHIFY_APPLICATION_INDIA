@@ -17,6 +17,9 @@ import MaterialSupply from "../../pages/building/MaterialSupply/ModMaterialSuppl
 import MachineryRental from "../../pages/building/MachineryRental/MachineryRental";
 import Transpotation from "../../pages/building/Transpotation/Transpotation";
 
+
+
+
 export const SecureRoutes = () => {
   return (
     <>
@@ -46,6 +49,11 @@ export const SecureRoutes = () => {
         <Route path="material-supply" element={<MaterialSupply />} />
         <Route path="machinery-rental" element={<MachineryRental />} />
         <Route path="transpotation" element={<Transpotation />} />
+
+
+
+
+
       </Routes>
     </>
   );

@@ -1,0 +1,168 @@
+/* HealthcareDashboards.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+:root {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #F0F9FF;
+    /* App container handles scroll */
+}
+
+/* React Native component equivalents */
+.rn-view {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+}
+
+.rn-text {
+    display: inline;
+    font-family: inherit;
+}
+
+.rn-scroll-view {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex: 1;
+}
+
+.rn-scroll-view-horizontal {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+}
+
+.rn-scroll-view-horizontal::-webkit-scrollbar {
+    display: none;
+}
+
+.touchable {
+    cursor: pointer;
+    user-select: none;
+    transition: opacity 0.2s;
+    background: transparent;
+    border: none;
+    text-align: left;
+    font-family: inherit;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.touchable:active {
+    opacity: 0.7;
+}
+
+.text-input {
+    outline: none;
+    border: none;
+    background: transparent;
+    font-family: inherit;
+}
+
+/* Base styles for View/Text equivalents if we use divs/spans */
+.app-container {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    background-color: #F0F9FF;
+}
+
+/* Mobile Sidebar classes */
+.sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.45);
+    z-index: 98;
+    pointer-events: auto;
+    opacity: 1;
+    transition: opacity 0.2s;
+}
+
+.sidebar-overlay.closed {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.sidebar-mobile {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 260px;
+    max-width: 85%;
+    background-color: #fff;
+    z-index: 99;
+    transform: translateX(0);
+    transition: transform 0.25s ease;
+}
+
+.sidebar-mobile.closed {
+    transform: translateX(-100%);
+}
+
+.ellipsize {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* MOBILE 320 / 375 FIX */
+@media (max-width: 480px) {
+
+    .stats-grid>.rn-view {
+        width: 100% !important;
+    }
+
+    .app-container {
+        overflow-x: hidden;
+    }
+
+    .rn-scroll-view {
+        overflow-x: hidden;
+    }
+
+}
+
+/* FORCE FULL WIDTH FOR MOBILE */
+@media (max-width:375px) {
+
+    .app-container {
+        width: 100vw;
+        max-width: 100vw;
+        overflow-x: hidden;
+    }
+
+    .rn-view {
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .rn-scroll-view {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    /* reduce page padding */
+    .rn-scroll-view>.rn-view {
+        padding-left: 8px !important;
+        padding-right: 8px !important;
+    }
+
+}
