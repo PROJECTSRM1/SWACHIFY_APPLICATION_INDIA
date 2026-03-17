@@ -266,3 +266,385 @@
 /* .cart-qty {
   margin-left: auto;
 } */
+
+/* ========================= */
+/* PAYMENT PAGE */
+/* ========================= */
+
+.payment-page {
+  background: #fafafa;
+  min-height: 100vh;
+  padding: 40px 10%;
+  font-family: "Inter", sans-serif;
+}
+
+.payment-page h1 {
+  margin-bottom: 30px;
+}
+
+/* PAYMENT OPTIONS */
+
+.payment-options {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.pay-option {
+  flex: 1;
+  background: white;
+  padding: 18px;
+  border-radius: 14px;
+  text-align: center;
+  font-weight: 600;
+  cursor: pointer;
+
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+
+  transition: all 0.2s ease;
+
+  border: 2px solid transparent;
+}
+
+.pay-option:hover {
+  transform: translateY(-3px);
+}
+
+.pay-option.active {
+  border: 2px solid #3b82f6;
+  color: #3b82f6;
+  background: #f0f6ff;
+}
+
+/* ========================= */
+/* ORDER SUMMARY */
+/* ========================= */
+
+.order-summary {
+  background: white;
+  padding: 20px;
+  border-radius: 16px;
+  margin-bottom: 30px;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+}
+
+.summary-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 12px 0;
+}
+
+.summary-item img {
+  width: 60px;
+  height: 60px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.summary-item h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.summary-item p {
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.summary-item span {
+  margin-left: auto;
+  font-weight: 600;
+}
+
+/* ========================= */
+/* SUMMARY ROW */
+/* ========================= */
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 10px;
+  font-size: 15px;
+}
+
+.summary-row.total {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.free {
+  color: #22c55e;
+}
+
+/* ========================= */
+/* ADD CARD SECTION */
+/* ========================= */
+
+.add-card {
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  text-align: center;
+  margin-bottom: 30px;
+
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+}
+
+.add-card p {
+  color: #6b7280;
+  margin-bottom: 20px;
+  font-size: 15px;
+}
+
+.add-card button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  background: #f8fafc;
+  border: 2px dashed #3b82f6;
+
+  color: #3b82f6;
+
+  padding: 12px 22px;
+
+  border-radius: 12px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.add-card button:hover {
+  background: #3b82f6;
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* ========================= */
+/* PAY BUTTON */
+/* ========================= */
+
+.pay-btn {
+  width: 100%;
+  background: #3b82f6;
+  color: white;
+  padding: 16px;
+  border: none;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(59, 130, 246, 0.4);
+}
+
+.pay-btn:hover {
+  transform: scale(1.02);
+}
+
+/* ========================= */
+/* ADD CARD PAGE */
+/* ========================= */
+
+.add-card-page {
+  background: #fafafa;
+
+  min-height: 100vh;
+
+  padding: 40px 10%;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 20px;
+}
+
+.add-card-page input {
+  width: 100%;
+
+  padding: 16px;
+
+  border-radius: 12px;
+
+  border: 1px solid #e5e7eb;
+
+  font-size: 15px;
+
+  outline: none;
+
+  transition: all 0.2s ease;
+}
+
+.add-card-page input:focus {
+  border: 1px solid #3b82f6;
+
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.add-card-page button {
+  background: #3b82f6;
+
+  color: white;
+
+  padding: 16px;
+
+  border: none;
+
+  border-radius: 12px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  margin-top: 10px;
+
+  box-shadow: 0 10px 24px rgba(59, 130, 246, 0.3);
+}
+
+.add-card-page button:hover {
+  transform: scale(1.02);
+}
+
+/* Card Type Display in UI */
+.card-type {
+  font-size: 13px;
+  color: #3b82f6;
+  margin-top: 6px;
+  font-weight: 600;
+}
+
+/* CARD FORM ROW */
+
+.card-row {
+  display: flex;
+  gap: 20px;
+  margin-top: 10px;
+}
+
+.card-row input {
+  flex: 1;
+}
+
+/* ========================= */
+/* SUCCESS PAGE */
+/* ========================= */
+
+.success-page {
+  background: #0f172a;
+  color: white;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+  text-align: center;
+}
+
+.success-page h1 {
+  font-size: 32px;
+}
+
+.success-page button {
+  background: #3b82f6;
+  border: none;
+  padding: 16px 32px;
+  border-radius: 14px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* ========================= */
+/* TRACK ORDER PAGE */
+/* ========================= */
+
+.track-page {
+  background: #0f172a;
+  color: white;
+  min-height: 100vh;
+  padding: 40px;
+  text-align: center;
+}
+
+.map-line {
+  height: 200px;
+  margin: 40px auto;
+  width: 4px;
+  background: linear-gradient(#ff6b35, #3b82f6);
+  border-radius: 2px;
+}
+
+.order-card {
+  background: #1e293b;
+  padding: 25px;
+  border-radius: 16px;
+  margin-top: 30px;
+}
+
+/* TRACK ORDER MAP */
+
+.track-map {
+  position: relative;
+  height: 320px;
+  width: 320px;
+  margin: 40px auto;
+}
+
+/* ROUTE SVG */
+
+.route-svg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+/* ROUTE PATH */
+
+.route-path {
+  fill: none;
+  stroke: #ff6b35;
+  stroke-width: 6;
+  stroke-linecap: round;
+}
+
+/* start location */
+
+.start-point {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  font-size: 30px;
+}
+
+/* destination */
+
+.end-circle {
+  fill: #3b82f6;
+  animation: destinationPulse 1.8s infinite;
+  transform-origin: center;
+}
+
+@keyframes destinationPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.8);
+  }
+
+  50% {
+    box-shadow: 0 0 0 14px rgba(59, 130, 246, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+  }
+}
+
+.add-new-button {
+  margin: 10px;
+}
